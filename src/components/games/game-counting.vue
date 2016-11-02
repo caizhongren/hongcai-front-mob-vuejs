@@ -392,7 +392,7 @@
     methods: {
       playAgin () {
         if (this.gameType === 1 && this.gameCounts <= 0) {
-          this.$router.push({name: 'gameOver', query: { act: this.activityType, isPlay: this.isPlay }})
+          this.$router.replace({name: 'gameOver', query: { act: this.activityType, isPlay: this.isPlay }})
           clearInterval(this.backgroundTimer)
           return
         }
@@ -499,7 +499,7 @@
               that.showFirst = true
               that.gameCounts = res.data.freeCount + res.data.count - res.data.usedCount
               if (that.gameType === 1 && that.gameCounts <= 0) {
-                that.$router.push({name: 'gameOver', query: { act: that.activityType, isPlay: that.isPlay }})
+                that.$router.replace({name: 'gameOver', query: { act: that.activityType, isPlay: that.isPlay }})
                 clearInterval(that.backgroundTimer)
               } else {
                 res.data.usedCount === 0 ? that.showFirst = true : that.showFirst = false
