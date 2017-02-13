@@ -10,5 +10,4 @@ new Vue({
   router,
   template: '<App/>',
   components: { App }
-  // styleUrls: ['./css/main.css']
 })
