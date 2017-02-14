@@ -8,6 +8,7 @@
 
 <script>
 // import thirdJs from 'js/jquery.min.js';
+// import $ from 'jquery'
 export default {
   name: 'app'
 }

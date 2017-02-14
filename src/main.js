@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import $ from 'jquery'
 
 /* eslint-disable no-new */
 new Vue({
@@ -11,3 +12,4 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+console.log($('#app'))
