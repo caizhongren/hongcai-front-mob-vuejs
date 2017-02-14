@@ -73,3 +73,20 @@ ul,li {
 .text-underline {
   text-decoration: underline;
 }
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.clearfix::after, .clearfix::before {
+    content: ".";
+    height: 0;
+    line-height: 0;
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+.display-inb {
+  display: inline-block;
+}

@@ -10,8 +10,10 @@
         <div>文章</div>
       </li>
       <li>
-        <img src="./images/footer/me2.png" alt="" width="22%">
-        <div>我</div>
+        <router-link to="/user-center">
+          <img src="./images/footer/me2.png" alt="" width="22%">
+          <div>我</div>
+        </router-link>
       </li>
     </ul>
     <router-view></router-view>
@@ -38,14 +40,15 @@ export default {
   }
   #footer {
     height: 53px;
-    background: #000;
-    opacity: .75;
+    background: #fff;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     margin: 0;
     padding: 8px 0 3px;
+    border-top: 1px solid #eee;
+    z-index: 9999999;
   }
   ul#footer li {
     float: left;

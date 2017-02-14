@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import $ from 'jquery'
+import 'font-awesome/css/font-awesome.css'
 
 /* eslint-disable no-new */
 new Vue({
