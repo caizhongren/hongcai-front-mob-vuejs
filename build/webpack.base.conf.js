@@ -34,14 +34,6 @@ module.exports = {
       // 'jquery': path.resolve(__dirname, '../src/assets/libs/jquery/jquery.min')
     }
   },
-  // 增加一个plugins
-  plugins: [
-    new webpack.optimize.CommonsChunkPlugin('common.js'),
-    new webpack.ProvidePlugin({
-        jQuery: "jquery",
-        $: "jquery"
-    })
-  ],
   module: {
     rules: [
       {
@@ -80,5 +72,13 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  // 增加一个plugins
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin('common.js'),
+    new webpack.ProvidePlugin({
+        jQuery: "jquery",
+        $: "jquery"
+    })
+  ]
 }
