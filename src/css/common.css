@@ -1,0 +1,29 @@
+body {
+  max-width: 640px;
+  height: 100%;
+  margin: 0 auto;
+  font-family: "微软雅黑" !important;
+}
+.normal-mid {
+  max-width: 640px;
+  margin: 0 auto;
+  margin-left: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+a {
+  text-decoration: none;
+}
+a:-webkit-any-link {
+  text-decoration: none;
+}
+div,
+p {
+  box-sizing: border-box;
+}
+
+ul,li {
+  list-style: none;
+}
