@@ -1,21 +1,19 @@
 <template>
   <div id="app">
-    <div>
-      <ul id="footer">
-        <li>
-          <img src="./images/footer/answer1.png" alt="" width="22%">
-          <div>问答</div>
-        </li>
-        <li>
-          <img src="./images/footer/article2.png" alt="" width="20%">
-          <div>文章</div>
-        </li>
-        <li>
-          <img src="./images/footer/me2.png" alt="" width="22%">
-          <div>我</div>
-        </li>
-      </uldiv>
-    </div>
+    <ul id="footer">
+      <li>
+        <img src="./images/footer/answer1.png" alt="" width="22%">
+        <div>问答</div>
+      </li>
+      <li>
+        <img src="./images/footer/article2.png" alt="" width="20%">
+        <div>文章</div>
+      </li>
+      <li>
+        <img src="./images/footer/me2.png" alt="" width="22%">
+        <div>我</div>
+      </li>
+    </ul>
     <router-view></router-view>
   </div>
 </template>
@@ -36,7 +34,6 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    margin-top: 60px;
     font-size: 16px;
   }
   #footer {

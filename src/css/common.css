@@ -1,8 +1,13 @@
 body {
-  max-width: 640px;
+  max-width: 7.2rem;
   height: 100%;
   margin: 0 auto;
   font-family: "微软雅黑" !important;
+  overflow-x: hidden;
+}
+* {
+  padding: 0;
+  margin: 0;
 }
 .normal-mid {
   max-width: 640px;
@@ -26,4 +31,45 @@ p {
 
 ul,li {
   list-style: none;
+}
+/* setposition */
+
+.position-re {
+  position: relative;
+}
+.position-ab {
+  position: absolute;
+}
+.position-fix {
+  position: fixed !important;
+}
+.position-static {
+  position: static !important;
+}
+.bottom-0 {
+  bottom: 0;
+}
+.left-0 {
+  left: 0;
+}
+.top-0 {
+  top: 0;
+}
+.right-0 {
+  right: 0;
+}
+.text-left {
+  text-align: left;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-justify {
+  text-align: justify;
+}
+.text-underline {
+  text-decoration: underline;
 }
