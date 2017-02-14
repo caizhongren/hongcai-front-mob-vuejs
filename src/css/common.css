@@ -73,3 +73,99 @@ ul,li {
 .text-underline {
   text-decoration: underline;
 }
+/* display*/
+.display-bl{
+  display: block;
+}
+.display-inb {
+  display: inline-block;
+}
+
+/* clear float */
+
+.fr {
+  float: right;
+}
+
+.fl {
+  float: left;
+}
+
+.overflow-hid {
+  overflow: hidden;
+}
+.overflow-aut{
+  overflow: auto;
+}
+.clear {
+  clear: both;
+}
+.clearfix::after, .clearfix::before {
+    content: ".";
+    height: 0;
+    line-height: 0;
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+/*font color*/
+
+.ft-444 {
+  color: #444;
+}
+.ft-999 {
+  color: #999;
+}
+.ft-red {
+  color: #ff2424;
+}
+/*font size*/
+@media screen and (min-width: 320px) {
+  .ft-24 {
+    font-size: 14px;
+  }
+  .ft-28 {
+    font-size: 15px;
+  }
+  .ft-30 {
+    font-size: 16px;
+  }
+}
+/*@media screen and (min-width: 375px) {
+  .ft-24 {
+    font-size: 15px;
+  }
+  .ft-28 {
+    font-size: 16px;
+  }
+  .ft-30 {
+    font-size: 17px;
+  }
+}*/
+@media screen and (min-width: 410px) {
+  .ft-24 {
+    font-size: 15px;
+  }
+  .ft-28 {
+    font-size: 16px;
+  }
+  .ft-30 {
+    font-size: 17px;
+  }
+}
+
+/*font family*/
+.ft-Arial {
+  font-family: Arial;
+}
+/*background-color*/
+.bg-blue {
+  background-color: #31cfff;
+}
+.bg-white {
+  background-color: #fff;
+}
+/*margin & padding*/
+.margin-r-0 {
+  margin-right: 0 !important;
+}

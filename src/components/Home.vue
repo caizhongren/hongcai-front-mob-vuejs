@@ -25,22 +25,124 @@
           </div>
         </div>
       </div>
+      <!--常见问题-->
+      <div class="symptom bg-white">
+        <div class="title symptom-title bd-t-eee bd-b-eee pad-40">
+          <p class="display-inb ft-444 text-left ft-30"><span class="line display-inb bg-blue"></span>孩子的常见问题</p><p class="display-inb ft-999 text-right ft-24">更多</p>
+        </div>
+        <div class="symptom-list bd-b-eee">
+          <ul>
+            <li class="display-inb"><img src="../images/home/symptom11.png" alt=""></li>
+            <li class="display-inb"><img src="../images/home/symptom11.png" alt=""></li>
+            <li class="margin-r-0 display-inb"><img src="../images/home/symptom11.png" alt=""></li>
+            <li class="display-inb"><img src="../images/home/symptom11.png" alt=""></li>
+            <li class="display-inb"><img src="../images/home/symptom11.png" alt=""></li>
+            <li class="margin-r-0 display-inb"><img src="../images/home/symptom11.png" alt=""></li>
+          </ul>
+        </div>
+      </div>
+      <!--专家推荐-->
+      <div class="expert bg-white">
+        <div class="title expert-title bd-t-eee bd-b-eee pad-40">
+          <p class="display-inb ft-444 text-left ft-30"><span class="line display-inb bg-blue"></span>专家推荐</p><p class="display-inb ft-999 text-right ft-24">更多</p>
+        </div>
+        <ul>
+          <li class="pad-40 bd-b-eee">
+            <!--<div class="portrait display-inb"></div>-->
+            <div class="portrait display-inb"><div class="portrait-inner"><img src="../images/home/boy.png" alt="" class="header" width="100%"></div></div>
+            <div class="info display-inb">
+              <div class="name"><p class="ft-28 ft-444 display-inb text-left">叶问</p><p class="ft-red ft-28 display-inb text-right ft-Arial">50</p></div>
+              <p class="ft-24 ft-999"><span>北京大学心理学教授</span><span>儿童教育学专家</span></p> 
+              <p class="ft-24 ft-999">擅长：儿童心理问题诊断治疗，帮助建立良好复</p>     
+            </div>
+          </li>
+          <li class="pad-40 bd-b-eee">
+            <!--<div class="portrait display-inb"></div>-->
+            <div class="portrait display-inb"><div class="portrait-inner"><img src="../images/home/boy.png" alt="" class="header" width="100%"></div></div>
+            <div class="info display-inb">
+              <div class="name"><p class="ft-28 ft-444 display-inb text-left">叶问</p><p class="ft-red ft-28 display-inb text-right ft-Arial">50</p></div>
+              <p class="ft-24 ft-999"><span>北京大学心理学教授</span><span>儿童教育学专家</span></p> 
+              <p class="ft-24 ft-999">擅长：儿童心理问题诊断治疗，帮助建立良好复</p>     
+            </div>
+          </li>
+        </ul>
+      </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'home',
-  data () {
-    return {
-      msg: '你好你好你哈哈的护肤环节'
+  // import '../js/swipeSlide.js'
+  export default {
+    name: 'home',
+    data () {
+      return {
+        msg: '你好你好你哈哈的护肤环节'
+      }
     }
   }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .pad-40 {
+    padding-left: .4rem;
+    padding-right: .4rem;
+  }
+  .bd-t-eee {
+    border-top: 1px solid #eee;
+  }
+  .bd-b-eee {
+    border-bottom: 1px solid #eee;
+  }
+  /*常见问题*/
+  .symptom .title, .expert .title {
+    padding-top: .23rem;
+    padding-bottom: .22rem;
+    display: table;
+    width: 100%;
+  }
+  .title p {
+    width: 50%;
+    display: table-cell;
+  }
+  .title .line {
+    height: .28rem;
+    width: .05rem;
+    background-color: #31cfff;
+    margin-right: .06rem;
+  }
+  .symptom-list {
+    padding: .2rem .4rem;
+  }
+  .symptom-list ul li img{
+    /*width: 27.5%;*/
+    /*margin-right: .022rem;*/
+    /*height: 1.95rem;*/
+    display: block;
+    background-color: pink;
+  }
+  /*推荐专家*/
+
+  .expert .portrait .portrait-inner {
+    width: .98rem;
+    height: .98rem;
+    border-radius: 50%;
+    text-align: left;
+  }
+  .expert ul li {
+    padding-top: .4rem;
+    padding-bottom: .4rem;
+  }
+  .expert .portrait {
+    width: 20%;
+  }
+  .expert .info {
+    width: 78%;
+    text-align: justify;
+  }
+  .expert .info .name p {
+    width: 50%;
+  }
   /*投资页轮播*/
   .slide-banner {
     margin: 0 auto;
@@ -52,28 +154,7 @@ export default {
     vertical-align:top;
     width:100%;
   }
-  .hd {
-    top: 83%;
-    left: 38%;
-  }
-  .hd li {
-    display:inline-block;
-    width:8px;
-    height:8px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
-    border-radius:5px;
-    background-color: black;
-    opacity: .25;
-    text-indent:-9999px;
-    overflow:hidden;
-    margin:0 6px;
-  }
-  .hd li.on {
-    background:#fff;
-    opacity: .75;
-  }
-  .main {
+  .home {
     background-color: #f8f5f5;
     width: 100%; 
     background-color: #f8f5f5; 
@@ -82,83 +163,6 @@ export default {
   .slide-banner, .modules {
     margin-bottom: 0.3rem; 
   }
-  .topic-list .newlist {
-    padding: 0.2rem 0.4rem;
-    border-top: 1px solid #eeeeee; 
-    border-bottom: 1px solid #cccccc; 
-  }
-  .list-title {
-    font-size: .256rem;
-    margin-bottom: 0.3rem;
-  }
-  .list-lf {
-    display: inline-block;
-    width: 2.6rem;
-    height: 0.9rem;
-    background-color: #42b9ff;
-    border-radius: 100px;
-    padding-right: 0.5rem;
-    margin-right: 0.22rem;
-    position: relative
-  }
-  .portrait {
-    border-radius: 50%; 
-    position: absolute;
-    width: .9rem;
-    height: .89rem;
-    left: 0;
-    top: 0;
-    box-shadow: 1px 1px 3px #033b5f;
-  }
-  .portraitUrl {
-    border-radius: 50%;
-    float: left;
-    width: .9rem;
-    height: .89rem;
-    margin-left: -1px;
-  }
-  .horn {
-    vertical-align: top;
-    margin-top: 0.26rem; 
-  }
-  .list-rt .names {
-    margin-bottom: 0.1rem;
-  }
-  .list-rt .names .name {
-    font-size: 0.26rem;
-    color: #444;
-    margin-right: 0.3rem;
-  }
-  .list-rt .names .child {
-    font-size: 0.24rem;
-    color: #666;
-  }
-  .list-rt .honner {
-    font-size: 0.24rem;
-    color: #999;
-  }
-  .rewards {
-    padding: 0.1rem 0.5rem;
-    border-bottom: 1px solid #eee;
-  }
-  .rewards li {
-    /*color: #ffa914;*/
-    color: #999;
-    font-size: 0.26rem;
-    font-family: Arial;
-    width: 31%;
-    float: left;
-    text-align: center;
-  }
-  .rewards li img {
-    vertical-align: middle;
-    margin-right: 0.1rem;
-    width: 16%;
-  }
-  .rewards li span {
-    vertical-align: middle;
-  }
-
   .slide{
       position: relative;
       /*max-width: 640px;*/
