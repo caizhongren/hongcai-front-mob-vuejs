@@ -1,14 +1,28 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <div> 调用jq</div>
+    <div>
+      <ul id="footer">
+        <li>
+          <img src="./images/footer/answer1.png" alt="" width="22%">
+          <div>问答</div>
+        </li>
+        <li>
+          <img src="./images/footer/article2.png" alt="" width="20%">
+          <div>文章</div>
+        </li>
+        <li>
+          <img src="./images/footer/me2.png" alt="" width="22%">
+          <div>我</div>
+        </li>
+      </uldiv>
+    </div>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 // import thirdJs from 'js/jquery.min.js';
-// import $ from 'jquery'
+
 export default {
   name: 'app'
 }
@@ -25,5 +39,20 @@ export default {
     margin-top: 60px;
     font-size: 16px;
   }
-
+  #footer {
+    height: 53px;
+    background: #000;
+    opacity: .75;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 8px 0 3px;
+  }
+  ul#footer li {
+    float: left;
+    width: 33.33%;
+  }
+  
 </style>
