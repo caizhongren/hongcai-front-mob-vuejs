@@ -73,6 +73,7 @@ ul,li {
 .text-underline {
   text-decoration: underline;
 }
+<<<<<<< HEAD
 /* display*/
 .display-bl{
   display: block;
@@ -83,14 +84,6 @@ ul,li {
 
 /* clear float */
 
-.fr {
-  float: right;
-}
-
-.fl {
-  float: left;
-}
-
 .overflow-hid {
   overflow: hidden;
 }
@@ -99,6 +92,12 @@ ul,li {
 }
 .clear {
   clear: both;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
 }
 .clearfix::after, .clearfix::before {
     content: ".";
@@ -168,4 +167,7 @@ ul,li {
 /*margin & padding*/
 .margin-r-0 {
   margin-right: 0 !important;
+}
+.display-inb {
+  display: inline-block;
 }
