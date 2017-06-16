@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import $ from 'jquery'
+// import $ from 'jquery'
 // import 'font-awesome/css/font-awesome.css'
 
 /* eslint-disable no-new */
@@ -13,4 +13,4 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
-console.log($('#app'))
+// console.log($('#app'))

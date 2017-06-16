@@ -1,10 +1,12 @@
 <template>
   <div id="app">
     <ul id="footer">
-      <li>
-        <img src="./images/footer/answer1.png" alt="" width="22%">
-        <div>问答</div>
-      </li>
+      <router-link to="/">
+        <li>
+          <img src="./images/footer/answer1.png" alt="" width="22%">
+          <div>问答</div>
+        </li>
+      </router-link>
       <li>
         <img src="./images/footer/article2.png" alt="" width="20%">
         <div>文章</div>

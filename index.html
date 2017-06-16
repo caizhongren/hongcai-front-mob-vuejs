@@ -13,16 +13,28 @@
     <meta name="wap-font-scale" content="no">
     <title>mama-staff-front</title>
     <script>
-      window.onload = function(){
-        var deviceWidth = document.documentElement.clientWidth;
-        if(deviceWidth > 640) deviceWidth = 640;
-        document.documentElement.style.fontSize = deviceWidth / 7.2 + 'px';
-      }()
+      function setRem() {
+          (document.documentElement.style.fontSize = (document.documentElement.clientWidth > 640 ? 100 : 100 * document.documentElement.clientWidth / 640) + "px")
+      }
+      function resetRem() {
+          setRem(),
+          window.addEventListener && (document.addEventListener("DOMContentLoaded",
+              function() {
+                  setRem()
+              }), window.addEventListener("load",
+              function() {
+                  setTimeout(setRem, 300)
+              }), window.addEventListener("resize",
+              function() {
+                  setTimeout(setRem, 300)
+              }))
+      }
+      setRem();resetRem();
     </script>
   </head>
   <body>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
-  <script src="./src/js/swipeSlide.js"></script>
+  <!-- <script src="./src/js/swipeSlide.js"></script> -->
 </html>
