@@ -7,10 +7,12 @@
           <div>问答</div>
         </li>
       </router-link>
-      <li>
-        <img src="./images/footer/article2.png" alt="" width="20%">
-        <div>文章</div>
-      </li>
+      <router-link :to="{name: 'ProjectDetail',params: {number: 1}}">
+        <li>
+          <img src="./images/footer/article2.png" alt="" width="20%">
+          <div>文章</div>
+        </li>
+      </router-link>
       <li>
         <router-link to="/user-center">
           <img src="./images/footer/me2.png" alt="" width="22%">
@@ -23,7 +25,6 @@
 </template>
 
 <script>
-// import thirdJs from 'js/jquery.min.js';
 
 export default {
   name: 'app'

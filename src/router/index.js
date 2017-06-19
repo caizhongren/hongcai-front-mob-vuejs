@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../components/Home.vue'
 import UserCenter from '../components/UserCenter.vue'
+import ProjectDetail from '../components/ProjectDetail.vue'
 
 Vue.use(Router)
 const routes = [
@@ -14,6 +15,11 @@ const routes = [
     path: '/user-center',
     name: 'UserCenter',
     component: UserCenter
+  },
+  {
+    path: '/project/:number',
+    name: 'ProjectDetail',
+    component: ProjectDetail
   }
 ]
 const router = new Router({
