@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <ul id="footer">
+    <!--<ul id="footer">
       <router-link to="/">
         <li>
           <img src="./images/footer/answer1.png" alt="" width="22%">
@@ -19,7 +19,7 @@
           <div>我</div>
         </router-link>
       </li>
-    </ul>
+    </ul>-->
     <router-view></router-view>
   </div>
 </template>

@@ -73,7 +73,6 @@ ul,li {
 .text-underline {
   text-decoration: underline;
 }
-<<<<<<< HEAD
 /* display*/
 .display-bl{
   display: block;
@@ -119,7 +118,7 @@ ul,li {
   color: #ff2424;
 }
 /*font size*/
-@media screen and (min-width: 320px) {
+/*@media screen and (min-width: 320px) {
   .ft-24 {
     font-size: 14px;
   }
@@ -129,7 +128,7 @@ ul,li {
   .ft-30 {
     font-size: 16px;
   }
-}
+}*/
 /*@media screen and (min-width: 375px) {
   .ft-24 {
     font-size: 15px;
@@ -141,7 +140,7 @@ ul,li {
     font-size: 17px;
   }
 }*/
-@media screen and (min-width: 410px) {
+/*@media screen and (min-width: 410px) {
   .ft-24 {
     font-size: 15px;
   }
@@ -151,7 +150,7 @@ ul,li {
   .ft-30 {
     font-size: 17px;
   }
-}
+}*/
 
 /*font family*/
 .ft-Arial {
