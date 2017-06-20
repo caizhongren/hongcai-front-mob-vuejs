@@ -13,9 +13,9 @@
             <div class="start-circle-center"></div>
           </div>
           <div class="process-bar fl">
-            <div class="process-inner-bar fl"></div>
-            <img src="../images/project/process-btn.png" class="fl">
-            <div class="process-tip">50%</div>
+            <div class="process-inner-bar fl" v-bind:style="{width:processWith + '%'}"></div>
+            <img src="../images/project/process-btn.png" class="fl" v-bind:style="{left:processWith - 5 + '%'}">
+            <div class="process-tip" v-bind:style="{left:processWith + '%'}">{{processWith}}%</div>
           </div>
           <div class="end-circle fr">
             <div class="end-circle-center"></div>
@@ -45,16 +45,27 @@
     </div>
   </div>
 </template>
+<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
 <script>
   // import '../js/swipeSlide.js'
+  // import VueResource from 'vue-resource'
+  import axios from 'axios'
   export default {
     name: 'projectDetail',
     data () {
       return {
-        msg: '你好你好你哈哈的护肤环节'
+        msg: '你好你好你哈哈的护肤环节',
+        processWith: 12
       }
     }
   }
+  axios.get('/project/330471011170619100')
+    .then(function (response) {
+      console.log(response)
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
 </script>
 <style scoped>
   .project {
@@ -168,7 +179,7 @@
   }
   .process-bar .process-inner-bar {
     position: absolute;
-    width: 80%;
+    /*width: 80%;*/
     height: 2px;
     top: 0;
     left: 0;
@@ -176,7 +187,7 @@
   }
   .process-bar img {
     position: absolute;
-    left: 75%;
+    /*left: 75%;*/
     top: -0.23rem;
     width: 10%;
   }
@@ -190,7 +201,7 @@
     text-align: center;
     line-height: .36rem;
     position: absolute;
-    left: 79%;
+    /*left: 79%;*/
     top: -0.57rem;
   }
   .remain-amount, .actual-amount {
