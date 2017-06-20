@@ -27,7 +27,18 @@ module.exports = {
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/hongcai': {
+        target: 'http://m.test321.hongcai.com', // 目标域名
+        changeOrigin: true,
+        pathRewrite: {
+          '^/hongcai': '/hongcai' // 规则, 见下面说明
+        },
+        headers: {
+          'Cookie': 'SID=810q3nmoi5mfp8geb9bkm9jql0;' //这里可以设置cookies, 也可以不设置
+        }
+      }
+    },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps)

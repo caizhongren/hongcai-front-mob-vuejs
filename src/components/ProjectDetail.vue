@@ -43,12 +43,13 @@
       </div>
       <p class="invest-fixed-btn">立即投资</p>
     </div>
+    <div class="second-frame">
+      hsdjfjdjgj
+    </div>
   </div>
 </template>
 <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
 <script>
-  // import '../js/swipeSlide.js'
-  // import VueResource from 'vue-resource'
   import axios from 'axios'
   export default {
     name: 'projectDetail',
@@ -59,19 +60,28 @@
       }
     }
   }
-  axios.get('/project/330471011170619100')
+  // axios.get('/project/330471011170619100')
+  //   .then(function (response) {
+  //     console.log(response)
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error)
+  //   })
+  axios({
+    method: 'get',
+    url: '/hongcai/rest/projects/330471011170619100'
+  })
     .then(function (response) {
       console.log(response)
-    })
-    .catch(function (error) {
-      console.log(error)
     })
 </script>
 <style scoped>
   .project {
     background-color: #efeef4;
+    overflow: hidden;
+    height: 100%;
   }
-  .fist-frame {
+  .fist-frame, .second-frame{
     height: 11.3rem;
   }
   .invest-fixed-btn {
