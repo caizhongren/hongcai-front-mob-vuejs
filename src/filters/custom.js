@@ -10,6 +10,7 @@ let date = value => {
   now.getSeconds()
 }
 let number = number => {
+  // 金额格式 并保留 2位小数
   let outputdollars = number => {
     if (number.length <= 3) {
       return (number === '' ? '0' : number)

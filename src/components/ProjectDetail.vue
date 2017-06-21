@@ -1,6 +1,6 @@
 <template>
-  <div id="project" class="project">
-    <div class="fist-frame">
+  <div class="project" id="project">
+    <div class="fist-frame product-page1">
       <div class="project-detail-top bg-white">
         <p class="ft-Arial"><span>{{project.annualEarnings}}</span>%</p>
         <p class="second">期望年均回报率</p>
@@ -64,7 +64,7 @@
       <p class="invest-fixed-btn disable-btn" v-if="project.status === 11">预约中</p>
     </div>
     <!--更多详情页面-->
-    <div class="more-details">
+    <div class="more-details product-page2">
       <div id="detail-tabs" class="detail-tabs-wrapper">
         <div class="tabs sum-4">
           <div class="clearfix">
@@ -84,27 +84,21 @@
             <span></span>
             <p>项目简介</p>
           </div>
-          <div class="content">
-            企业介绍：反反复复的奉公守法过三个代表fd辅导费 v 发的 vv 福鼎市的范儿个人玩惹人反而风热风格 v 时尚感
-          </div>
+          <div class="content" v-html="projectInfo.description"></div>
         </div>
         <div class="project-brief">
           <div class="title">
             <span></span>
             <p>资金用途</p>
           </div>
-          <div class="content">
-            企业正常经营销售收入
-          </div>
+          <div class="content" v-html="projectInfo.financingPurpose"></div>
         </div>
         <div class="project-brief">
           <div class="title">
             <span></span>
             <p>还款来源</p>
           </div>
-          <div class="content">
-            企业正常经营销售收入
-          </div>
+          <div class="content" v-html="projectInfo.repaymentSource"></div>
         </div>
         <div class="project-brief">
           <div class="title">
@@ -112,13 +106,18 @@
             <p>项目评级</p>
           </div>
           <div class="content">
-            <p><span></span>借款企业。。。。。</p>
-            <p><span></span>借款企业。。。。。</p>
-            <p><span></span>借款企业。。。。。</p>
-            <p><span></span>借款企业。。。。。</p>
-            <p><span></span>借款企业。。。。。</p>            
+            <p v-html="projectInfo.riskManagementInfo"><span></span></p>   
           </div>
         </div>
+        <!--<div class="project-brief" v-show="projectInfo.riskControl && projectInfo.riskControl.length>0">
+          <div class="title">
+            <span></span>
+            <p>风控审核</p>
+          </div>
+          <div class="content">
+            <p v-html="projectInfo.riskControl"><span></span></p>
+          </div>
+        </div>-->
       </div>
       <div v-show="activeTab === 1" class="business-license project-details bg-white">
         <div class="project-brief">
@@ -150,8 +149,82 @@
           </div>
         </div>
       </div>
-      <div v-show="activeTab === 2">
-        投资记录
+      <div class="orders" v-show="activeTab == 2">
+        <div class="investor-record">
+          <table>
+            <thead>
+              <tr>
+                <th>成交时间</th>
+                <th>用户名</th>
+                <th>投资金额(元)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="ft-grey4">2015-02-12</td>
+                <td class="ft-blue">ffff</td>
+                <td><span class="ft-orange0">11111</span></td>
+              </tr>
+              <tr>
+                <td class="ft-grey4">2015-02-12</td>
+                <td class="ft-blue">ffff</td>
+                <td><span class="ft-orange0">11111</span></td>
+              </tr>
+              <tr>
+                <td class="ft-grey4">2015-02-12</td>
+                <td class="ft-blue">ffff</td>
+                <td><span class="ft-orange0">11111</span></td>
+              </tr>
+              <tr>
+                <td class="ft-grey4">2015-02-12</td>
+                <td class="ft-blue">ffff</td>
+                <td><span class="ft-orange0">11111</span></td>
+              </tr>
+              <tr>
+                <td class="ft-grey4">2015-02-12</td>
+                <td class="ft-blue">ffff</td>
+                <td><span class="ft-orange0">11111</span></td>
+              </tr>
+              <tr>
+                <td class="ft-grey4">2015-02-12</td>
+                <td class="ft-blue">ffff</td>
+                <td><span class="ft-orange0">11111</span></td>
+              </tr>
+              <tr>
+                <td class="ft-grey4">2015-02-12</td>
+                <td class="ft-blue">ffff</td>
+                <td><span class="ft-orange0">11111</span></td>
+              </tr>
+              <tr>
+                <td class="ft-grey4">2015-02-12</td>
+                <td class="ft-blue">ffff</td>
+                <td><span class="ft-orange0">11111</span></td>
+              </tr>
+              <tr>
+                <td class="ft-grey4">2015-02-12</td>
+                <td class="ft-blue">ffff</td>
+                <td><span class="ft-orange0">11111</span></td>
+              </tr>
+              <tr>
+                <td class="ft-grey4">2015-02-12</td>
+                <td class="ft-blue">ffff</td>
+                <td><span class="ft-orange0">11111</span></td>
+              </tr>
+              <!--<tr v-for="order in orderList" :key="order.id" v-show="orderList.length >0 ">
+                <td>{{getHumanDate(order.createTime)}}</td>
+                <td>{{order.userName}}</td>
+                <td>{{order.orderAmount}}</td>
+              </tr>-->
+              <!--<tr class="text-center" v-show="orderList.length <=0 ">
+                <td colspan="3">-->
+                  <!--<img src="/images/project/no-record.png" width="17%" class="margin-t-2">-->
+                  <!--<p class="ft-grey4 margin-b-0 margin-t-1p5">该项目暂未有人投资</p>
+                  <p class="ft-grey4 margin-b-0">快做第一投资人吧</p>
+                </td>
+              </tr>-->
+            </tbody>
+          </table>
+        </div>
       </div>
       <div v-show="activeTab === 3" class="repayment-plan bg-white">
         <div class="each-line">
@@ -196,9 +269,6 @@
           </div>
         </div>    
       </div>
-      <!--<div class="investBtn">
-        立即投资
-      </div>-->
     </div> 
   </div>
 </template>
@@ -209,29 +279,98 @@
     data () {
       return {
         project: {},
+        projectInfo: {
+          description: '',
+          financingPurpose: '',
+          repaymentSource: '',
+          riskManagementInfo: '',
+          riskControl: ''
+        },
+        orderList: {},
+        paramsNum: 0,
+        projectId: 0,
         expectEarning: 0,
         processWith: 0,
-        activeTab: 3,
+        activeTab: 2,
         detailTabs: ['项目详情', '相关资料', '投资记录', '还款计划'],
-        time: 1498040551914
+        pageSize: 10,
+        page: 1
       }
     },
     created: function () {
+      this.paramsNum = this.$route.params.number
       this.getProject()
+      this.getProjectRisk()
+      this.getOrderList(this.page, this.pageSize)
     },
     methods: {
-      toggleTab (i) {
+      toggleTab: function (i) {
         this.activeTab = i
       },
       getProject: function () {
         axios({
           method: 'get',
-          url: '/hongcai/rest/projects/' + this.$route.params.number
+          url: '/hongcai/rest/projects/' + this.paramsNum
         }).then((response) => {
           this.project = response.data
           this.processWith = (this.project.total - this.project.amount) / this.project.total * 100
           this.expectEarning = (10000 * this.project.annualEarnings * this.project.projectDays / 36500).toFixed(2)
+          this.projectId = response.data.id
+          this.getProjectInfo()
         })
+      },
+      getProjectInfo: function () {
+        axios({
+          method: 'get',
+          url: '/hongcai/rest/projects/' + this.projectId + '/info'
+        }).then((response) => {
+          this.projectInfo = response.data
+        })
+      },
+      getProjectRisk: function () {
+        axios({
+          method: 'post',
+          url: '/hongcai/api/v1/siteProject/getProjectRisk?number=' + this.paramsNum
+        }).then((response) => {
+          this.projectInfo.riskControl = response.data.data.riskControl
+        })
+      },
+      getOrderList: function (page, pageSize) {
+        axios({
+          method: 'get',
+          url: '/hongcai/rest/projects/' + this.paramsNum + '/orders?page=' + page + '&pageSize=' + pageSize
+        }).then((response) => {
+          this.orderList = response.data.data
+        })
+      },
+      load: function () {
+        var e = document.querySelector('.product-page2')
+        e.addEventListener('touchstart', touch, false)
+        e.addEventListener('touchmove', touch, false)
+        e.addEventListener('touchend', touch, false)
+        function touch (e) {
+          var event = e || window.e
+          switch (event.type) {
+            case 'touchstart':
+              // alert(111)
+              break
+            case 'touchend':
+              // alert(222)
+              event.preventDefault()
+              setTimeout(function () {
+
+                // document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, -640px, 0)'
+                // document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, -640px, 0)'
+              }, 1000)
+              break
+            case 'touchmove':
+              event.preventDefault()
+              // alert(333)
+              // document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, ' + 0 + 'px, 0)'
+              // document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, ' + 0 + 'px, 0)'
+              break
+          }
+        }
       }
     }
   }
@@ -277,7 +416,7 @@
     line-height: .9rem;
     text-align: center;
     color: #666666;
-    font-size: .28rem;
+    font-size: .3rem;
   }
   .project-details {
     background-color: #efeef4;
@@ -496,6 +635,34 @@
   .project-detail-bottom span {
     color: #999;
   }
+  .investor-record p {
+    line-height: 1.8rem;
+  }
+  .investor-record table {
+    width: 100%;
+    background-color: #fff;
+  }
+  .investor-record table th {
+    width: 33.3333%;
+    text-align: center;
+    height: .8rem;
+    line-height: .8rem;
+    color: #666;
+    font-weight: normal;
+    font-size: .3rem;
+    border-bottom: 1px solid #ddd;
+  }
+  .investor-record table  td {
+    text-align: center;
+    border-color: #fff;
+    height: .8rem;
+    line-height: .8rem;
+    color: #666;
+    font-size: .24rem;
+  }
+  .investor-record table  tbody tr:nth-child(even) {
+    background-color: #f8f9fd;
+  }
   /*营业执照*/
   .business-license .project-brief {
     margin-bottom: 0;
@@ -516,7 +683,7 @@
   }
   /*还款计划*/
   .repayment-plan {
-    padding: ;
+    padding: 0;
     width: 100%;
     padding: .7rem .38rem 0;
     min-height: 9.2rem;
@@ -567,5 +734,4 @@
     height: 100%;
     vertical-align: top;
   }
-
 </style>
