@@ -21,8 +21,8 @@
             <div class="end-circle-center"></div>
           </div>
         </div>
-        <p class="remain-amount">剩余可投<span>{{project.amount}}</span>元</p>
-        <p class="actual-amount">投资<span>10,000</span>元，预计收益<span>{{expectEarning}}</span>元</p>
+        <p class="remain-amount">剩余可投<span>{{project.amount | number}}</span>元</p>
+        <p class="actual-amount">投资<span>10,000.00</span>元，预计收益<span>{{expectEarning}}</span>元</p>
       </div>
       <div class="project-detail-bottom bg-white">
         <div class="detail-item">
@@ -47,7 +47,7 @@
           <span>项目状态：</span>融资成功
         </div>
         <div class="detail-item" v-if="project.status === 10">
-          <span>项目状态：</span>已完成
+          <span>项目状态：</span>还款完成
         </div>
         <div class="detail-item" v-if="project.status === 11">
           <span>项目状态：</span>预约中
@@ -60,7 +60,7 @@
       <p class="invest-fixed-btn disable-btn" v-if="project.status === 6">预发布</p>
       <p class="invest-fixed-btn disable-btn" v-if="project.status === 8">融资成功</p>
       <p class="invest-fixed-btn disable-btn" v-if="project.status === 9">还款中</p>
-      <p class="invest-fixed-btn disable-btn" v-if="project.status === 10">已完成</p>
+      <p class="invest-fixed-btn disable-btn" v-if="project.status === 10">还款完成</p>
       <p class="invest-fixed-btn disable-btn" v-if="project.status === 11">预约中</p>
     </div>
     <!--更多详情页面-->
@@ -212,7 +212,8 @@
         expectEarning: 0,
         processWith: 0,
         activeTab: 3,
-        detailTabs: ['项目详情', '相关资料', '投资记录', '还款计划']
+        detailTabs: ['项目详情', '相关资料', '投资记录', '还款计划'],
+        time: 1498040551914
       }
     },
     created: function () {
