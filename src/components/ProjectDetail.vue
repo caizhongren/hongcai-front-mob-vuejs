@@ -1,12 +1,12 @@
 <template>
-  <div class="project">
+  <div id="project" class="project">
     <div class="fist-frame">
       <div class="project-detail-top bg-white">
-        <p class="ft-Arial"><span>9.3</span>%</p>
+        <p class="ft-Arial"><span>{{project.annualEarnings}}</span>%</p>
         <p class="second">期望年均回报率</p>
         <div class="tip-list">
           <span class="tip-item tip-item1"><span class="font-Arial margin-0">100</span>元起投</span>
-          <span class="tip-item tip-item2"><span class="font-Arial margin-0">180</span>天项目期</span>
+          <span class="tip-item tip-item2"><span class="font-Arial margin-0">{{project.projectDays}}</span>天项目期</span>
         </div>
         <div class="project-process clearfix">
           <div class="start-circle fl">
@@ -14,15 +14,15 @@
           </div>
           <div class="process-bar fl">
             <div class="process-inner-bar fl" v-bind:style="{width:processWith + '%'}"></div>
-            <img src="../images/project/process-btn.png" class="fl" v-bind:style="{left:processWith - 5 + '%'}">
+            <img src="../images/project/process-btn.png" class="fl" v-bind:style="{left:processWith - 4 + '%'}">
             <div class="process-tip" v-bind:style="{left:processWith + '%'}">{{processWith}}%</div>
           </div>
           <div class="end-circle fr">
             <div class="end-circle-center"></div>
           </div>
         </div>
-        <p class="remain-amount">剩余可投<span>20,000</span>元</p>
-        <p class="actual-amount">投资<span>20,000</span>元，预计收益<span>159.34</span>元</p>
+        <p class="remain-amount">剩余可投<span>{{project.amount}}</span>元</p>
+        <p class="actual-amount">投资<span>10,000</span>元，预计收益<span>{{expectEarning}}</span>元</p>
       </div>
       <div class="project-detail-bottom bg-white">
         <div class="detail-item">
@@ -32,16 +32,36 @@
           <span>还款方式：</span>按月付息，到期还本
         </div>
         <div class="detail-item">
-          <span>募集提示：</span>该项目将处于募集结束后，进入锁定期
+          <span>募集提示：</span>该项目将于募集结束后，进入锁定期
         </div>
-        <div class="detail-item">
+        <div class="detail-item" v-if="project.status === 7">
           <span>项目状态：</span>融资中
+        </div>
+        <div class="detail-item" v-if="project.status === 6">
+          <span>项目状态：</span>预发布
+        </div>
+        <div class="detail-item" v-if="project.status === 9">
+          <span>项目状态：</span>还款中
+        </div>
+        <div class="detail-item" v-if="project.status === 8">
+          <span>项目状态：</span>融资成功
+        </div>
+        <div class="detail-item" v-if="project.status === 10">
+          <span>项目状态：</span>已完成
+        </div>
+        <div class="detail-item" v-if="project.status === 11">
+          <span>项目状态：</span>预约中
         </div>
       </div>
       <div class="drop-load">
         向上滑动查看更多详情
       </div>
-      <p class="invest-fixed-btn">立即投资</p>
+      <p class="invest-fixed-btn" :class="{'disable-btn': project.status !== 7 }" v-if="project.status === 7">立即投资</p>
+      <p class="invest-fixed-btn disable-btn" v-if="project.status === 6">预发布</p>
+      <p class="invest-fixed-btn disable-btn" v-if="project.status === 8">融资成功</p>
+      <p class="invest-fixed-btn disable-btn" v-if="project.status === 9">还款中</p>
+      <p class="invest-fixed-btn disable-btn" v-if="project.status === 10">已完成</p>
+      <p class="invest-fixed-btn disable-btn" v-if="project.status === 11">预约中</p>
     </div>
     <!--更多详情页面-->
     <div class="more-details">
@@ -58,7 +78,7 @@
           </div>
         </div>
       </div>
-      <div class="project-details" v-show="activeTab == 0">
+      <div class="project-details" v-show="activeTab === 0">
         <div class="project-brief">
           <div class="title">
             <span></span>
@@ -100,47 +120,120 @@
           </div>
         </div>
       </div>
-      <div v-show="activeTab == 1">
-        相关资料
+      <div v-show="activeTab === 1" class="business-license project-details bg-white">
+        <div class="project-brief">
+          <div class="title">
+            <span></span>
+            <p>营业执照</p>
+          </div>
+          <div class="content">
+            <ul class="license-list">
+              <li class="license-item">
+                <img src="../images/project/icon01.png" width="100%" height="100%">
+              </li>
+              <li class="license-item">
+                <img src="../images/project/icon02.png" width="100%" height="100%">
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="project-brief">
+          <div class="title">
+            <span></span>
+            <p>银行流水</p>
+          </div>
+          <div class="content">
+            <ul class="license-list">
+              <li class="license-item"></li>
+              <li class="license-item"></li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div v-show="activeTab == 2">
+      <div v-show="activeTab === 2">
         投资记录
       </div>
-      <div v-show="activeTab == 3">
-        还款计划
+      <div v-show="activeTab === 3" class="repayment-plan bg-white">
+        <div class="each-line">
+          <div class="column1"><span>预计</span>2017-05-25至2017-06-01</div>
+          <div class="column2">
+            <span class="circle"></span>
+            <span class="vertical-line"></span>
+          </div>
+          <div class="column3">
+            项目回款:利息5,000.00元
+          </div>
+        </div>
+        <div class="each-line">
+          <div class="column1"><span>预计</span>2017-05-25至2017-06-01</div>
+          <div class="column2">
+            <span class="circle"></span>
+            <span class="vertical-line"></span>
+          </div>
+          <div class="column3">
+            项目回款:利息5,000.00元
+          </div>
+        </div> 
+        <div class="each-line">
+          <div class="column1"><span>预计</span>2017-05-25至2017-06-01</div>
+          <div class="column2">
+            <span class="circle"></span>
+            <span class="vertical-line"></span>
+          </div>
+          <div class="column3">
+            项目回款:利息5,000.00元
+          </div>
+        </div> 
+        <div class="each-line">
+          <div class="column1"><span>预计</span>2017-05-25至2017-06-01</div>
+          <div class="column2">
+            <span class="circle"></span>
+            <span class="vertical-line"></span>
+            <span class="circle"></span>
+          </div>
+          <div class="column3">
+            项目回款:本金5,000,000.00元
+          </div>
+        </div>    
       </div>
-      <div class="investBtn">
+      <!--<div class="investBtn">
         立即投资
-      </div>
+      </div>-->
     </div> 
   </div>
 </template>
-
-<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
 <script>
   import axios from 'axios'
   export default {
     name: 'projectDetail',
     data () {
       return {
-        processWith: 12,
-        activeTab: 0,
+        project: {},
+        expectEarning: 0,
+        processWith: 0,
+        activeTab: 3,
         detailTabs: ['项目详情', '相关资料', '投资记录', '还款计划']
       }
+    },
+    created: function () {
+      this.getProject()
     },
     methods: {
       toggleTab (i) {
         this.activeTab = i
+      },
+      getProject: function () {
+        axios({
+          method: 'get',
+          url: '/hongcai/rest/projects/' + this.$route.params.number
+        }).then((response) => {
+          this.project = response.data
+          this.processWith = (this.project.total - this.project.amount) / this.project.total * 100
+          this.expectEarning = (10000 * this.project.annualEarnings * this.project.projectDays / 36500).toFixed(2)
+        })
       }
     }
   }
-  axios({
-    method: 'get',
-    url: '/hongcai/rest/projects/330471011170619100'
-  })
-    .then(function (response) {
-      console.log(response)
-    })
 </script>
 
 <style scoped>
@@ -229,7 +322,7 @@
     background-color: #ff611d;
     margin: 1px .1rem 1px .1rem;
   }
-  .more-details .investBtn {
+   .invest-fixed-btn, .investBtn {
     width: 100%;
     height: .98rem;
     line-height: .98rem;
@@ -242,25 +335,16 @@
     right: 0;
     z-index: 9999;
   }
-
-  .project {
+  .invest-fixed-btn.disable-btn {
+    background-color: #999;
+  }
+  #project {
     background-color: #efeef4;
     overflow: hidden;
     height: 100%;
   }
   .fist-frame{
-    height: 11.3rem;
-  }
-  .invest-fixed-btn {
-    height: .9rem;
-    line-height: .9rem;
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    color: #fff;
-    font-size: .3rem;
-    background-color: #ff611d;
+    /*height: 11.3rem;*/
   }
   .drop-load {
      font-size: .22rem;
@@ -369,7 +453,7 @@
     width: 10%;
   }
   .process-bar .process-tip {
-    width: .7rem;
+    width: .6rem;
     height: .4rem;
     background: url('../images/project/process-tip.png') no-repeat 0 0;
     background-size: 100% 100%;
@@ -401,7 +485,7 @@
     padding: 0 .4rem;
     text-align: left;
     color: #666;
-    font-size: .25rem;
+    font-size: .26rem;
 
   }
   .project-detail-bottom .detail-item {
@@ -411,4 +495,76 @@
   .project-detail-bottom span {
     color: #999;
   }
+  /*营业执照*/
+  .business-license .project-brief {
+    margin-bottom: 0;
+  }
+  .business-license .project-brief .title{
+    margin-bottom: .46rem;
+  }
+  .business-license .project-brief .content .license-list {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .content .license-list .license-item {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid #fdb62b;
+    margin-bottom: .65rem;
+  }
+  /*还款计划*/
+  .repayment-plan {
+    padding: ;
+    width: 100%;
+    padding: .7rem .38rem 0;
+    min-height: 9.2rem;
+  }
+  .column1, .column2, .column3{
+    display: inline-block;
+  }
+  .repayment-plan .each-line {
+    height: 1.22rem;
+  }
+  .repayment-plan .each-line .column1{
+    width: 32%;
+    font-size: .24rem;
+    color: #999;
+    text-align: left;
+  }
+  .repayment-plan .each-line .column2{
+    width: 5%;
+    position: relative;
+  }
+  .column2 .circle {
+    width: .12rem;
+    height: .12rem;
+    border-radius: 50%;
+    background-color: #ff611d;
+    box-shadow: 0 2px 16px #ff611d, 0 0 2px #ff611d, 0 0 2px #ff611d;
+    display: block;
+  }
+  .column2 .circle:last-child {
+    position: absolute;
+    bottom: -.8rem;
+   }
+  .column2 .vertical-line {
+    height: .98rem;
+    width: 1px;
+    background-color: #ff611d;
+    display: block;
+    margin-left: .05rem;
+    margin-top: .07rem;
+    margin-bottom: -0.6rem;
+  }
+  .column3 {
+    padding-left: .2rem;
+    width: 60%;
+    color: #666;
+    font-size: .28rem;
+    text-align: left;
+    height: 100%;
+    vertical-align: top;
+  }
+
 </style>
