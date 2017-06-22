@@ -19,6 +19,7 @@ module.exports = {
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath
   },
+  externals: ['axios'],
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     modules: [
