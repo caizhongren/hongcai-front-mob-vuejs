@@ -1,4 +1,4 @@
-let date = value => {
+let dateTime = value => {
   // 时间格式 ‘yyyy-MM-dd HH:mm:ss’
   var now = new Date(value)
   var month = now.getMonth() < 9 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1
@@ -8,6 +8,14 @@ let date = value => {
   (now.getHours() < 12 ? '0' + now.getHours() : now.getHours()) + ':' +
   (now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes()) + ':' +
   now.getSeconds()
+}
+let date = value => {
+  // 时间格式 ‘yyyy-MM-dd’
+  var now = new Date(value)
+  var month = now.getMonth() < 9 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1
+  return now.getFullYear() + '-' +
+  month + '-' +
+  now.getDate()
 }
 let number = number => {
   // 金额格式 并保留 2位小数
@@ -42,3 +50,4 @@ let number = number => {
 }
 export { date }
 export { number }
+export {dateTime}
