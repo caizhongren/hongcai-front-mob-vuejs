@@ -272,6 +272,110 @@
     </div> 
   </div>
 </template>
+<script>
+  import axios from 'axios'
+  export default {
+    name: 'projectDetail',
+    data () {
+      return {
+        project: {},
+        projectInfo: {
+          description: '',
+          financingPurpose: '',
+          repaymentSource: '',
+          riskManagementInfo: '',
+          riskControl: ''
+        },
+        orderList: {},
+        paramsNum: 0,
+        projectId: 0,
+        expectEarning: 0,
+        processWith: 0,
+        activeTab: 3,
+        detailTabs: ['项目详情', '相关资料', '投资记录', '还款计划'],
+        pageSize: 10,
+        page: 1
+      }
+    },
+    created: function () {
+      this.paramsNum = this.$route.params.number
+      this.getProject()
+      this.getProjectRisk()
+      this.getOrderList(this.page, this.pageSize)
+    },
+    methods: {
+      toggleTab: function (i) {
+        this.activeTab = i
+      },
+      getProject: function () {
+        axios({
+          method: 'get',
+          url: '/hongcai/rest/projects/' + this.paramsNum
+        }).then((response) => {
+          this.project = response.data
+          this.processWith = (this.project.total - this.project.amount) / this.project.total * 100
+          this.expectEarning = (10000 * this.project.annualEarnings * this.project.projectDays / 36500).toFixed(2)
+          this.projectId = response.data.id
+          this.getProjectInfo()
+        })
+      },
+      getProjectInfo: function () {
+        axios({
+          method: 'get',
+          url: '/hongcai/rest/projects/' + this.projectId + '/info'
+        }).then((response) => {
+          this.projectInfo = response.data
+        })
+      },
+      getProjectRisk: function () {
+        axios({
+          method: 'post',
+          url: '/hongcai/api/v1/siteProject/getProjectRisk?number=' + this.paramsNum
+        }).then((response) => {
+          this.projectInfo.riskControl = response.data.data.riskControl
+        })
+      },
+      getOrderList: function (page, pageSize) {
+        axios({
+          method: 'get',
+          url: '/hongcai/rest/projects/' + this.paramsNum + '/orders?page=' + page + '&pageSize=' + pageSize
+        }).then((response) => {
+          this.orderList = response.data.data
+        })
+      },
+      load: function () {
+        var e = document.querySelector('.product-page2')
+        e.addEventListener('touchstart', touch, false)
+        e.addEventListener('touchmove', touch, false)
+        e.addEventListener('touchend', touch, false)
+        function touch (e) {
+          var event = e || window.e
+          switch (event.type) {
+            case 'touchstart':
+              // alert(111)
+              break
+            case 'touchend':
+              // alert(222)
+              event.preventDefault()
+              setTimeout(function () {
+
+                // document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, -640px, 0)'
+                // document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, -640px, 0)'
+              }, 1000)
+              break
+            case 'touchmove':
+              event.preventDefault()
+              // alert(333)
+              // document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, ' + 0 + 'px, 0)'
+              // document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, ' + 0 + 'px, 0)'
+              break
+          }
+        }
+      }
+    }
+  }
+</script>
+
 <style scoped>
   .more-details {
     background: #efeef4;
@@ -631,107 +735,3 @@
     vertical-align: top;
   }
 </style>
-<script>
-  import axios from 'axios'
-  export default {
-    name: 'projectDetail',
-    data () {
-      return {
-        project: {},
-        projectInfo: {
-          description: '',
-          financingPurpose: '',
-          repaymentSource: '',
-          riskManagementInfo: '',
-          riskControl: ''
-        },
-        orderList: {},
-        paramsNum: 0,
-        projectId: 0,
-        expectEarning: 0,
-        processWith: 0,
-        activeTab: 3,
-        detailTabs: ['项目详情', '相关资料', '投资记录', '还款计划'],
-        pageSize: 10,
-        page: 1
-      }
-    },
-    created: function () {
-      this.paramsNum = this.$route.params.number
-      this.getProject()
-      this.getProjectRisk()
-      this.getOrderList(this.page, this.pageSize)
-    },
-    methods: {
-      toggleTab: function (i) {
-        this.activeTab = i
-      },
-      getProject: function () {
-        axios({
-          method: 'get',
-          url: '/hongcai/rest/projects/' + this.paramsNum
-        }).then((response) => {
-          this.project = response.data
-          this.processWith = (this.project.total - this.project.amount) / this.project.total * 100
-          this.expectEarning = (10000 * this.project.annualEarnings * this.project.projectDays / 36500).toFixed(2)
-          this.projectId = response.data.id
-          this.getProjectInfo()
-        })
-      },
-      getProjectInfo: function () {
-        axios({
-          method: 'get',
-          url: '/hongcai/rest/projects/' + this.projectId + '/info'
-        }).then((response) => {
-          this.projectInfo = response.data
-        })
-      },
-      getProjectRisk: function () {
-        axios({
-          method: 'post',
-          url: '/hongcai/api/v1/siteProject/getProjectRisk?number=' + this.paramsNum
-        }).then((response) => {
-          this.projectInfo.riskControl = response.data.data.riskControl
-        })
-      },
-      getOrderList: function (page, pageSize) {
-        axios({
-          method: 'get',
-          url: '/hongcai/rest/projects/' + this.paramsNum + '/orders?page=' + page + '&pageSize=' + pageSize
-        }).then((response) => {
-          this.orderList = response.data.data
-        })
-      },
-      load: function () {
-        var e = document.querySelector('.product-page2')
-        e.addEventListener('touchstart', touch, false)
-        e.addEventListener('touchmove', touch, false)
-        e.addEventListener('touchend', touch, false)
-        function touch (e) {
-          var event = e || window.e
-          switch (event.type) {
-            case 'touchstart':
-              // alert(111)
-              break
-            case 'touchend':
-              // alert(222)
-              event.preventDefault()
-              setTimeout(function () {
-
-                // document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, -640px, 0)'
-                // document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, -640px, 0)'
-              }, 1000)
-              break
-            case 'touchmove':
-              event.preventDefault()
-              // alert(333)
-              // document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, ' + 0 + 'px, 0)'
-              // document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, ' + 0 + 'px, 0)'
-              break
-          }
-        }
-      }
-    }
-  }
-</script>
-

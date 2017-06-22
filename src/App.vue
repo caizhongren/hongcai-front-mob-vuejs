@@ -30,8 +30,6 @@ export default {
   name: 'app'
 }
 import Vue from 'vue'
-import axios from 'axios'
-Vue.prototype.$http = axios
 import * as custom from './filters/custom'
 Object.keys(custom).forEach(key => {
   Vue.filter(key, custom[key])
