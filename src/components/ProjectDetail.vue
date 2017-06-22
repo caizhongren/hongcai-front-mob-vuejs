@@ -14,10 +14,10 @@
           </div>
           <div class="process-bar fl">
             <div class="process-inner-bar fl" v-bind:style="{width:processWith + '%'}"></div>
-            <img src="../images/project/process-btn.png" class="fl" v-bind:style="{left:processWith - 4 + '%'}">
+            <img src="../images/project/process-btn.png" class="fl" v-bind:style="{left:processWith - 5.5 + '%'}">
             <div class="process-tip" v-bind:style="{left:processWith + '%'}">{{processWith}}%</div>
           </div>
-          <div class="end-circle fr">
+          <div class="end-circle fr" v-show="processWith < 100">
             <div class="end-circle-center"></div>
           </div>
         </div>
@@ -137,9 +137,13 @@
               <p>银行流水</p>
             </div>
             <div class="content">
-              <ul class="license-list">
-                <li class="license-item"></li>
-                <li class="license-item"></li>
+              <ul class="license-list" id="imgList">
+                <li class="license-item" v-for="(item, index) in imgSrcList" @click="preview($event)">
+                  <img :src='item' width="100%" height="100%" class="image">
+                  <div id="overlay" class="overlay" @click="closePreview($event)">
+                    <img src="" alt="" id="layImg"/>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>
@@ -278,7 +282,7 @@
   </div>
 </template>
 <script>
-  import axios from 'axios'
+  // import axios from 'axios'
   export default {
     name: 'projectDetail',
     data () {
@@ -296,11 +300,12 @@
         projectId: 0,
         expectEarning: 0,
         processWith: 0,
-        activeTab: 2,
+        activeTab: 1,
         detailTabs: ['项目详情', '相关资料', '投资记录', '还款计划'],
-        pageSize: 2,
+        pageSize: 10,
         page: 1,
-        totalPage: 0
+        totalPage: 0,
+        imgSrcList: ['https://www.hongcai.com/uploads/jpg/thumbnail/2017-06-22/project/project-5bbcdd3e5890421c9b8a2f0f93bf9f9a-thumbnail.jpg', 'https://www.hongcai.com/uploads/jpg/thumbnail/2017-06-22/project/project-a531d40cac07400bad03a2cf7b7018f8-thumbnail.jpg']
       }
     },
     created: function () {
@@ -314,7 +319,7 @@
         this.activeTab = i
       },
       getProject: function () {
-        axios({
+        this.$http({
           method: 'get',
           url: '/hongcai/rest/projects/' + this.paramsNum
         }).then((response) => {
@@ -326,7 +331,7 @@
         })
       },
       getProjectInfo: function () {
-        axios({
+        this.$http({
           method: 'get',
           url: '/hongcai/rest/projects/' + this.projectId + '/info'
         }).then((response) => {
@@ -334,7 +339,7 @@
         })
       },
       getProjectRisk: function () {
-        axios({
+        this.$http({
           method: 'post',
           url: '/hongcai/api/v1/siteProject/getProjectRisk?number=' + this.paramsNum
         }).then((response) => {
@@ -342,7 +347,7 @@
         })
       },
       getOrderList: function (page, pageSize) {
-        axios({
+        this.$http({
           method: 'get',
           url: '/hongcai/rest/projects/' + this.paramsNum + '/orders?page=' + page + '&pageSize=' + pageSize
         }).then((response) => {
@@ -364,38 +369,64 @@
         this.page += 1
         this.getOrderList()
       },
-      load: function () {
-        var e = document.querySelector('.product-page1')
-        e.addEventListener('touchstart', touch, false)
-        e.addEventListener('touchmove', touch, false)
-        e.addEventListener('touchend', touch, false)
-        function touch (e) {
-          var event = e || window.e
-          window.offsetY = 0
-          switch (event.type) {
-            case 'touchstart':
-              // alert(111)
-              break
-            case 'touchend':
-              // alert(222)
-              event.preventDefault()
-              setTimeout(function () {
-
-                // document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, -640px, 0)'
-                // document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, -640px, 0)'
-              }, 1000)
-              break
-            case 'touchmove':
-              event.preventDefault()
-              console.log(window.offsetY)
-              // alert(333)
-              // document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, ' + 0 + 'px, 0)'
-              // document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, ' + 0 + 'px, 0)'
-              break
+      preview: function (e) {
+        var theImage = new Image()
+        var imgItem = e.target
+        var imgWidth = theImage.style.width
+        var imgHeight = theImage.style.height
+        var overlay = imgItem.nextElementSibling
+        var layImg = overlay.children[0]
+        var imgPath = imgItem.src
+        console.log(layImg)
+        layImg.setAttribute('src', imgPath)
+        var mWidth = window.screen.width
+        var mHeight = window.screen.height
+        theImage.setAttribute('src', imgPath)
+        imgHeight = theImage.style.height
+        function setWidthAndHeight () {
+          if (imgWidth < mWidth) {
+            if (imgHeight > mHeight) {
+              layImg.style.height = mHeight
+            } else {
+              layImg.style.height = imgHeight
+              layImg.style.width = imgWidth
+            }
+          } else {
+            if (imgHeight > mHeight) {
+              var realRatio = imgWidth / mWidth > imgHeight / mHeight
+              if (realRatio) {
+                layImg.style.width = mWidth
+              } else {
+                layImg.style.height = mHeight
+              }
+            } else {
+              layImg.stylewidth = mWidth
+            }
           }
+        }
+        setWidthAndHeight()
+        overlay.style.display = 'block'
+      },
+      closePreview: function (e) {
+        e.cancelBubble = true
+        e.stopPropagation()
+        var con = document.getElementsByClassName('overlay')[0]
+        var con1 = document.getElementsByClassName('overlay')[1]
+        if (e.target !== undefined && e.target !== null && e.target.localName !== 'img') {
+          con.style.display = 'none'
+          con1.style.display = 'none'
         }
       }
     }
+  }
+  var Height = window.innerHeight
+  window.onload = function (e) {
+    var page1 = document.querySelector('.product-page1')
+    var page2 = document.querySelector('.product-page2')
+    var pagedetail = document.querySelector('.details-more')
+    page1.style.height = window.innerHeight + 'px'
+    page1.addEventListener('load', scrollDetail(page1), false)
+    page2.addEventListener('load', scrollBack(pagedetail), false)
   }
   function CaptureTouch (t) {
     function e (e) {
@@ -420,15 +451,6 @@
       }, !1),
       t.addEventListener('touchmove', e, !1), a]
   }
-  window.onload = function (e) {
-    var page1 = document.querySelector('.product-page1')
-    var page2 = document.querySelector('.product-page2')
-    var pagedetail = document.querySelector('.details-more')
-    page1.style.height = window.innerHeight + 'px'
-    page1.addEventListener('load', scrollDetail(page1), false)
-    page2.addEventListener('load', scrollBack(pagedetail), false)
-  }
-  var Height = window.innerHeight
   function scrollDetail (page) {
     window.touch = CaptureTouch(page)
     window.offsetY = 0
@@ -496,6 +518,7 @@
     height: 100%;
     position: relative;
     overflow: hidden;
+    min-height: 10.4rem;
   }
   #detail-tabs {
     position: relative;
@@ -589,7 +612,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 9999;
+    z-index: 99;
   }
   .invest-fixed-btn.disable-btn {
     background-color: #999;
@@ -799,11 +822,32 @@
     border: 1px solid #fdb62b;
     margin-bottom: .65rem;
   }
+  .overlay{
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:999;
+    background: rgba(0, 0, 0, 1);
+    width:100%;
+    height:100%;
+    display:none;
+  }
+  .overlay img{
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin:auto;
+    z-index:9999;
+  }
   /*还款计划*/
   .repayment-plan {
     padding: 0;
     width: 100%;
-    padding: .7rem .38rem 0;
+    padding: .7rem .35rem 0;
     min-height: 9.2rem;
   }
   .column1, .column2, .column3{
@@ -821,6 +865,7 @@
   .repayment-plan .each-line .column2{
     width: 5%;
     position: relative;
+    padding-left: .15rem;
   }
   .column2 .circle {
     width: .12rem;
@@ -845,7 +890,7 @@
   }
   .column3 {
     padding-left: .2rem;
-    width: 60%;
+    width: 59.5%;
     color: #666;
     font-size: .28rem;
     text-align: left;
