@@ -56,7 +56,7 @@
       <div class="drop-load">
         向上滑动查看更多详情
       </div>
-      <p class="invest-fixed-btn" :class="{'disable-btn': project.status !== 7 }" v-if="project.status === 7">立即投资</p>
+      <p class="invest-fixed-btn" :class="{'disable-btn': project.status !== 7 }" v-if="project.status === 7" @click="toInvest()">立即投资</p>
       <p class="invest-fixed-btn disable-btn" v-if="project.status === 6">预发布</p>
       <p class="invest-fixed-btn disable-btn" v-if="project.status === 8">融资成功</p>
       <p class="invest-fixed-btn disable-btn" v-if="project.status === 9">还款中</p>
@@ -420,6 +420,27 @@
           con.style.display = 'none'
           con1.style.display = 'none'
         }
+      },
+      setupWebViewJavascriptBridge: function (callback) {
+        if (window.WebViewJavascriptBridge) { return callback(window.WebViewJavascriptBridge) }
+        if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback) }
+        window.WVJBCallbacks = [callback]
+        var WVJBIframe = document.createElement('iframe')
+        WVJBIframe.style.display = 'none'
+        WVJBIframe.src = 'https://__bridge_loaded__'
+        document.documentElement.appendChild(WVJBIframe)
+        setTimeout(function () { document.documentElement.removeChild(WVJBIframe) }, 0)
+      },
+      toInvest: function () {
+        this.setupWebViewJavascriptBridge(function (bridge) {
+          bridge.registerHandler('iOSPayResultHandler', function (data) {
+            alert(data.name)
+          })
+          bridge.callHandler('iOS_invest', {
+            'detailTabs': 222
+          }, function (response) {
+          })
+        })
       }
     }
   }
