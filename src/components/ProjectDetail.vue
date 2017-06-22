@@ -291,7 +291,7 @@
         projectId: 0,
         expectEarning: 0,
         processWith: 0,
-        activeTab: 2,
+        activeTab: 3,
         detailTabs: ['项目详情', '相关资料', '投资记录', '还款计划'],
         pageSize: 10,
         page: 1
