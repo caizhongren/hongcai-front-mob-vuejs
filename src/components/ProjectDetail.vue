@@ -1,6 +1,6 @@
 <template>
   <div class="project" id="project">
-    <div class="fist-frame product-page1">
+    <div class="fist-frame product-page1" id="product-page1">
       <div class="project-detail-top bg-white">
         <p class="ft-Arial"><span>{{project.annualEarnings}}</span>%</p>
         <p class="second">期望年均回报率</p>
@@ -56,12 +56,6 @@
       <div class="drop-load">
         向上滑动查看更多详情
       </div>
-      <p class="invest-fixed-btn" :class="{'disable-btn': project.status !== 7 }" v-if="project.status === 7">立即投资</p>
-      <p class="invest-fixed-btn disable-btn" v-if="project.status === 6">预发布</p>
-      <p class="invest-fixed-btn disable-btn" v-if="project.status === 8">融资成功</p>
-      <p class="invest-fixed-btn disable-btn" v-if="project.status === 9">还款中</p>
-      <p class="invest-fixed-btn disable-btn" v-if="project.status === 10">还款完成</p>
-      <p class="invest-fixed-btn disable-btn" v-if="project.status === 11">预约中</p>
     </div>
     <!--更多详情页面-->
     <div class="more-details product-page2">
@@ -78,198 +72,209 @@
           </div>
         </div>
       </div>
-      <div class="project-details" v-show="activeTab === 0">
-        <div class="project-brief">
-          <div class="title">
-            <span></span>
-            <p>项目简介</p>
+      <div class="details-more">
+        <div class="project-details" v-show="activeTab === 0">
+          <div class="project-brief">
+            <div class="title">
+              <span></span>
+              <p>项目简介</p>
+            </div>
+            <div class="content" v-html="projectInfo.description"></div>
           </div>
-          <div class="content" v-html="projectInfo.description"></div>
+          <div class="project-brief">
+            <div class="title">
+              <span></span>
+              <p>资金用途</p>
+            </div>
+            <div class="content" v-html="projectInfo.financingPurpose"></div>
+          </div>
+          <div class="project-brief">
+            <div class="title">
+              <span></span>
+              <p>还款来源</p>
+            </div>
+            <div class="content" v-html="projectInfo.repaymentSource"></div>
+          </div>
+          <div class="project-brief">
+            <div class="title">
+              <span></span>
+              <p>项目评级</p>
+            </div>
+            <div class="content">
+              <p v-html="projectInfo.riskManagementInfo"><span></span></p>   
+            </div>
+          </div>
+          <!--<div class="project-brief" v-show="projectInfo.riskControl && projectInfo.riskControl.length>0">
+            <div class="title">
+              <span></span>
+              <p>风控审核</p>
+            </div>
+            <div class="content">
+              <p v-html="projectInfo.riskControl"><span></span></p>
+            </div>
+          </div>-->
         </div>
-        <div class="project-brief">
-          <div class="title">
-            <span></span>
-            <p>资金用途</p>
+        <div v-show="activeTab === 1" class="business-license project-details bg-white">
+          <div class="project-brief">
+            <div class="title">
+              <span></span>
+              <p>营业执照</p>
+            </div>
+            <div class="content">
+              <ul class="license-list">
+                <li class="license-item">
+                  <img src="../images/project/icon01.png" width="100%" height="100%">
+                </li>
+                <li class="license-item">
+                  <img src="../images/project/icon02.png" width="100%" height="100%">
+                </li>
+              </ul>
+            </div>
           </div>
-          <div class="content" v-html="projectInfo.financingPurpose"></div>
+          <div class="project-brief">
+            <div class="title">
+              <span></span>
+              <p>银行流水</p>
+            </div>
+            <div class="content">
+              <ul class="license-list">
+                <li class="license-item"></li>
+                <li class="license-item"></li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div class="project-brief">
-          <div class="title">
-            <span></span>
-            <p>还款来源</p>
+        <div class="orders" v-show="activeTab == 2">
+          <div class="investor-record">
+            <table>
+              <thead>
+                <tr>
+                  <th>成交时间</th>
+                  <th>用户名</th>
+                  <th>投资金额(元)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!--<tr>
+                  <td class="ft-grey4">2015-02-12</td>
+                  <td class="ft-blue">ffff</td>
+                  <td><span class="ft-orange0">11111</span></td>
+                </tr>
+                <tr>
+                  <td class="ft-grey4">2015-02-12</td>
+                  <td class="ft-blue">ffff</td>
+                  <td><span class="ft-orange0">11111</span></td>
+                </tr>
+                <tr>
+                  <td class="ft-grey4">2015-02-12</td>
+                  <td class="ft-blue">ffff</td>
+                  <td><span class="ft-orange0">11111</span></td>
+                </tr>
+                <tr>
+                  <td class="ft-grey4">2015-02-12</td>
+                  <td class="ft-blue">ffff</td>
+                  <td><span class="ft-orange0">11111</span></td>
+                </tr>
+                <tr>
+                  <td class="ft-grey4">2015-02-12</td>
+                  <td class="ft-blue">ffff</td>
+                  <td><span class="ft-orange0">11111</span></td>
+                </tr>
+                <tr>
+                  <td class="ft-grey4">2015-02-12</td>
+                  <td class="ft-blue">ffff</td>
+                  <td><span class="ft-orange0">11111</span></td>
+                </tr>
+                <tr>
+                  <td class="ft-grey4">2015-02-12</td>
+                  <td class="ft-blue">ffff</td>
+                  <td><span class="ft-orange0">11111</span></td>
+                </tr>
+                <tr>
+                  <td class="ft-grey4">2015-02-12</td>
+                  <td class="ft-blue">ffff</td>
+                  <td><span class="ft-orange0">11111</span></td>
+                </tr>
+                <tr>
+                  <td class="ft-grey4">2015-02-12</td>
+                  <td class="ft-blue">ffff</td>
+                  <td><span class="ft-orange0">11111</span></td>
+                </tr>
+                <tr>
+                  <td class="ft-grey4">2015-02-12</td>
+                  <td class="ft-blue">ffff</td>
+                  <td><span class="ft-orange0">11111</span></td>
+                </tr>-->
+                <tr v-for="order in orderList" :key="order.id" v-show="orderList && orderList.length >0 ">
+                  <td>{{order.createTime | date}}</td>
+                  <td>{{order.userName}}</td>
+                  <td>{{order.orderAmount}}</td>
+                </tr>
+                <tr class="text-center" v-show="orderList && orderList.length <=0 ">
+                  <td colspan="3">
+                    <!--<img src="/images/project/no-record.png" width="17%" class="margin-t-2">-->
+                    <p class="ft-grey4 margin-b-0 margin-t-1p5">该项目暂未有人投资</p>
+                    <p class="ft-grey4 margin-b-0">快做第一投资人吧</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="drop-load" @click="loadMoreOrder()">
+              查看更多
+            </div>
           </div>
-          <div class="content" v-html="projectInfo.repaymentSource"></div>
         </div>
-        <div class="project-brief">
-          <div class="title">
-            <span></span>
-            <p>项目评级</p>
+        <div v-show="activeTab === 3" class="repayment-plan bg-white">
+          <div class="each-line">
+            <div class="column1"><span>预计</span>2017-05-25至2017-06-01</div>
+            <div class="column2">
+              <span class="circle"></span>
+              <span class="vertical-line"></span>
+            </div>
+            <div class="column3">
+              项目回款:利息5,000.00元
+            </div>
           </div>
-          <div class="content">
-            <p v-html="projectInfo.riskManagementInfo"><span></span></p>   
-          </div>
+          <div class="each-line">
+            <div class="column1"><span>预计</span>2017-05-25至2017-06-01</div>
+            <div class="column2">
+              <span class="circle"></span>
+              <span class="vertical-line"></span>
+            </div>
+            <div class="column3">
+              项目回款:利息5,000.00元
+            </div>
+          </div> 
+          <div class="each-line">
+            <div class="column1"><span>预计</span>2017-05-25至2017-06-01</div>
+            <div class="column2">
+              <span class="circle"></span>
+              <span class="vertical-line"></span>
+            </div>
+            <div class="column3">
+              项目回款:利息5,000.00元
+            </div>
+          </div> 
+          <div class="each-line">
+            <div class="column1"><span>预计</span>2017-05-25至2017-06-01</div>
+            <div class="column2">
+              <span class="circle"></span>
+              <span class="vertical-line"></span>
+              <span class="circle"></span>
+            </div>
+            <div class="column3">
+              项目回款:本金5,000,000.00元
+            </div>
+          </div>    
         </div>
-        <!--<div class="project-brief" v-show="projectInfo.riskControl && projectInfo.riskControl.length>0">
-          <div class="title">
-            <span></span>
-            <p>风控审核</p>
-          </div>
-          <div class="content">
-            <p v-html="projectInfo.riskControl"><span></span></p>
-          </div>
-        </div>-->
       </div>
-      <div v-show="activeTab === 1" class="business-license project-details bg-white">
-        <div class="project-brief">
-          <div class="title">
-            <span></span>
-            <p>营业执照</p>
-          </div>
-          <div class="content">
-            <ul class="license-list">
-              <li class="license-item">
-                <img src="../images/project/icon01.png" width="100%" height="100%">
-              </li>
-              <li class="license-item">
-                <img src="../images/project/icon02.png" width="100%" height="100%">
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="project-brief">
-          <div class="title">
-            <span></span>
-            <p>银行流水</p>
-          </div>
-          <div class="content">
-            <ul class="license-list">
-              <li class="license-item"></li>
-              <li class="license-item"></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="orders" v-show="activeTab == 2">
-        <div class="investor-record">
-          <table>
-            <thead>
-              <tr>
-                <th>成交时间</th>
-                <th>用户名</th>
-                <th>投资金额(元)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="ft-grey4">2015-02-12</td>
-                <td class="ft-blue">ffff</td>
-                <td><span class="ft-orange0">11111</span></td>
-              </tr>
-              <tr>
-                <td class="ft-grey4">2015-02-12</td>
-                <td class="ft-blue">ffff</td>
-                <td><span class="ft-orange0">11111</span></td>
-              </tr>
-              <tr>
-                <td class="ft-grey4">2015-02-12</td>
-                <td class="ft-blue">ffff</td>
-                <td><span class="ft-orange0">11111</span></td>
-              </tr>
-              <tr>
-                <td class="ft-grey4">2015-02-12</td>
-                <td class="ft-blue">ffff</td>
-                <td><span class="ft-orange0">11111</span></td>
-              </tr>
-              <tr>
-                <td class="ft-grey4">2015-02-12</td>
-                <td class="ft-blue">ffff</td>
-                <td><span class="ft-orange0">11111</span></td>
-              </tr>
-              <tr>
-                <td class="ft-grey4">2015-02-12</td>
-                <td class="ft-blue">ffff</td>
-                <td><span class="ft-orange0">11111</span></td>
-              </tr>
-              <tr>
-                <td class="ft-grey4">2015-02-12</td>
-                <td class="ft-blue">ffff</td>
-                <td><span class="ft-orange0">11111</span></td>
-              </tr>
-              <tr>
-                <td class="ft-grey4">2015-02-12</td>
-                <td class="ft-blue">ffff</td>
-                <td><span class="ft-orange0">11111</span></td>
-              </tr>
-              <tr>
-                <td class="ft-grey4">2015-02-12</td>
-                <td class="ft-blue">ffff</td>
-                <td><span class="ft-orange0">11111</span></td>
-              </tr>
-              <tr>
-                <td class="ft-grey4">2015-02-12</td>
-                <td class="ft-blue">ffff</td>
-                <td><span class="ft-orange0">11111</span></td>
-              </tr>
-              <!--<tr v-for="order in orderList" :key="order.id" v-show="orderList.length >0 ">
-                <td>{{getHumanDate(order.createTime)}}</td>
-                <td>{{order.userName}}</td>
-                <td>{{order.orderAmount}}</td>
-              </tr>-->
-              <!--<tr class="text-center" v-show="orderList.length <=0 ">
-                <td colspan="3">-->
-                  <!--<img src="/images/project/no-record.png" width="17%" class="margin-t-2">-->
-                  <!--<p class="ft-grey4 margin-b-0 margin-t-1p5">该项目暂未有人投资</p>
-                  <p class="ft-grey4 margin-b-0">快做第一投资人吧</p>
-                </td>
-              </tr>-->
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div v-show="activeTab === 3" class="repayment-plan bg-white">
-        <div class="each-line">
-          <div class="column1"><span>预计</span>2017-05-25至2017-06-01</div>
-          <div class="column2">
-            <span class="circle"></span>
-            <span class="vertical-line"></span>
-          </div>
-          <div class="column3">
-            项目回款:利息5,000.00元
-          </div>
-        </div>
-        <div class="each-line">
-          <div class="column1"><span>预计</span>2017-05-25至2017-06-01</div>
-          <div class="column2">
-            <span class="circle"></span>
-            <span class="vertical-line"></span>
-          </div>
-          <div class="column3">
-            项目回款:利息5,000.00元
-          </div>
-        </div> 
-        <div class="each-line">
-          <div class="column1"><span>预计</span>2017-05-25至2017-06-01</div>
-          <div class="column2">
-            <span class="circle"></span>
-            <span class="vertical-line"></span>
-          </div>
-          <div class="column3">
-            项目回款:利息5,000.00元
-          </div>
-        </div> 
-        <div class="each-line">
-          <div class="column1"><span>预计</span>2017-05-25至2017-06-01</div>
-          <div class="column2">
-            <span class="circle"></span>
-            <span class="vertical-line"></span>
-            <span class="circle"></span>
-          </div>
-          <div class="column3">
-            项目回款:本金5,000,000.00元
-          </div>
-        </div>    
-      </div>
-    </div> 
+    </div>
+    <p class="invest-fixed-btn" :class="{'disable-btn': project.status !== 7 }" v-if="project.status === 7">立即投资</p>
+    <p class="invest-fixed-btn disable-btn" v-if="project.status === 6">预发布</p>
+    <p class="invest-fixed-btn disable-btn" v-if="project.status === 8">融资成功</p>
+    <p class="invest-fixed-btn disable-btn" v-if="project.status === 9">还款中</p>
+    <p class="invest-fixed-btn disable-btn" v-if="project.status === 10">还款完成</p>
+    <p class="invest-fixed-btn disable-btn" v-if="project.status === 11">预约中</p>
   </div>
 </template>
 <script>
@@ -286,15 +291,16 @@
           riskManagementInfo: '',
           riskControl: ''
         },
-        orderList: {},
+        orderList: [],
         paramsNum: 0,
         projectId: 0,
         expectEarning: 0,
         processWith: 0,
         activeTab: 2,
         detailTabs: ['项目详情', '相关资料', '投资记录', '还款计划'],
-        pageSize: 10,
-        page: 1
+        pageSize: 2,
+        page: 1,
+        totalPage: 0
       }
     },
     created: function () {
@@ -340,16 +346,32 @@
           method: 'get',
           url: '/hongcai/rest/projects/' + this.paramsNum + '/orders?page=' + page + '&pageSize=' + pageSize
         }).then((response) => {
+          if (response.ret && response.ret !== -1) {
+            this.totalPage = response.totalPage
+            if (response.data.length >= 1) {
+              for (var i = response.data.data.length - 1; i >= 0; i--) {
+                this.orderList.push(response.data.data[i])
+              }
+            }
+          }
           this.orderList = response.data.data
         })
       },
+      loadMoreOrder: function () {
+        if (this.page >= this.totalPage) {
+          return
+        }
+        this.page += 1
+        this.getOrderList()
+      },
       load: function () {
-        var e = document.querySelector('.product-page2')
+        var e = document.querySelector('.product-page1')
         e.addEventListener('touchstart', touch, false)
         e.addEventListener('touchmove', touch, false)
         e.addEventListener('touchend', touch, false)
         function touch (e) {
           var event = e || window.e
+          window.offsetY = 0
           switch (event.type) {
             case 'touchstart':
               // alert(111)
@@ -365,6 +387,7 @@
               break
             case 'touchmove':
               event.preventDefault()
+              console.log(window.offsetY)
               // alert(333)
               // document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, ' + 0 + 'px, 0)'
               // document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, ' + 0 + 'px, 0)'
@@ -374,12 +397,105 @@
       }
     }
   }
+  function CaptureTouch (t) {
+    function e (e) {
+      var n
+      var s = e.targetTouches[0]
+      if (s.pageX || s.pageY) {
+        n = s.pageY
+      } else {
+        n = s.clientY + document.body.scrollTop + document.documentElement.scrollTop
+      }
+      n -= t.offsetTop
+      a.y = n
+    }
+    var a = {
+      y: null
+    }
+    return [t.addEventListener('touchstart', function (t) {
+      e(t)
+    }, !1),
+      t.addEventListener('touchend', function (t) {
+        a.y = null
+      }, !1),
+      t.addEventListener('touchmove', e, !1), a]
+  }
+  window.onload = function (e) {
+    var page1 = document.querySelector('.product-page1')
+    var page2 = document.querySelector('.product-page2')
+    var pagedetail = document.querySelector('.details-more')
+    page1.style.height = window.innerHeight + 'px'
+    page1.addEventListener('load', scrollDetail(page1), false)
+    page2.addEventListener('load', scrollBack(pagedetail), false)
+  }
+  var Height = window.innerHeight
+  function scrollDetail (page) {
+    window.touch = CaptureTouch(page)
+    window.offsetY = 0
+    window.touchStartY = 0
+    window.speed = 0
+    var touchY = 1
+    page.addEventListener('touchstart', startTouchScroll, false)
+    page.addEventListener('touchmove', moveTouchScroll, false)
+    page.addEventListener('touchend', endTouchScroll, false)
+    function startTouchScroll (event) {
+      event.preventDefault()
+      window.touchStartY = window.touch[3].y
+      window.offsetY = 0
+    }
+    function moveTouchScroll (event) {
+      event.preventDefault()
+      window.offsetY += 0.25 * (window.touch[3].y - window.touchStartY)
+      window.touchStartY = window.touch[3].y
+      touchY = window.offsetY < 0 ? -1 : 1
+      if (window.offsetY <= 0) {
+        page.style.webkitTransform = 'translate3d(0, ' + window.offsetY + 'px, 0)'
+      }
+    }
+    function endTouchScroll (event) {
+      event.preventDefault()
+      window.speed = -(document.body.clientHeight - Math.abs(window.offsetY)) / 10
+      window.offsetY += window.speed
+      if (touchY < 0) {
+        page.style.webkitTransform = 'translate3d(0, ' + -Height + 'px, 0)'
+        document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, ' + -Height + 'px, 0)'
+      }
+    }
+  }
+  function scrollBack (page) {
+    window.offsetY = 0
+    var touchY = 1
+    page.addEventListener('touchstart', startTouchScroll, false)
+    page.addEventListener('touchmove', moveTouchScroll, false)
+    page.addEventListener('touchend', endTouchScroll, false)
+    function startTouchScroll (event) {
+      event.preventDefault()
+    }
+    function moveTouchScroll (event) {
+      event.preventDefault()
+      touchY = window.offsetY < 0 ? -1 : 1
+      document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, ' + -Height + 'px, 0)'
+      document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, ' + -Height + 'px, 0)'
+    }
+    function endTouchScroll (event) {
+      event.preventDefault()
+      if (touchY <= 0) {
+        setTimeout(function () {
+          document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, 0px, 0)'
+          document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, ' + Height + 'px, 0)'
+        }, 200)
+      }
+    }
+  }
 </script>
 
 <style scoped>
   .more-details {
     background: #efeef4;
     margin-bottom: .98rem;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
   }
   #detail-tabs {
     position: relative;
@@ -483,9 +599,6 @@
     overflow: hidden;
     height: 100%;
   }
-  .fist-frame{
-    /*height: 11.3rem;*/
-  }
   .drop-load {
      font-size: .22rem;
      background-color: #efeef4;
@@ -514,6 +627,11 @@
     color: #fdb62b;
     font-size: .21rem;
     margin-bottom: .52rem;
+  }
+  .fist-frame {
+    height: 100%;
+    position: relative;
+    overflow: hidden;
   }
   .tip-list {
     color: #333;
