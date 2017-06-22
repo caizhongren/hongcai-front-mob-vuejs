@@ -273,7 +273,7 @@
   </div>
 </template>
 <script>
-  import axios from 'axios'
+  // import axios from 'axios'
   export default {
     name: 'projectDetail',
     data () {
@@ -308,7 +308,7 @@
         this.activeTab = i
       },
       getProject: function () {
-        axios({
+        this.$http({
           method: 'get',
           url: '/hongcai/rest/projects/' + this.paramsNum
         }).then((response) => {
@@ -320,7 +320,7 @@
         })
       },
       getProjectInfo: function () {
-        axios({
+        this.$http({
           method: 'get',
           url: '/hongcai/rest/projects/' + this.projectId + '/info'
         }).then((response) => {
@@ -328,7 +328,7 @@
         })
       },
       getProjectRisk: function () {
-        axios({
+        this.$http({
           method: 'post',
           url: '/hongcai/api/v1/siteProject/getProjectRisk?number=' + this.paramsNum
         }).then((response) => {
@@ -336,7 +336,7 @@
         })
       },
       getOrderList: function (page, pageSize) {
-        axios({
+        this.$http({
           method: 'get',
           url: '/hongcai/rest/projects/' + this.paramsNum + '/orders?page=' + page + '&pageSize=' + pageSize
         }).then((response) => {
@@ -380,6 +380,7 @@
   .more-details {
     background: #efeef4;
     margin-bottom: .98rem;
+    min-height: 10.4rem;
   }
   #detail-tabs {
     position: relative;
