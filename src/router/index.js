@@ -5,7 +5,7 @@ import UserCenter from '../components/user-center/UserCenter.vue'
 import ProjectDetail from '../components/ProjectDetail.vue'
 import Invite from '../components/activity/invite.vue'
 import ActivityReward from '../components/activity/reward.vue'
-import Questionnaire from '../components/user-center/Questionnaire.vue'
+// import Questionnaire from '../components/user-center/Questionnaire.vue'
 Vue.use(Router)
 const routes = [
   {
@@ -32,11 +32,6 @@ const routes = [
     path: '/activity/reward/:userId',
     name: 'ActivityReward',
     component: ActivityReward
-  },
-  {
-    path: '/user-center/questionnaire',
-    name: 'Questionnaire',
-    component: Questionnaire
   }
 ]
 const router = new Router({
