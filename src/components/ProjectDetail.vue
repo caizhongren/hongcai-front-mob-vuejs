@@ -441,7 +441,7 @@
     }
   }
   var Height = window.innerHeight
-  window.onload = function (e) {
+  document.onload = function (e) {
     var page1 = document.querySelector('.product-page1')
     var page2 = document.querySelector('.product-page2')
     var pagedetail = document.querySelector('.details-more')

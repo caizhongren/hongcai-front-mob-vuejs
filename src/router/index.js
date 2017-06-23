@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Home from '../components/Home.vue'
 import UserCenter from '../components/UserCenter.vue'
 import ProjectDetail from '../components/ProjectDetail.vue'
+import Invite from '../components/activity/invite.vue'
+import ActivityReward from '../components/activity/reward.vue'
 
 Vue.use(Router)
 const routes = [
@@ -20,6 +22,16 @@ const routes = [
     path: '/project/:number',
     name: 'ProjectDetail',
     component: ProjectDetail
+  },
+  {
+    path: '/activity/invite/:isLogged',
+    name: 'Invite',
+    component: Invite
+  },
+  {
+    path: '/activity/reward/:userId',
+    name: 'ActivityReward',
+    component: ActivityReward
   }
 ]
 const router = new Router({
