@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../components/Home.vue'
-import UserCenter from '../components/UserCenter.vue'
+import UserCenter from '../components/user-center/UserCenter.vue'
 import ProjectDetail from '../components/ProjectDetail.vue'
 import Invite from '../components/activity/invite.vue'
 import ActivityReward from '../components/activity/reward.vue'
-
+import Questionnaire from '../components/user-center/Questionnaire.vue'
 Vue.use(Router)
 const routes = [
   {
@@ -32,6 +32,11 @@ const routes = [
     path: '/activity/reward/:userId',
     name: 'ActivityReward',
     component: ActivityReward
+  },
+  {
+    path: '/user-center/questionnaire',
+    name: 'Questionnaire',
+    component: Questionnaire
   }
 ]
 const router = new Router({
@@ -43,4 +48,3 @@ const router = new Router({
   routes // （缩写）相当于 routes: routes
 })
 export default router
-
