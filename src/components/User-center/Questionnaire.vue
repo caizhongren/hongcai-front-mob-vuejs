@@ -36,189 +36,191 @@
 </template>
 
 <script>
-export default {
-  name: 'questionnaire',
-  data () {
-    return {
-      questions: [
-        {
-          id: 1,
-          title: '您的年龄是：',
-          surveryType: 1,
-          status: 1,
-          answers: [
-              {id: 1, questionId: 1, answer: '30岁以下', score: 10, status: 1, createTime: 0, updateTime: null},
-              {id: 2, questionId: 1, answer: '30-45岁', score: 8, status: 1, createTime: 0, updateTime: null},
-              {id: 3, questionId: 1, answer: '45岁-60岁', score: 6, status: 1, createTime: 0, updateTime: null},
-              {id: 4, questionId: 1, answer: '60岁以上', score: 4, status: 1, createTime: 0, updateTime: null}
-          ]
-        },
-        {
-          id: 2,
-          title: '您的家庭就业情况：',
-          surveryType: 1,
-          status: 1,
-          answers: [
-              {id: 5, questionId: 1, answer: '您与配偶均有稳定收入的工作', score: 10, status: 1, createTime: 0, updateTime: null},
-              {id: 6, questionId: 1, answer: '您与配偶其中一人有稳定收入的工作', score: 8, status: 1, createTime: 0, updateTime: null},
-              {id: 7, questionId: 1, answer: '未婚，有稳定收入的工作', score: 6, status: 1, createTime: 0, updateTime: null},
-              {id: 8, questionId: 1, answer: '未婚，目前暂无稳定收入的工作', score: 4, status: 1, createTime: 0, updateTime: null}
-          ]
-        },
-        {
-          id: 3,
-          title: '您的家庭年收入：',
-          surveryType: 1,
-          status: 1,
-          answers: [
-              {id: 9, questionId: 1, answer: '30岁以下', score: 10, status: 1, createTime: 0, updateTime: null},
-              {id: 10, questionId: 1, answer: '30-45岁', score: 8, status: 1, createTime: 0, updateTime: null},
-              {id: 11, questionId: 1, answer: '45岁-60岁', score: 6, status: 1, createTime: 0, updateTime: null},
-              {id: 12, questionId: 1, answer: '60岁以上', score: 4, status: 1, createTime: 0, updateTime: null}
-          ]
-        },
-        {
-          id: 4,
-          title: '您有多少年股票、基金、P2P、金融衍生品等兼容投资的经验：',
-          surveryType: 1,
-          status: 1,
-          answers: [
-              {id: 13, questionId: 1, answer: '30岁以下', score: 10, status: 1, createTime: 0, updateTime: null},
-              {id: 14, questionId: 1, answer: '30-45岁', score: 8, status: 1, createTime: 0, updateTime: null},
-              {id: 15, questionId: 1, answer: '45岁-60岁', score: 6, status: 1, createTime: 0, updateTime: null},
-              {id: 16, questionId: 1, answer: '60岁以上', score: 4, status: 1, createTime: 0, updateTime: null}
-          ]
-        },
-        {
-          id: 5,
-          title: '您计划的投资期限是多久',
-          surveryType: 1,
-          status: 1,
-          answers: [
-              {id: 1, questionId: 17, answer: '30岁以下', score: 10, status: 1, createTime: 0, updateTime: null},
-              {id: 2, questionId: 18, answer: '30-45岁', score: 8, status: 1, createTime: 0, updateTime: null},
-              {id: 3, questionId: 19, answer: '45岁-60岁', score: 6, status: 1, createTime: 0, updateTime: null},
-              {id: 4, questionId: 20, answer: '60岁以上', score: 4, status: 1, createTime: 0, updateTime: null}
-          ]
-        },
-        {
-          id: 6,
-          title: '在您的投资计划中，您认为自己能承受的最大投资损失是多少：',
-          surveryType: 1,
-          status: 1,
-          answers: [
-              {id: 1, questionId: 21, answer: '30岁以下', score: 10, status: 1, createTime: 0, updateTime: null},
-              {id: 2, questionId: 22, answer: '30-45岁', score: 8, status: 1, createTime: 0, updateTime: null},
-              {id: 3, questionId: 23, answer: '45岁-60岁', score: 6, status: 1, createTime: 0, updateTime: null},
-              {id: 4, questionId: 24, answer: '60岁以上', score: 4, status: 1, createTime: 0, updateTime: null}
-          ]
-        },
-        {
-          id: 7,
-          title: '您的家庭就业情况：',
-          surveryType: 1,
-          status: 1,
-          answers: [
-              {id: 1, questionId: 25, answer: '30岁以下', score: 10, status: 1, createTime: 0, updateTime: null},
-              {id: 2, questionId: 26, answer: '30-45岁', score: 8, status: 1, createTime: 0, updateTime: null},
-              {id: 3, questionId: 27, answer: '45岁-60岁', score: 6, status: 1, createTime: 0, updateTime: null},
-              {id: 4, questionId: 28, answer: '60岁以上', score: 4, status: 1, createTime: 0, updateTime: null}
-          ]
-        },
-        {
-          id: 8,
-          title: '如果您打算用部分资金做风险投资，投资A预期获得10%的收益，可能损失非常小；投资B预期获得30%的收益，但可能承担较大亏损。您会如何投资？',
-          surveryType: 1,
-          status: 1,
-          answers: [
-              {id: 1, questionId: 29, answer: '30岁以下', score: 10, status: 1, createTime: 0, updateTime: null},
-              {id: 2, questionId: 30, answer: '30-45岁', score: 8, status: 1, createTime: 0, updateTime: null},
-              {id: 3, questionId: 31, answer: '45岁-60岁', score: 6, status: 1, createTime: 0, updateTime: null},
-              {id: 4, questionId: 32, answer: '60岁以上', score: 4, status: 1, createTime: 0, updateTime: null},
-              {id: 4, questionId: 33, answer: '60岁以上', score: 4, status: 1, createTime: 0, updateTime: null}
-          ]
-        }
-      ],
-      questionAndAnswer: {
+  import {Utils} from '../../service/Utils'
+  export default {
+    name: 'questionnaire',
+    data () {
+      return {
+        questions: [
+          {
+            id: 1,
+            title: '您的年龄是：',
+            surveryType: 1,
+            status: 1,
+            answers: [
+                {id: 1, questionId: 1, answer: '30岁以下', score: 10, status: 1, createTime: 0, updateTime: null},
+                {id: 2, questionId: 1, answer: '30-45岁', score: 8, status: 1, createTime: 0, updateTime: null},
+                {id: 3, questionId: 1, answer: '45岁-60岁', score: 6, status: 1, createTime: 0, updateTime: null},
+                {id: 4, questionId: 1, answer: '60岁以上', score: 4, status: 1, createTime: 0, updateTime: null}
+            ]
+          },
+          {
+            id: 2,
+            title: '您的家庭就业情况：',
+            surveryType: 1,
+            status: 1,
+            answers: [
+                {id: 5, questionId: 1, answer: '您与配偶均有稳定收入的工作', score: 10, status: 1, createTime: 0, updateTime: null},
+                {id: 6, questionId: 1, answer: '您与配偶其中一人有稳定收入的工作', score: 8, status: 1, createTime: 0, updateTime: null},
+                {id: 7, questionId: 1, answer: '未婚，有稳定收入的工作', score: 6, status: 1, createTime: 0, updateTime: null},
+                {id: 8, questionId: 1, answer: '未婚，目前暂无稳定收入的工作', score: 4, status: 1, createTime: 0, updateTime: null}
+            ]
+          },
+          {
+            id: 3,
+            title: '您的家庭年收入：',
+            surveryType: 1,
+            status: 1,
+            answers: [
+                {id: 9, questionId: 1, answer: '30岁以下', score: 10, status: 1, createTime: 0, updateTime: null},
+                {id: 10, questionId: 1, answer: '30-45岁', score: 8, status: 1, createTime: 0, updateTime: null},
+                {id: 11, questionId: 1, answer: '45岁-60岁', score: 6, status: 1, createTime: 0, updateTime: null},
+                {id: 12, questionId: 1, answer: '60岁以上', score: 4, status: 1, createTime: 0, updateTime: null}
+            ]
+          },
+          {
+            id: 4,
+            title: '您有多少年股票、基金、P2P、金融衍生品等兼容投资的经验：',
+            surveryType: 1,
+            status: 1,
+            answers: [
+                {id: 13, questionId: 1, answer: '30岁以下', score: 10, status: 1, createTime: 0, updateTime: null},
+                {id: 14, questionId: 1, answer: '30-45岁', score: 8, status: 1, createTime: 0, updateTime: null},
+                {id: 15, questionId: 1, answer: '45岁-60岁', score: 6, status: 1, createTime: 0, updateTime: null},
+                {id: 16, questionId: 1, answer: '60岁以上', score: 4, status: 1, createTime: 0, updateTime: null}
+            ]
+          },
+          {
+            id: 5,
+            title: '您计划的投资期限是多久',
+            surveryType: 1,
+            status: 1,
+            answers: [
+                {id: 1, questionId: 17, answer: '30岁以下', score: 10, status: 1, createTime: 0, updateTime: null},
+                {id: 2, questionId: 18, answer: '30-45岁', score: 8, status: 1, createTime: 0, updateTime: null},
+                {id: 3, questionId: 19, answer: '45岁-60岁', score: 6, status: 1, createTime: 0, updateTime: null},
+                {id: 4, questionId: 20, answer: '60岁以上', score: 4, status: 1, createTime: 0, updateTime: null}
+            ]
+          },
+          {
+            id: 6,
+            title: '在您的投资计划中，您认为自己能承受的最大投资损失是多少：',
+            surveryType: 1,
+            status: 1,
+            answers: [
+                {id: 1, questionId: 21, answer: '30岁以下', score: 10, status: 1, createTime: 0, updateTime: null},
+                {id: 2, questionId: 22, answer: '30-45岁', score: 8, status: 1, createTime: 0, updateTime: null},
+                {id: 3, questionId: 23, answer: '45岁-60岁', score: 6, status: 1, createTime: 0, updateTime: null},
+                {id: 4, questionId: 24, answer: '60岁以上', score: 4, status: 1, createTime: 0, updateTime: null}
+            ]
+          },
+          {
+            id: 7,
+            title: '您的家庭就业情况：',
+            surveryType: 1,
+            status: 1,
+            answers: [
+                {id: 1, questionId: 25, answer: '30岁以下', score: 10, status: 1, createTime: 0, updateTime: null},
+                {id: 2, questionId: 26, answer: '30-45岁', score: 8, status: 1, createTime: 0, updateTime: null},
+                {id: 3, questionId: 27, answer: '45岁-60岁', score: 6, status: 1, createTime: 0, updateTime: null},
+                {id: 4, questionId: 28, answer: '60岁以上', score: 4, status: 1, createTime: 0, updateTime: null}
+            ]
+          },
+          {
+            id: 8,
+            title: '如果您打算用部分资金做风险投资，投资A预期获得10%的收益，可能损失非常小；投资B预期获得30%的收益，但可能承担较大亏损。您会如何投资？',
+            surveryType: 1,
+            status: 1,
+            answers: [
+                {id: 1, questionId: 29, answer: '30岁以下', score: 10, status: 1, createTime: 0, updateTime: null},
+                {id: 2, questionId: 30, answer: '30-45岁', score: 8, status: 1, createTime: 0, updateTime: null},
+                {id: 3, questionId: 31, answer: '45岁-60岁', score: 6, status: 1, createTime: 0, updateTime: null},
+                {id: 4, questionId: 32, answer: '60岁以上', score: 4, status: 1, createTime: 0, updateTime: null},
+                {id: 4, questionId: 33, answer: '60岁以上', score: 4, status: 1, createTime: 0, updateTime: null}
+            ]
+          }
+        ],
+        questionAndAnswer: {
 
-      },
-      canSubmit: false,
-      showWarning: false,
-      showResult: false,
-      warningMsg: '',
-      questionnaireResult: {
-        score2: 35, score1: 53
-      },
-      ability: '',
-      type: ''
-    }
-  },
-  created: function () {
-    this.getQustions()
-  },
-  methods: {
-    getQustions: function () {
-      this.$http({
-        method: 'get',
-        url: '/hongcai/rest/users/31590/getQuestionnaire'
-      }).then((response) => {
-        this.projectInfo = response.data
-      })
-    },
-    select: function (e, question, answer) {
-      var target = e.target.localName === 'span' || e.target.localName === 'label' ? e.target.parentElement : e.target
-      for (var i = 0; i < target.parentElement.children.length; i++) {
-        target.parentElement.children[i].classList.remove('selected')
-        target.parentElement.children[i].children[0].classList.remove('selected')
+        },
+        canSubmit: false,
+        showWarning: false,
+        showResult: false,
+        warningMsg: '',
+        questionnaireResult: {
+          score2: 35, score1: 53
+        },
+        ability: '',
+        type: ''
       }
-      target.className += ' selected'
-      target.children[0].className += ' selected'
-      this.canSubmit = true
-      this.questionAndAnswer[question] = answer
-      console.log(this.questionAndAnswer)
     },
-    submitQuestionnaire: function (questionAndAnswer) {
-      let that = this
-      if (!that.canSubmit) { return }
-      that.canSubmit = false
-      that.$http.post('/hongcai/rest/users/0/questionnaire', {
-        surveyType: 1,
-        answerJson: questionAndAnswer
-      })
-      .then(function (response) {
-        if (!response || response.data.ret === -1) {
-          that.warningMsg = response.data.msg
-          that.showWarning = true
+    created: function () {
+      this.getQustions()
+      console.log(Utils.isAndroid())
+    },
+    methods: {
+      getQustions: function () {
+        this.$http({
+          method: 'get',
+          url: '/hongcai/rest/users/31590/getQuestionnaire'
+        }).then((response) => {
+          this.projectInfo = response.data
+        })
+      },
+      select: function (e, question, answer) {
+        var target = e.target.localName === 'span' || e.target.localName === 'label' ? e.target.parentElement : e.target
+        for (var i = 0; i < target.parentElement.children.length; i++) {
+          target.parentElement.children[i].classList.remove('selected')
+          target.parentElement.children[i].children[0].classList.remove('selected')
+        }
+        target.className += ' selected'
+        target.children[0].className += ' selected'
+        this.canSubmit = true
+        this.questionAndAnswer[question] = answer
+        console.log(this.questionAndAnswer)
+      },
+      submitQuestionnaire: function (questionAndAnswer) {
+        let that = this
+        if (!that.canSubmit) { return }
+        that.canSubmit = false
+        that.$http.post('/hongcai/rest/users/0/questionnaire', {
+          surveyType: 1,
+          answerJson: questionAndAnswer
+        })
+        .then(function (response) {
+          if (!response || response.data.ret === -1) {
+            that.warningMsg = response.data.msg
+            that.showWarning = true
+            setTimeout(function () {
+              that.showWarning = false
+            }, 2000)
+            return
+          }
+          that.showResult = true
+          var score1 = that.questionnaireResult.score1
+          var score2 = that.questionnaireResult.score2
+          that.ability = (function () {
+            if (score1 > 21 && score1 < 41) { return '一般' }
+            if (score1 > 40 && score1 < 56) { return '较强' }
+            if (score1 > 55 && score1 < 71) { return '很强' }
+            if (score1 > 70) { return '超赞' }
+          }())
+          that.type = (function () {
+            if (score2 < 35) { return '保守型' }
+            if (score2 > 34 && score2 < 60) { return '稳健型' }
+            if (score2 > 59) { return '进取型' }
+          }())
+        })
+        .catch(function (error) {
+          that.warningMsg = '网络出错'
           setTimeout(function () {
             that.showWarning = false
           }, 2000)
-          return
-        }
-        that.showResult = true
-        var score1 = that.questionnaireResult.score1
-        var score2 = that.questionnaireResult.score2
-        that.ability = (function () {
-          if (score1 > 21 && score1 < 41) { return '一般' }
-          if (score1 > 40 && score1 < 56) { return '较强' }
-          if (score1 > 55 && score1 < 71) { return '很强' }
-          if (score1 > 70) { return '超赞' }
-        }())
-        that.type = (function () {
-          if (score2 < 35) { return '保守型' }
-          if (score2 > 34 && score2 < 60) { return '稳健型' }
-          if (score2 > 59) { return '进取型' }
-        }())
-      })
-      .catch(function (error) {
-        that.warningMsg = '网络出错'
-        setTimeout(function () {
-          that.showWarning = false
-        }, 2000)
-        console.log(error)
-      })
+          console.log(error)
+        })
+      }
     }
   }
-}
 </script>
 
 <!-- Add 'scoped' attribute to limit CSS to this component only -->
