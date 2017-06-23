@@ -300,7 +300,7 @@
         projectId: 0,
         expectEarning: 0,
         processWith: 0,
-        activeTab: 1,
+        activeTab: 0,
         detailTabs: ['项目详情', '相关资料', '投资记录', '还款计划'],
         pageSize: 10,
         page: 1,
@@ -478,9 +478,16 @@
     var page1 = document.querySelector('.product-page1')
     var page2 = document.querySelector('.product-page2')
     var pagedetail = document.querySelector('.details-more')
-    page1.style.height = window.innerHeight + 'px'
-    page1.addEventListener('load', scrollDetail(page1), false)
-    page2.addEventListener('load', scrollBack(pagedetail), false)
+    var project = document.querySelector('#project')
+    if (project) {
+      project.style.height = window.innerHeight + 'px'
+    }
+    if (page1) {
+      page1.addEventListener('load', scrollDetail(page1), false)
+    }
+    if (page2 && pagedetail) {
+      page2.addEventListener('load', scrollBack(pagedetail), false)
+    }
   }
   function CaptureTouch (t) {
     function e (e) {

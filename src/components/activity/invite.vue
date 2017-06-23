@@ -111,6 +111,7 @@
 </template>
 
 <script>
+import {Utils} from '../../service/Utils'
 export default {
   name: 'Invite',
   data () {
@@ -125,9 +126,7 @@ export default {
   created: function () {
     this.isLogged = this.$route.params.isLogged
     this.getInvitedFriends()
-    var ua = navigator.userAgent.toLowerCase()
-    // var isAndroid = /android/.test(ua)
-    this.isiOS = /iphone|ipad|ipod/.test(ua)
+    this.isiOS = Utils.isIos()
   },
   methods: {
     showRuleBox: function () {
