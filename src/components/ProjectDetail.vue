@@ -277,7 +277,7 @@
     <p class="invest-fixed-btn disable-btn" v-if="project.status === 6">预发布</p>
     <p class="invest-fixed-btn disable-btn" v-if="project.status === 8">融资成功</p>
     <p class="invest-fixed-btn disable-btn" v-if="project.status === 9">还款中</p>
-    <p class="invest-fixed-btn disable-btn" v-if="project.status === 10">还款完成</p>
+    <p class="invest-fixed-btn disable-btn" v-if="project.status === 10" @click="toInvest()">还款完成</p>
     <p class="invest-fixed-btn disable-btn" v-if="project.status === 11">预约中</p>
   </div>
 </template>
@@ -418,7 +418,11 @@
         }
       },
       setupWebViewJavascriptBridge: function (callback) {
-        if (window.WebViewJavascriptBridge) { return callback(window.WebViewJavascriptBridge) }
+        if (window.WebViewJavascriptBridge) { return callback(window.WebViewJavascriptBridge) } else {
+          document.addEventListener('WebViewJavascriptBridgeReady', function () {
+            callback(window.WebViewJavascriptBridge)
+          }, false)
+        }
         if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback) }
         window.WVJBCallbacks = [callback]
         var WVJBIframe = document.createElement('iframe')
@@ -427,16 +431,45 @@
         document.documentElement.appendChild(WVJBIframe)
         setTimeout(function () { document.documentElement.removeChild(WVJBIframe) }, 0)
       },
+      connectWebViewJavascriptBridge: function (callback) {
+        if (window.WebViewJavascriptBridge) {
+          return callback(window.WebViewJavascriptBridge)
+        } else {
+        }
+      },
       toInvest: function () {
+        // var ua = navigator.userAgent.toLowerCase()
+        // var isAndroid = /android/.test(ua)
+        // var isiOS = /iphone|ipad|ipod/.test(ua)
+        // ios
         this.setupWebViewJavascriptBridge(function (bridge) {
-          bridge.registerHandler('iOSPayResultHandler', function (data) {
+          bridge.registerHandler('getInfos', function (data) {
             alert(data.name)
           })
-          bridge.callHandler('iOS_invest', {
+          bridge.callHandler('toWebView_invest', {
             'detailTabs': 222
           }, function (response) {
           })
         })
+        // android
+        // this.connectWebViewJavascriptBridge(function (bridge) {
+        //   alert('ldasl')
+        //   bridge.init(function (message, responseCallback) {
+        //     console.log('JS got a message', message)
+        //     var data = {
+        //       'Javascript Responds': '测试中文!'
+        //     }
+        //     console.log('JS responding with', data)
+        //     responseCallback(data)
+        //   })
+        //   bridge.registerHandler('Android_invest', function (data) {
+        //     alert(data)
+        //   })
+        //   bridge.callHandler('AndroidInvest', {
+        //     'detailTabs': 222
+        //   }, function (response) {
+        //   })
+        // })
       }
     }
   }
