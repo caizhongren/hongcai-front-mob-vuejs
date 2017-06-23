@@ -313,17 +313,17 @@
     line-height: 1.6;
   }
   .question-btn {
-  width: 43%;
-  height: .5rem;
-  display: block;
-  background-color: #fd8f3f;
-  border: 1px solid #fd8f3f;
-  border-radius: .5em;
-  line-height: .5rem;
-  text-align: center;
-  margin: .4rem 29% .1rem;
-  color: #fff;
-  font-size: .23rem;
-  font-weight: initial;
-}
+    width: 43%;
+    height: .5rem;
+    display: block;
+    background-color: #fd8f3f;
+    border: 1px solid #fd8f3f;
+    border-radius: .5em;
+    line-height: .5rem;
+    text-align: center;
+    margin: .4rem 29% .1rem;
+    color: #fff;
+    font-size: .23rem;
+    font-weight: initial;
+  }
 </style>
