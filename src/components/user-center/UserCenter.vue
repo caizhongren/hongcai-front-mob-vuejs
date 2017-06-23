@@ -3,15 +3,15 @@
     <!-- 我的账户 -->
     <div class="info">
         <div class="text-center">
-            <div class="margin-t-1p3 text-left margin-l-1 fl setting-icon" ui-sref="root.userCenter.setting"><img src="../images/user-center/setting.png" class="display-inb margin-t-0p6" width="45%"></div>
+            <div class="margin-t-1p3 text-left margin-l-1 fl setting-icon" ui-sref="root.userCenter.setting"><img src="../../images/user-center/setting.png" class="display-inb margin-t-0p6" width="45%"></div>
             <div class="display-inb text-center">
                 <div class="display-inb clearfix">
-                    <div class="border-pull margin-r-1 fl"><img src="../images/user-center/boy.png" alt="" class="border-pull avatar"></div>
+                    <div class="border-pull margin-r-1 fl"><img src="../../images/user-center/boy.png" alt="" class="border-pull avatar"></div>
                     <div class="user-name"><span class="display-inb ft-444">鱼儿</span></div>
                 </div>
             </div>
             <div class="fr margin-r-1 margin-t-1p3 text-right">
-                <div class="message-icon"><img src="../images/user-center/envelope.png" width="40%" class="margin-t-0p2 display-inb"></i></div>
+                <div class="message-icon"><img src="../../images/user-center/envelope.png" width="40%" class="margin-t-0p2 display-inb"></i></div>
             </div>
         </div>
         <div><span>北京大学心理教授 儿童教育研究者</span></div>
@@ -102,35 +102,35 @@ export default {
         padding-left: 1rem;
     }
     .homepage {
-        background: url('../images/user-center/homepage.png') no-repeat .4rem 15px;
+        background: url('../../images/user-center/homepage.png') no-repeat .4rem 15px;
         background-size: 22%;
     }
     .release-column {
-        background: url('../images/user-center/release-colum.png') no-repeat .4rem 15px;
+        background: url('../../images/user-center/release-colum.png') no-repeat .4rem 15px;
         background-size: 22%;
     }
     .my-income {
-        background: url('../images/user-center/my-income.png') no-repeat .4rem 15px;
+        background: url('../../images/user-center/my-income.png') no-repeat .4rem 15px;
         background-size: 18%;
     }
     .my-question {
-        background: url('../images/user-center/my-question.png') no-repeat .4rem 15px;
+        background: url('../../images/user-center/my-question.png') no-repeat .4rem 15px;
         background-size: 22%;
     }
     .my-expert {
-        background: url('../images/user-center/my-expert.png') no-repeat .4rem 15px;
+        background: url('../../images/user-center/my-expert.png') no-repeat .4rem 15px;
         background-size: 22%;
     }
     .my-collection {
-        background: url('../images/user-center/my-collection.png') no-repeat .4rem 15px;
+        background: url('../../images/user-center/my-collection.png') no-repeat .4rem 15px;
         background-size: 22%;
     }
     .my-application {
-        background: url('../images/user-center/my-application.png') no-repeat .4rem 15px;
+        background: url('../../images/user-center/my-application.png') no-repeat .4rem 15px;
         background-size: 18%;  
     }
     .my-help {
-        background: url('../images/user-center/my-help.png') no-repeat .4rem 15px;
+        background: url('../../images/user-center/my-help.png') no-repeat .4rem 15px;
         background-size: 22%;  
     }
     /*右箭头*/
