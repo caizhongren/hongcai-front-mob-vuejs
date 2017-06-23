@@ -38,7 +38,7 @@
 <script>
   import {Utils} from '../../service/Utils'
   export default {
-    name: 'questionnaire',
+    name: 'Questionnaire',
     data () {
       return {
         questions: [
