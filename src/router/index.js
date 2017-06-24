@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../components/Home.vue'
 import UserCenter from '../components/user-center/UserCenter.vue'
+import HelpCenter from '../components/user-center/HelpCenter.vue'
 import ProjectDetail from '../components/ProjectDetail.vue'
 import Invite from '../components/activity/invite.vue'
 import ActivityReward from '../components/activity/reward.vue'
@@ -32,6 +33,11 @@ const routes = [
     path: '/activity/reward/:userId',
     name: 'ActivityReward',
     component: ActivityReward
+  },
+  {
+    path: '/user-center/help-center',
+    name: 'HelpCenter',
+    component: HelpCenter
   }
 ]
 const router = new Router({

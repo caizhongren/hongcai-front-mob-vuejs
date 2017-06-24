@@ -44,7 +44,6 @@ Object.keys(custom).forEach(key => {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    font-size: 16px;
   }
   #footer {
     height: 53px;
