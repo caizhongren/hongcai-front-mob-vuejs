@@ -7,6 +7,7 @@ import Invite from '../components/activity/invite.vue'
 import ActivityReward from '../components/activity/reward.vue'
 import HelpCenter from '../components/HelpCenter.vue'
 import Questionnaire from '../components/Questionnaire.vue'
+import RegisterAgree from '../components/registerAgree.vue'
 Vue.use(Router)
 const routes = [
   {
@@ -43,6 +44,11 @@ const routes = [
     path: '/user-center/questionnaire',
     name: 'Questionnaire',
     component: Questionnaire
+  },
+  {
+    path: '/register-agree',
+    name: 'RegisterAgree',
+    component: RegisterAgree
   }
 ]
 const router = new Router({
