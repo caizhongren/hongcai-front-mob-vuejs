@@ -1,6 +1,6 @@
 <template>
   <div class="help-center">
-    <div class="content" @click="showContent($event)">
+    <div class="content" @click="showOrHide($event)">
       <div class="column">
         <div class="fl">1.宏财网是谁？</div>
         <div class="txt-right fr">
@@ -11,7 +11,7 @@
         <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">宏财网于2014年上线运营，2016年获得1亿元A轮战略融资，是业内鲜见的同时拥有国资背景和博士高管团队的互联网金融平台。凭借投资方广泛深耕的金融资源、博士团队的专业金融素养、严谨的风控模型和丰富的项目管理经验，为广大投资者精心提供优质投资项目。</span>  
       </div>
     </div>
-    <div class="content" @click="showContent($event)">
+    <div class="content" @click="showOrHide($event)">
       <div class="column">
         <div class="fl">2.为什么说投资宏财网安全可靠？</div>
         <div class="txt-right fr">
@@ -26,7 +26,7 @@
         </span>  
       </div>
     </div>
-    <div class="content" @click="showContent($event)">
+    <div class="content" @click="showOrHide($event)">
       <div class="column">
         <div class="fl">3.注册或登录时收不到验证码怎么办？</div>
         <div class="txt-right fr">
@@ -37,7 +37,7 @@
         <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">如果您在注册或登录过程中，点击“获取验证码”按钮后手机一直收不到验证码，建议等待60秒之后重新获取验证码，或查看是否被手机内安全软件拦截、进行重启手机等操作，在排除手机自身原因后，再次获取验证码。如果依旧收不到验证码，您可以拨打宏财网客服电话：400-9907626进行咨询。</span>  
       </div>
     </div>
-    <div class="content" @click="showContent($event)">
+    <div class="content" @click="showOrHide($event)">
       <div class="column">
         <div class="fl">4.如何修改登录密码？</div>
         <div class="txt-right fr">
@@ -48,7 +48,7 @@
         <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">登录宏财网--点击我的"账户信息—安全设置"，修改密码。</span>  
       </div>
     </div>
-    <div class="content" @click="showContent($event)">
+    <div class="content" @click="showOrHide($event)">
       <div class="column">
         <div class="fl">5.实名认证失败怎么办？</div>
         <div class="txt-right fr">
@@ -61,7 +61,7 @@
         </span>  
       </div>
     </div>
-    <div class="content" @click="showContent($event)">
+    <div class="content" @click="showOrHide($event)">
       <div class="column">
         <div class="fl">6.账户登录不上、APP更新不了怎么办？</div>
         <div class="txt-right fr">
@@ -74,7 +74,7 @@
         </span>  
       </div>
     </div>
-    <div class="content" @click="showContent($event)">
+    <div class="content" @click="showOrHide($event)">
       <div class="column">
         <div class="fl">7.一般什么原因导致充值支付失败？</div>
         <div class="txt-right fr">
@@ -88,7 +88,7 @@
         </span>  
       </div>
     </div>
-    <div class="content" @click="showContent($event)">
+    <div class="content" @click="showOrHide($event)">
       <div class="column">
         <div class="fl">8.提现什么时候能到账？</div>
         <div class="txt-right fr">
@@ -101,7 +101,7 @@
         </span>  
       </div>
     </div>
-    <div class="content" @click="showContent($event)">
+    <div class="content" @click="showOrHide($event)">
       <div class="column">
         <div class="fl">9.提现有手续费吗？次数和金额有限制吗？</div>
         <div class="txt-right fr">
@@ -114,7 +114,7 @@
         </span>  
       </div>
     </div>
-    <div class="content" @click="showContent($event)">
+    <div class="content" @click="showOrHide($event)">
       <div class="column">
         <div class="fl">10.一般什么原因导致提现失败？</div>
         <div class="txt-right fr">
@@ -128,7 +128,7 @@
         </span>  
       </div>
     </div>
-    <div class="content" @click="showContent($event)">
+    <div class="content" @click="showOrHide($event)">
       <div class="column">
         <div class="fl">11.如何更换我已绑定的银行卡？</div>
         <div class="txt-right fr">
@@ -146,7 +146,7 @@
         </span>  
       </div>
     </div>
-    <div class="content" @click="showContent($event)">
+    <div class="content" @click="showOrHide($event)">
       <div class="column">
         <div class="fl">12.宏财网有哪些产品？</div>
         <div class="txt-right fr">
@@ -161,7 +161,7 @@
         </span>  
       </div>
     </div>
-    <div class="content" @click="showContent($event)">
+    <div class="content" @click="showOrHide($event)">
       <div class="column">
         <div class="fl">13.账户余额内的资金会产生收益吗？</div>
         <div class="txt-right fr">
@@ -174,7 +174,7 @@
         </span>  
       </div>
     </div>
-    <div class="content" @click="showContent($event)">
+    <div class="content" @click="showOrHide($event)">
       <div class="column">
         <div class="fl">14.什么是特权本金？</div>
         <div class="txt-right fr">
@@ -187,7 +187,7 @@
         </span>  
       </div>
     </div>
-    <div class="content" @click="showContent($event)">
+    <div class="content" @click="showOrHide($event)">
       <div class="column">
         <div class="fl">15.什么是加息券？</div>
         <div class="txt-right fr">
@@ -200,7 +200,7 @@
         </span>  
       </div>
     </div>
-    <div class="content" @click="showContent($event)">
+    <div class="content" @click="showOrHide($event)">
       <div class="column">
         <div class="fl">16.什么是现金券？</div>
         <div class="txt-right fr">
@@ -213,7 +213,7 @@
         </span>  
       </div>
     </div>
-    <div class="content" @click="showContent($event)">
+    <div class="content" @click="showOrHide($event)">
       <div class="column">
         <div class="fl">17.如何联系客服？</div>
         <div class="txt-right fr">
@@ -231,17 +231,30 @@
 
 <script>
   // import {Utils} from '../../service/Utils'
+  var submenu = document.getElementsByClassName('submenu')
   export default {
     name: 'helpCenter',
     data () {
       return {
-        isShowContent: false
       }
     },
-    created: function () {
-    },
     methods: {
-      showContent: function (e) {
+      showContent: function (e, content, submenu) {
+        for (var i = 0; i < submenu.length; i++) {
+          submenu[i].style.display = 'none'
+          submenu[i].parentElement.classList.remove('open')
+          submenu[i].previousElementSibling.lastChild.classList.remove('rotate')
+        }
+        content.parentElement.lastChild.style.display = 'block'
+        content.parentElement.className += ' open'
+        content.lastChild.className += ' rotate'
+      },
+      hideContent: function (e, content, submenu) {
+        content.parentElement.lastChild.style.display = 'none'
+        content.parentElement.classList.remove('open')
+        content.lastChild.classList.remove('rotate')
+      },
+      showOrHide: function (e) {
         var content = e.target
         if (content.className === 'content') {
           content = e.target.firstChild
@@ -249,25 +262,17 @@
         if (content.className !== 'content' && content.className !== 'column') {
           content = e.target.parentElement
         }
-        this.isShowContent = !this.isShowContent
-        if (this.isShowContent === true) {
-          content.parentElement.lastChild.style.display = 'block'
-          content.parentElement.className += ' open'
-          content.lastChild.className += ' rotate'
-          return
+        if (content.parentElement.lastChild.style.display !== 'block') {
+          return this.showContent(e, content, submenu)
+        } else {
+          return this.hideContent(e, content, submenu)
         }
-        content.parentElement.lastChild.style.display = 'none'
-        content.parentElement.classList.remove('open')
-        content.lastChild.classList.remove('rotate')
       }
     }
   }
 </script>
 
 <style scoped>
-  .help-center {
-    /*color: #222;*/
-  }
   .help-center .content {
     overflow: hidden;
     padding: 0 .36rem;

@@ -5,8 +5,8 @@ import UserCenter from '../components/user-center/UserCenter.vue'
 import ProjectDetail from '../components/ProjectDetail.vue'
 import Invite from '../components/activity/invite.vue'
 import ActivityReward from '../components/activity/reward.vue'
-import HelpCenter from '../components/user-center/HelpCenter.vue'
-import Questionnaire from '../components/user-center/Questionnaire.vue'
+import HelpCenter from '../components/HelpCenter.vue'
+import Questionnaire from '../components/Questionnaire.vue'
 Vue.use(Router)
 const routes = [
   {
