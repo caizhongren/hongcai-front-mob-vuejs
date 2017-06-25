@@ -5,6 +5,7 @@ import UserCenter from '../components/user-center/UserCenter.vue'
 import ProjectDetail from '../components/ProjectDetail.vue'
 import Invite from '../components/activity/invite.vue'
 import ActivityReward from '../components/activity/reward.vue'
+import Lottery from '../components/activity/lottery.vue'
 import HelpCenter from '../components/HelpCenter.vue'
 import Questionnaire from '../components/Questionnaire.vue'
 import RegisterAgree from '../components/registerAgree.vue'
@@ -34,6 +35,11 @@ const routes = [
     path: '/activity/reward/:userId',
     name: 'ActivityReward',
     component: ActivityReward
+  },
+  {
+    path: '/activity/lottery',
+    name: 'Lottery',
+    component: Lottery
   },
   {
     path: '/user-center/help-center',
