@@ -4,6 +4,10 @@ body {
   margin: 0 auto;
   font-family: "微软雅黑" !important;
   overflow-x: hidden;
+  font-size: .24rem;
+  font-weight: normal;
+  line-height: 1.6;
+  color: #222;
 }
 * {
   padding: 0;

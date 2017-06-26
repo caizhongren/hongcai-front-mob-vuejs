@@ -5,7 +5,11 @@ import UserCenter from '../components/user-center/UserCenter.vue'
 import ProjectDetail from '../components/ProjectDetail.vue'
 import Invite from '../components/activity/invite.vue'
 import ActivityReward from '../components/activity/reward.vue'
-import Questionnaire from '../components/user-center/Questionnaire.vue'
+import Lottery from '../components/activity/lottery.vue'
+import HelpCenter from '../components/user-center/helpCenter.vue'
+import Help from '../components/user-center/help.vue'
+import Question from '../components/user-center/question.vue'
+import RegisterAgree from '../components/registerAgree.vue'
 Vue.use(Router)
 const routes = [
   {
@@ -34,9 +38,29 @@ const routes = [
     component: ActivityReward
   },
   {
+    path: '/activity/lottery',
+    name: 'Lottery',
+    component: Lottery
+  },
+  {
+    path: '/user-center/help-center',
+    name: 'HelpCenter',
+    component: HelpCenter
+  },
+  {
+    path: '/user-center/help',
+    name: 'Help',
+    component: Help
+  },
+  {
     path: '/user-center/questionnaire',
-    name: 'Questionnaire',
-    component: Questionnaire
+    name: 'Question',
+    component: Question
+  },
+  {
+    path: '/register-agree',
+    name: 'RegisterAgree',
+    component: RegisterAgree
   }
 ]
 const router = new Router({
