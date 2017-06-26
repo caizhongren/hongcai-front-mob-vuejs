@@ -1,5 +1,5 @@
 <template>
-  <div class="project" id="project">
+  <div class="project" id="project" v-auto-height>
     <div class="fist-frame product-page1" id="product-page1">
       <div class="project-detail-top bg-white">
         <p class="ft-Arial"><span>{{project.annualEarnings}}</span>%</p>
@@ -282,7 +282,6 @@
   </div>
 </template>
 <script>
-  // import axios from 'axios'
   export default {
     name: 'projectDetail',
     data () {
@@ -349,7 +348,11 @@
       getOrderList: function (page, pageSize) {
         this.$http({
           method: 'get',
-          url: '/hongcai/rest/projects/' + this.paramsNum + '/orders?page=' + page + '&pageSize=' + pageSize
+          url: '/hongcai/rest/projects/' + this.paramsNum + '/orders',
+          data: {
+            page: page,
+            pageSize: pageSize
+          }
         }).then((response) => {
           if (response.ret && response.ret !== -1) {
             this.totalPage = response.totalPage
@@ -478,10 +481,6 @@
     var page1 = document.querySelector('.product-page1')
     var page2 = document.querySelector('.product-page2')
     var pagedetail = document.querySelector('.details-more')
-    var project = document.querySelector('#project')
-    if (project) {
-      project.style.height = window.innerHeight + 'px'
-    }
     if (page1) {
       page1.addEventListener('load', scrollDetail(page1), false)
     }
