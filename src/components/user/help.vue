@@ -233,7 +233,7 @@
   // import {Utils} from '../../service/Utils'
   var submenu = document.getElementsByClassName('submenu')
   export default {
-    name: 'helpCenter',
+    name: 'help',
     data () {
       return {
       }

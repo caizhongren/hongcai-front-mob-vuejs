@@ -36,7 +36,7 @@
 </template>
 
 <script>
-  import {Utils} from '../service/Utils'
+  import {Utils} from '../../service/Utils'
   export default {
     name: 'Questionnaire',
     data () {
@@ -271,11 +271,11 @@
     display: inline-block;
     margin-right: 5px;
     margin-top: 5px;
-    background: url('../images/user-center/unselected.png') no-repeat;
+    background: url('../../images/user-center/unselected.png') no-repeat;
     background-size: contain;
   }
   .questionnaire .question .answers .answer span.selected {
-    background: url('../images/user-center/selected.png') no-repeat;
+    background: url('../../images/user-center/selected.png') no-repeat;
     background-size: contain;
   }
   .questionnaire .submit-btn {
@@ -288,7 +288,7 @@
     margin-top: 1rem;
   }
   .questionnaire .errMsg {
-    background: url('../images/user-center/transfer-msg.png') no-repeat;
+    background: url('../../images/user-center/transfer-msg.png') no-repeat;
     width: 47%;
     height: .6rem;
     line-height: .48rem;
