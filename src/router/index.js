@@ -8,7 +8,7 @@ import ActivityReward from '../components/activity/reward.vue'
 import Lottery from '../components/activity/lottery.vue'
 import HelpCenter from '../components/user/helpCenter.vue'
 import Help from '../components/user/help.vue'
-import Questionnaire from '../components/user/questionnaire.vue'
+// import Questionnaire from '../components/user/questionnaire.vue'
 import RegisterAgree from '../components/registerAgree.vue'
 Vue.use(Router)
 const routes = [
@@ -51,11 +51,6 @@ const routes = [
     path: '/user-center/help',
     name: 'Help',
     component: Help
-  },
-  {
-    path: '/user-center/questionnaire',
-    name: 'Questionnaire',
-    component: Questionnaire
   },
   {
     path: '/register-agree',
