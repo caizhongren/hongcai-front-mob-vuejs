@@ -349,7 +349,11 @@
       getOrderList: function (page, pageSize) {
         this.$http({
           method: 'get',
-          url: '/hongcai/rest/projects/' + this.paramsNum + '/orders?page=' + page + '&pageSize=' + pageSize
+          url: '/hongcai/rest/projects/' + this.paramsNum + '/orders',
+          data: {
+            page: page,
+            pageSize: pageSize
+          }
         }).then((response) => {
           if (response.ret && response.ret !== -1) {
             this.totalPage = response.totalPage

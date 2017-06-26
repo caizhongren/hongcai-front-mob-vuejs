@@ -30,11 +30,11 @@
             <!-- 邀请好友>0 && 活动进行中 ：从页面底部弹出分享框 -->
             <div class="invite-btn" v-show="isLogged && isInvitedFriends && !isActivityEnd">
                 <!-- 查看奖励按钮 -->
-                <img src="../../images/invite/rewards-btn.png" width="40%" class="rewards-btn">
-                <!-- 继续邀请按钮 -->
                 <router-link :to="{name: 'ActivityReward',params: {userId: 1}}">
-                    <img src="../../images/invite/toInvite-yellow-btn.png" width="40%" class="toInvite-btn">
+                    <img src="../../images/invite/rewards-btn.png" width="40%" class="rewards-btn">
+                <!-- 继续邀请按钮 -->
                 </router-link>
+                <img src="../../images/invite/toInvite-yellow-btn.png" width="40%" class="toInvite-btn" @click="toShare">
                 <!-- ios下显示 -->
                 <div class="iosTip" v-show="isiOS">该活动与设备生产商Apple Inc.公司无关</div>
             </div>
@@ -111,14 +111,14 @@
 </template>
 
 <script>
-import {Utils} from '../../service/Utils'
+import {Utils, InviteShareUtils} from '../../service/Utils'
 export default {
   name: 'Invite',
   data () {
     return {
       showRules: false,
-      isLogged: false,
-      isInvitedFriends: false,
+      isLogged: Boolean,
+      isInvitedFriends: true,
       isActivityEnd: false,
       isiOS: true
     }
@@ -139,25 +139,28 @@ export default {
         method: 'get',
         url: '/hongcai/rest/users/0/isInvitedFriends'
       }).then((response) => {
-        if (response && response.ret !== -1) {
+        if (response.data && response.data.ret !== -1) {
           this.isInvitedFriends = response.flag
-        } else if (response.code && response.code === -1041) {
+        } else if (response.data.code && response.data.code === -1041) {
           this.isActivityEnd = true
+        } else {
+          this.isInvitedFriends = true
+          this.isActivityEnd = false
         }
       })
     },
     setupWebViewJavascriptBridge: function (callback) {
-    //   if (window.WebViewJavascriptBridge) {
-    //     callback(WebViewJavascriptBridge)
-    //   } else {
-    //     document.addEventListener(
-    //       'WebViewJavascriptBridgeReady'
-    //       , function () {
-    //         callback(WebViewJavascriptBridge)
-    //       },
-    //       false
-    //     )
-    //   }
+      if (window.WebViewJavascriptBridge) {
+        callback(window.WebViewJavascriptBridge)
+      } else {
+        document.addEventListener(
+          'WebViewJavascriptBridgeReady'
+          , function () {
+            callback(window.WebViewJavascriptBridge)
+          },
+          false
+        )
+      }
       if (window.WebViewJavascriptBridge) { return callback(window.WebViewJavascriptBridge) }
       if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback) }
       window.WVJBCallbacks = [callback]
@@ -168,13 +171,30 @@ export default {
       setTimeout(function () { document.documentElement.removeChild(WVJBIframe) }, 0)
     },
     toLogin: function () {
-      var eventName = this.isLogged ? 'IOS_Share' : 'IOS_Login'
       this.setupWebViewJavascriptBridge(function (bridge) {
         bridge.registerHandler('iOSPayResultHandler', function (data) {
           alert(data.name)
         })
-        bridge.callHandler(eventName, {
+        bridge.callHandler('IOS_Login', {
           'needLogin': true
+        }, function (response) {
+        })
+      })
+    },
+    toShare: function () {
+      var shareItem = InviteShareUtils.share()
+    //   var linkUrl = location.href.split('#')[0]
+      console.log(shareItem)
+    //   console.log(linkUrl)
+      this.setupWebViewJavascriptBridge(function (bridge) {
+        bridge.registerHandler('iOSPayResultHandler', function (data) {
+          alert(data.name)
+        })
+        bridge.callHandler('IOS_Share', {
+          'title': shareItem.title,
+          'subTitle': shareItem.subTitle,
+          'linkUrl': shareItem.linkUrl,
+          'imageUrl': shareItem.imageUrl
         }, function (response) {
         })
       })
