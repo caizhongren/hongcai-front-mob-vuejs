@@ -34,6 +34,16 @@ import * as custom from './filters/custom'
 Object.keys(custom).forEach(key => {
   Vue.filter(key, custom[key])
 })
+Vue.directive('auto-height', function (el, binding) {
+  function setHeight () {
+    el.style.height = window.innerHeight + 'px'
+  }
+  window.addEventListener('load', function () {
+    setHeight()
+  }, window.addEventListener('resize', function () {
+    setHeight()
+  }))
+})
 </script>
 
 <style lang="css">

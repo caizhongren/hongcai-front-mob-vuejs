@@ -1,5 +1,5 @@
 <template>
-  <div class="invite-reward overflow-hid" auto-h>
+  <div class="invite-reward overflow-hid" v-auto-height>
     <div class="head">
       <p class="text-center">您已成功邀请<span class="ft-3 display-inbl margin-l-1 margin-r-1">{{inviteCount}}</span>位好友了！</p>
     </div>
@@ -320,7 +320,7 @@
   margin: .2rem 0;
 }
 .invite-reward .head {
-  padding-top: .9rem;
+  padding-top: .6rem;
 }
 .invite-reward .head p {
   font-style: italic;
@@ -359,7 +359,7 @@
   font-size: .23rem;
 }
 .table-wrap-wrap {
-  border-radius: .1rem; 
+  border-radius: 5px; 
   overflow: hidden;
 }
 .table-wrap {
@@ -370,7 +370,7 @@
   background-image: linear-gradient(#ea4555,#e85d36);
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 4.5rem; 
+  height: 4rem; 
 } 
 .table-wrap table {
   width: 100%;
