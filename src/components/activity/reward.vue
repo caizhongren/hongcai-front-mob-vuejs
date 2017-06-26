@@ -317,7 +317,7 @@
   color: #fff;
   font-size: .34rem;
   font-weight: 800;
-  margin: .5rem 0 0.3rem;
+  margin: .2rem 0;
 }
 .invite-reward .head {
   padding-top: .9rem;
@@ -342,6 +342,7 @@
   max-width: 640px;
   z-index: 10;
   bottom: 0;
+  background: #fa8535;
 }
 .con-invite-btn p {
   -webkit-transform: scale(0.8);
@@ -369,7 +370,7 @@
   background-image: linear-gradient(#ea4555,#e85d36);
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 5rem; 
+  height: 4.5rem; 
 } 
 .table-wrap table {
   width: 100%;
