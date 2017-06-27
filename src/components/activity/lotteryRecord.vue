@@ -72,19 +72,23 @@
   .margin-auto {
     margin: 0 auto;
   }
+  .border-none {
+    border: none !important;
+  }
   /*我的奖励*/
   .lottery-record {
-    padding-top: .8rem;
+    padding-top: .7rem;
     background: url('../../images/lottery/record-bg.jpg') 0 0 no-repeat;
     background-size: 100% 100%;
     width: 100%;
     overflow: hidden;
     position: fixed;
-    padding-bottom: 2rem;
+    padding-bottom: 3rem;
+    color: #222;
   }
   .lottery-record .lottery-list-wrap {
     width: 92%;
-    height: 9rem;
+    height: 8rem;
     margin: 0 auto;
     background: url('../../images/lottery/record-list-bg.png') 0 0 no-repeat;
     background-size: 100% 100%; 
@@ -94,8 +98,8 @@
     margin: 0 auto;
     color: #fc7371;
     text-align: center;
-    height: 2.2rem;
-    line-height: 3.6rem;
+    height: 2rem;
+    line-height: 3rem;
     border-bottom: 1px solid #ddd;
   }
   .lottery-record .lottery-list-wrap .no-data {
@@ -106,7 +110,7 @@
   }
   .lottery-record .lottery-list-wrap ul {
     width: 90%;
-    height: 73%;
+    height: 72%;
     display: block;
     margin: 0 auto;
     overflow-y: auto;
