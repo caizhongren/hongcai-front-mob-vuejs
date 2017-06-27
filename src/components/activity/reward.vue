@@ -76,7 +76,7 @@
       this.isiOS = Utils.isIos()
       this.InvitePrivilegedUsers()
       this.invitePrivilegedRewardStat()
-      this.getInvitePrivilegedRewards()
+      this.getInvitePrivilegedRewards(this.page, this.pageSize)
     },
     methods: {
       getintervalDays: function (firstInvestTime) {
@@ -91,170 +91,31 @@
       InvitePrivilegedUsers: function () {
         this.$http({
           method: 'get',
-          url: '/hongcai/rest/activitys/invitePrivilegedUsers'
+          url: '/hongcai/rest/activitys/invitePrivilegedUsers?token=e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698'
         }).then((response) => {
           if (response.data && response.data.ret !== -1) {
-            this.inviteCount = response.data
+            this.inviteCount = response.data.data
           }
         })
       },
       invitePrivilegedRewardStat: function () {
         this.$http({
           method: 'get',
-          url: '/hongcai/rest/activitys/invitePrivilegedRewardStat'
+          url: '/hongcai/rest/activitys/invitePrivilegedRewardStat?token=e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698'
         }).then((response) => {
           if (response.data && response.data.ret !== -1) {
             this.privilegedCapital = response.data
-          } else {
-            this.privilegedCapital = {amount: 10000, profit: 66.666}
           }
         })
       },
       getInvitePrivilegedRewards: function (page, pageSize) {
         this.$http({
           method: 'get',
-          url: '/hongcai/rest/activitys/invitePrivilegedRewards',
-          data: {
-            page: page,
-            pageSize: pageSize
-          }
+          url: '/hongcai/rest/activitys/invitePrivilegedRewards?page' + page + '&pageSize=' + pageSize + '&token=e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698'
         }).then((response) => {
           if (response.data && response.data.ret !== -1) {
-            // var details = response.data.data
-            // this.totalPage = response.data.totalPage
-            // for (var i = 0; i < details.length; i++) {
-            //   this.details.push(details[i])
-            // }
-          } else {
-            var details = [
-              {
-                activityId: null,
-                amount: 5000,
-                createTime: null,
-                creditRightId: null,
-                description: null,
-                dueTime: null,
-                firstInvestTime: 1493215321707,
-                id: 154730,
-                investAmount: 0,
-                investUserId: null,
-                mobile: '132****5315',
-                profit: 0,
-                registTime: 1493125733441,
-                settleInvestAmount: 0,
-                status: null,
-                userId: null
-              },
-              {
-                activityId: null,
-                amount: 5000,
-                createTime: null,
-                creditRightId: null,
-                description: null,
-                dueTime: null,
-                firstInvestTime: 1493215321707,
-                id: 154730,
-                investAmount: 0,
-                investUserId: null,
-                mobile: '132****5315',
-                profit: 0,
-                registTime: 1493125733441,
-                settleInvestAmount: 0,
-                status: null,
-                userId: null
-              },
-              {
-                activityId: null,
-                amount: 5000,
-                createTime: null,
-                creditRightId: null,
-                description: null,
-                dueTime: null,
-                firstInvestTime: 1493215321707,
-                id: 154730,
-                investAmount: 0,
-                investUserId: null,
-                mobile: '132****5315',
-                profit: 0,
-                registTime: 1493125733441,
-                settleInvestAmount: 0,
-                status: null,
-                userId: null
-              },
-              {
-                activityId: null,
-                amount: 5000,
-                createTime: null,
-                creditRightId: null,
-                description: null,
-                dueTime: null,
-                firstInvestTime: 1493215321707,
-                id: 154730,
-                investAmount: 0,
-                investUserId: null,
-                mobile: '132****5315',
-                profit: 0,
-                registTime: 1493125733441,
-                settleInvestAmount: 0,
-                status: null,
-                userId: null
-              },
-              {
-                activityId: null,
-                amount: 5000,
-                createTime: null,
-                creditRightId: null,
-                description: null,
-                dueTime: null,
-                firstInvestTime: 1493215321707,
-                id: 154730,
-                investAmount: 0,
-                investUserId: null,
-                mobile: '132****5315',
-                profit: 0,
-                registTime: 1493125733441,
-                settleInvestAmount: 0,
-                status: null,
-                userId: null
-              },
-              {
-                activityId: null,
-                amount: 5000,
-                createTime: null,
-                creditRightId: null,
-                description: null,
-                dueTime: null,
-                firstInvestTime: 1493215321707,
-                id: 154730,
-                investAmount: 0,
-                investUserId: null,
-                mobile: '132****5315',
-                profit: 0,
-                registTime: 1493125733441,
-                settleInvestAmount: 0,
-                status: null,
-                userId: null
-              },
-              {
-                activityId: null,
-                amount: 5000,
-                createTime: null,
-                creditRightId: null,
-                description: null,
-                dueTime: null,
-                firstInvestTime: 1493215321707,
-                id: 154730,
-                investAmount: 0,
-                investUserId: null,
-                mobile: '132****5315',
-                profit: 0,
-                registTime: 1493125733441,
-                settleInvestAmount: 0,
-                status: null,
-                userId: null
-              }
-            ]
-            this.totalPage = 3
+            var details = response.data.data
+            this.totalPage = response.data.totalPage
             for (var i = 0; i < details.length; i++) {
               this.details.push(details[i])
             }
@@ -263,7 +124,7 @@
       },
       loadMore: function () {
         this.page = this.page + 1
-        this.getInvitePrivilegedRewards(this.page)
+        this.getInvitePrivilegedRewards(this.page, this.pageSize)
       },
       setupWebViewJavascriptBridge: function (callback) {
         if (window.WebViewJavascriptBridge) {

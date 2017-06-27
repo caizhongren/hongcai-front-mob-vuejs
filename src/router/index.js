@@ -10,6 +10,8 @@ import HelpCenter from '../components/user-center/helpCenter.vue'
 import Help from '../components/user-center/help.vue'
 import Question from '../components/user-center/question.vue'
 import RegisterAgree from '../components/registerAgree.vue'
+import AssignmentQuestion from '../components/assignment_qr.vue'
+import assignmentAgree from '../components/assignmentAgree.vue'
 Vue.use(Router)
 const routes = [
   {
@@ -61,6 +63,16 @@ const routes = [
     path: '/register-agree',
     name: 'RegisterAgree',
     component: RegisterAgree
+  },
+  {
+    path: '/assignment_qr',
+    name: 'Assignment_qr',
+    component: AssignmentQuestion
+  },
+  {
+    path: '/assignment-agreement',
+    name: 'assignmentAgree',
+    component: assignmentAgree
   }
 ]
 const router = new Router({

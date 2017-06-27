@@ -159,56 +159,6 @@
                 </tr>
               </thead>
               <tbody>
-                <!--<tr>
-                  <td class="ft-grey4">2015-02-12</td>
-                  <td class="ft-blue">ffff</td>
-                  <td><span class="ft-orange0">11111</span></td>
-                </tr>
-                <tr>
-                  <td class="ft-grey4">2015-02-12</td>
-                  <td class="ft-blue">ffff</td>
-                  <td><span class="ft-orange0">11111</span></td>
-                </tr>
-                <tr>
-                  <td class="ft-grey4">2015-02-12</td>
-                  <td class="ft-blue">ffff</td>
-                  <td><span class="ft-orange0">11111</span></td>
-                </tr>
-                <tr>
-                  <td class="ft-grey4">2015-02-12</td>
-                  <td class="ft-blue">ffff</td>
-                  <td><span class="ft-orange0">11111</span></td>
-                </tr>
-                <tr>
-                  <td class="ft-grey4">2015-02-12</td>
-                  <td class="ft-blue">ffff</td>
-                  <td><span class="ft-orange0">11111</span></td>
-                </tr>
-                <tr>
-                  <td class="ft-grey4">2015-02-12</td>
-                  <td class="ft-blue">ffff</td>
-                  <td><span class="ft-orange0">11111</span></td>
-                </tr>
-                <tr>
-                  <td class="ft-grey4">2015-02-12</td>
-                  <td class="ft-blue">ffff</td>
-                  <td><span class="ft-orange0">11111</span></td>
-                </tr>
-                <tr>
-                  <td class="ft-grey4">2015-02-12</td>
-                  <td class="ft-blue">ffff</td>
-                  <td><span class="ft-orange0">11111</span></td>
-                </tr>
-                <tr>
-                  <td class="ft-grey4">2015-02-12</td>
-                  <td class="ft-blue">ffff</td>
-                  <td><span class="ft-orange0">11111</span></td>
-                </tr>
-                <tr>
-                  <td class="ft-grey4">2015-02-12</td>
-                  <td class="ft-blue">ffff</td>
-                  <td><span class="ft-orange0">11111</span></td>
-                </tr>-->
                 <tr v-for="order in orderList" :key="order.id" v-show="orderList && orderList.length >0 ">
                   <td>{{order.createTime | date}}</td>
                   <td>{{order.userName}}</td>
@@ -223,7 +173,7 @@
                 </tr>
               </tbody>
             </table>
-            <div class="drop-load" @click="loadMoreOrder()">
+            <div class="drop-load" @click="loadMoreOrder" v-show="totalPage > page">
               查看更多
             </div>
           </div>
@@ -301,9 +251,9 @@
         processWith: 0,
         activeTab: 0,
         detailTabs: ['项目详情', '相关资料', '投资记录', '还款计划'],
-        pageSize: 10,
+        pageSize: 8,
         page: 1,
-        totalPage: 0,
+        totalPage: 1,
         imgSrcList: ['https://www.hongcai.com/uploads/jpg/thumbnail/2017-06-22/project/project-5bbcdd3e5890421c9b8a2f0f93bf9f9a-thumbnail.jpg', 'https://www.hongcai.com/uploads/jpg/thumbnail/2017-06-22/project/project-a531d40cac07400bad03a2cf7b7018f8-thumbnail.jpg']
       }
     },
@@ -311,11 +261,11 @@
       this.paramsNum = this.$route.params.number
       this.getProject()
       this.getProjectRisk()
-      this.getOrderList(this.page, this.pageSize)
     },
     methods: {
       toggleTab: function (i) {
         this.activeTab = i
+        i === 2 ? this.getOrderList(this.page, this.pageSize) : ''
       },
       getProject: function () {
         this.$http({
@@ -348,21 +298,16 @@
       getOrderList: function (page, pageSize) {
         this.$http({
           method: 'get',
-          url: '/hongcai/rest/projects/' + this.paramsNum + '/orders',
-          data: {
-            page: page,
-            pageSize: pageSize
-          }
+          url: '/hongcai/rest/projects/' + this.paramsNum + '/orders?page=' + page + '&pageSize=' + pageSize + '&token=e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698'
         }).then((response) => {
-          if (response.ret && response.ret !== -1) {
-            this.totalPage = response.totalPage
-            if (response.data.length >= 1) {
+          if (response.data && response.data.ret !== -1) {
+            this.totalPage = response.data.totalPage
+            if (response.data.data.length >= 1) {
               for (var i = response.data.data.length - 1; i >= 0; i--) {
                 this.orderList.push(response.data.data[i])
               }
             }
           }
-          this.orderList = response.data.data
         })
       },
       loadMoreOrder: function () {
@@ -370,7 +315,7 @@
           return
         }
         this.page += 1
-        this.getOrderList()
+        this.getOrderList(this.page, this.pageSize)
       },
       preview: function (e) {
         var theImage = new Image()
