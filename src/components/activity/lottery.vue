@@ -23,7 +23,7 @@
             <img src="../../images/lottery/privilege.png" alt="">
             <span class="item-mask"></span>
           </div>
-          <div class="lottery-item js-start-btn">
+          <div class="lottery-item js-start-btn" @click="draw()">
             <img src="../../images/lottery/draw.png" alt="">
           </div>
           <div class="lottery-item js-item selecting" data-sort="4" data-prize-id="4">
@@ -70,18 +70,110 @@
     </div>
   </div>
 </template>
+<script src="../../service/rect.luckdraw.js"></script>
 <script>
   import {Utils} from '../../service/Utils'
+  // import $ from 'jquery'
+  // import {LuckDraw} from '../../service/rect.luckdraw.js'
   export default {
     name: 'lottery',
     data () {
       return {
         drawCount: 0,
-        isiOS: true
+        isiOS: true,
+        prizeList: {}
       }
     },
     created: function () {
       this.isiOS = Utils.isIos()
+      // console.log(LuckDraw.draw)
+    },
+    methods: {
+      draw: function () {
+        var that = this
+        // var rld = RectLuckDraw('#js-rect-luck-draw-con', this.prizeList, {
+        //   turnAroundCount: 5,
+        //   maxAnimateDelay: 400,
+        //   turnStartCallback: function () {
+        //     alert('摇奖开始...')
+        //   },
+        //   turnEndCallback: function (prizeId, obj) {
+        //     setTimeout(function () {
+        //       that.drawCount = that.drawCount - 1
+        //     }, 300)
+        //   },
+        //   startBtnClick: function ($btn) {
+        //     if (this.isLocked()) {
+        //       return
+        //     }
+        //   },
+        //   onLock: function () {
+        //     alert('锁上了')
+        //   },
+        //   onUnlock: function (obj) {
+        //     alert('解锁了')
+        //   }
+        // })
+        that.$http.post('/hongcai/rest/lotteries/draw', {})
+        .then(function (response) {
+          var receivePrize = response
+          that.prizeId = receivePrize.prizeType || 1
+          // rld.start(that.prizeId)
+          // switch (receivePrize.prizeType) {
+          //   case 1:
+          //     that.prizeList = {
+          //       prizeType: receivePrize.prizeType,
+          //       prizeText: '当日加息',
+          //       prizeValue: '+' + receivePrize.value + '%',
+          //       prizeCont: '奖励已自动生效，成功为您加息！'
+          //     }
+          //     break
+          //   case 2:
+          //     that.prizeList = {
+          //       prizeType: receivePrize.prizeType,
+          //       prizeText: '返现',
+          //       prizeValue: receivePrize.value + '元',
+          //       prizeCont: '奖励已发放至您的账户，前往“我的”页面即可查看！'
+          //     }
+          //     break
+          //   case 3:
+          //     that.prizeList = {
+          //       prizeType: receivePrize.prizeType,
+          //       prizeText: '加息券',
+          //       prizeValue: '+' + receivePrize.value + '%',
+          //       prizeCont: '奖励已发放至您的账户，前往“我的-加息券”即可查看！'
+          //     }
+          //     break
+          //   case 4:
+          //     that.prizeList = {
+          //       prizeType: receivePrize.prizeType,
+          //       prizeText: '现金券',
+          //       prizeValue: Number(receivePrize.value).toFixed(0) + '元',
+          //       prizeCont: '奖励已发放至您的账户，前往“我的-现金券”即可查看！'
+          //     }
+          //     break
+          //   case 5:
+          //     that.prizeList = {
+          //       prizeType: receivePrize.prizeType,
+          //       prizeText: '(有效期1天)',
+          //       prizeValue: Number(receivePrize.value).toFixed(0) + '元特权本金',
+          //       prizeCont: '奖励已发放至您的账户，前往“我的-特权本金”即可查看！'
+          //     }
+          //     break
+          //   case 6:
+          //     that.prizeList = {
+          //       prizeType: receivePrize.prizeType,
+          //       prizeText: '谢谢',
+          //       prizeValue: receivePrize.value,
+          //       prizeCont: '什么都木有赚到，换个姿势再试一次吧～'
+          //     }
+          //     break
+          // }
+        })
+        .catch(function (err) {
+          console.log(err)
+        })
+      }
     }
   }
 </script>
@@ -110,9 +202,9 @@
   }
   .lottery .lottery-wrap .draw-lottery .lottery-box {
     width: 92%;
-      margin: 0 auto;
-      text-align: center;
-      padding-top: .13rem;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: .88rem;
   }
   .lottery .lottery-wrap .draw-lottery .lottery-box .lottery-item {
     display: inline-block;
@@ -146,9 +238,9 @@
   }
   .lottery .lottery-wrap .lottery-other p {
     width: 40%;
-    height: 1rem;
+    height: .8rem;
     border-radius: .1rem;
-    line-height: 1rem;
+    line-height: .8rem;
     font-size: .4rem;
   }
   .lottery .lottery-wrap .lottery-other p:first-child {
@@ -334,12 +426,13 @@
       height: 15rem;
     }
     .lottery .lottery-wrap .draw-lottery {
-      height: 9rem;
+      height: 7.6rem;
     }
     .lottery .lottery-wrap .draw-lottery p {
       height: 1.3rem;
-      line-height: 2.8rem;
+      line-height: 2.4rem;
       margin-bottom: 0;
+      color: #222;
     }
     .lottery .lottery-wrap .draw-lottery .draw-count {
       font-size: .37rem;
@@ -347,16 +440,16 @@
       color: #f5fb60;
     }
     .lottery .lottery-wrap .draw-lottery .lottery-box {
-        padding-top: 1.3rem;
+        padding-top: .88rem;
     }
     .lottery .lottery-wrap .lucky-users .lucky-users-wrap {
-      height: 6.5rem;
+      height: 5.5rem;
     }
     .lottery .lottery-wrap .lucky-users .lucky-users-wrap li{
       font-size: .24rem;
       margin-bottom: 0;
-      height: .6rem;
-      line-height: .6rem;
+      height: .5rem;
+      line-height: .5rem;
     }
     .lottery .lottery-wrap .lucky-users .lucky-users-wrap li span{
       display: inline-block;

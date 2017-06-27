@@ -27,7 +27,7 @@
         <div class="wrap-conyent">
           <div class="rule">
             <p class="margin-t-0 margin-b-0 text-justify">尊敬的用户，您的风险承受能力 <span class="ft-bold">{{ability}}</span>，投资偏好为 <span class="ft-bold">{{type}}</span>，建议您选择宏财精选和宏财尊贵项目。</p>
-            <button class="question-btn padding-0" @click="showResult = false">我知道了</button>
+            <button class="question-btn padding-0" @click="closeResult">我知道了</button>
           </div>
         </div>
       </div>
@@ -147,11 +147,9 @@
         showWarning: false,
         showResult: false,
         warningMsg: '',
-        questionnaireResult: {
-          score2: 35, score1: 53
-        },
         ability: '',
-        type: ''
+        type: '',
+        token: 'e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698'
       }
     },
     created: function () {
@@ -160,11 +158,16 @@
     },
     methods: {
       getQustions: function () {
-        this.$http({
+        var that = this
+        that.$http({
           method: 'get',
-          url: '/hongcai/rest/users/31590/getQuestionnaire'
-        }).then((response) => {
-          this.projectInfo = response.data
+          url: '/hongcai/rest/users/31590/getQuestionnaire?token=' + that.token
+        })
+        .then(function (response) {
+          that.questions = response.data
+        })
+        .catch(function (error) {
+          console.log(error)
         })
       },
       select: function (e, question, answer) {
@@ -177,7 +180,6 @@
         target.children[0].className += ' selected'
         this.canSubmit = true
         this.questionAndAnswer[question] = answer
-        console.log(this.questionAndAnswer)
       },
       submitQuestionnaire: function (questionAndAnswer) {
         let that = this
@@ -185,10 +187,11 @@
         that.canSubmit = false
         that.$http.post('/hongcai/rest/users/0/questionnaire', {
           surveyType: 1,
-          answerJson: questionAndAnswer
+          answerJson: questionAndAnswer,
+          token: that.token
         })
         .then(function (response) {
-          if (!response || response.data.ret === -1) {
+          if (!response.data || response.data.ret === -1) {
             that.warningMsg = response.data.msg
             that.showWarning = true
             setTimeout(function () {
@@ -197,8 +200,9 @@
             return
           }
           that.showResult = true
-          var score1 = that.questionnaireResult.score1
-          var score2 = that.questionnaireResult.score2
+          var questionnaireResult = response.data
+          var score1 = questionnaireResult.score1
+          var score2 = questionnaireResult.score2
           that.ability = (function () {
             if (score1 > 21 && score1 < 41) { return '一般' }
             if (score1 > 40 && score1 < 56) { return '较强' }
@@ -218,6 +222,23 @@
           }, 2000)
           console.log(error)
         })
+      },
+      closeResult: function () {
+        this.showResult = false
+        this.questionAndAnswer = {}
+        var answer = document.getElementsByClassName('answer')
+        // var aswSpan = document.getElementsByClassName('answer-span')
+        console.log(aswSpan)
+        var aswSpan = []
+        for (var i = 0; i < answer.length; i++) {
+          answer[i].classList.remove('selected')
+          aswSpan.push(answer[i].firstChild)
+          aswSpan[i].classList.remove('selected')
+          this.canSubmit = true
+        }
+        for (var j = 0; i < answer.length; i++) {
+          aswSpan[j].classList.remove('selected')
+        }
       }
     }
   }

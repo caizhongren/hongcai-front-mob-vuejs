@@ -15,7 +15,7 @@
           <div class="process-bar fl">
             <div class="process-inner-bar fl" v-bind:style="{width:processWith + '%'}"></div>
             <img src="../images/project/process-btn.png" class="fl" v-bind:style="{left:processWith - 5.5 + '%'}">
-            <div class="process-tip" v-bind:style="{left:processWith + '%'}">{{processWith}}%</div>
+            <div class="process-tip" v-bind:style="{left:processWith - 2 + '%'}">{{processWith}}%</div>
           </div>
           <div class="end-circle fr" v-show="processWith < 100">
             <div class="end-circle-center"></div>
@@ -273,7 +273,7 @@
           url: '/hongcai/rest/projects/' + this.paramsNum
         }).then((response) => {
           this.project = response.data
-          this.processWith = (this.project.total - this.project.amount) / this.project.total * 100
+          this.processWith = ((this.project.total - this.project.amount) / this.project.total * 100).toFixed(1)
           this.expectEarning = (10000 * this.project.annualEarnings * this.project.projectDays / 36500).toFixed(2)
           this.projectId = response.data.id
           this.getProjectInfo()
@@ -560,7 +560,7 @@
     line-height: .9rem;
     text-align: center;
     color: #666666;
-    font-size: .3rem;
+    font-size: .28rem;
   }
   .project-details {
     background-color: #efeef4;
@@ -572,7 +572,7 @@
   }
   .project-details .project-brief .title {
     color: #ff611d;
-    font-size: .28rem;
+    font-size: .27rem;
     margin-bottom: .2rem;
     text-align: left;
     height: .36rem;
@@ -608,10 +608,10 @@
   }
    .invest-fixed-btn, .investBtn {
     width: 100%;
-    height: .98rem;
-    line-height: .98rem;
+    height: .9rem;
+    line-height: .9rem;
     color: #fff;
-    font-size: .3rem;
+    font-size: .28rem;
     background-color: #ff611d;
     position: fixed;
     bottom: 0;
@@ -628,7 +628,7 @@
     height: 100%;
   }
   .drop-load {
-     font-size: .22rem;
+     font-size: .2rem;
      background-color: #efeef4;
      color: #999;
      padding: .45rem 0;
@@ -653,8 +653,8 @@
     height: .2rem;
     line-height: .2rem;
     color: #fdb62b;
-    font-size: .21rem;
-    margin-bottom: .52rem;
+    font-size: .2rem;
+    margin-bottom: .4rem;
   }
   .fist-frame {
     height: 100%;
@@ -663,7 +663,7 @@
   }
   .tip-list {
     color: #333;
-    padding: 0 .4rem;
+    padding: 0 .38rem;
     display: flex;
     justify-content: space-between;
   }
@@ -687,17 +687,17 @@
   }
   .project-process {
     width: 100%;
-    padding: 0 .4rem;
-    margin-top: .8rem;
-    margin-bottom: .4rem;
+    padding: 0 .38rem;
+    margin-top: .6rem;
+    margin-bottom: .3rem;
   }
   .project-process .start-circle, .project-process .end-circle {
-    width: .2rem;
-    height: .2rem;
+    width: .15rem;
+    height: .15rem;
     background: #fff;
     position: relative;
     border-radius: 50%;
-    margin-top: -0.1rem;
+    margin-top: -0.05rem;
   }
   .project-process .start-circle {
     border: 1px solid #ff611d;
@@ -706,11 +706,11 @@
     border: 1px solid #75c4f6;
   }
   .project-process .start-circle .start-circle-center, .project-process .end-circle .end-circle-center {
-    width: 0.12rem;
-    height: 0.12rem;
+    width: 0.08rem;
+    height: 0.08rem;
     border-radius: 50%;
     margin: 0 auto;
-    margin-top: 0.023rem;
+    margin-top: 0.014rem;
   }
   .project-process .start-circle .start-circle-center, .process-inner-bar {
     background: #ff611d;
@@ -719,7 +719,7 @@
     background: #75c4f6;
   }
   .process-bar {
-    width: 93%;
+    width: 96%;
     height: 2px;
     margin-bottom: -2px;
     position: relative
@@ -735,48 +735,48 @@
   .process-bar img {
     position: absolute;
     /*left: 75%;*/
-    top: -0.23rem;
-    width: 10%;
+    top: -0.18rem;
+    width: 8%;
   }
   .process-bar .process-tip {
-    width: .6rem;
-    height: .4rem;
+    width: .55rem;
+    height: .35rem;
     background: url('../images/project/process-tip.png') no-repeat 0 0;
     background-size: 100% 100%;
     color: #fff;
-    font-size: .21rem;
+    font-size: .18rem;
     text-align: center;
-    line-height: .36rem;
+    line-height: .35rem;
     position: absolute;
     /*left: 79%;*/
-    top: -0.57rem;
+    top: -0.5rem;
   }
   .remain-amount, .actual-amount {
-    padding: 0 .4rem;
-    font-size: .24rem;
+    padding: 0 .38rem;
+    font-size: .235rem;
     color: #444;
     height: .26rem;
     line-height: .26rem;
     text-align: left;
   }
   .remain-amount {
-    margin-bottom: .4rem;
+    margin-bottom: .28rem;
   }
   .remain-amount span, .actual-amount span {
     color: #ff611d;
-    font-size: .25rem;
+    font-size: .24rem;
     margin-left: 0;
   }
   .project-detail-bottom {
-    padding: 0 .4rem;
+    padding: 0 .38rem;
     text-align: left;
     color: #666;
-    font-size: .26rem;
+    font-size: .25rem;
 
   }
   .project-detail-bottom .detail-item {
-    height: .83rem;
-    line-height: .9rem;
+    height: .7rem;
+    line-height: .7rem;
   }
   .project-detail-bottom span {
     color: #999;
@@ -795,7 +795,7 @@
     line-height: .8rem;
     color: #666;
     font-weight: normal;
-    font-size: .3rem;
+    font-size: .28rem;
     border-bottom: 1px solid #ddd;
   }
   .investor-record table  td {
@@ -810,11 +810,15 @@
     background-color: #f8f9fd;
   }
   /*营业执照*/
+  .details-more {
+    min-height: 10.2rem;
+    background-color: #fff;
+  }
   .business-license .project-brief {
     margin-bottom: 0;
   }
   .business-license .project-brief .title{
-    margin-bottom: .46rem;
+    margin-bottom: .3rem;
   }
   .business-license .project-brief .content .license-list {
     width: 100%;
@@ -825,7 +829,6 @@
     width: 2.5rem;
     height: 2.5rem;
     border: 1px solid #fdb62b;
-    margin-bottom: .65rem;
   }
   .overlay{
     position: fixed;
