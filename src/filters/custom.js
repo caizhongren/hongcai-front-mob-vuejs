@@ -5,9 +5,9 @@ let dateTime = value => {
   return now.getFullYear() + '-' +
   month + '-' +
   now.getDate() + ' ' +
-  (now.getHours() < 12 ? '0' + now.getHours() : now.getHours()) + ':' +
+  (now.getHours() < 10 ? '0' + now.getHours() : now.getHours()) + ':' +
   (now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes()) + ':' +
-  now.getSeconds()
+  (now.getSeconds() < 10 ? '0' + now.getSeconds() : now.getSeconds())
 }
 let date = value => {
   // 时间格式 ‘yyyy-MM-dd’

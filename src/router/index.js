@@ -6,10 +6,12 @@ import ProjectDetail from '../components/ProjectDetail.vue'
 import Invite from '../components/activity/invite.vue'
 import ActivityReward from '../components/activity/reward.vue'
 import Lottery from '../components/activity/lottery.vue'
+import LotteryRecord from '../components/activity/lotteryRecord.vue'
 import HelpCenter from '../components/user-center/helpCenter.vue'
 import Help from '../components/user-center/help.vue'
 import Question from '../components/user-center/question.vue'
 import RegisterAgree from '../components/registerAgree.vue'
+
 Vue.use(Router)
 const routes = [
   {
@@ -43,7 +45,12 @@ const routes = [
     component: Lottery
   },
   {
-    path: '/user-center/help-center',
+    path: '/activity/user-lottery-record',
+    name: 'LotteryRecord',
+    component: LotteryRecord
+  },
+  {
+    path: '/user-center/helpCenter',
     name: 'HelpCenter',
     component: HelpCenter
   },

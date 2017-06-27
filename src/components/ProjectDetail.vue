@@ -273,7 +273,7 @@
         </div>
       </div>
     </div>
-    <p class="invest-fixed-btn" :class="{'disable-btn': project.status !== 7 }" v-if="project.status === 7">立即投资</p>
+    <p class="invest-fixed-btn" :class="{'disable-btn': project.status !== 7 }" v-if="project.status === 7" @click="toInvest()">立即投资</p>
     <p class="invest-fixed-btn disable-btn" v-if="project.status === 6">预发布</p>
     <p class="invest-fixed-btn disable-btn" v-if="project.status === 8">融资成功</p>
     <p class="invest-fixed-btn disable-btn" v-if="project.status === 9">还款中</p>
@@ -282,6 +282,7 @@
   </div>
 </template>
 <script>
+  import {Utils} from '../service/Utils'
   export default {
     name: 'projectDetail',
     data () {
@@ -304,6 +305,8 @@
         pageSize: 10,
         page: 1,
         totalPage: 0,
+        isIos: Utils.isIos,
+        isAndroid: Utils.isAndroid,
         imgSrcList: ['https://www.hongcai.com/uploads/jpg/thumbnail/2017-06-22/project/project-5bbcdd3e5890421c9b8a2f0f93bf9f9a-thumbnail.jpg', 'https://www.hongcai.com/uploads/jpg/thumbnail/2017-06-22/project/project-a531d40cac07400bad03a2cf7b7018f8-thumbnail.jpg']
       }
     },
@@ -323,7 +326,8 @@
           url: '/hongcai/rest/projects/' + this.paramsNum
         }).then((response) => {
           this.project = response.data
-          this.processWith = ((this.project.total - this.project.amount) / this.project.total * 100).toFixed(1)
+          var proWidth = (this.project.total - this.project.amount) / this.project.total * 100
+          this.processWith = proWidth % 10 === 0 ? 100 : proWidth.toFixed(1)
           this.expectEarning = (10000 * this.project.annualEarnings * this.project.projectDays / 36500).toFixed(2)
           this.projectId = response.data.id
           this.getProjectInfo()
@@ -335,6 +339,30 @@
           url: '/hongcai/rest/projects/' + this.projectId + '/info'
         }).then((response) => {
           this.projectInfo = response.data
+        })
+      },
+      getProjectFiles: function () {
+        var that = this
+        that.$http.get({
+          url: '/hongcai/api/v1/siteProject/projectFiles?projectId=' + that.projectId
+        }).then(function (res) {
+          // that.enterpriseThumbnailFileList = response.data.enterpriseThumbnailFileList
+          // that.enterpriseOriginalFileList = response.data.enterpriseOriginalFileList
+          // that.contractOriginalFileList = response.data.contractOriginalFileList
+          // that.contractThumbnailFileList = response.data.contractThumbnailFileList
+          // that.projectThumbnailFileList = response.data.projectThumbnailFileList
+          // that.projectOriginalFileList = response.data.projectOriginalFileList
+        })
+        .catch(function (err) {
+          console.log(err)
+        })
+      },
+      getCategory: function () {
+        var that = this
+        that.$http.get({
+          url: '/hongcai/api/v1/siteProject/getCategory?number=' + this.paramsNum
+        }).then((res) => {
+          console.log(res)
         })
       },
       getProjectRisk: function () {
@@ -421,18 +449,16 @@
         }
       },
       setupWebViewJavascriptBridge: function (callback) {
-        if (window.WebViewJavascriptBridge) { return callback(window.WebViewJavascriptBridge) } else {
-          document.addEventListener('WebViewJavascriptBridgeReady', function () {
-            callback(window.WebViewJavascriptBridge)
-          }, false)
+        if (window.WebViewJavascriptBridge) {
+          return callback(window.WebViewJavascriptBridge)
         }
-        if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback) }
-        window.WVJBCallbacks = [callback]
         var WVJBIframe = document.createElement('iframe')
         WVJBIframe.style.display = 'none'
-        WVJBIframe.src = 'https://__bridge_loaded__'
+        WVJBIframe.src = 'hongcai://__BRIDGE__LOAD__'
         document.documentElement.appendChild(WVJBIframe)
-        setTimeout(function () { document.documentElement.removeChild(WVJBIframe) }, 0)
+        setTimeout(function () {
+          document.documentElement.removeChild(WVJBIframe)
+        }, 0)
       },
       connectWebViewJavascriptBridge: function (callback) {
         if (window.WebViewJavascriptBridge) {
@@ -441,38 +467,41 @@
         }
       },
       toInvest: function () {
-        // var ua = navigator.userAgent.toLowerCase()
-        // var isAndroid = /android/.test(ua)
-        // var isiOS = /iphone|ipad|ipod/.test(ua)
+        var that = this
         // ios
-        this.setupWebViewJavascriptBridge(function (bridge) {
-          bridge.registerHandler('getInfos', function (data) {
-            alert(data.name)
+        if (that.isIos) {
+          that.setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('HCNative_ImmediateInvestment', {
+              'detailTabs': 222
+            }, function (response) {
+            })
+            bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
+              alert(data)
+            })
           })
-          bridge.callHandler('toWebView_invest', {
-            'detailTabs': 222
-          }, function (response) {
-          })
-        })
+        }
         // android
-        // this.connectWebViewJavascriptBridge(function (bridge) {
-        //   alert('ldasl')
-        //   bridge.init(function (message, responseCallback) {
-        //     console.log('JS got a message', message)
-        //     var data = {
-        //       'Javascript Responds': '测试中文!'
-        //     }
-        //     console.log('JS responding with', data)
-        //     responseCallback(data)
-        //   })
-        //   bridge.registerHandler('Android_invest', function (data) {
-        //     alert(data)
-        //   })
-        //   bridge.callHandler('AndroidInvest', {
-        //     'detailTabs': 222
-        //   }, function (response) {
-        //   })
-        // })
+        if (that.isAndroid) {
+          window.WebViewJavascriptBridge.callHandler('HCNative_ImmediateInvestment', {
+            'code': '1006',
+            'tokenId': that.tokenId,
+            'buyCount': that.account
+          }, function (responseData) {})
+          that.connectWebViewJavascriptBridge(function (bridge) {
+            alert('ldasl')
+            bridge.init(function (message, responseCallback) {
+              console.log('JS got a message', message)
+              var data = {
+                'Javascript Responds': '测试中文!'
+              }
+              console.log('JS responding with', data)
+              responseCallback(data)
+            })
+            bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
+              alert(data)
+            })
+          })
+        }
       }
     }
   }
