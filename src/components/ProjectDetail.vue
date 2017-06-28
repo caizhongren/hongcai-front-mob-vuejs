@@ -468,7 +468,7 @@
         }
       },
       scrollBack: function (page) {
-        // var Height = window.innerHeight
+        window.vue = this
         var startY = 0
         var endY = 0
         var scrollDirection = 0
@@ -496,7 +496,7 @@
         }
         function endTouchScroll (event) {
           event.preventDefault()
-          console.log(startY - endY)
+          console.log(scrollDirection)
           if (scrollDirection < 0) {
             // alert('向上滑动')
             document.querySelector('.details-more').style.webkitTransform = 'translate3d(0, ' + scrollDirection + 'px, 0)'
@@ -505,6 +505,8 @@
             document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, 0px, 0)'
             document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, 0px, 0)'
             document.querySelector('.details-more').style.webkitTransform = 'translateY(0px)'
+          } else {
+            window.vue.loadMoreOrder()
           }
         }
       }
