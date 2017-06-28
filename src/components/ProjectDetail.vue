@@ -67,10 +67,6 @@
             </div>
           </div>
         </div>
-        <div class="iScrollHorizontalScrollbar iScrollLoneScrollbar" style="position: absolute; z-index: 9999; height: 7px; left: 2px; right: 2px; bottom: 0px; overflow: hidden; transform: translateZ(0px); transition-duration: 0ms; opacity: 0;">
-          <div class="iScrollIndicator" style="box-sizing: border-box; position: absolute; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.9); border-radius: 3px; height: 100%; transition-duration: 0ms; display: none; width: 8px; transform: translate(-8px, 0px) translateZ(0px);">
-          </div>
-        </div>
       </div>
       <div class="scroll">
         <div class="details-more">
@@ -137,7 +133,7 @@
               <table>
                 <thead>
                   <tr>
-                    <th>成交时间{{totalPage}}</th>
+                    <th>成交时间</th>
                     <th>用户名</th>
                     <th>投资金额(元)</th>
                   </tr>
@@ -238,7 +234,6 @@
       this.paramsNum = this.$route.params.number
       this.getProject()
       this.getProjectRisk()
-      this.getOrderList(this.page, this.pageSize)
       this.getFiles()
       this.getProjectBill()
       window.vue = this
@@ -329,7 +324,6 @@
         }).then((response) => {
           if (response.data && response.data.ret !== -1) {
             this.totalPage = response.data.totalPage
-            console.log(this.totalPage)
             if (response.data.data.length >= 1) {
               for (var i = response.data.data.length - 1; i >= 0; i--) {
                 this.orderList.push(response.data.data[i])
@@ -455,6 +449,7 @@
           window.offsetY += 0.25 * (window.touch[3].y - window.touchStartY)
           window.touchStartY = window.touch[3].y
           touchY = window.offsetY
+          console.log(touchY)
           if (window.offsetY <= 0 && window.offsetY < -1) {
             page.style.webkitTransform = 'translate3d(0, ' + window.offsetY + 'px, 0)'
           }
@@ -463,6 +458,7 @@
           event.preventDefault()
           window.speed = -(document.body.clientHeight - Math.abs(window.offsetY)) / 10
           window.offsetY += window.speed
+          console.log(touchY)
           if (touchY < -1) {
             page.style.webkitTransform = 'translate3d(0, -' + Height + 'px, 0)'
             var page2 = document.querySelector('.product-page2')
@@ -472,49 +468,43 @@
         }
       },
       scrollBack: function (page) {
-        var touch = this.CaptureTouch(page)
-        var touchStartY = 0
-        var offsetY = 0
-        var speed = 0
-        var touchY = 1
-        var vue = this
+        // var Height = window.innerHeight
+        var startY = 0
+        var endY = 0
+        var scrollDirection = 0
         page.addEventListener('touchstart', startTouchScroll, true)
         page.addEventListener('touchmove', moveTouchScroll, true)
         page.addEventListener('touchend', endTouchScroll, true)
         function startTouchScroll (event) {
           event.preventDefault()
-          touchStartY = touch[3].y
-          offsetY = offsetY ? offsetY + 50 : 0
+          // console.log(event.touches[0].pageY)
+          startY = event.touches[0].pageY
         }
         function moveTouchScroll (event) {
           event.preventDefault()
-          offsetY += 0.25 * (touch[3].y - touchStartY)
-          touchStartY = touch[3].y
-          touchY = offsetY
-          console.log(offsetY)
-          if (offsetY > 0.5) {
-            document.querySelector('.details-more').style.webkitTransform = 'translate3d(0, ' + 2 * offsetY + 'px, 0)'
-          } else if (offsetY < -0.5) {
-            document.querySelector('.details-more').style.webkitTransform = 'translateY(' + 2 * touchY + 'px)'
-          } else if (offsetY >= 0.5 && offsetY <= -0.5) {
-            document.querySelector('.details-more').style.webkitTransform = 'translateY(' + 0 + 'px)'
-            document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, ' + 0 + 'px, 0)'
-            return
+          // console.log(event.touches[0].pageY)
+          endY = event.touches[0].pageY
+          scrollDirection = (endY - startY)
+          console.log(scrollDirection)
+          if (scrollDirection < 0) {
+            // alert('向上滑动')
+            document.querySelector('.details-more').style.webkitTransform = 'translate3d(0, ' + scrollDirection + 'px, 0)'
+          } else if (scrollDirection > 0) {
+            // alert('向x滑动')
+            document.querySelector('.details-more').style.webkitTransform = 'translateY(' + scrollDirection + 'px)'
           }
         }
         function endTouchScroll (event) {
           event.preventDefault()
-          speed = -(document.body.clientHeight - Math.abs(offsetY)) / 10
-          offsetY += speed
-          offsetY = 0
-          if (touchY === 1) {
-            vue.loadMoreOrder()
-            document.querySelector('.details-more').style.webkitTransform = 'translate3d(0, ' + 0 + 'px, 0)'
-            return
-          }
-          if (touchY > 0.5) {
-            document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, ' + 0 + 'px, 0)'
-            document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, ' + 0 + 'px, 0)'
+          console.log(startY - endY)
+          if (scrollDirection < 0) {
+            // alert('向上滑动')
+            document.querySelector('.details-more').style.webkitTransform = 'translate3d(0, ' + scrollDirection + 'px, 0)'
+          } else if (scrollDirection > 0) {
+            // alert('向x滑动')
+            document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, 0px, 0)'
+            document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, 0px, 0)'
+            document.querySelector('.details-more').style.webkitTransform = 'translateY(0px)'
           }
         }
       }
