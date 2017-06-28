@@ -72,185 +72,116 @@
           </div>
         </div>
       </div>
-      <div class="details-more">
-        <div class="project-details" v-show="activeTab === 0">
-          <div class="project-brief">
-            <div class="title">
-              <span></span>
-              <p>项目简介</p>
+      <div class="scroll">
+        <div class="details-more">
+          <div class="project-details" v-show="activeTab === 0">
+            <div class="project-brief">
+              <div class="title">
+                <span></span>
+                <p>项目简介</p>
+              </div>
+              <div class="content" v-html="projectInfo.description"></div>
             </div>
-            <div class="content" v-html="projectInfo.description"></div>
-          </div>
-          <div class="project-brief">
-            <div class="title">
-              <span></span>
-              <p>资金用途</p>
+            <div class="project-brief">
+              <div class="title">
+                <span></span>
+                <p>资金用途</p>
+              </div>
+              <div class="content" v-html="projectInfo.financingPurpose"></div>
             </div>
-            <div class="content" v-html="projectInfo.financingPurpose"></div>
-          </div>
-          <div class="project-brief">
-            <div class="title">
-              <span></span>
-              <p>还款来源</p>
+            <div class="project-brief">
+              <div class="title">
+                <span></span>
+                <p>还款来源</p>
+              </div>
+              <div class="content" v-html="projectInfo.repaymentSource"></div>
             </div>
-            <div class="content" v-html="projectInfo.repaymentSource"></div>
-          </div>
-          <div class="project-brief">
-            <div class="title">
-              <span></span>
-              <p>项目评级</p>
+            <div class="project-brief">
+              <div class="title">
+                <span></span>
+                <p>项目评级</p>
+              </div>
+              <div class="content">
+                <p v-html="projectInfo.riskManagementInfo"><span></span></p>   
+              </div>
             </div>
-            <div class="content">
-              <p v-html="projectInfo.riskManagementInfo"><span></span></p>   
-            </div>
-          </div>
-          <!--<div class="project-brief" v-show="projectInfo.riskControl && projectInfo.riskControl.length>0">
-            <div class="title">
-              <span></span>
-              <p>风控审核</p>
-            </div>
-            <div class="content">
-              <p v-html="projectInfo.riskControl"><span></span></p>
-            </div>
-          </div>-->
-        </div>
-        <div v-show="activeTab === 1" class="business-license project-details bg-white">
-          <div class="project-brief">
-            <!--<div class="title">
-              <span></span>
-              <p>营业执照</p>
-            </div>-->
-            <div class="content">
-              <ul class="license-list">
-                <li class="license-item" v-show="categoryCode !== '0115'" v-for="contract in contractThumbnailFileList">
-                  <img v-bind:src="baseFileUrl + contract.uploadFile.url" width="100%" height="100%">
-                </li>
-                <li class="license-item" v-show="categoryCode !=='0112' && categoryCode !== '0115' && categoryCode !== '0116'" v-for="enterPrise in enterpriseThumbnailFileList">
-                  <img v-bind:src="baseFileUrl + enterPrise.uploadFile.url" width="100%" height="100%">
-                </li>
-                <li class="license-item" v-show="projectThumbnailFileList.length > 0" v-for="project in projectThumbnailFileList">
-                  <img v-bind:src="baseFileUrl + project.uploadFile.url" width="100%" height="100%">
-                </li>
-              </ul>
+            <div class="project-brief" v-show="projectInfo.riskControl && projectInfo.riskControl.length>0">
+              <div class="title">
+                <span></span>
+                <p>风控审核</p>
+              </div>
+              <div class="content">
+                <p v-html="projectInfo.riskControl"><span></span></p>
+              </div>
             </div>
           </div>
-          <!--<div class="project-brief">
-            <div class="title">
-              <span></span>
-              <p>银行流水</p>
-            </div>
-            <div class="content">
-              <ul class="license-list" id="imgList">
-                <li class="license-item" v-for="(item, index) in imgSrcList" @click="preview($event)">
-                  <img :src='item' width="100%" height="100%" class="image">
-                  <div id="overlay" class="overlay" @click="closePreview($event)">
-                    <img src="" alt="" id="layImg"/>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>-->
-        </div>
-        <div class="orders" v-show="activeTab == 2">
-          <div class="investor-record">
-            <table>
-              <thead>
-                <tr>
-                  <th>成交时间</th>
-                  <th>用户名</th>
-                  <th>投资金额(元)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!--<tr>
-                  <td class="ft-grey4">2015-02-12</td>
-                  <td class="ft-blue">ffff</td>
-                  <td><span class="ft-orange0">11111</span></td>
-                </tr>
-                <tr>
-                  <td class="ft-grey4">2015-02-12</td>
-                  <td class="ft-blue">ffff</td>
-                  <td><span class="ft-orange0">11111</span></td>
-                </tr>
-                <tr>
-                  <td class="ft-grey4">2015-02-12</td>
-                  <td class="ft-blue">ffff</td>
-                  <td><span class="ft-orange0">11111</span></td>
-                </tr>
-                <tr>
-                  <td class="ft-grey4">2015-02-12</td>
-                  <td class="ft-blue">ffff</td>
-                  <td><span class="ft-orange0">11111</span></td>
-                </tr>
-                <tr>
-                  <td class="ft-grey4">2015-02-12</td>
-                  <td class="ft-blue">ffff</td>
-                  <td><span class="ft-orange0">11111</span></td>
-                </tr>
-                <tr>
-                  <td class="ft-grey4">2015-02-12</td>
-                  <td class="ft-blue">ffff</td>
-                  <td><span class="ft-orange0">11111</span></td>
-                </tr>
-                <tr>
-                  <td class="ft-grey4">2015-02-12</td>
-                  <td class="ft-blue">ffff</td>
-                  <td><span class="ft-orange0">11111</span></td>
-                </tr>
-                <tr>
-                  <td class="ft-grey4">2015-02-12</td>
-                  <td class="ft-blue">ffff</td>
-                  <td><span class="ft-orange0">11111</span></td>
-                </tr>
-                <tr>
-                  <td class="ft-grey4">2015-02-12</td>
-                  <td class="ft-blue">ffff</td>
-                  <td><span class="ft-orange0">11111</span></td>
-                </tr>
-                <tr>
-                  <td class="ft-grey4">2015-02-12</td>
-                  <td class="ft-blue">ffff</td>
-                  <td><span class="ft-orange0">11111</span></td>
-                </tr>-->
-                <tr v-for="order in orderList" :key="order.id" v-show="orderList && orderList.length >0 ">
-                  <td>{{order.createTime | date}}</td>
-                  <td>{{order.userName}}</td>
-                  <td>{{order.orderAmount}}</td>
-                </tr>
-                <tr class="text-center" v-show="orderList && orderList.length <=0 ">
-                  <td colspan="3">
-                    <!--<img src="/images/project/no-record.png" width="17%" class="margin-t-2">-->
-                    <p class="ft-grey4 margin-b-0 margin-t-1p5">该项目暂未有人投资</p>
-                    <p class="ft-grey4 margin-b-0">快做第一投资人吧</p>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="drop-load" @click="loadMoreOrder()">
-              查看更多
+          <div v-show="activeTab === 1" class="business-license project-details bg-white">
+            <div class="project-brief">
+              <div class="content">
+                <ul class="license-list">
+                  <li class="license-item" v-show="categoryCode !== '0115'" v-for="contract in contractThumbnailFileList">
+                    <img v-bind:src="baseFileUrl + contract.uploadFile.url" width="100%" height="100%">
+                  </li>
+                  <li class="license-item" v-show="categoryCode !=='0112' && categoryCode !== '0115' && categoryCode !== '0116'" v-for="enterPrise in enterpriseThumbnailFileList">
+                    <img v-bind:src="baseFileUrl + enterPrise.uploadFile.url" width="100%" height="100%">
+                  </li>
+                  <li class="license-item" v-show="projectThumbnailFileList.length > 0" v-for="project in projectThumbnailFileList">
+                    <img v-bind:src="baseFileUrl + project.uploadFile.url" width="100%" height="100%">
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-        <div v-show="activeTab === 3" class="repayment-plan bg-white">
-          <div class="each-line" v-for="preRepayment in preRepaymentList">
-            <div class="column1"><span v-show="preRepayment.status !== 1">预计</span>{{preRepayment.repaymentTime | date}}</div>
-            <div class="column2">
-              <span class="circle"></span>
-              <span class="vertical-line"></span>
-            </div>
-            <div class="column3">
-              项目回款:利息{{preRepayment.repaymentInterest | number}}元
+          <div class="orders" v-show="activeTab == 2">
+            <div class="investor-record">
+              <table>
+                <thead>
+                  <tr>
+                    <th>成交时间{{totalPage}}</th>
+                    <th>用户名</th>
+                    <th>投资金额(元)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="order in orderList" :key="order.id" v-show="orderList && orderList.length >0 ">
+                    <td>{{order.createTime | date}}</td>
+                    <td>{{order.userName}}</td>
+                    <td>{{order.orderAmount}}</td>
+                  </tr>
+                  <tr class="text-center" v-show="orderList && orderList.length <=0 ">
+                    <td colspan="3">
+                      <!--<img src="/images/project/no-record.png" width="17%" class="margin-t-2">-->
+                      <p class="ft-grey4 margin-b-0 margin-t-1p5">暂无记录</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="drop-load" @click="loadMoreOrder()" v-if="page<totalPage">
+                查看更多
+              </div>
             </div>
           </div>
-          <div class="each-line">
-            <div class="column1"><span v-show="final.status !== 1">预计</span>{{final.repaymentTime | date}}</div>
-            <div class="column2">
-              <span class="circle"></span>
-              <span class="vertical-line"></span>
-              <span class="circle"></span>
+          <div v-show="activeTab === 3" class="repayment-plan bg-white">
+            <div class="each-line" v-for="preRepayment in preRepaymentList">
+              <div class="column1"><span v-show="preRepayment.status !== 1">预计</span>{{preRepayment.repaymentTime | date}}</div>
+              <div class="column2">
+                <span class="circle"></span>
+                <span class="vertical-line"></span>
+              </div>
+              <div class="column3">
+                项目回款:利息{{preRepayment.repaymentInterest | number}}元
+              </div>
             </div>
-            <div class="column3">
-              项目回款:本金{{final.repaymentPrincipal | number}}元
+            <div class="each-line">
+              <div class="column1"><span v-show="final.status !== 1">预计</span>{{final.repaymentTime | date}}</div>
+              <div class="column2">
+                <span class="circle"></span>
+                <span class="vertical-line"></span>
+                <span class="circle"></span>
+              </div>
+              <div class="column3">
+                项目回款:本金{{final.repaymentPrincipal | number}}元
+              </div>
             </div>
           </div>
         </div>
@@ -285,10 +216,10 @@
         processWith: 0,
         activeTab: 0,
         detailTabs: ['项目详情', '相关资料', '投资记录', '还款计划'],
-        pageSize: 10,
+        pageSize: 8,
         page: 1,
         tokenId: '9c438068699b1c092f2e65895feebaba8bc575a4dec742dd',
-        totalPage: 0,
+        totalPage: 1,
         isIos: Utils.isIos,
         isAndroid: Utils.isAndroid,
         categoryCode: '0115',
@@ -310,10 +241,24 @@
       this.getOrderList(this.page, this.pageSize)
       this.getFiles()
       this.getProjectBill()
+      window.vue = this
+      window.onload = function (e) {
+        var page1 = document.querySelector('.product-page1')
+        var page2 = document.querySelector('.product-page2')
+        var pagedetail = document.querySelector('.details-more')
+        if (page1) {
+          page1.addEventListener('load', window.vue.scrollDetail(page1), false)
+        }
+        if (page2 && pagedetail) {
+          page2.addEventListener('load', window.vue.scrollBack(pagedetail), false)
+        }
+      }
     },
     methods: {
       toggleTab: function (i) {
         this.activeTab = i
+        document.querySelector('.details-more').style.webkitTransform = 'translateY(' + 0 + 'px)'
+        i === 2 ? this.getOrderList(this.page, this.pageSize) : ''
       },
       getProject: function () {
         this.$http({
@@ -380,21 +325,17 @@
       getOrderList: function (page, pageSize) {
         this.$http({
           method: 'get',
-          url: '/hongcai/rest/projects/' + this.paramsNum + '/orders',
-          data: {
-            page: page,
-            pageSize: pageSize
-          }
+          url: '/hongcai/rest/projects/' + this.paramsNum + '/orders?page=' + page + '&pageSize=' + pageSize + '&token=e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698'
         }).then((response) => {
-          if (response.ret && response.ret !== -1) {
-            this.totalPage = response.totalPage
-            if (response.data.length >= 1) {
+          if (response.data && response.data.ret !== -1) {
+            this.totalPage = response.data.totalPage
+            console.log(this.totalPage)
+            if (response.data.data.length >= 1) {
               for (var i = response.data.data.length - 1; i >= 0; i--) {
                 this.orderList.push(response.data.data[i])
               }
             }
           }
-          this.orderList = response.data.data
         })
       },
       getProjectBill: function () {
@@ -414,7 +355,7 @@
           return
         }
         this.page += 1
-        this.getOrderList()
+        this.getOrderList(this.page, this.pageSize)
       },
       setupWebViewJavascriptBridge: function (callback) {
         if (window.WebViewJavascriptBridge) {
@@ -471,152 +412,121 @@
           })
         }
       },
-      preview: function (e) {
-        var theImage = new Image()
-        var imgItem = e.target
-        var imgWidth = theImage.style.width
-        var imgHeight = theImage.style.height
-        var overlay = imgItem.nextElementSibling
-        var layImg = overlay.children[0]
-        var imgPath = imgItem.src
-        console.log(layImg)
-        layImg.setAttribute('src', imgPath)
-        var mWidth = window.screen.width
-        var mHeight = window.screen.height
-        theImage.setAttribute('src', imgPath)
-        imgHeight = theImage.style.height
-        function setWidthAndHeight () {
-          if (imgWidth < mWidth) {
-            if (imgHeight > mHeight) {
-              layImg.style.height = mHeight
-            } else {
-              layImg.style.height = imgHeight
-              layImg.style.width = imgWidth
-            }
+      CaptureTouch: function (t) {
+        function e (e) {
+          var n
+          var s = e.targetTouches[0]
+          if (s.pageX || s.pageY) {
+            n = s.pageY
           } else {
-            if (imgHeight > mHeight) {
-              var realRatio = imgWidth / mWidth > imgHeight / mHeight
-              if (realRatio) {
-                layImg.style.width = mWidth
-              } else {
-                layImg.style.height = mHeight
-              }
-            } else {
-              layImg.stylewidth = mWidth
-            }
+            n = s.clientY + document.body.scrollTop + document.documentElement.scrollTop
+          }
+          n -= t.offsetTop
+          a.y = n
+        }
+        var a = {
+          y: null
+        }
+        return [t.addEventListener('touchstart', function (t) {
+          e(t)
+        }, !1),
+          t.addEventListener('touchend', function (t) {
+            a.y = null
+          }, !1),
+          t.addEventListener('touchmove', e, !1), a]
+      },
+      scrollDetail: function (page) {
+        var Height = window.innerHeight
+        window.touch = this.CaptureTouch(page)
+        window.offsetY = 0
+        window.touchStartY = 0
+        window.speed = 0
+        var touchY = 1
+        page.addEventListener('touchstart', startTouchScroll, false)
+        page.addEventListener('touchmove', moveTouchScroll, false)
+        page.addEventListener('touchend', endTouchScroll, false)
+        function startTouchScroll (event) {
+          event.preventDefault()
+          window.touchStartY = window.touch[3].y
+          window.offsetY = 0
+        }
+        function moveTouchScroll (event) {
+          event.preventDefault()
+          window.offsetY += 0.25 * (window.touch[3].y - window.touchStartY)
+          window.touchStartY = window.touch[3].y
+          touchY = window.offsetY
+          if (window.offsetY <= 0 && window.offsetY < -1) {
+            page.style.webkitTransform = 'translate3d(0, ' + window.offsetY + 'px, 0)'
           }
         }
-        setWidthAndHeight()
-        overlay.style.display = 'block'
-      },
-      closePreview: function (e) {
-        e.cancelBubble = true
-        e.stopPropagation()
-        var con = document.getElementsByClassName('overlay')[0]
-        var con1 = document.getElementsByClassName('overlay')[1]
-        if (e.target !== undefined && e.target !== null && e.target.localName !== 'img') {
-          con.style.display = 'none'
-          con1.style.display = 'none'
+        function endTouchScroll (event) {
+          event.preventDefault()
+          window.speed = -(document.body.clientHeight - Math.abs(window.offsetY)) / 10
+          window.offsetY += window.speed
+          if (touchY < -1) {
+            page.style.webkitTransform = 'translate3d(0, -' + Height + 'px, 0)'
+            var page2 = document.querySelector('.product-page2')
+            page2.style.webkitTransform = 'translate3d(0, -' + Height + 'px, 0)'
+            document.querySelector('.details-more').style.webkitTransform = 'translateY(' + 0 + 'px)'
+          }
         }
-      }
-    }
-  }
-  var Height = window.innerHeight
-  window.onload = function (e) {
-    var page1 = document.querySelector('.product-page1')
-    var page2 = document.querySelector('.product-page2')
-    var pagedetail = document.querySelector('.details-more')
-    if (page1) {
-      page1.addEventListener('load', scrollDetail(page1), false)
-    }
-    if (page2 && pagedetail) {
-      page2.addEventListener('load', scrollBack(pagedetail), false)
-    }
-  }
-  function CaptureTouch (t) {
-    function e (e) {
-      var n
-      var s = e.targetTouches[0]
-      if (s.pageX || s.pageY) {
-        n = s.pageY
-      } else {
-        n = s.clientY + document.body.scrollTop + document.documentElement.scrollTop
-      }
-      n -= t.offsetTop
-      a.y = n
-    }
-    var a = {
-      y: null
-    }
-    return [t.addEventListener('touchstart', function (t) {
-      e(t)
-    }, !1),
-      t.addEventListener('touchend', function (t) {
-        a.y = null
-      }, !1),
-      t.addEventListener('touchmove', e, !1), a]
-  }
-  function scrollDetail (page) {
-    window.touch = CaptureTouch(page)
-    window.offsetY = 0
-    window.touchStartY = 0
-    window.speed = 0
-    var touchY = 1
-    page.addEventListener('touchstart', startTouchScroll, false)
-    page.addEventListener('touchmove', moveTouchScroll, false)
-    page.addEventListener('touchend', endTouchScroll, false)
-    function startTouchScroll (event) {
-      event.preventDefault()
-      window.touchStartY = window.touch[3].y
-      window.offsetY = 0
-    }
-    function moveTouchScroll (event) {
-      event.preventDefault()
-      window.offsetY += 0.25 * (window.touch[3].y - window.touchStartY)
-      window.touchStartY = window.touch[3].y
-      touchY = window.offsetY < 0 ? -1 : 1
-      if (window.offsetY <= 0) {
-        page.style.webkitTransform = 'translate3d(0, ' + window.offsetY + 'px, 0)'
-      }
-    }
-    function endTouchScroll (event) {
-      event.preventDefault()
-      window.speed = -(document.body.clientHeight - Math.abs(window.offsetY)) / 10
-      window.offsetY += window.speed
-      if (touchY < 0) {
-        page.style.webkitTransform = 'translate3d(0, ' + -Height + 'px, 0)'
-        document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, ' + -Height + 'px, 0)'
-      }
-    }
-  }
-  function scrollBack (page) {
-    window.offsetY = 0
-    var touchY = 1
-    page.addEventListener('touchstart', startTouchScroll, false)
-    page.addEventListener('touchmove', moveTouchScroll, false)
-    page.addEventListener('touchend', endTouchScroll, false)
-    function startTouchScroll (event) {
-      event.preventDefault()
-    }
-    function moveTouchScroll (event) {
-      event.preventDefault()
-      touchY = window.offsetY < 0 ? -1 : 1
-      document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, ' + -Height + 'px, 0)'
-      document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, ' + -Height + 'px, 0)'
-    }
-    function endTouchScroll (event) {
-      event.preventDefault()
-      if (touchY <= 0) {
-        setTimeout(function () {
-          document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, 0px, 0)'
-          document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, ' + Height + 'px, 0)'
-        }, 200)
+      },
+      scrollBack: function (page) {
+        var touch = this.CaptureTouch(page)
+        var touchStartY = 0
+        var offsetY = 0
+        var speed = 0
+        var touchY = 1
+        var vue = this
+        page.addEventListener('touchstart', startTouchScroll, true)
+        page.addEventListener('touchmove', moveTouchScroll, true)
+        page.addEventListener('touchend', endTouchScroll, true)
+        function startTouchScroll (event) {
+          event.preventDefault()
+          touchStartY = touch[3].y
+          offsetY = offsetY ? offsetY + 50 : 0
+        }
+        function moveTouchScroll (event) {
+          event.preventDefault()
+          offsetY += 0.25 * (touch[3].y - touchStartY)
+          touchStartY = touch[3].y
+          touchY = offsetY
+          console.log(offsetY)
+          if (offsetY > 0.5) {
+            document.querySelector('.details-more').style.webkitTransform = 'translate3d(0, ' + 2 * offsetY + 'px, 0)'
+          } else if (offsetY < -0.5) {
+            document.querySelector('.details-more').style.webkitTransform = 'translateY(' + 2 * touchY + 'px)'
+          } else if (offsetY >= 0.5 && offsetY <= -0.5) {
+            document.querySelector('.details-more').style.webkitTransform = 'translateY(' + 0 + 'px)'
+            document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, ' + 0 + 'px, 0)'
+            return
+          }
+        }
+        function endTouchScroll (event) {
+          event.preventDefault()
+          speed = -(document.body.clientHeight - Math.abs(offsetY)) / 10
+          offsetY += speed
+          offsetY = 0
+          if (touchY === 1) {
+            vue.loadMoreOrder()
+            document.querySelector('.details-more').style.webkitTransform = 'translate3d(0, ' + 0 + 'px, 0)'
+            return
+          }
+          if (touchY > 0.5) {
+            document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, ' + 0 + 'px, 0)'
+            document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, ' + 0 + 'px, 0)'
+          }
+        }
       }
     }
   }
 </script>
 
 <style scoped>
+  .scroll {
+    overflow: scroll;
+    height: 9.5rem;
+  }
   .more-details {
     background: #efeef4;
     margin-bottom: .98rem;
@@ -631,6 +541,7 @@
     overflow: hidden;
     /*border-bottom: .05rem solid #efeef4;  */
     margin-bottom: .3rem;
+    z-index: 99999;
   }
   .detail-tabs-wrapper, .reminder-tip {
     background: #fff;
