@@ -137,10 +137,10 @@ export default {
     getInvitedFriends: function () {
       this.$http({
         method: 'get',
-        url: '/hongcai/rest/users/0/isInvitedFriends'
+        url: '/hongcai/rest/users/0/isInvitedFriends?token=e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698'
       }).then((response) => {
         if (response.data && response.data.ret !== -1) {
-          this.isInvitedFriends = response.flag
+          this.isInvitedFriends = response.data.flag
         } else if (response.data.code && response.data.code === -1041) {
           this.isActivityEnd = true
         } else {
