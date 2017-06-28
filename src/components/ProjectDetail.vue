@@ -116,22 +116,25 @@
         </div>
         <div v-show="activeTab === 1" class="business-license project-details bg-white">
           <div class="project-brief">
-            <div class="title">
+            <!--<div class="title">
               <span></span>
               <p>营业执照</p>
-            </div>
+            </div>-->
             <div class="content">
               <ul class="license-list">
-                <li class="license-item">
-                  <img src="../images/project/icon01.png" width="100%" height="100%">
+                <li class="license-item" v-show="categoryCode !== '0115'" v-for="contract in contractThumbnailFileList">
+                  <img v-bind:src="baseFileUrl + contract.uploadFile.url" width="100%" height="100%">
                 </li>
-                <li class="license-item">
-                  <img src="../images/project/icon02.png" width="100%" height="100%">
+                <li class="license-item" v-show="categoryCode !=='0112' && categoryCode !== '0115' && categoryCode !== '0116'" v-for="enterPrise in enterpriseThumbnailFileList">
+                  <img v-bind:src="baseFileUrl + enterPrise.uploadFile.url" width="100%" height="100%">
+                </li>
+                <li class="license-item" v-show="projectThumbnailFileList.length > 0" v-for="project in projectThumbnailFileList">
+                  <img v-bind:src="baseFileUrl + project.uploadFile.url" width="100%" height="100%">
                 </li>
               </ul>
             </div>
           </div>
-          <div class="project-brief">
+          <!--<div class="project-brief">
             <div class="title">
               <span></span>
               <p>银行流水</p>
@@ -146,7 +149,7 @@
                 </li>
               </ul>
             </div>
-          </div>
+          </div>-->
         </div>
         <div class="orders" v-show="activeTab == 2">
           <div class="investor-record">
@@ -229,47 +232,27 @@
           </div>
         </div>
         <div v-show="activeTab === 3" class="repayment-plan bg-white">
-          <div class="each-line">
-            <div class="column1"><span>预计</span>2017-05-25至2017-06-01</div>
+          <div class="each-line" v-for="preRepayment in preRepaymentList">
+            <div class="column1"><span v-show="preRepayment.status !== 1">预计</span>{{preRepayment.repaymentTime | date}}</div>
             <div class="column2">
               <span class="circle"></span>
               <span class="vertical-line"></span>
             </div>
             <div class="column3">
-              项目回款:利息5,000.00元
+              项目回款:利息{{preRepayment.repaymentInterest | number}}元
             </div>
           </div>
           <div class="each-line">
-            <div class="column1"><span>预计</span>2017-05-25至2017-06-01</div>
-            <div class="column2">
-              <span class="circle"></span>
-              <span class="vertical-line"></span>
-            </div>
-            <div class="column3">
-              项目回款:利息5,000.00元
-            </div>
-          </div> 
-          <div class="each-line">
-            <div class="column1"><span>预计</span>2017-05-25至2017-06-01</div>
-            <div class="column2">
-              <span class="circle"></span>
-              <span class="vertical-line"></span>
-            </div>
-            <div class="column3">
-              项目回款:利息5,000.00元
-            </div>
-          </div> 
-          <div class="each-line">
-            <div class="column1"><span>预计</span>2017-05-25至2017-06-01</div>
+            <div class="column1"><span v-show="final.status !== 1">预计</span>{{final.repaymentTime | date}}</div>
             <div class="column2">
               <span class="circle"></span>
               <span class="vertical-line"></span>
               <span class="circle"></span>
             </div>
             <div class="column3">
-              项目回款:本金5,000,000.00元
+              项目回款:本金{{final.repaymentPrincipal | number}}元
             </div>
-          </div>    
+          </div>
         </div>
       </div>
     </div>
@@ -304,10 +287,20 @@
         detailTabs: ['项目详情', '相关资料', '投资记录', '还款计划'],
         pageSize: 10,
         page: 1,
+        tokenId: '9c438068699b1c092f2e65895feebaba8bc575a4dec742dd',
         totalPage: 0,
         isIos: Utils.isIos,
         isAndroid: Utils.isAndroid,
-        imgSrcList: ['https://www.hongcai.com/uploads/jpg/thumbnail/2017-06-22/project/project-5bbcdd3e5890421c9b8a2f0f93bf9f9a-thumbnail.jpg', 'https://www.hongcai.com/uploads/jpg/thumbnail/2017-06-22/project/project-a531d40cac07400bad03a2cf7b7018f8-thumbnail.jpg']
+        categoryCode: '0115',
+        final: {},
+        preRepaymentList: {},
+        contractOriginalFileList: [],
+        contractThumbnailFileList: [],
+        enterpriseOriginalFileList: [],
+        enterpriseThumbnailFileList: [],
+        projectOriginalFileList: [],
+        projectThumbnailFileList: [],
+        baseFileUrl: 'http://m.test321.hongcai.com/uploads/'
       }
     },
     created: function () {
@@ -315,6 +308,8 @@
       this.getProject()
       this.getProjectRisk()
       this.getOrderList(this.page, this.pageSize)
+      this.getFiles()
+      this.getProjectBill()
     },
     methods: {
       toggleTab: function (i) {
@@ -346,23 +341,32 @@
         that.$http.get({
           url: '/hongcai/api/v1/siteProject/projectFiles?projectId=' + that.projectId
         }).then(function (res) {
-          // that.enterpriseThumbnailFileList = response.data.enterpriseThumbnailFileList
-          // that.enterpriseOriginalFileList = response.data.enterpriseOriginalFileList
-          // that.contractOriginalFileList = response.data.contractOriginalFileList
-          // that.contractThumbnailFileList = response.data.contractThumbnailFileList
-          // that.projectThumbnailFileList = response.data.projectThumbnailFileList
-          // that.projectOriginalFileList = response.data.projectOriginalFileList
+          that.enterpriseThumbnailFileList = res.data.enterpriseThumbnailFileList
+          that.enterpriseOriginalFileList = res.data.enterpriseOriginalFileList
+          that.contractOriginalFileList = res.data.contractOriginalFileList
+          that.contractThumbnailFileList = res.data.contractThumbnailFileList
+          that.projectThumbnailFileList = res.data.projectThumbnailFileList
+          that.projectOriginalFileList = res.data.projectOriginalFileList
         })
         .catch(function (err) {
           console.log(err)
         })
       },
-      getCategory: function () {
+      getFiles: function () {
         var that = this
-        that.$http.get({
-          url: '/hongcai/api/v1/siteProject/getCategory?number=' + this.paramsNum
+        that.$http({
+          url: '/hongcai/rest/projects/' + that.paramsNum + '/files'
         }).then((res) => {
-          console.log(res)
+          that.categoryCode = res.data.category.code
+          that.contractOriginalFileList = res.data.contractOriginalFileList
+          that.contractThumbnailFileList = res.data.contractThumbnailFileList
+          that.enterpriseOriginalFileList = res.data.enterpriseOriginalFileList
+          that.enterpriseThumbnailFileList = res.data.enterpriseThumbnailFileList
+          that.projectOriginalFileList = res.data.projectOriginalFileList
+          that.projectThumbnailFileList = res.data.projectThumbnailFileList
+        })
+        .catch(function (err) {
+          console.log(err)
         })
       },
       getProjectRisk: function () {
@@ -393,60 +397,24 @@
           this.orderList = response.data.data
         })
       },
+      getProjectBill: function () {
+        var that = this
+        that.$http({
+          url: '/hongcai/rest/projects/' + that.paramsNum + '/projectBill?token=' + that.tokenId
+        }).then(function (res) {
+          that.preRepaymentList = res.data.preRepaymentList
+          that.final = that.preRepaymentList[that.preRepaymentList.length - 1]
+        })
+        .catch(function (err) {
+          console.log(err)
+        })
+      },
       loadMoreOrder: function () {
         if (this.page >= this.totalPage) {
           return
         }
         this.page += 1
         this.getOrderList()
-      },
-      preview: function (e) {
-        var theImage = new Image()
-        var imgItem = e.target
-        var imgWidth = theImage.style.width
-        var imgHeight = theImage.style.height
-        var overlay = imgItem.nextElementSibling
-        var layImg = overlay.children[0]
-        var imgPath = imgItem.src
-        console.log(layImg)
-        layImg.setAttribute('src', imgPath)
-        var mWidth = window.screen.width
-        var mHeight = window.screen.height
-        theImage.setAttribute('src', imgPath)
-        imgHeight = theImage.style.height
-        function setWidthAndHeight () {
-          if (imgWidth < mWidth) {
-            if (imgHeight > mHeight) {
-              layImg.style.height = mHeight
-            } else {
-              layImg.style.height = imgHeight
-              layImg.style.width = imgWidth
-            }
-          } else {
-            if (imgHeight > mHeight) {
-              var realRatio = imgWidth / mWidth > imgHeight / mHeight
-              if (realRatio) {
-                layImg.style.width = mWidth
-              } else {
-                layImg.style.height = mHeight
-              }
-            } else {
-              layImg.stylewidth = mWidth
-            }
-          }
-        }
-        setWidthAndHeight()
-        overlay.style.display = 'block'
-      },
-      closePreview: function (e) {
-        e.cancelBubble = true
-        e.stopPropagation()
-        var con = document.getElementsByClassName('overlay')[0]
-        var con1 = document.getElementsByClassName('overlay')[1]
-        if (e.target !== undefined && e.target !== null && e.target.localName !== 'img') {
-          con.style.display = 'none'
-          con1.style.display = 'none'
-        }
       },
       setupWebViewJavascriptBridge: function (callback) {
         if (window.WebViewJavascriptBridge) {
@@ -501,6 +469,54 @@
               alert(data)
             })
           })
+        }
+      },
+      preview: function (e) {
+        var theImage = new Image()
+        var imgItem = e.target
+        var imgWidth = theImage.style.width
+        var imgHeight = theImage.style.height
+        var overlay = imgItem.nextElementSibling
+        var layImg = overlay.children[0]
+        var imgPath = imgItem.src
+        console.log(layImg)
+        layImg.setAttribute('src', imgPath)
+        var mWidth = window.screen.width
+        var mHeight = window.screen.height
+        theImage.setAttribute('src', imgPath)
+        imgHeight = theImage.style.height
+        function setWidthAndHeight () {
+          if (imgWidth < mWidth) {
+            if (imgHeight > mHeight) {
+              layImg.style.height = mHeight
+            } else {
+              layImg.style.height = imgHeight
+              layImg.style.width = imgWidth
+            }
+          } else {
+            if (imgHeight > mHeight) {
+              var realRatio = imgWidth / mWidth > imgHeight / mHeight
+              if (realRatio) {
+                layImg.style.width = mWidth
+              } else {
+                layImg.style.height = mHeight
+              }
+            } else {
+              layImg.stylewidth = mWidth
+            }
+          }
+        }
+        setWidthAndHeight()
+        overlay.style.display = 'block'
+      },
+      closePreview: function (e) {
+        e.cancelBubble = true
+        e.stopPropagation()
+        var con = document.getElementsByClassName('overlay')[0]
+        var con1 = document.getElementsByClassName('overlay')[1]
+        if (e.target !== undefined && e.target !== null && e.target.localName !== 'img') {
+          con.style.display = 'none'
+          con1.style.display = 'none'
         }
       }
     }
@@ -906,13 +922,16 @@
   }
   .business-license .project-brief .content .license-list {
     width: 100%;
-    display: flex;
-    justify-content: space-between;
   }
   .content .license-list .license-item {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.6rem;
+    height: 2.6rem;
+    display: inline-block;
     border: 1px solid #fdb62b;
+    margin-bottom: .3rem;
+  }
+  .license-item:nth-child(even) {
+    float: right;
   }
   .overlay{
     position: fixed;
@@ -939,7 +958,7 @@
   .repayment-plan {
     padding: 0;
     width: 100%;
-    padding: .7rem .35rem 0;
+    padding: .5rem .35rem 0;
     min-height: 9.2rem;
   }
   .column1, .column2, .column3{
@@ -953,6 +972,9 @@
     font-size: .24rem;
     color: #999;
     text-align: left;
+    margin-top: -.4rem;
+    vertical-align: text-top;
+    height: 100%;
   }
   .repayment-plan .each-line .column2{
     width: 5%;
@@ -984,9 +1006,10 @@
     padding-left: .2rem;
     width: 59.5%;
     color: #666;
-    font-size: .28rem;
+    font-size: .26rem;
     text-align: left;
     height: 100%;
     vertical-align: top;
+    margin-top: -.1rem;
   }
 </style>
