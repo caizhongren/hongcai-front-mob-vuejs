@@ -46,7 +46,7 @@
       </div>
     <div class="lottery-other">
         <p class="display-inb">活动规则</p>
-        <p class="display-inb">我的奖励</p>
+        <p class="display-inb" @click="toLotteryRecord()">我的奖励</p>
       </div>
       <!-- 幸运用户 -->
       <div class="lucky-users">
@@ -81,12 +81,14 @@
       return {
         drawCount: 0,
         isiOS: true,
-        prizeList: {}
+        prizeList: {},
+        token: '9c438068699b1c092f2e65895feebaba8bc575a4dec742dd'
       }
     },
     created: function () {
       this.isiOS = Utils.isIos()
-      // console.log(LuckDraw.draw)
+      this.token = this.$route.query.token
+      console.log(this.token)
     },
     methods: {
       draw: function () {
@@ -173,6 +175,13 @@
         .catch(function (err) {
           console.log(err)
         })
+      },
+      toLotteryRecord: function () {
+        if (!this.token || this.token === '') {
+          // 跳转native登录
+          return
+        }
+        this.$router.push({name: 'LotteryRecord', query: { token: this.token }})
       }
     }
   }
@@ -347,74 +356,6 @@
     font-size: 1.4rem;
     text-align: justify;
   }
-
-  /*我的奖励*/
-  .lottery-record {
-    padding-top: 4rem;
-    background: url('../../images/lottery/record-bg.jpg') 0 0 no-repeat;
-    background-size: 100% 100%;
-    width: 100%;
-    overflow: hidden;
-    position: fixed;
-  }
-  .lottery-record .lottery-list-wrap {
-    width: 92%;
-    margin: 0 auto;
-    height: 82%;
-    background: url('../../images/lottery/record-list-bg.png') 0 0 no-repeat;
-    background-size: 100% 100%; 
-  }
-  .lottery-record .lottery-list-wrap .lottery-list-header {
-    width: 93%;
-    margin: 0 auto;
-    color: #fc7371;
-    text-align: center;
-    height: 9rem;
-    line-height: 13rem;
-    border-bottom: 1px solid #ddd;
-  }
-  .lottery-record .lottery-list-wrap .no-data {
-    padding-top: 26%;
-  }
-  .lottery-record .lottery-list-wrap .no-data img:first-child{
-    margin-bottom: 10%;
-  }
-  .lottery-record .lottery-list-wrap ul {
-    width: 90%;
-    height: 75%;
-    display: block;
-    margin: 0 auto;
-    overflow-y: auto;
-  }
-  .lottery-record .lottery-list-wrap ul li {
-    margin-bottom: 0;
-    /*width: 100%;*/
-    border-bottom: 1px solid #ddd;
-    padding: 0 0.5rem;
-    height: 4.6rem;
-    line-height: 4.6rem;
-    font-size:1.2rem;
-  }
-  .lottery-record .lottery-list-wrap ul li:first-child span:first-child {
-    margin-bottom: -.3rem;
-  }
-  .lottery-record .lottery-list-wrap ul li span {
-    display: inline-block;
-    
-  }
-  .lottery-record .lottery-list-wrap ul li span:first-child {
-    width: 7%;
-    vertical-align: middle;
-  }
-  .lottery-record .lottery-list-wrap ul li span:nth-child(2) {
-    width: 21%;
-    text-align: left;
-  }
-  .lottery-record .lottery-list-wrap ul li span:nth-child(3) {
-    /*width: 11%;*/
-    width: 26%;
-    text-align: center;
-  }
   .state {
     font-size: .2rem;
     color: #000;
@@ -455,13 +396,6 @@
       display: inline-block;
       width: 46%;
       /*margin-right: 5%;*/
-    }
-    .lottery-record .lottery-list-wrap {
-      height: 38rem;
-    }
-    .lottery-record .lottery-list-wrap .lottery-list-header {
-      height: 9rem;
-      line-height: 13.5rem;
     }
     .about-background, .bank-custody, .risk-safety ul li {
       width: 92%;
