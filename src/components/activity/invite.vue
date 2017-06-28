@@ -50,7 +50,7 @@
                 <div class="iosTip" v-show="isiOS">该活动与设备生产商Apple Inc.公司无关</div>
             </div>
             <!-- 活动规则 -->
-            <div class="invite-rule" v-on:click="showRuleBox"></div>
+            <div class="invite-rule" @click="showRuleBox"></div>
         </div>
         <!-- 活动规则 -->
         <div class="invite-Rulebox" v-if="showRules">
@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import {Utils, InviteShareUtils} from '../../service/Utils'
+import {Utils, InviteShareUtils, ruleBox} from '../../service/Utils'
 export default {
   name: 'Invite',
   data () {
@@ -131,8 +131,7 @@ export default {
   methods: {
     showRuleBox: function () {
       var $invite = document.querySelector('#invite')
-      this.showRules = !this.showRules
-      this.showRules ? $invite.className = 'position-fix' : $invite.className = ' '
+      ruleBox.showRuleBox($invite, this, this.showRules)
     },
     getInvitedFriends: function () {
       this.$http({

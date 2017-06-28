@@ -54,5 +54,12 @@ let InviteShareUtils = {
     return imageUrl
   }
 }
+let ruleBox = {
+  showRuleBox: function (el, vue, showRules) {
+    vue.showRules = !vue.showRules
+    vue.showRules ? el.className = 'position-fix' : el.className = ' '
+  }
+}
 export {Utils}
 export {InviteShareUtils}
+export {ruleBox}

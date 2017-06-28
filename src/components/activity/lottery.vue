@@ -1,78 +1,142 @@
 <template>
   <div class="lottery padding-b-3">
-    <div class="lottery-wrap">
-      <div class="draw-lottery">
-        <p class="text-center ft-1p3">
-          <span ng-if="isLogged">今日可抽奖次数：<span class="draw-count">{{drawCount}}</span>次</span>
-        </p>
-        <!-- 抽奖转盘 1, "当日加息"" ; 2, "现金奖励 ; 3, "加息券 ; 4, "现金券" ; 5, "特权本金" ; 6, "谢谢"-->
-        <div class="lottery-box" id="js-rect-luck-draw-con">
-          <div class="lottery-item js-item selecting" data-sort="1" data-prize-id="1">
-            <img src="../../images/lottery/one-day-rate.png" alt="">
-            <span class="item-mask"></span>
+    <div id="lottery">
+      <div class="lottery-wrap">
+        <div class="draw-lottery">
+          <p class="text-center ft-1p3">
+            <span ng-if="isLogged">今日可抽奖次数：<span class="draw-count">{{drawCount}}</span>次</span>
+          </p>
+          <!-- 抽奖转盘 1, "当日加息"" ; 2, "现金奖励 ; 3, "加息券 ; 4, "现金券" ; 5, "特权本金" ; 6, "谢谢"-->
+          <div class="lottery-box" id="js-rect-luck-draw-con">
+            <div class="lottery-item js-item selecting" data-sort="1" data-prize-id="1">
+              <img src="../../images/lottery/one-day-rate.png" alt="">
+              <span class="item-mask"></span>
+            </div>
+            <div class="lottery-item js-item selecting" data-sort="2" data-prize-id="2">
+              <img src="../../images/lottery/cash.png" alt="">
+              <span class="item-mask"></span>
+            </div>
+            <div class="lottery-item js-item selecting" data-sort="3" data-prize-id="3">
+              <img src="../../images/lottery/rate-coupon.png" alt="">
+              <span class="item-mask"></span>
+            </div>
+            <div class="lottery-item js-item selecting" data-sort="8" data-prize-id="5">
+              <img src="../../images/lottery/privilege.png" alt="">
+              <span class="item-mask"></span>
+            </div>
+            <div class="lottery-item js-start-btn" @click="draw()">
+              <img src="../../images/lottery/draw.png" alt="">
+            </div>
+            <div class="lottery-item js-item selecting" data-sort="4" data-prize-id="4">
+              <img src="../../images/lottery/cash-coupon.png" alt="">
+              <span class="item-mask"></span>
+            </div>
+            <div class="lottery-item js-item selecting" data-sort="7" data-prize-id="6">
+              <img src="../../images/lottery/thanks.png" alt="">
+              <span class="item-mask"></span>
+            </div>
+            <div class="lottery-item js-item selecting" data-sort="6" data-prize-id="1">
+              <img src="../../images/lottery/one-day-rate.png" alt="">
+              <span class="item-mask"></span>
+            </div>
+            <div class="lottery-item js-item selecting" data-sort="5" data-prize-id="5">
+              <img src="../../images/lottery/privilege.png" alt="">
+              <span class="item-mask"></span>
+            </div>
           </div>
-          <div class="lottery-item js-item selecting" data-sort="2" data-prize-id="2">
-            <img src="../../images/lottery/cash.png" alt="">
-            <span class="item-mask"></span>
+        </div>
+      <div class="lottery-other">
+          <p class="display-inb" @click="ruleBox(showRules)">活动规则</p>
+          <p class="display-inb" @click="toLotteryRecord()">我的奖励</p>
+        </div>
+        <!-- 幸运用户 -->
+        <div class="lucky-users">
+          <img src="../../images/lottery/title-lucky-users.png" alt="" width="48%">
+          <div class="lucky-users-wrap">
+            <ul class="lucky-users-box margin-b-0">
+              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
+              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
+              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
+              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
+              <li class="text-justify"><span>恭喜153****5650</span>5555555555</li>
+              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
+              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
+              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
+              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
+              <li class="text-justify"><span>恭喜153****5650</span>555555555555</li>
+              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
+              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
+              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
+              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
+              <li class="text-justify"><span>恭喜153****5650</span>4444444444</li>
+              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
+              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
+              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
+              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
+              <li class="text-justify"><span>恭喜153****5650</span>66666</li>
+            </ul>
           </div>
-          <div class="lottery-item js-item selecting" data-sort="3" data-prize-id="3">
-            <img src="../../images/lottery/rate-coupon.png" alt="">
-            <span class="item-mask"></span>
+          <p class="text-center state" v-show="isiOS">该活动与设备生产商Apple Inc.公司无关</p>
+        </div>
+      </div>
+    </div>
+    <!--中奖弹窗-->
+    <div class="share-page-breakWishLayer showDrawBox" v-show="showDrawBox">
+      <div class="draw-box">
+        <!-- 抽奖 获得奖励-->
+        <div class="receive-draw" v-if="receiveDraw">
+          <img src="../../images/lottery/receive-draw-01.png" alt="恭喜您获得奖励!" width="55%" v-show="prizeList.prizeType !== 6">
+          <div class="getPrize">
+            <p ng-show="prizeList.prizeType !== 6">{{prizeList.prizeValue}}</p>
+            <p  ng-class="{'margin-t-0p8': prizeList.prizeType === 6}">{{prizeList.prizeText}}</p>
           </div>
-          <div class="lottery-item js-item selecting" data-sort="8" data-prize-id="5">
-            <img src="../../images/lottery/privilege.png" alt="">
-            <span class="item-mask"></span>
-          </div>
-          <div class="lottery-item js-start-btn" @click="draw()">
-            <img src="../../images/lottery/draw.png" alt="">
-          </div>
-          <div class="lottery-item js-item selecting" data-sort="4" data-prize-id="4">
-            <img src="../../images/lottery/cash-coupon.png" alt="">
-            <span class="item-mask"></span>
-          </div>
-          <div class="lottery-item js-item selecting" data-sort="7" data-prize-id="6">
-            <img src="../../images/lottery/thanks.png" alt="">
-            <span class="item-mask"></span>
-          </div>
-          <div class="lottery-item js-item selecting" data-sort="6" data-prize-id="1">
-            <img src="../../images/lottery/one-day-rate.png" alt="">
-            <span class="item-mask"></span>
-          </div>
-          <div class="lottery-item js-item selecting" data-sort="5" data-prize-id="5">
-            <img src="../../images/lottery/privilege.png" alt="">
-            <span class="item-mask"></span>
+          <div class="prize-effect">{{prizeList.prizeCont.split('，')[0]}} <br> {{prizeList.prizeCont.split('，')[1]}}</div>
+          <!--<div class="prize-effect">{{prizeList.prizeCont}} <br> {{prizeList.prizeCont}}</div>-->
+          <!-- 第一次抽奖 未分享 出现 ；第二次获得奖励 隐藏 -->
+          <img src="../../images/lottery/share-friends.png" alt="分享好友，再抽一次" width="42%" v-show="canShare" @click="LotteryShareTo();">
+        </div>
+        <!-- 抽奖次数达上限，欢迎明日再来！ -->
+        <div class="upper-limit" v-if="showUpperLimit">
+          <img src="../../images/lottery/upper-limit-01.png" alt="抽奖次数达上限，欢迎明日再来！" width="65%">
+          <img src="../../images/lottery/upper-limit-02.png" alt="明日见" width="45%" class="margin-t-4">
+        </div>
+        <!-- 今日次数用完需分享 -->
+        <div class="usedAndcanShare" v-if="usedAndcanShare">
+          <img src="../../images/lottery/usedAndcanShare-01.png" alt="今日免费抽奖机会已使用！分享好友可再获一次免费抽奖机会" width="75%">
+          <img src="../../images/lottery/usedAndcanShare-02.png" alt="分享好友，再抽一次" width="38%" class="margin-t-1" @click="LotteryShareTo();">
+        </div>
+        <img src="../../images/lottery/close-drawBox.png" alt="关闭中奖弹窗" width="8%" @click="closeDraw(showDrawBox);">
+      </div>
+    </div>
+    <!--活动规则-->
+    <div class="share-page-breakWishLayer text-center" v-show="showRules">
+      <div class="rule-box">
+        <div class="rule-title">
+          <img src="../../images/lottery/rule-title.png" width="50%">
+          <img src="../../images/lottery/rule-title-portrait.png"  width="12%" class="hongcai-portrait">
+        </div>
+        <div class="rule-bg">
+          <div class="rule-content">
+            <p>1.每人每天拥有1次免费抽奖机会，首次分享幸运大抽奖到第三方平台，可再获得1次免费抽奖机会；</p>
+            <p>2.您可在【我的奖励】中查看自己最近两周内的中奖情况；</p>
+            <p>3.抽中的当日加息奖励系统将自动为您使用，次日即可获得奖励收益，加息仅针对您当日宏财精选及宏财尊贵项目在投总资产有效，包含当日新增投资，不含购买的债权转让项目及已经成功转让的资产；</p>
+            <p>4.抽中的特权本金、返现、现金券及加息券奖励将直接发放至您的账户中，可在【我的】页面相应位置查看；</p>
+            <p>5.所有奖励均可叠加获得；</p>
+            <p>6.在法律规定范围内，平台保留本活动最终解释权；</p>
+            <p>7.如有更多相关问题，可致电详询<br>
+              客服电话：400-990-7626 <br>
+              服务时间：工作日9:00-18:00
+            </p>
           </div>
         </div>
       </div>
-    <div class="lottery-other">
-        <p class="display-inb">活动规则</p>
-        <p class="display-inb" @click="toLotteryRecord()">我的奖励</p>
-      </div>
-      <!-- 幸运用户 -->
-      <div class="lucky-users">
-        <img src="../../images/lottery/title-lucky-users.png" alt="" width="48%">
-        <div class="lucky-users-wrap">
-          <ul class="margin-b-0">
-            <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-            <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-            <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-            <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-            <li class="text-justify"><span>恭喜153****5650</span>获得200000元特权本金</li>
-            <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-            <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-            <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-            <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-            <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-          </ul>
-        </div>
-        <p class="text-center state" v-show="isiOS">该活动与设备生产商Apple Inc.公司无关</p>
-      </div>
+      <img src="../../images/lottery/close-drawBox.png" alt="关闭弹窗" width="8%" @click="ruleBox(showRules)">
     </div>
   </div>
 </template>
 <script src="../../service/rect.luckdraw.js"></script>
 <script>
-  import {Utils} from '../../service/Utils'
+  import {Utils, ruleBox} from '../../service/Utils'
   // import $ from 'jquery'
   // import {LuckDraw} from '../../service/rect.luckdraw.js'
   export default {
@@ -82,13 +146,23 @@
         drawCount: 0,
         isiOS: true,
         prizeList: {},
-        token: '9c438068699b1c092f2e65895feebaba8bc575a4dec742dd'
+        token: '9c438068699b1c092f2e65895feebaba8bc575a4dec742dd',
+        showRules: false,
+        canShare: false,
+        showDrawBox: false,
+        showUpperLimit: false,
+        usedAndcanShare: false,
+        receiveDraw: false
       }
     },
     created: function () {
       this.isiOS = Utils.isIos()
       this.token = this.$route.query.token
-      console.log(this.token)
+      this.getPrize()
+      window.vue = this
+      window.onload = function (e) {
+        window.vue.luckyTimer(-1.25)
+      }
     },
     methods: {
       draw: function () {
@@ -182,6 +256,110 @@
           return
         }
         this.$router.push({name: 'LotteryRecord', query: { token: this.token }})
+      },
+      ruleBox: function (closeBox) {
+        ruleBox.showRuleBox(document.querySelector('#lottery'), this, closeBox)
+      },
+      closeDraw: function (showDrawBox) {
+        this.showDrawBox = !this.showDrawBox
+        this.showDrawBox ? document.querySelector('#lottery').className = 'position-fix' : document.querySelector('#lottery').className = ' '
+      },
+      getPrize: function () {
+        this.$http({
+          method: 'post',
+          url: '/hongcai/rest/lotteries/draw?token=e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698'
+        }).then((response) => {
+          if (response.data && response.data.ret === -1) {
+            if (response.data.code === -1300) {
+              this.showUpperLimit = true
+            } else if (response.data.code === -1301) {
+              this.usedAndcanShare = true
+            } else {
+              alert(response.data.msg)
+            }
+          } else {
+            this.receiveDraw = true
+            // $lotteryItem.removeClass('selecting');
+            // var receivePrize = response.data.data
+            var receivePrize = {
+              prizeType: 1,
+              value: 2
+            }
+            // var prizeId = receivePrize.prizeType || 1
+            // this.canShare = response.data.canShare
+            this.canShare = false
+            // rld.start(prizeId)
+            switch (receivePrize.prizeType) {
+              case 1:
+                this.prizeList = {
+                  prizeType: receivePrize.prizeType,
+                  prizeText: '当日加息',
+                  prizeValue: '+' + receivePrize.value + '%',
+                  prizeCont: '奖励已自动生效，成功为您加息！'
+                }
+                break
+              case 2:
+                this.prizeList = {
+                  prizeType: receivePrize.prizeType,
+                  prizeText: '返现',
+                  prizeValue: receivePrize.value + '元',
+                  prizeCont: '奖励已发放至您的账户，前往“我的”页面即可查看！'
+                }
+                break
+              case 3:
+                this.prizeList = {
+                  prizeType: receivePrize.prizeType,
+                  prizeText: '加息券',
+                  prizeValue: '+' + receivePrize.value + '%',
+                  prizeCont: '奖励已发放至您的账户，前往“我的-加息券”即可查看！'
+                }
+                break
+              case 4:
+                this.prizeList = {
+                  prizeType: receivePrize.prizeType,
+                  prizeText: '现金券',
+                  prizeValue: Number(receivePrize.value).toFixed(0) + '元',
+                  prizeCont: '奖励已发放至您的账户，前往“我的-现金券”即可查看！'
+                }
+                break
+              case 5:
+                this.prizeList = {
+                  prizeType: receivePrize.prizeType,
+                  prizeText: '(有效期1天)',
+                  prizeValue: Number(receivePrize.value).toFixed(0) + '元特权本金',
+                  prizeCont: '奖励已发放至您的账户，前往“我的-特权本金”即可查看！'
+                }
+                break
+              case 6:
+                this.prizeList = {
+                  prizeType: receivePrize.prizeType,
+                  prizeText: '谢谢',
+                  prizeValue: receivePrize.value,
+                  prizeCont: '什么都木有赚到，换个姿势再试一次吧～'
+                }
+                break
+            }
+          }
+          this.showDrawBox = false
+          // var $lottry = document.querySelector('#lottery')
+          // $lottry.className = 'position-fix'
+        })
+      },
+      luckyTimer: function (val) {
+        var $luckyUsersList = document.querySelector('.lucky-users-box')
+        setInterval(function () {
+          setInterval(frame, 500)
+          function frame () {
+            if (val % -10 === 0) {
+              val = -1.25
+              $luckyUsersList.style.marginTop = '0rem'
+              // val -= 1.25
+            } else {
+              $luckyUsersList.style.marginTop = val + 'rem'
+            }
+          }
+          val -= -val
+        }, 5000)
       }
     }
   }
@@ -288,72 +466,82 @@
     margin-bottom: .23rem;
   }
 
+  .share-page-breakWishLayer {
+    position: fixed;
+    top: 0;
+    z-index: 999999;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
   /*中奖弹窗*/
   .showDrawBox {
-    display: none;
+    /*display: none;*/
   }
   .draw-box {
     text-align: center;
   }
   .draw-box .receive-draw {
     text-align: center;
-    padding: 22% 0 4rem;
-    display: none;
+    padding: 22% 0 .4rem;
+    /*display: none;*/
   }
   .draw-box .receive-draw .getPrize {
     background: url('../../images/lottery/receive-draw-02.png') no-repeat center center;
     background-size: contain;
-    height: 20rem;
-    padding-top: 11.6rem;
+    height: 4.5rem;
+    padding-top: 2.45rem;
     margin-top: .5rem;
+    font-size: .24rem;
   }
   .draw-box .receive-draw .getPrize p {
     color: #fc7371;
     margin-bottom: 0;
-    line-height: 1.8rem;
+    line-height: .5rem;
   }
   .draw-box .receive-draw .prize-effect {
     color: #fff;
-    font-size: 1.4rem;
-    margin: 2rem 0 1.4rem;
+    font-size: .24rem;
+    margin: 0.3rem 0;
   }
   .draw-box .upper-limit {
-    padding: 40% 0 4rem;
-    display: none;
+    padding: 40% 0 .4rem;
   } 
   .draw-box .usedAndcanShare {
-    padding: 40% 0 7rem;
-    display: none;
+    padding: 40% 0 .7rem;
   }
   /*规则弹窗*/
   .rule-box {
-      padding: 20% 3.2rem 4rem;
+    padding: 21% .2rem .5rem;
   }
   .rule-box .rule-title {
     position: relative;
+    margin-bottom: .1rem;
   }
   .rule-box .rule-title .hongcai-portrait {
     position: absolute;
-    top: -2.56rem;
+    top: -.62rem;
     left: 27%;
   }
   .rule-box .rule-bg {
-    height: 34rem;
+    height: 6rem;
     overflow: auto;
     background: url('../../images/lottery/rule-bg.png') no-repeat center center;
     background-size: contain;
   }
   .rule-box .rule-bg .rule-content {
-    height: 24.5rem;
-      position: relative;
-      top: 4rem;
-      padding: 0 4rem;
-      overflow: auto;
+    height: 4.86rem;
+    position: relative;
+    top: .5rem;
+    padding: 0 1rem;
+    overflow: auto;
   }
   .rule-box .rule-bg .rule-content p {
-    margin-bottom: 1.2rem;
+    margin-bottom: .1rem;
     color: #fff;
-    font-size: 1.4rem;
+    font-size: .24rem;
     text-align: justify;
   }
   .state {
@@ -395,27 +583,26 @@
     .lottery .lottery-wrap .lucky-users .lucky-users-wrap li span{
       display: inline-block;
       width: 46%;
-      /*margin-right: 5%;*/
     }
     .about-background, .bank-custody, .risk-safety ul li {
       width: 92%;
     }
-    .rule-box {
-      padding: 20% 3.2rem 1rem;
+    /*.rule-box {
+      padding: 20% .2rem .1rem;
     }
     .rule-box .rule-bg {
-      height: 30rem;
+      height: 6rem;
     }
     .rule-box .rule-bg .rule-content {
-      height: 21rem;
-        top: 4rem;
-        padding: 0 4rem;
+      height: 4.86rem;
+      top: .5rem;
+      padding: 0 1rem;
     }
     .rule-box .rule-title .hongcai-portrait {
-      top: -2.6rem;
-    }
+      top: -.6rem;
+    }*/
     .draw-box .receive-draw {
-      padding: 22% 0 2rem;
+      padding: 22% 0 .2rem;
     }
   }
 </style>
