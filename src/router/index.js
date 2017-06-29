@@ -13,6 +13,7 @@ import Question from '../components/user-center/question.vue'
 import RegisterAgree from '../components/registerAgree.vue'
 import AssignmentAgree from '../components/assignmentAgree.vue'
 import AssignmentQuestion from '../components/assignmentQuestion.vue'
+import BusinessSuccess from '../components/businessSuccess.vue'
 Vue.use(Router)
 const routes = [
   {
@@ -79,6 +80,11 @@ const routes = [
     path: '/assignment-question',
     name: 'AssignmentQuestion',
     component: AssignmentQuestion
+  },
+  {
+    path: '/businessSuccess',
+    name: 'BusinessSuccess',
+    component: BusinessSuccess
   }
 ]
 const router = new Router({
