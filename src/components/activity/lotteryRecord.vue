@@ -17,7 +17,7 @@
           <span v-if="record.prizeType === 5">特权本金</span>
           <span v-if="record.prizeType === 3 || record.prizeType === 1">{{record.value}}%</span>
           <span v-if="record.prizeType === 2">{{record.value}}元</span>
-            <span v-if="record.prizeType === 5 || record.prizeType === 4">{{record.value}}元</span>
+            <span v-if="record.prizeType === 5 || record.prizeType === 4">{{record.value.slice(0,-3)}}元</span>
           <span class="ft-1p2 fr">{{record.time | dateTime }}</span>
         </li>
           <li class="text-center ft-grey999 border-none">已无更多记录</li>
@@ -40,7 +40,7 @@
         },
         userLotteryRecord: [
           {
-            mobile: null,
+            mobile: '15313895650',
             prizeType: 5,
             time: 1498436076556,
             value: '1888.00'
@@ -138,7 +138,7 @@
   }
   .lottery-record .lottery-list-wrap ul li span:nth-child(3) {
     /*width: 11%;*/
-    width: 26%;
+    width: 23%;
     text-align: center;
   }
 </style>

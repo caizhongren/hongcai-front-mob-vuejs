@@ -24,7 +24,7 @@
               <img src="../../images/lottery/privilege.png" alt="">
               <span class="item-mask"></span>
             </div>
-            <div class="lottery-item js-start-btn" @click="draw()">
+            <div class="lottery-item js-start-btn" @click="getPrize()">
               <img src="../../images/lottery/draw.png" alt="">
             </div>
             <div class="lottery-item js-item selecting" data-sort="4" data-prize-id="4">
@@ -97,7 +97,7 @@
         </div>
         <!-- 抽奖次数达上限，欢迎明日再来！ -->
         <div class="upper-limit" v-if="showUpperLimit">
-          <img src="../../images/lottery/upper-limit-01.png" alt="抽奖次数达上限，欢迎明日再来！" width="65%">
+          <img src="../../images/lottery/upper-limit-01.png" alt="抽奖次数达上限，欢迎明日再来！" width="65%" @click="LotteryShareTo()">
           <img src="../../images/lottery/upper-limit-02.png" alt="明日见" width="45%" class="margin-t-4">
         </div>
         <!-- 今日次数用完需分享 -->
@@ -158,7 +158,7 @@
     created: function () {
       this.isiOS = Utils.isIos()
       this.token = this.$route.query.token
-      this.getPrize()
+      this.getDrawCount(this.token)
       window.vue = this
       window.onload = function (e) {
         window.vue.luckyTimer(-1.25)
@@ -166,89 +166,6 @@
     },
     methods: {
       draw: function () {
-        var that = this
-        // var rld = RectLuckDraw('#js-rect-luck-draw-con', this.prizeList, {
-        //   turnAroundCount: 5,
-        //   maxAnimateDelay: 400,
-        //   turnStartCallback: function () {
-        //     alert('摇奖开始...')
-        //   },
-        //   turnEndCallback: function (prizeId, obj) {
-        //     setTimeout(function () {
-        //       that.drawCount = that.drawCount - 1
-        //     }, 300)
-        //   },
-        //   startBtnClick: function ($btn) {
-        //     if (this.isLocked()) {
-        //       return
-        //     }
-        //   },
-        //   onLock: function () {
-        //     alert('锁上了')
-        //   },
-        //   onUnlock: function (obj) {
-        //     alert('解锁了')
-        //   }
-        // })
-        that.$http.post('/hongcai/rest/lotteries/draw', {})
-        .then(function (response) {
-          var receivePrize = response
-          that.prizeId = receivePrize.prizeType || 1
-          // rld.start(that.prizeId)
-          // switch (receivePrize.prizeType) {
-          //   case 1:
-          //     that.prizeList = {
-          //       prizeType: receivePrize.prizeType,
-          //       prizeText: '当日加息',
-          //       prizeValue: '+' + receivePrize.value + '%',
-          //       prizeCont: '奖励已自动生效，成功为您加息！'
-          //     }
-          //     break
-          //   case 2:
-          //     that.prizeList = {
-          //       prizeType: receivePrize.prizeType,
-          //       prizeText: '返现',
-          //       prizeValue: receivePrize.value + '元',
-          //       prizeCont: '奖励已发放至您的账户，前往“我的”页面即可查看！'
-          //     }
-          //     break
-          //   case 3:
-          //     that.prizeList = {
-          //       prizeType: receivePrize.prizeType,
-          //       prizeText: '加息券',
-          //       prizeValue: '+' + receivePrize.value + '%',
-          //       prizeCont: '奖励已发放至您的账户，前往“我的-加息券”即可查看！'
-          //     }
-          //     break
-          //   case 4:
-          //     that.prizeList = {
-          //       prizeType: receivePrize.prizeType,
-          //       prizeText: '现金券',
-          //       prizeValue: Number(receivePrize.value).toFixed(0) + '元',
-          //       prizeCont: '奖励已发放至您的账户，前往“我的-现金券”即可查看！'
-          //     }
-          //     break
-          //   case 5:
-          //     that.prizeList = {
-          //       prizeType: receivePrize.prizeType,
-          //       prizeText: '(有效期1天)',
-          //       prizeValue: Number(receivePrize.value).toFixed(0) + '元特权本金',
-          //       prizeCont: '奖励已发放至您的账户，前往“我的-特权本金”即可查看！'
-          //     }
-          //     break
-          //   case 6:
-          //     that.prizeList = {
-          //       prizeType: receivePrize.prizeType,
-          //       prizeText: '谢谢',
-          //       prizeValue: receivePrize.value,
-          //       prizeCont: '什么都木有赚到，换个姿势再试一次吧～'
-          //     }
-          //     break
-          // }
-        })
-        .catch(function (err) {
-          console.log(err)
-        })
       },
       toLotteryRecord: function () {
         if (!this.token || this.token === '') {
@@ -265,33 +182,34 @@
         this.showDrawBox ? document.querySelector('#lottery').className = 'position-fix' : document.querySelector('#lottery').className = ' '
       },
       getPrize: function () {
-        this.$http({
-          method: 'post',
-          url: '/hongcai/rest/lotteries/draw?token=e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698'
-        }).then((response) => {
+        var that = this
+        that.$http.post('/hongcai/rest/lotteries/draw', {
+          token: that.token
+        })
+        .then((response) => {
           if (response.data && response.data.ret === -1) {
+            that.receiveDraw = false
             if (response.data.code === -1300) {
-              this.showUpperLimit = true
+              that.showUpperLimit = true
             } else if (response.data.code === -1301) {
-              this.usedAndcanShare = true
+              that.usedAndcanShare = true
             } else {
               alert(response.data.msg)
             }
           } else {
-            this.receiveDraw = true
+            that.receiveDraw = true
             // $lotteryItem.removeClass('selecting');
             // var receivePrize = response.data.data
-            var receivePrize = {
-              prizeType: 1,
-              value: 2
-            }
+            var receivePrize = response.data
             // var prizeId = receivePrize.prizeType || 1
-            // this.canShare = response.data.canShare
-            this.canShare = false
+            // that.canShare = response.data.canShare
+            that.canShare = false
+            that.showUpperLimit = false
+            that.usedAndcanShare = false
             // rld.start(prizeId)
             switch (receivePrize.prizeType) {
               case 1:
-                this.prizeList = {
+                that.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '当日加息',
                   prizeValue: '+' + receivePrize.value + '%',
@@ -299,7 +217,7 @@
                 }
                 break
               case 2:
-                this.prizeList = {
+                that.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '返现',
                   prizeValue: receivePrize.value + '元',
@@ -307,7 +225,7 @@
                 }
                 break
               case 3:
-                this.prizeList = {
+                that.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '加息券',
                   prizeValue: '+' + receivePrize.value + '%',
@@ -315,7 +233,7 @@
                 }
                 break
               case 4:
-                this.prizeList = {
+                that.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '现金券',
                   prizeValue: Number(receivePrize.value).toFixed(0) + '元',
@@ -323,7 +241,7 @@
                 }
                 break
               case 5:
-                this.prizeList = {
+                that.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '(有效期1天)',
                   prizeValue: Number(receivePrize.value).toFixed(0) + '元特权本金',
@@ -331,7 +249,7 @@
                 }
                 break
               case 6:
-                this.prizeList = {
+                that.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '谢谢',
                   prizeValue: receivePrize.value,
@@ -339,10 +257,45 @@
                 }
                 break
             }
+            that.drawCount = that.drawCount <= 0 ? that.drawCount : that.drawCount - 1
           }
-          this.showDrawBox = false
-          // var $lottry = document.querySelector('#lottery')
-          // $lottry.className = 'position-fix'
+          that.showDrawBox = true
+          var $lottry = document.querySelector('#lottery')
+          $lottry.className = 'position-fix'
+        })
+      },
+      getDrawCount: function (token) {
+        var that = this
+        that.$http({
+          url: '/hongcai/rest/lotteries/drawCount?token=' + token
+        })
+        .then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.drawCount = res.data
+          }
+        })
+        .catch(function (err) {
+          console.log(err)
+        })
+      },
+      LotteryShareTo: function () {
+        this.showDrawBox = false
+        if (!this.token || this.token === '') {
+          // 跳转native登录
+          return
+        }
+        var that = this
+        that.$http.post('/hongcai/rest/lotteries/share', {
+          token: that.token
+        })
+        .then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            alert('success')
+            that.drawCount = !res.data.isEffective ? that.drawCount : that.drawCount + 1
+          }
+        })
+        .catch(function (err) {
+          console.log(err)
         })
       },
       luckyTimer: function (val) {
@@ -470,7 +423,7 @@
     position: fixed;
     top: 0;
     z-index: 999999;
-    bottom: 0;
+    bottom: -2px;
     left: 0;
     right: 0;
     margin: 0 auto;
