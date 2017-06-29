@@ -134,22 +134,23 @@
         showUpperLimit: false,
         usedAndcanShare: false,
         receiveDraw: false,
-        luckyUsers: []
+        luckyUsers: [],
+        isIos: Utils.isIos(),
+        isAndroid: Utils.isAndroid()
       }
     },
     created: function () {
-      this.isiOS = Utils.isIos()
+      document.title = '幸运大抽奖'
       this.token = this.$route.query.token
       this.getDrawCount(this.token)
       this.getLuckyUsers()
       window.vue = this
+      this.setupWebViewJavascriptBridge()
       window.onload = function (e) {
         window.vue.luckyTimer(-2.5)
       }
     },
     methods: {
-      draw: function () {
-      },
       toLotteryRecord: function () {
         if (!this.token || this.token === '') {
           // 跳转native登录
@@ -165,6 +166,44 @@
         this.showDrawBox ? document.querySelector('#lottery').className = 'position-fix' : document.querySelector('#lottery').className = ' '
       },
       getPrize: function () {
+        var that = this
+        // ios
+        if (that.isIos) {
+          that.setupWebViewJavascriptBridge(function (bridge) {
+            if (!that.token || that.token === '') {
+              bridge.callHandler('HCNative_Login', {}, function (response) {})
+            } else {
+              that.draw()
+            }
+            // html5创建方法，iOS进行调用
+            bridge.registerHandler('HCWeb_ShareSuceess', function (data) {
+            })
+          })
+        }
+        // android
+        if (that.isAndroid) {
+          window.WebViewJavascriptBridge.callHandler('HCNative_ImmediateInvestment', {
+            'code': '1006',
+            'tokenId': that.tokenId,
+            'buyCount': that.account
+          }, function (responseData) {})
+          that.connectWebViewJavascriptBridge(function (bridge) {
+            alert('ldasl')
+            bridge.init(function (message, responseCallback) {
+              console.log('JS got a message', message)
+              var data = {
+                'Javascript Responds': '测试中文!'
+              }
+              console.log('JS responding with', data)
+              responseCallback(data)
+            })
+            bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
+              alert(data)
+            })
+          })
+        }
+      },
+      draw: function () {
         var that = this
         that.$http.post('/hongcai/rest/lotteries/draw', {
           token: that.token
@@ -260,6 +299,24 @@
         .catch(function (err) {
           console.log(err)
         })
+      },
+      setupWebViewJavascriptBridge: function (callback) {
+        if (window.WebViewJavascriptBridge) {
+          return callback(window.WebViewJavascriptBridge)
+        }
+        var WVJBIframe = document.createElement('iframe')
+        WVJBIframe.style.display = 'none'
+        WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__'
+        document.documentElement.appendChild(WVJBIframe)
+        setTimeout(function () {
+          document.documentElement.removeChild(WVJBIframe)
+        }, 0)
+      },
+      connectWebViewJavascriptBridge: function (callback) {
+        if (window.WebViewJavascriptBridge) {
+          return callback(window.WebViewJavascriptBridge)
+        } else {
+        }
       },
       LotteryShareTo: function () {
         this.showDrawBox = false

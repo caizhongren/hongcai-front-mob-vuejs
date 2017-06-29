@@ -1,7 +1,7 @@
 <template>
   <div class="home">
       <!-- 轮播banner图 -->
-      <div id="slideBanner" class="slide-banner position-re overflow-hid" >
+      <!--<div id="slideBanner" class="slide-banner position-re overflow-hid" >
         <div class="slide position-re">
           <ul>
             <li class="position-re text-center">
@@ -24,9 +24,9 @@
             <span></span>
           </div>
         </div>
-      </div>
+      </div>-->
       <!--常见问题-->
-      <div class="symptom bg-white">
+      <!--<div class="symptom bg-white">
         <div class="title symptom-title bd-t-eee bd-b-eee pad-40">
           <p class="display-inb ft-444 text-left ft-30"><span class="line display-inb bg-blue"></span>孩子的常见问题</p><p class="display-inb ft-999 text-right ft-24">更多</p>
         </div>
@@ -40,25 +40,25 @@
             <li class="margin-r-0 display-inb"><img src="../images/home/symptom11.png" alt=""></li>
           </ul>
         </div>
-      </div>
+      </div>-->
       <!--专家推荐-->
-      <div class="expert bg-white">
+      <!--<div class="expert bg-white">
         <div class="title expert-title bd-t-eee bd-b-eee pad-40">
           <p class="display-inb ft-444 text-left ft-30"><span class="line display-inb bg-blue"></span>专家推荐</p><p class="display-inb ft-999 text-right ft-24">更多</p>
         </div>
-        <ul>
-          <li class="pad-40 bd-b-eee">
+        <ul>-->
+          <!--<li class="pad-40 bd-b-eee">-->
             <!--<div class="portrait display-inb"></div>-->
-            <div class="portrait display-inb"><div class="portrait-inner"><img src="../images/home/boy.png" alt="" class="header" width="100%"></div></div>
+            <!--<div class="portrait display-inb"><div class="portrait-inner"><img src="../images/home/boy.png" alt="" class="header" width="100%"></div></div>
             <div class="info display-inb">
               <div class="name"><p class="ft-28 ft-444 display-inb text-left">叶问</p><p class="ft-red ft-28 display-inb text-right ft-Arial">50</p></div>
               <p class="ft-24 ft-999"><span>北京大学心理学教授</span><span>儿童教育学专家</span></p> 
               <p class="ft-24 ft-999">擅长：儿童心理问题诊断治疗，帮助建立良好复</p>     
             </div>
           </li>
-          <li class="pad-40 bd-b-eee">
+          <li class="pad-40 bd-b-eee">-->
             <!--<div class="portrait display-inb"></div>-->
-            <div class="portrait display-inb"><div class="portrait-inner"><img src="../images/home/boy.png" alt="" class="header" width="100%"></div></div>
+            <!--<div class="portrait display-inb"><div class="portrait-inner"><img src="../images/home/boy.png" alt="" class="header" width="100%"></div></div>
             <div class="info display-inb">
               <div class="name"><p class="ft-28 ft-444 display-inb text-left">叶问</p><p class="ft-red ft-28 display-inb text-right ft-Arial">50</p></div>
               <p class="ft-24 ft-999"><span>北京大学心理学教授</span><span>儿童教育学专家</span></p> 
@@ -66,17 +66,81 @@
             </div>
           </li>
         </ul>
-      </div>
+      </div>-->
+      <button @click="investment(myInvestment)" style="font-size: .3rem; margin-top: 2rem;">
+        我的投资
+      </button>
+      <button @click="investment(viewProject)"style="font-size: .3rem; margin-top: 2rem;">
+        浏览项目
+      </button>
   </div>
 </template>
 
 <script>
-  // import '../js/swipeSlide.js'
+  import {Utils} from '../service/Utils'
   export default {
     name: 'home',
     data () {
       return {
-        msg: '你好你好你哈哈的护肤环节'
+        msg: '你好你好你哈哈的护肤环节',
+        isIos: Utils.isIos(),
+        isAndroid: Utils.isAndroid(),
+        myInvestment: '继续投资',
+        viewProject: '浏览项目'
+      }
+    },
+    methods: {
+      setupWebViewJavascriptBridge: function (callback) {
+        if (window.WebViewJavascriptBridge) {
+          return callback(window.WebViewJavascriptBridge)
+        }
+        var WVJBIframe = document.createElement('iframe')
+        WVJBIframe.style.display = 'none'
+        WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__'
+        document.documentElement.appendChild(WVJBIframe)
+        setTimeout(function () {
+          document.documentElement.removeChild(WVJBIframe)
+        }, 0)
+      },
+      connectWebViewJavascriptBridge: function (callback) {
+        if (window.WebViewJavascriptBridge) {
+          return callback(window.WebViewJavascriptBridge)
+        } else {
+        }
+      },
+      investment: function (act) {
+        var that = this
+        // ios
+        if (that.isIos) {
+          that.setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('HCNative_InvestSuccess', {
+              toDo: act
+            }, function (response) {
+            })
+          })
+        }
+        // android
+        if (that.isAndroid) {
+          window.WebViewJavascriptBridge.callHandler('HCNative_ImmediateInvestment', {
+            'code': '1006',
+            'tokenId': that.tokenId,
+            'buyCount': that.account
+          }, function (responseData) {})
+          that.connectWebViewJavascriptBridge(function (bridge) {
+            alert('ldasl')
+            bridge.init(function (message, responseCallback) {
+              console.log('JS got a message', message)
+              var data = {
+                'Javascript Responds': '测试中文!'
+              }
+              console.log('JS responding with', data)
+              responseCallback(data)
+            })
+            bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
+              alert(data)
+            })
+          })
+        }
       }
     }
   }

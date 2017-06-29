@@ -115,13 +115,13 @@
             <div class="project-brief">
               <div class="content">
                 <ul class="license-list">
-                  <li class="license-item" v-show="categoryCode !== '0115'" v-for="contract in contractThumbnailFileList">
+                  <li class="license-item" v-show="categoryCode !== '0115'" v-for="(contract, index) in contractThumbnailFileList" @click="preview(index, $event, contractOriginalFileList)">
                     <img v-bind:src="baseFileUrl + contract.uploadFile.url" width="100%" height="100%">
                   </li>
-                  <li class="license-item" v-show="categoryCode !=='0112' && categoryCode !== '0115' && categoryCode !== '0116'" v-for="enterPrise in enterpriseThumbnailFileList">
+                  <li class="license-item" v-show="categoryCode !=='0112' && categoryCode !== '0115' && categoryCode !== '0116'" @click="preview(index, $event, enterpriseOriginalFileList)" v-for="(enterPrise, index) in enterpriseThumbnailFileList">
                     <img v-bind:src="baseFileUrl + enterPrise.uploadFile.url" width="100%" height="100%">
                   </li>
-                  <li class="license-item" v-show="projectThumbnailFileList.length > 0" v-for="project in projectThumbnailFileList">
+                  <li class="license-item" v-show="projectThumbnailFileList.length > 0" @click="preview(index, $event, projectOriginalFileList)" v-for="(project, index) in projectThumbnailFileList">
                     <img v-bind:src="baseFileUrl + project.uploadFile.url" width="100%" height="100%">
                   </li>
                 </ul>
@@ -187,7 +187,7 @@
     <p class="invest-fixed-btn disable-btn" v-if="project.status === 6">预发布</p>
     <p class="invest-fixed-btn disable-btn" v-if="project.status === 8">融资成功</p>
     <p class="invest-fixed-btn disable-btn" v-if="project.status === 9">还款中</p>
-    <p class="invest-fixed-btn disable-btn" v-if="project.status === 10" @click="toInvest()">还款完成</p>
+    <p class="invest-fixed-btn disable-btn" v-if="project.status === 10">还款完成</p>
     <p class="invest-fixed-btn disable-btn" v-if="project.status === 11">预约中</p>
   </div>
 </template>
@@ -216,8 +216,8 @@
         page: 1,
         tokenId: '9c438068699b1c092f2e65895feebaba8bc575a4dec742dd',
         totalPage: 1,
-        isIos: Utils.isIos,
-        isAndroid: Utils.isAndroid,
+        isIos: Utils.isIos(),
+        isAndroid: Utils.isAndroid(),
         categoryCode: '0115',
         final: {},
         preRepaymentList: {},
@@ -227,7 +227,7 @@
         enterpriseThumbnailFileList: [],
         projectOriginalFileList: [],
         projectThumbnailFileList: [],
-        baseFileUrl: 'http://m.test321.hongcai.com/uploads/'
+        baseFileUrl: 'http://test321.hongcai.com/uploads/'
       }
     },
     created: function () {
@@ -236,6 +236,7 @@
       this.getProjectRisk()
       this.getFiles()
       this.getProjectBill()
+      this.setupWebViewJavascriptBridge()
       window.vue = this
       window.onload = function (e) {
         var page1 = document.querySelector('.product-page1')
@@ -261,6 +262,7 @@
           url: '/hongcai/rest/projects/' + this.paramsNum
         }).then((response) => {
           this.project = response.data
+          document.title = this.project.name
           var proWidth = (this.project.total - this.project.amount) / this.project.total * 100
           this.processWith = proWidth % 10 === 0 ? 100 : proWidth.toFixed(1)
           this.expectEarning = (10000 * this.project.annualEarnings * this.project.projectDays / 36500).toFixed(2)
@@ -357,7 +359,7 @@
         }
         var WVJBIframe = document.createElement('iframe')
         WVJBIframe.style.display = 'none'
-        WVJBIframe.src = 'hongcai://__BRIDGE__LOAD__'
+        WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__'
         document.documentElement.appendChild(WVJBIframe)
         setTimeout(function () {
           document.documentElement.removeChild(WVJBIframe)
@@ -375,11 +377,8 @@
         if (that.isIos) {
           that.setupWebViewJavascriptBridge(function (bridge) {
             bridge.callHandler('HCNative_ImmediateInvestment', {
-              'detailTabs': 222
+              'amount': that.project.amount
             }, function (response) {
-            })
-            bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
-              alert(data)
             })
           })
         }
@@ -389,6 +388,39 @@
             'code': '1006',
             'tokenId': that.tokenId,
             'buyCount': that.account
+          }, function (responseData) {})
+          that.connectWebViewJavascriptBridge(function (bridge) {
+            alert('ldasl')
+            bridge.init(function (message, responseCallback) {
+              console.log('JS got a message', message)
+              var data = {
+                'Javascript Responds': '测试中文!'
+              }
+              console.log('JS responding with', data)
+              responseCallback(data)
+            })
+            bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
+              alert(data)
+            })
+          })
+        }
+      },
+      preview: function (i, e, tar) {
+        var that = this
+        console.log(that.baseFileUrl + tar[i].uploadFile.url)
+        // ios
+        if (that.isIos) {
+          that.setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('HCNative_ImgSrc', {
+              'imgSrc': that.baseFileUrl + tar[i].uploadFile.url
+            }, function (response) {
+            })
+          })
+        }
+        // android
+        if (that.isAndroid) {
+          window.WebViewJavascriptBridge.callHandler('HCNative_ImmediateInvestment', {
+            'imgSrc': that.baseFileUrl + tar[i].uploadFile.url
           }, function (responseData) {})
           that.connectWebViewJavascriptBridge(function (bridge) {
             alert('ldasl')
@@ -440,12 +472,12 @@
         page.addEventListener('touchmove', moveTouchScroll, false)
         page.addEventListener('touchend', endTouchScroll, false)
         function startTouchScroll (event) {
-          event.preventDefault()
+          // event.preventDefault()
           window.touchStartY = window.touch[3].y
           window.offsetY = 0
         }
         function moveTouchScroll (event) {
-          event.preventDefault()
+          // event.preventDefault()
           window.offsetY += 0.25 * (window.touch[3].y - window.touchStartY)
           window.touchStartY = window.touch[3].y
           touchY = window.offsetY
@@ -454,7 +486,7 @@
           }
         }
         function endTouchScroll (event) {
-          event.preventDefault()
+          // event.preventDefault()
           window.speed = -(document.body.clientHeight - Math.abs(window.offsetY)) / 10
           window.offsetY += window.speed
           if (touchY < -1) {
@@ -477,11 +509,11 @@
         page.addEventListener('touchmove', moveTouchScroll, true)
         page.addEventListener('touchend', endTouchScroll, true)
         function startTouchScroll (event) {
-          event.preventDefault()
+          // event.preventDefault()
           startY = event.touches[0].pageY
         }
         function moveTouchScroll (event) {
-          event.preventDefault()
+          // event.preventDefault()
           endY = event.touches[0].pageY
           console.log(endY - startY)
           console.log(scrollDirection)
@@ -497,7 +529,7 @@
           }
         }
         function endTouchScroll (event) {
-          event.preventDefault()
+          // event.preventDefault()
           console.log(scrollDirection)
           if (scrollDirection < 0 && scrollDirection >= -detailMore) {
             document.querySelector('.details-more').style.webkitTransform = 'translate3d(0, ' + scrollDirection + 'px, 0)'
