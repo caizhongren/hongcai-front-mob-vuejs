@@ -466,9 +466,8 @@
         }
       },
       scrollBack: function scrollBack (page) {
-        var detailMore = 171
+        var detailMore = (document.querySelector('.details-more').scrollHeight + 150) - window.innerHeight + 100
         console.log(detailMore)
-        console.log(document.querySelector('.details-more').scrollHeight)
         window.vue = this
         var startY = 0
         var endY = 0
@@ -498,24 +497,32 @@
         }
         function endTouchScroll (event) {
           event.preventDefault()
+          console.log(event)
           console.log(scrollDirection)
-          if (scrollDirection < 0 && scrollDirection >= -detailMore) {
+          if (scrollDirection === 0 && event.target.className === 'drop-load') {
+            window.vue.loadMoreOrder()
+            return false
+          } else if (scrollDirection < 0 && scrollDirection >= -detailMore) {
             document.querySelector('.details-more').style.webkitTransform = 'translate3d(0, ' + scrollDirection + 'px, 0)'
           } else if (scrollDirection > 10) {
             document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, 0px, 0)'
             document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, 0px, 0)'
             document.querySelector('.details-more').style.webkitTransform = 'translateY(0px)'
             scrollDirection = 0
-          } else if (scrollDirection < detailMore) {
+          } else if (scrollDirection !== 0 && scrollDirection < detailMore) {
             scrollDirection = -detailMore
+          } else if (scrollDirection > 0 && scrollDirection <= 10) {
+            document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, 0px, 0)'
+            document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, 0px, 0)'
+            document.querySelector('.details-more').style.webkitTransform = 'translateY(0px)'
+            scrollDirection = 0
           }
-          if (scrollDirection === 0) {
-            window.vue.loadMoreOrder()
-          }
+          console.log(scrollDirection)
         }
       }
     }
   }
+  document.querySelector('.details-more') ? console.log(document.querySelector('.details-more').scrollHeight) : ''
 </script>
 
 <style scoped>

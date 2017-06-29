@@ -24,7 +24,7 @@
               <img src="../../images/lottery/privilege.png" alt="">
               <span class="item-mask"></span>
             </div>
-            <div class="lottery-item js-start-btn" @click="draw()">
+            <div class="lottery-item js-start-btn" @click="getPrize">
               <img src="../../images/lottery/draw.png" alt="">
             </div>
             <div class="lottery-item js-item selecting" data-sort="4" data-prize-id="4">
@@ -134,11 +134,11 @@
     </div>
   </div>
 </template>
-<script src="../../service/rect.luckdraw.js"></script>
+
 <script>
   import {Utils, ruleBox} from '../../service/Utils'
-  // import $ from 'jquery'
-  // import {LuckDraw} from '../../service/rect.luckdraw.js'
+  import $ from 'jquery'
+  import {LuckDraw} from '../../service/rect.luckdraw.js'
   export default {
     name: 'lottery',
     data () {
@@ -158,96 +158,41 @@
     created: function () {
       this.isiOS = Utils.isIos()
       this.token = this.$route.query.token
-      this.getPrize()
+      this.draw()
       window.vue = this
       window.onload = function (e) {
         window.vue.luckyTimer(-1.25)
       }
     },
     methods: {
-      draw: function () {
+      draw: function (prizeId) {
+        var prizeList = {}
         var that = this
-        // var rld = RectLuckDraw('#js-rect-luck-draw-con', this.prizeList, {
-        //   turnAroundCount: 5,
-        //   maxAnimateDelay: 400,
-        //   turnStartCallback: function () {
-        //     alert('摇奖开始...')
-        //   },
-        //   turnEndCallback: function (prizeId, obj) {
-        //     setTimeout(function () {
-        //       that.drawCount = that.drawCount - 1
-        //     }, 300)
-        //   },
-        //   startBtnClick: function ($btn) {
-        //     if (this.isLocked()) {
-        //       return
-        //     }
-        //   },
-        //   onLock: function () {
-        //     alert('锁上了')
-        //   },
-        //   onUnlock: function (obj) {
-        //     alert('解锁了')
-        //   }
-        // })
-        that.$http.post('/hongcai/rest/lotteries/draw', {})
-        .then(function (response) {
-          var receivePrize = response
-          that.prizeId = receivePrize.prizeType || 1
-          // rld.start(that.prizeId)
-          // switch (receivePrize.prizeType) {
-          //   case 1:
-          //     that.prizeList = {
-          //       prizeType: receivePrize.prizeType,
-          //       prizeText: '当日加息',
-          //       prizeValue: '+' + receivePrize.value + '%',
-          //       prizeCont: '奖励已自动生效，成功为您加息！'
-          //     }
-          //     break
-          //   case 2:
-          //     that.prizeList = {
-          //       prizeType: receivePrize.prizeType,
-          //       prizeText: '返现',
-          //       prizeValue: receivePrize.value + '元',
-          //       prizeCont: '奖励已发放至您的账户，前往“我的”页面即可查看！'
-          //     }
-          //     break
-          //   case 3:
-          //     that.prizeList = {
-          //       prizeType: receivePrize.prizeType,
-          //       prizeText: '加息券',
-          //       prizeValue: '+' + receivePrize.value + '%',
-          //       prizeCont: '奖励已发放至您的账户，前往“我的-加息券”即可查看！'
-          //     }
-          //     break
-          //   case 4:
-          //     that.prizeList = {
-          //       prizeType: receivePrize.prizeType,
-          //       prizeText: '现金券',
-          //       prizeValue: Number(receivePrize.value).toFixed(0) + '元',
-          //       prizeCont: '奖励已发放至您的账户，前往“我的-现金券”即可查看！'
-          //     }
-          //     break
-          //   case 5:
-          //     that.prizeList = {
-          //       prizeType: receivePrize.prizeType,
-          //       prizeText: '(有效期1天)',
-          //       prizeValue: Number(receivePrize.value).toFixed(0) + '元特权本金',
-          //       prizeCont: '奖励已发放至您的账户，前往“我的-特权本金”即可查看！'
-          //     }
-          //     break
-          //   case 6:
-          //     that.prizeList = {
-          //       prizeType: receivePrize.prizeType,
-          //       prizeText: '谢谢',
-          //       prizeValue: receivePrize.value,
-          //       prizeCont: '什么都木有赚到，换个姿势再试一次吧～'
-          //     }
-          //     break
-          // }
-        })
-        .catch(function (err) {
-          console.log(err)
+        LuckDraw.RectLuckDraw('#js-rect-luck-draw-con', prizeList, {
+          turnAroundCount: 2,
+          maxAnimateDelay: 400,
+          turnStartCallback: function () {
+            alert('抽奖中。。。')
+          },
+          turnEndCallback: function (prizeId, obj) {
+            // window.clearInterval($scope._timer)
+            setTimeout(function () {
+              alert('抽中xxx')
+              that.showDrawBox = true
+              var $lottry = document.querySelector('#lottery')
+              // var $itemMask = document.querySelector('.item-mask')
+              $lottry.className = 'position-fix'
+              // $itemMask.style.display = 'none'
+              $('.lottery-item').addClass('selecting')
+            }, 300)
+          },
+          startBtnClick: function ($btn) {
+            alert('开始抽奖')
+            if (this.isLocked()) {
+              return
+            }
+            // prizeId ? LuckDraw.start(prizeId) : ''
+          }
         })
       },
       toLotteryRecord: function () {
@@ -270,26 +215,31 @@
           url: '/hongcai/rest/lotteries/draw?token=e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698'
         }).then((response) => {
           if (response.data && response.data.ret === -1) {
-            if (response.data.code === -1300) {
-              this.showUpperLimit = true
-            } else if (response.data.code === -1301) {
-              this.usedAndcanShare = true
-            } else {
-              alert(response.data.msg)
-            }
-          } else {
+          //   if (response.data.code === -1300) {
+          //     this.showUpperLimit = true
+          //   } else if (response.data.code === -1301) {
+          //     this.usedAndcanShare = true
+          //   } else {
+          //     alert(response.data.msg)
+          //   }
+          // } else {
             this.receiveDraw = true
-            // $lotteryItem.removeClass('selecting');
+            // $('.lottery-item').removeClass('selecting')
+            // var $itemMask = document.querySelector('.item-mask')
+            // $itemMask.style.display = 'block'
             // var receivePrize = response.data.data
             var receivePrize = {
               prizeType: 1,
-              value: 2
+              value: 3
             }
-            // var prizeId = receivePrize.prizeType || 1
+            var prizeId = receivePrize.prizeType || 1
+            // console.log(prizeId)
             // this.canShare = response.data.canShare
             this.canShare = false
-            // rld.start(prizeId)
-            switch (receivePrize.prizeType) {
+            $('.lottery-item').removeClass('selecting')
+            this.draw(prizeId)
+            LuckDraw.start(prizeId)
+            switch (prizeId) {
               case 1:
                 this.prizeList = {
                   prizeType: receivePrize.prizeType,
@@ -340,22 +290,25 @@
                 break
             }
           }
-          this.showDrawBox = false
-          // var $lottry = document.querySelector('#lottery')
-          // $lottry.className = 'position-fix'
         })
       },
       luckyTimer: function (val) {
+        var pos = 0
         var $luckyUsersList = document.querySelector('.lucky-users-box')
         setInterval(function () {
-          setInterval(frame, 500)
+          setInterval(frame, 10)
           function frame () {
+            // post = val
             if (val % -10 === 0) {
               val = -1.25
               $luckyUsersList.style.marginTop = '0rem'
               // val -= 1.25
             } else {
-              $luckyUsersList.style.marginTop = val + 'rem'
+              pos = val + -0.01
+              $luckyUsersList.style.marginTop = pos + 'rem'
+              if (pos > 2 * val) {
+                return
+              }
             }
           }
           val -= -val
