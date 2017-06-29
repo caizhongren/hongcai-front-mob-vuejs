@@ -54,26 +54,7 @@
           <img src="../../images/lottery/title-lucky-users.png" alt="" width="48%">
           <div class="lucky-users-wrap">
             <ul class="lucky-users-box margin-b-0">
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>5555555555</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>555555555555</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>4444444444</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>66666</li>
+              <li class="text-justify" v-for="item in luckyUsers"><span>恭喜{{item.mobile}}</span>{{item.prizeName}}</li>
             </ul>
           </div>
           <p class="text-center state" v-show="isiOS">该活动与设备生产商Apple Inc.公司无关</p>
@@ -152,16 +133,18 @@
         showDrawBox: false,
         showUpperLimit: false,
         usedAndcanShare: false,
-        receiveDraw: false
+        receiveDraw: false,
+        luckyUsers: []
       }
     },
     created: function () {
       this.isiOS = Utils.isIos()
       this.token = this.$route.query.token
       this.getDrawCount(this.token)
+      this.getLuckyUsers()
       window.vue = this
       window.onload = function (e) {
-        window.vue.luckyTimer(-1.25)
+        window.vue.luckyTimer(-2.5)
       }
     },
     methods: {
@@ -298,26 +281,62 @@
           console.log(err)
         })
       },
+      getLuckyUsers: function () {
+        var that = this
+        that.$http({
+          url: '/hongcai/rest/lotteries/luckyUsers'
+        })
+        .then(function (res) {
+          that.luckyUsers = res.data
+          for (var i = 0; i < that.luckyUsers.length; i++) {
+            var prizeType = that.luckyUsers[i].prizeType
+            switch (prizeType) {
+              case 1:
+                that.luckyUsers[i].prizeName = '获得+' + that.luckyUsers[i].value + '%当日加息'
+                break
+              case 2:
+                that.luckyUsers[i].prizeName = '获得返现' + that.luckyUsers[i].value + '元'
+                break
+              case 3:
+                that.luckyUsers[i].prizeName = '获得+' + that.luckyUsers[i].value + '%加息券'
+                break
+              case 4:
+                that.luckyUsers[i].prizeName = '获得' + Number(that.luckyUsers[i].value).toFixed(0) + '元现金券'
+                break
+              case 5:
+                that.luckyUsers[i].prizeName = '获得特权本金' + Number(that.luckyUsers[i].value).toFixed(0) + '元'
+                break
+            }
+          }
+        })
+      },
       luckyTimer: function (val) {
         var $luckyUsersList = document.querySelector('.lucky-users-box')
         setInterval(function () {
-          setInterval(frame, 500)
-          function frame () {
-            if (val % -10 === 0) {
-              val = -1.25
-              $luckyUsersList.style.marginTop = '0rem'
-              // val -= 1.25
-            } else {
-              $luckyUsersList.style.marginTop = val + 'rem'
-            }
+          if (val % -12.5 === 0 && val !== 0) {
+            val = 0
+            $luckyUsersList.classList.remove('animate')
+            $luckyUsersList.style.webkitTransform = 'translateY(0rem)'
+          } else {
+            $luckyUsersList.className += ' animate'
+            $luckyUsersList.style.webkitTransform = 'translateY(' + val + 'rem)'
           }
-          val -= -val
+          val -= 2.5
         }, 5000)
       }
     }
   }
 </script>
 <style scoped>
+  .lucky-users-box.animate {
+    -webkit-transition:all 1.5s ease-in-out;
+    -moz-transition:all 1.5s ease-in-out;
+    -o-transition:all 1.5s ease-in-out;
+    -ms-transition:all 1.5s ease-in-out;    
+    transition:all 1.5s ease-in-out;
+    -webkit-transform:translateY(-2.5rem);
+    transform:translateY(-2.5rem);
+  }
   .lottery{
     font-family: "微软雅黑" !important;
     -webkit-touch-callout:none;  /*系统默认菜单被禁用*/   
