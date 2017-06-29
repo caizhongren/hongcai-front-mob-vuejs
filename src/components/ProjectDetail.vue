@@ -449,7 +449,6 @@
           window.offsetY += 0.25 * (window.touch[3].y - window.touchStartY)
           window.touchStartY = window.touch[3].y
           touchY = window.offsetY
-          console.log(touchY)
           if (window.offsetY <= 0 && window.offsetY < -1) {
             page.style.webkitTransform = 'translate3d(0, ' + window.offsetY + 'px, 0)'
           }
@@ -458,7 +457,6 @@
           event.preventDefault()
           window.speed = -(document.body.clientHeight - Math.abs(window.offsetY)) / 10
           window.offsetY += window.speed
-          console.log(touchY)
           if (touchY < -1) {
             page.style.webkitTransform = 'translate3d(0, -' + Height + 'px, 0)'
             var page2 = document.querySelector('.product-page2')
@@ -467,7 +465,10 @@
           }
         }
       },
-      scrollBack: function (page) {
+      scrollBack: function scrollBack (page) {
+        var detailMore = 171
+        console.log(detailMore)
+        console.log(document.querySelector('.details-more').scrollHeight)
         window.vue = this
         var startY = 0
         var endY = 0
@@ -477,35 +478,38 @@
         page.addEventListener('touchend', endTouchScroll, true)
         function startTouchScroll (event) {
           event.preventDefault()
-          // console.log(event.touches[0].pageY)
           startY = event.touches[0].pageY
         }
         function moveTouchScroll (event) {
           event.preventDefault()
-          // console.log(event.touches[0].pageY)
           endY = event.touches[0].pageY
-          scrollDirection = (endY - startY)
+          console.log(endY - startY)
           console.log(scrollDirection)
-          if (scrollDirection < 0) {
-            // alert('向上滑动')
+          if (scrollDirection < -detailMore || scrollDirection >= detailMore) {
+          } else {
+            scrollDirection = (scrollDirection + (endY - startY))
+          }
+          console.log(scrollDirection)
+          if (scrollDirection < 0 && scrollDirection >= -detailMore) {
             document.querySelector('.details-more').style.webkitTransform = 'translate3d(0, ' + scrollDirection + 'px, 0)'
-          } else if (scrollDirection > 0) {
-            // alert('向x滑动')
+          } else if (scrollDirection > 0 && scrollDirection < detailMore) {
             document.querySelector('.details-more').style.webkitTransform = 'translateY(' + scrollDirection + 'px)'
           }
         }
         function endTouchScroll (event) {
           event.preventDefault()
           console.log(scrollDirection)
-          if (scrollDirection < 0) {
-            // alert('向上滑动')
+          if (scrollDirection < 0 && scrollDirection >= -detailMore) {
             document.querySelector('.details-more').style.webkitTransform = 'translate3d(0, ' + scrollDirection + 'px, 0)'
-          } else if (scrollDirection > 0) {
-            // alert('向x滑动')
+          } else if (scrollDirection > 10) {
             document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, 0px, 0)'
             document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, 0px, 0)'
             document.querySelector('.details-more').style.webkitTransform = 'translateY(0px)'
-          } else {
+            scrollDirection = 0
+          } else if (scrollDirection < detailMore) {
+            scrollDirection = -detailMore
+          }
+          if (scrollDirection === 0) {
             window.vue.loadMoreOrder()
           }
         }
