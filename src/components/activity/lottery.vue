@@ -54,26 +54,7 @@
           <img src="../../images/lottery/title-lucky-users.png" alt="" width="48%">
           <div class="lucky-users-wrap">
             <ul class="lucky-users-box margin-b-0">
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>5555555555</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>555555555555</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>4444444444</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>获得20000元特权本金</li>
-              <li class="text-justify"><span>恭喜153****5650</span>66666</li>
+              <li class="text-justify" v-for="item in luckyUsers"><span>恭喜{{item.mobile}}</span>{{item.prizeName}}</li>
             </ul>
           </div>
           <p class="text-center state" v-show="isiOS">该活动与设备生产商Apple Inc.公司无关</p>
@@ -97,7 +78,7 @@
         </div>
         <!-- 抽奖次数达上限，欢迎明日再来！ -->
         <div class="upper-limit" v-if="showUpperLimit">
-          <img src="../../images/lottery/upper-limit-01.png" alt="抽奖次数达上限，欢迎明日再来！" width="65%">
+          <img src="../../images/lottery/upper-limit-01.png" alt="抽奖次数达上限，欢迎明日再来！" width="65%" @click="LotteryShareTo()">
           <img src="../../images/lottery/upper-limit-02.png" alt="明日见" width="45%" class="margin-t-4">
         </div>
         <!-- 今日次数用完需分享 -->
@@ -152,16 +133,22 @@
         showDrawBox: false,
         showUpperLimit: false,
         usedAndcanShare: false,
-        receiveDraw: false
+        receiveDraw: false,
+        luckyUsers: [],
+        isIos: Utils.isIos(),
+        isAndroid: Utils.isAndroid()
       }
     },
     created: function () {
-      this.isiOS = Utils.isIos()
+      document.title = '幸运大抽奖'
       this.token = this.$route.query.token
       this.draw()
+      this.getDrawCount(this.token)
+      this.getLuckyUsers()
       window.vue = this
+      this.setupWebViewJavascriptBridge()
       window.onload = function (e) {
-        window.vue.luckyTimer(-1.25)
+        window.vue.luckyTimer(-2.5)
       }
     },
     methods: {
@@ -209,11 +196,50 @@
         this.showDrawBox = !this.showDrawBox
         this.showDrawBox ? document.querySelector('#lottery').className = 'position-fix' : document.querySelector('#lottery').className = ' '
       },
+      // getPrize: function () {
+      //   var that = this
+      //   // ios
+      //   if (that.isIos) {
+      //     that.setupWebViewJavascriptBridge(function (bridge) {
+      //       if (!that.token || that.token === '') {
+      //         bridge.callHandler('HCNative_Login', {}, function (response) {})
+      //       } else {
+      //         that.draw()
+      //       }
+      //       // html5创建方法，iOS进行调用
+      //       bridge.registerHandler('HCWeb_ShareSuceess', function (data) {
+      //       })
+      //     })
+      //   }
+      //   // android
+      //   if (that.isAndroid) {
+      //     window.WebViewJavascriptBridge.callHandler('HCNative_ImmediateInvestment', {
+      //       'code': '1006',
+      //       'tokenId': that.tokenId,
+      //       'buyCount': that.account
+      //     }, function (responseData) {})
+      //     that.connectWebViewJavascriptBridge(function (bridge) {
+      //       alert('ldasl')
+      //       bridge.init(function (message, responseCallback) {
+      //         console.log('JS got a message', message)
+      //         var data = {
+      //           'Javascript Responds': '测试中文!'
+      //         }
+      //         console.log('JS responding with', data)
+      //         responseCallback(data)
+      //       })
+      //       bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
+      //         alert(data)
+      //       })
+      //     })
+      //   }
+      // },
       getPrize: function () {
-        this.$http({
-          method: 'post',
-          url: '/hongcai/rest/lotteries/draw?token=e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698'
-        }).then((response) => {
+        var that = this
+        this.$http.post('/hongcai/rest/lotteries/draw', {
+          token: that.token
+        })
+        .then((response) => {
           if (response.data && response.data.ret === -1) {
           //   if (response.data.code === -1300) {
           //     this.showUpperLimit = true
@@ -223,7 +249,7 @@
           //     alert(response.data.msg)
           //   }
           // } else {
-            this.receiveDraw = true
+            that.receiveDraw = true
             // $('.lottery-item').removeClass('selecting')
             // var $itemMask = document.querySelector('.item-mask')
             // $itemMask.style.display = 'block'
@@ -234,14 +260,14 @@
             }
             var prizeId = receivePrize.prizeType || 1
             // console.log(prizeId)
-            // this.canShare = response.data.canShare
-            this.canShare = false
+            // that.canShare = response.data.canShare
+            that.canShare = false
             $('.lottery-item').removeClass('selecting')
-            this.draw(prizeId)
+            that.draw(prizeId)
             LuckDraw.start(prizeId)
             switch (prizeId) {
               case 1:
-                this.prizeList = {
+                that.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '当日加息',
                   prizeValue: '+' + receivePrize.value + '%',
@@ -249,7 +275,7 @@
                 }
                 break
               case 2:
-                this.prizeList = {
+                that.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '返现',
                   prizeValue: receivePrize.value + '元',
@@ -257,7 +283,7 @@
                 }
                 break
               case 3:
-                this.prizeList = {
+                that.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '加息券',
                   prizeValue: '+' + receivePrize.value + '%',
@@ -265,7 +291,7 @@
                 }
                 break
               case 4:
-                this.prizeList = {
+                that.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '现金券',
                   prizeValue: Number(receivePrize.value).toFixed(0) + '元',
@@ -273,7 +299,7 @@
                 }
                 break
               case 5:
-                this.prizeList = {
+                that.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '(有效期1天)',
                   prizeValue: Number(receivePrize.value).toFixed(0) + '元特权本金',
@@ -281,7 +307,7 @@
                 }
                 break
               case 6:
-                this.prizeList = {
+                that.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '谢谢',
                   prizeValue: receivePrize.value,
@@ -289,35 +315,118 @@
                 }
                 break
             }
+            that.drawCount = that.drawCount <= 0 ? that.drawCount : that.drawCount - 1
+          }
+        })
+      },
+      getDrawCount: function (token) {
+        var that = this
+        that.$http({
+          url: '/hongcai/rest/lotteries/drawCount?token=' + token
+        })
+        .then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.drawCount = res.data
+          }
+        })
+        .catch(function (err) {
+          console.log(err)
+        })
+      },
+      setupWebViewJavascriptBridge: function (callback) {
+        if (window.WebViewJavascriptBridge) {
+          return callback(window.WebViewJavascriptBridge)
+        }
+        var WVJBIframe = document.createElement('iframe')
+        WVJBIframe.style.display = 'none'
+        WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__'
+        document.documentElement.appendChild(WVJBIframe)
+        setTimeout(function () {
+          document.documentElement.removeChild(WVJBIframe)
+        }, 0)
+      },
+      connectWebViewJavascriptBridge: function (callback) {
+        if (window.WebViewJavascriptBridge) {
+          return callback(window.WebViewJavascriptBridge)
+        } else {
+        }
+      },
+      LotteryShareTo: function () {
+        this.showDrawBox = false
+        if (!this.token || this.token === '') {
+          // 跳转native登录
+          return
+        }
+        var that = this
+        that.$http.post('/hongcai/rest/lotteries/share', {
+          token: that.token
+        })
+        .then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            alert('success')
+            that.drawCount = !res.data.isEffective ? that.drawCount : that.drawCount + 1
+          }
+        })
+        .catch(function (err) {
+          console.log(err)
+        })
+      },
+      getLuckyUsers: function () {
+        var that = this
+        that.$http({
+          url: '/hongcai/rest/lotteries/luckyUsers'
+        })
+        .then(function (res) {
+          that.luckyUsers = res.data
+          for (var i = 0; i < that.luckyUsers.length; i++) {
+            var prizeType = that.luckyUsers[i].prizeType
+            switch (prizeType) {
+              case 1:
+                that.luckyUsers[i].prizeName = '获得+' + that.luckyUsers[i].value + '%当日加息'
+                break
+              case 2:
+                that.luckyUsers[i].prizeName = '获得返现' + that.luckyUsers[i].value + '元'
+                break
+              case 3:
+                that.luckyUsers[i].prizeName = '获得+' + that.luckyUsers[i].value + '%加息券'
+                break
+              case 4:
+                that.luckyUsers[i].prizeName = '获得' + Number(that.luckyUsers[i].value).toFixed(0) + '元现金券'
+                break
+              case 5:
+                that.luckyUsers[i].prizeName = '获得特权本金' + Number(that.luckyUsers[i].value).toFixed(0) + '元'
+                break
+            }
           }
         })
       },
       luckyTimer: function (val) {
-        var pos = 0
         var $luckyUsersList = document.querySelector('.lucky-users-box')
         setInterval(function () {
-          setInterval(frame, 10)
-          function frame () {
-            // post = val
-            if (val % -10 === 0) {
-              val = -1.25
-              $luckyUsersList.style.marginTop = '0rem'
-              // val -= 1.25
-            } else {
-              pos = val + -0.01
-              $luckyUsersList.style.marginTop = pos + 'rem'
-              if (pos > 2 * val) {
-                return
-              }
-            }
+          if (val % -12.5 === 0 && val !== 0) {
+            val = 0
+            $luckyUsersList.classList.remove('animate')
+            $luckyUsersList.style.webkitTransform = 'translateY(0rem)'
+          } else {
+            $luckyUsersList.className += ' animate'
+            $luckyUsersList.style.webkitTransform = 'translateY(' + val + 'rem)'
           }
-          val -= -val
+          val -= 2.5
         }, 5000)
       }
     }
   }
 </script>
 <style scoped>
+  .lucky-users-box.animate {
+    -webkit-transition:all 1.5s ease-in-out;
+    -moz-transition:all 1.5s ease-in-out;
+    -o-transition:all 1.5s ease-in-out;
+    -ms-transition:all 1.5s ease-in-out;    
+    transition:all 1.5s ease-in-out;
+    -webkit-transform:translateY(-2.5rem);
+    transform:translateY(-2.5rem);
+  }
   .lottery{
     font-family: "微软雅黑" !important;
     -webkit-touch-callout:none;  /*系统默认菜单被禁用*/   
@@ -423,7 +532,7 @@
     position: fixed;
     top: 0;
     z-index: 999999;
-    bottom: 0;
+    bottom: -2px;
     left: 0;
     right: 0;
     margin: 0 auto;

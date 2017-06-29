@@ -4,7 +4,7 @@ let dateTime = value => {
   var month = now.getMonth() < 9 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1
   return now.getFullYear() + '-' +
   month + '-' +
-  (now.getDate() < 10 ? '0' + now.getDate() : now.getDate()) +
+  (now.getDate() < 10 ? '0' + now.getDate() : now.getDate()) + ' ' +
   (now.getHours() < 10 ? '0' + now.getHours() : now.getHours()) + ':' +
   (now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes()) + ':' +
   (now.getSeconds() < 10 ? '0' + now.getSeconds() : now.getSeconds())
