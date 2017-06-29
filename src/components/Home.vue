@@ -67,10 +67,10 @@
           </li>
         </ul>
       </div>-->
-      <button @click="investment(myInvestment)" style="font-size: .3rem; margin-top: 2rem;">
+      <button @click="investment()" style="font-size: .3rem; margin-top: 2rem;">
         我的投资
       </button>
-      <button @click="investment(viewProject)"style="font-size: .3rem; margin-top: 2rem;">
+      <button @click="browseProject()"style="font-size: .3rem; margin-top: 2rem;">
         浏览项目
       </button>
   </div>
@@ -84,9 +84,7 @@
       return {
         msg: '你好你好你哈哈的护肤环节',
         isIos: Utils.isIos(),
-        isAndroid: Utils.isAndroid(),
-        myInvestment: '继续投资',
-        viewProject: '浏览项目'
+        isAndroid: Utils.isAndroid()
       }
     },
     methods: {
@@ -108,39 +106,71 @@
         } else {
         }
       },
-      investment: function (act) {
+      investment: function () {
         var that = this
         // ios
         if (that.isIos) {
           that.setupWebViewJavascriptBridge(function (bridge) {
             bridge.callHandler('HCNative_InvestSuccess', {
-              toDo: act
+              toDo: 'eat'
             }, function (response) {
             })
           })
         }
         // android
-        if (that.isAndroid) {
-          window.WebViewJavascriptBridge.callHandler('HCNative_ImmediateInvestment', {
-            'code': '1006',
-            'tokenId': that.tokenId,
-            'buyCount': that.account
-          }, function (responseData) {})
-          that.connectWebViewJavascriptBridge(function (bridge) {
-            alert('ldasl')
-            bridge.init(function (message, responseCallback) {
-              console.log('JS got a message', message)
-              var data = {
-                'Javascript Responds': '测试中文!'
-              }
-              console.log('JS responding with', data)
-              responseCallback(data)
-            })
-            bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
-              alert(data)
+        // if (that.isAndroid) {
+        //   window.WebViewJavascriptBridge.callHandler('HCNative_InvestSuccess', {
+        //     'code': '1006',
+        //     'tokenId': that.tokenId,
+        //     'buyCount': that.account
+        //   }, function (responseData) {})
+        //   that.connectWebViewJavascriptBridge(function (bridge) {
+        //     alert('ldasl')
+        //     bridge.init(function (message, responseCallback) {
+        //       console.log('JS got a message', message)
+        //       var data = {
+        //         'Javascript Responds': '测试中文!'
+        //       }
+        //       console.log('JS responding with', data)
+        //       responseCallback(data)
+        //     })
+        //     bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
+        //       alert(data)
+        //     })
+        //   })
+        // }
+      },
+      browseProject: function () {
+        var that = this
+        // ios
+        if (that.isIos) {
+          that.setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('HCNative_BrowseProject', {}, function (response) {
             })
           })
         }
+        // android
+        // if (that.isAndroid) {
+        //   window.WebViewJavascriptBridge.callHandler('HCNative_BrowseProject', {
+        //     'code': '1006',
+        //     'tokenId': that.tokenId,
+        //     'buyCount': that.account
+        //   }, function (responseData) {})
+        //   that.connectWebViewJavascriptBridge(function (bridge) {
+        //     alert('ldasl')
+        //     bridge.init(function (message, responseCallback) {
+        //       console.log('JS got a message', message)
+        //       var data = {
+        //         'Javascript Responds': '测试中文!'
+        //       }
+        //       console.log('JS responding with', data)
+        //       responseCallback(data)
+        //     })
+        //     bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
+        //       alert(data)
+        //     })
+        //   })
+        // }
       }
     }
   }
