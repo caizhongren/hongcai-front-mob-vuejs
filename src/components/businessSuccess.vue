@@ -1,93 +1,133 @@
 <template>
-  <div class="home">
-      <!-- 轮播banner图 -->
-      <!--<div id="slideBanner" class="slide-banner position-re overflow-hid" >
-        <div class="slide position-re">
-          <ul>
-            <li class="position-re text-center">
-              <a class="pic display-bl"><img src="../images/banner/banner1.jpg" /></a>
-            </li>
-            <li class="position-re text-center">
-              <a class="pic display-bl"><img src="../images/banner/banner1.jpg" /></a>
-            </li>
-            <li class="position-re text-center">
-              <a class="pic display-bl"><img src="../images/banner/banner1.jpg" /></a>
-            </li>
-            <li class="position-re text-center">
-              <a class="pic display-bl"><img src="../images/banner/banner1.jpg" /></a>
-            </li>
-          </ul>
-          <div class="dot">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+  <div class="business-success">
+    <div class="overflow-hid">
+      <img src="../images/success-re_03.png" width="30%">
+      <p class="title">
+        <strong v-if="page == 0">恭喜您，成功开通银行资金存管账户！</strong>
+        <strong v-if="page === 1">恭喜您，成功充值{{amount}}元！</strong>
+        <strong v-if="page === 2">恭喜您，成功提现{{amount}}元！</strong>
+        <strong v-if="page === 3">恭喜您，成功投资{{amount}}元，<br><span class="text-center">开始计息！<span v-show="coupon.type == 1">额外加息{{coupon.value}}%</span><span  v-show="coupon.type == 2">额外奖励{{coupon.value}}元</span></span></strong>
+        <strong v-if="page === 4">恭喜您，成功绑定银行卡！</strong>
+        <strong v-if="page === 5">恭喜您，成功修改手机号！</strong>
+        <strong v-if="page === 6">恭喜您，成功投资{{amount}}元！</strong>
+        <strong v-if="page === 7">恭喜您，成功开通银行资金存管账户！</strong>
+        <strong v-if="page === 8">恭喜您，成功解绑银行卡！</strong>
+        <strong v-if="page === 9">恭喜您，成功申请解绑银行卡！</strong>
+      </p>
+      <div class="column">
+        <div v-if="page == 0">
+          <div class="one-half button button-primary" @click="toNative('HCNative_toProjectList')">
+            <span>浏览项目</span>
+          </div>
+          <div class="one-half button button-primary" @click="toNative('HCNative_toRecharge')")>
+            <span>充值</span>
           </div>
         </div>
-      </div>-->
-      <!--常见问题-->
-      <!--<div class="symptom bg-white">
-        <div class="title symptom-title bd-t-eee bd-b-eee pad-40">
-          <p class="display-inb ft-444 text-left ft-30"><span class="line display-inb bg-blue"></span>孩子的常见问题</p><p class="display-inb ft-999 text-right ft-24">更多</p>
+        <div class="one-half button button-primary" v-if="page === 1" @click="toNative('HCNative_toProjectList')">
+          <span>浏览项目</span>
         </div>
-        <div class="symptom-list bd-b-eee">
-          <ul>
-            <li class="display-inb"><img src="../images/home/symptom11.png" alt=""></li>
-            <li class="display-inb"><img src="../images/home/symptom11.png" alt=""></li>
-            <li class="margin-r-0 display-inb"><img src="../images/home/symptom11.png" alt=""></li>
-            <li class="display-inb"><img src="../images/home/symptom11.png" alt=""></li>
-            <li class="display-inb"><img src="../images/home/symptom11.png" alt=""></li>
-            <li class="margin-r-0 display-inb"><img src="../images/home/symptom11.png" alt=""></li>
-          </ul>
+        <div class="one-half button button-primary" v-if="page === 2" @click="toNative('HCNative_toProjectList')">
+          <span>浏览项目</span>
         </div>
-      </div>-->
-      <!--专家推荐-->
-      <!--<div class="expert bg-white">
-        <div class="title expert-title bd-t-eee bd-b-eee pad-40">
-          <p class="display-inb ft-444 text-left ft-30"><span class="line display-inb bg-blue"></span>专家推荐</p><p class="display-inb ft-999 text-right ft-24">更多</p>
+        <!-- userCenter.credits -->
+        <div class="one-half button button-primary" v-if="page === 3" @click="toNative('HCNative_toMyCredit')">
+          <span>我的投资</span>
         </div>
-        <ul>-->
-          <!--<li class="pad-40 bd-b-eee">-->
-            <!--<div class="portrait display-inb"></div>-->
-            <!--<div class="portrait display-inb"><div class="portrait-inner"><img src="../images/home/boy.png" alt="" class="header" width="100%"></div></div>
-            <div class="info display-inb">
-              <div class="name"><p class="ft-28 ft-444 display-inb text-left">叶问</p><p class="ft-red ft-28 display-inb text-right ft-Arial">50</p></div>
-              <p class="ft-24 ft-999"><span>北京大学心理学教授</span><span>儿童教育学专家</span></p> 
-              <p class="ft-24 ft-999">擅长：儿童心理问题诊断治疗，帮助建立良好复</p>     
-            </div>
-          </li>
-          <li class="pad-40 bd-b-eee">-->
-            <!--<div class="portrait display-inb"></div>-->
-            <!--<div class="portrait display-inb"><div class="portrait-inner"><img src="../images/home/boy.png" alt="" class="header" width="100%"></div></div>
-            <div class="info display-inb">
-              <div class="name"><p class="ft-28 ft-444 display-inb text-left">叶问</p><p class="ft-red ft-28 display-inb text-right ft-Arial">50</p></div>
-              <p class="ft-24 ft-999"><span>北京大学心理学教授</span><span>儿童教育学专家</span></p> 
-              <p class="ft-24 ft-999">擅长：儿童心理问题诊断治疗，帮助建立良好复</p>     
-            </div>
-          </li>
-        </ul>
-      </div>-->
-      <button @click="investment()" style="font-size: .3rem; margin-top: 2rem;">
-        我的投资
-      </button>
-      <button @click="browseProject()"style="font-size: .3rem; margin-top: 2rem;">
-        浏览项目
-      </button>
+        <div class="one-half button button-primary" v-if="page === 3" @click="toNative('HCNative_toProjectList')">
+          <span>浏览项目</span>
+        </div>
+        <div class="one-half button button-primary" v-if="page === 4" @click="toNative('HCNative_toProjectList')">
+          <span>浏览项目</span>
+        </div>
+        <div class="one-half button button-primary" v-if="page === 5" @click="toNative('HCNative_toProjectList')">
+          <span>浏览项目</span>
+        </div>
+        <div class="one-half button button-primary" v-if="page === 6" @click="toNative('HCNative_toProjectList')">
+          <span>浏览项目</span>
+        </div>
+        <div v-if="page === 7">
+          <div class="one-half button button-primary" @click="toNative('HCNative_toProjectList')">
+            <span>浏览项目</span>
+          </div>
+          <div class="one-half button button-primary" @click="toNative('HCNative_toUserCenter')">
+            <span>我的账户</span>
+          </div>
+        </div>
+        <div v-if="page === 8">
+          <div class="one-half button button-primary" ui-sref="root.userCenter.setting">
+            <span>绑定新银行卡</span>
+          </div>
+          <div class="one-half button button-primary" ui-sref="root.main">
+            <span>逛逛首页</span>
+          </div>
+        </div>
+        <div v-if="page === 9">
+          <div class="one-half button button-primary" ui-sref="root.userCenter.account-overview">
+            <span>我的账户</span>
+          </div>
+          <div class="one-half button button-primary" ui-sref="root.main">
+            <span>逛逛首页</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-  import {Utils} from '../service/Utils'
+  import {bridgeUtil} from '../service/Utils.js'
   export default {
     name: 'home',
     data () {
       return {
-        msg: '你好你好你哈哈的护肤环节',
-        isIos: Utils.isIos(),
-        isAndroid: Utils.isAndroid()
+        page: '0',
+        amount: 0,
+        coupon: {
+          type: 1,
+          value: 2
+        },
+        business: ''
       }
     },
+    created: function () {
+      this.business = this.$route.params.business
+      this.amount = 9
+      this.number = this.$route.query.number
+      // console.log(this.amount)
+      this.setBuiness()
+      bridgeUtil.setupWebViewJavascriptBridge()
+    },
     methods: {
+      setBuiness: function () {
+        if (this.business === 'RECHARGE') {
+          this.page = 1
+        } else if (this.business === 'WITHDRAW') {
+          this.page = 2
+        } else if (this.business === 'TRANSFER') {
+          this.page = 3
+          this.$http({
+            method: 'get',
+            url: '/hongcai/rest/orders/' + this.number + '/orderCoupon?token=be8e447ebfb61ea0f43846d540e4a21b27a38100517ff32c'
+          }).then((response) => {
+            if (response && response.data.ret !== -1) {
+              console.log(response.data.coupon)
+              this.coupon = response.data.coupon
+            }
+          })
+        } else if (this.business === 'BIND_BANK_CARD') {
+          this.page = 4
+        } else if (this.business === 'RESET_MOBILE') {
+          this.page = 5
+        } else if (this.business === 'EXPERIENCE') {
+          this.page = 6
+        } else if (this.business === 'USER_ACTIVE') {
+          this.page = 7
+        } else if (this.business === 'UNBIND_BANKCARD') {
+          this.page = 8
+        } else if (this.business === 'UNBIND_BANK_CARD_ING') {
+          this.page = 9
+        }
+      },
       setupWebViewJavascriptBridge: function (callback) {
         if (window.WebViewJavascriptBridge) {
           return callback(window.WebViewJavascriptBridge)
@@ -106,71 +146,8 @@
         } else {
         }
       },
-      investment: function () {
-        var that = this
-        // ios
-        if (that.isIos) {
-          that.setupWebViewJavascriptBridge(function (bridge) {
-            bridge.callHandler('HCNative_InvestSuccess', {
-              toDo: 'eat'
-            }, function (response) {
-            })
-          })
-        }
-        // android
-        // if (that.isAndroid) {
-        //   window.WebViewJavascriptBridge.callHandler('HCNative_InvestSuccess', {
-        //     'code': '1006',
-        //     'tokenId': that.tokenId,
-        //     'buyCount': that.account
-        //   }, function (responseData) {})
-        //   that.connectWebViewJavascriptBridge(function (bridge) {
-        //     alert('ldasl')
-        //     bridge.init(function (message, responseCallback) {
-        //       console.log('JS got a message', message)
-        //       var data = {
-        //         'Javascript Responds': '测试中文!'
-        //       }
-        //       console.log('JS responding with', data)
-        //       responseCallback(data)
-        //     })
-        //     bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
-        //       alert(data)
-        //     })
-        //   })
-        // }
-      },
-      browseProject: function () {
-        var that = this
-        // ios
-        if (that.isIos) {
-          that.setupWebViewJavascriptBridge(function (bridge) {
-            bridge.callHandler('HCNative_BrowseProject', {}, function (response) {
-            })
-          })
-        }
-        // android
-        // if (that.isAndroid) {
-        //   window.WebViewJavascriptBridge.callHandler('HCNative_BrowseProject', {
-        //     'code': '1006',
-        //     'tokenId': that.tokenId,
-        //     'buyCount': that.account
-        //   }, function (responseData) {})
-        //   that.connectWebViewJavascriptBridge(function (bridge) {
-        //     alert('ldasl')
-        //     bridge.init(function (message, responseCallback) {
-        //       console.log('JS got a message', message)
-        //       var data = {
-        //         'Javascript Responds': '测试中文!'
-        //       }
-        //       console.log('JS responding with', data)
-        //       responseCallback(data)
-        //     })
-        //     bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
-        //       alert(data)
-        //     })
-        //   })
-        // }
+      toNative: function (nativeFnName) {
+        bridgeUtil.webConnectNative('HCNative_toProjectList', '', {}, function (response) {}, function (response) {})
       }
     }
   }
@@ -178,141 +155,28 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .pad-40 {
-    padding-left: .4rem;
-    padding-right: .4rem;
+  .business-success {
+    background: #fff;
+    padding: .8rem .2rem;
+    overflow: hidden;
+    text-align: center;
   }
-  .bd-t-eee {
-    border-top: 1px solid #eee;
+  .title {
+    padding: .4rem 0;
+    font-size: .35rem;
+    color: #333;
   }
-  .bd-b-eee {
-    border-bottom: 1px solid #eee;
-  }
-  /*常见问题*/
-  .symptom .title, .expert .title {
-    padding-top: .23rem;
-    padding-bottom: .22rem;
-    display: table;
+  .column {
     width: 100%;
+    float: left;
+    box-sizing: border-box;
+    padding: .5rem 0.2rem;
   }
-  .title p {
-    width: 50%;
-    display: table-cell;
-  }
-  .title .line {
-    height: .28rem;
-    width: .05rem;
-    background-color: #31cfff;
-    margin-right: .06rem;
-  }
-  .symptom-list {
-    padding: .2rem .4rem;
-  }
-  .symptom-list ul li img{
-    /*width: 27.5%;*/
-    /*margin-right: .022rem;*/
-    /*height: 1.95rem;*/
-    display: block;
-    background-color: pink;
-  }
-  /*推荐专家*/
-
-  .expert .portrait .portrait-inner {
-    width: .98rem;
-    height: .98rem;
-    border-radius: 50%;
-    text-align: left;
-  }
-  .expert ul li {
-    padding-top: .4rem;
-    padding-bottom: .4rem;
-  }
-  .expert .portrait {
-    width: 20%;
-  }
-  .expert .info {
-    width: 78%;
-    text-align: justify;
-  }
-  .expert .info .name p {
-    width: 50%;
-  }
-  /*投资页轮播*/
-  .slide-banner {
-    margin: 0 auto;
-  }
-  .bd{
-    z-index:0;
-  }
-  .bd li a img {
-    vertical-align:top;
-    width:100%;
-  }
-  .home {
-    background-color: #f8f5f5;
-    width: 100%; 
-    background-color: #f8f5f5; 
-    margin-bottom: 0.8rem;
-  }
-  .slide-banner, .modules {
-    margin-bottom: 0.3rem; 
-  }
-  .slide{
-      position: relative;
-      /*max-width: 640px;*/
-      overflow: hidden;
-      margin: 0 auto;
-  }
-  .slide:after{
-      content: '';
-      display: block;
-      width: 100%;
-      padding-top: 50%;
-  }
-  .slide ul{
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-  }
-  .slide li{
-      list-style: none;
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-  }
-  /* 解决js阻塞页面显示首屏 */
-  .slide li:first-child{
-      z-index: 1;
-  }
-  .slide li img{
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-  }
-  .slide .dot{
-      position: absolute;
-      right: 40%;
-      bottom: 10px;
-      z-index: 5;
-      font-size: 0;
-  }
-  .slide .dot span{
-      display: inline-block;
-      width: .22rem;
-      height: .22rem;
-      margin-left: .12rem;
-      background-color: #f8f5f5;
-      border-radius: 50%;
-  }
-  .slide .dot .cur{
-      background-color: #fff;
-      border: 0.02rem solid #42b9ff;
+  .one-half {
+    width: 100%;
+    float: left;
+    font-size: .33rem;
+    font-weight: bold;
+    margin-bottom: .3rem;
   }
 </style>

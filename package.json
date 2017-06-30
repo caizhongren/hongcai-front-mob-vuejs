@@ -20,7 +20,8 @@
     "strip-ansi": "^3.0.1",
     "vue": "^2.1.10",
     "vue-axios": "^2.0.2",
-    "vue-router": "^2.2.0"
+    "vue-router": "^2.2.0",
+    "jquery" : "^2.2.3"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
