@@ -136,7 +136,8 @@
         receiveDraw: false,
         luckyUsers: [],
         isIos: Utils.isIos(),
-        isAndroid: Utils.isAndroid()
+        isAndroid: Utils.isAndroid(),
+        domain: 'http://m.test321.hongcai.com'
       }
     },
     created: function () {
@@ -149,6 +150,17 @@
       this.setupWebViewJavascriptBridge()
       window.onload = function (e) {
         window.vue.luckyTimer(-2.5)
+        window.vue.isShare = function () {
+          bridgeUtil.webConnectNative('HCNative_NeedShare', null, {
+            'title': '今日运势，一试便知',
+            'subTitle': '100%有礼！随机奖金、特权本金、返现加息券样样都有！好运从这里开始！',
+            'url': this.domain + '/activity/lottery',
+            'imageUrl': 'https://mmbiz.qlogo.cn/mmbiz_jpg/8MZDOEkib8AlvibTmbDkqwbDiasl9BphCGgYnicBzl9VfX4Sm9cpvFiarGsV73IRYurUF9LPibzL0JLR5SGmd1TeO3ug/0?wx_fmt=jpeg'
+          }, function (response) {
+            alert(this)
+          }, null)
+        }
+        window.vue.isShare()
       }
     },
     methods: {
@@ -194,48 +206,47 @@
         this.showDrawBox ? document.querySelector('#lottery').className = 'position-fix' : document.querySelector('#lottery').className = ' '
       },
       toLogin: function () {
-        var registerHandlerCallback = function (data) {
-          this.token = data.token
-          this.fetchEventsList()
+        var regesterHandCallback = function (data) {
+          window.location.replace(window.location.pathname + '?token=' + data.token)
+          this.isShare()
         }
-        bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, registerHandlerCallback)
+        bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, regesterHandCallback)
       },
       getPrize: function () {
-        var that = this
-        if (!that.token || that.token === '') {
-          that.toLogin()
+        if (!this.token || this.token === '') {
+          this.toLogin()
           return
         }
-        that.$http.post('/hongcai/rest/lotteries/draw', {
-          token: that.token
+        this.$http.post('/hongcai/rest/lotteries/draw', {
+          token: this.token
         })
         .then((response) => {
           if (response.data && response.data.ret === -1) {
-            that.showDrawBox = true
-            that.receiveDraw = false
+            this.showDrawBox = true
+            this.receiveDraw = false
             if (response.data.code === -1300) {
-              that.showUpperLimit = true
+              this.showUpperLimit = true
             } else if (response.data.code === -1301) {
-              that.usedAndcanShare = true
+              this.usedAndcanShare = true
             } else {
               alert(response.data.msg)
             }
           } else {
-            that.receiveDraw = true
-            that.usedAndcanShare = false
+            this.receiveDraw = true
+            this.usedAndcanShare = false
             $('.lottery-item').removeClass('selecting')
             // var $itemMask = document.querySelector('.item-mask')
             // $itemMask.style.display = 'block'
             var receivePrize = response.data
             var prizeId = receivePrize.prizeType || 1
             // console.log(prizeId)
-            that.canShare = response.data.canShare
+            this.canShare = response.data.canShare
             $('.lottery-item').removeClass('selecting')
-            that.draw(prizeId)
+            this.draw(prizeId)
             LuckDraw.start(prizeId)
             switch (prizeId) {
               case 1:
-                that.prizeList = {
+                this.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '当日加息',
                   prizeValue: '+' + receivePrize.value + '%',
@@ -243,7 +254,7 @@
                 }
                 break
               case 2:
-                that.prizeList = {
+                this.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '返现',
                   prizeValue: receivePrize.value + '元',
@@ -251,7 +262,7 @@
                 }
                 break
               case 3:
-                that.prizeList = {
+                this.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '加息券',
                   prizeValue: '+' + receivePrize.value + '%',
@@ -259,7 +270,7 @@
                 }
                 break
               case 4:
-                that.prizeList = {
+                this.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '现金券',
                   prizeValue: Number(receivePrize.value).toFixed(0) + '元',
@@ -267,7 +278,7 @@
                 }
                 break
               case 5:
-                that.prizeList = {
+                this.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '(有效期1天)',
                   prizeValue: Number(receivePrize.value).toFixed(0) + '元特权本金',
@@ -275,7 +286,7 @@
                 }
                 break
               case 6:
-                that.prizeList = {
+                this.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '谢谢',
                   prizeValue: receivePrize.value,
@@ -283,12 +294,13 @@
                 }
                 break
             }
-            that.drawCount = that.drawCount <= 0 ? that.drawCount : that.drawCount - 1
+            this.drawCount = this.drawCount <= 0 ? this.drawCount : this.drawCount - 1
           }
         })
       },
       getDrawCount: function (token) {
         var that = this
+        token = that.$route.query.token
         that.$http({
           url: '/hongcai/rest/lotteries/drawCount?token=' + token
         })
@@ -320,24 +332,31 @@
         }
       },
       LotteryShareTo: function () {
-        this.showDrawBox = false
-        if (!this.token || this.token === '') {
-          // 跳转native登录
-          return
-        }
         var that = this
-        that.$http.post('/hongcai/rest/lotteries/share', {
-          token: that.token
-        })
-        .then(function (res) {
-          if (res.data && res.data.ret !== -1) {
-            // alert('success')
-            that.drawCount = !res.data.isEffective ? that.drawCount : that.drawCount + 1
+        var regesterHandCallback = function (data) {
+          if (data.isShareSuccess === 1) {
+            alert(that)
+            that.$http.post('/hongcai/rest/lotteries/share', {
+              token: that.token
+            })
+            .then(function (res) {
+              if (res.data && res.data.ret !== -1) {
+                // alert('success')
+                that.drawCount = !res.data.isEffective ? that.drawCount : that.drawCount + 1
+              }
+            })
+            .catch(function (err) {
+              console.log(err)
+            })
           }
-        })
-        .catch(function (err) {
-          console.log(err)
-        })
+        }
+        bridgeUtil.webConnectNative('HCNative_Share', 'HCWeb_ShareSuccess', {
+          'title': '今日运势，一试便知',
+          'subTitle': '100%有礼！随机奖金、特权本金、返现加息券样样都有！好运从这里开始！',
+          'url': this.domain + '/activity/lottery',
+          'imageUrl': 'https://mmbiz.qlogo.cn/mmbiz_jpg/8MZDOEkib8AlvibTmbDkqwbDiasl9BphCGgYnicBzl9VfX4Sm9cpvFiarGsV73IRYurUF9LPibzL0JLR5SGmd1TeO3ug/0?wx_fmt=jpeg'
+        }, function (response) {}, regesterHandCallback)
+        this.showDrawBox = false
       },
       getLuckyUsers: function () {
         var that = this
