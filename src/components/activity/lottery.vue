@@ -127,7 +127,7 @@
         drawCount: 0,
         isiOS: true,
         prizeList: {},
-        token: '9c438068699b1c092f2e65895feebaba8bc575a4dec742dd',
+        token: '',
         showRules: false,
         canShare: false,
         showDrawBox: false,
@@ -142,7 +142,7 @@
     created: function () {
       document.title = '幸运大抽奖'
       this.token = this.$route.query.token
-      this.draw()
+      // this.draw()
       this.getDrawCount(this.token)
       this.getLuckyUsers()
       window.vue = this
@@ -159,12 +159,10 @@
           turnAroundCount: 2,
           maxAnimateDelay: 400,
           turnStartCallback: function () {
-            alert('抽奖中。。。')
           },
           turnEndCallback: function (prizeId, obj) {
             // window.clearInterval($scope._timer)
             setTimeout(function () {
-              alert('抽中xxx')
               that.showDrawBox = true
               var $lottry = document.querySelector('#lottery')
               // var $itemMask = document.querySelector('.item-mask')
@@ -174,7 +172,6 @@
             }, 300)
           },
           startBtnClick: function ($btn) {
-            alert('开始抽奖')
             if (this.isLocked()) {
               return
             }
@@ -196,72 +193,70 @@
         this.showDrawBox = !this.showDrawBox
         this.showDrawBox ? document.querySelector('#lottery').className = 'position-fix' : document.querySelector('#lottery').className = ' '
       },
-      // getPrize: function () {
-      //   var that = this
-      //   // ios
-      //   if (that.isIos) {
-      //     that.setupWebViewJavascriptBridge(function (bridge) {
-      //       if (!that.token || that.token === '') {
-      //         bridge.callHandler('HCNative_Login', {}, function (response) {})
-      //       } else {
-      //         that.draw()
-      //       }
-      //       // html5创建方法，iOS进行调用
-      //       bridge.registerHandler('HCWeb_ShareSuceess', function (data) {
-      //       })
-      //     })
-      //   }
-      //   // android
-      //   if (that.isAndroid) {
-      //     window.WebViewJavascriptBridge.callHandler('HCNative_ImmediateInvestment', {
-      //       'code': '1006',
-      //       'tokenId': that.tokenId,
-      //       'buyCount': that.account
-      //     }, function (responseData) {})
-      //     that.connectWebViewJavascriptBridge(function (bridge) {
-      //       alert('ldasl')
-      //       bridge.init(function (message, responseCallback) {
-      //         console.log('JS got a message', message)
-      //         var data = {
-      //           'Javascript Responds': '测试中文!'
-      //         }
-      //         console.log('JS responding with', data)
-      //         responseCallback(data)
-      //       })
-      //       bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
-      //         alert(data)
-      //       })
-      //     })
-      //   }
-      // },
+      toLogin: function () {
+        var that = this
+        // ios
+        if (that.isIos) {
+          that.setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler('HCNative_Login', {}, function (response) {})
+            // html5创建方法，iOS进行调用
+            bridge.registerHandler('HCWeb_ShareSuceess', function (data) {
+            })
+          })
+        }
+        // android
+        if (that.isAndroid) {
+          window.WebViewJavascriptBridge.callHandler('HCNative_ImmediateInvestment', {
+            'code': '1006',
+            'tokenId': that.tokenId,
+            'buyCount': that.account
+          }, function (responseData) {})
+          that.connectWebViewJavascriptBridge(function (bridge) {
+            alert('ldasl')
+            bridge.init(function (message, responseCallback) {
+              console.log('JS got a message', message)
+              var data = {
+                'Javascript Responds': '测试中文!'
+              }
+              console.log('JS responding with', data)
+              responseCallback(data)
+            })
+            bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
+              alert(data)
+            })
+          })
+        }
+      },
       getPrize: function () {
         var that = this
-        this.$http.post('/hongcai/rest/lotteries/draw', {
+        if (!that.token || that.token === '') {
+          that.toLogin()
+          return
+        }
+        that.$http.post('/hongcai/rest/lotteries/draw', {
           token: that.token
         })
         .then((response) => {
           if (response.data && response.data.ret === -1) {
-          //   if (response.data.code === -1300) {
-          //     this.showUpperLimit = true
-          //   } else if (response.data.code === -1301) {
-          //     this.usedAndcanShare = true
-          //   } else {
-          //     alert(response.data.msg)
-          //   }
-          // } else {
+            that.showDrawBox = true
+            that.receiveDraw = false
+            if (response.data.code === -1300) {
+              that.showUpperLimit = true
+            } else if (response.data.code === -1301) {
+              that.usedAndcanShare = true
+            } else {
+              alert(response.data.msg)
+            }
+          } else {
             that.receiveDraw = true
-            // $('.lottery-item').removeClass('selecting')
+            that.usedAndcanShare = false
+            $('.lottery-item').removeClass('selecting')
             // var $itemMask = document.querySelector('.item-mask')
             // $itemMask.style.display = 'block'
-            // var receivePrize = response.data.data
-            var receivePrize = {
-              prizeType: 1,
-              value: 3
-            }
+            var receivePrize = response.data
             var prizeId = receivePrize.prizeType || 1
             // console.log(prizeId)
-            // that.canShare = response.data.canShare
-            that.canShare = false
+            that.canShare = response.data.canShare
             $('.lottery-item').removeClass('selecting')
             that.draw(prizeId)
             LuckDraw.start(prizeId)
@@ -515,7 +510,7 @@
   .lottery .lottery-wrap .lucky-users .lucky-users-wrap {
     width: 92%;
     margin: 0 auto;
-    padding: 0.02rem .2rem;
+    padding: 0.12rem .2rem;
     background: #f7d25e;
     border: 0.26rem solid #edcd40;
     border-radius: .24rem;
@@ -634,7 +629,7 @@
         padding-top: .88rem;
     }
     .lottery .lottery-wrap .lucky-users .lucky-users-wrap {
-      height: 5.5rem;
+      height: 5.7rem;
     }
     .lottery .lottery-wrap .lucky-users .lucky-users-wrap li{
       font-size: .24rem;
