@@ -377,7 +377,10 @@
         if (that.isIos) {
           that.setupWebViewJavascriptBridge(function (bridge) {
             bridge.callHandler('HCNative_ImmediateInvestment', {
-              'amount': that.project.amount
+              'amount': that.project.amount,
+              'annualEarnings': that.project.annualEarnings,
+              'projectDays': that.project.projectDays,
+              'projectId': that.project.id
             }, function (response) {
             })
           })
