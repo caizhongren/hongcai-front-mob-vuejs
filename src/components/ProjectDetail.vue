@@ -358,10 +358,6 @@
       toInvest: function () {
         var that = this
         var callHandlerCallback = function (response) {}
-        // var registerHandlerCallback = function (data) {
-        //   that.token = data.token
-        //   window.location.href = ''
-        // }
         var nativeNeedDatas = {
           'amount': that.project.amount,
           'annualEarnings': that.project.annualEarnings,
@@ -369,73 +365,10 @@
           'projectId': that.project.id
         }
         bridgeUtil.webConnectNative('HCNative_ImmediateInvestment', 'HCWeb_LoginSuccess', nativeNeedDatas, callHandlerCallback, null)
-        // ios
-        // if (that.isIos) {
-        //   that.setupWebViewJavascriptBridge(function (bridge) {
-        //     bridge.callHandler('HCNative_ImmediateInvestment', {
-        //       'amount': that.project.amount,
-        //       'annualEarnings': that.project.annualEarnings,
-        //       'projectDays': that.project.projectDays,
-        //       'projectId': that.project.id
-        //     }, function (response) {
-        //     })
-        //   })
-        // }
-        // android
-        // if (that.isAndroid) {
-        //   window.WebViewJavascriptBridge.callHandler('HCNative_ImmediateInvestment', {
-        //     'code': '1006',
-        //     'tokenId': that.tokenId,
-        //     'buyCount': that.account
-        //   }, function (responseData) {})
-        //   that.connectWebViewJavascriptBridge(function (bridge) {
-        //     alert('ldasl')
-        //     bridge.init(function (message, responseCallback) {
-        //       console.log('JS got a message', message)
-        //       var data = {
-        //         'Javascript Responds': '测试中文!'
-        //       }
-        //       console.log('JS responding with', data)
-        //       responseCallback(data)
-        //     })
-        //     bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
-        //       alert(data)
-        //     })
-        //   })
-        // }
       },
       preview: function (i, e, tar) {
         var that = this
         bridgeUtil.webConnectNative('HCNative_ImgSrc', null, {'imgSrc': that.baseFileUrl + tar[i].uploadFile.url}, function (response) {}, function (data) {})
-        // ios
-        // if (that.isIos) {
-        //   that.setupWebViewJavascriptBridge(function (bridge) {
-        //     bridge.callHandler('HCNative_ImgSrc', {
-        //       'imgSrc': that.baseFileUrl + tar[i].uploadFile.url
-        //     }, function (response) {
-        //     })
-        //   })
-        // }
-        // android
-        // if (that.isAndroid) {
-        //   window.WebViewJavascriptBridge.callHandler('HCNative_ImmediateInvestment', {
-        //     'imgSrc': that.baseFileUrl + tar[i].uploadFile.url
-        //   }, function (responseData) {})
-        //   that.connectWebViewJavascriptBridge(function (bridge) {
-        //     alert('ldasl')
-        //     bridge.init(function (message, responseCallback) {
-        //       console.log('JS got a message', message)
-        //       var data = {
-        //         'Javascript Responds': '测试中文!'
-        //       }
-        //       console.log('JS responding with', data)
-        //       responseCallback(data)
-        //     })
-        //     bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
-        //       alert(data)
-        //     })
-        //   })
-        // }
       },
       CaptureTouch: function (t) {
         function e (e) {
