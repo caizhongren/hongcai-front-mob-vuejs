@@ -192,7 +192,7 @@
   </div>
 </template>
 <script>
-  import {Utils} from '../service/Utils'
+  import {Utils, bridgeUtil} from '../service/Utils'
   export default {
     name: 'projectDetail',
     data () {
@@ -236,7 +236,7 @@
       this.getProjectRisk()
       this.getFiles()
       this.getProjectBill()
-      this.setupWebViewJavascriptBridge()
+      bridgeUtil.setupWebViewJavascriptBridge()
       window.vue = this
       window.onload = function (e) {
         var page1 = document.querySelector('.product-page1')
@@ -276,22 +276,6 @@
           url: '/hongcai/rest/projects/' + this.projectId + '/info'
         }).then((response) => {
           this.projectInfo = response.data
-        })
-      },
-      getProjectFiles: function () {
-        var that = this
-        that.$http.get({
-          url: '/hongcai/api/v1/siteProject/projectFiles?projectId=' + that.projectId
-        }).then(function (res) {
-          that.enterpriseThumbnailFileList = res.data.enterpriseThumbnailFileList
-          that.enterpriseOriginalFileList = res.data.enterpriseOriginalFileList
-          that.contractOriginalFileList = res.data.contractOriginalFileList
-          that.contractThumbnailFileList = res.data.contractThumbnailFileList
-          that.projectThumbnailFileList = res.data.projectThumbnailFileList
-          that.projectOriginalFileList = res.data.projectOriginalFileList
-        })
-        .catch(function (err) {
-          console.log(err)
         })
       },
       getFiles: function () {
@@ -373,73 +357,85 @@
       },
       toInvest: function () {
         var that = this
+        var callHandlerCallback = function (response) {}
+        // var registerHandlerCallback = function (data) {
+        //   that.token = data.token
+        //   window.location.href = ''
+        // }
+        var nativeNeedDatas = {
+          'amount': that.project.amount,
+          'annualEarnings': that.project.annualEarnings,
+          'projectDays': that.project.projectDays,
+          'projectId': that.project.id
+        }
+        bridgeUtil.webConnectNative('HCNative_ImmediateInvestment', 'HCWeb_LoginSuccess', nativeNeedDatas, callHandlerCallback, null)
         // ios
-        if (that.isIos) {
-          that.setupWebViewJavascriptBridge(function (bridge) {
-            bridge.callHandler('HCNative_ImmediateInvestment', {
-              'amount': that.project.amount,
-              'annualEarnings': that.project.annualEarnings,
-              'projectDays': that.project.projectDays,
-              'projectId': that.project.id
-            }, function (response) {
-            })
-          })
-        }
+        // if (that.isIos) {
+        //   that.setupWebViewJavascriptBridge(function (bridge) {
+        //     bridge.callHandler('HCNative_ImmediateInvestment', {
+        //       'amount': that.project.amount,
+        //       'annualEarnings': that.project.annualEarnings,
+        //       'projectDays': that.project.projectDays,
+        //       'projectId': that.project.id
+        //     }, function (response) {
+        //     })
+        //   })
+        // }
         // android
-        if (that.isAndroid) {
-          window.WebViewJavascriptBridge.callHandler('HCNative_ImmediateInvestment', {
-            'code': '1006',
-            'tokenId': that.tokenId,
-            'buyCount': that.account
-          }, function (responseData) {})
-          that.connectWebViewJavascriptBridge(function (bridge) {
-            alert('ldasl')
-            bridge.init(function (message, responseCallback) {
-              console.log('JS got a message', message)
-              var data = {
-                'Javascript Responds': '测试中文!'
-              }
-              console.log('JS responding with', data)
-              responseCallback(data)
-            })
-            bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
-              alert(data)
-            })
-          })
-        }
+        // if (that.isAndroid) {
+        //   window.WebViewJavascriptBridge.callHandler('HCNative_ImmediateInvestment', {
+        //     'code': '1006',
+        //     'tokenId': that.tokenId,
+        //     'buyCount': that.account
+        //   }, function (responseData) {})
+        //   that.connectWebViewJavascriptBridge(function (bridge) {
+        //     alert('ldasl')
+        //     bridge.init(function (message, responseCallback) {
+        //       console.log('JS got a message', message)
+        //       var data = {
+        //         'Javascript Responds': '测试中文!'
+        //       }
+        //       console.log('JS responding with', data)
+        //       responseCallback(data)
+        //     })
+        //     bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
+        //       alert(data)
+        //     })
+        //   })
+        // }
       },
       preview: function (i, e, tar) {
         var that = this
-        console.log(that.baseFileUrl + tar[i].uploadFile.url)
+        bridgeUtil.webConnectNative('HCNative_ImgSrc', null, {'imgSrc': that.baseFileUrl + tar[i].uploadFile.url}, function (response) {}, function (data) {})
         // ios
-        if (that.isIos) {
-          that.setupWebViewJavascriptBridge(function (bridge) {
-            bridge.callHandler('HCNative_ImgSrc', {
-              'imgSrc': that.baseFileUrl + tar[i].uploadFile.url
-            }, function (response) {
-            })
-          })
-        }
+        // if (that.isIos) {
+        //   that.setupWebViewJavascriptBridge(function (bridge) {
+        //     bridge.callHandler('HCNative_ImgSrc', {
+        //       'imgSrc': that.baseFileUrl + tar[i].uploadFile.url
+        //     }, function (response) {
+        //     })
+        //   })
+        // }
         // android
-        if (that.isAndroid) {
-          window.WebViewJavascriptBridge.callHandler('HCNative_ImmediateInvestment', {
-            'imgSrc': that.baseFileUrl + tar[i].uploadFile.url
-          }, function (responseData) {})
-          that.connectWebViewJavascriptBridge(function (bridge) {
-            alert('ldasl')
-            bridge.init(function (message, responseCallback) {
-              console.log('JS got a message', message)
-              var data = {
-                'Javascript Responds': '测试中文!'
-              }
-              console.log('JS responding with', data)
-              responseCallback(data)
-            })
-            bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
-              alert(data)
-            })
-          })
-        }
+        // if (that.isAndroid) {
+        //   window.WebViewJavascriptBridge.callHandler('HCNative_ImmediateInvestment', {
+        //     'imgSrc': that.baseFileUrl + tar[i].uploadFile.url
+        //   }, function (responseData) {})
+        //   that.connectWebViewJavascriptBridge(function (bridge) {
+        //     alert('ldasl')
+        //     bridge.init(function (message, responseCallback) {
+        //       console.log('JS got a message', message)
+        //       var data = {
+        //         'Javascript Responds': '测试中文!'
+        //       }
+        //       console.log('JS responding with', data)
+        //       responseCallback(data)
+        //     })
+        //     bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
+        //       alert(data)
+        //     })
+        //   })
+        // }
       },
       CaptureTouch: function (t) {
         function e (e) {

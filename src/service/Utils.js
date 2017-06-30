@@ -60,6 +60,60 @@ let ruleBox = {
     vue.showRules ? el.className = 'position-fix' : el.className = ' '
   }
 }
+let bridgeUtil = {
+  setupWebViewJavascriptBridge: function (callback) {
+    if (window.WebViewJavascriptBridge) {
+      return callback(window.WebViewJavascriptBridge)
+    }
+    var WVJBIframe = document.createElement('iframe')
+    WVJBIframe.style.display = 'none'
+    WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__'
+    document.documentElement.appendChild(WVJBIframe)
+    setTimeout(function () {
+      document.documentElement.removeChild(WVJBIframe)
+    }, 0)
+  },
+  connectWebViewJavascriptBridge: function (callback) {
+    if (window.WebViewJavascriptBridge) {
+      return callback(window.WebViewJavascriptBridge)
+    } else {
+    }
+  },
+  webConnectNative: function (callHandlerName, registerHandlerName, nativeNeedDatas, callHandlerCallback, registerHandlerCallback) {
+    // callHandlerName 要调用的native方法名并传出数据，registerHandlerName web注册的方法接收native数据，nativeNeedDatas 是native端需要的数据，
+    // callHandlerCallback web to native成功回调  registerHandlerCallback 接受native成功回调
+    if (Utils.isIos()) {
+      this.setupWebViewJavascriptBridge(function (bridge) {
+        if (callHandlerName) {
+          bridge.callHandler(callHandlerName, nativeNeedDatas, callHandlerCallback)
+        }
+        if (registerHandlerName) {
+          bridge.registerHandler(registerHandlerName, registerHandlerCallback)
+        }
+      })
+    }
+    // android
+    if (Utils.isAndroid()) {
+      if (callHandlerName) {
+        window.WebViewJavascriptBridge.callHandler(callHandlerName, nativeNeedDatas, callHandlerCallback)
+      }
+      if (registerHandlerName) {
+        this.connectWebViewJavascriptBridge(function (bridge) {
+          bridge.init(function (message, responseCallback) {
+            console.log('JS got a message', message)
+            var data = {
+              'Javascript Responds': '测试中文!'
+            }
+            console.log('JS responding with', data)
+            responseCallback(data)
+          })
+          bridge.registerHandler(registerHandlerName, registerHandlerCallback)
+        })
+      }
+    }
+  }
+}
 export {Utils}
 export {InviteShareUtils}
 export {ruleBox}
+export {bridgeUtil}

@@ -117,7 +117,7 @@
 </template>
 
 <script>
-  import {Utils, ruleBox} from '../../service/Utils'
+  import {Utils, ruleBox, bridgeUtil} from '../../service/Utils'
   import $ from 'jquery'
   import {LuckDraw} from '../../service/rect.luckdraw.js'
   export default {
@@ -194,38 +194,11 @@
         this.showDrawBox ? document.querySelector('#lottery').className = 'position-fix' : document.querySelector('#lottery').className = ' '
       },
       toLogin: function () {
-        var that = this
-        // ios
-        if (that.isIos) {
-          that.setupWebViewJavascriptBridge(function (bridge) {
-            bridge.callHandler('HCNative_Login', {}, function (response) {})
-            // html5创建方法，iOS进行调用
-            bridge.registerHandler('HCWeb_ShareSuceess', function (data) {
-            })
-          })
+        var registerHandlerCallback = function (data) {
+          this.token = data.token
+          this.fetchEventsList()
         }
-        // android
-        if (that.isAndroid) {
-          window.WebViewJavascriptBridge.callHandler('HCNative_ImmediateInvestment', {
-            'code': '1006',
-            'tokenId': that.tokenId,
-            'buyCount': that.account
-          }, function (responseData) {})
-          that.connectWebViewJavascriptBridge(function (bridge) {
-            alert('ldasl')
-            bridge.init(function (message, responseCallback) {
-              console.log('JS got a message', message)
-              var data = {
-                'Javascript Responds': '测试中文!'
-              }
-              console.log('JS responding with', data)
-              responseCallback(data)
-            })
-            bridge.registerHandler('HCWeb_ImmediateInvestment', function (data) {
-              alert(data)
-            })
-          })
-        }
+        bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, registerHandlerCallback)
       },
       getPrize: function () {
         var that = this
@@ -358,7 +331,7 @@
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
-            alert('success')
+            // alert('success')
             that.drawCount = !res.data.isEffective ? that.drawCount : that.drawCount + 1
           }
         })
