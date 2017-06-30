@@ -82,7 +82,7 @@ const routes = [
     component: AssignmentQuestion
   },
   {
-    path: '/businessSuccess',
+    path: '/businessSuccess/:business/:status',
     name: 'BusinessSuccess',
     component: BusinessSuccess
   }
