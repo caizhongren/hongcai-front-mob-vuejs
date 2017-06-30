@@ -32,7 +32,7 @@ const routes = [
     component: ProjectDetail
   },
   {
-    path: '/activity/invite/:isLogged',
+    path: '/activity/invite/:token',
     name: 'Invite',
     component: Invite
   },
