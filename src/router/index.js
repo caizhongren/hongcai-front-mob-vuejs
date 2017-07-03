@@ -15,6 +15,7 @@ import AssignmentAgree from '../components/assignmentAgree.vue'
 import ServiceAgree from '../components/serviceAgree.vue'
 import AssignmentQuestion from '../components/assignmentQuestion.vue'
 import BusinessSuccess from '../components/businessSuccess.vue'
+import BankCustody from '../components/bank-custody.vue'
 Vue.use(Router)
 const routes = [
   {
@@ -91,6 +92,11 @@ const routes = [
     path: '/businessSuccess/:business/:status',
     name: 'BusinessSuccess',
     component: BusinessSuccess
+  },
+  {
+    path: '/bank-custody',
+    name: 'BankCustody',
+    component: BankCustody
   }
 ]
 const router = new Router({
