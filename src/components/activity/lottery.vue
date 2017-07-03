@@ -134,6 +134,7 @@
         showUpperLimit: false,
         usedAndcanShare: false,
         receiveDraw: false,
+        shareCallHandCallback: null,
         luckyUsers: [],
         timer: null,
         isIos: Utils.isIos(),
@@ -144,22 +145,34 @@
     created: function () {
       document.title = '幸运大抽奖'
       this.token = this.$route.query.token
-      // this.draw()
       this.getDrawCount(this.token)
       this.getLuckyUsers()
       bridgeUtil.setupWebViewJavascriptBridge()
+      this.shareRegisterCallback = function (data) {
+        if (data.isShareSuccess === 1) {
+          window.vue.$http.post('/hongcai/rest/lotteries/share', {
+            token: window.vue.token
+          })
+          .then(function (res) {
+            if (res.data && res.data.ret !== -1) {
+              window.vue.drawCount = !res.data.isEffective ? window.vue.drawCount : window.vue.drawCount + 1
+            }
+          })
+          .catch(function (err) {
+            console.log(err)
+          })
+        }
+      }
       window.vue = this
       window.onload = function (e) {
         window.vue.luckyTimer(-2.5)
         window.vue.isShare = function () {
-          bridgeUtil.webConnectNative('HCNative_NeedShare', null, {
+          bridgeUtil.webConnectNative('HCNative_NeedShare', 'HCWeb_ShareSuccess', {
             'title': '今日运势，一试便知',
             'subTitle': '100%有礼！随机奖金、特权本金、返现加息券样样都有！好运从这里开始！',
             'url': this.domain + '/activity/lottery',
             'imageUrl': 'https://mmbiz.qlogo.cn/mmbiz_jpg/8MZDOEkib8AlvibTmbDkqwbDiasl9BphCGgYnicBzl9VfX4Sm9cpvFiarGsV73IRYurUF9LPibzL0JLR5SGmd1TeO3ug/0?wx_fmt=jpeg'
-          }, function (response) {
-            alert(this)
-          }, null)
+          }, function (response) {}, window.vue.shareRegisterCallback)
         }
         window.vue.isShare()
       }
@@ -318,27 +331,12 @@
       },
       LotteryShareTo: function () {
         var that = this
-        var callHandCallback = function (data) {
-          if (data.isShareSuccess === 1) {
-            that.$http.post('/hongcai/rest/lotteries/share', {
-              token: that.token
-            })
-            .then(function (res) {
-              if (res.data && res.data.ret !== -1) {
-                that.drawCount = !res.data.isEffective ? that.drawCount : that.drawCount + 1
-              }
-            })
-            .catch(function (err) {
-              console.log(err)
-            })
-          }
-        }
-        bridgeUtil.webConnectNative('HCNative_Share', null, {
+        bridgeUtil.webConnectNative('HCNative_Share', 'HCWeb_ShareSuccess', {
           'title': '今日运势，一试便知',
           'subTitle': '100%有礼！随机奖金、特权本金、返现加息券样样都有！好运从这里开始！',
           'url': 'm.hongcai.com/lottery',
           'imageUrl': 'https://mmbiz.qlogo.cn/mmbiz_jpg/8MZDOEkib8AlvibTmbDkqwbDiasl9BphCGgYnicBzl9VfX4Sm9cpvFiarGsV73IRYurUF9LPibzL0JLR5SGmd1TeO3ug/0?wx_fmt=jpeg'
-        }, callHandCallback, null)
+        }, function () {}, that.shareRegisterCallback)
         this.showDrawBox = false
       },
       getLuckyUsers: function () {
