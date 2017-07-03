@@ -263,8 +263,8 @@
         }).then((response) => {
           this.project = response.data
           document.title = this.project.name
-          var proWidth = (this.project.total - this.project.amount) / this.project.total * 100
-          this.processWith = proWidth % 10 === 0 ? 100 : proWidth.toFixed(1)
+          var proWidth = (this.project.total - this.project.amount) / this.project.total
+          this.processWith = proWidth % 10 === 0 ? 100 : proWidth.toFixed(1) * 100
           this.expectEarning = (10000 * this.project.annualEarnings * this.project.projectDays / 36500).toFixed(2)
           this.projectId = response.data.id
           this.getProjectInfo()

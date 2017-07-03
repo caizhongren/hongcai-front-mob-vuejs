@@ -12,6 +12,7 @@ import Help from '../components/user-center/help.vue'
 import Question from '../components/user-center/question.vue'
 import RegisterAgree from '../components/registerAgree.vue'
 import AssignmentAgree from '../components/assignmentAgree.vue'
+import ServiceAgree from '../components/serviceAgree.vue'
 import AssignmentQuestion from '../components/assignmentQuestion.vue'
 import BusinessSuccess from '../components/businessSuccess.vue'
 Vue.use(Router)
@@ -75,6 +76,11 @@ const routes = [
     path: '/assignment-agree',
     name: 'AssignmentAgree',
     component: AssignmentAgree
+  },
+  {
+    path: '/service-agree',
+    name: 'ServiceAgree',
+    component: ServiceAgree
   },
   {
     path: '/assignment-question',

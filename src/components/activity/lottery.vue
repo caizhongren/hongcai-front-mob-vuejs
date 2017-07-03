@@ -193,7 +193,10 @@
       },
       toLotteryRecord: function () {
         if (!this.token || this.token === '') {
-          // 跳转native登录
+          var regesterHandCallback = function (data) {
+            window.location.replace(window.location.pathname + '?token=' + data.token)
+          }
+          bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, regesterHandCallback)
           return
         }
         this.$router.push({name: 'LotteryRecord', query: { token: this.token }})
