@@ -200,7 +200,7 @@ export default {
         'imageUrl': shareItem.imageUrl
       }
       bridgeUtil.webConnectNative('HCNative_Share', null, nativeNeedDatas, function (response) {
-         alert('分享成功')
+        alert('分享成功')
       }, null)
     }
   }
