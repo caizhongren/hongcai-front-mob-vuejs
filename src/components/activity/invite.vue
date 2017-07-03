@@ -265,13 +265,13 @@ export default {
     .ruleBox {
         background: url('../../images/invite/invite-rule-bg.png') no-repeat center center;
         background-size: contain;
-        height: 11rem;
+        height: 10rem;
         overflow: auto;
     }
     .box {
         position: relative;
         overflow: auto;
-        top: 2.3rem;
+        top: 2rem;
         height: 6.1rem;
     }
     .rec-act-rule {
@@ -328,7 +328,7 @@ export default {
     }
     .tips {
         position: fixed;
-        bottom: 2.3rem;
+        bottom: 2.62rem;
         left: 0.53rem;
     }
     .tips p {
