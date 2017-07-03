@@ -199,7 +199,9 @@ export default {
         'linkUrl': shareItem.linkUrl,
         'imageUrl': shareItem.imageUrl
       }
-      bridgeUtil.webConnectNative('HCNative_toShare', '', nativeNeedDatas, function (response) {}, function (response) {})
+      bridgeUtil.webConnectNative('HCNative_Share', null, nativeNeedDatas, function (response) {
+        alert('分享成功')
+      }, null)
     }
   }
 }
@@ -265,13 +267,13 @@ export default {
     .ruleBox {
         background: url('../../images/invite/invite-rule-bg.png') no-repeat center center;
         background-size: contain;
-        height: 11rem;
+        height: 10rem;
         overflow: auto;
     }
     .box {
         position: relative;
         overflow: auto;
-        top: 2.3rem;
+        top: 2rem;
         height: 6.1rem;
     }
     .rec-act-rule {
@@ -327,8 +329,8 @@ export default {
         overflow: hidden;
     }
     .tips {
-        position: fixed;
-        bottom: 2.3rem;
+        /*position: fixed;*/
+        bottom: 2.62rem;
         left: 0.53rem;
     }
     .tips p {
