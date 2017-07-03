@@ -4,7 +4,7 @@
       <div class="lottery-wrap">
         <div class="draw-lottery">
           <p class="text-center ft-1p3">
-            <span ng-if="isLogged">今日可抽奖次数：<span class="draw-count">{{drawCount}}</span>次</span>
+            <span v-if="token">今日可抽奖次数：<span class="draw-count">{{drawCount}}</span>次</span>
           </p>
           <!-- 抽奖转盘 1, "当日加息"" ; 2, "现金奖励 ; 3, "加息券 ; 4, "现金券" ; 5, "特权本金" ; 6, "谢谢"-->
           <div class="lottery-box" id="js-rect-luck-draw-con">
@@ -135,6 +135,7 @@
         usedAndcanShare: false,
         receiveDraw: false,
         luckyUsers: [],
+        timer: null,
         isIos: Utils.isIos(),
         isAndroid: Utils.isAndroid(),
         domain: 'http://m.test321.hongcai.com'
@@ -173,7 +174,6 @@
           turnStartCallback: function () {
           },
           turnEndCallback: function (prizeId, obj) {
-            // window.clearInterval($scope._timer)
             setTimeout(function () {
               that.showDrawBox = true
               var $lottry = document.querySelector('#lottery')
@@ -333,15 +333,13 @@
       },
       LotteryShareTo: function () {
         var that = this
-        var regesterHandCallback = function (data) {
+        var callHandCallback = function (data) {
           if (data.isShareSuccess === 1) {
-            alert(that)
             that.$http.post('/hongcai/rest/lotteries/share', {
               token: that.token
             })
             .then(function (res) {
               if (res.data && res.data.ret !== -1) {
-                // alert('success')
                 that.drawCount = !res.data.isEffective ? that.drawCount : that.drawCount + 1
               }
             })
@@ -350,12 +348,12 @@
             })
           }
         }
-        bridgeUtil.webConnectNative('HCNative_Share', 'HCWeb_ShareSuccess', {
+        bridgeUtil.webConnectNative('HCNative_Share', null, {
           'title': '今日运势，一试便知',
           'subTitle': '100%有礼！随机奖金、特权本金、返现加息券样样都有！好运从这里开始！',
-          'url': this.domain + '/activity/lottery',
+          'url': 'm.hongcai.com/lottery',
           'imageUrl': 'https://mmbiz.qlogo.cn/mmbiz_jpg/8MZDOEkib8AlvibTmbDkqwbDiasl9BphCGgYnicBzl9VfX4Sm9cpvFiarGsV73IRYurUF9LPibzL0JLR5SGmd1TeO3ug/0?wx_fmt=jpeg'
-        }, function (response) {}, regesterHandCallback)
+        }, callHandCallback, null)
         this.showDrawBox = false
       },
       getLuckyUsers: function () {
@@ -389,7 +387,7 @@
       },
       luckyTimer: function (val) {
         var $luckyUsersList = document.querySelector('.lucky-users-box')
-        setInterval(function () {
+        this.timer = setInterval(function () {
           if (val % -12.5 === 0 && val !== 0) {
             val = 0
             $luckyUsersList.classList.remove('animate')
@@ -401,6 +399,9 @@
           val -= 2.5
         }, 5000)
       }
+    },
+    destory: function () {
+      window.clearInterval(this.timer)
     }
   }
 </script>
