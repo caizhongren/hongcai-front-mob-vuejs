@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import {Utils, InviteShareUtils, ruleBox} from '../../service/Utils'
+import {Utils, InviteShareUtils, ruleBox, bridgeUtil} from '../../service/Utils'
 export default {
   name: 'Invite',
   data () {
@@ -120,13 +120,16 @@ export default {
       isLogged: Boolean,
       isInvitedFriends: true,
       isActivityEnd: false,
-      isiOS: true
+      isiOS: true,
+      token: 'e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698',
+      voucher: String
     }
   },
   created: function () {
-    this.isLogged = this.$route.params.isLogged
+    this.token = this.$route.params.token
     this.getInvitedFriends()
     this.isiOS = Utils.isIos()
+    this.token ? this.isLogged = true : this.isLogged = false
   },
   methods: {
     showRuleBox: function () {
@@ -136,7 +139,7 @@ export default {
     getInvitedFriends: function () {
       this.$http({
         method: 'get',
-        url: '/hongcai/rest/users/0/isInvitedFriends?token=e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698'
+        url: '/hongcai/rest/users/0/isInvitedFriends?token=' + this.token
       }).then((response) => {
         if (response.data && response.data.ret !== -1) {
           this.isInvitedFriends = response.data.flag
@@ -181,22 +184,26 @@ export default {
       })
     },
     toShare: function () {
-      var shareItem = InviteShareUtils.share()
-    //   var linkUrl = location.href.split('#')[0]
-      console.log(shareItem)
-    //   console.log(linkUrl)
-      this.setupWebViewJavascriptBridge(function (bridge) {
-        bridge.registerHandler('iOSPayResultHandler', function (data) {
-          alert(data.name)
-        })
-        bridge.callHandler('IOS_Share', {
-          'title': shareItem.title,
-          'subTitle': shareItem.subTitle,
-          'linkUrl': shareItem.linkUrl,
-          'imageUrl': shareItem.imageUrl
-        }, function (response) {
-        })
+      var that = this
+      that.$http({
+        method: 'get',
+        url: '/hongcai/rest/users/0/voucher?token=' + 'e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698'
+      }).then((response) => {
+        if (response.data && response.data.ret !== -1) {
+          that.voucher = response.data.inviteCode
+        }
       })
+      var shareItem = InviteShareUtils.share(that.voucher)
+     //   var linkUrl = location.href.split('#')[0]
+      console.log(shareItem)
+     //   console.log(linkUrl)
+      var nativeNeedDatas = {
+        'title': shareItem.title,
+        'subTitle': shareItem.subTitle,
+        'linkUrl': shareItem.linkUrl,
+        'imageUrl': shareItem.imageUrl
+      }
+      bridgeUtil.webConnectNative('HCNative_toShare', '', nativeNeedDatas, function (response) {}, function (response) {})
     }
   }
 }
