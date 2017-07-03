@@ -2,8 +2,8 @@
   <div class="lottery-record">
     <div class="lottery-list-wrap">
       <div class="lottery-list-header">(最近两周内)</div>
+      <!-- prizeType：1, "当日加息"" ; 2, "现金奖励 ; 3, "加息券 ; 4, "现金券" ; 5, "特权本金" -->
       <ul v-if="userLotteryRecord && userLotteryRecord.length > 0">
-        <!-- prizeType：1, "当日加息"" ; 2, "现金奖励 ; 3, "加息券 ; 4, "现金券" ; 5, "特权本金" -->
         <li v-for="record in userLotteryRecord " class="text-left">
           <span v-if="record.prizeType === 1"><img src="../../images/lottery/one-day-rate-icon.png" width="100%"></span>
           <span v-if="record.prizeType === 2"><img src="../../images/lottery/cash-icon.png" width="100%"></span>
@@ -38,19 +38,11 @@
         record: {
           prizeType: 4
         },
-        userLotteryRecord: [
-          {
-            mobile: '15313895650',
-            prizeType: 5,
-            time: 1498436076556,
-            value: '1888.00'
-          }
-        ],
+        userLotteryRecord: [],
         token: '9c438068699b1c092f2e65895feebaba8bc575a4dec742dd'
       }
     },
     created: function () {
-      // this.getRecord()
       var that = this
       that.token = that.$route.query.token
       console.log(that.token)
@@ -103,7 +95,7 @@
     border-bottom: 1px solid #ddd;
   }
   .lottery-record .lottery-list-wrap .no-data {
-    padding-top: 26%;
+    padding-top: 19%;
   }
   .lottery-record .lottery-list-wrap .no-data img:first-child{
     margin-bottom: 10%;

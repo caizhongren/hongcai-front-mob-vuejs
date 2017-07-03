@@ -77,6 +77,13 @@ let bridgeUtil = {
     if (window.WebViewJavascriptBridge) {
       return callback(window.WebViewJavascriptBridge)
     } else {
+      document.addEventListener(
+        'WebViewJavascriptBridgeReady',
+        function () {
+          callback(window.WebViewJavascriptBridge)
+        },
+        false
+      )
     }
   },
   webConnectNative: function (callHandlerName, registerHandlerName, nativeNeedDatas, callHandlerCallback, registerHandlerCallback) {
