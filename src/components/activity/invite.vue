@@ -199,7 +199,9 @@ export default {
         'linkUrl': shareItem.linkUrl,
         'imageUrl': shareItem.imageUrl
       }
-      bridgeUtil.webConnectNative('HCNative_toShare', '', nativeNeedDatas, function (response) {}, function (response) {})
+      bridgeUtil.webConnectNative('HCNative_Share', null, nativeNeedDatas, function (response) {
+         alert('分享成功')
+      }, null)
     }
   }
 }
@@ -327,7 +329,7 @@ export default {
         overflow: hidden;
     }
     .tips {
-        position: fixed;
+        /*position: fixed;*/
         bottom: 2.62rem;
         left: 0.53rem;
     }
