@@ -86,12 +86,14 @@
           type: 1,
           value: 2
         },
-        business: ''
+        business: '',
+        token: ''
       }
     },
     created: function () {
       this.business = this.$route.params.business
-      this.amount = 9
+      this.token = this.$route.params.token
+      this.amount = this.$route.query.amount
       this.number = this.$route.query.number
       // console.log(this.amount)
       this.setBuiness()
@@ -107,7 +109,7 @@
           this.page = 3
           this.$http({
             method: 'get',
-            url: '/hongcai/rest/orders/' + this.number + '/orderCoupon?token=be8e447ebfb61ea0f43846d540e4a21b27a38100517ff32c'
+            url: '/hongcai/rest/orders/' + this.number + '/orderCoupon?token=' + this.token
           }).then((response) => {
             if (response && response.data.ret !== -1) {
               console.log(response.data.coupon)
@@ -147,7 +149,7 @@
         }
       },
       toNative: function (nativeFnName) {
-        bridgeUtil.webConnectNative('HCNative_toProjectList', '', {}, function (response) {}, function (response) {})
+        bridgeUtil.webConnectNative(nativeFnName, '', {}, function (response) {}, function (response) {})
       }
     }
   }

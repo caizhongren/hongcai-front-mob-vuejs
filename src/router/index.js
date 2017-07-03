@@ -32,12 +32,12 @@ const routes = [
     component: ProjectDetail
   },
   {
-    path: '/activity/invite/:token',
+    path: '/activity/invite',
     name: 'Invite',
     component: Invite
   },
   {
-    path: '/activity/reward/:userId',
+    path: '/activity/reward/:token',
     name: 'ActivityReward',
     component: ActivityReward
   },
