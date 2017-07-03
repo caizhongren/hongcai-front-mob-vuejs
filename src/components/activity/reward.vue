@@ -69,10 +69,12 @@
         details: [],
         pageSize: 10,
         page: 1,
-        totalPage: 0
+        totalPage: 1,
+        token: String
       }
     },
     created: function () {
+      this.token = this.$route.params.token
       this.isiOS = Utils.isIos()
       this.InvitePrivilegedUsers()
       this.invitePrivilegedRewardStat()
@@ -91,7 +93,7 @@
       InvitePrivilegedUsers: function () {
         this.$http({
           method: 'get',
-          url: '/hongcai/rest/activitys/invitePrivilegedUsers?token=e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698'
+          url: '/hongcai/rest/activitys/invitePrivilegedUsers?token=' + this.token
         }).then((response) => {
           if (response.data && response.data.ret !== -1) {
             this.inviteCount = response.data.data
@@ -101,7 +103,7 @@
       invitePrivilegedRewardStat: function () {
         this.$http({
           method: 'get',
-          url: '/hongcai/rest/activitys/invitePrivilegedRewardStat?token=e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698'
+          url: '/hongcai/rest/activitys/invitePrivilegedRewardStat?token=' + this.token
         }).then((response) => {
           if (response.data && response.data.ret !== -1) {
             this.privilegedCapital = response.data
@@ -111,7 +113,7 @@
       getInvitePrivilegedRewards: function (page, pageSize) {
         this.$http({
           method: 'get',
-          url: '/hongcai/rest/activitys/invitePrivilegedRewards?page' + page + '&pageSize=' + pageSize + '&token=e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698'
+          url: '/hongcai/rest/activitys/invitePrivilegedRewards?page' + page + '&pageSize=' + pageSize + '&token=' + this.token
         }).then((response) => {
           if (response.data && response.data.ret !== -1) {
             var details = response.data.data
@@ -148,20 +150,26 @@
         setTimeout(function () { document.documentElement.removeChild(WVJBIframe) }, 0)
       },
       toshare: function () {
-        var shareItem = InviteShareUtils.share()
-        console.log(shareItem)
-        this.setupWebViewJavascriptBridge(function (bridge) {
-          bridge.registerHandler('iOSPayResultHandler', function (data) {
-            alert(data.name)
-          })
-          bridge.callHandler('IOS_Share', {
-            'title': shareItem.title,
-            'subTitle': shareItem.subTitle,
-            'linkUrl': shareItem.linkUrl,
-            'imageUrl': shareItem.imageUrl
-          }, function (response) {
-          })
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest/users/0/voucher?token=' + that.token
+        }).then((response) => {
+          if (response.data && response.data.ret !== -1) {
+            that.voucher = response.data.inviteCode
+          }
         })
+        var shareItem = InviteShareUtils.share(that.voucher)
+        //   var linkUrl = location.href.split('#')[0]
+        console.log(shareItem)
+        //   console.log(linkUrl)
+        var nativeNeedDatas = {
+          'title': shareItem.title,
+          'subTitle': shareItem.subTitle,
+          'linkUrl': shareItem.linkUrl,
+          'imageUrl': shareItem.imageUrl
+        }
+        bridgeUtil.webConnectNative('HCNative_toShare', '', nativeNeedDatas, function (response) {}, function (response) {})
       }
     }
   }

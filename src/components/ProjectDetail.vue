@@ -146,7 +146,7 @@
                   </tr>
                   <tr class="text-center" v-show="orderList && orderList.length <=0 ">
                     <td colspan="3">
-                      <!--<img src="/images/project/no-record.png" width="17%" class="margin-t-2">-->
+                      <img src="../images/project/no-record.png" width="35%" class="no-record">
                       <p class="ft-grey4 margin-b-0 margin-t-1p5">暂无记录</p>
                     </td>
                   </tr>
@@ -759,7 +759,7 @@
     color: #999;
   }
   .investor-record p {
-    line-height: 1.8rem;
+    /*line-height: 1.8rem;*/
   }
   .investor-record table {
     width: 100%;
@@ -888,5 +888,8 @@
     height: 100%;
     vertical-align: top;
     margin-top: -.1rem;
+  }
+  .no-record {
+    margin-top: 1rem;
   }
 </style>

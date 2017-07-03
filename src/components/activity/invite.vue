@@ -30,7 +30,7 @@
             <!-- 邀请好友>0 && 活动进行中 ：从页面底部弹出分享框 -->
             <div class="invite-btn" v-show="isLogged && isInvitedFriends && !isActivityEnd">
                 <!-- 查看奖励按钮 -->
-                <router-link :to="{name: 'ActivityReward',params: {userId: 1}}">
+                <router-link :to="{name: 'ActivityReward',params: {token: token}}">
                     <img src="../../images/invite/rewards-btn.png" width="40%" class="rewards-btn">
                 <!-- 继续邀请按钮 -->
                 </router-link>
@@ -41,7 +41,7 @@
             <!-- 邀请好友>0 && 活动停止 -->
             <div class="invite-btn" v-show="isLogged && isActivityEnd">
                 <!-- 查看奖励按钮 -->
-                <router-link :to="{name: 'ActivityReward',params: {userId: 1}}">
+                <router-link :to="{name: 'ActivityReward',params: {token: token}}">
                     <img src="../../images/invite/rewards-btn.png" width="40%" class="rewards-btn">
                 </router-link>
                 <!-- 点击出现活动结束页面 -->
@@ -121,13 +121,13 @@ export default {
       isInvitedFriends: true,
       isActivityEnd: false,
       isiOS: true,
-      token: 'e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698',
+      token: '',
       voucher: String
     }
   },
   created: function () {
-    this.token = this.$route.params.token
-    this.getInvitedFriends()
+    this.token = this.$route.query.token
+    this.token ? this.getInvitedFriends() : ''
     this.isiOS = Utils.isIos()
     this.token ? this.isLogged = true : this.isLogged = false
   },
@@ -173,21 +173,17 @@ export default {
       setTimeout(function () { document.documentElement.removeChild(WVJBIframe) }, 0)
     },
     toLogin: function () {
-      this.setupWebViewJavascriptBridge(function (bridge) {
-        bridge.registerHandler('iOSPayResultHandler', function (data) {
-          alert(data.name)
-        })
-        bridge.callHandler('IOS_Login', {
-          'needLogin': true
-        }, function (response) {
-        })
-      })
+      var regesterHandCallback = function (data) {
+        window.location.replace(window.location.pathname + '?token=' + data.token)
+        this.getInvitedFriends()
+      }
+      bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, regesterHandCallback)
     },
     toShare: function () {
       var that = this
       that.$http({
         method: 'get',
-        url: '/hongcai/rest/users/0/voucher?token=' + 'e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698'
+        url: '/hongcai/rest/users/0/voucher?token=' + that.token
       }).then((response) => {
         if (response.data && response.data.ret !== -1) {
           that.voucher = response.data.inviteCode
