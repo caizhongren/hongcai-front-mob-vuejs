@@ -58,7 +58,7 @@
 </template>
 
 <script>
-  import {Utils, InviteShareUtils} from '../../service/Utils'
+  import {Utils, InviteShareUtils, bridgeUtil} from '../../service/Utils'
   export default {
     name: 'ActivityReward',
     data () {
