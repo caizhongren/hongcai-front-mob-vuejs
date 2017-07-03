@@ -44,7 +44,7 @@
     },
     created: function () {
       var that = this
-      that.token = that.$route.query.token
+      that.token = that.$route.params.token
       console.log(that.token)
       that.$http({
         url: '/hongcai/rest/lotteries/rewards?token=' + that.token

@@ -48,7 +48,7 @@ const routes = [
     component: Lottery
   },
   {
-    path: '/activity/user-lottery-record',
+    path: '/activity/user-lottery-record/:token',
     name: 'LotteryRecord',
     component: LotteryRecord
   },
