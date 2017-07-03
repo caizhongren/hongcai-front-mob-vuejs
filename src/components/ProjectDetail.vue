@@ -321,9 +321,9 @@
       getProjectBill: function () {
         var that = this
         that.$http({
-          url: '/hongcai/rest/projects/' + that.paramsNum + '/projectBill?token=' + that.tokenId
+          url: '/hongcai/rest/projects/' + that.paramsNum + '/projectBills?token=' + that.tokenId
         }).then(function (res) {
-          that.preRepaymentList = res.data.preRepaymentList
+          that.preRepaymentList = res.data
           that.final = that.preRepaymentList[that.preRepaymentList.length - 1]
         })
         .catch(function (err) {

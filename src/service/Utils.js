@@ -62,16 +62,34 @@ let ruleBox = {
 }
 let bridgeUtil = {
   setupWebViewJavascriptBridge: function (callback) {
-    if (window.WebViewJavascriptBridge) {
-      return callback(window.WebViewJavascriptBridge)
+    if (Utils.isIos()) {
+      if (window.WebViewJavascriptBridge) {
+        return callback(window.WebViewJavascriptBridge)
+      }
+      if (window.WVJBCallbacks) {
+        return window.WVJBCallbacks.push(callback)
+      }
+      var WVJBIframe = document.createElement('iframe')
+      WVJBIframe.style.display = 'none'
+      WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__'
+      document.documentElement.appendChild(WVJBIframe)
+      setTimeout(function () {
+        document.documentElement.removeChild(WVJBIframe)
+      }, 0)
     }
-    var WVJBIframe = document.createElement('iframe')
-    WVJBIframe.style.display = 'none'
-    WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__'
-    document.documentElement.appendChild(WVJBIframe)
-    setTimeout(function () {
-      document.documentElement.removeChild(WVJBIframe)
-    }, 0)
+    if (Utils.isAndroid()) {
+      if (window.WebViewJavascriptBridge) {
+        callback(window.WebViewJavascriptBridge)
+      } else {
+        document.addEventListener(
+          'WebViewJavascriptBridgeReady'
+          , function () {
+            callback(window.WebViewJavascriptBridge)
+          },
+          false
+        )
+      }
+    }
   },
   connectWebViewJavascriptBridge: function (callback) {
     if (window.WebViewJavascriptBridge) {
@@ -102,7 +120,9 @@ let bridgeUtil = {
     // android
     if (Utils.isAndroid()) {
       if (callHandlerName) {
-        window.WebViewJavascriptBridge.callHandler(callHandlerName, nativeNeedDatas, callHandlerCallback)
+        this.setupWebViewJavascriptBridge(function (bridge) {
+          bridge.callHandler(callHandlerName, nativeNeedDatas, callHandlerCallback)
+        })
       }
       if (registerHandlerName) {
         this.connectWebViewJavascriptBridge(function (bridge) {

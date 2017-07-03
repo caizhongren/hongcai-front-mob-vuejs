@@ -147,8 +147,8 @@
       // this.draw()
       this.getDrawCount(this.token)
       this.getLuckyUsers()
+      bridgeUtil.setupWebViewJavascriptBridge()
       window.vue = this
-      this.setupWebViewJavascriptBridge()
       window.onload = function (e) {
         window.vue.luckyTimer(-2.5)
         window.vue.isShare = function () {
@@ -194,12 +194,12 @@
       toLotteryRecord: function () {
         if (!this.token || this.token === '') {
           var regesterHandCallback = function (data) {
-            window.location.replace(window.location.pathname + '?token=' + data.token)
+            window.location.replace(window.location.pathname + '/' + data.token)
           }
           bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, regesterHandCallback)
           return
         }
-        this.$router.push({name: 'LotteryRecord', query: { token: this.token }})
+        this.$router.push({name: 'LotteryRecord', params: { token: this.token }})
       },
       ruleBox: function (closeBox) {
         ruleBox.showRuleBox(document.querySelector('#lottery'), this, closeBox)
@@ -315,24 +315,6 @@
         .catch(function (err) {
           console.log(err)
         })
-      },
-      setupWebViewJavascriptBridge: function (callback) {
-        if (window.WebViewJavascriptBridge) {
-          return callback(window.WebViewJavascriptBridge)
-        }
-        var WVJBIframe = document.createElement('iframe')
-        WVJBIframe.style.display = 'none'
-        WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__'
-        document.documentElement.appendChild(WVJBIframe)
-        setTimeout(function () {
-          document.documentElement.removeChild(WVJBIframe)
-        }, 0)
-      },
-      connectWebViewJavascriptBridge: function (callback) {
-        if (window.WebViewJavascriptBridge) {
-          return callback(window.WebViewJavascriptBridge)
-        } else {
-        }
       },
       LotteryShareTo: function () {
         var that = this
