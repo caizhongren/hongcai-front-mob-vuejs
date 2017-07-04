@@ -63,7 +63,7 @@ const routes = [
     path: '/activity/invite',
     name: 'Invite',
     component: Invite,
-    meta: {title: '邀请活动'}
+    meta: {title: '邀请好友'}
   },
   {
     path: '/activity/reward/:token',

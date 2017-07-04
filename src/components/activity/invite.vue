@@ -23,7 +23,7 @@
             </div>
             <div class="invite-btns" v-show="!isLogged || (isLogged && !isInvitedFriends)">
                 <!-- 马上邀请按钮 -->
-                <img src="../../images/invite/toInvite-btn.png" width="94.4%" @click="toLogin">
+                <img src="../../images/invite/toInvite-btn.png" width="94.4%" @click="toShare">
                  <!--ios下显示 -->
                 <div class="iosTip" v-show="isiOS">该活动与设备生产商Apple Inc.公司无关</div>
             </div>
@@ -130,6 +130,8 @@ export default {
     this.token ? this.getInvitedFriends() : ''
     this.isiOS = Utils.isIos()
     this.token ? this.isLogged = true : this.isLogged = false
+    bridgeUtil.setupWebViewJavascriptBridge()
+    this.token ? this.getVoucher() : ''
   },
   methods: {
     showRuleBox: function () {
@@ -145,41 +147,16 @@ export default {
           this.isInvitedFriends = response.data.flag
         } else if (response.data.code && response.data.code === -1041) {
           this.isActivityEnd = true
+        } else if (response.data.code && response.data.code === -1000) {
+          this.isInvitedFriends = false
+          this.isActivityEnd = false
         } else {
           this.isInvitedFriends = true
           this.isActivityEnd = false
         }
       })
     },
-    setupWebViewJavascriptBridge: function (callback) {
-      if (window.WebViewJavascriptBridge) {
-        callback(window.WebViewJavascriptBridge)
-      } else {
-        document.addEventListener(
-          'WebViewJavascriptBridgeReady'
-          , function () {
-            callback(window.WebViewJavascriptBridge)
-          },
-          false
-        )
-      }
-      if (window.WebViewJavascriptBridge) { return callback(window.WebViewJavascriptBridge) }
-      if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback) }
-      window.WVJBCallbacks = [callback]
-      var WVJBIframe = document.createElement('iframe')
-      WVJBIframe.style.display = 'none'
-      WVJBIframe.src = 'https://__bridge_loaded__'
-      document.documentElement.appendChild(WVJBIframe)
-      setTimeout(function () { document.documentElement.removeChild(WVJBIframe) }, 0)
-    },
-    toLogin: function () {
-      var regesterHandCallback = function (data) {
-        window.location.replace(window.location.pathname + '?token=' + data.token)
-        this.getInvitedFriends()
-      }
-      bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, regesterHandCallback)
-    },
-    toShare: function () {
+    getVoucher: function () {
       var that = this
       that.$http({
         method: 'get',
@@ -189,14 +166,24 @@ export default {
           that.voucher = response.data.inviteCode
         }
       })
-      var shareItem = InviteShareUtils.share(that.voucher)
-     //   var linkUrl = location.href.split('#')[0]
-      console.log(shareItem)
-     //   console.log(linkUrl)
+    },
+    toLogin: function () {
+      var regesterHandCallback = function (data) {
+        window.location.replace(window.location.pathname + '?token=' + data.token)
+        this.getInvitedFriends()
+      }
+      bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, regesterHandCallback)
+    },
+    toShare: function () {
+      if (!this.token || this.token === '') {
+        this.toLogin()
+        return
+      }
+      var shareItem = InviteShareUtils.share(this.voucher)
       var nativeNeedDatas = {
         'title': shareItem.title,
         'subTitle': shareItem.subTitle,
-        'linkUrl': shareItem.linkUrl,
+        'url': shareItem.linkUrl,
         'imageUrl': shareItem.imageUrl
       }
       bridgeUtil.webConnectNative('HCNative_Share', null, nativeNeedDatas, function (response) {

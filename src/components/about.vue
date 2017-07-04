@@ -293,8 +293,8 @@
   }
   .about .aboutorange li {
     color: #757575;
-    height: 1rem;
-    line-height: 1rem;
+    height: .8rem;
+    line-height: .8rem;
   }
   .about .aboutorange li.active {
     color: #f5762f;
@@ -435,10 +435,7 @@
     right: -0.2rem;
   }
   .about .topTeam .part1 .img1 {
-    left: -1rem;
-  }
-  .about .topTeam .part1 .img2 {
-    left: -0.4rem;
+    left: 0rem;
   }
   .about .callMe {
     margin: 0rem .2rem .4rem;
