@@ -68,19 +68,13 @@
           this.toLogin()
           return
         }
-        if (this.userAuth.authStatus === 2 && !this.userAuth.active) {
-          bridgeUtil.webConnectNative('HCNative_Active', null, {}, function (response) {}, null)
-        } else if (this.userAuth.authStatus === 0) {
-          bridgeUtil.webConnectNative('HCNative_RealName', null, {}, function (response) {}, null)
-        } else {
-          bridgeUtil.webConnectNative('HCNative_Active', null, {}, function (response) {}, null)
-        }
+        bridgeUtil.webConnectNative('HCNative_Active', null, {}, function (response) {}, null)
       }
     }
   }
 </script>
 
-<style>
+<style scoped>
   .bank-custody-landing img {
     width: 100%;
     vertical-align: top;
