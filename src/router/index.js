@@ -10,6 +10,7 @@ import LotteryRecord from '../components/activity/lotteryRecord.vue'
 import HelpCenter from '../components/user-center/helpCenter.vue'
 import Help from '../components/user-center/help.vue'
 import Question from '../components/user-center/question.vue'
+import NoticeDetail from '../components/user-center/noticeDetail.vue'
 import RegisterAgree from '../components/registerAgree.vue'
 import AssignmentAgree from '../components/assignmentAgree.vue'
 import ServiceAgree from '../components/serviceAgree.vue'
@@ -103,6 +104,11 @@ const routes = [
     path: '/safe',
     name: 'Safe',
     component: Safe
+  },
+  {
+    path: '/user-center/messages/:id',
+    name: 'NoticeDetail',
+    component: NoticeDetail
   }
 ]
 const router = new Router({
