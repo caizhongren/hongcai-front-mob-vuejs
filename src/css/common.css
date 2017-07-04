@@ -221,6 +221,12 @@ input,button,select,textarea {
 .display-inb {
   display: inline-block;
 }
+.margin-auto {
+  margin: 0 auto;
+}
+.clearfix {
+  clear: both;
+}
 
 /*公用mask*/
 .mask-common {

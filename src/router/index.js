@@ -11,12 +11,14 @@ import LotteryRecord from '../components/activity/lotteryRecord.vue'
 import HelpCenter from '../components/user-center/helpCenter.vue'
 import Help from '../components/user-center/help.vue'
 import Question from '../components/user-center/question.vue'
+import NoticeDetail from '../components/user-center/noticeDetail.vue'
 import RegisterAgree from '../components/registerAgree.vue'
 import AssignmentAgree from '../components/assignmentAgree.vue'
 import ServiceAgree from '../components/serviceAgree.vue'
 import AssignmentQuestion from '../components/assignmentQuestion.vue'
 import BusinessSuccess from '../components/businessSuccess.vue'
 import BankCustody from '../components/bank-custody.vue'
+import Safe from '../components/safe.vue'
 Vue.use(Router)
 const routes = [
   {
@@ -114,6 +116,17 @@ const routes = [
     name: 'BankCustody',
     component: BankCustody,
     meta: {title: '银行存管介绍'}
+  },
+  {
+    path: '/safe',
+    name: 'Safe',
+    component: Safe,
+    meta: {title: '安全保障'}
+  },
+  {
+    path: '/user-center/messages/:id',
+    name: 'NoticeDetail',
+    component: NoticeDetail
   }
 ]
 const router = new Router({
