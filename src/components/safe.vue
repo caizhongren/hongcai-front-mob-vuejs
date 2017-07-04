@@ -93,11 +93,7 @@
           <p class="margin-b-0">法律权益保障</p>
         </div>
         <div class="content safe-black margin-auto">
-          <p class="margin-b-0 safe-black">宏财网在平台运作、借贷居间服务、财务管理等方</p>
-          <p class="margin-b-0 safe-black">面均合法合规。若上述风险防控措施仍不能覆盖全</p>
-          <p class="margin-b-0 safe-black">部风险，投资人的借款合同仍然有效，受国家法律</p>
-          <p class="margin-b-0 safe-black">保护。宏财网可以帮助投资人通过法律程序维护合</p>
-          <p class="margin-b-0 safe-black">法权益。</p>
+          <p class="margin-b-0 safe-black">宏财网在平台运作、借贷居间服务、财务管理等方面均合法合规。若上述风险防控措施仍不能覆盖全部风险，投资人的借款合同仍然有效，受国家法律保护。宏财网可以帮助投资人通过法律程序维护合法权益。</p>
         </div>
       </div>
     </div>
