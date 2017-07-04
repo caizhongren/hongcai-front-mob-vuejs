@@ -55,12 +55,12 @@ const routes = [
     component: LotteryRecord
   },
   {
-    path: '/user-center/helpCenter',
+    path: '/user-center/help-center',
     name: 'HelpCenter',
     component: HelpCenter
   },
   {
-    path: '/user-center/help',
+    path: '/user-center/help/:type',
     name: 'Help',
     component: Help
   },
