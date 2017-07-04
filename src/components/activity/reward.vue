@@ -79,6 +79,8 @@
       this.InvitePrivilegedUsers()
       this.invitePrivilegedRewardStat()
       this.getInvitePrivilegedRewards(this.page, this.pageSize)
+      this.getVoucher()
+      bridgeUtil.setupWebViewJavascriptBridge()
     },
     methods: {
       getintervalDays: function (firstInvestTime) {
@@ -149,7 +151,7 @@
         document.documentElement.appendChild(WVJBIframe)
         setTimeout(function () { document.documentElement.removeChild(WVJBIframe) }, 0)
       },
-      toshare: function () {
+      getVoucher: function () {
         var that = this
         that.$http({
           method: 'get',
@@ -159,14 +161,16 @@
             that.voucher = response.data.inviteCode
           }
         })
-        var shareItem = InviteShareUtils.share(that.voucher)
+      },
+      toshare: function () {
+        var shareItem = InviteShareUtils.share(this.voucher)
         //   var linkUrl = location.href.split('#')[0]
         console.log(shareItem)
         //   console.log(linkUrl)
         var nativeNeedDatas = {
           'title': shareItem.title,
           'subTitle': shareItem.subTitle,
-          'linkUrl': shareItem.linkUrl,
+          'url': shareItem.linkUrl,
           'imageUrl': shareItem.imageUrl
         }
         bridgeUtil.webConnectNative('HCNative_Share', null, nativeNeedDatas, function (response) {

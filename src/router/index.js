@@ -17,6 +17,7 @@ import AssignmentAgree from '../components/assignmentAgree.vue'
 import ServiceAgree from '../components/serviceAgree.vue'
 import AssignmentQuestion from '../components/assignmentQuestion.vue'
 import BusinessSuccess from '../components/businessSuccess.vue'
+import BusinessTransfer from '../components/businessTransfer.vue'
 import BankCustody from '../components/bank-custody.vue'
 import Safe from '../components/safe.vue'
 Vue.use(Router)
@@ -25,6 +26,16 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/businessSuccess/:business/:status',
+    name: 'BusinessSuccess',
+    component: BusinessSuccess
+  },
+  {
+    path: '/businessTransfer',
+    name: 'BusinessTransfer',
+    component: BusinessTransfer
   },
   {
     path: '/about',
@@ -107,11 +118,6 @@ const routes = [
     meta: {title: '常见问题'}
   },
   {
-    path: '/businessSuccess/:business/:status',
-    name: 'BusinessSuccess',
-    component: BusinessSuccess
-  },
-  {
     path: '/bank-custody',
     name: 'BankCustody',
     component: BankCustody,
@@ -138,7 +144,12 @@ const router = new Router({
   routes // （缩写）相当于 routes: routes
 })
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title
+  if (to.meta.title === undefined) {
+    document.title = '宏财网'
+  } else {
+    document.title = to.meta.title
+  }
   next()
 })
 export default router
+
