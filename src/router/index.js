@@ -19,6 +19,7 @@ import AssignmentQuestion from '../components/assignmentQuestion.vue'
 import BusinessSuccess from '../components/businessSuccess.vue'
 import BankCustody from '../components/bank-custody.vue'
 import Safe from '../components/safe.vue'
+import BindWechat from '../components/bind-wechat.vue'
 Vue.use(Router)
 const routes = [
   {
@@ -68,7 +69,8 @@ const routes = [
   {
     path: '/activity/reward/:token',
     name: 'ActivityReward',
-    component: ActivityReward
+    component: ActivityReward,
+    meta: {title: '我的奖励'}
   },
   {
     path: '/activity/lottery',
@@ -126,7 +128,14 @@ const routes = [
   {
     path: '/user-center/messages/:id',
     name: 'NoticeDetail',
-    component: NoticeDetail
+    component: NoticeDetail,
+    meta: {title: '公告详情'}
+  },
+  {
+    path: '/bind-wechat',
+    name: 'BindWechat',
+    component: BindWechat,
+    meta: {title: '绑定微信有钱领'}
   }
 ]
 const router = new Router({
