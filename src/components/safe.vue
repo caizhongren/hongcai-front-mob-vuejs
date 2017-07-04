@@ -207,7 +207,7 @@
   .advantages ul li {
     font-size: .22rem;
     float: left;
-    width: 32%;
+    width: 31%;
     margin: .2rem 0 0 1.3%;
     text-align: left;
   }
@@ -229,7 +229,7 @@
     margin-top: -1rem;
   }
   .section-two .business .content ul>li {
-    margin-top: .4rem;
+    margin-top: .32rem;
   }
   .section-two .business .content ul>li img {
     width: 14%;
@@ -333,11 +333,11 @@
   .section-six .business {
     background: url('../images/safe/section-6.png') 0 0 no-repeat;
     background-size: 100%;
-    height: 6rem;
+    height: 4.5rem;
   }
   .section-six .content {
     width: 88%;
-    text-align: justify;
+    text-align: left;
     font-size: .22rem;
   }
 </style>
