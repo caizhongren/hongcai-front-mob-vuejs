@@ -45,7 +45,7 @@
                     <img src="../../images/invite/rewards-btn.png" width="40%" class="rewards-btn">
                 </router-link>
                 <!-- 点击出现活动结束页面 -->
-                <img src="../../images/invite/toInvite-grey-btn.png" width="40%" class="toInvite-btn">
+                <img src="../../images/invite/toInvite-grey-btn.png" width="40%" class="toInvite-btn" @click="toShare">
                 <!-- ios下显示 -->
                 <div class="iosTip" v-show="isiOS">该活动与设备生产商Apple Inc.公司无关</div>
             </div>
@@ -177,6 +177,10 @@ export default {
     toShare: function () {
       if (!this.token || this.token === '') {
         this.toLogin()
+        return
+      }
+      if (this.isActivityEnd) {
+        alert('活动结束')
         return
       }
       var shareItem = InviteShareUtils.share(this.voucher)
