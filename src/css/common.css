@@ -215,6 +215,9 @@ input,button,select,textarea {
 .margin-r-0 {
   margin-right: 0 !important;
 }
+.margin-auto {
+  margin: 0 auto;
+}
 .display-inb {
   display: inline-block;
 }

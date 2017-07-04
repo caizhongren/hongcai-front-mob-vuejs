@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../components/Home.vue'
+import About from '../components/about.vue'
 import UserCenter from '../components/user-center/UserCenter.vue'
 import ProjectDetail from '../components/ProjectDetail.vue'
 import Invite from '../components/activity/invite.vue'
@@ -24,39 +25,21 @@ const routes = [
     component: Home
   },
   {
+    path: '/about',
+    name: 'About',
+    component: About,
+    meta: {title: '走进宏财'}
+  },
+  {
     path: '/user-center',
     name: 'UserCenter',
     component: UserCenter
   },
   {
-    path: '/project/:number',
-    name: 'ProjectDetail',
-    component: ProjectDetail
-  },
-  {
-    path: '/activity/invite',
-    name: 'Invite',
-    component: Invite
-  },
-  {
-    path: '/activity/reward/:token',
-    name: 'ActivityReward',
-    component: ActivityReward
-  },
-  {
-    path: '/activity/lottery',
-    name: 'Lottery',
-    component: Lottery
-  },
-  {
-    path: '/activity/user-lottery-record/:token',
-    name: 'LotteryRecord',
-    component: LotteryRecord
-  },
-  {
     path: '/user-center/help-center',
     name: 'HelpCenter',
-    component: HelpCenter
+    component: HelpCenter,
+    meta: {title: '帮助中心'}
   },
   {
     path: '/user-center/help/:type',
@@ -66,27 +49,60 @@ const routes = [
   {
     path: '/user-center/questionnaire',
     name: 'Question',
-    component: Question
+    component: Question,
+    meta: {title: '风险测评'}
+  },
+  {
+    path: '/project/:number',
+    name: 'ProjectDetail',
+    component: ProjectDetail
+  },
+  {
+    path: '/activity/invite',
+    name: 'Invite',
+    component: Invite,
+    meta: {title: '邀请活动'}
+  },
+  {
+    path: '/activity/reward/:token',
+    name: 'ActivityReward',
+    component: ActivityReward
+  },
+  {
+    path: '/activity/lottery',
+    name: 'Lottery',
+    component: Lottery,
+    meta: {title: '幸运大抽奖'}
+  },
+  {
+    path: '/activity/user-lottery-record/:token',
+    name: 'LotteryRecord',
+    component: LotteryRecord,
+    meta: {title: '我的奖励'}
   },
   {
     path: '/register-agree',
     name: 'RegisterAgree',
-    component: RegisterAgree
+    component: RegisterAgree,
+    meta: {title: '注册服务协议'}
   },
   {
     path: '/assignment-agree',
     name: 'AssignmentAgree',
-    component: AssignmentAgree
+    component: AssignmentAgree,
+    meta: {title: '债权转让协议'}
   },
   {
     path: '/service-agree',
     name: 'ServiceAgree',
-    component: ServiceAgree
+    component: ServiceAgree,
+    meta: {title: '宏财网服务协议'}
   },
   {
     path: '/assignment-question',
     name: 'AssignmentQuestion',
-    component: AssignmentQuestion
+    component: AssignmentQuestion,
+    meta: {title: '常见问题'}
   },
   {
     path: '/businessSuccess/:business/:status',
@@ -96,7 +112,8 @@ const routes = [
   {
     path: '/bank-custody',
     name: 'BankCustody',
-    component: BankCustody
+    component: BankCustody,
+    meta: {title: '银行存管介绍'}
   }
 ]
 const router = new Router({
@@ -106,5 +123,9 @@ const router = new Router({
   base: __dirname,
   linkActiveClass: 'v-link-active',
   routes // （缩写）相当于 routes: routes
+})
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title
+  next()
 })
 export default router
