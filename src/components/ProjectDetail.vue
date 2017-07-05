@@ -68,6 +68,7 @@
           </div>
         </div>
       </div>
+      <div class="child">下滑返回详情首页</div>
       <div class="scroll">
         <div class="details-more">
           <div class="project-details" v-show="activeTab === 0">
@@ -254,6 +255,8 @@
       toggleTab: function (i) {
         this.activeTab = i
         document.querySelector('.details-more').style.webkitTransform = 'translateY(' + 0 + 'px)'
+        this.orderList = []
+        this.page = 1
         i === 2 ? this.getOrderList(this.page, this.pageSize) : ''
       },
       getProject: function () {
@@ -396,6 +399,7 @@
           window.offsetY += 0.25 * (window.touch[3].y - window.touchStartY)
           window.touchStartY = window.touch[3].y
           touchY = window.offsetY
+          console.log(window.offsetY)
           if (window.offsetY <= 0 && window.offsetY < -1) {
             page.style.webkitTransform = 'translate3d(0, ' + window.offsetY + 'px, 0)'
           }
@@ -413,66 +417,51 @@
         }
       },
       scrollBack: function scrollBack (page) {
-        var detailMore = (document.querySelector('.details-more').scrollHeight + 100) - window.innerHeight + 200
-        console.log(detailMore)
         window.vue = this
-        var startY = 0
-        var endY = 0
         var scrollDirection = 0
+        var offsetY = 0
+        var touchStartY = 0
         page.addEventListener('touchstart', startTouchScroll, true)
         page.addEventListener('touchmove', moveTouchScroll, true)
         page.addEventListener('touchend', endTouchScroll, true)
         function startTouchScroll (event) {
           // event.preventDefault()
-          startY = event.touches[0].pageY
-          document.querySelector('#product-page1').classList.remove('animate')
+          document.querySelector('.scroll').classList.remove('animate')
+          touchStartY = event.targetTouches[0].pageY
+          offsetY = 0
         }
         function moveTouchScroll (event) {
           // event.preventDefault()
-          endY = event.touches[0].pageY
-          var sub = $('.scroll').offset().top - $('.details-more').offset().top
-          console.log(endY - startY)
-          console.log(scrollDirection)
-          if (scrollDirection < -detailMore || scrollDirection >= detailMore) {
-          } else {
-            scrollDirection = (scrollDirection + (endY - startY))
-          }
-          // console.log(scrollDirection)
-          if (scrollDirection < 0 && scrollDirection >= -detailMore) {
-            // document.querySelector('.details-more').style.webkitTransform = 'translate3d(0, ' + scrollDirection + 'px, 0)'
-          } else if (scrollDirection > 0 && scrollDirection < detailMore) {
-            // document.querySelector('.details-more').style.webkitTransform = 'translateY(' + scrollDirection + 'px)'
-          }
-          if (sub === 0) {
-            document.querySelector('.scroll').classList = 'scroll animate'
+          offsetY += 0.25 * (event.targetTouches[0].pageY - touchStartY)
+          touchStartY = event.targetTouches[0].pageY
+          scrollDirection = offsetY
+          console.log(offsetY)
+          if (scrollDirection <= 600 && scrollDirection >= 15) {
+            // document.querySelector('.scroll').classList = 'scroll animate'
             document.querySelector('.scroll').style.webkitTransform = 'translateY(' + scrollDirection + 'px)'
           }
         }
         function endTouchScroll (event) {
           // event.preventDefault()($('.scroll').offset().top)
-          console.log($('.scroll').offset().top - $('.details-more').offset().top)
           var sub = $('.scroll').offset().top - $('.details-more').offset().top
           if (scrollDirection === 0 && event.target.className === 'drop-load') {
             window.vue.loadMoreOrder()
             return false
-          } else if (scrollDirection < 0 && scrollDirection >= -detailMore) {
-            // document.querySelector('.details-more').style.webkitTransform = 'translate3d(0, ' + scrollDirection + 'px, 0)'
-          } else if (sub === 0 && scrollDirection >= 0) {
+          } else if (sub === 0 && scrollDirection >= 50) {
+            document.querySelector('.scroll').classList = 'scroll animate'
             setTimeout(function () {
+              document.querySelector('.scroll').style.webkitTransform = 'translateY(0px)'
               document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, 0px, 0)'
               document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, 0px, 0)'
-            }, 1000)
-            // document.querySelector('.details-more').style.webkitTransform = 'translateY(0px)'
+            }, 300)
             scrollDirection = 0
-          } else if (scrollDirection !== 0 && scrollDirection < detailMore) {
-            // scrollDirection = -detailMore
-          } else if (scrollDirection > 0 && scrollDirection <= 10) {
-            // document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, 0px, 0)'
-            // document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, 0px, 0)'
-            // document.querySelector('.details-more').style.webkitTransform = 'translateY(0px)'
+          } else if (sub === 0 && scrollDirection < 50) {
+            document.querySelector('.scroll').style.webkitTransform = 'translateY(0px)'
+          } else if (sub === 0) {
+            offsetY = 0
+          } else if (scrollDirection < -window.innerHeight) {
             scrollDirection = 0
           }
-          // console.log(scrollDirection)
         }
       }
     }
@@ -481,9 +470,14 @@
 </script>
 
 <style scoped>
+  .child {
+    position: absolute;
+    top: 1.5rem;
+    left: 35%;
+  }
   .scroll {
     overflow: scroll;
-    height: 9.5rem;
+    height: 8.5rem;
   }
   #product-page1.animate, .product-page2.animate, .scroll.animate {
     -webkit-transition:all .6s ease-in-out;
