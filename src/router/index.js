@@ -34,7 +34,7 @@ const routes = [
     component: BusinessSuccess
   },
   {
-    path: '/businessTransfer',
+    path: '/businessTransfer/:business',
     name: 'BusinessTransfer',
     component: BusinessTransfer
   },
