@@ -34,7 +34,7 @@
     </router-link>
     <router-link :to="{name: 'Help',params: {type: 5}}">
       <div class="class1">
-        <img src="../../images/user-center/dlzc.png" alt="" class="display-bl margin-auto" width="100%">
+        <img src="../../images/user-center/zhgl.png" alt="" class="display-bl margin-auto" width="100%">
         <div class="mask">
           <span class="line1 display-inbl"></span><span>账户管理</span><span class="line2 display-inbl"></span>
         </div>
