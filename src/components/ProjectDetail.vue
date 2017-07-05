@@ -1,6 +1,6 @@
 <template>
   <div class="project" id="project" v-auto-height>
-    <div class="fist-frame product-page1" id="product-page1">
+    <div class="fist-frame product-page1 animate" id="product-page1">
       <div class="project-detail-top bg-white">
         <p class="ft-Arial"><span>{{project.annualEarnings}}</span>%</p>
         <p class="second">期望年均回报率</p>
@@ -14,7 +14,7 @@
           </div>
           <div class="process-bar fl">
             <div class="process-inner-bar fl" v-bind:style="{width:processWith + '%'}"></div>
-            <img src="../images/project/process-btn.png" class="fl" v-bind:style="{left:processWith - 5.5 + '%'}">
+            <img src="../images/project/process-btn.png" class="fl" v-bind:style="{left:processWith - 5 + '%'}">
             <div class="process-tip" v-bind:style="{left:processWith - 2 + '%'}">{{processWith}}%</div>
           </div>
           <div class="end-circle fr" v-show="processWith < 100">
@@ -58,7 +58,7 @@
       </div>
     </div>
     <!--更多详情页面-->
-    <div class="more-details product-page2">
+    <div class="more-details product-page2 animate">
       <div id="detail-tabs" class="detail-tabs-wrapper">
         <div class="tabs sum-4">
           <div class="clearfix">
@@ -337,24 +337,6 @@
         this.page += 1
         this.getOrderList(this.page, this.pageSize)
       },
-      setupWebViewJavascriptBridge: function (callback) {
-        if (window.WebViewJavascriptBridge) {
-          return callback(window.WebViewJavascriptBridge)
-        }
-        var WVJBIframe = document.createElement('iframe')
-        WVJBIframe.style.display = 'none'
-        WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__'
-        document.documentElement.appendChild(WVJBIframe)
-        setTimeout(function () {
-          document.documentElement.removeChild(WVJBIframe)
-        }, 0)
-      },
-      connectWebViewJavascriptBridge: function (callback) {
-        if (window.WebViewJavascriptBridge) {
-          return callback(window.WebViewJavascriptBridge)
-        } else {
-        }
-      },
       toInvest: function () {
         var that = this
         var callHandlerCallback = function (response) {}
@@ -430,7 +412,7 @@
         }
       },
       scrollBack: function scrollBack (page) {
-        var detailMore = (document.querySelector('.details-more').scrollHeight + 150) - window.innerHeight + 100
+        var detailMore = (document.querySelector('.details-more').scrollHeight + 50) - window.innerHeight + 100
         console.log(detailMore)
         window.vue = this
         var startY = 0
@@ -492,6 +474,13 @@
   .scroll {
     overflow: scroll;
     height: 9.5rem;
+  }
+  #product-page1.animate, .product-page2.animate {
+    -webkit-transition:all .6s ease-in-out;
+    -moz-transition:all .6s ease-in-out;
+    -o-transition:all .6s ease-in-out;
+    -ms-transition:all .6s ease-in-out;    
+    transition:all .6s ease-in-out;
   }
   .more-details {
     background: #efeef4;

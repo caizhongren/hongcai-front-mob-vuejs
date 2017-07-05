@@ -28,8 +28,6 @@
 </template>
 
 <script>
-  // import {Utils} from '../../service/Utils'
-  // var submenu = document.getElementsByClassName('submenu')
   export default {
     name: 'help',
     data () {

@@ -130,27 +130,6 @@
         this.page = this.page + 1
         this.getInvitePrivilegedRewards(this.page, this.pageSize)
       },
-      setupWebViewJavascriptBridge: function (callback) {
-        if (window.WebViewJavascriptBridge) {
-          callback(window.WebViewJavascriptBridge)
-        } else {
-          document.addEventListener(
-            'WebViewJavascriptBridgeReady'
-            , function () {
-              callback(window.WebViewJavascriptBridge)
-            },
-            false
-          )
-        }
-        if (window.WebViewJavascriptBridge) { return callback(window.WebViewJavascriptBridge) }
-        if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback) }
-        window.WVJBCallbacks = [callback]
-        var WVJBIframe = document.createElement('iframe')
-        WVJBIframe.style.display = 'none'
-        WVJBIframe.src = 'https://__bridge_loaded__'
-        document.documentElement.appendChild(WVJBIframe)
-        setTimeout(function () { document.documentElement.removeChild(WVJBIframe) }, 0)
-      },
       getVoucher: function () {
         var that = this
         that.$http({
