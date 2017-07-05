@@ -172,8 +172,7 @@
               <div class="column1"><span v-show="final.status !== 1">预计</span>{{final.repaymentTime | date}}</div>
               <div class="column2">
                 <span class="circle"></span>
-                <span class="vertical-line"></span>
-                <span class="circle"></span>
+                <span class="vertical-line last-line"></span>
               </div>
               <div class="column3">
                 项目回款:本金{{final.repaymentPrincipal | number}}元
@@ -193,6 +192,7 @@
 </template>
 <script>
   import {Utils, bridgeUtil} from '../service/Utils'
+  import $ from 'jquery'
   export default {
     name: 'projectDetail',
     data () {
@@ -389,6 +389,7 @@
           // event.preventDefault()
           window.touchStartY = window.touch[3].y
           window.offsetY = 0
+          document.querySelector('#product-page1').classList = 'fist-frame product-page1 animate'
         }
         function moveTouchScroll (event) {
           // event.preventDefault()
@@ -412,7 +413,7 @@
         }
       },
       scrollBack: function scrollBack (page) {
-        var detailMore = (document.querySelector('.details-more').scrollHeight + 50) - window.innerHeight + 100
+        var detailMore = (document.querySelector('.details-more').scrollHeight + 100) - window.innerHeight + 200
         console.log(detailMore)
         window.vue = this
         var startY = 0
@@ -424,45 +425,54 @@
         function startTouchScroll (event) {
           // event.preventDefault()
           startY = event.touches[0].pageY
+          document.querySelector('#product-page1').classList.remove('animate')
         }
         function moveTouchScroll (event) {
           // event.preventDefault()
           endY = event.touches[0].pageY
+          var sub = $('.scroll').offset().top - $('.details-more').offset().top
           console.log(endY - startY)
           console.log(scrollDirection)
           if (scrollDirection < -detailMore || scrollDirection >= detailMore) {
           } else {
             scrollDirection = (scrollDirection + (endY - startY))
           }
-          console.log(scrollDirection)
+          // console.log(scrollDirection)
           if (scrollDirection < 0 && scrollDirection >= -detailMore) {
-            document.querySelector('.details-more').style.webkitTransform = 'translate3d(0, ' + scrollDirection + 'px, 0)'
+            // document.querySelector('.details-more').style.webkitTransform = 'translate3d(0, ' + scrollDirection + 'px, 0)'
           } else if (scrollDirection > 0 && scrollDirection < detailMore) {
-            document.querySelector('.details-more').style.webkitTransform = 'translateY(' + scrollDirection + 'px)'
+            // document.querySelector('.details-more').style.webkitTransform = 'translateY(' + scrollDirection + 'px)'
+          }
+          if (sub === 0) {
+            document.querySelector('.scroll').classList = 'scroll animate'
+            document.querySelector('.scroll').style.webkitTransform = 'translateY(' + scrollDirection + 'px)'
           }
         }
         function endTouchScroll (event) {
-          // event.preventDefault()
-          console.log(scrollDirection)
+          // event.preventDefault()($('.scroll').offset().top)
+          console.log($('.scroll').offset().top - $('.details-more').offset().top)
+          var sub = $('.scroll').offset().top - $('.details-more').offset().top
           if (scrollDirection === 0 && event.target.className === 'drop-load') {
             window.vue.loadMoreOrder()
             return false
           } else if (scrollDirection < 0 && scrollDirection >= -detailMore) {
-            document.querySelector('.details-more').style.webkitTransform = 'translate3d(0, ' + scrollDirection + 'px, 0)'
-          } else if (scrollDirection > 10) {
-            document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, 0px, 0)'
-            document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, 0px, 0)'
-            document.querySelector('.details-more').style.webkitTransform = 'translateY(0px)'
+            // document.querySelector('.details-more').style.webkitTransform = 'translate3d(0, ' + scrollDirection + 'px, 0)'
+          } else if (sub === 0 && scrollDirection >= 0) {
+            setTimeout(function () {
+              document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, 0px, 0)'
+              document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, 0px, 0)'
+            }, 1000)
+            // document.querySelector('.details-more').style.webkitTransform = 'translateY(0px)'
             scrollDirection = 0
           } else if (scrollDirection !== 0 && scrollDirection < detailMore) {
-            scrollDirection = -detailMore
+            // scrollDirection = -detailMore
           } else if (scrollDirection > 0 && scrollDirection <= 10) {
-            document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, 0px, 0)'
-            document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, 0px, 0)'
-            document.querySelector('.details-more').style.webkitTransform = 'translateY(0px)'
+            // document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, 0px, 0)'
+            // document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, 0px, 0)'
+            // document.querySelector('.details-more').style.webkitTransform = 'translateY(0px)'
             scrollDirection = 0
           }
-          console.log(scrollDirection)
+          // console.log(scrollDirection)
         }
       }
     }
@@ -475,7 +485,7 @@
     overflow: scroll;
     height: 9.5rem;
   }
-  #product-page1.animate, .product-page2.animate {
+  #product-page1.animate, .product-page2.animate, .scroll.animate {
     -webkit-transition:all .6s ease-in-out;
     -moz-transition:all .6s ease-in-out;
     -o-transition:all .6s ease-in-out;
@@ -777,8 +787,8 @@
   }
   /*营业执照*/
   .details-more {
-    min-height: 10.2rem;
     background-color: #fff;
+    min-height: 9.2rem;
   }
   .business-license .project-brief {
     margin-bottom: 0;
@@ -868,11 +878,14 @@
     margin-top: .07rem;
     margin-bottom: -0.6rem;
   }
+  .column2 .vertical-line.last-line {
+    opacity: 0;
+  }
   .column3 {
     padding-left: .2rem;
     width: 59.5%;
     color: #666;
-    font-size: .26rem;
+    font-size: .25rem;
     text-align: left;
     height: 100%;
     vertical-align: top;
