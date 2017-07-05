@@ -108,7 +108,7 @@ const routes = [
     meta: {title: '债权转让协议'}
   },
   {
-    path: '/service-agree',
+    path: '/service-agree/:number',
     name: 'ServiceAgree',
     component: ServiceAgree,
     meta: {title: '宏财网服务协议'}

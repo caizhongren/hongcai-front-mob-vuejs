@@ -38,11 +38,9 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .transfer {
-    height: 9rem;
+  /*.transfer {
     background-color: #fff;
-    /*position: fix;*/
-  }
+  }*/
   p {
     color: #666;
     text-align: center;
