@@ -434,7 +434,8 @@
   .about .topTeam .part1 .img {
     right: -0.2rem;
   }
-  .about .topTeam .part1 .img1 {
+  .about .topTeam .part1 .img1,
+  .about .topTeam .part1 .img2  {
     left: 0rem;
   }
   .about .callMe {

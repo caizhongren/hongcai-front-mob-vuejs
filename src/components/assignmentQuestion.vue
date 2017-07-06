@@ -96,7 +96,7 @@
         </div>
       </div>
       <div class="submenu">
-        <span class="">1）持有该笔债权大于10天；<br>2）该笔债权距项目完结日大于3天；<br>3）该笔债权购买时未参与宏财网线下特定奖励活动。</span>  
+        <span class="">1）持有该笔债权大于10天；<br>&nbsp;&nbsp; 2）该笔债权距项目完结日大于3天；<br>&nbsp;&nbsp; 3）该笔债权购买时未参与宏财网线下特定奖励活动。</span>  
       </div>
     </div>
     <div class="content">
