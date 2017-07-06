@@ -347,7 +347,8 @@
           'amount': that.project.amount,
           'annualEarnings': that.project.annualEarnings,
           'projectDays': that.project.projectDays,
-          'projectId': that.project.id
+          'projectId': that.project.id,
+          'number': that.project.number
         }
         bridgeUtil.webConnectNative('HCNative_ImmediateInvestment', 'HCWeb_LoginSuccess', nativeNeedDatas, callHandlerCallback, null)
       },
