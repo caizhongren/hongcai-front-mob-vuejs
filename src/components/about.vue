@@ -18,16 +18,16 @@
               <div class="line position-re"><p class="margin-auto position-ab"></p></div>
             </li>
             <li class="margin-0">
-              <img src="../images/about/02.png" width="46%" class="display-bl margin-auto margin-b-1">
+              <img src="../images/about/hklogo.png" width="46%" class="display-bl margin-auto margin-b-1">
               <p class="margin-auto margin-t-1p5 ft-1p4">
                 宏财网已正式对接海口联合农商银行资金存管系统（简称银行资金存管系统）。标的、资金信息同步上传北京市网贷协会，最大限度保护投资者利益。
               </p>
               <div class="line position-re"><p class="margin-auto position-ab"></p></div>
             </li>
             <li class="margin-0">
-              <img src="../images/about/03.png" width="46%" class="display-bl margin-auto margin-b-1">
+              <img src="../images/about/yblogo.png" width="46%" class="display-bl margin-auto margin-b-1">
               <p class="margin-auto margin-t-1p5 ft-1p4">
-                富友金融自2008年创立至今，已经发展成为一家大型的金融综合服务集团公司，注册资金2.0007亿元，实收资本金3.8亿元，下设6加全资子公司和1家控股子公司，同时拥有6家支付及金融服务牌照，并在全国设立了35家分公司，立志成为互联网金融和网络生活服务的领跑者。
+                易宝支付（YeePay.com)成立于2003年8月成立，总部位于北京，在全国设有30家分公司，是中国行业支付的开创者和领导者。自公司成立以来，秉承成就客户、极致服务、开放分享的核心价值观，致力成为世界一流的交易服务平台，领跑电子支付、移动互联和互联网金融。
               </p>
               <div class="line position-re"><p class="margin-auto position-ab"></p></div>
             </li>

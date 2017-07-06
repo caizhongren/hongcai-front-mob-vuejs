@@ -142,6 +142,10 @@ const routes = [
     name: 'BindWechat',
     component: BindWechat,
     meta: {title: '绑定微信有钱领'}
+  },
+  {
+    path: '*',
+    redirect: {name: 'Home'}
   }
 ]
 const router = new Router({
