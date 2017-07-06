@@ -23,14 +23,29 @@
     },
     created: function () {
       this.business = this.$route.params.business
-      this.token = this.$route.params.token
       this.amount = this.$route.query.amount
       this.number = this.$route.query.number
+      this.token = this.$route.query.token
       bridgeUtil.setupWebViewJavascriptBridge()
+      this.token && this.business ? this.getCoupon() : null
     },
     methods: {
       toNative: function (nativeFnName) {
-        bridgeUtil.webConnectNative(nativeFnName, '', {}, function (response) {}, function (response) {})
+        bridgeUtil.webConnectNative(nativeFnName, '', {
+          amout: this.amount,
+          number: this.number,
+          coupon: this.coupon
+        }, function (response) {}, function (response) {})
+      },
+      getCoupon: function () {
+        var that = this
+        that.$http({
+          url: '/hongcai/rest/orders/' + that.number + '/orderCoupon?token=' + that.token
+        }).then((response) => {
+          if (response && response.data.ret !== -1) {
+            that.coupon = response.data.coupon
+          }
+        })
       }
     }
   }
