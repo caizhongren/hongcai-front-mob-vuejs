@@ -213,9 +213,8 @@
         processWith: 0,
         activeTab: 0,
         detailTabs: ['项目详情', '相关资料', '投资记录', '还款计划'],
-        pageSize: 8,
+        pageSize: 10,
         page: 1,
-        tokenId: '9c438068699b1c092f2e65895feebaba8bc575a4dec742dd',
         totalPage: 1,
         isIos: Utils.isIos(),
         isAndroid: Utils.isAndroid(),
@@ -249,6 +248,7 @@
         if (page2 && pagedetail) {
           page2.addEventListener('load', window.vue.scrollBack(pagedetail), false)
         }
+        document.querySelector('.scroll').style.height = window.innerHeight - 2 * document.querySelector('#detail-tabs').offsetHeight - 20 + 'px'
       }
     },
     methods: {
@@ -309,7 +309,7 @@
       getOrderList: function (page, pageSize) {
         this.$http({
           method: 'get',
-          url: '/hongcai/rest/projects/' + this.paramsNum + '/orders?page=' + page + '&pageSize=' + pageSize + '&token=e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698'
+          url: '/hongcai/rest/projects/' + this.paramsNum + '/orders?page=' + page + '&pageSize=' + pageSize
         }).then((response) => {
           if (response.data && response.data.ret !== -1) {
             this.totalPage = response.data.totalPage
@@ -324,7 +324,7 @@
       getProjectBill: function () {
         var that = this
         that.$http({
-          url: '/hongcai/rest/projects/' + that.paramsNum + '/projectBills?token=' + that.tokenId
+          url: '/hongcai/rest/projects/' + that.paramsNum + '/projectBills'
         }).then(function (res) {
           that.preRepaymentList = res.data
           that.final = that.preRepaymentList[that.preRepaymentList.length - 1]
@@ -448,7 +448,7 @@
           // event.preventDefault()($('.scroll').offset().top)
           var sub = $('.scroll').offset().top - $('.details-more').offset().top
           if (scrollDirection === 0 && event.target.className === 'drop-load') {
-            window.vue.loadMoreOrder()
+            // window.vue.loadMoreOrder()
             return false
           } else if (sub === 0 && scrollDirection >= 35) {
             document.querySelector('.scroll').classList = 'scroll animate'
@@ -483,7 +483,8 @@
   }
   .scroll {
     overflow: scroll;
-    height: 8.5rem;
+    background: #fff;
+    /*height: 8.5rem;*/
   }
   #product-page1.animate, .product-page2.animate, .scroll.animate {
     -webkit-transition:all .6s ease-in-out;
@@ -605,9 +606,9 @@
   }
   .drop-load {
      font-size: .2rem;
-     background-color: #efeef4;
+     /*background-color: #efeef4;*/
      color: #999;
-     padding: .45rem 0;
+     padding: .25rem 0;
   }
   .project-detail-top {
     padding-top: 0.8rem;
@@ -788,7 +789,7 @@
   /*营业执照*/
   .details-more {
     background-color: #fff;
-    min-height: 9.2rem;
+    min-height: 8.9rem;
   }
   .business-license .project-brief {
     margin-bottom: 0;
