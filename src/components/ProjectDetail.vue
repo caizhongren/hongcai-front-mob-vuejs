@@ -421,6 +421,7 @@
         var scrollDirection = 0
         var offsetY = 0
         var touchStartY = 0
+        var scrollTop = 0
         page.addEventListener('touchstart', startTouchScroll, true)
         page.addEventListener('touchmove', moveTouchScroll, true)
         page.addEventListener('touchend', endTouchScroll, true)
@@ -429,16 +430,18 @@
           document.querySelector('.scroll').classList.remove('animate')
           touchStartY = event.targetTouches[0].pageY
           offsetY = 0
+          scrollTop = $('.scroll').offset().top
         }
         function moveTouchScroll (event) {
           // event.preventDefault()
           offsetY += 0.25 * (event.targetTouches[0].pageY - touchStartY)
           touchStartY = event.targetTouches[0].pageY
           scrollDirection = offsetY
-          console.log(offsetY)
-          if (scrollDirection <= 600 && scrollDirection >= 15) {
+          if (scrollDirection > 15 && $('.details-more').offset().top - screenTop >= 15) {
             // document.querySelector('.scroll').classList = 'scroll animate'
             document.querySelector('.scroll').style.webkitTransform = 'translateY(' + scrollDirection + 'px)'
+          } else if (scrollTop === $('.details-more').offset().top) {
+            // document.querySelector('.scroll').classList = 'scroll animate'
           }
         }
         function endTouchScroll (event) {
@@ -447,7 +450,7 @@
           if (scrollDirection === 0 && event.target.className === 'drop-load') {
             window.vue.loadMoreOrder()
             return false
-          } else if (sub === 0 && scrollDirection >= 50) {
+          } else if (sub === 0 && scrollDirection >= 35) {
             document.querySelector('.scroll').classList = 'scroll animate'
             setTimeout(function () {
               document.querySelector('.scroll').style.webkitTransform = 'translateY(0px)'
@@ -455,7 +458,7 @@
               document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, 0px, 0)'
             }, 300)
             scrollDirection = 0
-          } else if (sub === 0 && scrollDirection < 50) {
+          } else if (sub === 0 && scrollDirection < 35) {
             document.querySelector('.scroll').style.webkitTransform = 'translateY(0px)'
           } else if (sub === 0) {
             offsetY = 0
@@ -474,6 +477,9 @@
     position: absolute;
     top: 1.5rem;
     left: 35%;
+    font-size: .2rem;
+    background-color: #efeef4;
+    color: #999;
   }
   .scroll {
     overflow: scroll;
