@@ -570,15 +570,26 @@
       </div>
       <div class="content" @click="showOrHide($event)">
         <div class="column">
-          <div class="fl">8.各银行对网上交易单日及单笔限额？</div>
+          <div class="fl">8.各银行对网上交易单笔、单日及单月限额？</div>
           <div class="txt-right fr">
             ＞
           </div>
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            以下是宏财网支持银行的相关限额规定：<br>
-          </span>  
+            以下是宏财网支持银行的相关限额规定：
+            <br>
+          </span>
+          <div class="banklimit-list">
+            <ul class="display-bl margin-auto border-grey">
+              <li>
+                <div><p class="margin-b-0 display-inb bank-name">支持银行</p><p class="display-inb limit">单笔/单日/单月</p></div>
+              </li>
+              <li class="clearfix margin-b-0 padding-r-1 border-t-dashed" :class="{'border-none': index === bankLimit.length - 1}" v-for="(card, index) in bankLimit">
+                <div><p class="margin-b-0 display-inb bank-name">{{card.bankName}}</p><p class="display-inb limit">{{card.singleLimit < 0 ? '不限': card.singleLimit % 10000 === 0 ? card.singleLimit / 10000 + 'w' : card.singleLimit}}/{{card.dayLimit < 0 ? '不限': card.dayLimit % 10000 === 0 ? card.dayLimit / 10000 + 'w' : card.dayLimit}}/{{card.monthLimit < 0 ? '不限': card.monthLimit % 10000 === 0 ? card.monthLimit / 10000 + 'w' : card.monthLimit}}</p></div>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -694,12 +705,14 @@
     data () {
       return {
         type: '1',
-        titles: ['了解宏财', '产品介绍', '投资相关', '注册登录', '账户管理', '充值提现', '用户福利', '客户服务']
+        titles: ['了解宏财', '产品介绍', '投资相关', '注册登录', '账户管理', '充值提现', '用户福利', '客户服务'],
+        bankLimit: []
       }
     },
     created: function () {
       this.type = this.$route.params.type.toString()
       document.title = this.titles[Number(this.type - 1)]
+      this.getBankLimit()
     },
     methods: {
       showContent: function (e, content, submenu) {
@@ -730,6 +743,15 @@
         } else {
           return this.hideContent(e, content, submenu)
         }
+      },
+      getBankLimit: function () {
+        var that = this
+        that.$http({
+          url: '/hongcai/api/v1/bank/getBankRechargeLimit'
+        })
+        .then(function (res) {
+          that.bankLimit = res.data.data.bankLimit
+        })
       }
     }
   }
@@ -767,5 +789,26 @@
     padding-left: .2rem;
     padding-bottom: .25rem;
     color: #999;
+  }
+  .banklimit-list ul {
+    margin-top: .2rem;
+    border: 1px solid #eee;
+    padding: .2rem .3rem;
+  }
+  .banklimit-list li {
+    height: 0.6rem;
+    line-height: 0.6rem;
+    border-bottom: 1px dashed #ddd;
+  }
+  .banklimit-list li .bank-name {
+    width: 30%;
+    text-align: center;
+  }
+  .banklimit-list li .limit {
+    width: 70%;
+    text-align: center;
+  }
+  .border-none {
+    border-bottom: none !important;
   }
 </style> 
