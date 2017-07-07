@@ -17,8 +17,7 @@
           type: 1,
           value: 2
         },
-        business: '',
-        token: ''
+        business: ''
       }
     },
     created: function () {
@@ -30,8 +29,8 @@
       this.token && this.business ? this.getCoupon() : null
     },
     methods: {
-      toNative: function (nativeFnName) {
-        bridgeUtil.webConnectNative(nativeFnName, '', {
+      toNative: function () {
+        bridgeUtil.webConnectNative('HCNative_Transfer', '', {
           amout: this.amount,
           number: this.number,
           coupon: this.coupon
@@ -40,7 +39,7 @@
       getCoupon: function () {
         var that = this
         that.$http({
-          url: '/hongcai/rest/orders/' + that.number + '/orderCoupon?token=' + that.token
+          url: '/hongcai/rest/orders/' + that.number + '/orderCoupon'
         }).then((response) => {
           if (response && response.data.ret !== -1) {
             that.coupon = response.data.coupon
