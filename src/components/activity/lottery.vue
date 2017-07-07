@@ -169,6 +169,7 @@
         window.vue.luckyTimer(-2.5)
         window.vue.isShare = function () {
           bridgeUtil.webConnectNative('HCNative_NeedShare', 'HCWeb_ShareSuccess', {
+            'HC_shareType': 2,
             'title': '今日运势，一试便知',
             'subTitle': '100%有礼！随机奖金、特权本金、返现加息券样样都有！好运从这里开始！',
             'url': this.domain + '/activity/lottery',
@@ -333,6 +334,7 @@
       LotteryShareTo: function () {
         var that = this
         bridgeUtil.webConnectNative('HCNative_Share', 'HCWeb_ShareSuccess', {
+          'HC_shareType': 2,
           'title': '今日运势，一试便知',
           'subTitle': '100%有礼！随机奖金、特权本金、返现加息券样样都有！好运从这里开始！',
           'url': 'm.hongcai.com/lottery',
