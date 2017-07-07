@@ -14,10 +14,7 @@
     data () {
       return {
         amount: 0,
-        coupon: {
-          type: 1,
-          value: 2
-        },
+        coupon: {},
         b: ''
       }
     },
@@ -27,31 +24,30 @@
       this.number = this.$route.query.number
       bridgeUtil.setupWebViewJavascriptBridge()
       this.b === 'TRANSFER' ? this.getCoupon() : null
-      this.toNative()
     },
     methods: {
-      toNative: function () {
-        var dataList = {}
-        dataList = this.coupon.type ? dataList = {
-          'business': this.b,
-          'amout': this.amount,
-          'number': this.number,
-          'coupon': this.coupon
-        } : {
-          'business': this.b,
-          'amout': this.amount,
-          'number': this.number
-        }
-        bridgeUtil.webConnectNative('HCNative_SuccessCallback', '', dataList, function (response) {}, function (response) {})
-      },
       getCoupon: function () {
         var that = this
         that.$http({
-          url: '/hongcai/rest/orders/' + that.number + '/orderCoupon'
+          url: '/hongcai/rest/orders/' + that.number + '/orderCoupon?token=6261f5e1e9eb93e9b49163c64298d8a736cee0025eb49263'
         }).then((response) => {
           if (response && response.data.ret !== -1) {
-            that.coupon.type = response.data.coupon.type
-            that.coupon.value = response.data.coupon.value
+            if (response.data.coupon) {
+              that.coupon.type = response.data.coupon.type
+              that.coupon.value = response.data.coupon.value
+            }
+            var dataList = {}
+            dataList = that.coupon.type ? dataList = {
+              'business': that.b,
+              'amount': that.amount,
+              'number': that.number,
+              'coupon': that.coupon
+            } : {
+              'business': that.b,
+              'amount': that.amount,
+              'number': that.number
+            }
+            bridgeUtil.webConnectNative('HCNative_SuccessCallback', '', dataList, function (response) {}, function (response) {})
           }
         })
       }
