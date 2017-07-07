@@ -149,6 +149,7 @@
       this.getLuckyUsers()
       bridgeUtil.setupWebViewJavascriptBridge()
       this.shareRegisterCallback = function (data) {
+        data = JSON.parse(data);
         if (data.isShareSuccess === 1) {
           window.vue.$http.post('/hongcai/rest/lotteries/share', {
             token: window.vue.token
