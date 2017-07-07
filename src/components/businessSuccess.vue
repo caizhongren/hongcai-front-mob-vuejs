@@ -22,20 +22,19 @@
       }
     },
     created: function () {
-      this.b = this.$route.params.b
+      this.b = this.$route.query.b
       this.amount = this.$route.query.amount
       this.number = this.$route.query.number
-      this.token = this.$route.query.token
       bridgeUtil.setupWebViewJavascriptBridge()
       this.b === 'TRANSFER' ? this.getCoupon() : null
     },
     methods: {
       toNative: function () {
         bridgeUtil.webConnectNative('HCNative_Transfer', '', {
-          business: this.b,
-          amout: this.amount,
-          number: this.number,
-          coupon: this.coupon
+          'business': this.b,
+          'amout': this.amount,
+          'number': this.number,
+          'coupon': this.coupon
         }, function (response) {}, function (response) {})
       },
       getCoupon: function () {
