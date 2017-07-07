@@ -27,15 +27,22 @@
       this.number = this.$route.query.number
       bridgeUtil.setupWebViewJavascriptBridge()
       this.b === 'TRANSFER' ? this.getCoupon() : null
+      this.toNative()
     },
     methods: {
       toNative: function () {
-        bridgeUtil.webConnectNative('HCNative_SuccessCallback', '', {
+        var dataList = {}
+        dataList = this.coupon.type ? dataList = {
           'business': this.b,
           'amout': this.amount,
           'number': this.number,
           'coupon': this.coupon
-        }, function (response) {}, function (response) {})
+        } : {
+          'business': this.b,
+          'amout': this.amount,
+          'number': this.number
+        }
+        bridgeUtil.webConnectNative('HCNative_SuccessCallback', '', dataList, function (response) {}, function (response) {})
       },
       getCoupon: function () {
         var that = this
@@ -43,7 +50,8 @@
           url: '/hongcai/rest/orders/' + that.number + '/orderCoupon'
         }).then((response) => {
           if (response && response.data.ret !== -1) {
-            that.coupon = response.data.coupon
+            that.coupon.type = response.data.coupon.type
+            that.coupon.value = response.data.coupon.value
           }
         })
       }
