@@ -12,6 +12,7 @@ import HelpCenter from '../components/user-center/helpCenter.vue'
 import Help from '../components/user-center/help.vue'
 import Question from '../components/user-center/question.vue'
 import NoticeDetail from '../components/user-center/noticeDetail.vue'
+import bankCardLimit from '../components/user-center/bankCardLimit.vue'
 import RegisterAgree from '../components/registerAgree.vue'
 import AssignmentAgree from '../components/assignmentAgree.vue'
 import ServiceAgree from '../components/serviceAgree.vue'
@@ -136,6 +137,12 @@ const routes = [
     name: 'BindWechat',
     component: BindWechat,
     meta: {title: '绑定微信有钱领'}
+  },
+  {
+    path: '/user-center/bankcard-limit',
+    name: 'bankCardLimit',
+    component: bankCardLimit,
+    meta: {title: '银行卡限额'}
   },
   {
     path: '*',

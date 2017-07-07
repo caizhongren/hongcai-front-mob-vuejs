@@ -210,6 +210,7 @@
       toLotteryRecord: function () {
         if (!this.token || this.token === '') {
           var regesterHandCallback = function (data) {
+            data = JSON.parse(data)
             window.location.replace(window.location.pathname + '/' + data.token)
           }
           bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, regesterHandCallback)
@@ -226,6 +227,7 @@
       },
       toLogin: function () {
         var regesterHandCallback = function (data) {
+          data = JSON.parse(data)
           window.location.replace(window.location.pathname + '?token=' + data.token)
           this.isShare()
         }
