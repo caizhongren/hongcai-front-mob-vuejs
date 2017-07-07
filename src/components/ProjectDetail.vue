@@ -393,6 +393,7 @@
           // event.preventDefault()
           window.touchStartY = window.touch[3].y
           window.offsetY = 0
+          touchY = window.offsetY
           // document.querySelector('#product-page1').classList = 'fist-frame product-page1 animate'
           $('#product-page1').addClass('animate')
         }
@@ -401,7 +402,6 @@
           window.offsetY += 0.25 * (window.touch[3].y - window.touchStartY)
           window.touchStartY = window.touch[3].y
           touchY = window.offsetY
-          console.log(window.offsetY)
           if (window.offsetY <= 0 && window.offsetY < -1) {
             page.style.webkitTransform = 'translate3d(0, ' + window.offsetY + 'px, 0)'
           }
