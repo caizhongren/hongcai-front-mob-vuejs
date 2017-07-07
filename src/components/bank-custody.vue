@@ -49,6 +49,7 @@
     methods: {
       toLogin: function () {
         var regesterHandCallback = function (data) {
+          data = JSON.parse(data)
           window.location.replace(window.location.pathname + '?token=' + data.token)
         }
         bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, regesterHandCallback)

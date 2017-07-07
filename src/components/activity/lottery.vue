@@ -149,7 +149,7 @@
       this.getLuckyUsers()
       bridgeUtil.setupWebViewJavascriptBridge()
       this.shareRegisterCallback = function (data) {
-        data = JSON.parse(data);
+        data = JSON.parse(data)
         if (data.isShareSuccess === 1) {
           window.vue.$http.post('/hongcai/rest/lotteries/share', {
             token: window.vue.token
@@ -209,6 +209,7 @@
       toLotteryRecord: function () {
         if (!this.token || this.token === '') {
           var regesterHandCallback = function (data) {
+            data = JSON.parse(data)
             window.location.replace(window.location.pathname + '/' + data.token)
           }
           bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, regesterHandCallback)
@@ -225,6 +226,7 @@
       },
       toLogin: function () {
         var regesterHandCallback = function (data) {
+          data = JSON.parse(data)
           window.location.replace(window.location.pathname + '?token=' + data.token)
           this.isShare()
         }

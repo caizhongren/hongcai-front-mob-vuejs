@@ -72,6 +72,9 @@
 
       }
     },
+    created: function () {
+      bridgeUtil.setupWebViewJavascriptBridge()
+    },
     methods: {
       openAndCopy: function () {
         bridgeUtil.webConnectNative('HCNative_OpenAndCopy', null, {
