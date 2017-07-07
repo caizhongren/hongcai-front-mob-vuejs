@@ -147,6 +147,7 @@
         console.log(shareItem)
         //   console.log(linkUrl)
         var nativeNeedDatas = {
+          'HC_shareType': 1,
           'title': shareItem.title,
           'subTitle': shareItem.subTitle,
           'url': shareItem.linkUrl,
