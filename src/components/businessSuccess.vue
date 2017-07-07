@@ -30,7 +30,7 @@
     },
     methods: {
       toNative: function () {
-        bridgeUtil.webConnectNative('HCNative_Transfer', '', {
+        bridgeUtil.webConnectNative('HCNative_SuccessCallback', '', {
           'business': this.b,
           'amout': this.amount,
           'number': this.number,
