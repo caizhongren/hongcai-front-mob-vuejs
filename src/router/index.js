@@ -17,7 +17,6 @@ import AssignmentAgree from '../components/assignmentAgree.vue'
 import ServiceAgree from '../components/serviceAgree.vue'
 import AssignmentQuestion from '../components/assignmentQuestion.vue'
 import BusinessSuccess from '../components/businessSuccess.vue'
-import BusinessTransfer from '../components/businessTransfer.vue'
 import BankCustody from '../components/bank-custody.vue'
 import Safe from '../components/safe.vue'
 import BindWechat from '../components/bind-wechat.vue'
@@ -29,14 +28,9 @@ const routes = [
     component: Home
   },
   {
-    path: '/businessSuccess/:business/:status',
+    path: '/businessSuccess',
     name: 'BusinessSuccess',
     component: BusinessSuccess
-  },
-  {
-    path: '/businessTransfer/:business/:status',
-    name: 'BusinessTransfer',
-    component: BusinessTransfer
   },
   {
     path: '/about',
