@@ -23,13 +23,21 @@
       this.amount = this.$route.query.amount
       this.number = this.$route.query.number
       bridgeUtil.setupWebViewJavascriptBridge()
-      this.b === 'TRANSFER' ? this.getCoupon() : null
+      window.vue = this
+      window.onload = function () {
+        window.vue.b === 'TRANSFER' ? window.vue.getCoupon() : window.vue.connectNative({'business': window.vue.b, 'amount': window.vue.amount})
+      }
     },
     methods: {
+      connectNative: function (dataList) {
+        console.log(1)
+        bridgeUtil.webConnectNative('HCNative_SuccessCallback', '', dataList, function (response) {
+        }, function (response) {})
+      },
       getCoupon: function () {
         var that = this
         that.$http({
-          url: '/hongcai/rest/orders/' + that.number + '/orderCoupon?token=6261f5e1e9eb93e9b49163c64298d8a736cee0025eb49263'
+          url: '/hongcai/rest/orders/' + that.number + '/orderCoupon?token=6261f5e1e9eb93e9479f8cf19c1b2e986ab535d7a0e01c51'
         }).then((response) => {
           if (response && response.data.ret !== -1) {
             if (response.data.coupon) {
@@ -37,7 +45,7 @@
               that.coupon.value = response.data.coupon.value
             }
             var dataList = {}
-            dataList = that.coupon.type ? dataList = {
+            dataList = that.coupon.type ? {
               'business': that.b,
               'amount': that.amount,
               'number': that.number,
@@ -47,7 +55,7 @@
               'amount': that.amount,
               'number': that.number
             }
-            bridgeUtil.webConnectNative('HCNative_SuccessCallback', '', dataList, function (response) {}, function (response) {})
+            that.connectNative(dataList)
           }
         })
       }

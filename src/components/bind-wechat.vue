@@ -77,11 +77,10 @@
     },
     methods: {
       openAndCopy: function () {
-        bridgeUtil.webConnectNative('HCNative_OpenAndCopy', null, {
+        // var busy =
+        bridgeUtil.webConnectNative('HCNative_CopyToWechat', null, {
           copyText: 'hongcailicai01'
-        }, function (response) {
-          alert('复制成功')
-        }, null)
+        }, function (response) {}, null)
       }
     }
   }
