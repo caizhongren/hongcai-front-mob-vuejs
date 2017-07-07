@@ -393,7 +393,8 @@
           // event.preventDefault()
           window.touchStartY = window.touch[3].y
           window.offsetY = 0
-          document.querySelector('#product-page1').classList = 'fist-frame product-page1 animate'
+          // document.querySelector('#product-page1').classList = 'fist-frame product-page1 animate'
+          $('#product-page1').addClass('animate')
         }
         function moveTouchScroll (event) {
           // event.preventDefault()
@@ -428,7 +429,8 @@
         page.addEventListener('touchend', endTouchScroll, true)
         function startTouchScroll (event) {
           // event.preventDefault()
-          document.querySelector('.scroll').classList.remove('animate')
+          // document.querySelector('.scroll').classList.remove('animate')
+          $('.scroll').removeClass('animate')
           touchStartY = event.targetTouches[0].pageY
           offsetY = 0
           scrollTop = $('.scroll').offset().top
@@ -452,7 +454,8 @@
             // window.vue.loadMoreOrder()
             return false
           } else if (sub === 0 && scrollDirection >= 35) {
-            document.querySelector('.scroll').classList = 'scroll animate'
+            // document.querySelector('.scroll').classList = 'scroll animate'
+            $('.scroll').addClass('animate')
             setTimeout(function () {
               document.querySelector('.scroll').style.webkitTransform = 'translateY(0px)'
               document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, 0px, 0)'
