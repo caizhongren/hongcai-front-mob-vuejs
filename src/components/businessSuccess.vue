@@ -14,10 +14,7 @@
     data () {
       return {
         amount: 0,
-        coupon: {
-          type: 1,
-          value: 2
-        },
+        coupon: {},
         b: ''
       }
     },
@@ -26,24 +23,39 @@
       this.amount = this.$route.query.amount
       this.number = this.$route.query.number
       bridgeUtil.setupWebViewJavascriptBridge()
-      this.b === 'TRANSFER' ? this.getCoupon() : null
+      window.vue = this
+      window.onload = function () {
+        window.vue.b === 'TRANSFER' ? window.vue.getCoupon() : window.vue.connectNative({'business': window.vue.b, 'amount': window.vue.amount})
+      }
     },
     methods: {
-      toNative: function () {
-        bridgeUtil.webConnectNative('HCNative_SuccessCallback', '', {
-          'business': this.b,
-          'amout': this.amount,
-          'number': this.number,
-          'coupon': this.coupon
-        }, function (response) {}, function (response) {})
+      connectNative: function (dataList) {
+        console.log(1)
+        bridgeUtil.webConnectNative('HCNative_SuccessCallback', '', dataList, function (response) {
+        }, function (response) {})
       },
       getCoupon: function () {
         var that = this
         that.$http({
-          url: '/hongcai/rest/orders/' + that.number + '/orderCoupon'
+          url: '/hongcai/rest/orders/' + that.number + '/orderCoupon?token=6261f5e1e9eb93e9479f8cf19c1b2e986ab535d7a0e01c51'
         }).then((response) => {
           if (response && response.data.ret !== -1) {
-            that.coupon = response.data.coupon
+            if (response.data.coupon) {
+              that.coupon.type = response.data.coupon.type
+              that.coupon.value = response.data.coupon.value
+            }
+            var dataList = {}
+            dataList = that.coupon.type ? {
+              'business': that.b,
+              'amount': that.amount,
+              'number': that.number,
+              'coupon': that.coupon
+            } : {
+              'business': that.b,
+              'amount': that.amount,
+              'number': that.number
+            }
+            that.connectNative(dataList)
           }
         })
       }

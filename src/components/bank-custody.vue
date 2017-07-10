@@ -69,7 +69,7 @@
           this.toLogin()
           return
         }
-        bridgeUtil.webConnectNative('HCNative_Active', null, {}, function (response) {}, null)
+        bridgeUtil.webConnectNative('HCNative_CgtActive', null, {}, function (response) {}, null)
       }
     }
   }
