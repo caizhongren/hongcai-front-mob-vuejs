@@ -6,7 +6,7 @@
       </li>
       <li class="clearfix" v-for="(card, index) in bankLimit">
         <div>
-          <p class="display-inb bank-name"><img src="../../images/ABOC.png" alt="">{{card.bankName}}</p>
+          <p class="display-inb bank-name"><img v-bind:src="card.bankCardImg" alt="">{{card.bankName}}</p>
           <p class="display-inb limit">{{card.singleLimit < 0 ? '不限': card.singleLimit % 10000 === 0 ? card.singleLimit / 10000 + 'w' : card.singleLimit}}/{{card.dayLimit < 0 ? '不限': card.dayLimit % 10000 === 0 ? card.dayLimit / 10000 + 'w' : card.dayLimit}}/{{card.monthLimit < 0 ? '不限': card.monthLimit % 10000 === 0 ? card.monthLimit / 10000 + 'w' : card.monthLimit}}</p>
         </div>
       </li>
@@ -34,6 +34,9 @@
         })
         .then(function (res) {
           that.bankLimit = res.data.data.bankLimit
+          for (var i = 0; i < that.bankLimit.length; i++) {
+            that.bankLimit[i].bankCardImg = '.../../../static/' + that.bankLimit[i].bankCode + '.png'
+          }
         })
       }
     }
