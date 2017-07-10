@@ -62,6 +62,7 @@
   }
   .banklimit-list ul {
     padding-bottom: 1.5rem;
+    min-height: 9rem;
   }
   .banklimit-list li {
     height: 1.1rem;
