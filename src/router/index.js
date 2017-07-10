@@ -15,6 +15,7 @@ import NoticeDetail from '../components/user-center/noticeDetail.vue'
 import bankCardLimit from '../components/user-center/bankCardLimit.vue'
 import RegisterAgree from '../components/registerAgree.vue'
 import AssignmentAgree from '../components/assignmentAgree.vue'
+import ServiceAgreeAssignment from '../components/serviceAgreeAssignment.vue'
 import ServiceAgree from '../components/serviceAgree.vue'
 import AssignmentQuestion from '../components/assignmentQuestion.vue'
 import BusinessSuccess from '../components/businessSuccess.vue'
@@ -106,6 +107,12 @@ const routes = [
     path: '/service-agree/:number',
     name: 'ServiceAgree',
     component: ServiceAgree,
+    meta: {title: '宏财网服务协议'}
+  },
+  {
+    path: '/service-agree-assignment/:number',
+    name: 'ServiceAgreeAssignment',
+    component: ServiceAgreeAssignment,
     meta: {title: '宏财网服务协议'}
   },
   {
