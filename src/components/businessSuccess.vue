@@ -40,9 +40,13 @@
           url: '/hongcai/rest/orders/' + that.number + '/orderCoupon?token=6261f5e1e9eb93e9479f8cf19c1b2e986ab535d7a0e01c51'
         }).then((response) => {
           if (response && response.data.ret !== -1) {
-            var dataList = {
+            var dataList = !that.number ? {
               'business': that.b,
               'amount': that.amount
+            } : {
+              'business': that.b,
+              'amount': that.amount,
+              'number': that.number
             }
             if (response.data.coupon) {
               that.coupon.type = response.data.coupon.type
