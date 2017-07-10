@@ -58,7 +58,7 @@
             <td width="120" align="center">借款最终到期日</td>
             <td width="400" align="center"><u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</u></td>
           </tr>
-      </table>
+        </table>
       </div>
         <p class="agree-tx">除非文意另有所指或另有约定，下列词语具有以下含义：</p>
         <p class="agree-tx">1.2 借款金额是指本协议第1.1条中列明的借款本金金额。借款币种为人民币。</p>
@@ -70,8 +70,8 @@
         <p class="agree-tx">1.8 工作日是指中华人民共和国法律规定的工作日。</p>
       <br>
       <p><strong class="agree-mg">第二条 &nbsp&nbsp出借资金冻结与发放</strong></p>
-      <p class="agree-tx">2.1 乙方或其受托人通过宏财网勾选“同意《借款及服务协议》”并点击【确认】按钮后，视为签订本协议。</p>
-      <p class="agree-tx">2.2 甲方通过宏财网对乙方发布的借款需求勾选“同意《借款及服务协议》”并点击【立即投资】按钮及完成相应支付时，视为甲方签订本协议，并不可撤销地授权第三方资金存管机构冻结甲方确认向乙方出借的金额等同于本协议第1.1条中列明的“借款金额”的资金。</p>
+      <p class="agree-tx">2.1 乙方或其受托人通过宏财网勾选“同意《宏财网服务协议》”并点击【确认】按钮后，视为签订本协议。</p>
+      <p class="agree-tx">2.2 甲方通过宏财网对乙方发布的借款需求勾选“同意《宏财网服务协议》”并点击【立即投资】按钮及完成相应支付时，视为甲方签订本协议，并不可撤销地授权第三方资金存管机构冻结甲方确认向乙方出借的金额等同于本协议第1.1条中列明的“借款金额”的资金。</p>
       <p class="agree-tx">2.3 协议成立：乙方在宏财网上发布借款需求，丙方、甲方在宏财网上依照约定进行相关操作完成本协议的签订后，本协议成立。</p>
       <p class="agree-tx">2.4 协议生效：出借资金累计等于乙方借款金额时本协议即时生效。</p>
       <p class="agree-tx">2.5 协议成立：乙方在宏财网上发布借款需求，丙方出具签署协议书面确认书，丁方、甲方在宏财网上依照约定进行相关操作完成本协议的签订后，本协议成立。</p>
@@ -198,6 +198,27 @@
     </div>
     <div class="annex">
       <p class="text-left">附件1</p>
+      <br>
+      <p class="text-center">还款计划（单位：元、月/日）</p>
+      <table>
+        <thead>
+          <td>序号</td>
+          <td>还款日</td>
+          <td>还款金额</td>
+          <td>还款类型</td>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in preRepaymentList">
+            <td>{{index + 1}}</td>
+            <td>{{item.repaymentTime | date}}</td>
+            <td>{{item.repaymentAmount | number}}</td>
+            <td>{{item.type === 1 ? '利息' : '本息'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="annex">
+      <p class="text-left">附件2</p>
       <br>
       <p class="text-center">还款计划（单位：元、月/日）</p>
       <table>
