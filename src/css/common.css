@@ -228,12 +228,6 @@ input,button,select,textarea {
 .margin-auto {
   margin: 0 auto;
 }
-.display-inb {
-  display: inline-block;
-}
-.margin-auto {
-  margin: 0 auto;
-}
 .clearfix {
   clear: both;
 }

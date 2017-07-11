@@ -418,7 +418,7 @@
           }
         }
       },
-      scrollBack: function scrollBack (page) {
+      scrollBack: function (page) {
         window.vue = this
         var scrollDirection = 0
         var offsetY = 0
@@ -473,7 +473,6 @@
       }
     }
   }
-  document.querySelector('.details-more') ? console.log(document.querySelector('.details-more').scrollHeight) : ''
 </script>
 
 <style scoped>
