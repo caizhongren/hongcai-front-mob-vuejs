@@ -83,11 +83,11 @@
     },
     methods: {
       loadMore: function () {
-        $('.cashCouponList').slideToggle('slow')
+        $('.cashCouponList').slideToggle()
         $('.loadMore').hide()
       },
       slideUp: function () {
-        $('.cashCouponList').slideToggle()
+        $('.cashCouponList').slideToggle('slow')
         $('.loadMore').show()
       },
       getUserAuth: function () {
