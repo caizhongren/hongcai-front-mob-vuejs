@@ -111,6 +111,7 @@
     color: #ff611d !important;
   }
   .inviteRebateList {
+    min-height: 11.4rem;
     padding: .3rem .5rem .8rem;
     background-image: linear-gradient(to bottom, #ff611d 0%, #f6363f 100%);
     background-image: -webkit-linear-gradient(to bottom, #ff611d 0%, #f6363f 100%);
