@@ -14,8 +14,8 @@
           </div>
           <div class="process-bar fl">
             <div class="process-inner-bar fl" v-bind:style="{width:processWith + '%'}"></div>
-            <img src="../images/project/process-btn.png" class="fl" v-bind:style="{left:processWith - 5 + '%'}">
-            <div class="process-tip" v-bind:style="{left:processWith - 2 + '%'}">{{processWith}}%</div>
+            <img src="../images/project/process-btn.png" class="fl" v-bind:style="{left:processWith - 4.5 + '%'}">
+            <div class="process-tip" v-bind:style="{left:processWith - 3 + '%'}">{{processWith}}%</div>
           </div>
           <div class="end-circle fr" v-show="processWith < 100">
             <div class="end-circle-center"></div>
@@ -183,12 +183,12 @@
         </div>
       </div>
     </div>
-    <p class="invest-fixed-btn" :class="{'disable-btn': project.status !== 7 }" v-if="project.status === 7" @click="toInvest()">立即投资</p>
-    <p class="invest-fixed-btn disable-btn" v-if="project.status === 6">预发布</p>
-    <p class="invest-fixed-btn disable-btn" v-if="project.status === 8">融资成功</p>
-    <p class="invest-fixed-btn disable-btn" v-if="project.status === 9">还款中</p>
-    <p class="invest-fixed-btn disable-btn" v-if="project.status === 10">还款完成</p>
-    <p class="invest-fixed-btn disable-btn" v-if="project.status === 11">预约中</p>
+    <button class="invest-fixed-btn" :class="{'disable-btn': project.status !== 7 }" v-if="project.status === 7" @click="toInvest()" :disabled="busy">立即投资</button>
+    <button class="invest-fixed-btn disable-btn" v-if="project.status === 6">预发布</button>
+    <button class="invest-fixed-btn disable-btn" v-if="project.status === 8">融资成功</button>
+    <button class="invest-fixed-btn disable-btn" v-if="project.status === 9">还款中</button>
+    <button class="invest-fixed-btn disable-btn" v-if="project.status === 10">还款完成</button>
+    <button class="invest-fixed-btn disable-btn" v-if="project.status === 11">预约中</button>
   </div>
 </template>
 <script>
@@ -198,6 +198,7 @@
     name: 'projectDetail',
     data () {
       return {
+        busy: false,
         project: {},
         projectInfo: {
           description: '',
@@ -342,13 +343,18 @@
       },
       toInvest: function () {
         var that = this
-        var callHandlerCallback = function (response) {}
+        that.busy = true
+        var callHandlerCallback = function (response) {
+          setTimeout(function () {
+            that.busy = false
+          }, 1500)
+        }
         var nativeNeedDatas = {
           'amount': that.project.amount,
           'annualEarnings': that.project.annualEarnings,
           'projectDays': that.project.projectDays,
           'projectId': that.project.id,
-          'number': this.paramsNum
+          'number': that.paramsNum
         }
         bridgeUtil.webConnectNative('HCNative_ImmediateInvestment', 'HCWeb_LoginSuccess', nativeNeedDatas, callHandlerCallback, null)
       },
@@ -589,6 +595,7 @@
    .invest-fixed-btn, .investBtn {
     width: 100%;
     height: .9rem;
+    border: none;
     line-height: .9rem;
     color: #fff;
     font-size: .28rem;
@@ -600,6 +607,7 @@
     z-index: 99;
   }
   .invest-fixed-btn.disable-btn {
+    border: none;
     background-color: #999;
   }
   #project {
@@ -719,7 +727,7 @@
     width: 8%;
   }
   .process-bar .process-tip {
-    width: .55rem;
+    padding: 0 .01rem;
     height: .35rem;
     background: url('../images/project/process-tip.png') no-repeat 0 0;
     background-size: 100% 100%;
