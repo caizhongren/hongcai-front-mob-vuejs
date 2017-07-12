@@ -8,21 +8,23 @@ import Invite from '../components/activity/invite.vue'
 import ActivityReward from '../components/activity/reward.vue'
 import Lottery from '../components/activity/lottery.vue'
 import LotteryRecord from '../components/activity/lotteryRecord.vue'
+import Novice from '../components/activity/novice.vue'
 import HelpCenter from '../components/user-center/helpCenter.vue'
 import Help from '../components/user-center/help.vue'
 import Question from '../components/user-center/question.vue'
 import NoticeDetail from '../components/user-center/noticeDetail.vue'
 import bankCardLimit from '../components/user-center/bankCardLimit.vue'
 import InviteRebate from '../components/user-center/inviteRebate.vue'
+import inviteRebateList from '../components/user-center/inviteRebateList.vue'
 import RegisterAgree from '../components/registerAgree.vue'
 import AssignmentAgree from '../components/assignmentAgree.vue'
 import ServiceAgreeAssignment from '../components/serviceAgreeAssignment.vue'
 import ServiceAgree from '../components/serviceAgree.vue'
 import AssignmentQuestion from '../components/assignmentQuestion.vue'
 import BusinessSuccess from '../components/businessSuccess.vue'
-import BankCustody from '../components/bank-custody.vue'
+import BankCustody from '../components/bankCustody.vue'
 import Safe from '../components/safe.vue'
-import BindWechat from '../components/bind-wechat.vue'
+import BindWechat from '../components/bindWechat.vue'
 Vue.use(Router)
 const routes = [
   {
@@ -64,10 +66,16 @@ const routes = [
     meta: {title: '风险测评'}
   },
   {
-    path: '/user-center/invite-rebate',
+    path: '/user-center/invite-rebate/:token',
     name: 'InviteRebate',
     component: InviteRebate,
     meta: {title: '我的邀请'}
+  },
+  {
+    path: '/user-center/invite-rebate-list/:token',
+    name: 'inviteRebateList',
+    component: inviteRebateList,
+    meta: {title: '邀请列表'}
   },
   {
     path: '/project/:number',
@@ -97,6 +105,12 @@ const routes = [
     name: 'LotteryRecord',
     component: LotteryRecord,
     meta: {title: '我的奖励'}
+  },
+  {
+    path: '/activity/novice-landing/:token',
+    name: 'Novice',
+    component: Novice,
+    meta: {title: '新手大礼包'}
   },
   {
     path: '/register-agree',
