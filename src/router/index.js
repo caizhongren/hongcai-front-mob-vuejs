@@ -13,6 +13,7 @@ import Help from '../components/user-center/help.vue'
 import Question from '../components/user-center/question.vue'
 import NoticeDetail from '../components/user-center/noticeDetail.vue'
 import bankCardLimit from '../components/user-center/bankCardLimit.vue'
+import InviteRebate from '../components/user-center/inviteRebate.vue'
 import RegisterAgree from '../components/registerAgree.vue'
 import AssignmentAgree from '../components/assignmentAgree.vue'
 import ServiceAgreeAssignment from '../components/serviceAgreeAssignment.vue'
@@ -61,6 +62,12 @@ const routes = [
     name: 'Question',
     component: Question,
     meta: {title: '风险测评'}
+  },
+  {
+    path: '/user-center/invite-rebate',
+    name: 'InviteRebate',
+    component: InviteRebate,
+    meta: {title: '我的邀请'}
   },
   {
     path: '/project/:number',
