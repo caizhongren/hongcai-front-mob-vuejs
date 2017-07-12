@@ -84,10 +84,12 @@
     methods: {
       loadMore: function () {
         $('.cashCouponList').slideToggle()
+        // $('.cashCouponList').show()
         $('.loadMore').hide()
       },
       slideUp: function () {
-        $('.cashCouponList').slideToggle('slow')
+        $('.cashCouponList').slideToggle('fast')
+        // $('.cashCouponList').hide()
         $('.loadMore').show()
       },
       getUserAuth: function () {
@@ -151,6 +153,8 @@
     text-align: center;
     height: 1rem;
     line-height: 1rem;
+    max-width: 720px;
+    margin: 0 auto;
   }
   .rules {
     padding: .3rem 0;

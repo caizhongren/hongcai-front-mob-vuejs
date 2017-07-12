@@ -96,7 +96,7 @@ const routes = [
     path: '/activity/novice-landing/:token',
     name: 'Novice',
     component: Novice,
-    meta: {title: '新客驾到,福利专享'}
+    meta: {title: '新手大礼包'}
   },
   {
     path: '/register-agree',
