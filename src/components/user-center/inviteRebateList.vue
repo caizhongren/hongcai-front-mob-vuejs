@@ -87,7 +87,7 @@
   .noList img {
     width: 60%;
     display: block;
-    margin: .88rem auto .3rem;
+    margin: .68rem auto .3rem;
   }
   .noList .textTip {
     color: #666;
@@ -103,7 +103,7 @@
     color: #fff;
     font-size: .26rem;
     text-align: center;
-    margin: 1rem auto .3rem;
+    margin: .8rem auto .3rem;
     position: relative;
     z-index: 2222;
   }
@@ -111,7 +111,6 @@
     color: #ff611d !important;
   }
   .inviteRebateList {
-    min-height: 11.4rem;
     padding: .3rem .5rem .8rem;
     background-image: linear-gradient(to bottom, #ff611d 0%, #f6363f 100%);
     background-image: -webkit-linear-gradient(to bottom, #ff611d 0%, #f6363f 100%);
@@ -201,5 +200,37 @@
     padding: .1rem 0 .3rem;
     position: relative;
     z-index: 2222;
+  }
+  @media (min-width: 320px) {
+    .inviteRebateList {
+      min-height: 568px;
+    }
+    .rebate-list {
+      min-height: 418px;
+    }
+  }
+  @media (min-width: 360px) {
+    .inviteRebateList {
+      min-height: 640px;
+    }
+    .rebate-list {
+      min-height: 490px;
+    }
+  }
+  @media (min-width: 375px) {
+    .inviteRebateList {
+      min-height: 667px;
+    }
+    .rebate-list {
+      min-height: 517px;
+    }
+  }
+  @media (min-width: 414px) {
+    .inviteRebateList {
+      min-height: 736px;
+    }
+    .rebate-list {
+      min-height: 586px;
+    }
   }
 </style>
