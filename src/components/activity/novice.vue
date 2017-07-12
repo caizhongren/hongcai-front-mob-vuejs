@@ -42,7 +42,7 @@
           </div>
         </div>
     </div>
-    <div class="rules">
+    <div class="rules" v-bind:class="{'rules-bottom' : !isIos}">
       <img src="../../images/novice/rule-01.png" alt="">
       <img src="../../images/novice/rule-02.png" alt="">
       <img src="../../images/novice/rule-03.png" alt="">
@@ -132,7 +132,7 @@
     background-color: #f98c0b;
     border: 1px solid rgba(0,0,0,.6);
     border-radius: .15rem;
-    box-shadow: 0px 0px .8rem #f98c0b;
+    box-shadow: 0px 0px .65rem #f98c0b;
   }
   .smallBox {
     background-color: #ffffff;
@@ -156,14 +156,14 @@
     max-width: 720px;
     margin: 0 auto;
   }
-  .rules {
-    padding: .3rem 0;
+  .rules-bottom {
+    padding-bottom: .3rem;
   }
   .iosTips {
     text-align: center;
-    color: #4b4b4b;
-    font-size: .24rem;
-    padding-bottom: .5rem;
+    color: #4a5a5a;
+    font-size: .2rem;
+    padding-bottom: .3rem;
   }
   .cashTip {
     width: 90%;
