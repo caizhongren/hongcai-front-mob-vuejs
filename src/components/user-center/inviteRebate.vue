@@ -55,23 +55,24 @@
       }
     },
     created () {
-      this.getInviteStat()
       this.token = this.$route.params.token
+      this.getInviteStat()
       this.voucher = InviteShareUtils.voucher
       bridgeUtil.setupWebViewJavascriptBridge()
     },
     methods: {
       getInviteStat: function () {
-        // var that = this
+        var that = this
+        console.log(that.token)
         this.$http({
           method: 'get',
-          url: '/hongcai/rest/users/0/inviteStat?token=' + this.token
+          url: '/hongcai/rest/users/0/inviteStat?token=' + that.token
         })
         .then(response => {
           if (!response.data || response.data.ret === -1) {
             return
           }
-          this.inviteStat = response.data
+          that.inviteStat = response.data
         })
       },
       toInviteActivity: function () {
