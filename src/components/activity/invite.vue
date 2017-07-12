@@ -169,7 +169,7 @@ export default {
     },
     toLogin: function () {
       var regesterHandCallback = function (data) {
-        data = JSON.parse(data)
+        data = this.isiOS ? data : JSON.parse(data)
         window.location.replace(window.location.pathname + '?token=' + data.token)
         this.getInvitedFriends()
       }

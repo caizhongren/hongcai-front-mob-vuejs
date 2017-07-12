@@ -27,13 +27,14 @@
 </template>
 
 <script>
-  import {bridgeUtil} from '../service/Utils'
+  import {bridgeUtil, Utils} from '../service/Utils'
   export default {
     name: 'BankCustody',
     data () {
       return {
         token: String,
         isLogged: Boolean,
+        isAndroid: Utils.isAndroid(),
         userAuth: {
           active: Boolean,
           authStatus: Number
@@ -49,7 +50,7 @@
     methods: {
       toLogin: function () {
         var regesterHandCallback = function (data) {
-          data = JSON.parse(data)
+          data = this.isAndroid ? JSON.parse(data) : data
           window.location.replace(window.location.pathname + '?token=' + data.token)
         }
         bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, regesterHandCallback)
