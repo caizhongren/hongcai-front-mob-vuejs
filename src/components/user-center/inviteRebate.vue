@@ -28,13 +28,13 @@
       <div class="share-route">
         <p>分享到</p>
         <div class="share-list">
-          <div><img src="../../images/user-center/wechat2.png" alt=""></div>
-          <div><img src="../../images/user-center/qq.png" alt=""></div>
-          <div><img src="../../images/user-center/link.png" alt=""></div>
+          <div @click="shareToWechat()"><img src="../../images/user-center/wechat2.png" alt=""></div>
+          <div @click="shareToQQ()"><img src="../../images/user-center/qq.png" alt=""></div>
+          <div @click="copyLink()"><img src="../../images/user-center/link.png" alt=""></div>
         </div>
         <div class="share-list-words">
           <div>微信好友</div>
-          <div @click="shareToQQ()">QQ好友</div>
+          <div>QQ好友</div>
           <div>复制链接</div>
         </div>
       </div>
@@ -76,9 +76,7 @@
         })
       },
       toInviteActivity: function () {
-        bridgeUtil.webConnectNative('HCNative_ToInviteActivity', null, {}, function (res) {
-          console.log(res)
-        }, null)
+        this.$router.push({name: 'Invite', query: { token: this.token }})
       },
       getVoucher: function () {
         var that = this
@@ -128,12 +126,12 @@
   }
   .invite-rebate-wrap {
     border-radius: .2rem;
-    height: 96%;
+    height: 98%;
     background: url('../../images/user-center/invite-bg.png') no-repeat center 3rem;
     background-color: #fff;
     background-size: 100%;
     color: #ff611d;
-    padding-top: .8rem;
+    padding-top: .67rem;
     position: relative;
     /*overflow: hidden;*/
   }
@@ -154,15 +152,16 @@
     width: 40%;
   }
   .tip {
-    margin: .6rem 0 .3rem;
+    margin: .6rem 0 .2rem;
     font-size: .28rem;
+    line-height: .38rem;
     font-weight: 500;
   }
   .invite-btn {
     width: 100%;
     height: 1.3rem;
     line-height: .9rem;
-    font-size: .28rem;
+    font-size: .27rem;
     color: #fff;
     border-radius: .4rem;
     background: url('../../images/user-center/invite-btn.png') no-repeat 0 0;
@@ -191,13 +190,14 @@
     background-image: linear-gradient(to bottom, #f64c24, #fb491e);
   }
   .share-route p {
-    font-size: .29rem;
+    font-size: .28rem;
     color: #fa6943;
-    margin: .75rem 0 .5rem;
+    margin: .55rem 0 .5rem;
   }
   .share-list, .share-list-words {
     display: flex;
     justify-content: space-around;
+    padding: 0 .1rem;
   }
   .share-list-words {
     color: #999;
@@ -208,8 +208,8 @@
     margin: .21rem auto;
   }
   .share-list div {
-    height: 1.1rem;
-    width: 1.1rem;
+    height: 1rem;
+    width: 1rem;
     border: 1px solid #ddd;
     border-radius: .1rem;
     background-color: #eee;
