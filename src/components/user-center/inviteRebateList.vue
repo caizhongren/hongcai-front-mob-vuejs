@@ -205,32 +205,20 @@
     .inviteRebateList {
       min-height: 568px;
     }
-    .rebate-list {
-      min-height: 418px;
-    }
   }
   @media (min-width: 360px) {
     .inviteRebateList {
       min-height: 640px;
-    }
-    .rebate-list {
-      min-height: 490px;
     }
   }
   @media (min-width: 375px) {
     .inviteRebateList {
       min-height: 667px;
     }
-    .rebate-list {
-      min-height: 517px;
-    }
   }
   @media (min-width: 414px) {
     .inviteRebateList {
       min-height: 736px;
-    }
-    .rebate-list {
-      min-height: 586px;
     }
   }
 </style>
