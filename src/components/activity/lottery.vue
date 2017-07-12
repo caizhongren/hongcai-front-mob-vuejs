@@ -149,6 +149,7 @@
       this.getLuckyUsers()
       bridgeUtil.setupWebViewJavascriptBridge()
       this.shareRegisterCallback = function (data) {
+        console.log(data)
         console.log(data.isShareSuccess)
         data = JSON.parse(data)
         if (data.isShareSuccess === 1) {
