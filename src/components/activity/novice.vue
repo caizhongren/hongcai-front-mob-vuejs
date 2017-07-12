@@ -9,7 +9,12 @@
       <img src="../../images/novice/header-06.png" alt="">
       <img src="../../images/novice/header-07.png" alt="">
       <img src="../../images/novice/header-08.png" alt="">
-      <img src="../../images/novice/header-09.png" alt="">
+      <div class="rateCoupon">
+        <img src="../../images/novice/header-09.png" alt="">
+        <div class="rateCouponTip">
+          <img src="../../images/novice/RateCoupon.png" alt="">
+        </div>
+      </div>
       <img src="../../images/novice/header-10.png" alt="">
       <img src="../../images/novice/header-11.png" alt="">
       <img src="../../images/novice/header-12.png" alt="">
@@ -174,7 +179,7 @@
     position: relative;
   }
   .cash782, .cash182{
-    width: 57%;
+    width: 56%;
   }
   .cash782 {
     margin-left: -.4rem;
@@ -203,5 +208,19 @@
   .cashCouponList .IKnow {
     width: 51%;
     margin-top: .3rem;
+  }
+  .rateCoupon {
+    position: relative;
+  }
+  .rateCouponTip {
+    background-color: #fff;
+    width: 84%;
+    position: absolute;
+    bottom: -.1rem;
+    left: 8%;
+  }
+  .rateCouponTip img {
+    width: 86%;
+    padding-top: .1rem;
   }
 </style>
