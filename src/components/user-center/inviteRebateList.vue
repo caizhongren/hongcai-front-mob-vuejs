@@ -32,7 +32,6 @@
 </template>
 
 <script>
-  import {bridgeUtil} from '../../service/Utils.js'
   export default {
     name: 'inviteRebateList',
     data () {
@@ -52,7 +51,6 @@
       }
       this.token = this.$route.params.token
       this.getInviteList()
-      bridgeUtil.setupWebViewJavascriptBridge()
     },
     methods: {
       getInviteList: function () {
@@ -79,7 +77,7 @@
         this.getInviteList(this.page)
       },
       toInvite: function () {
-        bridgeUtil.webConnectNative('HCNative_ImmediateInvite', null, {}, function (response) {}, null)
+        this.$router.push({name: 'Invite', query: { token: this.token }})
       }
     }
   }

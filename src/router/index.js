@@ -14,6 +14,7 @@ import Help from '../components/user-center/help.vue'
 import Question from '../components/user-center/question.vue'
 import NoticeDetail from '../components/user-center/noticeDetail.vue'
 import bankCardLimit from '../components/user-center/bankCardLimit.vue'
+import inviteRebateList from '../components/user-center/inviteRebateList.vue'
 import RegisterAgree from '../components/registerAgree.vue'
 import AssignmentAgree from '../components/assignmentAgree.vue'
 import ServiceAgreeAssignment from '../components/serviceAgreeAssignment.vue'
@@ -157,6 +158,12 @@ const routes = [
     name: 'bankCardLimit',
     component: bankCardLimit,
     meta: {title: '银行卡限额'}
+  },
+  {
+    path: '/user-center/invite-rebate-list/:token',
+    name: 'inviteRebateList',
+    component: inviteRebateList,
+    meta: {title: '邀请列表'}
   },
   {
     path: '*',
