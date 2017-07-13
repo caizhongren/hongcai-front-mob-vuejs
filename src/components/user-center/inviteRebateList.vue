@@ -124,8 +124,8 @@
   }
   .inviteRebateList {
     padding: .3rem .5rem .8rem;
-    background-image: linear-gradient(to bottom, #ff611d 0%, #f6363f 100%);
     background-image: -webkit-linear-gradient(to bottom, #ff611d 0%, #f6363f 100%);
+    background-image: linear-gradient(to bottom, #ff611d 0%, #f6363f 100%);
     overflow: hidden;
   }
   .invite-rebate-list {
@@ -164,6 +164,8 @@
     width: 15px;
     height: 30px;
     background-color: #ff611e;
+    background-image: -webkit-linear-gradient(to bottom, #ff5c21 0%, #ff5a22 100%);
+    background-image: linear-gradient(to bottom, #ff5c21 0%, #ff5a22 100%);
     position: absolute;
     bottom: -14px;
   }
