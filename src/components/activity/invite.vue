@@ -132,7 +132,7 @@ export default {
     this.isiOS = Utils.isIos()
     this.token ? this.isLogged = true : this.isLogged = false
     bridgeUtil.setupWebViewJavascriptBridge()
-    this.token ? this.getVoucher() : ''
+    this.getVoucher()
   },
   methods: {
     showRuleBox: function () {
@@ -159,13 +159,16 @@ export default {
     },
     getVoucher: function () {
       var that = this
+      if (!that.token || that.token === '') {
+        return
+      }
       that.$http({
         method: 'get',
         url: '/hongcai/rest/users/0/voucher?token=' + that.token
       }).then((response) => {
         if (response.data && response.data.ret !== -1) {
           that.voucher = response.data.inviteCode
-          that.shareItem = InviteShareUtils.share(this.voucher)
+          that.shareItem = InviteShareUtils.share(that.voucher)
         }
       })
     },
