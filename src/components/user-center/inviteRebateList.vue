@@ -11,7 +11,7 @@
           <span class="left-c"></span>
         </div>
       </div>
-      <div class="rebate-list">
+      <div class="rebate-list" v-auto-h>
         <ul v-show="inviteList.length > 0">
           <li v-for="item in inviteList">
             <p class="ft-Arail">{{item.user.mobile}}</p>
@@ -46,9 +46,6 @@
       }
     },
     created: function () {
-      window.onload = function () {
-        document.querySelector('.rebate-list').style.height = window.innerHeight - 150 + 'px'
-      }
       this.token = this.$route.params.token
       this.getInviteList()
     },
@@ -78,6 +75,21 @@
       },
       toInvite: function () {
         this.$router.push({name: 'Invite', query: { token: this.token }})
+      }
+    },
+    directives: {
+      'auto-h': {
+        inserted: function (el) {
+          function setHeight () {
+            el.style.height = window.innerHeight - 150 + 'px'
+          }
+          setHeight()
+          window.addEventListener('load', function () {
+            setHeight()
+          }, window.addEventListener('resize', function () {
+            setHeight()
+          }))
+        }
       }
     }
   }
@@ -200,25 +212,5 @@
     padding: .1rem 0 .3rem;
     position: relative;
     z-index: 2222;
-  }
-  @media (min-width: 320px) {
-    .inviteRebateList {
-      min-height: 568px;
-    }
-  }
-  @media (min-width: 360px) {
-    .inviteRebateList {
-      min-height: 640px;
-    }
-  }
-  @media (min-width: 375px) {
-    .inviteRebateList {
-      min-height: 667px;
-    }
-  }
-  @media (min-width: 414px) {
-    .inviteRebateList {
-      min-height: 736px;
-    }
   }
 </style>
