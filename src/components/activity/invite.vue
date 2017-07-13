@@ -122,7 +122,8 @@ export default {
       isActivityEnd: false,
       isiOS: true,
       token: '',
-      voucher: String
+      voucher: String,
+      shareItem: {}
     }
   },
   created: function () {
@@ -164,6 +165,7 @@ export default {
       }).then((response) => {
         if (response.data && response.data.ret !== -1) {
           that.voucher = response.data.inviteCode
+          that.shareItem = InviteShareUtils.share(this.voucher)
         }
       })
     },
@@ -184,13 +186,15 @@ export default {
         alert('活动结束')
         return
       }
-      var shareItem = InviteShareUtils.share(this.voucher)
+      if (!this.shareItem) {
+        return
+      }
       var nativeNeedDatas = {
         'HC_shareType': 1,
-        'title': shareItem.title,
-        'subTitle': shareItem.subTitle,
-        'url': shareItem.linkUrl,
-        'imageUrl': shareItem.imageUrl
+        'title': this.shareItem.title,
+        'subTitle': this.shareItem.subTitle,
+        'url': this.shareItem.linkUrl,
+        'imageUrl': this.shareItem.imageUrl
       }
       bridgeUtil.webConnectNative('HCNative_Share', null, nativeNeedDatas, function (response) {
         alert('分享成功')

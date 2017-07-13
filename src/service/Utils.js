@@ -14,6 +14,7 @@ let Utils = {
 }
 let InviteShareUtils = {
   share: function (inviteCode) {
+    console.log(inviteCode)
     var title = this.shareTitle()
     var subTitle = this.shareSubtitle()
     var linkUrl = this.shareLink(inviteCode)
@@ -41,7 +42,7 @@ let InviteShareUtils = {
     return subTitle
   },
   shareLink: function (inviteCode) {
-    var shareLink = 'http://m.test321.hongcai.com' + '/activity/invite-sharing'
+    var shareLink = 'http://m.hongcai.com' + '/activity/invite-sharing'
     if (inviteCode) {
       console.log(inviteCode)
       shareLink = shareLink + '/' + inviteCode
