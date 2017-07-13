@@ -38,6 +38,7 @@ Vue.directive('auto-height', function (el, binding) {
   function setHeight () {
     el.style.height = window.innerHeight + 'px'
   }
+  setHeight()
   window.addEventListener('load', function () {
     setHeight()
   }, window.addEventListener('resize', function () {

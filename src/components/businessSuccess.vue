@@ -37,7 +37,7 @@
       getCoupon: function () {
         var that = this
         that.$http({
-          url: '/hongcai/rest/orders/' + that.number + '/orderCoupon?token=6261f5e1e9eb93e9479f8cf19c1b2e986ab535d7a0e01c51'
+          url: '/hongcai/rest/orders/' + that.number
         }).then((response) => {
           if (response && response.data.ret !== -1) {
             var dataList = !that.number ? {
@@ -63,7 +63,7 @@
               }
               that.connectNative(dataList)
             } else {
-              that.connectNative(dataList)
+              that.webConnectNative(dataList)
             }
           }
         })
