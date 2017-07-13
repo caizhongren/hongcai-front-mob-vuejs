@@ -123,8 +123,7 @@ export default {
       isiOS: true,
       token: '',
       voucher: String,
-      shareItem: {},
-      nativeNeedDatas: {}
+      shareItem: {}
     }
   },
   created: function () {
@@ -133,7 +132,6 @@ export default {
     this.isiOS = Utils.isIos()
     this.token ? this.isLogged = true : this.isLogged = false
     bridgeUtil.setupWebViewJavascriptBridge()
-    this.getVoucher()
   },
   methods: {
     showRuleBox: function () {
@@ -158,28 +156,6 @@ export default {
         }
       })
     },
-    getVoucher: function () {
-      var that = this
-      if (!that.token || that.token === '') {
-        return
-      }
-      that.$http({
-        method: 'get',
-        url: '/hongcai/rest/users/0/voucher?token=' + that.token
-      }).then((response) => {
-        if (response.data && response.data.ret !== -1) {
-          that.voucher = response.data.inviteCode
-          that.shareItem = InviteShareUtils.share(that.voucher)
-          that.nativeNeedDatas = {
-            'HC_shareType': 1,
-            'title': that.shareItem.title,
-            'subTitle': that.shareItem.subTitle,
-            'url': that.shareItem.linkUrl,
-            'imageUrl': that.shareItem.imageUrl
-          }
-        }
-      })
-    },
     toLogin: function () {
       var regesterHandCallback = function (data) {
         data = Utils.isIos() === true ? data : JSON.parse(data)
@@ -189,6 +165,7 @@ export default {
       bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, regesterHandCallback)
     },
     toShare: function () {
+      // var that = this
       if (!this.token || this.token === '') {
         this.toLogin()
         return
@@ -197,12 +174,26 @@ export default {
         alert('活动结束')
         return
       }
-      if (!this.shareItem) {
-        return
-      }
-      bridgeUtil.webConnectNative('HCNative_Share', null, this.nativeNeedDatas, function (response) {
-        alert('分享成功')
-      }, null)
+      var that = this
+      that.$http({
+        method: 'get',
+        url: '/hongcai/rest/users/0/voucher?token=' + that.token
+      }).then(function (response) {
+        if (response.data && response.data.ret !== -1) {
+          that.voucher = response.data.inviteCode
+          that.shareItem = InviteShareUtils.share(that.voucher)
+          var nativeNeedDatas = {
+            'HC_shareType': 1,
+            'title': that.shareItem.title,
+            'subTitle': that.shareItem.subTitle,
+            'url': that.shareItem.linkUrl,
+            'imageUrl': that.shareItem.imageUrl
+          }
+          bridgeUtil.webConnectNative('HCNative_Share', null, nativeNeedDatas, function (response) {
+            alert('分享成功')
+          }, null)
+        }
+      })
     }
   }
 }

@@ -44,7 +44,6 @@ let InviteShareUtils = {
   shareLink: function (inviteCode) {
     var shareLink = 'http://m.hongcai.com' + '/activity/invite-sharing'
     if (inviteCode) {
-      console.log(inviteCode)
       shareLink = shareLink + '/' + inviteCode
     }
     shareLink = shareLink + '?act=22&f=officeweb'
