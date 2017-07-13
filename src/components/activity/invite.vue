@@ -122,13 +122,16 @@ export default {
       isActivityEnd: false,
       isiOS: true,
       token: '',
-      voucher: String,
-      shareItem: {}
+      voucher: '',
+      shareItem: {},
+      nativeNeedDatas: {}
     }
   },
   created: function () {
     this.token = this.$route.query.token
     this.token ? this.getInvitedFriends() : ''
+    this.token ? this.getInviteCode() : ''
+
     this.isiOS = Utils.isIos()
     this.token ? this.isLogged = true : this.isLogged = false
     bridgeUtil.setupWebViewJavascriptBridge()
@@ -164,6 +167,23 @@ export default {
       }
       bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, regesterHandCallback)
     },
+    getInviteCode: function () {
+      var that = this
+      that.$http({
+        method: 'get',
+        url: '/hongcai/rest/users/0/voucher?token=' + that.token
+      }).then(function (response) {
+        that.voucher = response.data.inviteCode
+        that.shareItem = InviteShareUtils.share(that.voucher)
+        that.nativeNeedDatas = {
+          'HC_shareType': 1,
+          'title': that.shareItem.title,
+          'subTitle': that.shareItem.subTitle,
+          'url': that.shareItem.linkUrl,
+          'imageUrl': that.shareItem.imageUrl
+        }
+      })
+    },
     toShare: function () {
       // var that = this
       if (!this.token || this.token === '') {
@@ -174,26 +194,8 @@ export default {
         alert('活动结束')
         return
       }
-      var that = this
-      that.$http({
-        method: 'get',
-        url: '/hongcai/rest/users/0/voucher?token=' + that.token
-      }).then(function (response) {
-        if (response.data && response.data.ret !== -1) {
-          that.voucher = response.data.inviteCode
-          that.shareItem = InviteShareUtils.share(that.voucher)
-          var nativeNeedDatas = {
-            'HC_shareType': 1,
-            'title': that.shareItem.title,
-            'subTitle': that.shareItem.subTitle,
-            'url': that.shareItem.linkUrl,
-            'imageUrl': that.shareItem.imageUrl
-          }
-          bridgeUtil.webConnectNative('HCNative_Share', null, nativeNeedDatas, function (response) {
-            alert('分享成功')
-          }, null)
-        }
-      })
+      bridgeUtil.webConnectNative('HCNative_Share', null, this.nativeNeedDatas, function (response) {
+      }, null)
     }
   }
 }
