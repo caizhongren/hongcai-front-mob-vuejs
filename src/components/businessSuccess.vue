@@ -30,7 +30,6 @@
     },
     methods: {
       connectNative: function (dataList) {
-        console.log(1)
         bridgeUtil.webConnectNative('HCNative_SuccessCallback', '', dataList, function (response) {
         }, function (response) {})
       },
@@ -63,7 +62,7 @@
               }
               that.connectNative(dataList)
             } else {
-              that.webConnectNative(dataList)
+              that.connectNative(dataList)
             }
           }
         })
