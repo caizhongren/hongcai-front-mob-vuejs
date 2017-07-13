@@ -57,7 +57,7 @@
     created () {
       this.token = this.$route.params.token
       this.getInviteStat()
-      this.voucher = InviteShareUtils.voucher
+      this.getVoucher()
       bridgeUtil.setupWebViewJavascriptBridge()
     },
     methods: {
