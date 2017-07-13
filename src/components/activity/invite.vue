@@ -123,7 +123,8 @@ export default {
       isiOS: true,
       token: '',
       voucher: String,
-      shareItem: {}
+      shareItem: {},
+      nativeNeedDatas: {}
     }
   },
   created: function () {
@@ -169,6 +170,13 @@ export default {
         if (response.data && response.data.ret !== -1) {
           that.voucher = response.data.inviteCode
           that.shareItem = InviteShareUtils.share(that.voucher)
+          that.nativeNeedDatas = {
+            'HC_shareType': 1,
+            'title': that.shareItem.title,
+            'subTitle': that.shareItem.subTitle,
+            'url': that.shareItem.linkUrl,
+            'imageUrl': that.shareItem.imageUrl
+          }
         }
       })
     },
@@ -192,14 +200,7 @@ export default {
       if (!this.shareItem) {
         return
       }
-      var nativeNeedDatas = {
-        'HC_shareType': 1,
-        'title': this.shareItem.title,
-        'subTitle': this.shareItem.subTitle,
-        'url': this.shareItem.linkUrl,
-        'imageUrl': this.shareItem.imageUrl
-      }
-      bridgeUtil.webConnectNative('HCNative_Share', null, nativeNeedDatas, function (response) {
+      bridgeUtil.webConnectNative('HCNative_Share', null, this.nativeNeedDatas, function (response) {
         alert('分享成功')
       }, null)
     }
