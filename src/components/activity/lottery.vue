@@ -149,9 +149,7 @@
       this.getLuckyUsers()
       bridgeUtil.setupWebViewJavascriptBridge()
       this.shareRegisterCallback = function (data) {
-        console.log(data)
-        console.log(data.isShareSuccess)
-        data = this.isAndroid ? JSON.parse(data) : data
+        data = Utils.isAndroid() === true ? JSON.parse(data) : data
         if (data.isShareSuccess === 1) {
           window.vue.$http.post('/hongcai/rest/lotteries/share', {
             token: window.vue.token
@@ -229,7 +227,7 @@
       },
       toLogin: function () {
         var regesterHandCallback = function (data) {
-          data = this.isAndroid ? JSON.parse(data) : data
+          data = Utils.isAndroid() ? JSON.parse(data) : data
           window.location.replace(window.location.pathname + '?token=' + data.token)
           this.isShare()
         }
@@ -252,7 +250,8 @@
             } else if (response.data.code === -1301) {
               this.usedAndcanShare = true
             } else {
-              alert(response.data.msg)
+              // alert(response.data.msg)
+              this.showDrawBox = false
             }
           } else {
             this.receiveDraw = true

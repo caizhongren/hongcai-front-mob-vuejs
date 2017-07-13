@@ -50,7 +50,7 @@
     methods: {
       toLogin: function () {
         var regesterHandCallback = function (data) {
-          data = this.isAndroid ? JSON.parse(data) : data
+          data = Utils.isAndroid() === true ? JSON.parse(data) : data
           window.location.replace(window.location.pathname + '?token=' + data.token)
         }
         bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, regesterHandCallback)
@@ -66,7 +66,7 @@
         })
       },
       toOpen: function () {
-        if (!this.token) {
+        if (!this.token || this.token === '') {
           this.toLogin()
           return
         }
