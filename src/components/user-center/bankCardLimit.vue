@@ -11,7 +11,7 @@
         </div>
       </li>
     </ul>
-    <img class="bottom_bg" src="../../images/user-center/bankcard-limit.png" alt="">
+    <img class="bottom_bg" src="../../images/common-bg.png" alt="">
   </div>
 </template>
 
@@ -30,10 +30,10 @@
       getBankLimit: function () {
         var that = this
         that.$http({
-          url: '/hongcai/api/v1/bank/getBankRechargeLimit'
+          url: '/hongcai/rest/bankcard/rechargeBankLimits'
         })
         .then(function (res) {
-          that.bankLimit = res.data.data.bankLimit
+          that.bankLimit = res.data
           for (var i = 0; i < that.bankLimit.length; i++) {
             that.bankLimit[i].bankCardImg = '.../../../static/' + that.bankLimit[i].bankCode + '.png'
           }
