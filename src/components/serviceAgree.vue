@@ -275,6 +275,7 @@
       getProjectBill: function () {
         var that = this
         this.$http({
+          method: 'get',
           url: '/hongcai/rest/projects/' + that.projectNumber + '/projectBills'
         })
         .then(function (res) {
@@ -301,7 +302,6 @@
           }
           var LenderNames = Array.from(new Set(name))
           that.LenderNames = LenderNames
-          console.log(that.LenderNames)
         })
       }
     }

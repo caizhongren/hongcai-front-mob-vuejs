@@ -1,17 +1,18 @@
 <template>
   <div class="agreement-area row">
     <p class="text-title">宏财网服务协议</p>
-    <p class="text-right">合同编号：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
+    <p class="text-right" v-if="!contracts.assignAmount">合同编号：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>    
+    <p class="text-right" v-else="contracts">合同编号：{{contracts.contractNumber}}</p>
     <div class="row">
       <p><strong class="agree-mg text-justify">为了维护您的权益，请在签署本协议前，仔细阅读、充分理解本协议各条款（特别是加重、免除或限制协议一方责任条款），关注您在协议中的权利、义务。请您审慎阅读并选择接受或不接受本协议。您一经选择接受即视为对本协议全部条款已充分理解并完全接受。</strong></p>
-      <p><strong class="agree-mg">本协议由以下双方于【&nbsp&nbsp&nbsp】年【&nbsp&nbsp&nbsp】月【&nbsp&nbsp 】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
+      <p v-if="!contracts.assignAmount"><strong class="agree-mg">本协议由以下双方于【&nbsp&nbsp&nbsp】年【&nbsp&nbsp&nbsp】月【&nbsp&nbsp 】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
+      <p v-else="contracts"><strong class="agree-mg">本协议由以下双方于【{{contracts.year}}】年【{{contracts.month}}】月【{{contracts.day}}】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
       <br>
       <p><strong class="agree-mg">协议各方：</strong></p>
-      <p><strong class="agree-mg">甲方（受让方/投资人）：</strong></p>
-      <p>宏财网用户/会员名：</p>
+      <p><strong class="agree-mg">甲方（受让方/投资人）：</strong>{{contracts.assignAmount ? '详见附件1' : ' '}}</p>
       <br>
-      <p><strong class="agree-mg">乙方（借款人）：</strong>
-      <p>身份证号码：</p>
+      <p><strong class="agree-mg">乙方（借款人）：</strong>{{contracts.assignorRealName}}
+      <p>身份证号码：{{contracts.assignorIdNo}}</p>
       </p>
       <br>
       <p><strong class="agree-mg">丙方（居间人）：北京竞财投资服务有限公司</strong></p>
@@ -33,19 +34,20 @@
         <table border="1">
           <tr >
             <td width="120" align="center">原债权用途</td>
-            <td width="400" align="center">&nbsp</td>
+            <td width="400" align="center">{{contracts.financingPurpose}}</td>
           </tr>
           <tr >
             <td width="120" align="center">债权金额</td>
-            <td width="400" align="center">人民币（大写）<u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp整</u>（小写）RMB<u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp元</u><br>（各出借人出借金额详见附件1《出借人及出借金额明细表》）</td>
+            <td width="400" align="center" v-if="!contracts.assignAmount">人民币（大写）<u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp整</u>（小写）RMB<u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp元</u><br>（各出借人出借金额详见附件1《出借人及出借金额明细表》）</td>
+            <td width="400" align="center" v-if="contracts.assignAmount">人民币（大写）<u>{{contracts.AssignAmount}}</u>（小写）RMB<u>{{contracts.assignAmount}}元</u><br>（各出借人出借金额详见附件1《出借人及出借金额明细表》）</td>
           </tr>
           <tr>
             <td width="120" align="center">债权年化利率</td>
-            <td width="400" align="center">%</td>
+            <td width="400" align="center"><u>{{creditRightBills.length<= 0 ? assignments.annualEarnings : contracts.assignAnnualEarnings}}%</u></td>
           </tr>
           <tr>
             <td width="120" align="center">转让后债权期限</td>
-            <td width="400" align="center"><u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</u>（天）</td>
+            <td width="400" align="center"><u>{{creditRightBills.length<= 0 ? assignments.remainDay : contracts.projectDays}}天</u></td>
           </tr>
           <tr>
             <td width="120" align="center">每月还款本息数额及还款日</td>
@@ -53,11 +55,13 @@
           </tr>
           <tr>
             <td width="120" align="center">转让后债权起始日</td>
-            <td width="400" align="center"><u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</u></td>
+            <td width="400" align="center" v-if="!contracts.assignAmount"><u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</u></td>
+            <td width="400" align="center" v-else="contracts"><u>{{contracts.loanTime}}</u></td>
           </tr>
           <tr>
             <td width="120" align="center">转让后债权到期日</td>
-            <td width="400" align="center"><u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</u></td>
+            <td width="400" align="center" v-if="!contracts.assignAmount"><u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</u></td>
+            <td width="400" align="center" v-else="contracts"><u>{{contracts.repaymentDate}}</u></td>
           </tr>
         </table>
       </div>
@@ -74,14 +78,14 @@
       <p class="agree-tx">2.4 协议生效：出借资金累计等于乙方债权金额时本协议即时生效。</p>
       <p class="agree-tx">2.5 出借资金或借款发放：本协议生效的同时，甲方即不可撤销地授权第三方资金存管机构在下列放款日将上述冻结资金划转至乙方或乙方委托存管账户（以下统称乙方存管账户）中，划转完毕即视为债权转让成功。</p>
       <p class="agree-tx">2.6 转让后债权起始日为丙方在宏财网上点击【确认放款】按钮时日。</p>
-      <p class="agree-tx">2.7 自乙方在宏财网上发布债权转让需求信息之日起（   ）日，宏财网上出借人同意向乙方支付的资金金额累计仍未满足乙方本次在宏财网上发布的债权需求时，则于（  ）日24：00起终止发布借款需求信息，甲方存管账户中的出借资金自动解冻。</p>
+      <p class="agree-tx">2.7 自乙方在宏财网上发布债权转让需求信息之日起（  {{contracts.release}}  ）日，宏财网上出借人同意向乙方支付的资金金额累计仍未满足乙方本次在宏财网上发布的债权需求时，则于（ {{contracts.releaseEndTime}} ）日24：00起终止发布借款需求信息，甲方存管账户中的出借资金自动解冻。</p>
       <p class="agree-tx">2.8 协议生效后，凡因乙方原因导致甲方出借资金未能成功发放的，均视为乙方放弃债权转让，乙方应承担相应责任，按丙方收费规则及有关协议支付提前终止债权转让费，乙方不可撤销地授权丙方从乙方存管账户中直接扣收或代收。</p>
       <br>
       <p><strong class="agree-mg">第三条 &nbsp&nbsp还款</strong></p>
-      <p class="agree-tx">3.1 乙方按照以下第（3.1.2）种方式还本付息：</p>
+      <p class="agree-tx">3.1 乙方按照以下第（  {{contracts.assignAmount ? '3.1.2' : ''}}）种方式还本付息：</p>
       <p class="agree-tx">3.1.1 实行利随本清方式还款，到期一次性归还借款本息。</p>
-      <p class="agree-tx">3.1.2 月结息，到期还本。结息日为每月的（  ）日。乙方须于每一结息日结息。如债权本金的最后一次偿还日不在结息日，则未付利息应利随本清。</p>
-      <p class="agree-tx">按月等额本息还款法按每个月还款，还款日为每期末月的<u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</u>（20日/借款发放日对应日）。如无借款发放日对应日，以所在期末月的最后一日为还款日。计算公式如下：</p>
+      <p class="agree-tx">3.1.2 月结息，到期还本。结息日为每月的（ {{contracts.accountDay}} ）日。乙方须于每一结息日结息。如债权本金的最后一次偿还日不在结息日，则未付利息应利随本清。</p>
+      <p class="agree-tx">按月等额本息还款法按每个月还款，还款日为每期末月的（20日/借款发放日对应日）。如无借款发放日对应日，以所在期末月的最后一日为还款日。计算公式如下：</p>
       <img src="../images/agreement.png" width="100%">
       <p class="agree-tx">3.2 乙方不可撤销地授权第三方存管机构，按还款计划将金额等同于甲方当期应收金额的资金（即乙方当期应偿还的本金或利息）由乙方存管账户划转至甲方存管账户中，划转完毕即视为本期还款成功。</p>
       <p class="agree-tx">3.3 乙方应于每期还款日（如遇国家法定节假日，则借款还本付息日顺延至节后第一个工作日）下午3点前履行还款义务。为保证还款成功，乙方至少应于每期还款日前三日，将足以偿还当期本金或利息的款项转入（包括但不限于充值等方式）乙方存管账户。若乙方存管账户中资金不足以清偿当期借款本金或利息，导致还款不成功，乙方承担补足义务。乙方不可撤销地授权第三方资金存管机构将相应款项由乙方存管账户划转至甲方存管账户。</p>
@@ -176,19 +180,19 @@
       <br>
       <p><strong class="agree-mg">各方签章：</strong></p>
       <br>
-      <p><strong class="agree-mg">甲方</strong>：</p>
+      <p><strong class="agree-mg">甲方：<span v-for="(item, index) in LenderNames">{{item}}{{LenderNames.length === index + 1 ? '' : '、'}}</span></strong></p>
       <br>
       <br>
       <br>
       <br>
       <br>
-      <p><strong class="agree-mg">乙方</strong>：</p>
+      <p><strong class="agree-mg">乙方：{{contracts.assignorRealName}}</strong></p>
       <br>
       <br>
       <br>
       <br>
       <br>
-      <p><strong class="agree-mg">丙方</strong>：</p>
+      <p><strong class="agree-mg">丙方：北京竞财投资服务有限公司</strong></p>
       <br>
       <br>
       <br>
@@ -203,7 +207,7 @@
     <div class="annex">
       <p class="text-left">附件1</p>
       <br>
-      <table>
+      <table v-if="contracts.assignAmount">
         <thead>
           <td>甲方姓名</td>
           <td>身份证号</td>
@@ -211,11 +215,11 @@
           <td>债权编号</td>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in preRepaymentList">
-            <td>{{index + 1}}</td>
-            <td>{{item.repaymentTime | date}}</td>
-            <td>{{item.repaymentAmount | number}}</td>
-            <td>{{item.type === 1 ? '利息' : '本息'}}</td>
+          <tr v-for="(item, index) in contracts.orderList">
+            <td>{{item.name}}</td>
+            <td>{{item.idNo}}</td>
+            <td>{{item.amount}}</td>
+            <td>{{item.number}}</td>
           </tr>
         </tbody>
       </table>
@@ -227,8 +231,8 @@
     <div class="annex">
       <p class="text-left">附件2</p>
       <br>
-      <p class="text-center">还款计划（单位：元、月/日）</p>
-      <table>
+      <p class="text-center" v-if="creditRightBills.length >0">还款计划（单位：元、月/日）</p>
+      <table v-if="creditRightBills.length >0">
         <thead>
           <td>序号</td>
           <td>还款日</td>
@@ -236,11 +240,11 @@
           <td>还款类型</td>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in preRepaymentList">
+          <tr v-for="(item, index) in creditRightBills">
             <td>{{index + 1}}</td>
-            <td>{{item.repaymentTime | date}}</td>
-            <td>{{item.repaymentAmount | number}}</td>
-            <td>{{item.type === 1 ? '利息' : '本息'}}</td>
+            <td>{{item.createTime | date}}</td>
+            <td>{{item.amount | number}}</td>
+            <td>{{item.principal === 0 ? '利息' : '本息'}}</td>
           </tr>
         </tbody>
       </table>
@@ -251,26 +255,62 @@
   export default {
     data () {
       return {
-        paramsNum: '',
-        preRepaymentList: []
+        creditRightNo: '',
+        creditRightBills: [],
+        creditRightId: '',
+        token: '',
+        contracts: {},
+        assignments: {},
+        orderNumber: '',
+        LenderNames: []
       }
     },
     created: function () {
-      this.paramsNum = this.$route.params.number
-      this.getProjectBill()
+      this.creditRightNo = this.$route.params.number
+      this.token = this.$route.query.token
+      this.token ? this.getCreditRightBills() : ''
+      this.getAssignments()
     },
     methods: {
-      getProjectBill: function () {
+      getAssignments: function () {
+        this.$http({
+          method: 'get',
+          url: '/hongcai/rest/assignments/' + this.creditRightNo
+        }).then((response) => {
+          this.assignments = response.data
+        })
+      },
+      getCreditRightBills: function () {
         var that = this
         this.$http({
-          url: '/hongcai/rest/projects/' + that.paramsNum + '/projectBills'
-        })
-        .then(function (res) {
-          that.preRepaymentList = res.data
-          console.log(that.preRepaymentList)
+          method: 'get',
+          url: '/hongcai/rest/creditRights/' + that.creditRightNo + '/creditRightBills?token=' + that.token
+        }).then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.creditRightBills = res.data
+            that.orderNumber = that.creditRightBills[0].orderNumber
+            that.token ? that.getContracts() : ''
+          }
+          console.log(that.creditRightBills)
         })
         .catch(function (err) {
           console.log(err)
+        })
+      },
+      getContracts: function () {
+        var that = this
+        this.$http({
+          method: 'get',
+          url: '/hongcai/rest/contracts/0/' + that.orderNumber + '/credit' + '/?token=' + that.token
+        }).then(function (res) {
+          that.contracts = res.data
+          var orderList = that.contracts.orderList
+          var name = []
+          for (var i = 0; i < orderList.length; i++) {
+            name.push(orderList[i].name)
+          }
+          var LenderNames = Array.from(new Set(name))
+          that.LenderNames = LenderNames
         })
       }
     }
