@@ -33,7 +33,7 @@
         <table border="1">
           <tr >
             <td width="120" align="center">借款用途</td>
-            <td width="400" align="center">{{contracts.financingPurpose}}</td>
+            <td width="400" align="center" v-html="contracts.financingPurpose"></td>
           </tr>
           <tr >
             <td width="120" align="center">借款金额</td>
@@ -42,11 +42,11 @@
           </tr>
           <tr>
             <td width="120" align="center">借款利率</td>
-            <td width="400" align="center"><u>{{project.annualEarnings}}%</u></td>
+            <td width="400" align="center"><u>{{contracts.annualEarnings}}%</u></td>
           </tr>
           <tr>
             <td width="120" align="center">借款期限</td>
-            <td width="400" align="center"><u>{{project.projectDays}}天</u></td>
+            <td width="400" align="center"><u>{{contracts.projectDays}}天</u></td>
           </tr>
           <tr>
             <td width="120" align="center">每月还款本息数额及还款日</td>
@@ -253,25 +253,15 @@
         projectId: '',
         token: '',
         contracts: {},
-        project: {},
         LenderNames: Array
       }
     },
     created: function () {
-      this.projectNumber = this.$route.params.number
+      this.projectNumber = this.$route.query.number
       this.token = this.$route.query.token
-      this.getProjectBill()
-      this.getProject()
+      this.projectNumber ? this.getProjectBill() : ''
     },
     methods: {
-      getProject: function () {
-        this.$http({
-          method: 'get',
-          url: '/hongcai/rest/projects/' + this.projectNumber
-        }).then((response) => {
-          this.project = response.data
-        })
-      },
       getProjectBill: function () {
         var that = this
         this.$http({
@@ -279,10 +269,11 @@
           url: '/hongcai/rest/projects/' + that.projectNumber + '/projectBills'
         })
         .then(function (res) {
-          that.preRepaymentList = res.data
-          console.log(that.preRepaymentList)
-          that.projectId = that.preRepaymentList[0].projectId
-          that.token ? that.getContracts() : ''
+          if (res.data && res.data.ret !== -1) {
+            that.preRepaymentList = res.data
+            that.projectId = that.preRepaymentList[0].projectId
+            that.token ? that.getContracts() : ''
+          }
         })
         .catch(function (err) {
           console.log(err)

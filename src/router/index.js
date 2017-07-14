@@ -126,13 +126,13 @@ const routes = [
     meta: {title: '债权转让协议'}
   },
   {
-    path: '/service-agree/:number',
+    path: '/service-agree',
     name: 'ServiceAgree',
     component: ServiceAgree,
     meta: {title: '宏财网服务协议'}
   },
   {
-    path: '/service-agree-assignment/:number',
+    path: '/service-agree-assignment',
     name: 'ServiceAgreeAssignment',
     component: ServiceAgreeAssignment,
     meta: {title: '宏财网服务协议'}

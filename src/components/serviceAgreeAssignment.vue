@@ -43,11 +43,11 @@
           </tr>
           <tr>
             <td width="120" align="center">债权年化利率</td>
-            <td width="400" align="center"><u>{{creditRightBills.length<= 0 ? assignments.annualEarnings : contracts.assignAnnualEarnings}}%</u></td>
+            <td width="400" align="center"><u>{{contracts.assignAnnualEarnings}}%</u></td>
           </tr>
           <tr>
             <td width="120" align="center">转让后债权期限</td>
-            <td width="400" align="center"><u>{{creditRightBills.length<= 0 ? assignments.remainDay : contracts.projectDays}}天</u></td>
+            <td width="400" align="center"><u>{{contracts.projectDays}}天</u></td>
           </tr>
           <tr>
             <td width="120" align="center">每月还款本息数额及还款日</td>
@@ -260,26 +260,16 @@
         creditRightId: '',
         token: '',
         contracts: {},
-        assignments: {},
         orderNumber: '',
         LenderNames: []
       }
     },
     created: function () {
-      this.creditRightNo = this.$route.params.number
+      this.creditRightNo = this.$route.query.number
       this.token = this.$route.query.token
-      this.token ? this.getCreditRightBills() : ''
-      this.getAssignments()
+      this.token && this.creditRightNo ? this.getCreditRightBills() : ''
     },
     methods: {
-      getAssignments: function () {
-        this.$http({
-          method: 'get',
-          url: '/hongcai/rest/assignments/' + this.creditRightNo
-        }).then((response) => {
-          this.assignments = response.data
-        })
-      },
       getCreditRightBills: function () {
         var that = this
         this.$http({
@@ -291,9 +281,7 @@
             that.orderNumber = that.creditRightBills[0].orderNumber
             that.token ? that.getContracts() : ''
           }
-          console.log(that.creditRightBills)
-        })
-        .catch(function (err) {
+        }).catch(function (err) {
           console.log(err)
         })
       },
