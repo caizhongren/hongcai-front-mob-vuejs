@@ -16,6 +16,7 @@ import NoticeDetail from '../components/user-center/noticeDetail.vue'
 import bankCardLimit from '../components/user-center/bankCardLimit.vue'
 import InviteRebate from '../components/user-center/inviteRebate.vue'
 import inviteRebateList from '../components/user-center/inviteRebateList.vue'
+import AssignmentList from '../components/user-center/assignmentList.vue'
 import RegisterAgree from '../components/registerAgree.vue'
 import AssignmentAgree from '../components/assignmentAgree.vue'
 import ServiceAgreeAssignment from '../components/serviceAgreeAssignment.vue'
@@ -171,6 +172,12 @@ const routes = [
     name: 'bankCardLimit',
     component: bankCardLimit,
     meta: {title: '银行卡限额'}
+  },
+  {
+    path: '/user-center/assignment-list/:number',
+    name: 'AssignmentList',
+    component: AssignmentList,
+    meta: {title: '转让记录'}
   },
   {
     path: '*',
