@@ -769,9 +769,6 @@
   .project-detail-bottom span {
     color: #999;
   }
-  .investor-record p {
-    /*line-height: 1.8rem;*/
-  }
   .investor-record table {
     width: 100%;
     background-color: #fff;

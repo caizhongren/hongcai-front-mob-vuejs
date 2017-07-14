@@ -2,8 +2,8 @@
   <div class="help">
     <!-- 理解宏财 -->
     <div v-if="type === '1'">
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">1.宏财网是谁？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -12,8 +12,8 @@
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">宏财网于2014年上线运营，2016年获得1亿元A轮国企战略投资，是业内鲜见的同时拥有国资背景和博士高管团队的互联网金融信息服务平台。凭借投资方广泛深耕的金融资源、博士团队的专业金融素养、严谨的风控模型和丰富的项目管理经验，为广大投资者精心提供优质投资项目。</span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">2.为什么说投资宏财网安全可靠？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -27,8 +27,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">3.银行存管是什么？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -37,8 +37,8 @@
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">银行存管是指按照有关法律、法规的规定，客户交易结算资金统一交由独立于平台的第三方存管机构来存管。第三方存管机构是指具备第三方存管资格的商业银行。存管银行按照法律、法规的要求，负责客户资金的存取与资金交收，平台交易操作保持不变。</span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">4.如何保障宏财网用户的资金与交易安全？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -50,8 +50,8 @@
     </div>
     <!-- 产品介绍 -->
     <div v-if="type === '2'">
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">1.收益如何计算？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -62,8 +62,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">2.宏财网有哪些产品？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -79,8 +79,8 @@
     </div>
     <!-- 投资相关 -->
     <div v-if="type === '3'">
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">1.投资有手续费吗？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -91,8 +91,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">2.随时都能投资吗？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -103,8 +103,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">3.投资标的后的计息日是什么时候开始的？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -115,8 +115,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">4.什么是自动投标功能？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -127,8 +127,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">5.项目到期后多久能收到回款？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -139,8 +139,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">6.债权转让的实际支付金额为什么大于认购金额？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -152,8 +152,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">7.购买债权后，已收收益为什么是负值？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -164,8 +164,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">8.什么样的债权可以进行转让？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -178,8 +178,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">9.参加过奖励活动的债权，可以申请转让么？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -190,8 +190,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">10.债权转让的手续费是如何收取的？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -202,8 +202,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">11.宏财网对投资项目的金额有限制吗？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -217,8 +217,8 @@
     </div>
     <!-- 注册登录 -->
     <div v-if="type === '4'">
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">1.实名认证失败怎么办？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -235,8 +235,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">2.如何更换手机号？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -247,8 +247,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">3.登录时忘记密码怎么办？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -259,8 +259,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">4.投资或提现时，忘记支付密码怎么办？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -271,8 +271,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">5.如何修改支付密码或登录密码？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -283,8 +283,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">6.注册或登录时收不到验证码怎么办？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -295,8 +295,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">7.为什么要进行实名认证？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -307,8 +307,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">8.一个手机号可以注册几个账户吗？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -319,8 +319,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">9.账户登录不上、APP更新不了怎么办？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -335,8 +335,8 @@
     </div>
     <!-- 账户管理 -->
     <div v-if="type === '5'">
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">1.什么是“同卡进出”？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -347,8 +347,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">2.如何更换我已绑定的银行卡？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -364,8 +364,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">3.宏财网目前支持哪些银行？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -377,8 +377,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">4.如何绑定银行卡？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -389,8 +389,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">5.绑定银行卡遇到的问题怎么办？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -409,8 +409,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">6.可以绑定几张银行卡？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -421,8 +421,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">7.账户余额内的资金会产生收益吗？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -436,8 +436,8 @@
     </div>
     <!-- 充值提现 -->
     <div v-if="type === '6'">
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">1.一般什么原因导致充值支付失败？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -451,8 +451,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">2.提现什么时候能到账？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -463,8 +463,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">3.提现有手续费吗？提现次数和金额有什么限制？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -476,8 +476,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">4.一般什么原因导致提现失败？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -491,8 +491,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">5.如何查看我的历史交易记录？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -503,8 +503,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">6.提现对银行卡有什么要求？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -516,8 +516,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">7.银行卡已扣款，但充值未到账，怎么办？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -528,8 +528,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">8.各银行对网上交易单笔、单日及单月限额？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -554,8 +554,8 @@
     </div>
     <!-- 用户福利 -->
     <div v-if="type === '7'">
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">1.什么是特权本金？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -566,8 +566,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">2.什么是加息券？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -578,8 +578,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">3.什么是现金券？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -590,8 +590,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">4.每日抽奖可以抽到哪些奖励？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -602,8 +602,8 @@
           </span>  
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">5.如何进入宏财网VIP群？进群后享受哪些特权？</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -634,8 +634,8 @@
           <div class="fl">2.客服邮箱：hckf@hongcai.com</div>
         </div>
       </div>
-      <div class="content" @click="showOrHide($event)">
-        <div class="column">
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
           <div class="fl">3.服务时间：工作日9:00-18:00</div>
           <div class="fa-down txt-right fr">
           </div>
@@ -685,6 +685,7 @@
       },
       showOrHide: function (e) {
         var content = e.target
+        console.log(e)
         if (content.className === 'content') {
           content = e.target.firstChild
         }
@@ -700,10 +701,10 @@
       getBankLimit: function () {
         var that = this
         that.$http({
-          url: '/hongcai/api/v1/bank/getBankRechargeLimit'
+          url: '/hongcai/rest/bankcard/rechargeBankLimits'
         })
         .then(function (res) {
-          that.bankLimit = res.data.data.bankLimit
+          that.bankLimit = res.data
         })
       }
     }

@@ -42,7 +42,7 @@
       getCoupon: function () {
         var that = this
         that.$http({
-          url: '/hongcai/rest/orders/' + that.number + '/orderCoupon'
+          url: '/hongcai/rest/orders/' + that.number + '/orderCoupon?token=69f8821b945dfc9e1ad9d54a496885db95a1625bc67d93b1'
         }).then(function (response) {
           if (response && response.data.ret !== -1) {
             var dataList = {
