@@ -89,10 +89,10 @@
   .list-title li {
     float: left;
     width: 33.3%;
-    height: 1.1rem;
-    line-height: 1.1rem;
+    height: .9rem;
+    line-height: .9rem;
     background-color: #fff;
-    font-size: .3rem;
+    font-size: .28rem;
     color: #fa6943;
     text-align: center;
     border-bottom: 1px solid #fa6943;
@@ -106,7 +106,7 @@
     width: 33.3%;
     height: .9rem;
     line-height: .9rem;
-    font-size: .26rem;
+    font-size: .24rem;
     color: #666;
     text-align: center;
   }
