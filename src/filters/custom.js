@@ -1,5 +1,6 @@
 let dateTime = value => {
   // 时间格式 ‘yyyy-MM-dd HH:mm:ss’
+  if (!value) { return }
   var now = new Date(value)
   var month = now.getMonth() < 9 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1
   return now.getFullYear() + '-' +
@@ -9,16 +10,20 @@ let dateTime = value => {
   (now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes()) + ':' +
   (now.getSeconds() < 10 ? '0' + now.getSeconds() : now.getSeconds())
 }
+
 let date = value => {
   // 时间格式 ‘yyyy-MM-dd’
+  if (!value) { return }
   var now = new Date(value)
   var month = now.getMonth() < 9 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1
   return now.getFullYear() + '-' +
   month + '-' +
   (now.getDate() < 10 ? '0' + now.getDate() : now.getDate())
 }
+
 let number = number => {
   // 金额格式 并保留 2位小数
+  if (!number) { return }
   let outputdollars = number => {
     if (number.length <= 3) {
       return (number === '' ? '0' : number)
@@ -48,6 +53,7 @@ let number = number => {
     return outputdollars(Math.floor(number - 0) + '') + outputcents(number - 0)
   }
 }
+
 export { date }
 export { number }
 export {dateTime}
