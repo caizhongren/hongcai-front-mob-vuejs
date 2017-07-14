@@ -19,15 +19,15 @@
       }
     },
     created: function () {
-      this.b = this.$route.query.b
+      this.b = this.$route.query.business
       this.amount = this.$route.query.amount
       this.number = this.$route.query.number
       bridgeUtil.setupWebViewJavascriptBridge()
       window.vue = this
       window.onload = function () {
         if (window.vue.b === 'TRANSFER') {
-          window.vue.getCoupon(this.number)
-        } else if (!this.amount) {
+          window.vue.getCoupon()
+        } else if (!window.vue.amount) {
           window.vue.connectNative({'business': window.vue.b})
         } else {
           window.vue.connectNative({'business': window.vue.b, 'amount': window.vue.amount})
@@ -39,11 +39,11 @@
         bridgeUtil.webConnectNative('HCNative_SuccessCallback', '', dataList, function (response) {
         }, function (response) {})
       },
-      getCoupon: function (number) {
+      getCoupon: function () {
         var that = this
         that.$http({
-          url: '/hongcai/rest/orders/' + number
-        }).then((response) => {
+          url: '/hongcai/rest/orders/' + that.number + '/orderCoupon'
+        }).then(function (response) {
           if (response && response.data.ret !== -1) {
             var dataList = {
               'business': that.b,
