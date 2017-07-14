@@ -344,11 +344,10 @@
       toInvest: function () {
         var that = this
         that.busy = true
-        var callHandlerCallback = function (response) {
-          setTimeout(function () {
-            that.busy = false
-          }, 1500)
-        }
+        setTimeout(function () {
+          that.busy = false
+        }, 2000)
+        var callHandlerCallback = function (response) {}
         var nativeNeedDatas = {
           'amount': that.project.amount,
           'annualEarnings': that.project.annualEarnings,
@@ -356,7 +355,7 @@
           'projectId': that.project.id,
           'number': that.paramsNum
         }
-        bridgeUtil.webConnectNative('HCNative_ImmediateInvestment', 'HCWeb_LoginSuccess', nativeNeedDatas, callHandlerCallback, null)
+        bridgeUtil.webConnectNative('HCNative_ImmediateInvestment', 'HCWeb_LoginSuccess', nativeNeedDatas, callHandlerCallback, callHandlerCallback)
       },
       preview: function (i, e, tar) {
         var that = this

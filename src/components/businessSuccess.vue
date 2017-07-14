@@ -39,31 +39,25 @@
           url: '/hongcai/rest/orders/' + that.number
         }).then((response) => {
           if (response && response.data.ret !== -1) {
-            var dataList = !that.number ? {
-              'business': that.b,
-              'amount': that.amount
-            } : {
-              'business': that.b,
-              'amount': that.amount,
-              'number': that.number
+            var dataList = {
+              'business': that.b
             }
-            if (response.data.coupon) {
-              that.coupon.type = response.data.coupon.type
-              that.coupon.value = response.data.coupon.value
-              dataList = that.coupon.type ? {
+            if (that.amount) {
+              dataList = {
                 'business': that.b,
-                'amount': that.amount,
-                'number': that.number,
-                'coupon': that.coupon
-              } : {
-                'business': that.b,
-                'amount': that.amount,
-                'number': that.number
+                'amount': that.amount
               }
-              that.connectNative(dataList)
-            } else {
-              that.connectNative(dataList)
+              if (response.data.coupon) {
+                that.coupon.type = response.data.coupon.type
+                that.coupon.value = response.data.coupon.value
+                dataList = {
+                  'business': that.b,
+                  'amount': that.amount,
+                  'coupon': that.coupon
+                }
+              }
             }
+            that.connectNative(dataList)
           }
         })
       }

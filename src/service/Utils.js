@@ -14,7 +14,6 @@ let Utils = {
 }
 let InviteShareUtils = {
   share: function (inviteCode) {
-    console.log(inviteCode)
     var title = this.shareTitle()
     var subTitle = this.shareSubtitle()
     var linkUrl = this.shareLink(inviteCode)
