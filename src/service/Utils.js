@@ -14,7 +14,6 @@ let Utils = {
 }
 let InviteShareUtils = {
   share: function (inviteCode) {
-    console.log(inviteCode)
     var title = this.shareTitle()
     var subTitle = this.shareSubtitle()
     var linkUrl = this.shareLink(inviteCode)
@@ -140,7 +139,15 @@ let bridgeUtil = {
     }
   }
 }
+let getToken = function () {
+  var tokenId = ''
+  bridgeUtil.webConnectNative('HCNative_GetToken', '', {}, function (res) {
+    tokenId = res.token
+  }, null)
+  return tokenId
+}
 export {Utils}
 export {InviteShareUtils}
 export {ruleBox}
 export {bridgeUtil}
+export {getToken}

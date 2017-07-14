@@ -1,7 +1,7 @@
 <template>
   <div class="website-notice-detail">
     <div class="notice-title">
-      <p class="title text-center">{{noticeDetail.title}}</p>
+      <p class="title text-center">{{noticeDetail.title || ''}}</p>
       <p class="createTime">{{noticeDetail.createTime | dateTime}}</p>
       <div class="content" v-html="noticeDetail.content">
       </div>
@@ -14,7 +14,10 @@
     name: 'NoticeDetail',
     data () {
       return {
-        noticeDetail: Object,
+        noticeDetail: {
+          title: '',
+          createTime: new Date().getTime()
+        },
         textId: 719
       }
     },

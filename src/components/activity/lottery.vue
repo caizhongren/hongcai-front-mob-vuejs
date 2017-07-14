@@ -117,7 +117,7 @@
 </template>
 
 <script>
-  import {Utils, ruleBox, bridgeUtil} from '../../service/Utils'
+  import {Utils, ruleBox, bridgeUtil, getToken} from '../../service/Utils'
   import $ from 'jquery'
   import {LuckDraw} from '../../service/rect.luckdraw.js'
   export default {
@@ -144,7 +144,7 @@
     },
     created: function () {
       document.title = '幸运大抽奖'
-      this.token = this.$route.query.token
+      this.token = getToken()
       this.getDrawCount(this.token)
       this.getLuckyUsers()
       bridgeUtil.setupWebViewJavascriptBridge()
@@ -211,12 +211,12 @@
         if (!this.token || this.token === '') {
           var regesterHandCallback = function (data) {
             data = this.isAndroid ? JSON.parse(data) : data
-            window.location.replace(window.location.pathname + '/' + data.token)
+            window.location.replace(window.location.pathname)
           }
           bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, regesterHandCallback)
           return
         }
-        this.$router.push({name: 'LotteryRecord', params: { token: this.token }})
+        this.$router.push({name: 'LotteryRecord'})
       },
       ruleBox: function (closeBox) {
         ruleBox.showRuleBox(document.querySelector('#lottery'), this, closeBox)
@@ -228,7 +228,7 @@
       toLogin: function () {
         var regesterHandCallback = function (data) {
           data = Utils.isAndroid() ? JSON.parse(data) : data
-          window.location.replace(window.location.pathname + '?token=' + data.token)
+          window.location.replace(window.location.pathname)
           this.isShare()
         }
         bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, regesterHandCallback)
@@ -322,7 +322,6 @@
       },
       getDrawCount: function (token) {
         var that = this
-        token = that.$route.query.token
         that.$http({
           url: '/hongcai/rest/lotteries/drawCount?token=' + token
         })

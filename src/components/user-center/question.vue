@@ -36,7 +36,7 @@
 </template>
 
 <script>
-  import {Utils} from '../../service/Utils'
+  import {Utils, getToken} from '../../service/Utils'
   export default {
     name: 'Questionnaire',
     data () {
@@ -140,16 +140,14 @@
             ]
           }
         ],
-        questionAndAnswer: {
-
-        },
+        questionAndAnswer: {},
         canSubmit: false,
         showWarning: false,
         showResult: false,
         warningMsg: '',
         ability: '',
         type: '',
-        token: 'e745776d47dcd5d7fc3aea509ed3b125e493969a6437c698'
+        token: getToken()
       }
     },
     created: function () {

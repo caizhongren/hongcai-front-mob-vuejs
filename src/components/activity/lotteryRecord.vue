@@ -31,6 +31,7 @@
 </template>
 
 <script>
+  import {getToken} from '../../service/Utils'
   export default {
     name: 'lotteryRecord',
     data () {
@@ -39,12 +40,11 @@
           prizeType: 4
         },
         userLotteryRecord: [],
-        token: '9c438068699b1c092f2e65895feebaba8bc575a4dec742dd'
+        token: getToken()
       }
     },
     created: function () {
       var that = this
-      that.token = that.$route.params.token
       console.log(that.token)
       that.$http({
         url: '/hongcai/rest/lotteries/rewards?token=' + that.token

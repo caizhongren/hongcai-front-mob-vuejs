@@ -68,7 +68,7 @@
 
 <script>
   import $ from 'jquery'
-  import {Utils, bridgeUtil} from '../../service/Utils'
+  import {Utils, bridgeUtil, getToken} from '../../service/Utils'
   export default {
     name: 'Novice',
     data () {
@@ -78,11 +78,10 @@
           active: Boolean,
           authStatus: Number
         },
-        token: String
+        token: getToken()
       }
     },
     created: function () {
-      this.token = this.$route.params.token
       bridgeUtil.setupWebViewJavascriptBridge()
       this.token ? this.getUserAuth() : ''
     },

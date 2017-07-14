@@ -2,30 +2,37 @@
 <template>
   <div class="transfer">
     <img src="../images/transfer.png" alt="" width="50%" class="display-bl">
-    <p>处理中…</p>
+    <p>处理中…{{token}}</p>
     <p>请耐心等待哟～</p>
   </div>
 </template>
 
 <script>
-  import {bridgeUtil} from '../service/Utils.js'
+  import {bridgeUtil, getToken} from '../service/Utils.js'
   export default {
     name: 'businessSuccess',
     data () {
       return {
         amount: 0,
         coupon: {},
-        b: ''
+        b: '',
+        token: getToken()
       }
     },
     created: function () {
-      this.b = this.$route.query.b
+      this.b = this.$route.query.business
       this.amount = this.$route.query.amount
       this.number = this.$route.query.number
       bridgeUtil.setupWebViewJavascriptBridge()
       window.vue = this
       window.onload = function () {
-        window.vue.b === 'TRANSFER' ? window.vue.getCoupon() : window.vue.connectNative({'business': window.vue.b, 'amount': window.vue.amount})
+        if (window.vue.b === 'TRANSFER') {
+          window.vue.getCoupon()
+        } else if (!window.vue.amount) {
+          window.vue.connectNative({'business': window.vue.b})
+        } else {
+          window.vue.connectNative({'business': window.vue.b, 'amount': window.vue.amount})
+        }
       }
     },
     methods: {
@@ -36,34 +43,23 @@
       getCoupon: function () {
         var that = this
         that.$http({
-          url: '/hongcai/rest/orders/' + that.number
-        }).then((response) => {
+          url: '/hongcai/rest/orders/' + that.number + '/orderCoupon?token=' + that.token
+        }).then(function (response) {
           if (response && response.data.ret !== -1) {
-            var dataList = !that.number ? {
+            var dataList = {
               'business': that.b,
               'amount': that.amount
-            } : {
-              'business': that.b,
-              'amount': that.amount,
-              'number': that.number
             }
             if (response.data.coupon) {
               that.coupon.type = response.data.coupon.type
               that.coupon.value = response.data.coupon.value
-              dataList = that.coupon.type ? {
+              dataList = {
                 'business': that.b,
                 'amount': that.amount,
-                'number': that.number,
                 'coupon': that.coupon
-              } : {
-                'business': that.b,
-                'amount': that.amount,
-                'number': that.number
               }
-              that.connectNative(dataList)
-            } else {
-              that.connectNative(dataList)
             }
+            that.connectNative(dataList)
           }
         })
       }
