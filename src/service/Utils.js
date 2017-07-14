@@ -137,16 +137,17 @@ let bridgeUtil = {
         })
       }
     }
-  },
-  token: function () {
-    var tokenId = ''
-    this.webConnectNative('HCNative_GetToken', '', {}, function (res) {
-      tokenId = res.token
-    }, null)
-    return tokenId
   }
+}
+let getToken = function () {
+  var tokenId = ''
+  bridgeUtil.webConnectNative('HCNative_GetToken', '', {}, function (res) {
+    tokenId = res.token
+  }, null)
+  return tokenId
 }
 export {Utils}
 export {InviteShareUtils}
 export {ruleBox}
 export {bridgeUtil}
+export {getToken}

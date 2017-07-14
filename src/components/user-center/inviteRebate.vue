@@ -42,20 +42,19 @@
   </div>
 </template>
 <script>
-  import {InviteShareUtils, bridgeUtil} from '../../service/Utils'
+  import {bridgeUtil, InviteShareUtils, getToken} from '../../service/Utils'
   export default {
     name: 'inviteRebate',
     data () {
       return {
         inviteStat: {},
-        token: '',
+        token: getToken(),
         voucher: '',
         shareItem: {},
         nativeNeedDatas: {}
       }
     },
     created () {
-      this.token = this.$route.params.token
       this.getInviteStat()
       this.getVoucher()
       bridgeUtil.setupWebViewJavascriptBridge()
@@ -63,7 +62,6 @@
     methods: {
       getInviteStat: function () {
         var that = this
-        console.log(that.token)
         this.$http({
           method: 'get',
           url: '/hongcai/rest/users/0/inviteStat?token=' + that.token
@@ -76,7 +74,7 @@
         })
       },
       toInviteActivity: function () {
-        this.$router.push({name: 'Invite', query: { token: this.token }})
+        this.$router.push({name: 'Invite'})
       },
       getVoucher: function () {
         var that = this

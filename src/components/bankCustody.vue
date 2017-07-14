@@ -27,12 +27,12 @@
 </template>
 
 <script>
-  import {bridgeUtil, Utils} from '../service/Utils'
+  import {bridgeUtil, Utils, getToken} from '../service/Utils'
   export default {
     name: 'BankCustody',
     data () {
       return {
-        token: String,
+        token: getToken(),
         isLogged: Boolean,
         isAndroid: Utils.isAndroid(),
         userAuth: {
@@ -42,7 +42,6 @@
       }
     },
     created: function () {
-      this.token = this.$route.query.token
       this.token ? this.isLogged = true : this.isLogged = false
       this.token ? this.getUserAuth() : ''
       bridgeUtil.setupWebViewJavascriptBridge()

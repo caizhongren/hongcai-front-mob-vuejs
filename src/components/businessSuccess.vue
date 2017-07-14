@@ -2,20 +2,21 @@
 <template>
   <div class="transfer">
     <img src="../images/transfer.png" alt="" width="50%" class="display-bl">
-    <p>处理中…</p>
+    <p>处理中…{{token}}</p>
     <p>请耐心等待哟～</p>
   </div>
 </template>
 
 <script>
-  import {bridgeUtil} from '../service/Utils.js'
+  import {bridgeUtil, getToken} from '../service/Utils.js'
   export default {
     name: 'businessSuccess',
     data () {
       return {
         amount: 0,
         coupon: {},
-        b: ''
+        b: '',
+        token: getToken()
       }
     },
     created: function () {
@@ -42,7 +43,7 @@
       getCoupon: function () {
         var that = this
         that.$http({
-          url: '/hongcai/rest/orders/' + that.number + '/orderCoupon?token=69f8821b945dfc9e1ad9d54a496885db95a1625bc67d93b1'
+          url: '/hongcai/rest/orders/' + that.number + '/orderCoupon?token=' + that.token
         }).then(function (response) {
           if (response && response.data.ret !== -1) {
             var dataList = {

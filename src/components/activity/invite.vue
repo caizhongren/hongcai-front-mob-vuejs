@@ -30,7 +30,7 @@
             <!-- 邀请好友>0 && 活动进行中 ：从页面底部弹出分享框 -->
             <div class="invite-btn" v-show="isLogged && isInvitedFriends && !isActivityEnd">
                 <!-- 查看奖励按钮 -->
-                <router-link :to="{name: 'ActivityReward',params: {token: token}}">
+                <router-link :to="{name: 'ActivityReward'}">
                     <img src="../../images/invite/rewards-btn.png" width="40%" class="rewards-btn">
                 <!-- 继续邀请按钮 -->
                 </router-link>
@@ -41,7 +41,7 @@
             <!-- 邀请好友>0 && 活动停止 -->
             <div class="invite-btn" v-show="isLogged && isActivityEnd">
                 <!-- 查看奖励按钮 -->
-                <router-link :to="{name: 'ActivityReward',params: {token: token}}">
+                <router-link :to="{name: 'ActivityReward'}">
                     <img src="../../images/invite/rewards-btn.png" width="40%" class="rewards-btn">
                 </router-link>
                 <!-- 点击出现活动结束页面 -->
@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import {Utils, InviteShareUtils, ruleBox, bridgeUtil} from '../../service/Utils'
+import {Utils, InviteShareUtils, ruleBox, bridgeUtil, getToken} from '../../service/Utils'
 export default {
   name: 'Invite',
   data () {
@@ -121,14 +121,14 @@ export default {
       isInvitedFriends: true,
       isActivityEnd: false,
       isiOS: true,
-      token: '',
+      token: getToken(),
       voucher: '',
       shareItem: {},
       nativeNeedDatas: {}
     }
   },
   created: function () {
-    this.token = this.$route.query.token
+    this.token = getToken()
     this.token ? this.getInvitedFriends() : ''
     this.token ? this.getInviteCode() : ''
 
@@ -162,7 +162,7 @@ export default {
     toLogin: function () {
       var regesterHandCallback = function (data) {
         data = Utils.isIos() === true ? data : JSON.parse(data)
-        window.location.replace(window.location.pathname + '?token=' + data.token)
+        window.location.replace(window.location.pathname)
         this.getInvitedFriends()
       }
       bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, regesterHandCallback)

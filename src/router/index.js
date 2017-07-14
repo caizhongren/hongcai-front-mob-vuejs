@@ -66,13 +66,13 @@ const routes = [
     meta: {title: '风险测评'}
   },
   {
-    path: '/user-center/invite-rebate/:token',
+    path: '/user-center/invite-rebate',
     name: 'InviteRebate',
     component: InviteRebate,
     meta: {title: '我的邀请'}
   },
   {
-    path: '/user-center/invite-rebate-list/:token',
+    path: '/user-center/invite-rebate-list',
     name: 'inviteRebateList',
     component: inviteRebateList,
     meta: {title: '邀请列表'}
@@ -89,7 +89,7 @@ const routes = [
     meta: {title: '邀请好友'}
   },
   {
-    path: '/activity/reward/:token',
+    path: '/activity/reward',
     name: 'ActivityReward',
     component: ActivityReward,
     meta: {title: '我的奖励'}
@@ -101,13 +101,13 @@ const routes = [
     meta: {title: '幸运大抽奖'}
   },
   {
-    path: '/activity/user-lottery-record/:token',
+    path: '/activity/user-lottery-record',
     name: 'LotteryRecord',
     component: LotteryRecord,
     meta: {title: '我的奖励'}
   },
   {
-    path: '/activity/novice-landing/:token',
+    path: '/activity/novice-landing',
     name: 'Novice',
     component: Novice,
     meta: {title: '新手大礼包'}

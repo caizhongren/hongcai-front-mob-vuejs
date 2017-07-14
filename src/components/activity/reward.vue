@@ -58,7 +58,7 @@
 </template>
 
 <script>
-  import {Utils, InviteShareUtils, bridgeUtil} from '../../service/Utils'
+  import {Utils, InviteShareUtils, bridgeUtil, getToken} from '../../service/Utils'
   export default {
     name: 'ActivityReward',
     data () {
@@ -70,11 +70,11 @@
         pageSize: 10,
         page: 1,
         totalPage: 1,
-        token: String
+        token: ''
       }
     },
     created: function () {
-      this.token = this.$route.params.token
+      this.token = getToken()
       this.isiOS = Utils.isIos()
       this.InvitePrivilegedUsers()
       this.invitePrivilegedRewardStat()

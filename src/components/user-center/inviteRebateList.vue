@@ -32,6 +32,7 @@
 </template>
 
 <script>
+  import {getToken} from '../../service/Utils'
   export default {
     name: 'inviteRebateList',
     data () {
@@ -42,11 +43,10 @@
         inviteList: [],
         page: 1,
         pageSize: 10,
-        token: String
+        token: getToken()
       }
     },
     created: function () {
-      this.token = this.$route.params.token
       this.getInviteList()
     },
     methods: {
