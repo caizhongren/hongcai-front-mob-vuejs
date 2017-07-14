@@ -347,6 +347,7 @@
         setTimeout(function () {
           that.busy = false
         }, 2000)
+        console.log(1)
         var callHandlerCallback = function (response) {}
         var nativeNeedDatas = {
           'amount': that.project.amount,

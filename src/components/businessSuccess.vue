@@ -25,7 +25,13 @@
       bridgeUtil.setupWebViewJavascriptBridge()
       window.vue = this
       window.onload = function () {
-        window.vue.b === 'TRANSFER' ? window.vue.getCoupon() : window.vue.connectNative({'business': window.vue.b, 'amount': window.vue.amount})
+        if (window.vue.b === 'TRANSFER') {
+          window.vue.getCoupon(this.number)
+        } else if (!this.amount) {
+          window.vue.connectNative({'business': window.vue.b})
+        } else {
+          window.vue.connectNative({'business': window.vue.b, 'amount': window.vue.amount})
+        }
       }
     },
     methods: {
@@ -33,28 +39,23 @@
         bridgeUtil.webConnectNative('HCNative_SuccessCallback', '', dataList, function (response) {
         }, function (response) {})
       },
-      getCoupon: function () {
+      getCoupon: function (number) {
         var that = this
         that.$http({
-          url: '/hongcai/rest/orders/' + that.number
+          url: '/hongcai/rest/orders/' + number
         }).then((response) => {
           if (response && response.data.ret !== -1) {
             var dataList = {
-              'business': that.b
+              'business': that.b,
+              'amount': that.amount
             }
-            if (that.amount) {
+            if (response.data.coupon) {
+              that.coupon.type = response.data.coupon.type
+              that.coupon.value = response.data.coupon.value
               dataList = {
                 'business': that.b,
-                'amount': that.amount
-              }
-              if (response.data.coupon) {
-                that.coupon.type = response.data.coupon.type
-                that.coupon.value = response.data.coupon.value
-                dataList = {
-                  'business': that.b,
-                  'amount': that.amount,
-                  'coupon': that.coupon
-                }
+                'amount': that.amount,
+                'coupon': that.coupon
               }
             }
             that.connectNative(dataList)

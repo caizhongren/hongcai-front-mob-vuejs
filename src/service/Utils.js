@@ -137,6 +137,13 @@ let bridgeUtil = {
         })
       }
     }
+  },
+  token: function () {
+    var tokenId = ''
+    this.webConnectNative('HCNative_GetToken', '', {}, function (res) {
+      tokenId = res.token
+    }, null)
+    return tokenId
   }
 }
 export {Utils}
