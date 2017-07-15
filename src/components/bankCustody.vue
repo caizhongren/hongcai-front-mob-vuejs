@@ -27,12 +27,11 @@
 </template>
 
 <script>
-  import {bridgeUtil, Utils, getToken} from '../service/Utils'
+  import {bridgeUtil, Utils} from '../service/Utils'
   export default {
     name: 'BankCustody',
     data () {
       return {
-        token: getToken(),
         isLogged: Boolean,
         isAndroid: Utils.isAndroid(),
         userAuth: {
@@ -46,6 +45,7 @@
       this.token ? this.getUserAuth() : ''
       bridgeUtil.setupWebViewJavascriptBridge()
     },
+    props: ['token'],
     methods: {
       toLogin: function () {
         var regesterHandCallback = function (data) {

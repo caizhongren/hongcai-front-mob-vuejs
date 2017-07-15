@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import {Utils, InviteShareUtils, ruleBox, bridgeUtil, getToken} from '../../service/Utils'
+import {Utils, InviteShareUtils, ruleBox, bridgeUtil} from '../../service/Utils'
 export default {
   name: 'Invite',
   data () {
@@ -121,21 +121,19 @@ export default {
       isInvitedFriends: true,
       isActivityEnd: false,
       isiOS: true,
-      token: getToken(),
       voucher: '',
       shareItem: {},
       nativeNeedDatas: {}
     }
   },
   created: function () {
-    this.token = getToken()
     this.token ? this.getInvitedFriends() : ''
     this.token ? this.getInviteCode() : ''
-
     this.isiOS = Utils.isIos()
     this.token ? this.isLogged = true : this.isLogged = false
     bridgeUtil.setupWebViewJavascriptBridge()
   },
+  props: ['token'],
   methods: {
     showRuleBox: function () {
       var $invite = document.querySelector('#invite')

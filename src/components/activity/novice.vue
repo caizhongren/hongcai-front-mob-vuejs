@@ -68,7 +68,7 @@
 
 <script>
   import $ from 'jquery'
-  import {Utils, bridgeUtil, getToken} from '../../service/Utils'
+  import {Utils, bridgeUtil} from '../../service/Utils'
   export default {
     name: 'Novice',
     data () {
@@ -77,14 +77,14 @@
         userAuth: {
           active: Boolean,
           authStatus: Number
-        },
-        token: getToken()
+        }
       }
     },
     created: function () {
       bridgeUtil.setupWebViewJavascriptBridge()
       this.token ? this.getUserAuth() : ''
     },
+    props: ['token'],
     methods: {
       loadMore: function () {
         $('.cashCouponList').slideToggle()

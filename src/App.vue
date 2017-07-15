@@ -20,17 +20,31 @@
         </router-link>
       </li>
     </ul> -->
-    <router-view></router-view>
+    <router-view :token="token"></router-view>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
+import {bridgeUtil, Utils} from './service/Utils'
+import * as custom from './filters/custom'
 
 export default {
-  name: 'app'
+  name: 'app',
+  data () {
+    return {
+      token: ''
+    }
+  },
+  created: function () {
+    var that = this
+    window.addEventListener('load', function () {
+      bridgeUtil.webConnectNative('HCNative_GetToken', '', {}, function (res) {
+        that.token = Utils.isAndroid() ? JSON.parse(res).token : res.token
+      }, null)
+    })
+  }
 }
-import Vue from 'vue'
-import * as custom from './filters/custom'
 Object.keys(custom).forEach(key => {
   Vue.filter(key, custom[key])
 })

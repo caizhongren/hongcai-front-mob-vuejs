@@ -2,7 +2,7 @@
   <div class="invite-rebate" v-auto-height>
     <div class="invite-rebate-wrap">
       <div class="count1">
-        <p>{{inviteStat.totalNum || 0}}</p>
+        <p>{{inviteStat.totalNum || 0}}{{msg}}</p>
         <p>邀请好友(人)</p>
       </div>
       <div class="clearfix">
@@ -42,13 +42,12 @@
   </div>
 </template>
 <script>
-  import {bridgeUtil, InviteShareUtils, getToken} from '../../service/Utils'
+  import {bridgeUtil, InviteShareUtils} from '../../service/Utils'
   export default {
     name: 'inviteRebate',
     data () {
       return {
         inviteStat: {},
-        token: getToken(),
         voucher: '',
         shareItem: {},
         nativeNeedDatas: {}
@@ -59,6 +58,7 @@
       this.getVoucher()
       bridgeUtil.setupWebViewJavascriptBridge()
     },
+    props: ['token'],
     methods: {
       getInviteStat: function () {
         var that = this

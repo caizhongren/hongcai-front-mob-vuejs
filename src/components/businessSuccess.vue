@@ -8,17 +8,17 @@
 </template>
 
 <script>
-  import {bridgeUtil, getToken} from '../service/Utils.js'
+  import {bridgeUtil} from '../service/Utils.js'
   export default {
     name: 'businessSuccess',
     data () {
       return {
         amount: 0,
         coupon: {},
-        b: '',
-        token: getToken()
+        b: ''
       }
     },
+    props: ['token'],
     created: function () {
       this.b = this.$route.query.business
       this.amount = this.$route.query.amount

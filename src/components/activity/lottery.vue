@@ -117,7 +117,7 @@
 </template>
 
 <script>
-  import {Utils, ruleBox, bridgeUtil, getToken} from '../../service/Utils'
+  import {Utils, ruleBox, bridgeUtil} from '../../service/Utils'
   import $ from 'jquery'
   import {LuckDraw} from '../../service/rect.luckdraw.js'
   export default {
@@ -127,7 +127,6 @@
         drawCount: 0,
         isiOS: true,
         prizeList: {},
-        token: '',
         showRules: false,
         canShare: false,
         showDrawBox: false,
@@ -142,22 +141,22 @@
         domain: 'http://m.test321.hongcai.com'
       }
     },
+    props: ['token'],
     created: function () {
-      document.title = '幸运大抽奖'
-      this.token = getToken()
-      this.getDrawCount(this.token)
       this.getLuckyUsers()
+      this.getDrawCount(this.token)
       bridgeUtil.setupWebViewJavascriptBridge()
+      var that = this
       this.shareRegisterCallback = function (data) {
-        data = Utils.isAndroid() === true ? JSON.parse(data) : data
+        data = Utils.isAndroid() ? JSON.parse(data) : data
         if (data.isShareSuccess === 1) {
-          window.vue.$http.post('/hongcai/rest/lotteries/share', {
-            token: window.vue.token
+          that.$http.post('/hongcai/rest/lotteries/share', {
+            token: that.token
           })
           .then(function (res) {
             if (res.data && res.data.ret !== -1) {
-              window.vue.drawCount = !res.data.isEffective ? window.vue.drawCount : window.vue.drawCount + 1
-              this.showDrawBox = false
+              that.drawCount = !res.data.isEffective ? that.drawCount : that.drawCount + 1
+              that.showDrawBox = false
             }
           })
           .catch(function (err) {
@@ -165,19 +164,17 @@
           })
         }
       }
-      window.vue = this
       window.onload = function (e) {
-        window.vue.luckyTimer(-2.5)
-        window.vue.isShare = function () {
+        that.isShare = function () {
           bridgeUtil.webConnectNative('HCNative_NeedShare', 'HCWeb_ShareSuccess', {
             'HC_shareType': 2,
             'title': '今日运势，一试便知',
             'subTitle': '100%有礼！随机奖金、特权本金、返现加息券样样都有！好运从这里开始！',
             'url': this.domain + '/lottery',
             'imageUrl': 'https://mmbiz.qlogo.cn/mmbiz_jpg/8MZDOEkib8AlvibTmbDkqwbDiasl9BphCGgYnicBzl9VfX4Sm9cpvFiarGsV73IRYurUF9LPibzL0JLR5SGmd1TeO3ug/0?wx_fmt=jpeg'
-          }, function (response) {}, window.vue.shareRegisterCallback)
+          }, function (response) {}, that.shareRegisterCallback)
         }
-        window.vue.isShare()
+        that.isShare()
       }
     },
     methods: {
@@ -371,6 +368,7 @@
                 break
             }
           }
+          that.luckyTimer(-2.5)
         })
       },
       luckyTimer: function (val) {
@@ -395,11 +393,11 @@
 </script>
 <style scoped>
   .lucky-users-box.animate {
-    -webkit-transition:all 1.5s ease-in-out;
-    -moz-transition:all 1.5s ease-in-out;
-    -o-transition:all 1.5s ease-in-out;
-    -ms-transition:all 1.5s ease-in-out;    
-    transition:all 1.5s ease-in-out;
+    -webkit-transition:all 1s ease-in-out;
+    -moz-transition:all 1s ease-in-out;
+    -o-transition:all 1s ease-in-out;
+    -ms-transition:all 1s ease-in-out;    
+    transition:all 1s ease-in-out;
     -webkit-transform:translateY(-2.5rem);
     transform:translateY(-2.5rem);
   }

@@ -36,7 +36,7 @@
 </template>
 
 <script>
-  import {Utils, getToken} from '../../service/Utils'
+  import {Utils} from '../../service/Utils'
   export default {
     name: 'Questionnaire',
     data () {
@@ -146,14 +146,14 @@
         showResult: false,
         warningMsg: '',
         ability: '',
-        type: '',
-        token: getToken()
+        type: ''
       }
     },
     created: function () {
       this.getQustions()
       console.log(Utils.isAndroid())
     },
+    props: ['token'],
     methods: {
       getQustions: function () {
         var that = this

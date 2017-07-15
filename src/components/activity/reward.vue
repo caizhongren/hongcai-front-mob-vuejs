@@ -58,7 +58,7 @@
 </template>
 
 <script>
-  import {Utils, InviteShareUtils, bridgeUtil, getToken} from '../../service/Utils'
+  import {Utils, InviteShareUtils, bridgeUtil} from '../../service/Utils'
   export default {
     name: 'ActivityReward',
     data () {
@@ -69,12 +69,10 @@
         details: [],
         pageSize: 10,
         page: 1,
-        totalPage: 1,
-        token: ''
+        totalPage: 1
       }
     },
     created: function () {
-      this.token = getToken()
       this.isiOS = Utils.isIos()
       this.InvitePrivilegedUsers()
       this.invitePrivilegedRewardStat()
@@ -157,7 +155,8 @@
           alert('分享成功')
         }, null)
       }
-    }
+    },
+    props: ['token']
   }
 </script>
 
