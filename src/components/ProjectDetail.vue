@@ -736,7 +736,7 @@
     text-align: center;
     line-height: .35rem;
     position: absolute;
-    /*left: 79%;*/
+    min-width: 0.4rem;
     top: -0.5rem;
   }
   .remain-amount, .actual-amount {
