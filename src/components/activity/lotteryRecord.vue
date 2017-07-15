@@ -1,9 +1,9 @@
 <template>
-  <div class="lottery-record">
+  <div class="lottery-record" v-show="token && token !== ''">
     <div class="lottery-list-wrap">
       <div class="lottery-list-header">(最近两周内)</div>
       <!-- prizeType：1, "当日加息"" ; 2, "现金奖励 ; 3, "加息券 ; 4, "现金券" ; 5, "特权本金" -->
-      <ul v-if="token && userLotteryRecord && userLotteryRecord.length > 0">
+      <ul v-if="userLotteryRecord && userLotteryRecord.length > 0">
         <li v-for="record in userLotteryRecord " class="text-left">
           <span v-if="record.prizeType === 1"><img src="../../images/lottery/one-day-rate-icon.png" width="100%"></span>
           <span v-if="record.prizeType === 2"><img src="../../images/lottery/cash-icon.png" width="100%"></span>
@@ -22,7 +22,7 @@
         </li>
           <li class="text-center ft-grey999 border-none">已无更多记录</li>
       </ul>
-      <div class="no-data" v-show="token && userLotteryRecord && userLotteryRecord.length <= 0">
+      <div class="no-data" v-show="userLotteryRecord && userLotteryRecord.length === 0">
         <img src="../../images/lottery/no-data.png" width="60%" class="margin-auto display-bl">
         <img src="../../images/lottery/hc-baby.png" width="26%" class="margin-auto display-bl">
       </div>
@@ -43,7 +43,6 @@
     },
     created: function () {
       var that = this
-      console.log(that.token)
       that.$http({
         url: '/hongcai/rest/lotteries/rewards?token=' + that.token
       })

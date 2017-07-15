@@ -43,9 +43,13 @@
     created: function () {
       this.token ? this.isLogged = true : this.isLogged = false
       this.token ? this.getUserAuth() : ''
-      bridgeUtil.setupWebViewJavascriptBridge()
     },
     props: ['token'],
+    watch: {
+      token: function (val) {
+        val && val !== '' ? this.getUserAuth() : null
+      }
+    },
     methods: {
       toLogin: function () {
         var regesterHandCallback = function (data) {

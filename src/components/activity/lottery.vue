@@ -142,10 +142,19 @@
       }
     },
     props: ['token'],
+    watch: {
+      token: function (value) {
+        if (value !== '') {
+          this.getLuckyUsers()
+          this.getDrawCount(this.token)
+        }
+      }
+    },
     created: function () {
-      this.getLuckyUsers()
-      this.getDrawCount(this.token)
-      bridgeUtil.setupWebViewJavascriptBridge()
+      if (this.token) {
+        this.getLuckyUsers()
+        this.getDrawCount(this.token)
+      }
       var that = this
       this.shareRegisterCallback = function (data) {
         data = Utils.isAndroid() ? JSON.parse(data) : data

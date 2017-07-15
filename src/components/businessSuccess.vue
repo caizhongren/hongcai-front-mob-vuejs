@@ -23,7 +23,6 @@
       this.b = this.$route.query.business
       this.amount = this.$route.query.amount
       this.number = this.$route.query.number
-      bridgeUtil.setupWebViewJavascriptBridge()
       window.vue = this
       window.onload = function () {
         if (window.vue.b === 'TRANSFER') {

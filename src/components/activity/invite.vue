@@ -131,9 +131,16 @@ export default {
     this.token ? this.getInviteCode() : ''
     this.isiOS = Utils.isIos()
     this.token ? this.isLogged = true : this.isLogged = false
-    bridgeUtil.setupWebViewJavascriptBridge()
   },
   props: ['token'],
+  watch: {
+    token: function (value) {
+      if (value && value !== '') {
+        this.getInvitedFriends()
+        this.getInviteCode()
+      }
+    }
+  },
   methods: {
     showRuleBox: function () {
       var $invite = document.querySelector('#invite')

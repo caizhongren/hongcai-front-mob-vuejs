@@ -258,7 +258,6 @@
         creditRightNo: '',
         creditRightBills: [],
         creditRightId: '',
-        token: '',
         contracts: {},
         orderNumber: '',
         LenderNames: []
@@ -266,8 +265,15 @@
     },
     created: function () {
       this.creditRightNo = this.$route.query.number
-      this.token = this.$route.query.token
       this.token && this.creditRightNo ? this.getCreditRightBills() : ''
+    },
+    props: ['token'],
+    watch: {
+      'token': function (val) {
+        if (val && val !== '' && this.creditRightNo) {
+          this.getCreditRightBills()
+        }
+      }
     },
     methods: {
       getCreditRightBills: function () {

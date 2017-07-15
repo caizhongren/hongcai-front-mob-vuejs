@@ -28,14 +28,18 @@
       return {
         assignmentOrderList: [],
         assignmentOrder: [],
-        limit: 10,
-        token: ''
+        limit: 10
       }
     },
     created: function () {
       this.assignmentNumber = this.$route.params.number
-      this.token = this.$route.query.token
-      this.getAssignmentOrder(this.limit)
+      this.token ? this.getAssignmentOrder(this.limit) : null
+    },
+    props: ['token'],
+    watch: {
+      'token': function (val) {
+        val && val !== '' ? this.getAssignmentOrder(this.limit) : null
+      }
     },
     methods: {
       getAssignmentOrder: function (limit) {

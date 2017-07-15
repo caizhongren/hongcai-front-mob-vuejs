@@ -37,6 +37,7 @@ export default {
     }
   },
   created: function () {
+    bridgeUtil.setupWebViewJavascriptBridge()
     var that = this
     window.addEventListener('load', function () {
       bridgeUtil.webConnectNative('HCNative_GetToken', '', {}, function (res) {

@@ -251,16 +251,15 @@
         projectNumber: '',
         preRepaymentList: [],
         projectId: '',
-        token: '',
         contracts: {},
         LenderNames: Array
       }
     },
     created: function () {
       this.projectNumber = this.$route.query.number
-      this.token = this.$route.query.token
       this.projectNumber ? this.getProjectBill() : ''
     },
+    props: ['token'],
     methods: {
       getProjectBill: function () {
         var that = this

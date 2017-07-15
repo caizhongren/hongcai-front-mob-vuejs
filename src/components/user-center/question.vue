@@ -36,7 +36,6 @@
 </template>
 
 <script>
-  import {Utils} from '../../service/Utils'
   export default {
     name: 'Questionnaire',
     data () {
@@ -150,10 +149,14 @@
       }
     },
     created: function () {
-      this.getQustions()
-      console.log(Utils.isAndroid())
+      this.token ? this.getQustions() : null
     },
     props: ['token'],
+    watch: {
+      'token': function (val) {
+        val && val !== '' ? this.getQustions() : null
+      }
+    },
     methods: {
       getQustions: function () {
         var that = this

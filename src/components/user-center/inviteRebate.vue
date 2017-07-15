@@ -2,7 +2,7 @@
   <div class="invite-rebate" v-auto-height>
     <div class="invite-rebate-wrap">
       <div class="count1">
-        <p>{{inviteStat.totalNum || 0}}{{msg}}</p>
+        <p>{{inviteStat.totalNum || 0}}</p>
         <p>邀请好友(人)</p>
       </div>
       <div class="clearfix">
@@ -53,12 +53,21 @@
         nativeNeedDatas: {}
       }
     },
-    created () {
-      this.getInviteStat()
-      this.getVoucher()
-      bridgeUtil.setupWebViewJavascriptBridge()
+    created: function () {
+      if (this.token) {
+        this.getVoucher()
+        this.getInviteStat()
+      }
     },
     props: ['token'],
+    watch: {
+      'token': function (value) {
+        if (value && value !== '') {
+          this.getVoucher()
+          this.getInviteStat()
+        }
+      }
+    },
     methods: {
       getInviteStat: function () {
         var that = this

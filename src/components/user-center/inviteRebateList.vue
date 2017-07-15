@@ -45,8 +45,13 @@
       }
     },
     props: ['token'],
+    watch: {
+      'token': function (val) {
+        val && val !== '' ? this.getInviteList() : null
+      }
+    },
     created: function () {
-      this.getInviteList()
+      this.token ? this.getInviteList() : null
     },
     methods: {
       getInviteList: function () {
@@ -73,7 +78,7 @@
         this.getInviteList(this.page)
       },
       toInvite: function () {
-        this.$router.push({name: 'Invite', query: { token: this.token }})
+        this.$router.push({name: 'Invite'})
       }
     },
     directives: {

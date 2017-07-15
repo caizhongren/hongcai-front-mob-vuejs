@@ -74,11 +74,23 @@
     },
     created: function () {
       this.isiOS = Utils.isIos()
-      this.InvitePrivilegedUsers()
-      this.invitePrivilegedRewardStat()
-      this.getInvitePrivilegedRewards(this.page, this.pageSize)
-      this.getVoucher()
-      bridgeUtil.setupWebViewJavascriptBridge()
+      if (this.token) {
+        this.InvitePrivilegedUsers()
+        this.invitePrivilegedRewardStat()
+        this.getInvitePrivilegedRewards(this.page, this.pageSize)
+        this.getVoucher()
+      }
+    },
+    props: ['token'],
+    watch: {
+      token: function (val) {
+        if (val && val !== '') {
+          this.InvitePrivilegedUsers()
+          this.invitePrivilegedRewardStat()
+          this.getInvitePrivilegedRewards(this.page, this.pageSize)
+          this.getVoucher()
+        }
+      }
     },
     methods: {
       getintervalDays: function (firstInvestTime) {
@@ -155,8 +167,7 @@
           alert('分享成功')
         }, null)
       }
-    },
-    props: ['token']
+    }
   }
 </script>
 

@@ -81,10 +81,16 @@
       }
     },
     created: function () {
-      bridgeUtil.setupWebViewJavascriptBridge()
       this.token ? this.getUserAuth() : ''
     },
     props: ['token'],
+    watch: {
+      token: function (val) {
+        if (val && val !== '') {
+          this.getUserAuth()
+        }
+      }
+    },
     methods: {
       loadMore: function () {
         $('.cashCouponList').slideToggle()
