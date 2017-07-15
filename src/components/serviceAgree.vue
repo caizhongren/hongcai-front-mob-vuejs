@@ -1,17 +1,18 @@
 <template>
   <div class="agreement-area row">
     <p class="text-title">宏财网服务协议</p>
-    <p class="text-right">合同编号：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
+    <p class="text-right" v-if="!contracts.total">合同编号：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
+    <p class="text-right" v-else="contracts">合同编号：{{contracts.contractNumber}}</p>
     <div class="row">
       <p><strong class="agree-mg text-justify">为了维护您的权益，请在签署本协议前，仔细阅读、充分理解本协议各条款（特别是加重、免除或限制协议一方责任条款），关注您在协议中的权利、义务。请您审慎阅读并选择接受或不接受本协议。您一经选择接受即视为对本协议全部条款已充分理解并完全接受。</strong></p>
-      <p><strong class="agree-mg">本协议由以下双方于【&nbsp&nbsp&nbsp】年【&nbsp&nbsp&nbsp】月【&nbsp&nbsp 】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
+      <p v-if="!contracts.total"><strong class="agree-mg">本协议由以下双方于【&nbsp&nbsp&nbsp】年【&nbsp&nbsp&nbsp】月【&nbsp&nbsp 】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
+      <p v-else="contracts"><strong class="agree-mg">本协议由以下双方于【{{contracts.year}}】年【{{contracts.month}}】月【{{contracts.day}}】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
       <br>
       <p><strong class="agree-mg">协议各方：</strong></p>
-      <p><strong class="agree-mg">甲方（出借人）：</strong></p>
-      <p>宏财网用户/会员名：</p>
+      <p><strong class="agree-mg">甲方（出借人）：</strong>{{contracts.total ? '详见附件1' : ' '}}</p>
       <br>
-      <p><strong class="agree-mg">乙方（借款人）：</strong>
-      <p>企业法人营业执照注册号：</p>
+      <p><strong class="agree-mg">乙方（借款人）：</strong>{{contracts.enterpriseName}}
+      <p>企业法人营业执照注册号：{{contracts.entRegistrationNo}}</p>
       </p>
       <br>
       <p><strong class="agree-mg">丙方（居间人）：北京竞财投资服务有限公司</strong></p>
@@ -32,19 +33,20 @@
         <table border="1">
           <tr >
             <td width="120" align="center">借款用途</td>
-            <td width="400" align="center">&nbsp</td>
+            <td width="400" align="center" v-html="contracts.financingPurpose"></td>
           </tr>
           <tr >
             <td width="120" align="center">借款金额</td>
-            <td width="400" align="center">人民币（大写）<u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp整</u>（小写）RMB<u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp元</u><br>（各出借人出借金额详见附件1《出借人及出借金额明细表》）</td>
+            <td width="400" align="center" v-if="!contracts.total">人民币（大写）<u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp整</u>（小写）RMB<u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp元</u><br>（各出借人出借金额详见附件1《出借人及出借金额明细表》）</td>
+            <td width="400" align="center" v-else="contracts">人民币（大写）<u>{{contracts.Total}}</u>（小写）RMB<u>{{contracts.total}}元</u><br>（各出借人出借金额详见附件1《出借人及出借金额明细表》）</td>
           </tr>
           <tr>
             <td width="120" align="center">借款利率</td>
-            <td width="400" align="center">/年均</td>
+            <td width="400" align="center"><u>{{contracts.annualEarnings}}%</u></td>
           </tr>
           <tr>
             <td width="120" align="center">借款期限</td>
-            <td width="400" align="center"><u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</u>（日/月）</td>
+            <td width="400" align="center"><u>{{contracts.projectDays}}天</u></td>
           </tr>
           <tr>
             <td width="120" align="center">每月还款本息数额及还款日</td>
@@ -52,11 +54,13 @@
           </tr>
           <tr>
             <td width="120" align="center">借款放款日</td>
-            <td width="400" align="center"><u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</u></td>
+            <td width="400" align="center" v-if="!contracts.total"><u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</u></td>
+            <td width="400" align="center" v-else="contracts"><u>{{contracts.loanTime}}</u></td>
           </tr>
           <tr>
             <td width="120" align="center">借款最终到期日</td>
-            <td width="400" align="center"><u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</u></td>
+            <td width="400" align="center" v-if="!contracts.total"><u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</u></td>
+            <td width="400" align="center" v-else="contracts"><u>{{contracts.repaymentDate}}</u></td>
           </tr>
         </table>
       </div>
@@ -76,14 +80,14 @@
       <p class="agree-tx">2.4 协议生效：出借资金累计等于乙方借款金额时本协议即时生效。</p>
       <p class="agree-tx">2.5 协议成立：乙方在宏财网上发布借款需求，丙方出具签署协议书面确认书，丁方、甲方在宏财网上依照约定进行相关操作完成本协议的签订后，本协议成立。</p>
       <p class="agree-tx">2.6 放款日为丙方在宏财网上点击【确认放款】按钮时日。</p>
-      <p class="agree-tx">2.7 自乙方在宏财网上发布借款需求信息之日起（${release}）日，宏财网上出借人同意向乙方出借的资金金额累计仍未满足乙方本次在宏财网上发布的借款需求时，则于（${releaseEndTime}）日24：00起终止发布借款需求信息，甲方存管账户中的出借资金自动解冻。</p>
+      <p class="agree-tx">2.7 自乙方在宏财网上发布借款需求信息之日起（ {{contracts.release}}）日，宏财网上出借人同意向乙方出借的资金金额累计仍未满足乙方本次在宏财网上发布的借款需求时，则于（ {{contracts.releaseEndTime}}）日24：00起终止发布借款需求信息，甲方存管账户中的出借资金自动解冻。</p>
       <p class="agree-tx">2.8 协议生效后，凡因乙方原因导致甲方出借资金未能成功发放的，均视为乙方放弃借款，乙方应承担相应责任，按丙方收费规则及有关协议支付提前终止借款费，甲方按确认出借金额的0.4%从上述提前终止借款费中收取，甲乙双方不可撤销地授权丙方从乙方存管账户中直接扣收或代收。</p>
       <br>
       <p><strong class="agree-mg">第三条 &nbsp&nbsp还款</strong></p>
-      <p class="agree-tx">3.1 乙方按照以下第（&nbsp&nbsp）种方式还本付息：</p>
+      <p class="agree-tx">3.1 乙方按照以下第（  {{contracts.total ? '3.1.2' : ''}} ）种方式还本付息：</p>
       <p class="agree-tx">3.1.1 实行利随本清方式还款，到期一次性归还借款本息。</p>
-      <p class="agree-tx">3.1.2 按月结息，到期还本。结息日为每月的（&nbsp&nbsp）日。乙方须于每一结息日结息。如借款本金的最后一次偿还日不在结息日，则未付利息应利随本清。</p>
-      <p class="agree-tx">3.1.3按月等额本息还款法按每个月还款，还款日为每期末月的<u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</u>（20日/借款发放日对应日）。如无借款发放日对应日，以所在期末月的最后一日为还款日。计算公式如下：</p>
+      <p class="agree-tx">3.1.2 按月结息，到期还本。结息日为每月的（ {{contracts.accountDay}} ）日。乙方须于每一结息日结息。如借款本金的最后一次偿还日不在结息日，则未付利息应利随本清。</p>
+      <p class="agree-tx">3.1.3 按月等额本息还款法按每个月还款，还款日为每期末月的（20日/借款发放日对应日）。如无借款发放日对应日，以所在期末月的最后一日为还款日。计算公式如下：</p>
       <img src="../images/agreement.png" width="100%">
       <p class="agree-tx">3.2 乙方不可撤销地授权第三方存管机构,按还款计划将金额等同于甲方当期应收金额的资金（即乙方当期应偿还的借款本金或利息）由乙方存管账户划转至甲方存管账户中，划转完毕即视为本期还款成功。</p>
       <p class="agree-tx">3.3 乙方应于每期还款日（如遇国家法定节假日，则借款还本付息日顺延至节后第一个工作日）下午3点前履行还款义务。为保证还款成功，乙方至少应于每期还款日前三日，将足以偿还当期借款本金或利息的款项转入（包括但不限于充值等方式）乙方存管账户。若乙方存管账户中资金不足以清偿当期借款本金或利息，导致还款不成功，乙方承担补足义务。乙方应于乙方不可撤销地授权第三方存管机构将相应款项由乙方存管账户划转至甲方存管账户。</p>
@@ -95,7 +99,7 @@
       <p><strong class="agree-mg">第五条 &nbsp&nbsp甲方权利和义务</strong></p>
       <p class="agree-tx">5.1 依据本协议约定按时足额向借款人发放借款，并保证资金来源合法。</p>
       <p class="agree-tx">5.2 有权依照本协议约定收回本金及收取利息。</p>
-      <p class="agree-tx">5.3乙方违约时，授权丙方向乙方主张权利，包括但不限于追偿借款本金及利息、罚息、违约金、损害赔偿金以及诉讼（仲裁）费、律师费等实现债权、担保权的费用等。</p>
+      <p class="agree-tx">5.3 乙方违约时，授权丙方向乙方主张权利，包括但不限于追偿借款本金及利息、罚息、违约金、损害赔偿金以及诉讼（仲裁）费、律师费等实现债权、担保权的费用等。</p>
       <p class="agree-tx">5.4.有权了解借款人基本情况、借款使用情况、担保人及担保物情况。</p>
       <br>
       <p><strong class="agree-mg">第六条 &nbsp&nbsp乙方权利和义务</strong></p>
@@ -105,7 +109,7 @@
       <p class="agree-tx">6.4 住所、通信地址、联系方式等发生变动时，应在前述变动发生之日起2个工作日内书面通知丙方并提供相应的证明文件。</p>
       <p class="agree-tx">6.5 出现以下重大不利情形时，应在该等情形发生之日起两日内书面通知丙方，必要时需提供有效担保或采取其他补救措施。</p>
       <p class="agree-tx">该等重大不利情形包括但不限于：涉及重大诉讼；已全部或者部分丧失还款能力；财务状况恶化或者因其他原因导致还款能力明显下降；担保物（如有）价值减少、毁损、灭失、被征用、被征收以及因附合、混合、加工使担保物所有权归属第三人或者出现权属争议等影响甲方实现担保物权；与金融机构或非金融机构签订的借款合同或担保合同项下发生任何违约事项；乙方或其下属公司牵连重大违纪、违法或被索赔事件，出严重困难或财务状况恶化，发生重大债权债务纠纷引起诉讼、仲裁等事件；其他影响还款能力的事项等。</p>
-      <p class="agree-tx">6.6乙方应配合甲方或丙方的要求，出具相关文件；并不可撤销地授权甲方或丙方，可向中国人民银行征信系统或其他数据信息系统，或有关单位、部门或个人，查询其信用状况，查询、打印和保存其信息和信用报告；可按照有关规定向中国人民银行征信系统或其他数据信息系统提供借款人基本信息和其他相关信息。</p>
+      <p class="agree-tx">6.6 乙方应配合甲方或丙方的要求，出具相关文件；并不可撤销地授权甲方或丙方，可向中国人民银行征信系统或其他数据信息系统，或有关单位、部门或个人，查询其信用状况，查询、打印和保存其信息和信用报告；可按照有关规定向中国人民银行征信系统或其他数据信息系统提供借款人基本信息和其他相关信息。</p>
       <br>
       <p><strong class="agree-mg">第七条 &nbsp&nbsp丙方权利义务</strong></p>
       <p class="agree-tx">7.1 为本协议项下借款提供信息交互平台居间服务。</p>
@@ -143,8 +147,8 @@
       <p class="agree-tx">10.2.5 通过宏财网发布的方式（包括但不限于公告、站内消息等方式）通知的，在宏财网发布之日为有效送达。</p>
       <br>
       <p><strong class="agree-mg">第十一条 &nbsp&nbsp保密条款</strong></p>
-      <p class="agree-tx">11.1.本协议的任何一方在本协议履行过程中，或为履行本协议的需要，从其他各方所获得的有关商业秘密，未经其他各方同意，不得向任何第三方披露。但是各方聘请的律师、会计师、审计师、评估师或根据法律法规规定及有权部门要求提供的除外。</p>
-      <p class="agree-tx">11.2本协议任何一方应采取所有其他必要、适当和可采取的措施，以确保保密信息的保密性。</p>
+      <p class="agree-tx">11.1 本协议的任何一方在本协议履行过程中，或为履行本协议的需要，从其他各方所获得的有关商业秘密，未经其他各方同意，不得向任何第三方披露。但是各方聘请的律师、会计师、审计师、评估师或根据法律法规规定及有权部门要求提供的除外。</p>
+      <p class="agree-tx">11.2 本协议任何一方应采取所有其他必要、适当和可采取的措施，以确保保密信息的保密性。</p>
       <br>
       <p><strong class="agree-mg">第十二条 &nbsp&nbsp费用承担</strong></p>
       <p class="agree-tx">与本协议有关的公证、登记、评估、鉴定、见证、运输、保管等费用由乙方承担。</p>
@@ -169,19 +173,19 @@
       <br>
       <br>
       <br>
-      <p><strong class="agree-mg">甲方（出借人）</strong>：</p>
+      <p><strong class="agree-mg">甲方：<span v-for="(item, index) in LenderNames">{{item}}{{LenderNames.length === index + 1 ? '' : '、'}}</span></strong></p>
       <br>
       <br>
       <br>
       <br>
       <br>
-      <p><strong class="agree-mg">乙方（借款人） </strong>：</p>
+      <p><strong class="agree-mg">乙方：{{contracts.enterpriseName}}</strong></p>
       <br>
       <br>
       <br>
       <br>
       <br>
-      <p><strong class="agree-mg">丙方（居间人）</strong>：</p>
+      <p><strong class="agree-mg">丙方：北京竞财投资服务有限公司</strong></p>
       <br>
       <br>
       <br>
@@ -193,22 +197,22 @@
       <br>
       <br>
     </div>
-    <div class="annex">
+    <div class="annex1">
       <p class="text-left">附件1</p>
       <br>
-      <table>
+      <table v-if="contracts.total">
         <thead>
-          <td>序号</td>
-          <td>还款日</td>
-          <td>还款金额</td>
-          <td>还款类型</td>
+          <td>甲方姓名 </td>
+          <td>身份证号</td>
+          <td>出借金额</td>
+          <td>债权编号</td>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in preRepaymentList">
-            <td>{{index + 1}}</td>
-            <td>{{item.repaymentTime | date}}</td>
-            <td>{{item.repaymentAmount | number}}</td>
-            <td>{{item.type === 1 ? '利息' : '本息'}}</td>
+          <tr v-for="(item, index) in contracts.orderList">
+            <td>{{item.name}}</td>
+            <td>{{item.idNo}}</td>
+            <td>{{item.amount}}</td>
+            <td>{{item.number}}</td>
           </tr>
         </tbody>
       </table>
@@ -244,26 +248,51 @@
   export default {
     data () {
       return {
-        paramsNum: '',
-        preRepaymentList: []
+        projectNumber: '',
+        preRepaymentList: [],
+        projectId: '',
+        token: '',
+        contracts: {},
+        LenderNames: Array
       }
     },
     created: function () {
-      this.paramsNum = this.$route.params.number
-      this.getProjectBill()
+      this.projectNumber = this.$route.query.number
+      this.token = this.$route.query.token
+      this.projectNumber ? this.getProjectBill() : ''
     },
     methods: {
       getProjectBill: function () {
         var that = this
         this.$http({
-          url: '/hongcai/rest/projects/' + that.paramsNum + '/projectBills'
+          method: 'get',
+          url: '/hongcai/rest/projects/' + that.projectNumber + '/projectBills'
         })
         .then(function (res) {
-          that.preRepaymentList = res.data
-          console.log(that.preRepaymentList)
+          if (res.data && res.data.ret !== -1) {
+            that.preRepaymentList = res.data
+            that.projectId = that.preRepaymentList[0].projectId
+            that.token ? that.getContracts() : ''
+          }
         })
         .catch(function (err) {
           console.log(err)
+        })
+      },
+      getContracts: function () {
+        var that = this
+        this.$http({
+          method: 'get',
+          url: '/hongcai/rest/contracts/0/' + that.projectId + '/?token=' + that.token
+        }).then(function (res) {
+          that.contracts = res.data
+          var orderList = that.contracts.orderList
+          var name = []
+          for (var i = 0; i < orderList.length; i++) {
+            name.push(orderList[i].name)
+          }
+          var LenderNames = Array.from(new Set(name))
+          that.LenderNames = LenderNames
         })
       }
     }
@@ -311,14 +340,20 @@
   td {
     width: 25%;
   }
-  .annex  table{
+  .annex table, .annex1 table{
     margin-top: .3rem;
     text-align: center;
   }
-  .annex table thead {
+  .annex table thead, .annex1 table thead {
     margin-bottom: .2rem;
   }
   .annex table td:first-child {
     width: 18%;
+  }
+  .annex1 table td:nth-child(2) {
+    width: 30%;
+  }
+  .annex1 table td:nth-child(3) {
+    width: 20%;
   }
 </style>

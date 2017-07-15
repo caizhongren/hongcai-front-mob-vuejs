@@ -25,7 +25,7 @@
         </div>
         <div class="loadMuch text-center" @click="loadMuch();" v-show="page < loadMoreData">查看更多</p>
         </div>
-        <img class="invite-rebate-bg" src="../../images/user-center/invite-rebate-bg.png" alt="">
+        <img class="invite-rebate-bg" src="../../images/common-bg.png" alt="">
       </div>
     </div>
   </div>
