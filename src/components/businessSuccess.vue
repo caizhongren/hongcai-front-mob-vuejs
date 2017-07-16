@@ -53,8 +53,11 @@
     },
     methods: {
       connectNative: function (dataList) {
+        console.log(dataList);
         bridgeUtil.webConnectNative('HCNative_SuccessCallback', '', dataList, function (response) {
-        }, function (response) {})
+        }, function (response) {
+          console.log(response);
+        })
       },
       getCoupon: function (status) {
         var that = this
