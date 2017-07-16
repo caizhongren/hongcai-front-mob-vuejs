@@ -42,6 +42,7 @@ export default {
     window.addEventListener('load', function () {
       bridgeUtil.webConnectNative('HCNative_GetToken', '', {}, function (res) {
         that.token = Utils.isAndroid() ? JSON.parse(res).token : res.token
+        console.log(token)
       }, null)
     })
   }
