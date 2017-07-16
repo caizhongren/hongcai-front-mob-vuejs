@@ -83,6 +83,9 @@ let bridgeUtil = {
         document.addEventListener(
           'WebViewJavascriptBridgeReady'
           , function () {
+            if (!callback) {
+              return
+            }
             callback(window.WebViewJavascriptBridge)
           },
           false
@@ -106,14 +109,14 @@ let bridgeUtil = {
   webConnectNative: function (callHandlerName, registerHandlerName, nativeNeedDatas, callHandlerCallback, registerHandlerCallback) {
     // callHandlerName 要调用的native方法名并传出数据，registerHandlerName web注册的方法接收native数据，nativeNeedDatas 是native端需要的数据，
     // callHandlerCallback web to native成功回调  registerHandlerCallback 接受native成功回调
-    if(window.WebViewJavascriptBridge){
+    if (window.WebViewJavascriptBridge) {
       if (callHandlerName) {
         window.WebViewJavascriptBridge.callHandler(callHandlerName, nativeNeedDatas, callHandlerCallback)
       }
       if (registerHandlerName) {
         window.WebViewJavascriptBridge.registerHandler(registerHandlerName, registerHandlerCallback)
       }
-      return;
+      return
     }
 
     this.setupWebViewJavascriptBridge(function (bridge) {
