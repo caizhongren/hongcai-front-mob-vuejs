@@ -106,37 +106,14 @@ let bridgeUtil = {
   webConnectNative: function (callHandlerName, registerHandlerName, nativeNeedDatas, callHandlerCallback, registerHandlerCallback) {
     // callHandlerName 要调用的native方法名并传出数据，registerHandlerName web注册的方法接收native数据，nativeNeedDatas 是native端需要的数据，
     // callHandlerCallback web to native成功回调  registerHandlerCallback 接受native成功回调
-    if (Utils.isIos()) {
-      this.setupWebViewJavascriptBridge(function (bridge) {
-        if (callHandlerName) {
-          bridge.callHandler(callHandlerName, nativeNeedDatas, callHandlerCallback)
-        }
-        if (registerHandlerName) {
-          bridge.registerHandler(registerHandlerName, registerHandlerCallback)
-        }
-      })
-    }
-    // android
-    if (Utils.isAndroid()) {
+    this.setupWebViewJavascriptBridge(function (bridge) {
       if (callHandlerName) {
-        this.setupWebViewJavascriptBridge(function (bridge) {
-          bridge.callHandler(callHandlerName, nativeNeedDatas, callHandlerCallback)
-        })
+        bridge.callHandler(callHandlerName, nativeNeedDatas, callHandlerCallback)
       }
       if (registerHandlerName) {
-        this.connectWebViewJavascriptBridge(function (bridge) {
-          bridge.init(function (message, responseCallback) {
-            console.log('JS got a message', message)
-            var data = {
-              'Javascript Responds': '测试中文!'
-            }
-            console.log('JS responding with', data)
-            responseCallback(data)
-          })
-          bridge.registerHandler(registerHandlerName, registerHandlerCallback)
-        })
+        bridge.registerHandler(registerHandlerName, registerHandlerCallback)
       }
-    }
+    })
   }
 }
 export {Utils}
