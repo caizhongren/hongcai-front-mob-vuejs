@@ -37,7 +37,7 @@
     },
     props: ['token'],
     watch: {
-      'token': function (val) {
+      token: function (val) {
         if (val && val !== '') {
           if (this.b === 'TRANSFER') {
             this.getCoupon(1)
