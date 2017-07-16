@@ -61,45 +61,18 @@ let ruleBox = {
 }
 let bridgeUtil = {
   setupWebViewJavascriptBridge: function (callback) {
-    if (Utils.isIos()) {
-      if (window.WebViewJavascriptBridge) {
-        return callback(window.WebViewJavascriptBridge)
-      }
-      if (window.WVJBCallbacks) {
-        return window.WVJBCallbacks.push(callback)
-      }
-      var WVJBIframe = document.createElement('iframe')
-      WVJBIframe.style.display = 'none'
-      WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__'
-      document.documentElement.appendChild(WVJBIframe)
-      setTimeout(function () {
-        document.documentElement.removeChild(WVJBIframe)
-      }, 0)
-    }
-    if (Utils.isAndroid()) {
-      if (window.WebViewJavascriptBridge) {
-        callback(window.WebViewJavascriptBridge)
-      } else {
-        document.addEventListener(
-          'WebViewJavascriptBridgeReady'
-          , function () {
-            if (!callback) {
-              return
-            }
-            callback(window.WebViewJavascriptBridge)
-          },
-          false
-        )
-      }
-    }
-  },
-  connectWebViewJavascriptBridge: function (callback) {
     if (window.WebViewJavascriptBridge) {
       return callback(window.WebViewJavascriptBridge)
     } else {
       document.addEventListener(
-        'WebViewJavascriptBridgeReady',
-        function () {
+        'WebViewJavascriptBridgeReady'
+        , function () {
+          window.WebViewJavascriptBridge.init(function (message, responseCallback) {
+            var data = {
+              'Javascript Responds': 'Wee!'
+            }
+            responseCallback(data)
+          })
           callback(window.WebViewJavascriptBridge)
         },
         false
@@ -120,9 +93,11 @@ let bridgeUtil = {
     }
 
     this.setupWebViewJavascriptBridge(function (bridge) {
+      // 调用native方法
       if (callHandlerName) {
         bridge.callHandler(callHandlerName, nativeNeedDatas, callHandlerCallback)
       }
+      // 注册方法，以便native调用
       if (registerHandlerName) {
         bridge.registerHandler(registerHandlerName, registerHandlerCallback)
       }

@@ -37,15 +37,10 @@ export default {
     }
   },
   created: function () {
-    bridgeUtil.setupWebViewJavascriptBridge()
     var that = this
-    window.addEventListener('load', function () {
-      bridgeUtil.webConnectNative('HCNative_GetToken', '', {}, function (res) {
-        console(res)
-        that.token = Utils.isAndroid() ? JSON.parse(res).token : res.token
-        console.log(that.token)
-      }, null)
-    })
+    bridgeUtil.webConnectNative('HCNative_GetToken', '', {}, function (res) {
+      that.token = Utils.isAndroid() ? JSON.parse(res).token : res.token
+    }, null)
   }
 }
 Object.keys(custom).forEach(key => {
