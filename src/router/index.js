@@ -1,30 +1,30 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../components/Home.vue'
-import About from '../components/about.vue'
-import ProjectDetail from '../components/ProjectDetail.vue'
-import Invite from '../components/activity/invite.vue'
-import ActivityReward from '../components/activity/reward.vue'
-import Lottery from '../components/activity/lottery.vue'
-import LotteryRecord from '../components/activity/lotteryRecord.vue'
-import Novice from '../components/activity/novice.vue'
-import HelpCenter from '../components/user-center/helpCenter.vue'
-import Help from '../components/user-center/help.vue'
-import Question from '../components/user-center/question.vue'
-import NoticeDetail from '../components/user-center/noticeDetail.vue'
-import bankCardLimit from '../components/user-center/bankCardLimit.vue'
-import InviteRebate from '../components/user-center/inviteRebate.vue'
-import inviteRebateList from '../components/user-center/inviteRebateList.vue'
-import AssignmentList from '../components/user-center/assignmentList.vue'
-import RegisterAgree from '../components/registerAgree.vue'
-import AssignmentAgree from '../components/assignmentAgree.vue'
-import ServiceAgreeAssignment from '../components/serviceAgreeAssignment.vue'
-import ServiceAgree from '../components/serviceAgree.vue'
-import AssignmentQuestion from '../components/assignmentQuestion.vue'
-import BusinessSuccess from '../components/businessSuccess.vue'
-import BankCustody from '../components/bankCustody.vue'
-import Safe from '../components/safe.vue'
-import BindWechat from '../components/bindWechat.vue'
+const ProjectDetail = r => require.ensure([], () => r(require('../components/ProjectDetail.vue')), 'ProjectDetail')
+const Invite = r => require.ensure([], () => r(require('../components/activity/invite.vue')), 'Invite')
+const ActivityReward = r => require.ensure([], () => r(require('../components/activity/reward.vue')), 'Invite')
+const Lottery = r => require.ensure([], () => r(require('../components/activity/lottery.vue')), 'Lottery')
+const LotteryRecord = r => require.ensure([], () => r(require('../components/activity/lotteryRecord.vue')), 'Lottery')
+const Home = r => require.ensure([], () => r(require('../components/Home.vue')), 'others')
+const About = r => require.ensure([], () => r(require('../components/about.vue')), 'others')
+const Novice = r => require.ensure([], () => r(require('../components/activity/novice.vue')), 'others')
+const HelpCenter = r => require.ensure([], () => r(require('../components/user-center/helpCenter.vue')), 'others')
+const Help = r => require.ensure([], () => r(require('../components/user-center/help.vue')), 'others')
+const Question = r => require.ensure([], () => r(require('../components/user-center/question.vue')), 'others')
+const NoticeDetail = r => require.ensure([], () => r(require('../components/user-center/noticeDetail.vue')), 'others')
+const bankCardLimit = r => require.ensure([], () => r(require('../components/user-center/bankCardLimit.vue')), 'others')
+const InviteRebate = r => require.ensure([], () => r(require('../components/user-center/inviteRebate.vue')), 'others')
+const inviteRebateList = r => require.ensure([], () => r(require('../components/user-center/inviteRebateList.vue')), 'others')
+const AssignmentList = r => require.ensure([], () => r(require('../components/user-center/assignmentList.vue')), 'others')
+const RegisterAgree = r => require.ensure([], () => r(require('../components/registerAgree.vue')), 'others')
+const AssignmentAgree = r => require.ensure([], () => r(require('../components/assignmentAgree.vue')), 'others')
+const ServiceAgreeAssignment = r => require.ensure([], () => r(require('../components/serviceAgreeAssignment.vue')), 'others')
+const ServiceAgree = r => require.ensure([], () => r(require('../components/serviceAgree.vue')), 'others')
+const AssignmentQuestion = r => require.ensure([], () => r(require('../components/assignmentQuestion.vue')), 'others')
+const BusinessSuccess = r => require.ensure([], () => r(require('../components/businessSuccess.vue')), 'others')
+const BankCustody = r => require.ensure([], () => r(require('../components/bankCustody.vue')), 'others')
+const Safe = r => require.ensure([], () => r(require('../components/safe.vue')), 'others')
+const BindWechat = r => require.ensure([], () => r(require('../components/bindWechat.vue')), 'others')
 Vue.use(Router)
 const routes = [
   {
