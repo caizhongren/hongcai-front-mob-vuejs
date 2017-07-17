@@ -3,7 +3,7 @@
  * @author wd<githiwd@163.com>
  * @GitHub https://github.com/hiwd/luckdraw
  */
-import $ from 'jquery'
+import $ from 'zepto'
 var LuckDraw = {
   RectLuckDraw: function (selector, prizeObj, options) {
     // var this = LuckDraw

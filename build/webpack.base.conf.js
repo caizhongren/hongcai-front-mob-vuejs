@@ -30,8 +30,7 @@ module.exports = {
       'src': resolve('src'),
       'assets': resolve('src/assets'),
       'components': resolve('src/components'),
-      'jquery': 'jquery' 
-      // 'jquery': path.resolve(__dirname, '../src/assets/libs/jquery/jquery.min')
+      'zepto': resolve('static/zepto.js')
     }
   },
   module: {
@@ -70,6 +69,10 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
+      },
+      {
+        test: resolve('static/zepto.js'),
+        loader: 'exports-loader?window.$!script-loader'
       }
     ]
   },
@@ -77,8 +80,9 @@ module.exports = {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin('common.js'),
     new webpack.ProvidePlugin({
-        jQuery: "jquery",
-        $: "jquery"
+        $: resolve('static/zepto.js'),
+        Zepto: resolve('static/zepto.js'),
+        "window.Zepto": resolve('static/zepto.js')
     })
   ]
 }

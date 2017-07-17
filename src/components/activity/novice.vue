@@ -67,7 +67,7 @@
 </template>
 
 <script>
-  import $ from 'jquery'
+  import $ from 'zepto'
   import {Utils, bridgeUtil} from '../../service/Utils'
   export default {
     name: 'Novice',

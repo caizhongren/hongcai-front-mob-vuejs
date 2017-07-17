@@ -3,7 +3,8 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-Vue.use(VueAxios, axios)
+import Zepto from '../static/zepto'
+Vue.use(VueAxios, axios, Zepto)
 // Vue.prototype.$http = axios
 
 /* eslint-disable no-new */

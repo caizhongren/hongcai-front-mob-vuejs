@@ -118,7 +118,7 @@
 
 <script>
   import {Utils, ruleBox, bridgeUtil} from '../../service/Utils'
-  import $ from 'jquery'
+  import $ from 'zepto'
   import {LuckDraw} from '../../service/rect.luckdraw.js'
   export default {
     name: 'lottery',

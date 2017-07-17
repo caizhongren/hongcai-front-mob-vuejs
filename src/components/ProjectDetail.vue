@@ -193,7 +193,7 @@
 </template>
 <script>
   import {Utils, bridgeUtil} from '../service/Utils'
-  import $ from 'jquery'
+  import $ from 'zepto'
   export default {
     name: 'projectDetail',
     data () {
