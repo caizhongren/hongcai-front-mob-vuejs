@@ -237,7 +237,6 @@
       this.getProjectRisk()
       this.getFiles()
       this.getProjectBill()
-      bridgeUtil.setupWebViewJavascriptBridge()
       window.vue = this
       window.onload = function (e) {
         var page1 = document.querySelector('.product-page1')

@@ -1,6 +1,5 @@
 <template>
   <div class="register-agree">
-     <!--<p class="text-center ft-white header">注册服务协议</p>-->
      <div class="content">
         <p class="text-justify">
             欢迎注册宏财网站（www.hongcai.com，以下简称“本网站”），本网站由北京竞财投资服务有限公司(以下简称“本公司”)负责运营。本服务协议双方为本网站用户与本公司，适用于用户注册使用本网站服务的全部活动。
@@ -230,10 +229,8 @@
     </div> 
   </div>
 </template>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
-  .register-agree {
-  }
   .header, p, .title {
       font-size: .3rem;
       padding: .2rem 0 0;
