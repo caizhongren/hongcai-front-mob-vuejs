@@ -30,7 +30,7 @@ module.exports = {
       'src': resolve('src'),
       'assets': resolve('src/assets'),
       'components': resolve('src/components'),
-      'zepto': resolve('src/assets/scripts/lib/zepto.min.js')
+      'zepto': resolve('static/zepto.min.js')
       // 'zepto': 'zepto'
     }
   },
@@ -73,7 +73,7 @@ module.exports = {
         }
       },
       {
-        test: resolve('src/assets/scripts/lib/zepto.min.js'),
+        test: resolve('static/zepto.min.js'),
         loader: 'exports-loader?window.$!script-loader'
       }
     ]
@@ -88,9 +88,9 @@ module.exports = {
       )
     }),
     new webpack.ProvidePlugin({
-        $: resolve('src/assets/scripts/lib/zepto.min.js'),
-        Zepto: resolve('src/assets/scripts/lib/zepto.min.js'),
-        "window.Zepto": resolve('src/assets/scripts/lib/zepto.min.js')
+        $: resolve('static/zepto.min.js'),
+        Zepto: resolve('static/zepto.min.js'),
+        "window.Zepto": resolve('static/zepto.min.js')
     })
   ]
 }
