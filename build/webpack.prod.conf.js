@@ -76,11 +76,6 @@ var webpackConfig = merge(baseWebpackConfig, {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
       chunks: ['vendor']
-    }),
-    new webpack.ProvidePlugin({
-      $: ('../static/zepto.min.js'),
-      Zepto: ('../static/zepto.min.js'),
-      "window.Zepto": ('../static/zepto.min.js')
     })
   ]
 })

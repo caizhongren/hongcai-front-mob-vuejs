@@ -30,7 +30,7 @@ module.exports = {
       'src': resolve('src'),
       'assets': resolve('src/assets'),
       'components': resolve('src/components'),
-      'zepto': resolve('static/zepto.min.js')
+      'zepto': resolve('node_modules/webpack-zepto/index.js')
       // 'zepto': 'zepto'
     }
   },
@@ -71,10 +71,6 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
-      },
-      {
-        test: resolve('static/zepto.min.js'),
-        loader: 'exports-loader?window.$!script-loader'
       }
     ]
   },
@@ -88,9 +84,9 @@ module.exports = {
       )
     }),
     new webpack.ProvidePlugin({
-        $: resolve('static/zepto.min.js'),
-        Zepto: resolve('static/zepto.min.js'),
-        "window.Zepto": resolve('static/zepto.min.js')
+      $: 'zepto',
+      Zepto: 'zepto',
+      "window.Zepto": 'zepto'
     })
   ]
 }
