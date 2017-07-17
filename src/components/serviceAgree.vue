@@ -271,7 +271,7 @@
           if (res.data && res.data.ret !== -1) {
             that.preRepaymentList = res.data
             that.projectId = that.preRepaymentList[0].projectId
-            that.token ? that.getContracts() : ''
+            that.projectId ? that.getContracts() : ''
           }
         })
         .catch(function (err) {
