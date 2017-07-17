@@ -69,15 +69,12 @@
     name: 'BindWechat',
     data () {
       return {
-
       }
     },
     created: function () {
-      bridgeUtil.setupWebViewJavascriptBridge()
     },
     methods: {
       openAndCopy: function () {
-        // var busy =
         bridgeUtil.webConnectNative('HCNative_CopyToWechat', null, {
           copyText: 'hongcailicai01'
         }, function (response) {}, null)
