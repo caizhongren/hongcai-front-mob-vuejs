@@ -35,7 +35,7 @@
         .then(function (res) {
           that.bankLimit = res.data
           for (var i = 0; i < that.bankLimit.length; i++) {
-            that.bankLimit[i].bankCardImg = '.../../../static/' + that.bankLimit[i].bankCode + '.png'
+            that.bankLimit[i].bankCardImg = '.../../../static/images/' + that.bankLimit[i].bankCode + '.png'
           }
         })
       }
