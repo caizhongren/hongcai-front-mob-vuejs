@@ -10,7 +10,7 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: ['./src/main.js']
   },
   output: {
     path: config.build.assetsRoot,
@@ -51,8 +51,9 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        loader: 'babel-loader?cacheDirectory=true',
+        include: [resolve('src'), resolve('test')],
+        exclude: [path.resolve('../../node_modules')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -78,7 +79,13 @@ module.exports = {
   },
   // 增加一个plugins
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin('common.js'),
+    // new webpack.optimize.CommonsChunkPlugin('common.js'),
+    new webpack.optimize.CommonsChunkPlugin({
+      async: 'shared-module',
+      minChunks: (module, count) => (
+        count >= 2    // 当一个模块被重复引用2次或以上的时候单独打包起来。 
+      )
+    }),
     new webpack.ProvidePlugin({
         $: resolve('static/zepto.js'),
         Zepto: resolve('static/zepto.js'),
