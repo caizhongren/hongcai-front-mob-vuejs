@@ -285,7 +285,7 @@
           if (res.data && res.data.ret !== -1) {
             that.creditRightBills = res.data
             that.orderNumber = that.creditRightBills[0].orderNumber
-            that.orderNumber ? that.getContracts() : ''
+            that.token ? that.getContracts() : ''
           }
         }).catch(function (err) {
           console.log(err)

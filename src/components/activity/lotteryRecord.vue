@@ -1,5 +1,5 @@
 <template>
-  <div class="lottery-record">
+  <div class="lottery-record" v-show="token && token !== ''">
     <div class="lottery-list-wrap">
       <div class="lottery-list-header">(最近两周内)</div>
       <!-- prizeType：1, "当日加息"" ; 2, "现金奖励 ; 3, "加息券 ; 4, "现金券" ; 5, "特权本金" -->
@@ -42,27 +42,19 @@
       }
     },
     created: function () {
-      this.token ? this.getLotteryRecord() : null
+      var that = this
+      that.$http({
+        url: '/hongcai/rest/lotteries/rewards?token=' + that.token
+      })
+      .then(function (res) {
+        that.userLotteryRecord = res.data
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
     },
     props: ['token'],
-    watch: {
-      'token': function (val) {
-        val && val !== '' ? this.getLotteryRecord() : null
-      }
-    },
     methos: {
-      getLotteryRecord: function () {
-        var that = this
-        that.$http({
-          url: '/hongcai/rest/lotteries/rewards?token=' + that.token
-        })
-        .then(function (res) {
-          that.userLotteryRecord = res.data
-        })
-        .catch(function (err) {
-          console.log(err)
-        })
-      }
     }
   }
 </script>

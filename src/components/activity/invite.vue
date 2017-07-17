@@ -117,7 +117,7 @@ export default {
   data () {
     return {
       showRules: false,
-      isLogged: false,
+      isLogged: Boolean,
       isInvitedFriends: true,
       isActivityEnd: false,
       isiOS: true,
@@ -139,7 +139,6 @@ export default {
         this.getInvitedFriends()
         this.getInviteCode()
       }
-      this.token ? this.isLogged = true : this.isLogged = false
     }
   },
   methods: {

@@ -48,7 +48,6 @@
     watch: {
       token: function (val) {
         val && val !== '' ? this.getUserAuth() : null
-        val && val !== '' ? this.isLogged = true : this.isLogged = false
       }
     },
     methods: {
