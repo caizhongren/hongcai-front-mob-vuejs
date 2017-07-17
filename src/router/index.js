@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../components/Home.vue'
 import About from '../components/about.vue'
-import UserCenter from '../components/user-center/UserCenter.vue'
 import ProjectDetail from '../components/ProjectDetail.vue'
 import Invite from '../components/activity/invite.vue'
 import ActivityReward from '../components/activity/reward.vue'
@@ -43,11 +42,6 @@ const routes = [
     name: 'About',
     component: About,
     meta: {title: '走进宏财'}
-  },
-  {
-    path: '/user-center',
-    name: 'UserCenter',
-    component: UserCenter
   },
   {
     path: '/user-center/help-center',
