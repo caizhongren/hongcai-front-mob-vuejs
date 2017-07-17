@@ -619,7 +619,7 @@
      font-size: .2rem;
      /*background-color: #efeef4;*/
      color: #999;
-     padding: .25rem 0;
+     padding: .3rem 0;
   }
   .project-detail-top {
     padding-top: 0.8rem;

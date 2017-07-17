@@ -145,14 +145,13 @@
     watch: {
       token: function (value) {
         if (value !== '') {
-          this.getLuckyUsers()
           this.getDrawCount(this.token)
         }
       }
     },
     created: function () {
+      this.getLuckyUsers()
       if (this.token) {
-        this.getLuckyUsers()
         this.getDrawCount(this.token)
       }
       var that = this

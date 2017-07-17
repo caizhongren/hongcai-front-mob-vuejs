@@ -61,7 +61,7 @@
     },
     props: ['token'],
     watch: {
-      'token': function (value) {
+      token: function (value) {
         if (value && value !== '') {
           this.getVoucher()
           this.getInviteStat()

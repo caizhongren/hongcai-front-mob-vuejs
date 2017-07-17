@@ -269,7 +269,7 @@
     },
     props: ['token'],
     watch: {
-      'token': function (val) {
+      token: function (val) {
         if (val && val !== '' && this.creditRightNo) {
           this.getCreditRightBills()
         }

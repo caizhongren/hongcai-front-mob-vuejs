@@ -153,7 +153,7 @@
     },
     props: ['token'],
     watch: {
-      'token': function (val) {
+      token: function (val) {
         val && val !== '' ? this.getQustions() : null
       }
     },
