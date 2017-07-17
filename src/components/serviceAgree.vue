@@ -46,7 +46,7 @@
           </tr>
           <tr>
             <td width="120" align="center">借款期限</td>
-            <td width="400" align="center"><u>{{contracts.projectDays}}天</u></td>
+            <td width="400" align="center"><u>{{contracts.cycle}} ( 月 )</u></td>
           </tr>
           <tr>
             <td width="120" align="center">每月还款本息数额及还款日</td>

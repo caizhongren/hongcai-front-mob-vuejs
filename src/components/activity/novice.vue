@@ -93,13 +93,11 @@
     },
     methods: {
       loadMore: function () {
-        $('.cashCouponList').slideToggle()
-        // $('.cashCouponList').show()
+        $('.cashCouponList').show()
         $('.loadMore').hide()
       },
       slideUp: function () {
-        $('.cashCouponList').slideToggle('fast')
-        // $('.cashCouponList').hide()
+        $('.cashCouponList').hide()
         $('.loadMore').show()
       },
       getUserAuth: function () {
