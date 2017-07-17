@@ -30,7 +30,8 @@ module.exports = {
       'src': resolve('src'),
       'assets': resolve('src/assets'),
       'components': resolve('src/components'),
-      'zepto': resolve('static/zepto.js')
+      'zepto': resolve('src/assets/scripts/lib/zepto.min.js')
+      // 'zepto': 'zepto'
     }
   },
   module: {
@@ -71,7 +72,7 @@ module.exports = {
         }
       },
       {
-        test: resolve('static/zepto.js'),
+        test: resolve('src/assets/scripts/lib/zepto.min.js'),
         loader: 'exports-loader?window.$!script-loader'
       }
     ]
@@ -80,9 +81,9 @@ module.exports = {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin('common.js'),
     new webpack.ProvidePlugin({
-        $: resolve('static/zepto.js'),
-        Zepto: resolve('static/zepto.js'),
-        "window.Zepto": resolve('static/zepto.js')
+        $: resolve('src/assets/scripts/lib/zepto.min.js'),
+        Zepto: resolve('src/assets/scripts/lib/zepto.min.js'),
+        "window.Zepto": resolve('src/assets/scripts/lib/zepto.min.js')
     })
   ]
 }
