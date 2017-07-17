@@ -1,5 +1,5 @@
 <template>
-  <div class="banklimit-list">
+  <div class="banklimit-list" v-auto-height>
     <ul class="display-bl margin-auto">
       <li class="titles">
         <div><p class="display-inb bank-names">支持银行</p><p class="display-inb limits">单笔/单日/单月</p></div>
@@ -47,8 +47,8 @@
   .bottom_bg {
     vertical-align: bottom;
     width: 100%;
-    position: absolute;
-    bottom: -8px;
+    position: fixed;
+    bottom: 0;
     left: 0;
     right: 0;
   }

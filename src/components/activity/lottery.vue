@@ -521,9 +521,6 @@
     background-color: rgba(0, 0, 0, 0.8);
   }
   /*中奖弹窗*/
-  .showDrawBox {
-    /*display: none;*/
-  }
   .draw-box {
     text-align: center;
   }
