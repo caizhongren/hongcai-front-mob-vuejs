@@ -5,6 +5,7 @@
  */
 import $ from 'zepto'
 var LuckDraw = {
+  locked: false,
   RectLuckDraw: function (selector, prizeObj, options) {
     // var this = LuckDraw
     this.$selector = null
@@ -30,13 +31,12 @@ var LuckDraw = {
       onUnlock: function () {}
     }, options)
     this._init(selector)
-    this._bindEvents(selector)
+    // this._bindEvents(selector)
   },
   start: function (prizeId) {
     var _this = this
     var options
     var $li
-    console.log(this)
     if (this.isLocked() || this.seqLis.length === 0) {
       return
     }
@@ -148,16 +148,16 @@ var LuckDraw = {
   lock: function () {
     this.locked = true
 
-    if (typeof this.options.onLock === 'function') {
-      this.options.onLock.apply(this, [])
-    }
+    // if (typeof this.options.onLock === 'function') {
+    //   this.options.onLock.apply(this, [])
+    // }
   },
   unlock: function () {
     this.locked = false
 
-    if (typeof this.options.onLock === 'function') {
-      this.options.onUnlock.apply(this, [])
-    }
+    // if (typeof this.options.onLock === 'function') {
+    //   this.options.onUnlock.apply(this, [])
+    // }
   },
   isLocked: function () {
     return this.locked

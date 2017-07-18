@@ -195,17 +195,13 @@
           turnStartCallback: function () {
           },
           turnEndCallback: function (prizeId, obj) {
-            setTimeout(function () {
-              that.showDrawBox = true
-              var $lottry = document.querySelector('#lottery')
-              // var $itemMask = document.querySelector('.item-mask')
-              $lottry.className = 'position-fix'
-              // $itemMask.style.display = 'none'
-              $('.lottery-item').addClass('selecting')
-            }, 300)
+            that.showDrawBox = true
+            var $lottry = document.querySelector('#lottery')
+            $lottry.className = 'position-fix'
+            $('.lottery-item').addClass('selecting')
           },
           startBtnClick: function ($btn) {
-            if (this.isLocked()) {
+            if (LuckDraw.isLocked()) {
               return
             }
             // prizeId ? LuckDraw.start(prizeId) : ''
@@ -243,6 +239,9 @@
           this.toLogin()
           return
         }
+        if (LuckDraw.isLocked()) {
+          return
+        }
         this.$http.post('/hongcai/rest/lotteries/draw', {
           token: this.token
         })
@@ -262,13 +261,10 @@
             this.receiveDraw = true
             this.usedAndcanShare = false
             $('.lottery-item').removeClass('selecting')
-            // var $itemMask = document.querySelector('.item-mask')
-            // $itemMask.style.display = 'block'
             var receivePrize = response.data
             var prizeId = receivePrize.prizeType || 1
             // console.log(prizeId)
             this.canShare = response.data.canShare
-            $('.lottery-item').removeClass('selecting')
             this.draw(prizeId)
             LuckDraw.start(prizeId)
             switch (prizeId) {
