@@ -1,25 +1,5 @@
 <template>
   <div id="app">
-    <!-- <ul id="footer">
-      <router-link to="/">
-        <li>
-          <img src="./images/footer/answer1.png" alt="" width="22%">
-          <div>问答</div>
-        </li>
-      </router-link>
-      <router-link :to="{name: 'ProjectDetail',params: {number: 1}}">
-        <li>
-          <img src="./images/footer/article2.png" alt="" width="20%">
-          <div>文章</div>
-        </li>
-      </router-link>
-      <li>
-        <router-link to="/user-center">
-          <img src="./images/footer/me2.png" alt="" width="22%">
-          <div>我</div>
-        </router-link>
-      </li>
-    </ul> -->
     <router-view :token="token"></router-view>
   </div>
 </template>
