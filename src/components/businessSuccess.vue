@@ -53,11 +53,9 @@
     },
     methods: {
       connectNative: function (dataList) {
-        console.log(dataList)
-        bridgeUtil.webConnectNative('HCNative_SuccessCallback', '', dataList, function (response) {
-        }, function (response) {
-          console.log(response)
-        })
+        setTimeout(function () {
+          bridgeUtil.webConnectNative('HCNative_SuccessCallback', '', dataList, function (response) {}, function (response) {})
+        }, 1000)
       },
       getCoupon: function (status) {
         var that = this
