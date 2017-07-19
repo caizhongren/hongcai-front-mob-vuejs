@@ -5,7 +5,7 @@
       <li>转让本金(元)</li>
       <li>转让时间</li>
     </ul>
-    <ul class="list" v-if="assignmentOrder && assignmentOrder.length > 0">
+    <ul class="list" v-show="showOrder">
       <li v-for="order in assignmentOrder">
         <span>{{order.userName}}{{assignmentOrderList.length}}</span>
         <span>{{order.orderAmount}}</span>
@@ -13,7 +13,7 @@
       </li>
       <div class="loadMuch text-center" @click="loadMore(limit)" v-if="assignmentOrderList.length > limit">查看更多</p></div>
     </ul>
-    <div class="no-record" v-else="assignmentOrder && assignmentOrder.length <= 0">
+    <div class="no-record" v-show="!showOrder">
       <img src="../../images/project/no-record.png" width="35%" class="no-record">
       <p class="ft-grey4 margin-b-0 margin-t-1p5">暂无记录</p>
     </div>
@@ -28,17 +28,22 @@
       return {
         assignmentOrderList: [],
         assignmentOrder: [],
-        limit: 10
+        limit: 10,
+        showOrder: Boolean,
+        token: '6261f5e1e9eb93e9479f8cf19c1b2e986ab535d7a0e01c51'
       }
     },
     created: function () {
       this.assignmentNumber = this.$route.params.number
       this.token ? this.getAssignmentOrder(this.limit) : null
     },
-    props: ['token'],
+    // props: ['token'],
     watch: {
-      token: function (val) {
-        val && val !== '' ? this.getAssignmentOrder(this.limit) : null
+      // token: function (val) {
+      //   val && val !== '' ? this.getAssignmentOrder(this.limit) : null
+      // },
+      assignmentOrder: function (val) {
+        val.length > 0 ? this.showOrder = true : this.showOrder = false
       }
     },
     methods: {

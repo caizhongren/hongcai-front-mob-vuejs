@@ -3,7 +3,7 @@
     <div class="lottery-list-wrap">
       <div class="lottery-list-header">(最近两周内)</div>
       <!-- prizeType：1, "当日加息"" ; 2, "现金奖励 ; 3, "加息券 ; 4, "现金券" ; 5, "特权本金" -->
-      <ul v-if="userLotteryRecord && userLotteryRecord.length > 0">
+      <ul v-show="showRecord">
         <li v-for="record in userLotteryRecord " class="text-left">
           <span v-if="record.prizeType === 1"><img src="../../images/lottery/one-day-rate-icon.png" width="100%"></span>
           <span v-if="record.prizeType === 2"><img src="../../images/lottery/cash-icon.png" width="100%"></span>
@@ -20,9 +20,9 @@
             <span v-if="token && record.prizeType === 5 || record.prizeType === 4">{{record.value.slice(0,-3)}}元</span>
           <span class="ft-1p2 fr">{{record.time | dateTime }}</span>
         </li>
-          <li class="text-center ft-grey999 border-none">已无更多记录</li>
+        <li class="text-center ft-grey999 border-none" v-show="userLotteryRecord.length > 0 && userLotteryRecord[0].value">已无更多记录</li>
       </ul>
-      <div class="no-data" v-show="token && userLotteryRecord && userLotteryRecord.length === 0">
+      <div class="no-data" v-show="token && !showRecord">
         <img src="../../images/lottery/no-data.png" width="60%" class="margin-auto display-bl">
         <img src="../../images/lottery/hc-baby.png" width="26%" class="margin-auto display-bl">
       </div>
@@ -38,16 +38,21 @@
         record: {
           prizeType: 4
         },
-        userLotteryRecord: []
+        userLotteryRecord: [],
+        showRecord: Boolean,
+        token: '6261f5e1e9eb93e9479f8cf19c1b2e986ab535d7a0e01c51'
       }
     },
     created: function () {
       this.token ? this.getLotteryRecord() : null
     },
-    props: ['token'],
+    // props: ['token'],
     watch: {
-      'token': function (val) {
-        val && val !== '' ? this.getLotteryRecord() : null
+      // 'token': function (val) {
+      //   val && val !== '' ? this.getLotteryRecord() : null
+      // },
+      userLotteryRecord: function (val) {
+        val.length > 0 ? this.showRecord = true : this.showRecord = false
       }
     },
     methods: {

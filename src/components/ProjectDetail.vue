@@ -140,12 +140,12 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="order in orderList" :key="order.id" v-show="orderList && orderList.length >0 ">
+                  <tr v-for="order in orderList" :key="order.id" v-show="showOrderList">
                     <td>{{order.createTime | date}}</td>
                     <td>{{order.userName}}</td>
                     <td>{{order.orderAmount}}</td>
                   </tr>
-                  <tr class="text-center" v-show="orderList && orderList.length <=0 ">
+                  <tr class="text-center" v-show="!showOrderList">
                     <td colspan="3">
                       <img src="../images/project/no-record.png" width="35%" class="no-record">
                       <p class="ft-grey4 margin-b-0 margin-t-1p5">暂无记录</p>
@@ -208,6 +208,7 @@
           riskControl: ''
         },
         orderList: [],
+        showOrderList: Boolean,
         paramsNum: 0,
         projectId: 0,
         expectEarning: 0,
@@ -231,12 +232,18 @@
         baseFileUrl: 'http://test321.hongcai.com/uploads/'
       }
     },
+    watch: {
+      orderList: function (value) {
+        value.length > 0 ? this.showOrderList = true : this.showOrderList = false
+      }
+    },
     created: function () {
       this.paramsNum = this.$route.params.number
       this.getProject()
       this.getProjectRisk()
       this.getFiles()
       this.getProjectBill()
+      this.getOrderList(this.page, this.pageSize)
       window.vue = this
       window.onload = function (e) {
         var page1 = document.querySelector('.product-page1')
@@ -255,9 +262,7 @@
       toggleTab: function (i) {
         this.activeTab = i
         document.querySelector('.details-more').style.webkitTransform = 'translateY(' + 0 + 'px)'
-        this.orderList = []
         this.page = 1
-        i === 2 ? this.getOrderList(this.page, this.pageSize) : ''
       },
       getProject: function () {
         this.$http({
