@@ -54,6 +54,7 @@
       }
     },
     created: function () {
+      console.log(this)
       if (this.token) {
         this.getVoucher()
         this.getInviteStat()
@@ -70,6 +71,11 @@
         if (value && value !== '') {
           this.getVoucher()
           this.getInviteStat()
+        }
+      },
+      voucher: function (val) {
+        if (val) {
+          alert('val')
         }
       }
     },

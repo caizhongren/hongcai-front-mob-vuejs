@@ -52,7 +52,7 @@
         val && val !== '' ? this.getInviteList() : null
       },
       inviteList: function (val) {
-        val.length > 0 ? this.showList = true : this.showList = false
+        val[0].mobile ? this.showList = true : this.showList = false
       }
     },
     created: function () {
