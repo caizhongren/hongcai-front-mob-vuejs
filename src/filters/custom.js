@@ -23,10 +23,10 @@ let date = value => {
 
 let number = number => {
   // 金额格式 并保留 2位小数
-  if (!number) { return }
+  if (number === undefined) { return }
   let outputdollars = number => {
     if (number.length <= 3) {
-      return (number === '' ? '0' : number)
+      return (output = number === '' || number === '0' ? '0' : number)
     } else {
       var mod = number.length % 3
       var output = (mod === 0 ? '' : (number.substring(0, mod)))

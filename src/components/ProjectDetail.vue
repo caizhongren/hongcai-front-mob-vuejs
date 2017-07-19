@@ -161,21 +161,21 @@
           <div v-show="activeTab === 3" class="repayment-plan bg-white">
             <div class="each-line" v-for="preRepayment in preRepaymentList">
               <div class="column1"><span v-show="preRepayment.status !== 1">预计</span>{{preRepayment.repaymentTime | date}}</div>
-              <div class="column2">
+              <div class="column2" :class="{'ed': preRepayment && preRepayment.status === 1 }">
                 <span class="circle"></span>
                 <span class="vertical-line"></span>
               </div>
-              <div class="column3">
+              <div class="column3" :class="{'ed': preRepayment && preRepayment.status === 1 }">
                 项目回款:利息{{preRepayment.repaymentInterest | number}}元
               </div>
             </div>
             <div class="each-line">
               <div class="column1"><span v-show="final.status !== 1">预计</span>{{final.repaymentTime | date}}</div>
-              <div class="column2">
+              <div class="column2" :class="{'ed': final && final.status === 1 }">
                 <span class="circle"></span>
                 <span class="vertical-line last-line"></span>
               </div>
-              <div class="column3">
+              <div class="column3" :class="{'ed': final && final.status === 1 }">
                 项目回款:本金{{final.repaymentPrincipal | number}}元
               </div>
             </div>
@@ -877,6 +877,10 @@
     position: absolute;
     bottom: -.8rem;
    }
+  .column2.ed .circle {
+    background-color: #ddd;
+    box-shadow: 0 2px 16px #ddd, 0 0 2px #ddd, 0 0 2px #ff611d;
+   }
   .column2 .vertical-line {
     height: .98rem;
     width: 1px;
@@ -885,6 +889,9 @@
     margin-left: .05rem;
     margin-top: .07rem;
     margin-bottom: -0.6rem;
+  }
+  .column2.ed .vertical-line {
+    background-color: #ddd;
   }
   .column2 .vertical-line.last-line {
     opacity: 0;
@@ -898,6 +905,9 @@
     height: 100%;
     vertical-align: top;
     margin-top: -.1rem;
+  }
+  .column3.ed {
+    color: #999;
   }
   .no-record {
     margin-top: 1rem;
