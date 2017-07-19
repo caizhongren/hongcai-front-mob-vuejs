@@ -71,6 +71,8 @@
           this.getVoucher()
           this.getInviteStat()
         }
+      },
+      voucher: function (val) {
         bridgeUtil.webConnectNative('HCNative_NeedInviteList', null, {
           // 1 需要显示 0 不需要显示
           isShow: 1
