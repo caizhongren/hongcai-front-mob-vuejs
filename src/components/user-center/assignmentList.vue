@@ -29,19 +29,18 @@
         assignmentOrderList: [],
         assignmentOrder: [],
         limit: 10,
-        showOrder: Boolean,
-        token: '6261f5e1e9eb93e9479f8cf19c1b2e986ab535d7a0e01c51'
+        showOrder: Boolean
       }
     },
     created: function () {
       this.assignmentNumber = this.$route.params.number
       this.token ? this.getAssignmentOrder(this.limit) : null
     },
-    // props: ['token'],
+    props: ['token'],
     watch: {
-      // token: function (val) {
-      //   val && val !== '' ? this.getAssignmentOrder(this.limit) : null
-      // },
+      token: function (val) {
+        val && val !== '' ? this.getAssignmentOrder(this.limit) : null
+      },
       assignmentOrder: function (val) {
         val.length > 0 ? this.showOrder = true : this.showOrder = false
       }

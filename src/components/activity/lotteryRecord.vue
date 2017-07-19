@@ -39,18 +39,17 @@
           prizeType: 4
         },
         userLotteryRecord: [],
-        showRecord: Boolean,
-        token: '6261f5e1e9eb93e9479f8cf19c1b2e986ab535d7a0e01c51'
+        showRecord: Boolean
       }
     },
     created: function () {
       this.token ? this.getLotteryRecord() : null
     },
-    // props: ['token'],
+    props: ['token'],
     watch: {
-      // 'token': function (val) {
-      //   val && val !== '' ? this.getLotteryRecord() : null
-      // },
+      'token': function (val) {
+        val && val !== '' ? this.getLotteryRecord() : null
+      },
       userLotteryRecord: function (val) {
         val.length > 0 ? this.showRecord = true : this.showRecord = false
       }

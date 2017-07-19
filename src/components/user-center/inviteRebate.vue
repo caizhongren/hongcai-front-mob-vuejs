@@ -222,7 +222,7 @@
   .share-list div {
     height: 1rem;
     width: 1rem;
-    border: 1px solid #ddd;
+    border: 1px solid #eee;
     border-radius: .1rem;
     background-color: #eee;
   }
