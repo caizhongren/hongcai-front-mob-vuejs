@@ -50,7 +50,7 @@
         val && val !== '' ? this.getLotteryRecord() : null
       }
     },
-    methos: {
+    methods: {
       getLotteryRecord: function () {
         var that = this
         that.$http({
