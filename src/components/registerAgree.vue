@@ -248,7 +248,7 @@
     top: 0;
   }
   .content {
-      padding: .8rem .4rem .4rem;
+      padding: .2rem .4rem .4rem;
   }
   .text-justify {
       text-align: justify;

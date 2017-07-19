@@ -125,7 +125,6 @@
     data () {
       return {
         drawCount: 0,
-        isiOS: true,
         prizeList: {},
         showRules: false,
         canShare: false,
@@ -136,7 +135,7 @@
         shareCallHandCallback: null,
         luckyUsers: [],
         timer: null,
-        isIos: Utils.isIos(),
+        isiOS: Utils.isIos(),
         isAndroid: Utils.isAndroid(),
         domain: 'http://m.test321.hongcai.com'
       }
