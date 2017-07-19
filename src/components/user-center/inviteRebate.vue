@@ -58,11 +58,13 @@
         this.getVoucher()
         this.getInviteStat()
       }
-      bridgeUtil.webConnectNative('HCNative_NeedInviteList', null, {
+      bridgeUtil.webConnectNative('HCNative_NeedInviteList', 'HCWeb_ToInviteList', {
         // 1 需要显示 0 不需要显示
         isShow: 1
       }, function (res) {
-      }, null)
+      }, function (data) {
+        this.$router.push({name: 'inviteRebateList'})
+      })
     },
     props: ['token'],
     watch: {
