@@ -87,7 +87,7 @@
       <p class="agree-tx">3.1 乙方按照以下第（  {{contracts.total ? '3.1.2' : ''}} ）种方式还本付息：</p>
       <p class="agree-tx">3.1.1 实行利随本清方式还款，到期一次性归还借款本息。</p>
       <p class="agree-tx">3.1.2 按月结息，到期还本。结息日为每月的（ {{contracts.accountDay}} ）日。乙方须于每一结息日结息。如借款本金的最后一次偿还日不在结息日，则未付利息应利随本清。</p>
-      <p class="agree-tx">3.1.3 按月等额本息还款法按每个月还款，还款日为每期末月的（20日/借款发放日对应日）。如无借款发放日对应日，以所在期末月的最后一日为还款日。计算公式如下：</p>
+      <p class="agree-tx">3.1.3 按月等额本息还款法按每个月还款，还款日为每期末月的<u> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp </u>（20日/借款发放日对应日）。如无借款发放日对应日，以所在期末月的最后一日为还款日。计算公式如下：</p>
       <img src="../images/agreement.png" width="100%">
       <p class="agree-tx">3.2 乙方不可撤销地授权第三方存管机构,按还款计划将金额等同于甲方当期应收金额的资金（即乙方当期应偿还的借款本金或利息）由乙方存管账户划转至甲方存管账户中，划转完毕即视为本期还款成功。</p>
       <p class="agree-tx">3.3 乙方应于每期还款日（如遇国家法定节假日，则借款还本付息日顺延至节后第一个工作日）下午3点前履行还款义务。为保证还款成功，乙方至少应于每期还款日前三日，将足以偿还当期借款本金或利息的款项转入（包括但不限于充值等方式）乙方存管账户。若乙方存管账户中资金不足以清偿当期借款本金或利息，导致还款不成功，乙方承担补足义务。乙方应于乙方不可撤销地授权第三方存管机构将相应款项由乙方存管账户划转至甲方存管账户。</p>
@@ -224,8 +224,8 @@
     <div class="annex">
       <p class="text-left">附件2</p>
       <br>
-      <p class="text-center">还款计划（单位：元、月/日）</p>
-      <table>
+      <p class="text-center" v-if="preRepaymentList.length >0">还款计划（单位：元、月/日）</p>
+      <table v-if="preRepaymentList.length >0">
         <thead>
           <td>序号</td>
           <td>还款日</td>
@@ -260,6 +260,13 @@
       this.projectNumber ? this.getProjectBill() : ''
     },
     props: ['token'],
+    watch: {
+      token: function (value) {
+        if (value !== '' && this.projectId) {
+          this.getContracts()
+        }
+      }
+    },
     methods: {
       getProjectBill: function () {
         var that = this
@@ -271,7 +278,7 @@
           if (res.data && res.data.ret !== -1) {
             that.preRepaymentList = res.data
             that.projectId = that.preRepaymentList[0].projectId
-            that.projectId ? that.getContracts() : ''
+            that.projectId && that.token ? that.getContracts() : null
           }
         })
         .catch(function (err) {
