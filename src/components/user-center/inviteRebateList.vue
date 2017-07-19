@@ -12,13 +12,13 @@
         </div>
       </div>
       <div class="rebate-list" v-auto-h>
-        <ul v-show="inviteList.length > 0">
+        <ul v-show="showList">
           <li v-for="item in inviteList">
             <p class="ft-Arail">{{item.user.mobile}}</p>
             <p v-bind:class="{'ft-orange': item.investAmount > 0}">{{ item.investAmount <= 0 ? '未投资' : '已投资'}}</p>
           </li>
         </ul>
-        <div class="noList" v-show="inviteList.length <= 0">
+        <div class="noList" v-show="!showList">
           <img src="../../images/user-center/invite-rebate-no.png" alt="">
           <div class="textTip">您暂时还没有邀请到好友哦～</div>
           <div class="InviteBtn" @click="toInvite">立即邀请</div>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+  import {bridgeUtil} from '../../service/Utils'
   export default {
     name: 'inviteRebateList',
     data () {
@@ -41,17 +42,25 @@
         loadMoreData: 1,
         inviteList: [],
         page: 1,
-        pageSize: 10
+        pageSize: 10,
+        showList: Boolean
       }
     },
     props: ['token'],
     watch: {
       token: function (val) {
         val && val !== '' ? this.getInviteList() : null
+      },
+      inviteList: function (val) {
+        val.length > 0 ? this.showList = true : this.showList = false
       }
     },
     created: function () {
       this.token ? this.getInviteList() : null
+      bridgeUtil.webConnectNative('HCNative_NeedInviteList', null, {
+        // 1 需要显示 0 不需要显示
+        isShow: 0
+      }, function (res) {}, null)
     },
     methods: {
       getInviteList: function () {
