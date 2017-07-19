@@ -133,7 +133,7 @@ export default {
     this.token ? this.isLogged = true : this.isLogged = false
     bridgeUtil.webConnectNative('HCNative_NeedInviteList', null, {
       // 1 需要显示 0 不需要显示
-      isNeed: 0
+      isShow: 0
     }, function (res) {}, null)
   },
   props: ['token'],
