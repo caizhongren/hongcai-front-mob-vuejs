@@ -36,6 +36,7 @@
 </template>
 
 <script>
+  import {bridgeUtil} from '../../service/Utils.js'
   export default {
     name: 'Questionnaire',
     data () {
@@ -225,11 +226,10 @@
         })
       },
       closeResult: function () {
+        bridgeUtil.webConnectNative('HCNative_FinishQuestions', null, {}, function (response) {}, null)
         this.showResult = false
         this.questionAndAnswer = {}
         var answer = document.getElementsByClassName('answer')
-        // var aswSpan = document.getElementsByClassName('answer-span')
-        console.log(aswSpan)
         var aswSpan = []
         for (var i = 0; i < answer.length; i++) {
           answer[i].classList.remove('selected')

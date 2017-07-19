@@ -17,12 +17,12 @@
           <span v-if="record.prizeType === 5">特权本金</span>
           <span v-if="record.prizeType === 3 || record.prizeType === 1">{{record.value}}%</span>
           <span v-if="record.prizeType === 2">{{record.value}}元</span>
-            <span v-if="record.prizeType === 5 || record.prizeType === 4">{{record.value.slice(0,-3)}}元</span>
+            <span v-if="token && record.prizeType === 5 || record.prizeType === 4">{{record.value.slice(0,-3)}}元</span>
           <span class="ft-1p2 fr">{{record.time | dateTime }}</span>
         </li>
           <li class="text-center ft-grey999 border-none">已无更多记录</li>
       </ul>
-      <div class="no-data" v-show="userLotteryRecord && userLotteryRecord.length === 0">
+      <div class="no-data" v-show="token && userLotteryRecord && userLotteryRecord.length === 0">
         <img src="../../images/lottery/no-data.png" width="60%" class="margin-auto display-bl">
         <img src="../../images/lottery/hc-baby.png" width="26%" class="margin-auto display-bl">
       </div>
@@ -50,7 +50,7 @@
         val && val !== '' ? this.getLotteryRecord() : null
       }
     },
-    methos: {
+    methods: {
       getLotteryRecord: function () {
         var that = this
         that.$http({
