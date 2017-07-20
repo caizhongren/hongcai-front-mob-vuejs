@@ -138,6 +138,9 @@
     font-family: '微软雅黑';
     overflow: hidden;
   }
+  p {
+    margin: 0;
+  }
   .invite-rebate-wrap {
     border-radius: .2rem;
     height: 98%;
@@ -166,7 +169,7 @@
     width: 40%;
   }
   .tip {
-    margin: .6rem 0 .2rem;
+    margin: 1.3rem 0 .2rem;
     font-size: .28rem;
     line-height: .38rem;
     font-weight: 500;
@@ -185,8 +188,8 @@
   }
   .circles {
     position: absolute;
-    top: 62%;
-    left: -5.6%;
+    top: 60%;
+    left: -17.6%;
     width: 120%;
   }
   .circles li {
@@ -206,7 +209,7 @@
   .share-route p {
     font-size: .28rem;
     color: #fa6943;
-    margin: .55rem 0 .5rem;
+    margin: 0.75rem 0 .5rem;
   }
   .share-list, .share-list-words {
     display: flex;
