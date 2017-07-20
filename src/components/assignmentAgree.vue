@@ -2,10 +2,12 @@
   <div class="agreement">
     <div>
       <section class="header">
-        <p><small>甲方（转让人）：</small> </p>
-        <p><small>身份证号：</small></p>
-        <p><small>乙方（受让人）：详见附件</small></p>
-        <p><small>身份证号：</small></p>
+        <p><small>甲方（转让人）：{{contracts.assignorRealName }}</small> </p>
+        <p><small>身份证号：{{contracts.assignorIdNo}}</small></p>
+        <p><small>宏财网用户名：{{contracts.assignorName}}</small></p>
+        <p><small>乙方（受让人）：{{contracts.assigneeRealName}}</small></p>
+        <p><small>身份证号：{{contracts.assigneeIdNo}}</small></p>
+        <p><small>宏财网用户名：{{contracts.assigneeName}}</small></p>
         <p><small>就甲方通过北京竞财投资管理有限公司（以下简称“竞财”）运营管理的www.hongcai.com 网站（以下称“宏财网”）向乙方转让债权事宜，双方经协商一致，达成如下协议：</small></p>
       </section>
       <section>
@@ -14,25 +16,29 @@
         <p><small>甲方同意将其通过宏财网的居间协助而形成的有关债权（下称“标的债权”）转让给乙方，乙方同意受让该等债权。标的债权具体信息如下：</small> </p>
         <ul class="border-grey clearfix">
           <li><small>借款项目名称</small></li>
-          <li><small></small></li>
+          <li><small>{{contracts.projectName}}</small></li>
           <li><small>借款项目编号</small></li>
-          <li><small></small></li>
+          <li><small>{{contracts.projectNumber}}</small></li>
           <li><small>借款项目金额</small></li>
-          <li><small></small></li>
+          <li><small>{{contracts.projectTotal}}<span v-show="contracts">元</span></small></li>
           <li><small>借款项目年均回报率</small></li>
-          <li><small></small></li>
+          <li><small>{{contracts.projectAnnualEarnings}}<span v-show="contracts">%</span></small></li>
           <li><small>借款项目期限</small></li>
-          <li><small></small></li>
+          <li><small>{{contracts.projectDays}}<span v-show="contracts">天</span></small></li>
           <li><small>还款方式</small></li>
-          <li><small></small></li>
+          <li><small>{{contracts.repaymentType}}</small></li>
           <li><small>甲方转让债权编号</small></li>
-          <li><small></small></li>
+          <li><small>{{contracts.oldCreditId}}</small></li>
           <li><small>甲方转让本金</small></li>
-          <li><small></small></li>
+          <li><small>{{contracts.assignAmount}}<span v-show="contracts">元</span></small></li>
           <li><small>甲方转让利率</small></li>
-          <li><small></small></li>
-          <li><small>乙方受让债权信息</small></li>
-          <li><small>详见附件</small></li>
+          <li><small>{{contracts.assignAnnualEarnings}}<span v-show="contracts">%</span></small></li>
+          <li><small>乙方受让债权编号</small></li>
+          <li><small>{{contracts.inCreditId}}</small></li>
+          <li><small>乙方实际支付金额</small></li>
+          <li><small>{{contracts.payAmount}}<span v-show="contracts">元</span></small></li>
+          <li><small>乙方支付确认日期</small></li>
+          <li><small>{{contracts.payTime}}</small></li>
         </ul>
       </section>
       <section>
@@ -66,30 +72,47 @@
       </section>
       <section>
         <p>各方签章：</p>
-        <p>甲方：</p>
-        <p>乙方：</p>
-        <p>附件：</p>
-        <table>
-          <thead>
-            <td>乙方姓名</td>
-            <td>身份证号</td>
-            <td>受让金额</td>
-            <td>受让日期</td>
-            <td>债权编号</td>
-          </thead>
-          <tbody>
-            <!-- <tr v-for="(item, index) in contracts.orderList">
-              <td>{{item.name}}</td>
-              <td>{{item.idNo}}</td>
-              <td>{{item.amount}}</td>
-              <td>{{item.number}}</td>
-            </tr> -->
-          </tbody>
-        </table>
+        <p>甲方：{{contracts.assignorRealName}}</p>
+        <p>乙方：{{contracts.assigneeRealName}}</p>
       </section>
     </div>
   </div>
 </template>
+
+<script>
+  export default {
+    name: 'AssignmentAgree',
+    data () {
+      return {
+        creditRightNum: '',
+        projectNumber: '',
+        preRepaymentList: [],
+        contracts: {},
+        LenderNames: Array,
+        status: String
+      }
+    },
+    created: function () {
+      this.creditRightNum = this.$route.query.creditRightNum
+      this.creditRightNum ? this.getContracts() : null
+    },
+    props: ['token'],
+    methods: {
+      getContracts: function () {
+        var that = this
+        this.$http({
+          method: 'get',
+          url: '/hongcai/rest/contracts/' + that.creditRightNum + '/credit/?token=' + that.token
+        }).then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.contracts = res.data
+            that.contracts.projectName.length > 12 ? that.contracts.projectName = that.contracts.projectName.substr(0, 12).concat('...') : that.contracts.projectName = that.contracts.projectName
+          }
+        })
+      }
+    }
+  }
+</script>
 
 <style scoped>
   .agreement {
@@ -101,9 +124,18 @@
   }
   .agreement ul {
     border: 1px solid #ddd;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  .agreement ul li:nth-child(odd) {
+    width: 45.6%;
+  }
+  .agreement ul li:nth-child(even) {
+    width: 54%;
   }
   .agreement ul li {
-    width: 49.8%;
     border-bottom: 1px solid #ddd;
     float: left;
     height: .5rem;
