@@ -19,7 +19,6 @@ const inviteRebateList = r => require.ensure([], () => r(require('../components/
 const AssignmentList = r => require.ensure([], () => r(require('../components/user-center/assignmentList.vue')), 'others')
 const RegisterAgree = r => require.ensure([], () => r(require('../components/registerAgree.vue')), 'RegisterAgree')
 const AssignmentAgree = r => require.ensure([], () => r(require('../components/assignmentAgree.vue')), 'AssignmentAgree')
-const ServiceAgreeAssignment = r => require.ensure([], () => r(require('../components/serviceAgreeAssignment.vue')), 'ServiceAgreeAssignment')
 const ServiceAgree = r => require.ensure([], () => r(require('../components/serviceAgree.vue')), 'ServiceAgree')
 const AssignmentQuestion = r => require.ensure([], () => r(require('../components/assignmentQuestion.vue')), 'others')
 const BusinessSuccess = r => require.ensure([], () => r(require('../components/businessSuccess.vue')), 'BusinessSuccess')
@@ -127,15 +126,9 @@ const routes = [
     meta: {title: '债权转让协议'}
   },
   {
-    path: '/service-agree',
+    path: '/service-agree/:number/:status',
     name: 'ServiceAgree',
     component: ServiceAgree,
-    meta: {title: '宏财网服务协议'}
-  },
-  {
-    path: '/service-agree-assignment',
-    name: 'ServiceAgreeAssignment',
-    component: ServiceAgreeAssignment,
     meta: {title: '宏财网服务协议'}
   },
   {
