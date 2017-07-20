@@ -62,12 +62,10 @@
       goTransfer: function (status) {
         // 投资
         var that = this
-        console.log(that.token)
         that.$http({
           url: '/hongcai/rest/orders/' + that.number + '/orderCoupon?token=' + that.token
         }).then(function (response) {
           if (response && response.data.ret !== -1) {
-            alert(that.b + '0')
             var dataList = that.b === 'RECHARGE_AUTH_TENDER' ? {
               'business': that.b,
               'status': status,
@@ -76,14 +74,11 @@
               'business': that.b,
               'amount': that.amount
             }
-            alert(dataList + 1)
             if (status === 1) {
-              alert(status + '2')
               if (response.data.coupon) {
                 alert(that.coupon + '3')
                 that.coupon.type = response.data.coupon.type
                 that.coupon.value = response.data.coupon.value
-                alert(that.coupon.type + '4')
                 dataList = {
                   'business': that.b,
                   'amount': that.amount,
@@ -100,23 +95,25 @@
         // 充值并投资
         var that = this
         // 支付成功 status 2 || 3 ||4
-        this.$http({
+        that.$http({
           url: '/hongcai/rest/orders/' + that.number + '/orders?token=' + that.token
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
-            this.userOrder = res.data
+            that.userOrder = res.data
             // 投资成功
             if (res.data.status === 2 || res.data.status === 3 || res.data.status === 4) {
-              this.goTransfer(1)
+              that.goTransfer(1)
             } else {
               // 投资失败
-              this.goTransfer(0)
+              that.goTransfer(0)
             }
+            return
           }
           setTimeout(function () {
-            if (!this.userOrder.status) {
-              this.getOrderStatas()
+            if (!that.userOrder.status) {
+              // 如果没有订单状态再次请求
+              that.goRechargeAndTransfer()
             }
           }, 1000)
         })
@@ -130,9 +127,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  /*.transfer {
-    background-color: #fff;
-  }*/
   p {
     color: #666;
     text-align: center;
