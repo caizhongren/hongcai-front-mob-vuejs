@@ -5,70 +5,86 @@
       <p>为了给您更好的服务，请详细描述您的问题或建议，我们将及时跟进解决，不断优化产品！</p>
     </div>
     <form action="" name="fadebackForm">
-      <textarea name="" id="feedbackInfo" cols="6" rows="5" placeholder="你想吐槽的原因：" required initial="off" v-model="feedbackInfo"></textarea>
-      <label for="mobile">
-        联系方式
-        <input type="mobile" name="mobile" id="contackWay" placeholder="(选填)" initial="off" v-model="contackWay">
-        <p type="button" class="btn" @click="postFeesback()">
-          提交
-        </p>
-      </label>
+      <textarea name="" id="feedbackInfo" cols="6" rows="5" placeholder="你想吐槽的原因：" v-model="feedbackInfo" required></textarea>
+      <p class="btn" :disabled="busy || !feedbackInfo" :class="{'disabled-btn': busy || !feedbackInfo}" @click="postFeesback()">
+        提交
+      </p>
     </form>
   </div>
 </template>
 <script>
   import $ from 'zepto'
+  import {bridgeUtil, Utils} from '../../service/Utils'
   export default {
     data () {
       return {
         msg: 'hello',
         contackWay: '',
         feedbackInfo: '',
-        busy: false
+        busy: false,
+        isLogged: false
       }
     },
-    created () {
-      this.contackWay = $('#contackWay').val()
-      this.feedbackInfo = $('#feedbackInfo').val()
-    },
+    props: ['token'],
     watch: {
       contackWay: function (newVal, oldVal) {
-        this.contackWay = $('#contackWay').val()
+        if (newVal && newVal !== oldVal) {
+          this.busy = true
+          this.contackWay = $('#contackWay').val()
+        }
       },
       feedbackInfo: function (newVal, oldVal) {
-        this.feedbackInfo = $('#feedbackInfo').val()
+        if (newVal && newVal !== oldVal) {
+          this.feedbackInfo = $('#feedbackInfo').val()
+        }
+      },
+      token: function (value) {
+        this.isLogged = this.token && this.token !== '' ? this.isLogged = true : this.isLogged = false
       }
+    },
+    created: function () {
+      this.isLogged = this.token && this.token !== '' ? this.isLogged = true : this.isLogged = false
     },
     methods: {
       postFeesback: function () {
-        if (this.busy) {
+        var that = this
+        if (that.busy) {
           return
         }
-        if (!this.feedbackInfo || this.feedbackInfo === '') {
-          return
-        }
-        if (this.contackWay && this.contackWay.toString().length !== 11) {
-          return
-        }
-        this.busy = true
-        this.$http({
-          method: 'post',
-          url: '/hongcai/api/v1/feedback/saveFeedback?feedbackInfo=' + this.feedbackInfo + '&contackWay=' + undefined
-        }).then(function (res) {
-          if (res.data && res.data.ret !== -1) {
-            setTimeout(function () {
-              this.busy = false
-            }, 1000)
-            if (confirm('反馈成功')) {
-              this.feedbackInfo = $('#feedbackInfo').val('')
-              this.contackWay = $('#contackWay').val('')
-              return
-            }
+        bridgeUtil.webConnectNative('HCNative_GetToken', '', {}, function (res) {
+          that.token = Utils.isAndroid() ? JSON.parse(res).token : res.token
+          that.isLogged = that.token && that.token !== '' ? that.isLogged = true : that.isLogged = false
+          if (!that.isLogged) {
+            bridgeUtil.webConnectNative('HCNative_Login', null, {}, function () {}, null)
+            return
           }
-        })
-        .catch(function (err) {
-          console.log(err)
-        })
+          if (!that.feedbackInfo || that.feedbackInfo === '') {
+            return
+          }
+          if (that.contackWay && that.contackWay.toString().length !== 11) {
+            return
+          }
+          that.busy = true
+          that.$http({
+            method: 'post',
+            url: '/hongcai/api/v1/feedback/saveFeedback?feedbackInfo=' + that.feedbackInfo + '&contackWay=' + undefined
+          }).then(function (res) {
+            if (res.data && res.data.ret !== -1) {
+              if (confirm('反馈成功')) {
+                bridgeUtil.webConnectNative('HCNative_BackToPrePage', null, {}, function (response) {}, null)
+                that.feedbackInfo = $('#feedbackInfo').val('')
+                that.contackWay = $('#contackWay').val('')
+                setTimeout(function () {
+                  that.busy = false
+                }, 1000)
+              }
+              bridgeUtil.webConnectNative('HCNative_BackToPrePage', null, {}, function (response) {}, null)
+            }
+          })
+          .catch(function (err) {
+            console.log(err)
+          })
+        }, null)
       }
     }
   }
@@ -76,14 +92,19 @@
 <style scoped>
   .feedback {
     background-color: #fff;
-    padding: .28rem .35rem;
+    padding: 0rem .33rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select:none;
   }
   .title p, label {
     color: #ff6000;
     font-size: .28rem;
   }
   .title p:first-child {
-    display: inline-block;
     width: 30%;
     float: left;
     text-align: left;
@@ -105,29 +126,43 @@
     color: #bbb;
     font-size: .28rem;
     text-align: justify;
-    border: 1px solid #ccc;
+    border: 0.01rem solid #ccc;
     margin-bottom: 0;
     padding: .2rem;
-    margin: .2rem 0 .4rem;
+    margin: 0.05rem 0 .3rem; 
   }
   input {
-    height: .85rem;
-    line-height: .85rem;
-    padding: 0 .28rem;
-    margin-bottom: .7rem;
-    border: 1px solid #ccc;
+    padding: .2rem .28rem;
+    outline: none;
+    margin-bottom: .4rem;
+    border: 0.01rem solid #ccc;
     border-radius: .1rem;
     margin-left: .25rem;
     width: 62%;
     font-size: .28rem;
+    background-color: #fff; 
   }
   p.btn {
-    height: .9rem;
-    line-height: .9rem;
+    height: .85rem;
+    line-height: 1rem;
     display: block;
     background: url(../../images/user-center/invite-btn.png) no-repeat;
     background-size: cover;
-    font-size: .3rem;
+    font-size: .28rem;
+    padding: 0;
+    border: none;
+    color: #fff;
+    text-align: center;
+    width: 104%;
+    margin-left: -2%;
+  }
+  p.btn.disabled-btn {
+    height: .85rem;
+    line-height: 1rem;
+    display: block;
+    background: url(../../images/user-center/disabled-btn.png) no-repeat;
+    background-size: cover;
+    font-size: .28rem;
     padding: 0;
     border: none;
     color: #fff;
