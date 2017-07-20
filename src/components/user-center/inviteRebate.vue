@@ -141,11 +141,11 @@
   .invite-rebate-wrap {
     border-radius: .2rem;
     height: 98%;
-    background: url('../../images/user-center/invite-bg.png') no-repeat center 3rem;
+    background: url('../../images/user-center/invite-bg.png') no-repeat center 30%;
     background-color: #fff;
     background-size: 100%;
     color: #ff611d;
-    padding-top: .67rem;
+    padding-top: 4%;
     position: relative;
     /*overflow: hidden;*/
   }
@@ -166,14 +166,13 @@
     width: 40%;
   }
   .tip {
-    margin: .6rem 0 .2rem;
+    margin: 6% 0 2%;
     font-size: .28rem;
     line-height: .38rem;
     font-weight: 500;
   }
   .invite-btn {
-    width: 100%;
-    height: 1.3rem;
+    height: 12%;
     line-height: .9rem;
     font-size: .27rem;
     color: #fff;
