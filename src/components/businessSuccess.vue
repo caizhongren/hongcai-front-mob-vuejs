@@ -67,7 +67,8 @@
           url: '/hongcai/rest/orders/' + that.number + '/orderCoupon?token=' + that.token
         }).then(function (response) {
           if (response && response.data.ret !== -1) {
-            var dataList = this.b === 'RECHARGE_AUTH_TENDER' ? {
+            alert(that.b + '0')
+            var dataList = that.b === 'RECHARGE_AUTH_TENDER' ? {
               'business': that.b,
               'status': status,
               'rechargeAmount': that.rechargeAmount
