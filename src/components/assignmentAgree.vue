@@ -20,23 +20,23 @@
           <li><small>借款项目编号</small></li>
           <li><small>{{contracts.projectNumber}}</small></li>
           <li><small>借款项目金额</small></li>
-          <li><small>{{contracts.projectTotal}}<span v-show="contracts">元</span></small></li>
+          <li><small>{{contracts.projectTotal}}<span v-show="contracts.projectTotal">元</span></small></li>
           <li><small>借款项目年均回报率</small></li>
-          <li><small>{{contracts.projectAnnualEarnings}}<span v-show="contracts">%</span></small></li>
+          <li><small>{{contracts.projectAnnualEarnings}}<span v-show="contracts.projectTotal">%</span></small></li>
           <li><small>借款项目期限</small></li>
-          <li><small>{{contracts.projectDays}}<span v-show="contracts">天</span></small></li>
+          <li><small>{{contracts.projectDays}}<span v-show="contracts.projectTotal">天</span></small></li>
           <li><small>还款方式</small></li>
           <li><small>{{contracts.repaymentType}}</small></li>
           <li><small>甲方转让债权编号</small></li>
           <li><small>{{contracts.oldCreditId}}</small></li>
           <li><small>甲方转让本金</small></li>
-          <li><small>{{contracts.assignAmount}}<span v-show="contracts">元</span></small></li>
+          <li><small>{{contracts.assignAmount}}<span v-show="contracts.projectTotal">元</span></small></li>
           <li><small>甲方转让利率</small></li>
-          <li><small>{{contracts.assignAnnualEarnings}}<span v-show="contracts">%</span></small></li>
+          <li><small>{{contracts.assignAnnualEarnings}}<span v-show="contracts.projectTotal">%</span></small></li>
           <li><small>乙方受让债权编号</small></li>
           <li><small>{{contracts.inCreditId}}</small></li>
           <li><small>乙方实际支付金额</small></li>
-          <li><small>{{contracts.payAmount}}<span v-show="contracts">元</span></small></li>
+          <li><small>{{contracts.payAmount}}<span v-show="contracts.projectTotal">元</span></small></li>
           <li><small>乙方支付确认日期</small></li>
           <li><small>{{contracts.payTime}}</small></li>
         </ul>
