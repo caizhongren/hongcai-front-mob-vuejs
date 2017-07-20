@@ -26,10 +26,10 @@
       if (this.token && this.token !== '') {
         if (this.b === 'TRANSFER') {
           this.getCoupon(1)
-        } else if (!this.amount) {
-          this.connectNative({'business': this.b})
         } else if (this.b === 'RECHARGE_AUTH_TENDER') {
           this.getUserOrder()
+        } else if (!this.amount) {
+          this.connectNative({'business': this.b})
         } else {
           this.connectNative({'business': this.b, 'amount': this.amount})
         }
@@ -41,10 +41,10 @@
         if (val && val !== '') {
           if (this.b === 'TRANSFER') {
             this.getCoupon(1)
-          } else if (!this.amount) {
-            this.connectNative({'business': this.b})
           } else if (this.b === 'RECHARGE_AUTH_TENDER') {
             this.getUserOrder()
+          } else if (!this.amount) {
+            this.connectNative({'business': this.b})
           } else {
             this.connectNative({'business': this.b, 'amount': this.amount})
           }

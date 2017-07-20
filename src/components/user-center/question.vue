@@ -226,7 +226,7 @@
         })
       },
       closeResult: function () {
-        bridgeUtil.webConnectNative('HCNative_FinishQuestions', null, {}, function (response) {}, null)
+        bridgeUtil.webConnectNative('HCNative_BackToPrePage', null, {}, function (response) {}, null)
         this.showResult = false
         this.questionAndAnswer = {}
         var answer = document.getElementsByClassName('answer')

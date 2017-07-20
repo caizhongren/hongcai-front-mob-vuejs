@@ -11,6 +11,7 @@ const Novice = r => require.ensure([], () => r(require('../components/activity/n
 const HelpCenter = r => require.ensure([], () => r(require('../components/user-center/helpCenter.vue')), 'others')
 const Help = r => require.ensure([], () => r(require('../components/user-center/help.vue')), 'others')
 const Question = r => require.ensure([], () => r(require('../components/user-center/question.vue')), 'others')
+const Feedback = r => require.ensure([], () => r(require('../components/user-center/feedback.vue')), 'others')
 const NoticeDetail = r => require.ensure([], () => r(require('../components/user-center/noticeDetail.vue')), 'others')
 const bankCardLimit = r => require.ensure([], () => r(require('../components/user-center/bankCardLimit.vue')), 'others')
 const InviteRebate = r => require.ensure([], () => r(require('../components/user-center/inviteRebate.vue')), 'others')
@@ -59,6 +60,12 @@ const routes = [
     name: 'Question',
     component: Question,
     meta: {title: '风险测评'}
+  },
+  {
+    path: '/user-center/feedback',
+    name: 'Feedback',
+    component: Feedback,
+    meta: {title: '意见反馈'}
   },
   {
     path: '/user-center/invite-rebate',
