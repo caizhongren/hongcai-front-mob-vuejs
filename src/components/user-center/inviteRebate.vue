@@ -141,7 +141,7 @@
   .invite-rebate-wrap {
     border-radius: .2rem;
     height: 98%;
-    background: url('../../images/user-center/invite-bg.png') no-repeat center 30%;
+    background: url('../../images/user-center/invite-bg.png') no-repeat center 33%;
     background-color: #fff;
     background-size: 100%;
     color: #ff611d;
@@ -166,7 +166,7 @@
     width: 40%;
   }
   .tip {
-    margin: 6% 0 2%;
+    margin: 14% 0 4%;
     font-size: .28rem;
     line-height: .38rem;
     font-weight: 500;
@@ -184,7 +184,7 @@
   }
   .circles {
     position: absolute;
-    top: -32%;
+    top: -30%;
     left: -5.6%;
     width: 120%;
   }
@@ -205,7 +205,7 @@
   .share-route p {
     font-size: .28rem;
     color: #fa6943;
-    margin: 15% 0 .5rem;
+    margin: 16% 0 8%;
   }
   .share-list, .share-list-words {
     display: flex;
