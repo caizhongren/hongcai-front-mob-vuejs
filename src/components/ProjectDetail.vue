@@ -68,7 +68,7 @@
           </div>
         </div>
       </div>
-      <div class="child">下滑返回详情首页</div>
+      <div class="child">向下滑动, 查看项目</div>
       <div class="scroll">
         <div class="details-more">
           <div class="project-details" v-show="activeTab === 0">
@@ -463,7 +463,7 @@
           if (scrollDirection === 0 && event.target.className === 'drop-load') {
             // window.vue.loadMoreOrder()
             return false
-          } else if (sub === 0 && scrollDirection >= 35) {
+          } else if (sub === 0 && scrollDirection >= 20) {
             // document.querySelector('.scroll').classList = 'scroll animate'
             $('.scroll').addClass('animate')
             setTimeout(function () {
@@ -472,7 +472,7 @@
               document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, 0px, 0)'
             }, 300)
             scrollDirection = 0
-          } else if (sub === 0 && scrollDirection < 35) {
+          } else if (sub === 0 && scrollDirection < 20) {
             document.querySelector('.scroll').style.webkitTransform = 'translateY(0px)'
           } else if (sub === 0) {
             offsetY = 0
@@ -488,7 +488,7 @@
 <style scoped>
   .child {
     position: absolute;
-    top: 1.5rem;
+    top: 1.3rem;
     left: 35%;
     font-size: .2rem;
     background-color: #efeef4;
