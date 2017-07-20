@@ -73,7 +73,7 @@
 <style scoped>
   .feedback {
     background-color: #fff;
-    padding: 0rem .33rem;
+    padding: 0.28rem .33rem;
     -webkit-user-select: none;
     -moz-user-select: none;
     -webkit-tap-highlight-color: transparent;
@@ -110,7 +110,7 @@
     border: 0.01rem solid #ccc;
     margin-bottom: 0;
     padding: .2rem;
-    margin: 0.05rem 0 .3rem; 
+    margin: .3rem auto; 
   }
   input {
     padding: .2rem .28rem;

@@ -20,12 +20,12 @@
         <p>最高可获得1315元现金奖励</p>
       </div>
       <p class="invite-btn" @click="toInviteActivity">立即参与</p>
-      <ul class="circles">
-        <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
-        <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
-        <li></li><li></li><li></li><li></li><li></li><li></li><li></li>
-      </ul>
-      <div class="share-route">
+      <div class="share-route position-re">
+        <ul class="circles">
+          <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+          <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+          <li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+        </ul>
         <p>分享到</p>
         <div class="share-list">
           <div @click="shareToWechat()"><img src="../../images/user-center/wechat2.png" alt=""></div>
@@ -185,7 +185,7 @@
   }
   .circles {
     position: absolute;
-    top: 62%;
+    top: -32%;
     left: -5.6%;
     width: 120%;
   }
@@ -206,7 +206,7 @@
   .share-route p {
     font-size: .28rem;
     color: #fa6943;
-    margin: .55rem 0 .5rem;
+    margin: 15% 0 .5rem;
   }
   .share-list, .share-list-words {
     display: flex;
