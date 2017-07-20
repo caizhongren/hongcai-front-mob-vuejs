@@ -75,10 +75,14 @@
               'business': that.b,
               'amount': that.amount
             }
+            alert(dataList + 1)
             if (status === 1) {
+              alert(status + '2')
               if (response.data.coupon) {
+                alert(that.coupon + '3')
                 that.coupon.type = response.data.coupon.type
                 that.coupon.value = response.data.coupon.value
+                alert(that.coupon.type + '4')
                 dataList = {
                   'business': that.b,
                   'amount': that.amount,
