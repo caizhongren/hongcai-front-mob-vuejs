@@ -96,7 +96,7 @@
         var that = this
         // 支付成功 status 2 || 3 ||4
         that.$http({
-          url: '/hongcai/rest/orders/' + that.number + '/orders?token=' + that.token
+          url: '/hongcai/rest/orders/' + that.number + '?token=' + that.token
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
