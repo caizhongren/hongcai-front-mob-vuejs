@@ -13,37 +13,22 @@
   </div>
 </template>
 <script>
-  import $ from 'zepto'
   import {bridgeUtil, Utils} from '../../service/Utils'
   export default {
     data () {
       return {
-        msg: 'hello',
-        contackWay: '',
         feedbackInfo: '',
         busy: false,
-        isLogged: false
+        isLogged: false,
+        token: ''
       }
     },
-    props: ['token'],
     watch: {
-      contackWay: function (newVal, oldVal) {
-        if (newVal && newVal !== oldVal) {
-          this.busy = true
-          this.contackWay = $('#contackWay').val()
-        }
-      },
       feedbackInfo: function (newVal, oldVal) {
         if (newVal && newVal !== oldVal) {
-          this.feedbackInfo = $('#feedbackInfo').val()
+          this.feedbackInfo = document.getElementById('feedbackInfo').value
         }
-      },
-      token: function (value) {
-        this.isLogged = this.token && this.token !== '' ? this.isLogged = true : this.isLogged = false
       }
-    },
-    created: function () {
-      this.isLogged = this.token && this.token !== '' ? this.isLogged = true : this.isLogged = false
     },
     methods: {
       postFeesback: function () {
@@ -61,19 +46,15 @@
           if (!that.feedbackInfo || that.feedbackInfo === '') {
             return
           }
-          if (that.contackWay && that.contackWay.toString().length !== 11) {
-            return
-          }
           that.busy = true
           that.$http({
             method: 'post',
-            url: '/hongcai/api/v1/feedback/saveFeedback?feedbackInfo=' + that.feedbackInfo + '&contackWay=' + undefined
+            url: '/hongcai/api/v1/feedback/saveFeedback?feedbackInfo=' + that.feedbackInfo
           }).then(function (res) {
             if (res.data && res.data.ret !== -1) {
               if (confirm('反馈成功')) {
                 bridgeUtil.webConnectNative('HCNative_BackToPrePage', null, {}, function (response) {}, null)
-                that.feedbackInfo = $('#feedbackInfo').val('')
-                that.contackWay = $('#contackWay').val('')
+                that.feedbackInfo = ''
                 setTimeout(function () {
                   that.busy = false
                 }, 1000)
