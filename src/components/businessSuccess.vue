@@ -69,18 +69,13 @@
             var dataList = that.b === 'RECHARGE_AUTH_TENDER' ? {
               'business': that.b,
               'status': status,
+              'amount': that.amount,
               'rechargeAmount': that.rechargeAmount
             } : {
               'business': that.b,
               'amount': that.amount
             }
             if (status === 1) {
-              dataList = {
-                'business': that.b,
-                'amount': that.amount,
-                'coupon': that.coupon,
-                'status': status
-              }
               if (response.data.coupon) {
                 that.coupon.type = response.data.coupon.type
                 that.coupon.value = response.data.coupon.value
