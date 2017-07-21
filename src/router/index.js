@@ -14,7 +14,7 @@ const Question = r => require.ensure([], () => r(require('../components/user-cen
 const Feedback = r => require.ensure([], () => r(require('../components/user-center/feedback.vue')), 'others')
 const NoticeDetail = r => require.ensure([], () => r(require('../components/user-center/noticeDetail.vue')), 'others')
 const bankCardLimit = r => require.ensure([], () => r(require('../components/user-center/bankCardLimit.vue')), 'others')
-const InviteRebate = r => require.ensure([], () => r(require('../components/user-center/inviteRebate.vue')), 'others')
+const InviteRebate = r => require.ensure([], () => r(require('../components/user-center/inviteRebate.vue')), 'InviteRebate')
 const inviteRebateList = r => require.ensure([], () => r(require('../components/user-center/inviteRebateList.vue')), 'others')
 const AssignmentList = r => require.ensure([], () => r(require('../components/user-center/assignmentList.vue')), 'others')
 const RegisterAgree = r => require.ensure([], () => r(require('../components/registerAgree.vue')), 'RegisterAgree')
