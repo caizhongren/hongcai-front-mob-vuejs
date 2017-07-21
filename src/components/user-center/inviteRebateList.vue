@@ -2,7 +2,7 @@
   <div class="inviteRebateList" v-auto-height>
     <div class="invite-rebate-list">
       <div class="list-header">
-        <ul class="list-title bg-white" @click="toInvite">
+        <ul class="list-title bg-white">
           <li>好友</li>
           <li>投资状态</li>
         </ul>
@@ -50,8 +50,6 @@
     watch: {
       token: function (val) {
         val && val !== '' ? this.getInviteList() : null
-      },
-      inviteList: function (val) {
         val.length > 0 ? this.showList = true : this.showList = false
         bridgeUtil.webConnectNative('HCNative_NeedInviteList', null, {
           // 1 需要显示 0 不需要显示
@@ -62,6 +60,10 @@
     created: function () {
       this.token ? this.getInviteList() : null
       this.inviteList.length > 0 ? this.showList = true : this.showList = false
+      bridgeUtil.webConnectNative('HCNative_NeedInviteList', null, {
+        // 1 需要显示 0 不需要显示
+        isShow: 0
+      }, function (res) {}, null)
     },
     methods: {
       getInviteList: function () {
