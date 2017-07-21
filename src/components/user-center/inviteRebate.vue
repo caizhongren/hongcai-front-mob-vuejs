@@ -58,13 +58,6 @@
         this.getVoucher()
         this.getInviteStat()
       }
-      bridgeUtil.webConnectNative('HCNative_NeedInviteList', 'HCWeb_ToInviteList', {
-        // 1 需要显示 0 不需要显示
-        isShow: 1
-      }, function (res) {
-      }, function (data) {
-        this.$router.push({name: 'inviteRebateList'})
-      })
     },
     props: ['token'],
     watch: {
@@ -73,6 +66,15 @@
           this.getVoucher()
           this.getInviteStat()
         }
+      },
+      inviteStat: function (val) {
+        bridgeUtil.webConnectNative('HCNative_NeedInviteList', 'HCWeb_ToInviteList', {
+          // 1 需要显示 0 不需要显示
+          isShow: 1
+        }, function (res) {
+        }, function (data) {
+          this.$router.push({name: 'inviteRebateList'})
+        })
       }
     },
     methods: {
@@ -205,7 +207,7 @@
   .share-route p {
     font-size: .28rem;
     color: #fa6943;
-    margin: 16% 0 8%;
+    margin: 15% 0 8%;
   }
   .share-list, .share-list-words {
     display: flex;
