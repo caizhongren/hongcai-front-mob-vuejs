@@ -84,12 +84,14 @@ let bridgeUtil = {
       document.addEventListener(
         'WebViewJavascriptBridgeReady'
         , function () {
-          window.WebViewJavascriptBridge.init(function (message, responseCallback) {
-            var data = {
-              'Javascript Responds': 'Wee!'
-            }
-            responseCallback(data)
-          })
+          try {
+            window.WebViewJavascriptBridge.init(function (message, responseCallback) {
+              var data = {
+                'Javascript Responds': 'Wee!'
+              }
+              responseCallback(data)
+            })
+          } catch(e) {}
           callback(window.WebViewJavascriptBridge)
         },
         false
