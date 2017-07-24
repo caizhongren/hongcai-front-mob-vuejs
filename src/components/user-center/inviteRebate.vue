@@ -96,8 +96,9 @@
         this.$router.push({name: 'Invite'})
       },
       toInviteList: function () {
+        var that = this
         bridgeUtil.webConnectNative(null, 'HCWeb_ToInviteList', {}, null, function (data) {
-          this.$router.push({name: 'inviteRebateList'})
+          that.$router.push({name: 'inviteRebateList'})
         })
       },
       getVoucher: function () {
