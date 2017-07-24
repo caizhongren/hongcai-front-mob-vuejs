@@ -91,7 +91,7 @@ let bridgeUtil = {
               }
               responseCallback(data)
             })
-          } catch(e) {}
+          } catch (e) {}
           callback(window.WebViewJavascriptBridge)
         },
         false
