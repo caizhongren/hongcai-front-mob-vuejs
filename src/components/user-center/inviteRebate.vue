@@ -57,6 +57,7 @@
       if (this.token) {
         this.getVoucher()
         this.getInviteStat()
+        this.toInviteList()
       }
     },
     props: ['token'],
@@ -65,15 +66,15 @@
         if (value && value !== '') {
           this.getVoucher()
           this.getInviteStat()
+          this.toInviteList()
         }
       },
       inviteStat: function (val) {
-        bridgeUtil.webConnectNative('HCNative_NeedInviteList', 'HCWeb_ToInviteList', {
+        bridgeUtil.webConnectNative('HCNative_NeedInviteList', '', {
           // 1 需要显示 0 不需要显示
           isShow: 1
         }, function (res) {
         }, function (data) {
-          this.$router.push({name: 'inviteRebateList'})
         })
       }
     },
@@ -93,6 +94,11 @@
       },
       toInviteActivity: function () {
         this.$router.push({name: 'Invite'})
+      },
+      toInviteList: function () {
+        bridgeUtil.webConnectNative(null, 'HCWeb_ToInviteList', {}, null, function (data) {
+          this.$router.push({name: 'inviteRebateList'})
+        })
       },
       getVoucher: function () {
         var that = this
