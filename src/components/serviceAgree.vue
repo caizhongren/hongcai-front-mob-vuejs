@@ -247,8 +247,8 @@
       <div class="annex">
         <p class="text-left" v-show="contractType === 1">附件2</p>
         <br>
-        <p class="text-center" v-if="preRepaymentList.length >0">还款计划（单位：元、月/日）</p>
-        <table v-if="preRepaymentList.length >0">
+        <p class="text-center" v-if="preRepaymentList.length >0 && status ===1 && isLoan !== 0">还款计划（单位：元、月/日）</p>
+        <table v-if="preRepaymentList.length >0 && status ===1 && isLoan !== 0">
           <thead>
             <td>序号</td>
             <td>还款日</td>
@@ -498,8 +498,8 @@
       <div class="annex">
         <p class="text-left">附件2</p>
         <br>
-        <p class="text-center" v-if="preRepaymentList.length >0">还款计划（单位：元、月/日）</p>
-        <table v-if="preRepaymentList.length >0">
+        <p class="text-center" v-if="preRepaymentList.length >0 && status ===1 && isLoan !== 0">还款计划（单位：元、月/日）</p>
+        <table v-if="preRepaymentList.length >0 && status ===1 && isLoan !== 0">
           <thead>
             <td>序号</td>
             <td>还款日</td>
@@ -529,7 +529,8 @@
         contracts: {},
         LenderNames: Array,
         contractType: Number,
-        status: String
+        status: String,
+        isLoan: 0
       }
     },
     created: function () {
@@ -562,6 +563,7 @@
           if (res.data && res.data.ret !== -1) {
             that.preRepaymentList = res.data
             that.projectId = that.preRepaymentList[0].projectId
+            that.isLoan = that.preRepaymentList[0].id
             that.projectId && that.status === '1' ? that.getContracts(that.projectId) : null
           }
         }).catch(function (err) {
@@ -574,14 +576,16 @@
           method: 'get',
           url: '/hongcai/rest/contracts/0/' + projectId + '/?token=' + that.token
         }).then(function (res) {
-          that.contracts = res.data
-          var orderList = that.contracts.orderList
-          var name = []
-          for (var i = 0; i < orderList.length; i++) {
-            name.push(orderList[i].name)
+          if (res.data && res.data.ret !== -1) {
+            that.contracts = res.data
+            var orderList = that.contracts.orderList
+            var name = []
+            for (var i = 0; i < orderList.length; i++) {
+              name.push(orderList[i].name)
+            }
+            var LenderNames = Array.from(new Set(name))
+            that.LenderNames = LenderNames
           }
-          var LenderNames = Array.from(new Set(name))
-          that.LenderNames = LenderNames
         })
       }
     }
