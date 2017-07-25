@@ -27,6 +27,7 @@ const BusinessSuccess = r => require.ensure([], () => r(require('../components/b
 const BankCustody = r => require.ensure([], () => r(require('../components/bankCustody.vue')), 'BankCustody')
 const Safe = r => require.ensure([], () => r(require('../components/safe.vue')), 'Safe')
 const BindWechat = r => require.ensure([], () => r(require('../components/bindWechat.vue')), 'BindWechat')
+const CoolSummerPlan = r => require.ensure([], () => r(require('../components/activity/cool-summer-plan.vue')), 'CoolSummerPlan')
 Vue.use(Router)
 const routes = [
   {
@@ -186,6 +187,12 @@ const routes = [
     name: 'AssignmentList',
     component: AssignmentList,
     meta: {title: '转让记录'}
+  },
+  {
+    path: '/activity/cool-summer-plan',
+    name: 'CoolSummerPlan',
+    component: CoolSummerPlan,
+    meta: {title: '夏日清凉计划'}
   },
   {
     path: '*',
