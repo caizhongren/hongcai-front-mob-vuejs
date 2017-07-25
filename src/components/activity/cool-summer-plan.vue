@@ -232,9 +232,8 @@
     top: .78rem;
   }
   .ruleBox {
-    /* position: relative; */
     width: 5.72rem;
-    height: 8.18rem;
+    height: 7.18rem;
     border: 1px solid #00ffe4;
     background: #1e9781;
     border-radius: .25rem;
