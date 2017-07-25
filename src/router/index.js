@@ -5,6 +5,8 @@ const Invite = r => require.ensure([], () => r(require('../components/activity/i
 const ActivityReward = r => require.ensure([], () => r(require('../components/activity/reward.vue')), 'Invite')
 const Lottery = r => require.ensure([], () => r(require('../components/activity/lottery.vue')), 'Lottery')
 const LotteryRecord = r => require.ensure([], () => r(require('../components/activity/lotteryRecord.vue')), 'Lottery')
+const CoolRanking = r => require.ensure([], () => r(require('../components/activity/coolRanking.vue')), 'CoolRanking')
+const IntegralDetail = r => require.ensure([], () => r(require('../components/activity/integralDetail.vue')), 'CoolRanking')
 const Home = r => require.ensure([], () => r(require('../components/Home.vue')), 'others')
 const About = r => require.ensure([], () => r(require('../components/about.vue')), 'About')
 const Novice = r => require.ensure([], () => r(require('../components/activity/novice.vue')), 'Novice')
@@ -112,6 +114,18 @@ const routes = [
     name: 'Novice',
     component: Novice,
     meta: {title: '新手大礼包'}
+  },
+  {
+    path: '/activity/cool-Ranking',
+    name: 'CoolRanking',
+    component: CoolRanking,
+    meta: {title: '清凉排行榜'}
+  },
+  {
+    path: '/activity/integral-detail',
+    name: 'IntegralDetail',
+    component: IntegralDetail,
+    meta: {title: '清凉积分明细'}
   },
   {
     path: '/register-agree',

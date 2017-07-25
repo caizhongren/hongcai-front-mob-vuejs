@@ -1,0 +1,182 @@
+<template>
+  <div class="runking" v-auto-height>
+    <div class="runking-list">
+       <img src="../../images/summer/list-line.png" alt="" class="top-line">
+       <table>
+         <thead>
+          <tr>
+            <td>名次</td>
+            <td>用户</td>
+            <td>积分</td>
+          </tr>
+        </thead>
+       </table>
+      <div class="table-wrap">
+        <table>
+          <tbody>
+            <tr v-for="(item, index) in runkingList">
+              <td v-if="index === 0"><img src="../../images/summer/no.1.png" alt="" width="40%"></td>
+              <td v-if="index !== 0">{{index + 1}}</td> 
+              <td>{{item.mobile}}</td>
+              <td>{{item.integral || 0}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>*数据每5分钟更新一次，如出现积分相同情况时，根据投资时间先后进行排名</p>
+    </div>
+  </div>
+</template>
+<script>
+  export default {
+    name: 'coolRunking',
+    data () {
+      return {
+        runkingList: [
+          {
+            mobile: '153****5650',
+            integral: 100
+          },
+          {
+            mobile: '153****5650',
+            integral: 100
+          },
+          {
+            mobile: '153****5650',
+            integral: 100
+          },
+          {
+            mobile: '153****5650',
+            integral: 100
+          },
+          {
+            mobile: '153****5650',
+            integral: 100
+          },
+          {
+            mobile: '153****5650',
+            integral: 100
+          },
+          {
+            mobile: '153****5650',
+            integral: 100
+          },
+          {
+            mobile: '153****5650',
+            integral: 100
+          },
+          {
+            mobile: '153****5650',
+            integral: 100
+          },
+          {
+            mobile: '153****5650',
+            integral: 100
+          }
+        ]
+      }
+    },
+    methods: {
+      getRunkingList () {
+        var that = this
+        that.$http({
+          url: '/hongcai/rest/'
+        })
+        .then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.runkingList = res.data
+          }
+        })
+        .catch(function (err) {
+          console.log(err)
+        })
+      }
+    }
+  }
+</script>
+<style scoped>
+  .runking {
+    padding-top: 13%;
+    width: 100%;
+    overflow-x: hidden;
+    background: url(../../images/summer/summer-bg.png) repeat-y 0 0;
+  }
+  .runking-list {
+    padding: 0 .45rem;
+    position: relative;
+    height: 92%;
+  }
+  .table-wrap {
+    height: 80%;
+    padding: 0 2%;
+    overflow-y: scroll;
+    background-color: #fff;
+    border-radius: 0 0 .1rem .1rem;
+  }
+  .runking-list .top-line {
+    position: absolute;
+    width: 91%;
+    top: -.2rem;
+    left: .3rem;
+  }
+  table {
+    background-color: #fff;
+    width: 100%;
+  }
+  thead tr {
+    border: 1px solid #eee;
+  }
+  thead td {
+    height: 1rem;
+    line-height: 1rem;
+    color: #2aafa0;
+    font-size: .35rem;
+    font-weight: 500;
+    text-align: center;
+    border-right: 1px solid #eee;
+  }
+  tbody img {
+    vertical-align: middle;
+  }
+  tbody tr td {
+    height: 1.1rem;
+    line-height: 1.1rem;
+    text-align: center;
+    border: 1px solid #eee;
+  }
+  tbody tr td:first-child {
+    color: #ddd;
+    font-size: .58rem;
+    font-weight: 600;
+    width: 19%;
+    border-left: none !important;
+  }
+  tbody tr td:first-child + td, tbody tr td:last-child{
+    font-size: .28rem;
+    color: #666;
+  }
+  tbody tr td:first-child + td, thead td:first-child + td {
+    width: 30%;
+  }
+  tbody tr td:last-child {
+    width: 19%;
+  }
+  thead td:last-child, thead td:first-child {
+    width: 20%;
+  }
+  tbody tr td:last-child, thead td:last-child {
+    border-right: none !important;
+  }
+  tbody tr:last-child td {
+    border-bottom: none !important;
+  }
+  tbody tr:first-child td:last-child {
+    color: #e3b71b;
+  }
+  .runking p {
+    text-align: justify;
+    color: #023532;
+    padding: .3rem 3%;
+  }
+
+</style>
