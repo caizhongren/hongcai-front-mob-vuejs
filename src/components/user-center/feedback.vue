@@ -74,12 +74,6 @@
   .feedback {
     background-color: #fff;
     padding: 0.28rem .33rem;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    user-select:none;
   }
   .title p, label {
     color: #ff6000;
@@ -107,7 +101,7 @@
     color: #bbb;
     font-size: .28rem;
     text-align: justify;
-    border: 0.01rem solid #ccc;
+    border: 1px solid #ccc;
     margin-bottom: 0;
     padding: .2rem;
     margin: .3rem auto; 
