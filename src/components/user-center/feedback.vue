@@ -98,13 +98,19 @@
     border-radius: .1rem;
     -webkit-appearance: none;
     background: #fdfdfd;
-    color: #bbb;
+    color: #666;
     font-size: .28rem;
     text-align: justify;
     border: 1px solid #ccc;
     margin-bottom: 0;
     padding: .2rem;
     margin: .3rem auto; 
+  }
+  textarea::-webkit-input-placeholder {
+    color: #bbb;
+  }
+  textarea:-moz-placeholder {
+    color: #bbb;
   }
   input {
     padding: .2rem .28rem;
