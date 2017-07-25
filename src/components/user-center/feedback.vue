@@ -52,16 +52,13 @@
             url: '/hongcai/api/v1/feedback/saveFeedback?feedbackInfo=' + that.feedbackInfo
           }).then(function (res) {
             if (res.data && res.data.ret !== -1) {
-              if (confirm('反馈成功')) {
-                bridgeUtil.webConnectNative('HCNative_BackToPrePage', null, {}, function (response) {}, null)
-                that.feedbackInfo = ''
-                setTimeout(function () {
-                  that.busy = false
-                }, 1000)
-              }
               bridgeUtil.webConnectNative('HCNative_BackToPrePage', null, {
                 successMsg: '反馈成功！'
               }, function (response) {}, null)
+              that.feedbackInfo = ''
+              setTimeout(function () {
+                that.busy = false
+              }, 1000)
             }
           })
           .catch(function (err) {
