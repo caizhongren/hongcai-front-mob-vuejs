@@ -247,8 +247,8 @@
       <div class="annex">
         <p class="text-left" v-show="contractType === 1">附件2</p>
         <br>
-        <p class="text-center" v-if="preRepaymentList.length >0 && status ===1 && isLoan !== 0">还款计划（单位：元、月/日）</p>
-        <table v-if="preRepaymentList.length >0 && status ===1 && isLoan !== 0">
+        <p class="text-center" v-if="preRepaymentList.length >0 && status ==='1' && isLoan !== 0">还款计划（单位：元、月/日）</p>
+        <table v-if="preRepaymentList.length >0 && status ==='1' && isLoan !== 0">
           <thead>
             <td>序号</td>
             <td>还款日</td>
@@ -498,8 +498,8 @@
       <div class="annex">
         <p class="text-left">附件2</p>
         <br>
-        <p class="text-center" v-if="preRepaymentList.length >0 && status ===1 && isLoan !== 0">还款计划（单位：元、月/日）</p>
-        <table v-if="preRepaymentList.length >0 && status ===1 && isLoan !== 0">
+        <p class="text-center" v-if="preRepaymentList.length >0 && status ==='1' && isLoan !== 0">还款计划（单位：元、月/日）</p>
+        <table v-if="preRepaymentList.length >0 && status ==='1' && isLoan !== 0">
           <thead>
             <td>序号</td>
             <td>还款日</td>
@@ -521,6 +521,7 @@
 </template>
 <script>
   export default {
+    props: ['token'],
     data () {
       return {
         projectNumber: '',
@@ -539,7 +540,18 @@
       this.getProjectBill()
       this.contractTemplate()
     },
-    props: ['token'],
+    watch: {
+      'token': function (val) {
+        if (val !== '') {
+          this.getProjectBill()
+        }
+      },
+      'projectId': function (val) {
+        if (this.token !== '' && val !== '') {
+          this.getContracts()
+        }
+      }
+    },
     methods: {
       contractTemplate: function () {
         var that = this
@@ -564,7 +576,7 @@
             that.preRepaymentList = res.data
             that.projectId = that.preRepaymentList[0].projectId
             that.isLoan = that.preRepaymentList[0].id
-            that.projectId && that.status === '1' ? that.getContracts(that.projectId) : null
+            that.projectId !== '' && that.status === '1' ? that.getContracts(that.projectId) : null
           }
         }).catch(function (err) {
           console.log(err)
