@@ -527,7 +527,7 @@
         projectNumber: '',
         preRepaymentList: [],
         projectId: '',
-        contracts: {},
+        contracts: localStorage.getItem('contracts') ? localStorage.getItem('contracts') : {},
         LenderNames: Array,
         contractType: Number,
         status: String,
@@ -539,6 +539,7 @@
       this.status = this.$route.params.status
       this.getProjectBill()
       this.contractTemplate()
+      alert(this.contracts.contractNumber)
     },
     watch: {
       'token': function (val) {
@@ -597,6 +598,8 @@
             }
             var LenderNames = Array.from(new Set(name))
             that.LenderNames = LenderNames
+            localStorage.setItem('contracts', res.data)
+            console.log(localStorage.getItem('contracts').contractNumber)
           }
         })
       }
