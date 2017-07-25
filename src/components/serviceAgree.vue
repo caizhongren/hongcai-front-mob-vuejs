@@ -521,18 +521,17 @@
 </template>
 <script>
   export default {
-    // props: ['token'],
+    props: ['token'],
     data () {
       return {
         projectNumber: '',
         preRepaymentList: [],
         projectId: '',
-        contracts: localStorage.getItem('contracts') ? localStorage.getItem('contracts') : {},
+        contracts: {},
         LenderNames: Array,
         contractType: Number,
         status: String,
-        isLoan: 0,
-        token: '9c438068699b1c092f2e65895feebaba8bc575a4dec742dd'
+        isLoan: 0
       }
     },
     created: function () {
@@ -540,13 +539,13 @@
       this.status = this.$route.params.status
       this.getProjectBill()
       this.contractTemplate()
-      alert(this.contracts.contractNumber)
-      alert(this.token)
+      this.getProject()
     },
     watch: {
       'token': function (val) {
         if (val !== '') {
           this.getProjectBill()
+          this.contractTemplate()
         }
       },
       'projectId': function (val) {
@@ -556,6 +555,17 @@
       }
     },
     methods: {
+      getProject: function () {
+        this.$http({
+          method: 'get',
+          url: '/hongcai/rest/projects/' + this.projectNumber
+        }).then((response) => {
+          if (response.data && response.data.ret !== -1) {
+            var status = response.data.status
+            status === 9 || status === 10 ? this.isLoan = 1 : this.isLoan = 0
+          }
+        })
+      },
       contractTemplate: function () {
         var that = this
         this.$http({
@@ -577,20 +587,19 @@
         }).then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.preRepaymentList = res.data
-            that.projectId = that.preRepaymentList[0].projectId
+            that.projectId = that.token !== '' && that.status === '1' ? that.preRepaymentList[0].projectId : ''
             that.isLoan = that.preRepaymentList[0].id
-            alert(that.projectId !== '' && that.status === '1')
-            that.projectId !== '' && that.status === '1' ? that.getContracts(that.projectId) : null
+            that.token !== '' && that.projectId !== '' && that.status === '1' ? this.getContracts() : null
           }
         }).catch(function (err) {
           console.log(err)
         })
       },
-      getContracts: function (projectId) {
+      getContracts: function () {
         var that = this
         this.$http({
           method: 'get',
-          url: '/hongcai/rest/contracts/0/' + projectId + '/?token=' + that.token
+          url: '/hongcai/rest/contracts/0/' + that.projectId + '/?token=' + that.token
         }).then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.contracts = res.data
@@ -601,9 +610,6 @@
             }
             var LenderNames = Array.from(new Set(name))
             that.LenderNames = LenderNames
-            localStorage.setItem('contracts', res.data)
-            alert(that.contracts.contractNumber)
-            console.log(localStorage.getItem('contracts').contractNumber)
           }
         })
       }
