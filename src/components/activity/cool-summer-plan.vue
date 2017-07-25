@@ -26,7 +26,7 @@
             <p>投资项目 &nbsp;&nbsp;&nbsp; 精选</p>
             <p>起投金额 &nbsp;&nbsp;&nbsp; 5 千</p>
           </div>
-          <div class="getCoupon">点击领取</div>
+          <div class="getCoupon" @click="receive">点击领取</div>
         </li>
         <li>
           <div class="amount">
@@ -37,7 +37,7 @@
             <p>投资项目 &nbsp;&nbsp;&nbsp; 尊贵</p>
             <p>起投金额 &nbsp;&nbsp;&nbsp; 3 千</p>
           </div>
-          <div class="getCoupon">点击领取</div>
+          <div class="getCoupon" @click="receive">点击领取</div>
         </li>
       </div>
       <div class="cash-bg02">
@@ -50,7 +50,7 @@
             <p>投资项目 &nbsp;&nbsp;&nbsp; 精选</p>
             <p>起投金额 &nbsp;&nbsp;&nbsp; 1 万</p>
           </div>
-          <div class="getCoupon">点击领取</div>
+          <div class="getCoupon" @click="receive">点击领取</div>
         </li>
         <li>
           <div class="amount">
@@ -61,7 +61,7 @@
             <p>投资项目 &nbsp;&nbsp;&nbsp; 尊贵</p>
             <p>起投金额 &nbsp;&nbsp;&nbsp; 1 万</p>
           </div>
-          <div class="getCoupon">点击领取</div>
+          <div class="getCoupon" @click="receive">点击领取</div>
         </li>
       </div>
       <div class="cash-bg03">
@@ -74,7 +74,7 @@
             <p>投资项目 &nbsp;&nbsp;&nbsp; 精选</p>
             <p>起投金额 &nbsp;&nbsp;&nbsp; 3 万</p>
           </div>
-          <div class="getCoupon">点击领取</div>
+          <div class="getCoupon" @click="receive">点击领取</div>
         </li>
         <li>
           <div class="amount">
@@ -85,7 +85,7 @@
             <p>投资项目 &nbsp;&nbsp;&nbsp; 尊贵</p>
             <p>起投金额 &nbsp;&nbsp;&nbsp; 2 万</p>
           </div>
-          <div class="getCoupon">点击领取</div>
+          <div class="getCoupon" @click="receive">点击领取</div>
         </li>
       </div>
     </ul>
@@ -137,7 +137,7 @@
         <br><br>活动结束后，如正好排名为第5名
         <br>则可获得675x1000x3倍=2025000元特权本金奖励！(有效期1天)
       </div>
-      <div class="gotoRanking">查看排行榜</div>
+      <div class="gotoRanking" @click="toCoolRank">查看排行榜</div>
     </div>
     <div class="integral">
       <div class="title">
@@ -153,21 +153,22 @@
             <li>
               <p>
                 <span>50</span>
-                <br><u>查看详情&gt;&gt;</u>
+                <br><u @click="toIntegralDetail">查看详情&gt;&gt;</u>
               </p>
               <p>第68名</p>
             </li>
           </ul>
-          <div class="needLogin">
+          <div class="needLogin" v-if="!token">
             <p>登录后即可查看您的清凉积分及清凉排名</p>
-            <div class="gotoLogin">立即登录</div>
+            <div class="gotoLogin" @click="toLogin">立即登录</div>
           </div>
         </div>
       </div>
       <div class="updata">数据每5分钟更新一次，如出现积分相同情况时，根据投资时间先后进行排名.</div>
     </div>
-    <div class="iosTip">该活动与设备生产商Apple Inc.公司无关</div>
+    <div class="iosTip" v-if="isIOS">该活动与设备生产商Apple Inc.公司无关</div>
     <img class="rule-btn" src="../../images/summer-plan/rule-btn.png" alt="" width="22%" @click="ruleSelect">
+    <!-- 活动规则弹窗 -->
     <div class="dialog" v-if="showRule">
       <div class="ruleBox">
         <img src="../../images/summer-plan/close.png" alt="" width="8%" class="closeRule"  @click="ruleSelect">
@@ -193,14 +194,28 @@
         </div>
       </div>
     </div>
+    <!-- 领取成功弹窗 -->
+    <div class="dialog" v-if="receiveSuccess">
+      <div class="receive">
+        <img src="../../images/summer-plan/receive.png" alt="" width="50%">
+        <p>可前往我的优惠券查看</p>
+        <p>您已经领取10次啦，明天再来哦～</p>
+        <p>登录后才可以领取哦～</p>
+        <div class="IKnowBtn" @click="receive">我知道了</div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
+  import {Utils, bridgeUtil} from '../../service/Utils'
   export default {
     name: 'CoolSummerPlan',
+    props: ['token'],
     data () {
       return {
-        showRule: false
+        showRule: false,
+        isIOS: Utils.isIos(),
+        receiveSuccess: false
       }
     },
     created: function () {
@@ -210,6 +225,23 @@
       ruleSelect: function () {
         this.showRule = !this.showRule
         document.querySelector('.CoolSummerPlan').classList = this.showRule ? 'CoolSummerPlan position-fix' : 'CoolSummerPlan'
+      },
+      receive: function () {
+        this.receiveSuccess = !this.receiveSuccess
+        document.querySelector('.CoolSummerPlan').classList = this.receiveSuccess ? 'CoolSummerPlan position-fix' : 'CoolSummerPlan'
+      },
+      toCoolRank: function () {
+        this.$router.push({name: 'CoolRanking'})
+      },
+      toIntegralDetail: function () {
+        this.$router.push({name: 'IntegralDetail'})
+      },
+      toLogin: function () {
+        var regesterHandCallback = function (data) {
+          data = Utils.isAndroid() ? JSON.parse(data) : data
+          window.location.replace(window.location.pathname)
+        }
+        bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, regesterHandCallback)
       }
     }
   }
@@ -217,6 +249,31 @@
 <style scoped>
   .CoolSummerPlan {
     width: 100%;
+  }
+  .receive {
+    width: 5.72rem;
+    height: 4rem;
+    background: url('../../images/summer-plan/receive-bg.png') no-repeat center center;
+    background-size: contain;
+    margin: 2rem auto;
+    text-align: center;
+  }
+  .receive img {
+    margin: 1rem 0 .31rem;
+  }
+  .receive p {
+    font-size: .26rem;
+    color: #023532;
+    margin-bottom: .76rem;
+  }
+  .IKnowBtn {
+    font-size: .32rem;
+    color: #0b8979;
+    width: 100%;
+    height: .55rem;
+    line-height: .55rem;
+    background: url('../../images/summer-plan/ckphb-btn.png') no-repeat center center;
+    background-size: contain;
   }
   .dialog {
     position: fixed;
