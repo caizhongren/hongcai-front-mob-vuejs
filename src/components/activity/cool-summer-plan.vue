@@ -199,8 +199,8 @@
       <div class="receive">
         <img src="../../images/summer-plan/receive.png" alt="" width="50%">
         <p>可前往我的优惠券查看</p>
-        <p>您已经领取10次啦，明天再来哦～</p>
-        <p>登录后才可以领取哦～</p>
+        <!-- <p>您已经领取10次啦，明天再来哦～</p>
+        <p>登录后才可以领取哦～</p> -->
         <div class="IKnowBtn" @click="receive">我知道了</div>
       </div>
     </div>
@@ -472,7 +472,7 @@
     font-size: .3rem;
   }
   .gotoRanking, .gotoLogin {
-    /* background: url('../../images/summer-plan/ckphb-btn.png') no-repeat center center; */
+     background: url('../../images/summer-plan/ckphb-btn.png') no-repeat center center; 
     background-size: contain;
     width: 50%;
     height: .8rem;
