@@ -59,7 +59,9 @@
                   that.busy = false
                 }, 1000)
               }
-              bridgeUtil.webConnectNative('HCNative_BackToPrePage', null, {}, function (response) {}, null)
+              bridgeUtil.webConnectNative('HCNative_BackToPrePage', null, {
+                successMsg: '反馈成功！'
+              }, function (response) {}, null)
             }
           })
           .catch(function (err) {
