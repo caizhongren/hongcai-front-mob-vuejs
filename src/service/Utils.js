@@ -123,7 +123,24 @@ let bridgeUtil = {
     })
   }
 }
+let ModalHelper = (function (bodyCls) {
+  var scrollTop
+  return {
+    afterOpen: function () {
+      scrollTop = document.scrollingElement.scrollTop
+      document.body.classList.add(bodyCls)
+      document.body.style.top = -scrollTop + 'px'
+    },
+    beforeClose: function () {
+      document.body.classList.remove(bodyCls)
+      document.body.removeAttribute('style')
+      // scrollTop lost after set position:fixed, restore it back.
+      document.scrollingElement.scrollTop = scrollTop
+    }
+  }
+})('modal-open')
 export {Utils}
 export {InviteShareUtils}
 export {ruleBox}
 export {bridgeUtil}
+export {ModalHelper}
