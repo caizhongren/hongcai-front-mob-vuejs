@@ -548,7 +548,7 @@
         }
       },
       'projectId': function (val) {
-        if (this.token !== '' && val !== '') {
+        if (this.token !== '' && val !== '' && this.status === '1') {
           this.getContracts()
         }
       }
@@ -577,6 +577,7 @@
             that.preRepaymentList = res.data
             that.projectId = that.preRepaymentList[0].projectId
             that.isLoan = that.preRepaymentList[0].id
+            alert(that.projectId !== '' && that.status === '1')
             that.projectId !== '' && that.status === '1' ? that.getContracts(that.projectId) : null
           }
         }).catch(function (err) {
