@@ -11,35 +11,35 @@
         <div class="partner-units padding-t-1">
           <ul>
             <li class="margin-0 padding-t-1p5">
-              <img src="../images/about/01.png" width="46%" class="display-bl margin-auto margin-b-1">
+              <img src="../images/about/01.png" height="25px" class="display-bl margin-auto margin-b-1">
               <p class="margin-auto margin-t-1p5 ft-1p4">
                 宏财网项目推荐方为鑫融基金控股份有限公司（以下简称鑫融基，证券代码：832379）。鑫融基注册资本16.39亿元，是2006年由政府出资发起，多家地方企业共同参与成立的金融机构。是新三板金控第一股和首家民间全牌照金融服务机构，股本总额位居全国第四。
               </p>
               <div class="line position-re"><p class="margin-auto position-ab"></p></div>
             </li>
             <li class="margin-0">
-              <img src="../images/about/hklogo.png" width="46%" class="display-bl margin-auto margin-b-1">
+              <img src="../images/about/hklogo.png" height="25px" class="display-bl margin-auto margin-b-1">
               <p class="margin-auto margin-t-1p5 ft-1p4">
                 宏财网已正式对接海口联合农商银行资金存管系统（简称银行资金存管系统）。标的、资金信息同步上传北京市网贷协会，最大限度保护投资者利益。
               </p>
               <div class="line position-re"><p class="margin-auto position-ab"></p></div>
             </li>
             <li class="margin-0">
-              <img src="../images/about/yblogo.png" width="46%" class="display-bl margin-auto margin-b-1">
+              <img src="../images/about/yblogo.png" height="25px" class="display-bl margin-auto margin-b-1">
               <p class="margin-auto margin-t-1p5 ft-1p4">
                 易宝支付（YeePay.com)成立于2003年8月成立，总部位于北京，在全国设有30家分公司，是中国行业支付的开创者和领导者。自公司成立以来，秉承成就客户、极致服务、开放分享的核心价值观，致力成为世界一流的交易服务平台，领跑电子支付、移动互联和互联网金融。
               </p>
               <div class="line position-re"><p class="margin-auto position-ab"></p></div>
             </li>
             <li class="margin-0">
-              <img src="../images/about/05.png" width="46%" class="display-bl margin-auto margin-b-1">
+              <img src="../images/about/05.png" height="25px" class="display-bl margin-auto margin-b-1">
               <p class="margin-auto margin-t-1p5 ft-1p4">
                 深圳市嘉得投资基金管理有限公司注册资本2亿元，主营业务为资产管理业务、股权和证券投资业务、管理咨询服务等。公司成立至今，资产管理规模从人民币1000万发展到人民币数十亿元左右，平均回报率超过50%，投研人员平均从业经验10年以上。
               </p>
               <div class="line position-re"><p class="margin-auto position-ab"></p></div>
             </li>
             <li class="margin-0">
-              <img src="../images/about/06.png" width="46%" class="display-bl margin-auto margin-b-1">
+              <img src="../images/about/06.png" height="25px" class="display-bl margin-auto margin-b-1">
               <p class="margin-auto margin-t-1p5 ft-1p4">
                 宏财网与工信部下设中国中小企业信息网（www.sme.gov.cn）达成战略合作协议。成为首个与中小企业信息网合作的互联网金融平台。
               </p>
