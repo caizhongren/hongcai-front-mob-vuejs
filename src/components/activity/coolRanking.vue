@@ -2,15 +2,17 @@
   <div class="runking" v-auto-height>
     <div class="runking-list">
        <img src="../../images/summer/list-line.png" alt="" class="top-line">
-       <table class="header">
-         <thead>
-          <tr>
-            <td>名次</td>
-            <td>用户</td>
-            <td>积分</td>
-          </tr>
-        </thead>
-       </table>
+       <div class="list-herder-wrap">
+        <table class="header">
+          <thead>
+            <tr>
+              <td>名次</td>
+              <td>用户</td>
+              <td>积分</td>
+            </tr>
+          </thead>
+        </table>
+       </div>
       <div class="table-wrap">
         <table>
           <tbody>
@@ -104,7 +106,7 @@
   .runking-list {
     padding: 0 .45rem;
     position: relative;
-    height: 85%;
+    height: 81%;
   }
   .table-wrap {
     height: 80%;
@@ -113,18 +115,22 @@
     background-color: #fff;
     border-radius: 0 0 .1rem .1rem;
   }
+  .list-herder-wrap {
+    padding: 0 1.5%;
+    background-color: #fff;
+  }
+  table {
+    background-color: #fff;
+    width: 100%;
+  }
   .runking-list .top-line {
     position: absolute;
     width: 91%;
     top: -.2rem;
     left: .3rem;
   }
-  table {
-    background-color: #fff;
-    width: 100%;
-  }
-  table.header {
-    box-shadow: 0 10px 10px #eee inset;
+  table tr {
+    border-bottom: 1px solid #eee;
   }
   thead td {
     height: .7rem;
@@ -134,7 +140,6 @@
     font-size: .33rem;
     font-weight: 500;
     text-align: center;
-    border-right: 1px solid #eee;
   }
   tbody img {
     vertical-align: middle;
@@ -143,14 +148,16 @@
     height: 1rem;
     line-height: 1rem;
     text-align: center;
-    border: 1px solid #eee;
   }
   tbody tr td:first-child {
     color: #ddd;
     font-size: .58rem;
     font-weight: 500;
-    width: 19%;
-    border-left: none !important;
+    width: 20%;
+    border-right: 1px solid #eee;
+  }
+  table td:first-child, table td:first-child + td {
+    border-right: 1px solid #eee;
   }
   tbody tr td:first-child + td, tbody tr td:last-child{
     font-size: .28rem;
@@ -159,17 +166,8 @@
   tbody tr td:first-child + td, thead td:first-child + td {
     width: 30%;
   }
-  tbody tr td:last-child {
-    width: 19%;
-  }
-  thead td:last-child, thead td:first-child {
+  thead td:last-child, thead td:first-child, tbody tr td:last-child {
     width: 20%;
-  }
-  tbody tr td:last-child, thead td:last-child {
-    border-right: none !important;
-  }
-  tbody tr:last-child td {
-    border-bottom: none !important;
   }
   tbody tr:first-child td:last-child {
     color: #e3b71b;
