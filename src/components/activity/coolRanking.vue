@@ -123,14 +123,12 @@
     background-color: #fff;
     width: 100%;
   }
-  thead tr {
-    border: 1px solid #eee;
-  }
   thead td {
-    height: 1rem;
+    height: .7rem;
     line-height: 1rem;
+    padding-top: .3rem;
     color: #2aafa0;
-    font-size: .35rem;
+    font-size: .33rem;
     font-weight: 500;
     text-align: center;
     border-right: 1px solid #eee;
@@ -139,15 +137,15 @@
     vertical-align: middle;
   }
   tbody tr td {
-    height: 1.1rem;
-    line-height: 1.1rem;
+    height: 1rem;
+    line-height: 1rem;
     text-align: center;
     border: 1px solid #eee;
   }
   tbody tr td:first-child {
     color: #ddd;
     font-size: .58rem;
-    font-weight: 600;
+    font-weight: 500;
     width: 19%;
     border-left: none !important;
   }
@@ -176,7 +174,8 @@
   .runking p {
     text-align: justify;
     color: #023532;
-    padding: .3rem 3%;
+    font-size: .22rem;
+    padding: .28rem 3%;
   }
 
 </style>

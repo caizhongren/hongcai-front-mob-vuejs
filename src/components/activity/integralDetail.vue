@@ -53,6 +53,17 @@
     data () {
       return {
       }
+    },
+    props: ['token'],
+    watch: {
+      token: function (val) {
+        if (val !== '') {
+        }
+      }
+    },
+    created () {
+      if (this.token) {
+      }
     }
   }
 </script>
@@ -68,7 +79,8 @@
   p.statement {
     text-align: justify;
     color: #023532;
-    padding: .3rem 8%;
+    padding: .55rem 9%;
+    font-size: .22rem;
   }
   .detail-list {
     padding: 0 .45rem;
@@ -97,8 +109,8 @@
     border-right: 1px solid #eee;
   }
   tbody td {
-    height: 1.3rem;
-    line-height: 1.3rem;
+    height: 1rem;
+    line-height: 1rem;
     color: #666;
     font-size: .28rem;
   }
@@ -113,8 +125,8 @@
     width: 25%;
   }
   thead td {
-    height: 1.2rem;
-    line-height: 1.2rem;
+    height: 1rem;
+    line-height: 1rem;
     color: #2aafa0;
     font-size: .28rem;
     font-weight: 500;
