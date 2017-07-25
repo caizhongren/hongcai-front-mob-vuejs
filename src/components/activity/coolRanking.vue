@@ -1,7 +1,7 @@
 <template>
   <div class="runking" v-auto-height>
     <div class="runking-list">
-       <img src="../../images/summer/list-line.png" alt="" class="top-line">
+       <img src="../../images/summer-plan/list-line.png" alt="" class="top-line">
        <div class="list-herder-wrap">
         <table class="header">
           <thead>
@@ -17,7 +17,7 @@
         <table>
           <tbody>
             <tr v-for="(item, index) in runkingList">
-              <td v-if="index === 0"><img src="../../images/summer/no.1.png" alt="" width="40%"></td>
+              <td v-if="index === 0"><img src="../../images/summer-plan/no.1.png" alt="" width="40%"></td>
               <td v-if="index !== 0">{{index + 1}}</td> 
               <td>{{item.mobile}}</td>
               <td>{{item.integral || 0}}</td>
@@ -101,7 +101,7 @@
     padding-top: 13%;
     width: 100%;
     overflow-x: hidden;
-    background: url(../../images/summer/summer-bg.png) repeat-y 0 0;
+    background: url(../../images/summer-plan/bg-02-1.png) repeat-y center center;
   }
   .runking-list {
     padding: 0 .45rem;

@@ -217,6 +217,7 @@
 <style scoped>
   .CoolSummerPlan {
     width: 100%;
+    background: url(../../images/summer-plan/bg-02-1.png) repeat-y center center;
   }
   .dialog {
     position: fixed;
@@ -271,20 +272,20 @@
   .High-temperature-subsidies {
     padding: .42rem 0 0.5rem;
     margin: 0 auto;
-    background: url('../../images/summer-plan/bg-01.png') no-repeat center center;
+    /* background: url('../../images/summer-plan/bg-01.png') no-repeat center center; */
     background-size: cover;
   }
   .cash-bg01, .cash-bg02, .cash-bg03 {
     overflow: hidden;
   }
   .cash-bg01 {
-    background: url('../../images/summer-plan/bg-02-1.png') no-repeat center center; 
+    /* background: url('../../images/summer-plan/bg-02-1.png') no-repeat center center;  */
   }
   .cash-bg02 {
-    background: url('../../images/summer-plan/bg-02-2.png') no-repeat center center; 
+    /* background: url('../../images/summer-plan/bg-02-2.png') no-repeat center center;  */
   }
   .cash-bg03 {
-    background: url('../../images/summer-plan/bg-02-3.png') no-repeat center center; 
+    /* background: url('../../images/summer-plan/bg-02-3.png') no-repeat center center;  */
   }
   .conditions {
     text-align: center;
@@ -354,10 +355,10 @@
   .RankingList .title {
     text-align: center;
     padding: 1rem 0 .62rem;
-    background: url('../../images/summer-plan/bg-03-1.png') no-repeat center center; 
+    /* background: url('../../images/summer-plan/bg-03-1.png') no-repeat center center;  */
   }
   .RankingList .text {
-    background: url('../../images/summer-plan/bg-03-2.png') no-repeat center center;
+    /* background: url('../../images/summer-plan/bg-03-2.png') no-repeat center center; */
     padding: 0 .5rem .8rem;
     line-height: .38rem;
   }
@@ -404,7 +405,7 @@
     color: #eaff00;
   }
   .expro {
-    background: url('../../images/summer-plan/bg-04-2.png') no-repeat center center;
+    /* background: url('../../images/summer-plan/bg-04-2.png') no-repeat center center; */
     background-size: cover;
   }
   .expro-txt {
@@ -414,7 +415,7 @@
     font-size: .3rem;
   }
   .gotoRanking, .gotoLogin {
-    background: url('../../images/summer-plan/ckphb-btn.png') no-repeat center center;
+    /* background: url('../../images/summer-plan/ckphb-btn.png') no-repeat center center; */
     background-size: contain;
     width: 50%;
     height: .8rem;
@@ -424,12 +425,12 @@
     margin: 0 auto;
   }
   .bg-05 {
-    background: url('../../images/summer-plan/bg-05-2.png') no-repeat center center;
+    /* background: url('../../images/summer-plan/bg-05-2.png') no-repeat center center; */
     background-size: cover;
   }
   .integral .title {
     padding: 1.3rem 0 .8rem;
-    background: url('../../images/summer-plan/bg-05-1.png') no-repeat center center;
+    /* background: url('../../images/summer-plan/bg-05-1.png') no-repeat center center; */
     background-size: cover;
   }
   .integral .RankingTable ul.table li p:nth-child(1), .integral .RankingTable ul.table li p:nth-child(2) {
@@ -461,7 +462,7 @@
     font-size: .26rem;
     text-align: justify;
     padding: .4rem 0.5rem .72rem;
-    background: url('../../images/summer-plan/bg-05-3.png') no-repeat center center;
+    /* background: url('../../images/summer-plan/bg-05-3.png') no-repeat center center; */
     background-size: cover;
   }
   .iosTip {
@@ -473,7 +474,7 @@
     background: #0d6f52;
   }
   .bg-04 {
-    background: url('../../images/summer-plan/bg-04-1.png') no-repeat center center;
+    /* background: url('../../images/summer-plan/bg-04-1.png') no-repeat center center; */
     background-size: cover;
   }
   .rule-btn {

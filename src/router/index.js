@@ -5,29 +5,29 @@ const Invite = r => require.ensure([], () => r(require('../components/activity/i
 const ActivityReward = r => require.ensure([], () => r(require('../components/activity/reward.vue')), 'Invite')
 const Lottery = r => require.ensure([], () => r(require('../components/activity/lottery.vue')), 'Lottery')
 const LotteryRecord = r => require.ensure([], () => r(require('../components/activity/lotteryRecord.vue')), 'Lottery')
-const CoolRanking = r => require.ensure([], () => r(require('../components/activity/coolRanking.vue')), 'CoolRanking')
-const IntegralDetail = r => require.ensure([], () => r(require('../components/activity/integralDetail.vue')), 'CoolRanking')
-const Home = r => require.ensure([], () => r(require('../components/Home.vue')), 'others')
-const About = r => require.ensure([], () => r(require('../components/about.vue')), 'About')
+const CoolRanking = r => require.ensure([], () => r(require('../components/activity/coolRanking.vue')), 'CoolSummerPlan')
+const IntegralDetail = r => require.ensure([], () => r(require('../components/activity/integralDetail.vue')), 'CoolSummerPlan')
+const CoolSummerPlan = r => require.ensure([], () => r(require('../components/activity/cool-summer-plan.vue')), 'CoolSummerPlan')
 const Novice = r => require.ensure([], () => r(require('../components/activity/novice.vue')), 'Novice')
+const About = r => require.ensure([], () => r(require('../components/about.vue')), 'About')
+const Safe = r => require.ensure([], () => r(require('../components/safe.vue')), 'Safe')
+const Home = r => require.ensure([], () => r(require('../components/Home.vue')), 'others')
+const NoticeDetail = r => require.ensure([], () => r(require('../components/user-center/noticeDetail.vue')), 'others')
+const bankCardLimit = r => require.ensure([], () => r(require('../components/user-center/bankCardLimit.vue')), 'others')
+const AssignmentList = r => require.ensure([], () => r(require('../components/user-center/assignmentList.vue')), 'others')
 const HelpCenter = r => require.ensure([], () => r(require('../components/user-center/helpCenter.vue')), 'userCenter')
 const Help = r => require.ensure([], () => r(require('../components/user-center/help.vue')), 'userCenter')
 const Question = r => require.ensure([], () => r(require('../components/user-center/question.vue')), 'Question')
 const Feedback = r => require.ensure([], () => r(require('../components/user-center/feedback.vue')), 'Feedback')
-const NoticeDetail = r => require.ensure([], () => r(require('../components/user-center/noticeDetail.vue')), 'others')
-const bankCardLimit = r => require.ensure([], () => r(require('../components/user-center/bankCardLimit.vue')), 'others')
 const InviteRebate = r => require.ensure([], () => r(require('../components/user-center/inviteRebate.vue')), 'InviteRebate')
 const inviteRebateList = r => require.ensure([], () => r(require('../components/user-center/inviteRebateList.vue')), 'InviteRebate')
-const AssignmentList = r => require.ensure([], () => r(require('../components/user-center/assignmentList.vue')), 'others')
+const AssignmentQuestion = r => require.ensure([], () => r(require('../components/assignmentQuestion.vue')), 'Question')
 const RegisterAgree = r => require.ensure([], () => r(require('../components/registerAgree.vue')), 'RegisterAgree')
 const AssignmentAgree = r => require.ensure([], () => r(require('../components/assignmentAgree.vue')), 'AssignmentAgree')
 const ServiceAgree = r => require.ensure([], () => r(require('../components/serviceAgree.vue')), 'ServiceAgree')
-const AssignmentQuestion = r => require.ensure([], () => r(require('../components/assignmentQuestion.vue')), 'Question')
 const BusinessSuccess = r => require.ensure([], () => r(require('../components/businessSuccess.vue')), 'BusinessSuccess')
 const BankCustody = r => require.ensure([], () => r(require('../components/bankCustody.vue')), 'BankCustody')
-const Safe = r => require.ensure([], () => r(require('../components/safe.vue')), 'Safe')
 const BindWechat = r => require.ensure([], () => r(require('../components/bindWechat.vue')), 'BindWechat')
-const CoolSummerPlan = r => require.ensure([], () => r(require('../components/activity/cool-summer-plan.vue')), 'CoolSummerPlan')
 Vue.use(Router)
 const routes = [
   {
@@ -111,10 +111,34 @@ const routes = [
     meta: {title: '我的奖励'}
   },
   {
+    path: '/user-center/bankcard-limit',
+    name: 'bankCardLimit',
+    component: bankCardLimit,
+    meta: {title: '银行卡限额'}
+  },
+  {
+    path: '/user-center/assignment-list/:number',
+    name: 'AssignmentList',
+    component: AssignmentList,
+    meta: {title: '转让记录'}
+  },
+  {
+    path: '/user-center/messages/:id',
+    name: 'NoticeDetail',
+    component: NoticeDetail,
+    meta: {title: '公告详情'}
+  },
+  {
     path: '/activity/novice-landing',
     name: 'Novice',
     component: Novice,
     meta: {title: '新手大礼包'}
+  },
+  {
+    path: '/activity/cool-summer-plan',
+    name: 'CoolSummerPlan',
+    component: CoolSummerPlan,
+    meta: {title: '夏日清凉计划'}
   },
   {
     path: '/activity/cool-Ranking',
@@ -165,34 +189,10 @@ const routes = [
     meta: {title: '安全保障'}
   },
   {
-    path: '/user-center/messages/:id',
-    name: 'NoticeDetail',
-    component: NoticeDetail,
-    meta: {title: '公告详情'}
-  },
-  {
     path: '/bind-wechat',
     name: 'BindWechat',
     component: BindWechat,
     meta: {title: '绑定微信有钱领'}
-  },
-  {
-    path: '/user-center/bankcard-limit',
-    name: 'bankCardLimit',
-    component: bankCardLimit,
-    meta: {title: '银行卡限额'}
-  },
-  {
-    path: '/user-center/assignment-list/:number',
-    name: 'AssignmentList',
-    component: AssignmentList,
-    meta: {title: '转让记录'}
-  },
-  {
-    path: '/activity/cool-summer-plan',
-    name: 'CoolSummerPlan',
-    component: CoolSummerPlan,
-    meta: {title: '夏日清凉计划'}
   },
   {
     path: '*',

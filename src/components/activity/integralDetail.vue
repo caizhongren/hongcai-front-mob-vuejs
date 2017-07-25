@@ -1,12 +1,12 @@
 <template>
   <div class="integral-details" v-auto-height>
     <div>
-      <img src="../../images/summer/detail-top.png" alt="" class="display-bl margin-auto" width="100%">
+      <img src="../../images/summer-plan/detail-top.png" alt="" class="display-bl margin-auto" width="100%">
     </div>
     <div class="detail-list">
-      <img src="../../images/summer/integral-detail.png" alt="" class="display-bl margin-b-0p2" width="95%">
+      <img src="../../images/summer-plan/integral-detail.png" alt="" class="display-bl margin-b-0p2" width="95%">
       <div class="table-wrap">
-        <img src="../../images/summer/list-line.png" alt="" class="top-line">
+        <img src="../../images/summer-plan/list-line.png" alt="" class="top-line">
         <table>
           <thead>
             <tr>
@@ -18,7 +18,7 @@
           <tbody>
             <tr>
               <td>
-                <img src="../../images/summer/select.png" alt="" width="40%" class="display-bl margin-auto">
+                <img src="../../images/summer-plan/select.png" alt="" width="40%" class="display-bl margin-auto">
                 <span>
                   宏财精选
                 </span>
@@ -30,7 +30,7 @@
             </tr>
             <tr>
               <td>
-                <img src="../../images/summer/honor.png" alt="" width="40%" class="display-bl margin-auto">
+                <img src="../../images/summer-plan/honor.png" alt="" width="40%" class="display-bl margin-auto">
                 <span>
                   宏财尊贵
                 </span>
@@ -71,7 +71,7 @@
   .integral-details {
     width: 100%;
     overflow-x: hidden;
-    background: url(../../images/summer/summer-bg.png) repeat-y 0 0;
+    background: url(../../images/summer-plan/bg-02-1.png) repeat-y center center;
   }
   .margin-b-0p2 {
     margin: -.25rem auto .4rem;
