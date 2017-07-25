@@ -521,7 +521,7 @@
 </template>
 <script>
   export default {
-    props: ['token'],
+    // props: ['token'],
     data () {
       return {
         projectNumber: '',
@@ -531,7 +531,8 @@
         LenderNames: Array,
         contractType: Number,
         status: String,
-        isLoan: 0
+        isLoan: 0,
+        token: '9c438068699b1c092f2e65895feebaba8bc575a4dec742dd'
       }
     },
     created: function () {
@@ -540,6 +541,7 @@
       this.getProjectBill()
       this.contractTemplate()
       alert(this.contracts.contractNumber)
+      alert(this.token)
     },
     watch: {
       'token': function (val) {
@@ -600,6 +602,7 @@
             var LenderNames = Array.from(new Set(name))
             that.LenderNames = LenderNames
             localStorage.setItem('contracts', res.data)
+            alert(that.contracts.contractNumber)
             console.log(localStorage.getItem('contracts').contractNumber)
           }
         })
