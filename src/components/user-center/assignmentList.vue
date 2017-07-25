@@ -7,7 +7,7 @@
     </ul>
     <ul class="list" v-show="showOrder">
       <li v-for="order in assignmentOrder">
-        <span>{{order.userName}}{{assignmentOrderList.length}}</span>
+        <span>{{order.userName}}</span>
         <span>{{order.orderAmount}}</span>
         <span>{{order.createTime | date}}</span>
       </li>
