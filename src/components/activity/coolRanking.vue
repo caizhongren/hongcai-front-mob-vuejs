@@ -2,7 +2,7 @@
   <div class="runking" v-auto-height>
     <div class="runking-list">
        <img src="../../images/summer/list-line.png" alt="" class="top-line">
-       <table>
+       <table class="header">
          <thead>
           <tr>
             <td>名次</td>
@@ -104,7 +104,7 @@
   .runking-list {
     padding: 0 .45rem;
     position: relative;
-    height: 92%;
+    height: 85%;
   }
   .table-wrap {
     height: 80%;
@@ -123,9 +123,12 @@
     background-color: #fff;
     width: 100%;
   }
+  table.header {
+    box-shadow: 0 10px 10px #eee inset;
+  }
   thead td {
     height: .7rem;
-    line-height: 1rem;
+    line-height: .6rem;
     padding-top: .3rem;
     color: #2aafa0;
     font-size: .33rem;

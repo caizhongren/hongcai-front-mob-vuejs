@@ -4,7 +4,7 @@
       <img src="../../images/summer/detail-top.png" alt="" class="display-bl margin-auto" width="100%">
     </div>
     <div class="detail-list">
-      <img src="../../images/summer/integral-detail.png" alt="" class="display-bl margin-b-0p2" width="84%">
+      <img src="../../images/summer/integral-detail.png" alt="" class="display-bl margin-b-0p2" width="95%">
       <div class="table-wrap">
         <img src="../../images/summer/list-line.png" alt="" class="top-line">
         <table>
@@ -74,7 +74,7 @@
     background: url(../../images/summer/summer-bg.png) repeat-y 0 0;
   }
   .margin-b-0p2 {
-    margin: 0 auto .4rem;
+    margin: -.25rem auto .4rem;
   }
   p.statement {
     text-align: justify;
@@ -91,12 +91,13 @@
     background-color: #fff;
     border-radius: .1rem;
     padding: 0 1.5%;
+    box-shadow: 0 10px 10px #eee inset;
   }
   .table-wrap .top-line {
     position: absolute;
-    width: 107%;
+    width: 106%;
     top: -.2rem;
-    left: -.2rem;
+    left: -.15rem;
   }
   thead td{
     height: 1.2rem;
