@@ -169,7 +169,8 @@
     <div class="iosTip" v-if="isIOS">该活动与设备生产商Apple Inc.公司无关</div>
     <img class="rule-btn" src="../../images/summer-plan/rule-btn.png" alt="" width="22%" @click="ruleSelect">
     <!-- 活动规则弹窗 -->
-    <div class="dialog" v-if="showRule">
+    <div class="dialog" v-if="showRule" v-auto-height>
+      <img src="../../images/summer-plan/close.png" alt="" width="8%" class="closeRule"  @click="ruleSelect">
       <div class="ruleBox">
         <img src="../../images/summer-plan/close.png" alt="" width="8%" class="closeRule"  @click="ruleSelect">
         <div class="rule">
@@ -207,7 +208,7 @@
   </div>
 </template>
 <script>
-  import {Utils, bridgeUtil} from '../../service/Utils'
+  import {Utils, bridgeUtil, ModalHelper} from '../../service/Utils'
   export default {
     name: 'CoolSummerPlan',
     props: ['token'],
@@ -219,16 +220,25 @@
       }
     },
     created: function () {
-
     },
     methods: {
       ruleSelect: function () {
         this.showRule = !this.showRule
-        document.querySelector('.CoolSummerPlan').classList = this.showRule ? 'CoolSummerPlan position-fix' : 'CoolSummerPlan'
+        if (this.showRule) {
+          ModalHelper.afterOpen()
+        } else {
+          ModalHelper.beforeClose()
+        }
+        // document.querySelector('.CoolSummerPlan').classList = this.showRule ? 'CoolSummerPlan position-fix' : 'CoolSummerPlan'
       },
       receive: function () {
         this.receiveSuccess = !this.receiveSuccess
-        document.querySelector('.CoolSummerPlan').classList = this.receiveSuccess ? 'CoolSummerPlan position-fix' : 'CoolSummerPlan'
+        if (this.receiveSuccess) {
+          ModalHelper.afterOpen()
+        } else {
+          ModalHelper.beforeClose()
+        }
+        // document.querySelector('.CoolSummerPlan').classList = this.receiveSuccess ? 'CoolSummerPlan position-fix' : 'CoolSummerPlan'
       },
       toCoolRank: function () {
         this.$router.push({name: 'CoolRanking'})
@@ -283,11 +293,13 @@
     top: 0;
     bottom: 0;
     background: rgba(0, 0, 0, .8);
+    -webkit-overflow-scrolling: touch;
+    overflow-y: hidden !important;
   }
   .closeRule {
-    position: absolute;
+    position: fixed; 
     right: .8rem;
-    top: .78rem;
+    top: 0.75rem;
   }
   .ruleBox {
     width: 5.72rem;
