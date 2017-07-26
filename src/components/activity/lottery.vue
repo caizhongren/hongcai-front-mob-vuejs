@@ -62,7 +62,7 @@
       </div>
     </div>
     <!--中奖弹窗-->
-    <div class="share-page-breakWishLayer showDrawBox" v-show="showDrawBox">
+    <div class="mask-common showDrawBox" v-show="showDrawBox">
       <div class="draw-box">
         <!-- 抽奖 获得奖励-->
         <div class="receive-draw" v-if="receiveDraw">
@@ -492,17 +492,6 @@
     color: #000;
     margin-bottom: .23rem;
   }
-
-  /* .share-page-breakWishLayer {
-    position: fixed;
-    top: 0;
-    z-index: 999999;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    background-color: rgba(0, 0, 0, 0.8);
-  } */
   /*中奖弹窗*/
   .draw-box {
     text-align: center;
