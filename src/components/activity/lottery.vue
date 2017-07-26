@@ -62,7 +62,7 @@
       </div>
     </div>
     <!--中奖弹窗-->
-    <div class="share-page-breakWishLayer showDrawBox" v-show="showDrawBox">
+    <div class="mask-common showDrawBox" v-show="showDrawBox">
       <div class="draw-box">
         <!-- 抽奖 获得奖励-->
         <div class="receive-draw" v-if="receiveDraw">
@@ -90,7 +90,7 @@
       </div>
     </div>
     <!--活动规则-->
-    <div class="share-page-breakWishLayer text-center" v-show="showRules">
+    <div class="mask-common text-center" v-show="showRules">
       <div class="rule-box">
         <div class="rule-title">
           <img src="../../images/lottery/rule-title.png" width="50%">
@@ -492,31 +492,20 @@
     color: #000;
     margin-bottom: .23rem;
   }
-
-  .share-page-breakWishLayer {
-    position: fixed;
-    top: 0;
-    z-index: 999999;
-    bottom: -2px;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    background-color: rgba(0, 0, 0, 0.8);
-  }
   /*中奖弹窗*/
   .draw-box {
     text-align: center;
   }
   .draw-box .receive-draw {
     text-align: center;
-    padding: 22% 0 .4rem;
+    padding: 16% 0 .4rem;
     /*display: none;*/
   }
   .draw-box .receive-draw .getPrize {
     background: url('../../images/lottery/receive-draw-02.png') no-repeat center center;
     background-size: contain;
-    height: 4.5rem;
-    padding-top: 2.45rem;
+    height: 4rem;
+    padding-top: 2.2rem;
     margin-top: .5rem;
     font-size: .24rem;
   }

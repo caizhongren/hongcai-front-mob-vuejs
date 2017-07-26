@@ -53,7 +53,7 @@
             <div class="invite-rule" @click="showRuleBox"></div>
         </div>
         <!-- 活动规则 -->
-        <div class="invite-Rulebox" v-if="showRules">
+        <div class="invite-Rulebox mask-common" v-if="showRules">
             <div class="ruleBox width-100 height-100 position-re bg-grey0p5" >
                 <div class="box">
                     <div class="rec-act-rule bg-white border-ra-0p5">
@@ -260,17 +260,8 @@ export default {
         right: 0rem;
     }
     .invite-Rulebox {
-        position: fixed;
-        top: 0;
-        z-index: 99999;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: 0 auto;
         padding: 0 .3rem;
         background: rgba(0,0,0,.5);
-        -webkit-overflow-scrolling: touch;
-        overflow-y: hidden !important;
     }
     .ruleBox {
         background: url('../../images/invite/invite-rule-bg.png') no-repeat center center;

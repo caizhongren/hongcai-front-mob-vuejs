@@ -172,7 +172,7 @@
     <div class="iosTip" v-if="isIOS">该活动与设备生产商Apple Inc.公司无关</div>
     <img class="rule-btn" src="../../images/summer-plan/rule-btn.png" alt="" width="22%" @click="ruleSelect">
     <!-- 活动规则弹窗 -->
-    <div class="dialog" v-if="showRule" v-auto-height>
+    <div class="dialog mask-common" v-if="showRule" v-auto-height>
       <img src="../../images/summer-plan/close.png" alt="" width="8%" class="closeRule"  @click="ruleSelect">
       <div class="ruleBox">
         <img src="../../images/summer-plan/close.png" alt="" width="8%" class="closeRule"  @click="ruleSelect">
@@ -199,7 +199,7 @@
       </div>
     </div>
     <!-- 领取成功弹窗 -->
-    <div class="dialog" v-if="receiveBG">
+    <div class="dialog mask-common" v-if="receiveBG">
       <div class="successBg">
         <div class="receive" v-if="token !== '' && receiveSuccess">
           <img src="../../images/summer-plan/receive.png" alt="" width="50%">
@@ -383,17 +383,10 @@
     background-size: 100% 100%;
     margin: 0 auto;
   }
-  .dialog {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, .8);
+  /* .dialog {
     -webkit-overflow-scrolling: touch;
     overflow-y: hidden !important;
-    z-index: 9999;
-  }
+  } */
   .closeRule {
     position: absolute; 
     right: .8rem;
