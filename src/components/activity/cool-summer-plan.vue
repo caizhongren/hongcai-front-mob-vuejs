@@ -294,7 +294,7 @@
     z-index: 9999;
   }
   .closeRule {
-    position: fixed; 
+    position: absolute; 
     right: .8rem;
     top: 0.75rem;
   }
