@@ -16,78 +16,72 @@
       <img src="../../images/summer-plan/gwbt.png" alt="" width="50%">
     </div>
     <ul class="cashCoupons">
-      <div class="cash-bg01">
-        <li>
-          <div class="amount">
-            <span>元</span>
-            <img src="../../images/summer-plan/8.png" alt="" width="13%"> 
-          </div>
-          <div class="conditions">
-            <p>投资项目 &nbsp;&nbsp;&nbsp; 精选</p>
-            <p>起投金额 &nbsp;&nbsp;&nbsp; 5 千</p>
-          </div>
-          <div class="getCoupon" @click="receive">点击领取</div>
-        </li>
-        <li>
-          <div class="amount">
-            <span>元</span>
-            <img src="../../images/summer-plan/18-2.png" alt="" width="18%"> 
-          </div>
-          <div class="conditions">
-            <p>投资项目 &nbsp;&nbsp;&nbsp; 尊贵</p>
-            <p>起投金额 &nbsp;&nbsp;&nbsp; 3 千</p>
-          </div>
-          <div class="getCoupon" @click="receive">点击领取</div>
-        </li>
-      </div>
-      <div class="cash-bg02">
-        <li>
-          <div class="amount">
-            <span>元</span>
-            <img src="../../images/summer-plan/18-1.png" alt="" width="18%"> 
-          </div>
-          <div class="conditions">
-            <p>投资项目 &nbsp;&nbsp;&nbsp; 精选</p>
-            <p>起投金额 &nbsp;&nbsp;&nbsp; 1 万</p>
-          </div>
-          <div class="getCoupon" @click="receive">点击领取</div>
-        </li>
-        <li>
-          <div class="amount">
-            <span>元</span>
-            <img src="../../images/summer-plan/78.png" alt="" width="26%"> 
-          </div>
-          <div class="conditions">
-            <p>投资项目 &nbsp;&nbsp;&nbsp; 尊贵</p>
-            <p>起投金额 &nbsp;&nbsp;&nbsp; 1 万</p>
-          </div>
-          <div class="getCoupon" @click="receive">点击领取</div>
-        </li>
-      </div>
-      <div class="cash-bg03">
-        <li>
-          <div class="amount">
-            <span>元</span>
-            <img src="../../images/summer-plan/58.png" alt="" width="26%"> 
-          </div>
-          <div class="conditions">
-            <p>投资项目 &nbsp;&nbsp;&nbsp; 精选</p>
-            <p>起投金额 &nbsp;&nbsp;&nbsp; 3 万</p>
-          </div>
-          <div class="getCoupon" @click="receive">点击领取</div>
-        </li>
-        <li>
-          <div class="amount">
-            <span>元</span>
-            <img src="../../images/summer-plan/158.png" alt="" width="31%"> 
-          </div>
-          <div class="conditions">
-            <p>投资项目 &nbsp;&nbsp;&nbsp; 尊贵</p>
-            <p>起投金额 &nbsp;&nbsp;&nbsp; 2 万</p>
-          </div>
-          <div class="getCoupon" @click="receive">点击领取</div>
-        </li>
-      </div>
+      <li>
+        <div class="amount">
+          <span>元</span>
+          <img src="../../images/summer-plan/8.png" alt="" width="13%"> 
+        </div>
+        <div class="conditions">
+          <p>投资项目 &nbsp;&nbsp;&nbsp; 精选</p>
+          <p>起投金额 &nbsp;&nbsp;&nbsp; 5 千</p>
+        </div>
+        <div class="getCoupon" @click="receive">点击领取</div>
+      </li>
+      <li>
+        <div class="amount">
+          <span>元</span>
+          <img src="../../images/summer-plan/18-2.png" alt="" width="18%"> 
+        </div>
+        <div class="conditions">
+          <p>投资项目 &nbsp;&nbsp;&nbsp; 尊贵</p>
+          <p>起投金额 &nbsp;&nbsp;&nbsp; 3 千</p>
+        </div>
+        <div class="getCoupon" @click="receive">点击领取</div>
+      </li>
+      <li>
+        <div class="amount">
+          <span>元</span>
+          <img src="../../images/summer-plan/18-1.png" alt="" width="18%"> 
+        </div>
+        <div class="conditions">
+          <p>投资项目 &nbsp;&nbsp;&nbsp; 精选</p>
+          <p>起投金额 &nbsp;&nbsp;&nbsp; 1 万</p>
+        </div>
+        <div class="getCoupon" @click="receive">点击领取</div>
+      </li>
+      <li>
+        <div class="amount">
+          <span>元</span>
+          <img src="../../images/summer-plan/78.png" alt="" width="26%"> 
+        </div>
+        <div class="conditions">
+          <p>投资项目 &nbsp;&nbsp;&nbsp; 尊贵</p>
+          <p>起投金额 &nbsp;&nbsp;&nbsp; 1 万</p>
+        </div>
+        <div class="getCoupon" @click="receive">点击领取</div>
+      </li>
+      <li>
+        <div class="amount">
+          <span>元</span>
+          <img src="../../images/summer-plan/58.png" alt="" width="26%"> 
+        </div>
+        <div class="conditions">
+          <p>投资项目 &nbsp;&nbsp;&nbsp; 精选</p>
+          <p>起投金额 &nbsp;&nbsp;&nbsp; 3 万</p>
+        </div>
+        <div class="getCoupon" @click="receive">点击领取</div>
+      </li>
+      <li>
+        <div class="amount">
+          <span>元</span>
+          <img src="../../images/summer-plan/158.png" alt="" width="31%"> 
+        </div>
+        <div class="conditions">
+          <p>投资项目 &nbsp;&nbsp;&nbsp; 尊贵</p>
+          <p>起投金额 &nbsp;&nbsp;&nbsp; 2 万</p>
+        </div>
+        <div class="getCoupon" @click="receive">点击领取</div>
+      </li>
     </ul>
     <div class="RankingList">
       <div class="title">
@@ -99,35 +93,34 @@
         <br><br>活动结束后，根据所获积分名次，可以获得<span class="yell-ft ft-bold">所获清凉积分 x 1000 x 相应倍数的特权本金奖励</span>(有效期1天)
       </div>
     </div>
-    <div class="bg-04">
-      <div class="RankingTable">
-        <ul class="table">
-          <li>
-            <p>名次</p>
-            <p>可获特权本金奖励</p>
-          </li>
-          <li>
-            <p>第1名</p>
-            <p>5倍</p>
-          </li>
-          <li>
-            <p>第2～5名</p>
-            <p>3倍</p>
-          </li>
-          <li>
-            <p>第6～10名</p>
-            <p>2倍</p>
-          </li>
-          <li>
-            <p>第11～50名</p>
-            <p>1.5倍</p>
-          </li>
-          <li>
-            <p>第50名外</p>
-            <p>1倍</p>
-          </li>
-        </ul>
-      </div>
+    <div class="RankingTable">
+      <div class="mask"></div>
+      <ul class="table">
+        <li>
+          <p>名次</p>
+          <p>可获特权本金奖励</p>
+        </li>
+        <li>
+          <p>第1名</p>
+          <p>5倍</p>
+        </li>
+        <li>
+          <p>第2～5名</p>
+          <p>3倍</p>
+        </li>
+        <li>
+          <p>第6～10名</p>
+          <p>2倍</p>
+        </li>
+        <li>
+          <p>第11～50名</p>
+          <p>1.5倍</p>
+        </li>
+        <li>
+          <p>第50名外</p>
+          <p>1倍</p>
+        </li>
+      </ul>
     </div>
     <div class="expro">
       <img src="../../images/summer-plan/expro.png" alt="" width="20%">
@@ -143,25 +136,24 @@
       <div class="title">
         <img src="../../images/summer-plan/wdqljf.png" alt="" width="50%">
       </div>
-      <div class="bg-05">
-        <div class="RankingTable">
-          <ul class="table">
-            <li>
-              <p>我当前的积分</p>
-              <p>我的清凉排名</p>
-            </li>
-            <li>
-              <p>
-                <span>50</span>
-                <br><u @click="toIntegralDetail">查看详情&gt;&gt;</u>
-              </p>
-              <p>第68名</p>
-            </li>
-          </ul>
-          <div class="needLogin" v-if="!token">
-            <p>登录后即可查看您的清凉积分及清凉排名</p>
-            <div class="gotoLogin" @click="toLogin">立即登录</div>
-          </div>
+      <div class="RankingTable">
+        <div class="mask-integral"></div>
+         <ul class="table" v-if="token !== ''">
+          <li>
+            <p>我当前的积分</p>
+            <p>我的清凉排名</p>
+          </li>
+          <li>
+            <p>
+              <span class="IntegralDetail">50</span>
+              <br><u @click="toIntegralDetail">查看详情&gt;&gt;</u>
+            </p>
+            <p>第68名</p>
+          </li>
+        </ul> 
+        <div class="needLogin" v-if="token === ''">
+          <p>登录后即可查看您的清凉积分及清凉排名</p>
+          <div class="gotoLogin" @click="toLogin">立即登录</div>
         </div>
       </div>
       <div class="updata">数据每5分钟更新一次，如出现积分相同情况时，根据投资时间先后进行排名.</div>
@@ -211,12 +203,13 @@
   import {Utils, bridgeUtil, ModalHelper} from '../../service/Utils'
   export default {
     name: 'CoolSummerPlan',
-    props: ['token'],
+    // props: ['token'],
     data () {
       return {
         showRule: false,
         isIOS: Utils.isIos(),
-        receiveSuccess: false
+        receiveSuccess: false,
+        token: '88'
       }
     },
     created: function () {
@@ -229,7 +222,6 @@
         } else {
           ModalHelper.beforeClose()
         }
-        // document.querySelector('.CoolSummerPlan').classList = this.showRule ? 'CoolSummerPlan position-fix' : 'CoolSummerPlan'
       },
       receive: function () {
         this.receiveSuccess = !this.receiveSuccess
@@ -238,7 +230,6 @@
         } else {
           ModalHelper.beforeClose()
         }
-        // document.querySelector('.CoolSummerPlan').classList = this.receiveSuccess ? 'CoolSummerPlan position-fix' : 'CoolSummerPlan'
       },
       toCoolRank: function () {
         this.$router.push({name: 'CoolRanking'})
@@ -257,9 +248,14 @@
   }
 </script>
 <style scoped>
+  .IntegralDetail {
+    position: relative;
+    top: -.2rem;
+  }
   .CoolSummerPlan {
     width: 100%;
-    background: url(../../images/summer-plan/bg-02-1.png) repeat-y center center;
+    background: url('../../images/summer-plan/bg-02-1.png') repeat-y center center;
+    font-family: Arial;
   }
   .receive {
     width: 5.72rem;
@@ -295,6 +291,7 @@
     background: rgba(0, 0, 0, .8);
     -webkit-overflow-scrolling: touch;
     overflow-y: hidden !important;
+    z-index: 9999;
   }
   .closeRule {
     position: fixed; 
@@ -341,20 +338,6 @@
   .High-temperature-subsidies {
     padding: .42rem 0 0.5rem;
     margin: 0 auto;
-    /* background: url('../../images/summer-plan/bg-01.png') no-repeat center center; */
-    background-size: cover;
-  }
-  .cash-bg01, .cash-bg02, .cash-bg03 {
-    overflow: hidden;
-  }
-  .cash-bg01 {
-    /* background: url('../../images/summer-plan/bg-02-1.png') no-repeat center center;  */
-  }
-  .cash-bg02 {
-    /* background: url('../../images/summer-plan/bg-02-2.png') no-repeat center center;  */
-  }
-  .cash-bg03 {
-    /* background: url('../../images/summer-plan/bg-02-3.png') no-repeat center center;  */
   }
   .conditions {
     text-align: center;
@@ -424,10 +407,8 @@
   .RankingList .title {
     text-align: center;
     padding: 1rem 0 .62rem;
-    /* background: url('../../images/summer-plan/bg-03-1.png') no-repeat center center;  */
   }
   .RankingList .text {
-    /* background: url('../../images/summer-plan/bg-03-2.png') no-repeat center center; */
     padding: 0 .5rem .8rem;
     line-height: .38rem;
   }
@@ -440,12 +421,25 @@
     padding: .2rem;
     border-radius: .35rem;
   }
-  .RankingTable .table {
-    background: rgba(0,0,0,.2);
+  .mask, .mask-integral {
+    background: url('../../images/summer-plan/bg-02-1.png') repeat-y center center;
     border-radius: .15rem;
-    overflow: hidden;
-    clear: both;
+    width: 5rem;
+    height: 6.1rem;
+    position: absolute;
+    z-index: 22;
+  }
+  .mask-integral {
+    height: 2.5rem;
+  }
+  .RankingTable .table {
+    background: rgba(4,90,57,.3); 
+    border-radius: .15rem;
+    overflow: hidden; 
+    clear: both; 
     padding: .25rem 0;
+    position: relative;
+    z-index: 222;
   }
   .RankingTable ul.table li p {
     float: left;
@@ -472,10 +466,12 @@
   }
   .RankingTable ul.table li:first-child p {
     color: #eaff00;
+    height: .75rem;
+    line-height: .6rem;
   }
-  .expro {
-    /* background: url('../../images/summer-plan/bg-04-2.png') no-repeat center center; */
-    background-size: cover;
+  .RankingTable ul.table li:last-child p {
+    height: .75rem;
+    line-height: 1rem;
   }
   .expro-txt {
     padding: .36rem .5rem .5rem;
@@ -484,44 +480,45 @@
     font-size: .3rem;
   }
   .gotoRanking, .gotoLogin {
-     background: url('../../images/summer-plan/ckphb-btn.png') no-repeat center center; 
+    background: url('../../images/summer-plan/ckphb-btn.png') no-repeat center center; 
     background-size: contain;
     width: 50%;
     height: .8rem;
     line-height: .85rem;
     color: #0b8979;
     font-size: .39rem;
-    margin: 0 auto;
-  }
-  .bg-05 {
-    /* background: url('../../images/summer-plan/bg-05-2.png') no-repeat center center; */
-    background-size: cover;
+    margin: 0.3rem auto 0;
   }
   .integral .title {
     padding: 1.3rem 0 .8rem;
-    /* background: url('../../images/summer-plan/bg-05-1.png') no-repeat center center; */
-    background-size: cover;
   }
   .integral .RankingTable ul.table li p:nth-child(1), .integral .RankingTable ul.table li p:nth-child(2) {
     width: 50%;
+    height: .8rem;
+    line-height: .6rem;
   }
   .integral .RankingTable ul.table li:nth-child(1) {
     font-size: .31rem;
   }
   .integral .RankingTable ul.table li:nth-child(2) p {
-    height: 1.3rem;
-    line-height: 1.3rem;
+    height: 1.2rem;
+    line-height: 1.4rem;
   }
   .integral .RankingTable ul.table li:nth-child(2) p:nth-child(1) u {
     color: #eaff00;
     position: relative;
-    top: -.85rem;
+    top: -1.1rem;
   }
-  .needLogin {
+  .RankingTable .needLogin {
     color: #effffd;
     text-align: center;
-    padding: 0 .3rem;
+    padding: 0.2rem .3rem;
     font-size: .3rem;
+    height: 2.5rem;
+    position: relative;
+    z-index: 222;
+    background: rgba(4,90,57,.3);
+    border-radius: .15rem;
   }
   .gotoLogin {
     width: 70%;
@@ -531,8 +528,6 @@
     font-size: .26rem;
     text-align: justify;
     padding: .4rem 0.5rem .72rem;
-    /* background: url('../../images/summer-plan/bg-05-3.png') no-repeat center center; */
-    background-size: cover;
   }
   .iosTip {
     text-align: center;
@@ -542,13 +537,10 @@
     line-height: 1rem;
     background: #0d6f52;
   }
-  .bg-04 {
-    /* background: url('../../images/summer-plan/bg-04-1.png') no-repeat center center; */
-    background-size: cover;
-  }
   .rule-btn {
     position: fixed;
     top: 27.5%;
     right: 0;
+    z-index: 999;
   }
 </style>
