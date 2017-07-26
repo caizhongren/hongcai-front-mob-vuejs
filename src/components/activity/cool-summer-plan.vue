@@ -13,13 +13,24 @@
       </div>
     </div>
     <div class="High-temperature-subsidies">
-      <img src="../../images/summer-plan/gwbt.png" alt="" width="50%">
+      <img src="../../images/summer-plan/gwbt.png" alt="" width="60%">
     </div>
     <ul class="cashCoupons">
-      <li>
+      <li v-for="cashCoupon in cashCoupons">
         <div class="amount">
           <span>元</span>
-          <img src="../../images/summer-plan/8.png" alt="" width="13%"> 
+          <img v-bind:src="cashCoupon.imgSrc" alt="" v-bind:style="{ width: cashCoupon.imgWidth + '%' }"> 
+        </div>
+        <div class="conditions">
+          <p>投资项目 &nbsp;&nbsp;&nbsp; {{cashCoupon.type === '5' ? '精选' : '尊贵'}}</p>
+          <p>起投金额 &nbsp;&nbsp;&nbsp; {{cashCoupon.minInvestAmount/1000 <10 ? cashCoupon.minInvestAmount/1000 +' 千' : cashCoupon.minInvestAmount/10000 >=1 ? cashCoupon.minInvestAmount/10000 +' 万' : ''}}</p>
+        </div>
+        <div class="getCoupon" @click="receive">点击领取</div>
+      </li>
+      <!-- <li>
+        <div class="amount">
+          <span>元</span>
+          <img src="../../images/summer-plan/8.png" alt="" width="13%">  
         </div>
         <div class="conditions">
           <p>投资项目 &nbsp;&nbsp;&nbsp; 精选</p>
@@ -81,11 +92,11 @@
           <p>起投金额 &nbsp;&nbsp;&nbsp; 2 万</p>
         </div>
         <div class="getCoupon" @click="receive">点击领取</div>
-      </li>
+      </li> -->
     </ul>
     <div class="RankingList">
       <div class="title">
-        <img src="../../images/summer-plan/qlphb.png" alt="" width="50%">
+        <img src="../../images/summer-plan/qlphb.png" alt="" width="60%">
       </div>
       <div class="text">
         活动期间，新增投资<span class="yell-ft ft-bold">精选项目</span>每满1000元，可获得<span class="yell-ft ft-bold">1清凉积分</span>
@@ -134,7 +145,7 @@
     </div>
     <div class="integral">
       <div class="title">
-        <img src="../../images/summer-plan/wdqljf.png" alt="" width="50%">
+        <img src="../../images/summer-plan/wdqljf.png" alt="" width="60%">
       </div>
       <div class="RankingTable">
         <div class="mask-integral"></div>
@@ -190,12 +201,12 @@
     <!-- 领取成功弹窗 -->
     <div class="dialog" v-if="receiveBG">
       <div class="successBg">
-        <div class="receive" v-if="true">
+        <div class="receive" v-if="token !== '' && receiveSuccess">
           <img src="../../images/summer-plan/receive.png" alt="" width="50%">
           <p>可前往我的优惠券查看</p>
           <div class="IKnowBtn" @click="receive">我知道了</div>
         </div>
-        <div class="UpperLimit" v-if="false">
+        <div class="UpperLimit" v-if="token !== '' && UpperLimit">
           <p>您已经领取<span>10次</span>啦! <br>明天再来哦～</p> 
           <div class="IKnowBtn" @click="receive">我知道了</div>
         </div>
@@ -212,13 +223,53 @@
   import {Utils, bridgeUtil, ModalHelper} from '../../service/Utils'
   export default {
     name: 'CoolSummerPlan',
-    // props: ['token'],
+    props: ['token'],
     data () {
       return {
         showRule: false,
         isIOS: Utils.isIos(),
         receiveBG: false,
-        token: ''
+        receiveSuccess: false,
+        UpperLimit: false,
+        cashCoupons: [
+          {
+            value: 8,
+            type: '5',
+            minInvestAmount: 5000,
+            imgSrc: '../../../static/images/8.png',
+            imgWidth: 13
+          }, {
+            value: 18,
+            type: '6',
+            minInvestAmount: 3000,
+            imgSrc: '../../../static/images/18-2.png',
+            imgWidth: 18
+          }, {
+            value: 18,
+            type: '5',
+            minInvestAmount: 10000,
+            imgSrc: '../../../static/images/18-1.png',
+            imgWidth: 18
+          }, {
+            value: 78,
+            type: '6',
+            minInvestAmount: 10000,
+            imgSrc: '../../../static/images/78.png',
+            imgWidth: 26
+          }, {
+            value: 58,
+            type: '5',
+            minInvestAmount: 30000,
+            imgSrc: '../../../static/images/58.png',
+            imgWidth: 26
+          }, {
+            value: 158,
+            type: '6',
+            minInvestAmount: 20000,
+            imgSrc: '../../../static/images/158.png',
+            imgWidth: 31
+          }
+        ]
       }
     },
     created: function () {
@@ -239,6 +290,22 @@
         } else {
           ModalHelper.beforeClose()
         }
+        if (this.token === '') {
+          return
+        }
+        this.$http.post('/hongcai/rest/lotteries/draw', {
+          token: this.token
+        }).then((response) => {
+          if (response.data && response.data.ret === -1) {
+            this.receiveSuccess = true
+            this.UpperLimit = false
+            if (response.data.code === -1300) {
+              this.UpperLimit = true
+            }
+          } else {
+            this.UpperLimit = true
+          }
+        })
       },
       toCoolRank: function () {
         this.$router.push({name: 'CoolRanking'})
@@ -247,6 +314,7 @@
         this.$router.push({name: 'IntegralDetail'})
       },
       toLogin: function () {
+        this.receiveBG ? this.receiveBG = false : null
         var regesterHandCallback = function (data) {
           data = Utils.isAndroid() ? JSON.parse(data) : data
           window.location.replace(window.location.pathname)
@@ -340,7 +408,7 @@
     overflow-y: scroll;
     padding: .63rem;
     color: #effffd;
-    font-size: .3rem;
+    font-size: .26rem;
     text-align: justify;
     line-height: .4rem;
     margin: 1.8rem auto;
@@ -358,15 +426,16 @@
   .time {
     position: absolute;
     bottom: .65rem;
-    left: 1.5rem;
+    left: 1.7rem;
     color: #fff;
-    background: rgba(0, 0, 0, .3);
+    background: #139066;
     padding: .026rem .2rem;
     text-align: center;
     font-size: .2rem;
     height: .34rem;
-    line-height: .34rem;
+    line-height: .33rem;
     border-radius: .5rem;
+    transform: scale(.85); 
   }
   .High-temperature-subsidies {
     padding: .42rem 0 0.5rem;
@@ -401,22 +470,21 @@
   }
   .cashCoupons .amount span {
     display: inline-block;
-    width: .33rem;
-    height: .33rem;
-    line-height: .36rem;
+    width: .25rem;
+    height: .25rem;
+    line-height: .3rem;
     position: absolute;
-    margin-left: -.5rem;
-    font-size: .22rem;
+    margin-left: -.35rem;
+    font-size: .2rem;
     border-radius: 50%;
-    font-weight: bold;
   }
   .cashCoupons li:nth-child(odd) .amount span {
     color: #14ab9d;
-    border: 2px solid #14ab9d;
+    border: 1px solid #14ab9d;
   }
   .cashCoupons li:nth-child(even) .amount span {
     color: #dca665;
-    border: 2px solid #dca665;
+    border: 1px solid #dca665;
   }
   .getCoupon {
     width: 1.31rem;
@@ -434,7 +502,7 @@
   }
   .RankingList {
     color: #effffd;
-    font-size: .3rem;
+    font-size: .26rem;
     text-align: justify;
   }
   .RankingList .title {
@@ -479,7 +547,7 @@
     height: 1rem;
     line-height: 1rem;
     color: #effffd;
-    font-size: .3rem;
+    font-size: .26rem;
     text-align: center;
   }
   .RankingTable ul.table li p:nth-child(1) {
@@ -510,7 +578,7 @@
     padding: .36rem .5rem .5rem;
     color: #effffd;
     text-align: justify;
-    font-size: .3rem;
+    font-size: .26rem;
   }
   .gotoRanking, .gotoLogin {
     background: url('../../images/summer-plan/ckphb-btn.png') no-repeat center center; 
@@ -519,7 +587,7 @@
     height: .8rem;
     line-height: .85rem;
     color: #0b8979;
-    font-size: .39rem;
+    font-size: .3rem;
     margin: 0.3rem auto 0;
   }
   .integral .title {
@@ -546,7 +614,7 @@
     color: #effffd;
     text-align: center;
     padding: 0.2rem .3rem;
-    font-size: .3rem;
+    font-size: .26rem;
     height: 2.5rem;
     position: relative;
     z-index: 222;
@@ -558,14 +626,14 @@
   }
   .updata {
     color: #effffd;
-    font-size: .26rem;
+    font-size: .22rem;
     text-align: justify;
     padding: .4rem 0.5rem .72rem;
   }
   .iosTip {
     text-align: center;
     color: #effffd;
-    font-size: .24rem;
+    font-size: .22rem;
     height: 1rem;
     line-height: 1rem;
     background: #0d6f52;
