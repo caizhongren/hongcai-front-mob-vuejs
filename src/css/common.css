@@ -158,6 +158,9 @@ input,button,select,textarea {
     visibility: hidden;
     clear: both;
 }
+.clearfix {
+  clear: both;
+}
 /*font color*/
 
 .ft-444 {
@@ -170,40 +173,6 @@ input,button,select,textarea {
   color: #ff2424;
 }
 /*font size*/
-/*@media screen and (min-width: 320px) {
-  .ft-24 {
-    font-size: 14px;
-  }
-  .ft-28 {
-    font-size: 15px;
-  }
-  .ft-30 {
-    font-size: 16px;
-  }
-}*/
-/*@media screen and (min-width: 375px) {
-  .ft-24 {
-    font-size: 15px;
-  }
-  .ft-28 {
-    font-size: 16px;
-  }
-  .ft-30 {
-    font-size: 17px;
-  }
-}*/
-/*@media screen and (min-width: 410px) {
-  .ft-24 {
-    font-size: 15px;
-  }
-  .ft-28 {
-    font-size: 16px;
-  }
-  .ft-30 {
-    font-size: 17px;
-  }
-}*/
-
 /*font family*/
 .ft-Arial {
   font-family: Arial;
@@ -225,19 +194,18 @@ input,button,select,textarea {
 .margin-auto {
   margin: 0 auto;
 }
-.clearfix {
-  clear: both;
-}
 
-/*公用mask*/
+/*公用蒙层*/
 .mask-common {
   position: fixed;
   top: 0;
   z-index: 999999;
-  bottom: 0;
+  bottom: -5px;
   left: 0;
   right: 0;
   max-width: 640px;
   margin: 0 auto;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.8);
+  -webkit-overflow-scrolling: touch;
+  overflow-y: hidden !important;
 }
