@@ -509,14 +509,14 @@
   }
   .draw-box .receive-draw {
     text-align: center;
-    padding: 22% 0 .4rem;
+    padding: 16% 0 .4rem;
     /*display: none;*/
   }
   .draw-box .receive-draw .getPrize {
     background: url('../../images/lottery/receive-draw-02.png') no-repeat center center;
     background-size: contain;
-    height: 4.5rem;
-    padding-top: 2.45rem;
+    height: 4rem;
+    padding-top: 2.2rem;
     margin-top: .5rem;
     font-size: .24rem;
   }
