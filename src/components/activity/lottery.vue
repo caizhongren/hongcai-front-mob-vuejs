@@ -150,6 +150,7 @@
     },
     created: function () {
       this.getLuckyUsers()
+      alert(process.env.NODE_ENV)
       if (this.token) {
         this.getDrawCount(this.token)
       }

@@ -30,7 +30,7 @@ module.exports = {
     proxyTable: {
       '/hongcai': {
         // target: 'http://192.168.70.63:8080', // 目标域名
-        target: 'http://m.test321.hongcai.com',
+        target: process.env.NODE_ENV === 'production' ? 'http://m.hongcai.com' : 'http://m.test321.hongcai.com',
         changeOrigin: true,
         pathRewrite: {
           '^/hongcai': '/hongcai' // 规则, 见下面说明
