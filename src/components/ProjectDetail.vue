@@ -497,6 +497,7 @@
   .scroll {
     overflow: scroll;
     background: #fff;
+    -webkit-overflow-scrolling: touch;
     /*height: 8.5rem;*/
   }
   #product-page1.animate, .product-page2.animate, .scroll.animate {

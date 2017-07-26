@@ -114,6 +114,7 @@
     overflow-y: scroll;
     background-color: #fff;
     border-radius: 0 0 .1rem .1rem;
+    -webkit-overflow-scrolling: touch;
   }
   .list-herder-wrap {
     padding: 0 1.5%;

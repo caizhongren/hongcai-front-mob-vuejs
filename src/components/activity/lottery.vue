@@ -46,7 +46,7 @@
           </div>
         </div>
       <div class="lottery-other">
-          <p class="display-inb" @click="ruleBox(showRules)">活动规则</p>
+          <p class="display-inb" @click="ruleBox()">活动规则</p>
           <p class="display-inb" @click="toLotteryRecord()">我的奖励</p>
         </div>
         <!-- 幸运用户 -->
@@ -111,13 +111,13 @@
           </div>
         </div>
       </div>
-      <img src="../../images/lottery/close-drawBox.png" alt="关闭弹窗" width="8%" @click="ruleBox(showRules)">
+      <img src="../../images/lottery/close-drawBox.png" alt="关闭弹窗" width="8%" @click="ruleBox()">
     </div>
   </div>
 </template>
 
 <script>
-  import {Utils, ruleBox, bridgeUtil} from '../../service/Utils'
+  import {Utils, bridgeUtil, ModalHelper} from '../../service/Utils'
   import $ from 'zepto'
   import {LuckDraw} from '../../service/rect.luckdraw.js'
   export default {
@@ -213,8 +213,10 @@
         }
         this.$router.push({name: 'LotteryRecord'})
       },
-      ruleBox: function (closeBox) {
-        ruleBox.showRuleBox(document.querySelector('#lottery'), this, closeBox)
+      ruleBox: function () {
+        // ruleBox.showRuleBox(document.querySelector('#lottery'), this, closeBox)
+        this.showRules = !this.showRules
+        this.showRules ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       },
       closeDraw: function (showDrawBox) {
         this.showDrawBox = !this.showDrawBox
@@ -399,15 +401,6 @@
     -webkit-transform:translateY(-2.5rem);
     transform:translateY(-2.5rem);
   }
-  .lottery{
-    font-family: "微软雅黑" !important;
-    -webkit-touch-callout:none;  /*系统默认菜单被禁用*/   
-    -webkit-user-select:none; /*webkit浏览器*/   
-    -khtml-user-select:none; /*早期浏览器*/   
-    -moz-user-select:none;/*火狐*/   
-    -ms-user-select:none; /*IE10*/   
-    user-select:none;   
-  }
   .lottery .lottery-wrap {
     background: url('../../images/lottery/lottery-bg.jpg') 0 0 no-repeat;
     background-size: cover;
@@ -546,6 +539,7 @@
   /*规则弹窗*/
   .rule-box {
     padding: 21% .2rem .5rem;
+    -webkit-overflow-scrolling: touch;
   }
   .rule-box .rule-title {
     position: relative;

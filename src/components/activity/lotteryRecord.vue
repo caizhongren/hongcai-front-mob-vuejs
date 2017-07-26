@@ -93,7 +93,8 @@
     height: 8rem;
     margin: 0 auto;
     background: url('../../images/lottery/record-list-bg.png') 0 0 no-repeat;
-    background-size: 100% 100%; 
+    background-size: 100% 100%;
+    -webkit-overflow-scrolling: touch;
   }
   .lottery-record .lottery-list-wrap .lottery-list-header {
     width: 93%;
