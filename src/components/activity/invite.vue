@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import {Utils, InviteShareUtils, ruleBox, bridgeUtil} from '../../service/Utils'
+import {Utils, InviteShareUtils, bridgeUtil, ModalHelper} from '../../service/Utils'
 export default {
   name: 'Invite',
   data () {
@@ -148,8 +148,10 @@ export default {
   },
   methods: {
     showRuleBox: function () {
-      var $invite = document.querySelector('#invite')
-      ruleBox.showRuleBox($invite, this, this.showRules)
+    //   var $invite = document.querySelector('#invite')
+    //   ruleBox.showRuleBox($invite, this, this.showRules)
+      this.showRules = !this.showRules
+      this.showRules ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
     },
     getInvitedFriends: function () {
       this.$http({
@@ -267,6 +269,8 @@ export default {
         margin: 0 auto;
         padding: 0 .3rem;
         background: rgba(0,0,0,.5);
+        -webkit-overflow-scrolling: touch;
+        overflow-y: hidden !important;
     }
     .ruleBox {
         background: url('../../images/invite/invite-rule-bg.png') no-repeat center center;
