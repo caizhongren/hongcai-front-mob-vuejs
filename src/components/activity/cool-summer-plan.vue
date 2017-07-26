@@ -188,13 +188,22 @@
       </div>
     </div>
     <!-- 领取成功弹窗 -->
-    <div class="dialog" v-if="receiveSuccess">
-      <div class="receive">
-        <img src="../../images/summer-plan/receive.png" alt="" width="50%">
-        <p>可前往我的优惠券查看</p>
-        <!-- <p>您已经领取10次啦，明天再来哦～</p>
-        <p>登录后才可以领取哦～</p> -->
-        <div class="IKnowBtn" @click="receive">我知道了</div>
+    <div class="dialog" v-if="receiveBG">
+      <div class="successBg">
+        <div class="receive" v-if="true">
+          <img src="../../images/summer-plan/receive.png" alt="" width="50%">
+          <p>可前往我的优惠券查看</p>
+          <div class="IKnowBtn" @click="receive">我知道了</div>
+        </div>
+        <div class="UpperLimit" v-if="false">
+          <p>您已经领取<span>10次</span>啦! <br>明天再来哦～</p> 
+          <div class="IKnowBtn" @click="receive">我知道了</div>
+        </div>
+        <div class="Login" v-if="token === ''">
+          <p>登录后才可以领取哦～</p> 
+          <div class="cancel fl" @click="receive">取消</div>
+          <div class="toLogin fr" @click="toLogin">去登录</div>
+        </div>
       </div>
     </div>
   </div>
@@ -208,8 +217,8 @@
       return {
         showRule: false,
         isIOS: Utils.isIos(),
-        receiveSuccess: false,
-        token: '88'
+        receiveBG: false,
+        token: ''
       }
     },
     created: function () {
@@ -224,8 +233,8 @@
         }
       },
       receive: function () {
-        this.receiveSuccess = !this.receiveSuccess
-        if (this.receiveSuccess) {
+        this.receiveBG = !this.receiveBG
+        if (this.receiveBG) {
           ModalHelper.afterOpen()
         } else {
           ModalHelper.beforeClose()
@@ -257,13 +266,36 @@
     background: url('../../images/summer-plan/bg-02-1.png') repeat-y center center;
     font-family: Arial;
   }
-  .receive {
+  .UpperLimit p {
+    font-size: .36rem;
+    color: #023532;
+    padding: 1.18rem 0 .82rem;
+  }
+  .UpperLimit p span {
+    color: #dca665;
+  }
+  .Login p {
+    font-size: .36rem;
+    color: #023532;
+    padding: 1.34rem 0 1.2rem;
+    margin: 0 auto;
+  }
+  .Login .cancel {
+    margin-left: .3rem;
+    color: #dca665;
+  }
+  .Login .toLogin {
+    margin-right: .3rem;
+    color: #0b8979;
+  }
+  .successBg {
     width: 5.72rem;
     height: 4rem;
     background: url('../../images/summer-plan/receive-bg.png') no-repeat center center;
     background-size: contain;
     margin: 2rem auto;
     text-align: center;
+    padding: 0 .3rem;
   }
   .receive img {
     margin: 1rem 0 .31rem;
@@ -273,14 +305,15 @@
     color: #023532;
     margin-bottom: .76rem;
   }
-  .IKnowBtn {
+  .IKnowBtn, .cancel, .toLogin {
     font-size: .32rem;
     color: #0b8979;
-    width: 100%;
-    height: .55rem;
-    line-height: .55rem;
+    width: 2rem;
+    height: .65rem;
+    line-height: .65rem;
     background: url('../../images/summer-plan/ckphb-btn.png') no-repeat center center;
-    background-size: contain;
+    background-size: 100% 100%;
+    margin: 0 auto;
   }
   .dialog {
     position: fixed;
