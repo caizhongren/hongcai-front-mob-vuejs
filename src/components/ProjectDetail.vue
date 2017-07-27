@@ -208,7 +208,7 @@
           riskControl: ''
         },
         orderList: [],
-        showOrderList: Boolean,
+        showOrderList: false,
         paramsNum: 0,
         projectId: 0,
         expectEarning: 0,
