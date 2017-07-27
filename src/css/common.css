@@ -79,11 +79,11 @@ input,button,select,textarea {
   border-color: #fd8f3f;
   border: none !important;
 }
-.button-disabled {
+/* .button-disabled {
     background-color: #FEB682 !important;
     color: #fff;
     border: none !important;
-}
+} */
 /* setposition */
 
 .position-re {

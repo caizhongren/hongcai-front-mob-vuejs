@@ -28,6 +28,7 @@ const ServiceAgree = r => require.ensure([], () => r(require('../components/serv
 const BusinessSuccess = r => require.ensure([], () => r(require('../components/businessSuccess.vue')), 'BusinessSuccess')
 const BankCustody = r => require.ensure([], () => r(require('../components/bankCustody.vue')), 'BankCustody')
 const BindWechat = r => require.ensure([], () => r(require('../components/bindWechat.vue')), 'BindWechat')
+const Report2 = r => require.ensure([], () => r(require('../components/news/report2.vue')), 'News')
 Vue.use(Router)
 const routes = [
   {
@@ -193,6 +194,11 @@ const routes = [
     name: 'BindWechat',
     component: BindWechat,
     meta: {title: '绑定微信有钱领'}
+  },
+  {
+    path: '/news/report2',
+    name: 'Report2',
+    component: Report2
   },
   {
     path: '*',
