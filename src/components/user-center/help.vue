@@ -727,12 +727,17 @@
   }
   .help .content .column {
     border-bottom: 1px solid #eee;
-    padding: .2rem 0rem;
+    /* padding: .2rem 0rem; */
+    height: 1rem;
+    line-height: 1rem;
     background-color: #fff;
     margin-left: 0;
     width: 100%;
     float: left;
     color: #666;
+  }
+  .help .content .column div.fl {
+    font-size: .28rem;
   }
   .column .rotate {
     transform: rotateZ(180deg);
@@ -766,11 +771,12 @@
     border-bottom: none !important;
   }
   .fa-down {
-    background: url('../../images/user-center/angle-down.png') no-repeat center 5px;
+    background: url('../../images/user-center/angle-down.png') no-repeat center .4rem;
     background-size: contain;
     display: block;
     width: .2rem;
-    height: .3rem;
+    height: 1rem;
+    padding-top: .3rem;
     -webkit-transition: all .2s ease-in;
     -moz-transition: all .2s ease-in;
     transition: all .2s ease-in;
