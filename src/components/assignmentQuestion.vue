@@ -236,10 +236,10 @@
     /*background: rgb(248, 249, 253)*/
   }
   .column{
-    font-size: .27rem;
+    font-size: .28rem;
     border-bottom: 1px solid #eee;
-    padding:.25rem 0rem;
-    /*background-color:#fff;*/
+    height: 1rem;
+    line-height: 1rem;
     margin-left: 0;
     overflow: hidden;
   }
@@ -251,23 +251,22 @@
     text-align: justify;
     color: #999;
     padding: 0rem 0 .2rem .2rem;
-    font-size: .25rem;
   }
   .txt-left {   
     color: #666666;
   }
   .angle-down {
-    background: url('../images/user-center/angle-down.png') no-repeat center 5px;
+    background: url('../images/user-center/angle-down.png') no-repeat center .4rem;
     background-size: contain;
     display: block;
     width: .2rem;
-    height: .3rem;
+    height: 1rem;
   }
   .angle-up {
-    background: url('../images/user-center/angle-up.png') no-repeat center 5px;
+    background: url('../images/user-center/angle-up.png') no-repeat center .4rem;
     background-size: contain;
     display: block;
     width: .2rem;
-    height: .3rem;
+    height: 1rem;
   }
 </style>
