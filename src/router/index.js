@@ -29,7 +29,7 @@ const BusinessSuccess = r => require.ensure([], () => r(require('../components/b
 const BankCustody = r => require.ensure([], () => r(require('../components/bankCustody.vue')), 'BankCustody')
 const BindWechat = r => require.ensure([], () => r(require('../components/bindWechat.vue')), 'BindWechat')
 const Report2 = r => require.ensure([], () => r(require('../components/news/report2.vue')), 'News')
-const Reprot1 = r => require.ensure([], () => r(require('../components/news/report1.vue')), 'News')
+const Report1 = r => require.ensure([], () => r(require('../components/news/report1.vue')), 'News')
 const Events = r => require.ensure([], () => r(require('../components/events.vue')), 'Events')
 Vue.use(Router)
 const routes = [
@@ -203,9 +203,9 @@ const routes = [
     component: Report2
   },
   {
-    path: '/news/reprot1',
-    name: 'Reprot1',
-    component: Reprot1,
+    path: '/news/Report1',
+    name: 'Report1',
+    component: Report1,
     meta: {title: '新闻1'}
   },
   {
