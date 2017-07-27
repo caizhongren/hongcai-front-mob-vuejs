@@ -485,11 +485,11 @@
     line-height: .44rem;
     color: #ffc703;
     text-align: center;
-    font-size: .28rem;
+    font-size: .26rem;
     border: 1px solid #ffc703;
     border-radius: .5rem;
     background: transparent;
-    margin: .16rem auto .6rem;
+    margin: .18rem auto 0rem;
     position: relative;
     top: -.15rem;
   }
