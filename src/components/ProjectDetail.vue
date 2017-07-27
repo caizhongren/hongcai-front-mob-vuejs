@@ -229,7 +229,7 @@
         enterpriseThumbnailFileList: [],
         projectOriginalFileList: [],
         projectThumbnailFileList: [],
-        baseFileUrl: process.env.NODE_ENV === 'production' ? 'https://m.hongcai.com' : 'http://m.test321.hongcai.com'
+        baseFileUrl: process.env.baseFileUrl
       }
     },
     watch: {

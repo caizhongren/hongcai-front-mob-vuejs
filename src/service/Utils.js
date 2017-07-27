@@ -41,7 +41,7 @@ let InviteShareUtils = {
     return subTitle
   },
   shareLink: function (inviteCode) {
-    var shareLink = 'https://m.hongcai.com' + '/activity/invite-sharing'
+    var shareLink = process.env.domain + '/activity/invite-sharing'
     if (inviteCode) {
       shareLink = shareLink + '/' + inviteCode
     }

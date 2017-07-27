@@ -137,7 +137,7 @@
         timer: null,
         isiOS: Utils.isIos(),
         isAndroid: Utils.isAndroid(),
-        domain: 'https://m.hongcai.com'
+        domain: process.env.domain
       }
     },
     props: ['token'],
