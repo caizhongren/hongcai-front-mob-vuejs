@@ -3,6 +3,6 @@ var prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  baseFileUrl: '"http://m.test321.hongcai.com/uploads/"',
+  baseFileUrl: '"http://test321.hongcai.com/uploads/"',
   domain: '"http://m.test321.hongcai.com"'
 })
