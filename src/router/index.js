@@ -28,6 +28,8 @@ const ServiceAgree = r => require.ensure([], () => r(require('../components/serv
 const BusinessSuccess = r => require.ensure([], () => r(require('../components/businessSuccess.vue')), 'BusinessSuccess')
 const BankCustody = r => require.ensure([], () => r(require('../components/bankCustody.vue')), 'BankCustody')
 const BindWechat = r => require.ensure([], () => r(require('../components/bindWechat.vue')), 'BindWechat')
+const Reprot1 = r => require.ensure([], () => r(require('../components/news/report1.vue')), 'News')
+const Events = r => require.ensure([], () => r(require('../components/events.vue')), 'Events')
 Vue.use(Router)
 const routes = [
   {
@@ -193,6 +195,18 @@ const routes = [
     name: 'BindWechat',
     component: BindWechat,
     meta: {title: '绑定微信有钱领'}
+  },
+  {
+    path: '/news/reprot1',
+    name: 'Reprot1',
+    component: Reprot1,
+    meta: {title: '新闻1'}
+  },
+  {
+    path: '/events',
+    name: 'Events',
+    component: Events,
+    meta: {title: '历史大事件'}
   },
   {
     path: '*',
