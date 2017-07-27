@@ -48,7 +48,7 @@
   p {
     text-indent: 2em;
     text-align: justify;
-    font-size: 0.22rem;
+    font-size: 0.26rem;
     margin-bottom: .2rem;
   }
   img {

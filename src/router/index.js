@@ -212,7 +212,7 @@ const routes = [
     path: '/events',
     name: 'Events',
     component: Events,
-    meta: {title: '历史大事件'}
+    meta: {title: '宏财大事件'}
   },
   {
     path: '*',

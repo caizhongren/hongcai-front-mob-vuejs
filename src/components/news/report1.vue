@@ -27,7 +27,7 @@
 <style scoped>
   .report1 {
     padding: .3rem;
-    font-size: .22rem;
+    font-size: .26rem;
   }
   h2 {
     margin-bottom: .3rem;
