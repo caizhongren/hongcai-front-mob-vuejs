@@ -110,7 +110,7 @@
       },
       toHCNative: function () {
         if ((!this.userAuth.active && this.userAuth.authStatus === 2) || this.userAuth.authStatus === 0) {
-          bridgeUtil.webConnectNative('HCNative_CgtActive', null, {}, function (response) {}, null)
+          bridgeUtil.webConnectNative('HCNative_CheckUserAuth', null, {}, function (response) {}, null)
         } else {
           bridgeUtil.webConnectNative('HCNative_GoInvestList', null, {}, function (response) {}, null)
         }
