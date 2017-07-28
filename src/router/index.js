@@ -200,13 +200,14 @@ const routes = [
   {
     path: '/news/report2',
     name: 'Report2',
-    component: Report2
+    component: Report2,
+    meta: {title: '宏财网CEO王斌首谈经验'}
   },
   {
-    path: '/news/Report1',
+    path: '/news/report1',
     name: 'Report1',
     component: Report1,
-    meta: {title: '新闻1'}
+    meta: {title: '宏财网合规经营练内功'}
   },
   {
     path: '/events',
