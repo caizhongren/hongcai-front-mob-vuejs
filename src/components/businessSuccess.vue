@@ -62,20 +62,24 @@
       goTransfer: function (status) {
         // 投资
         var that = this
-        that.$http({
+        var dataList = {}
+        if (status === 0) {
+          dataList = {
+            'business': that.b,
+            'status': status,
+            'rechargeAmount': that.rechargeAmount
+          }
+          that.connectNative(dataList)
+        } else {
+          that.$http({
           url: '/hongcai/rest/orders/' + that.number + '/orderCoupon?token=' + that.token
         }).then(function (response) {
-          if (response && response.data.ret !== -1) {
-            var dataList = that.b === 'RECHARGE_AUTH_TENDER' ? {
-              'business': that.b,
-              'status': status,
-              'amount': that.amount,
-              'rechargeAmount': that.rechargeAmount
-            } : {
-              'business': that.b,
-              'amount': that.amount
-            }
-            if (status === 1) {
+            if (response && response.data.ret !== -1) {
+              dataList = {
+                'business': that.b,
+                'amount': that.amount,
+                'status' : that.status
+              }
               if (response.data.coupon) {
                 that.coupon.type = response.data.coupon.type
                 that.coupon.value = response.data.coupon.value
@@ -86,10 +90,10 @@
                   'status': status
                 }
               }
+              that.connectNative(dataList)
             }
-            that.connectNative(dataList)
-          }
-        })
+          })
+        }
       },
       goRechargeAndTransfer: function () {
         // 充值并投资
