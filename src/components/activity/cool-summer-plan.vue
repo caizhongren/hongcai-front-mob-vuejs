@@ -25,74 +25,8 @@
           <p>投资项目 &nbsp;&nbsp;&nbsp; {{cashCoupon.type === '5' ? '精选' : '尊贵'}}</p>
           <p>起投金额 &nbsp;&nbsp;&nbsp; {{cashCoupon.minInvestAmount/1000 <10 ? cashCoupon.minInvestAmount/1000 +' 千' : cashCoupon.minInvestAmount/10000 >=1 ? cashCoupon.minInvestAmount/10000 +' 万' : ''}}</p>
         </div>
-        <div class="getCoupon" @click="receive">点击领取</div>
+        <div class="getCoupon" @click="getCoolCoupons(cashCoupon.level)" :disabled="busy">点击领取</div>
       </li>
-      <!-- <li>
-        <div class="amount">
-          <span>元</span>
-          <img src="../../images/summer-plan/8.png" alt="" width="13%">  
-        </div>
-        <div class="conditions">
-          <p>投资项目 &nbsp;&nbsp;&nbsp; 精选</p>
-          <p>起投金额 &nbsp;&nbsp;&nbsp; 5 千</p>
-        </div>
-        <div class="getCoupon" @click="receive">点击领取</div>
-      </li>
-      <li>
-        <div class="amount">
-          <span>元</span>
-          <img src="../../images/summer-plan/18-2.png" alt="" width="18%"> 
-        </div>
-        <div class="conditions">
-          <p>投资项目 &nbsp;&nbsp;&nbsp; 尊贵</p>
-          <p>起投金额 &nbsp;&nbsp;&nbsp; 3 千</p>
-        </div>
-        <div class="getCoupon" @click="receive">点击领取</div>
-      </li>
-      <li>
-        <div class="amount">
-          <span>元</span>
-          <img src="../../images/summer-plan/18-1.png" alt="" width="18%"> 
-        </div>
-        <div class="conditions">
-          <p>投资项目 &nbsp;&nbsp;&nbsp; 精选</p>
-          <p>起投金额 &nbsp;&nbsp;&nbsp; 1 万</p>
-        </div>
-        <div class="getCoupon" @click="receive">点击领取</div>
-      </li>
-      <li>
-        <div class="amount">
-          <span>元</span>
-          <img src="../../images/summer-plan/78.png" alt="" width="26%"> 
-        </div>
-        <div class="conditions">
-          <p>投资项目 &nbsp;&nbsp;&nbsp; 尊贵</p>
-          <p>起投金额 &nbsp;&nbsp;&nbsp; 1 万</p>
-        </div>
-        <div class="getCoupon" @click="receive">点击领取</div>
-      </li>
-      <li>
-        <div class="amount">
-          <span>元</span>
-          <img src="../../images/summer-plan/58.png" alt="" width="26%"> 
-        </div>
-        <div class="conditions">
-          <p>投资项目 &nbsp;&nbsp;&nbsp; 精选</p>
-          <p>起投金额 &nbsp;&nbsp;&nbsp; 3 万</p>
-        </div>
-        <div class="getCoupon" @click="receive">点击领取</div>
-      </li>
-      <li>
-        <div class="amount">
-          <span>元</span>
-          <img src="../../images/summer-plan/158.png" alt="" width="31%"> 
-        </div>
-        <div class="conditions">
-          <p>投资项目 &nbsp;&nbsp;&nbsp; 尊贵</p>
-          <p>起投金额 &nbsp;&nbsp;&nbsp; 2 万</p>
-        </div>
-        <div class="getCoupon" @click="receive">点击领取</div>
-      </li> -->
     </ul>
     <div class="RankingList">
       <div class="title">
@@ -156,10 +90,10 @@
           </li>
           <li>
             <p>
-              <span class="IntegralDetail">50</span>
+              <span class="IntegralDetail">{{userScores.score}}</span>
               <br><u @click="toIntegralDetail">查看详情&gt;&gt;</u>
             </p>
-            <p>第68名</p>
+            <p>第{{userScores.top}}名</p>
           </li>
         </ul> 
         <div class="needLogin" v-if="token === ''">
@@ -201,18 +135,22 @@
     <!-- 领取成功弹窗 -->
     <div class="dialog mask-common" v-if="receiveBG">
       <div class="successBg">
-        <div class="receive" v-if="token !== '' && receiveSuccess">
-          <img src="../../images/summer-plan/receive.png" alt="" width="50%">
-          <p>可前往我的优惠券查看</p>
-          <div class="IKnowBtn" @click="receive">我知道了</div>
-        </div>
-        <div class="UpperLimit" v-if="token !== '' && UpperLimit">
-          <p>您已经领取<span>10次</span>啦! <br>明天再来哦～</p> 
-          <div class="IKnowBtn" @click="receive">我知道了</div>
+        <div v-if="token !== ''">
+          <div class="receive" v-if="receiveSuccess">
+            <img src="../../images/summer-plan/receive.png" alt="" width="50%">
+            <p>可前往我的优惠券查看</p>
+          </div>
+          <div class="UpperLimit" v-if="UpperLimit">
+            您已经领取<span>10次</span>啦! <br>明天再来哦～
+          </div>
+          <div class="activityEnd" v-if="activityEnd">
+            活动结束啦，下次早点来哦～
+          </div>
+          <div class="IKnowBtn" @click="ShowReceive">我知道了</div>
         </div>
         <div class="Login" v-if="token === ''">
           <p>登录后才可以领取哦～</p> 
-          <div class="cancel fl" @click="receive">取消</div>
+          <div class="cancel fl" @click="ShowReceive">取消</div>
           <div class="toLogin fr" @click="toLogin">去登录</div>
         </div>
       </div>
@@ -231,48 +169,68 @@
         receiveBG: false,
         receiveSuccess: false,
         UpperLimit: false,
+        activityEnd: false,
         cashCoupons: [
           {
             value: 8,
             type: '5',
             minInvestAmount: 5000,
             imgSrc: '../../../static/images/8.png',
-            imgWidth: 13
+            imgWidth: 13,
+            level: 1
           }, {
             value: 18,
             type: '6',
             minInvestAmount: 3000,
             imgSrc: '../../../static/images/18-2.png',
-            imgWidth: 18
+            imgWidth: 18,
+            level: 4
           }, {
             value: 18,
             type: '5',
             minInvestAmount: 10000,
             imgSrc: '../../../static/images/18-1.png',
-            imgWidth: 18
+            imgWidth: 18,
+            level: 2
           }, {
             value: 78,
             type: '6',
             minInvestAmount: 10000,
             imgSrc: '../../../static/images/78.png',
-            imgWidth: 26
+            imgWidth: 26,
+            level: 5
           }, {
             value: 58,
             type: '5',
             minInvestAmount: 30000,
             imgSrc: '../../../static/images/58.png',
-            imgWidth: 26
+            imgWidth: 26,
+            level: 3
           }, {
             value: 158,
             type: '6',
             minInvestAmount: 20000,
             imgSrc: '../../../static/images/158.png',
-            imgWidth: 31
+            imgWidth: 31,
+            level: 6
           }
-        ]
+        ],
+        userScores: {
+          score: 0,
+          top: 0
+        },
+        busy: false
+      }
+    },
+    watch: {
+      token: function (val) {
+        if (val && val !== '') {
+          this.getUserScores()
+        }
       }
     },
     created: function () {
+      this.getUserScores()
     },
     methods: {
       ruleSelect: function () {
@@ -283,28 +241,53 @@
           ModalHelper.beforeClose()
         }
       },
-      receive: function () {
+      ShowReceive: function () {
         this.receiveBG = !this.receiveBG
         if (this.receiveBG) {
           ModalHelper.afterOpen()
         } else {
           ModalHelper.beforeClose()
         }
-        if (this.token === '') {
+      },
+      getUserScores: function () {
+        var that = this
+        that.$http({
+          method: 'GET',
+          url: '/hongcai/rest/activitys/summer/scores/0?token=' + that.token
+        }).then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.userScores = res.data
+          }
+        })
+      },
+      getCoolCoupons: function (level) {
+        var that = this
+        if (that.busy) {
           return
         }
-        this.$http.post('/hongcai/rest/lotteries/draw', {
-          token: this.token
+        if (that.token === '') {
+          that.ShowReceive()
+          return
+        }
+        that.busy = true
+        that.$http.post('/hongcai/rest/users/0/coupons/takeCoolCoupons', {
+          token: that.token,
+          level: level
         }).then((response) => {
-          if (response.data && response.data.ret === -1) {
-            this.receiveSuccess = true
-            this.UpperLimit = false
-            if (response.data.code === -1300) {
-              this.UpperLimit = true
-            }
-          } else {
-            this.UpperLimit = true
+          that.receiveSuccess = false
+          that.UpperLimit = false
+          that.activityEnd = false
+          if (response.data && response.data.ret === 1) {
+            that.receiveSuccess = true
+          } else if (response.data.ret === -1 && response.data.code === -1304) {
+            that.UpperLimit = true
+          } else if (response.data.ret === -1 && response.data.code === -1041) {
+            that.activityEnd = true
           }
+          that.ShowReceive()
+          setTimeout(function () {
+            that.busy = false
+          }, 500)
         })
       },
       toCoolRank: function () {
@@ -334,12 +317,12 @@
     background: url('../../images/summer-plan/bg-02-1.png') repeat-y center center;
     font-family: Arial;
   }
-  .UpperLimit p {
+  .UpperLimit, .activityEnd {
     font-size: .36rem;
     color: #023532;
     padding: 1.18rem 0 .82rem;
   }
-  .UpperLimit p span {
+  .UpperLimit span {
     color: #dca665;
   }
   .Login p {
@@ -383,10 +366,6 @@
     background-size: 100% 100%;
     margin: 0 auto;
   }
-  /* .dialog {
-    -webkit-overflow-scrolling: touch;
-    overflow-y: hidden !important;
-  } */
   .closeRule {
     position: absolute; 
     right: .8rem;
