@@ -9,19 +9,39 @@
       <img src="../../images/novice/header-06.png" alt="">
       <img src="../../images/novice/header-07.png" alt="">
       <img src="../../images/novice/header-08.png" alt="">
-      <div class="rateCoupon">
-        <img src="../../images/novice/header-09.png" alt="">
-        <div class="rateCouponTip">
-          <img src="../../images/novice/RateCoupon.png" alt="">
-        </div>
+    </div>
+    <div class="rateCoupon" v-if="false">
+      <img src="../../images/novice/header-09.png" alt="">
+      <div class="rateCouponTip">
+        <img src="../../images/novice/RateCoupon.png" alt="">
       </div>
       <img src="../../images/novice/header-10.png" alt="">
       <img src="../../images/novice/header-11.png" alt="">
       <img src="../../images/novice/header-12.png" alt="">
       <img src="../../images/novice/header-13.png" alt="">
       <img src="../../images/novice/header-14.png" alt="">
-      <img src="../../images/novice/header-15.png" alt="">
     </div>
+    <div class="rateCoupon2">
+        <div class="bigBox">
+          <div class="smallBox">
+            <img class="cashTip" src="../../images/novice/RateCoupon.png" alt="">
+            <img src="../../images/novice/rate-point-10.png" alt="" class="tqRate">
+            <div class="rates">
+              <img class="rate1 fl" src="../../images/novice/rate-point-16.png" alt="">
+              <img class="rate2 fr" src="../../images/novice/rate-point-8.png" alt="">
+            </div>
+            <div class="rates">
+              <img class="rate1 fl" src="../../images/novice/rate-point-12.png" alt="">
+              <img class="rate2 fr" src="../../images/novice/rate-point-5.png" alt="">
+            </div>
+            <div class="rates">
+              <img class="rate1 fl" src="../../images/novice/rate-point-81.png" alt="">
+              <img class="rate2 fr" src="../../images/novice/rate-point-3.png" alt="">
+            </div>
+          </div>
+        </div>
+    </div>
+    <img src="../../images/novice/header-15.png" alt="" width="100%">
     <div class="cashCoupon">
         <div class="bigBox">
           <div class="smallBox">
@@ -120,9 +140,14 @@
 </script>
 
 <style scoped>
+  .tqRate {
+    width: 104%;
+    margin-left: -.5rem;
+  }
   .novice {
     margin-bottom: 1rem;
     background-color: #fccf00;
+    width: 100%;
   }
   .header img {
     vertical-align: top;
@@ -132,8 +157,11 @@
     vertical-align: bottom;
     width: 100%;
   }
-  .cashCoupon {
+  .cashCoupon, .rateCoupon2 {
     padding: .2rem .4rem;
+  }
+  .rateCoupon2 {
+    margin: .2rem 0 .6rem;
   }
   .bigBox {
     padding: .065rem;
@@ -174,12 +202,18 @@
     padding-bottom: .3rem;
   }
   .cashTip {
-    width: 90%;
+    width: 100%;
   }
-  .cashs {
+  .cashs, .rates {
     clear: both;
     overflow: hidden;
     position: relative;
+  }
+  .rates {
+    margin-top: -0.4rem;
+  }
+  .rate1, .rate2 {
+    width: 50%;
   }
   .cash782, .cash182{
     width: 56%;
@@ -215,15 +249,19 @@
   .rateCoupon {
     position: relative;
   }
+  .rateCoupon img {
+    width: 100%;
+    vertical-align: top;
+  }
   .rateCouponTip {
     background-color: #fff;
     width: 84%;
     position: absolute;
-    bottom: -.1rem;
+    top: .5rem;
     left: 8%;
   }
   .rateCouponTip img {
-    width: 86%;
+    width: 96%;
     padding-top: .1rem;
   }
 </style>
