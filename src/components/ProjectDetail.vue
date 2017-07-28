@@ -238,6 +238,7 @@
       }
     },
     created: function () {
+      // $('body')[0].addEventListener('touchstart', function (e) { e.preventDefault() }, false)
       this.paramsNum = this.$route.params.number
       this.getProject()
       this.getProjectRisk()

@@ -24,9 +24,9 @@
                 </span>
               </td> 
               <td>
-                100000元
+                {{userCoolScoresDetail.selectionTotalAmount}}元
               </td>
-              <td>10积分</td>
+              <td>{{userCoolScoresDetail.selectionScore}}分</td>
             </tr>
             <tr>
               <td>
@@ -36,9 +36,9 @@
                 </span>
               </td>
               <td>
-                20000元
+                {{token ? userCoolScoresDetail.honorTotalAmount : 0}}元
               </td>
-              <td>10积分</td>
+              <td>{{userCoolScoresDetail.honorScore}}分</td>
             </tr>
           </tbody>
         </table>
@@ -52,17 +52,34 @@
     name: 'integralDetail',
     data () {
       return {
+        userCoolScoresDetail: {}
       }
     },
     props: ['token'],
     watch: {
       token: function (val) {
-        if (val !== '') {
+        if (val && val !== '') {
+          this.getUserCoolScores(val)
         }
       }
     },
     created () {
       if (this.token) {
+        this.getUserCoolScores(this.token)
+      }
+    },
+    methods: {
+      getUserCoolScores: function (token) {
+        var that = this
+        that.$http({
+          url: '/hongcai/rest/activitys/summer/scores/0/detail?token=' + token
+        })
+        .then(function (res) {
+          that.userCoolScoresDetail = res.data
+        })
+        .catch(function (err) {
+          console.log(err)
+        })
       }
     }
   }

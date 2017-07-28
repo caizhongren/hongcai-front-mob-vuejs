@@ -1,6 +1,6 @@
 <template>
   <div class="feedback">
-    <div class="title" @click="postFeesback()">
+    <div class="title">
       <p>尊敬的用户：</p>
       <p>为了给您更好的服务，请详细描述您的问题或建议，我们将及时跟进解决，不断优化产品！</p>
     </div>
