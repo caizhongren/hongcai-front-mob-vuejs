@@ -72,13 +72,13 @@
           that.connectNative(dataList)
         } else {
           that.$http({
-          url: '/hongcai/rest/orders/' + that.number + '/orderCoupon?token=' + that.token
-        }).then(function (response) {
+            url: '/hongcai/rest/orders/' + that.number + '/orderCoupon?token=' + that.token
+          }).then(function (response) {
             if (response && response.data.ret !== -1) {
               dataList = {
                 'business': that.b,
                 'amount': that.amount,
-                'status' : status
+                'status': status
               }
               if (response.data.coupon) {
                 that.coupon.type = response.data.coupon.type

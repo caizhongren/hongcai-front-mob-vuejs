@@ -19,8 +19,8 @@
             <tr v-for="(item, index) in runkingList">
               <td v-if="index === 0"><img src="../../images/summer-plan/no.1.png" alt="" width="40%"></td>
               <td v-if="index !== 0">{{index + 1}}</td> 
-              <td>{{item.mobile}}</td>
-              <td>{{item.integral || 0}}</td>
+              <td>{{item.userMobile}}</td>
+              <td>{{item.score || 0}}</td>
             </tr>
           </tbody>
         </table>
@@ -34,59 +34,21 @@
     name: 'coolRunking',
     data () {
       return {
-        runkingList: [
-          {
-            mobile: '153****5650',
-            integral: 100
-          },
-          {
-            mobile: '153****5650',
-            integral: 100
-          },
-          {
-            mobile: '153****5650',
-            integral: 100
-          },
-          {
-            mobile: '153****5650',
-            integral: 100
-          },
-          {
-            mobile: '153****5650',
-            integral: 100
-          },
-          {
-            mobile: '153****5650',
-            integral: 100
-          },
-          {
-            mobile: '153****5650',
-            integral: 100
-          },
-          {
-            mobile: '153****5650',
-            integral: 100
-          },
-          {
-            mobile: '153****5650',
-            integral: 100
-          },
-          {
-            mobile: '153****5650',
-            integral: 100
-          }
-        ]
+        runkingList: []
       }
+    },
+    created () {
+      this.getRunkingList()
     },
     methods: {
       getRunkingList () {
         var that = this
         that.$http({
-          url: '/hongcai/rest/'
+          url: '/hongcai/rest/activitys/summer/scores/top'
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
-            that.runkingList = res.data
+            that.runkingList = res.data.data
           }
         })
         .catch(function (err) {
