@@ -261,7 +261,7 @@
     methods: {
       toggleTab: function (i) {
         this.activeTab = i
-        document.querySelector('.details-more').style.webkitTransform = 'translateY(' + 0 + 'px)'
+        document.querySelector('.details-more').style.webkitTransform = 'translateY(0px)'
         this.page = 1
       },
       getProject: function () {
@@ -366,32 +366,8 @@
         var that = this
         bridgeUtil.webConnectNative('HCNative_ImgSrc', null, {'imgSrc': that.baseFileUrl + tar[i].uploadFile.url}, function (response) {}, function (data) {})
       },
-      CaptureTouch: function (t) {
-        function e (e) {
-          var n
-          var s = e.targetTouches[0]
-          if (s.pageX || s.pageY) {
-            n = s.pageY
-          } else {
-            n = s.clientY + document.body.scrollTop + document.documentElement.scrollTop
-          }
-          n -= t.offsetTop
-          a.y = n
-        }
-        var a = {
-          y: null
-        }
-        return [t.addEventListener('touchstart', function (t) {
-          e(t)
-        }, !1),
-          t.addEventListener('touchend', function (t) {
-            a.y = null
-          }, !1),
-          t.addEventListener('touchmove', e, !1), a]
-      },
       scrollDetail: function (page) {
         var Height = window.innerHeight
-        window.touch = this.CaptureTouch(page)
         window.offsetY = 0
         window.touchStartY = 0
         window.speed = 0
@@ -399,21 +375,24 @@
         page.addEventListener('touchstart', startTouchScroll, false)
         page.addEventListener('touchmove', moveTouchScroll, false)
         page.addEventListener('touchend', endTouchScroll, false)
+        document.querySelector('.project').addEventListener('touchmove', function (event) {
+          event.stopPropagation()
+          event.preventDefault()
+        }, false)
         function startTouchScroll (event) {
           // event.preventDefault()
-          window.touchStartY = window.touch[3].y
+          window.touchStartY = event.targetTouches[0].pageY
           window.offsetY = 0
           touchY = window.offsetY
-          // document.querySelector('#product-page1').classList = 'fist-frame product-page1 animate'
           $('#product-page1').addClass('animate')
         }
         function moveTouchScroll (event) {
           // event.preventDefault()
-          window.offsetY += 0.25 * (window.touch[3].y - window.touchStartY)
-          window.touchStartY = window.touch[3].y
+          window.offsetY += 0.25 * (event.targetTouches[0].pageY - window.touchStartY)
+          window.touchStartY = event.targetTouches[0].pageY
           touchY = window.offsetY
-          if (window.offsetY <= 0 && window.offsetY < -1) {
-            page.style.webkitTransform = 'translate3d(0, ' + window.offsetY + 'px, 0)'
+          if (window.offsetY < -1) {
+            page.style.webkitTransform = 'translateY(' + window.offsetY + 'px)'
           }
         }
         function endTouchScroll (event) {
@@ -433,38 +412,49 @@
         var scrollDirection = 0
         var offsetY = 0
         var touchStartY = 0
-        var scrollTop = 0
+        var lastY
+        var sub
         page.addEventListener('touchstart', startTouchScroll, true)
         page.addEventListener('touchmove', moveTouchScroll, true)
         page.addEventListener('touchend', endTouchScroll, true)
+        document.querySelector('.product-page2').addEventListener('touchstart', function (event) {
+          lastY = event.changedTouches[0].clientY
+        }, false)
+        document.querySelector('.product-page2').addEventListener('touchmove', function (event) {
+          var y = event.changedTouches[0].clientY
+          var st = $(this).scrollTop()
+          sub = $('.scroll').offset().top - $('.details-more').offset().top
+          event.stopPropagation()
+          if (sub === 0 && y >= lastY && st <= 10) {
+            lastY = y
+            event.preventDefault()
+          }
+        }, false)
         function startTouchScroll (event) {
-          // event.preventDefault()
-          // document.querySelector('.scroll').classList.remove('animate')
           $('.scroll').removeClass('animate')
           touchStartY = event.targetTouches[0].pageY
           offsetY = 0
-          scrollTop = $('.scroll').offset().top
+          // scrollTop = $('.scroll').offset().top
         }
         function moveTouchScroll (event) {
-          // event.preventDefault()
+          // event.stopPropagation()
           offsetY += 0.25 * (event.targetTouches[0].pageY - touchStartY)
           touchStartY = event.targetTouches[0].pageY
           scrollDirection = offsetY
+          if (scrollDirection < 0) {
+            document.querySelector('.scroll').style.webkitTransform = 'translateY(0px)'
+          }
           if (scrollDirection > 15 && $('.details-more').offset().top - screenTop >= 15) {
-            // document.querySelector('.scroll').classList = 'scroll animate'
             document.querySelector('.scroll').style.webkitTransform = 'translateY(' + scrollDirection + 'px)'
-          } else if (scrollTop === $('.details-more').offset().top) {
-            // document.querySelector('.scroll').classList = 'scroll animate'
+          }
+          if (scrollDirection >= 50) {
+            scrollDirection = 50
+            document.querySelector('.scroll').style.webkitTransform = 'translateY(' + scrollDirection + 'px)'
           }
         }
         function endTouchScroll (event) {
-          // event.preventDefault()($('.scroll').offset().top)
-          var sub = $('.scroll').offset().top - $('.details-more').offset().top
-          if (scrollDirection === 0 && event.target.className === 'drop-load') {
-            // window.vue.loadMoreOrder()
-            return false
-          } else if (sub === 0 && scrollDirection >= 20) {
-            // document.querySelector('.scroll').classList = 'scroll animate'
+          sub = $('.scroll').offset().top - $('.details-more').offset().top
+          if ((sub === 0 && scrollDirection >= 20) || $('.scroll').offset().top > 80) {
             $('.scroll').addClass('animate')
             setTimeout(function () {
               document.querySelector('.scroll').style.webkitTransform = 'translateY(0px)'
