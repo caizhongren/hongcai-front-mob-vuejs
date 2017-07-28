@@ -78,7 +78,7 @@
               dataList = {
                 'business': that.b,
                 'amount': that.amount,
-                'status' : that.status
+                'status' : status
               }
               if (response.data.coupon) {
                 that.coupon.type = response.data.coupon.type
