@@ -1,6 +1,6 @@
 <template>
   <div class="runking" v-auto-height>
-    <div class="runking-list" @click="toTest2()">
+    <div class="runking-list">
        <img src="../../images/summer-plan/list-line.png" alt="" class="top-line">
        <div class="list-herder-wrap">
         <table class="header">
@@ -54,9 +54,6 @@
         .catch(function (err) {
           console.log(err)
         })
-      },
-      toTest2 () {
-        window.location.href = 'http://192.168.80.76:8080/activity/integral-detail'
       }
     }
   }

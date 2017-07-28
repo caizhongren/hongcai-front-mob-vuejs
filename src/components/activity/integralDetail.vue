@@ -36,7 +36,7 @@
                 </span>
               </td>
               <td>
-                {{userCoolScoresDetail.honorTotalAmount}}元
+                {{token ? userCoolScoresDetail.honorTotalAmount : 0}}元
               </td>
               <td>{{userCoolScoresDetail.honorScore}}分</td>
             </tr>
@@ -52,12 +52,7 @@
     name: 'integralDetail',
     data () {
       return {
-        userCoolScoresDetail: {
-          'selectionTotalAmount': 0,
-          'honorTotalAmount': 0,
-          'honorScore': 0,
-          'selectionScore': 0
-        }
+        userCoolScoresDetail: {}
       }
     },
     props: ['token'],
@@ -80,7 +75,7 @@
           url: '/hongcai/rest/activitys/summer/scores/0/detail?token=' + token
         })
         .then(function (res) {
-          that.userCoolScoreDetail = res.data
+          that.userCoolScoresDetail = res.data
         })
         .catch(function (err) {
           console.log(err)
