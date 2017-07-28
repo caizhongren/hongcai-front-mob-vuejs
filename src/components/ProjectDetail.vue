@@ -2,11 +2,11 @@
   <div class="project" id="project" v-auto-height>
     <div class="fist-frame product-page1 animate" id="product-page1">
       <div class="project-detail-top bg-white">
-        <p class="ft-Arial"><span>{{project.annualEarnings}}</span>%</p>
+        <p class="ft-Arial"><span>{{project.annualEarnings || 0}}</span>%</p>
         <p class="second">期望年均回报率</p>
         <div class="tip-list">
           <span class="tip-item tip-item1"><span class="font-Arial margin-0">100</span>元起投</span>
-          <span class="tip-item tip-item2"><span class="font-Arial margin-0">{{project.projectDays}}</span>天项目期</span>
+          <span class="tip-item tip-item2"><span class="font-Arial margin-0">{{project.projectDays || 0}}</span>天项目期</span>
         </div>
         <div class="project-process clearfix">
           <div class="start-circle fl">
@@ -199,7 +199,9 @@
     data () {
       return {
         busy: false,
-        project: {},
+        project: {
+          amount: 0
+        },
         projectInfo: {
           description: '',
           financingPurpose: '',

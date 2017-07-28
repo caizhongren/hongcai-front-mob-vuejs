@@ -65,7 +65,10 @@
       return {
         isiOS: false,
         inviteCount: 0,
-        privilegedCapital: {},
+        privilegedCapital: {
+          amount: 0,
+          profit: 0
+        },
         details: [],
         pageSize: 10,
         page: 1,

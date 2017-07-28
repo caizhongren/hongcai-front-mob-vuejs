@@ -24,9 +24,9 @@
                 </span>
               </td> 
               <td>
-                {{userCoolScoresDetail.selectionTotalAmount}}元
+                {{userCoolScoresDetail.selectionTotalAmount || 0}}元
               </td>
-              <td>{{userCoolScoresDetail.selectionScore}}分</td>
+              <td>{{userCoolScoresDetail.selectionScore || 0}}分</td>
             </tr>
             <tr>
               <td>
@@ -36,9 +36,9 @@
                 </span>
               </td>
               <td>
-                {{token ? userCoolScoresDetail.honorTotalAmount : 0}}元
+                {{userCoolScoresDetail.honorTotalAmount || 0}}元
               </td>
-              <td>{{userCoolScoresDetail.honorScore}}分</td>
+              <td>{{userCoolScoresDetail.honorScore || 0}}分</td>
             </tr>
           </tbody>
         </table>
@@ -52,7 +52,8 @@
     name: 'integralDetail',
     data () {
       return {
-        userCoolScoresDetail: {}
+        userCoolScoresDetail: {
+        }
       }
     },
     props: ['token'],
