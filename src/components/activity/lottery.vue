@@ -332,6 +332,7 @@
         })
       },
       LotteryShareTo: function () {
+        var that = this
         bridgeUtil.webConnectNative('HCNative_Share', 'HCWeb_ShareSuccess', {
           'HC_shareType': 2,
           'title': '今日运势，一试便知',
