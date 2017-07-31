@@ -147,7 +147,7 @@ const routes = [
     path: '/activity/cool-Ranking',
     name: 'CoolRanking',
     component: CoolRanking,
-    meta: {title: '清凉排行榜'}
+    meta: {title: '前十名排行榜'}
   },
   {
     path: '/activity/integral-detail',

@@ -17,7 +17,7 @@
         <table>
           <tbody>
             <tr v-for="(item, index) in runkingList">
-              <td v-if="index === 0"><img src="../../images/summer-plan/no.1.png" alt="" width="40%"></td>
+              <td v-if="index === 0"><img src="../../images/summer-plan/no.1.png" alt="" width="35%"></td>
               <td v-if="index !== 0">{{index + 1}}</td> 
               <td>{{item.userMobile}}</td>
               <td>{{item.score || 0}}</td>
@@ -60,7 +60,7 @@
 </script>
 <style scoped>
   .runking {
-    padding-top: 13%;
+    padding-top: 11%;
     width: 100%;
     overflow-x: hidden;
     background: url(../../images/summer-plan/bg-02-1.png) repeat-y center center;
@@ -71,7 +71,7 @@
     height: 81%;
   }
   .table-wrap {
-    height: 80%;
+    /* height: 80%; */
     padding: 0 2%;
     overflow-y: scroll;
     background-color: #fff;
@@ -98,7 +98,7 @@
   thead td {
     height: .7rem;
     line-height: .6rem;
-    padding-top: .3rem;
+    padding-top: .1rem;
     color: #2aafa0;
     font-size: .33rem;
     font-weight: 500;
@@ -108,13 +108,13 @@
     vertical-align: middle;
   }
   tbody tr td {
-    height: 1rem;
-    line-height: 1rem;
+    height: .76rem;
+    line-height: .76rem;
     text-align: center;
   }
   tbody tr td:first-child {
-    color: #ddd;
-    font-size: .58rem;
+    color: #999;
+    font-size: .50rem;
     font-weight: 500;
     width: 20%;
     border-right: 1px solid #eee;
@@ -139,7 +139,7 @@
     text-align: justify;
     color: #023532;
     font-size: .22rem;
-    padding: .28rem 3%;
+    padding: .28rem 3% .1rem;
   }
 
 </style>
