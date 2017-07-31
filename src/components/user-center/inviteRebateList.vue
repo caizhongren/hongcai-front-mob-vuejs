@@ -156,6 +156,7 @@
     overflow-y: scroll;
     position: relative;
     z-index: 2222;
+    -webkit-overflow-scrolling: touch;
   }
   .rebate-list ul li {
     width: 100%;

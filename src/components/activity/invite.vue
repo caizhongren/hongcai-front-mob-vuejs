@@ -215,7 +215,7 @@ export default {
 
 <style scoped>
     #invite {
-        background-image: linear-gradient(to bottom, #cb0804 0%, #f8902d 100%);
+        background-image: linear-gradient(to bottom, #f8902d 0%, #f8902d 100%);
     }
     .imgs {
         margin-bottom: 1rem;

@@ -381,15 +381,16 @@
     background: #1e9781;
     border-radius: .25rem;
     overflow-y: scroll;
-    padding: .63rem;
+    padding: .56rem;
     color: #effffd;
     font-size: .26rem;
     text-align: justify;
     line-height: .4rem;
     margin: 1.8rem auto;
+    -webkit-overflow-scrolling: touch;
   }
   .ruleBox .rule {
-    margin-bottom: .46rem;
+    margin-bottom: .2rem;
   }
   .header {
     position: relative;
@@ -482,7 +483,7 @@
   }
   .RankingList .title {
     text-align: center;
-    padding: 1rem 0 .62rem;
+    padding: .8rem 0 .5rem;
   }
   .RankingList .text {
     padding: 0 .5rem .8rem;
@@ -550,7 +551,7 @@
     line-height: 1rem;
   }
   .expro-txt {
-    padding: .36rem .5rem .5rem;
+    padding: .36rem .5rem 0rem;
     color: #effffd;
     text-align: justify;
     font-size: .26rem;
@@ -566,7 +567,7 @@
     margin: 0.3rem auto 0;
   }
   .integral .title {
-    padding: 1.3rem 0 .8rem;
+    padding: 1.3rem 0 .5rem;
   }
   .integral .RankingTable ul.table li p:nth-child(1), .integral .RankingTable ul.table li p:nth-child(2) {
     width: 50%;
@@ -618,5 +619,19 @@
     top: 27.5%;
     right: 0;
     z-index: 999;
+  }
+  /* 设置滚动条的样式 */
+  ::-webkit-scrollbar {
+    width:5px;
+  }
+  /* 滚动槽 */
+  ::-webkit-scrollbar-track {
+    border-radius:10px;
+  }
+  /* 滚动条滑块 */
+  ::-webkit-scrollbar-thumb {
+    border-radius:10px;
+    background:rgba(0,0,0,0.1);
+    -webkit-box-shadow:rgba(0,0,0,0.5);
   }
 </style>
