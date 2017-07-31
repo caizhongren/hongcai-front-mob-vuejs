@@ -114,7 +114,9 @@ var LuckDraw = {
     // this._calcAniDelay()
 
     if (parseInt(seqLis[this.aniIndex].attr(options.prizeIdAttr)) === prizeId && this.currCircle === options.turnAroundCount) {
-      this._turnEnd(prizeId)
+      setTimeout(function () {
+        _this._turnEnd(prizeId)
+      }, 300)
     } else {
       setTimeout(function () {
         _this._turning(prizeId)
