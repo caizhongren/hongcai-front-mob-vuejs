@@ -93,7 +93,8 @@
               <span class="IntegralDetail">{{userScores.score}}</span>
               <br><u @click="toIntegralDetail">查看详情&gt;&gt;</u>
             </p>
-            <p>第{{userScores.top}}名</p>
+            <p v-if="userScores.score > 0">第{{userScores.top}}名</p>
+            <p v-else="userScores.score <= 0">暂无</p>
           </li>
         </ul> 
         <div class="needLogin" v-if="token === ''">

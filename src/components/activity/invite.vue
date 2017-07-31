@@ -214,6 +214,9 @@ export default {
 </script>
 
 <style scoped>
+    #invite {
+        background-image: linear-gradient(to bottom, #cb0804 0%, #f8902d 100%);
+    }
     .imgs {
         margin-bottom: 1rem;
     }
