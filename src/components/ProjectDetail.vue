@@ -264,7 +264,7 @@
     methods: {
       toggleTab: function (i) {
         this.activeTab = i
-        document.querySelector('.details-more').style.webkitTransform = 'translateY(0px)'
+        document.querySelector('.scroll').style.webkitTransform = 'translateY(0px)'
         this.page = 1
       },
       getProject: function () {
@@ -407,6 +407,7 @@
             var page2 = document.querySelector('.product-page2')
             page2.style.webkitTransform = 'translate3d(0, -' + Height + 'px, 0)'
             document.querySelector('.details-more').style.webkitTransform = 'translateY(' + 0 + 'px)'
+            window.vue.activeTab = 0
           }
         }
       },
