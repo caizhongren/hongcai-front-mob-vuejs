@@ -17,10 +17,26 @@ export default {
     }
   },
   created: function () {
-    var that = this
-    bridgeUtil.webConnectNative('HCNative_GetToken', '', {}, function (res) {
-      that.token = Utils.isAndroid() ? JSON.parse(res).token : res.token
-    }, null)
+    this.getToken()
+    this.receiveToken()
+  },
+  methods: {
+    getToken: function () {
+      var that = this
+      bridgeUtil.webConnectNative('HCNative_GetToken', '', {}, function (res) {
+        that.token = Utils.isAndroid() ? JSON.parse(res).token : res.token
+      }, null)
+    },
+    receiveToken: function () {
+      var that = this
+      bridgeUtil.webConnectNative('', 'HCWeb_LoginSuccess', {}, function (res) {}, function (data) {
+        that.token = Utils.isAndroid() ? JSON.parse(data).token : data.token
+      })
+    }
+  },
+  watch: {
+    // 如果路由有变化，会再次执行该方法
+    '$route': 'getToken'
   }
 }
 Object.keys(custom).forEach(key => {

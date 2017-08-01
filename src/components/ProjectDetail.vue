@@ -354,8 +354,6 @@
         setTimeout(function () {
           that.busy = false
         }, 2000)
-        console.log(1)
-        var callHandlerCallback = function (response) {}
         var nativeNeedDatas = {
           'amount': that.project.amount,
           'annualEarnings': that.project.annualEarnings,
@@ -363,7 +361,7 @@
           'projectId': that.project.id,
           'number': that.paramsNum
         }
-        bridgeUtil.webConnectNative('HCNative_ImmediateInvestment', 'HCWeb_LoginSuccess', nativeNeedDatas, callHandlerCallback, callHandlerCallback)
+        bridgeUtil.webConnectNative('HCNative_ImmediateInvestment', 'HCWeb_LoginSuccess', nativeNeedDatas, null, null)
       },
       preview: function (i, e, tar) {
         var that = this

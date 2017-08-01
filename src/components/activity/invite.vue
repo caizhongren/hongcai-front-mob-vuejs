@@ -172,12 +172,12 @@ export default {
       })
     },
     toLogin: function () {
-      var regesterHandCallback = function (data) {
-        data = Utils.isIos() === true ? data : JSON.parse(data)
-        window.location.replace(window.location.pathname)
-        this.getInvitedFriends()
-      }
-      bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, regesterHandCallback)
+    //   var regesterHandCallback = function (data) {
+    //     data = Utils.isIos() === true ? data : JSON.parse(data)
+    //     window.location.replace(window.location.pathname)
+    //     this.getInvitedFriends()
+    //   }
+      bridgeUtil.webConnectNative('HCNative_Login', '', {}, function (response) {}, null)
     },
     getInviteCode: function () {
       var that = this
