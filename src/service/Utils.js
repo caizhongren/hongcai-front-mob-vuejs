@@ -139,8 +139,17 @@ let ModalHelper = (function (bodyCls) {
     }
   }
 })('modal-open')
+let dateUtil = {
+  intervalDays: function (timeInMills1, timeInMills2) {
+    var DAY_TIME_IN_MILLS = 24 * 60 * 60 * 1000
+    var time1 = Math.floor(timeInMills1 / DAY_TIME_IN_MILLS) * DAY_TIME_IN_MILLS
+    var time2 = Math.floor(timeInMills2 / DAY_TIME_IN_MILLS) * DAY_TIME_IN_MILLS
+    return Math.abs((time2 - time1) / DAY_TIME_IN_MILLS)
+  }
+}
 export {Utils}
 export {InviteShareUtils}
 export {ruleBox}
 export {bridgeUtil}
 export {ModalHelper}
+export {dateUtil}

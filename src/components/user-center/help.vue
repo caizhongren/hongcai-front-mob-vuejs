@@ -1,5 +1,88 @@
 <template>
   <div class="help">
+    <!-- 预计回款 -->
+    <div v-if="type === '9'">
+      <div class="content">
+        <div class="column">
+          <div class="fl">债权本金</div>
+          <div class="fa-down txt-right fr">
+          </div>
+          <p class="fr">
+            {{transferAmount || 0}}元
+          </p>
+        </div>
+      </div>
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
+          <div class="fl">本期待收收益</div>
+          <div class="fa-down txt-right fr">
+          </div>
+          <p class="fr">
+            {{profit | number}}元
+          </p>
+        </div>
+        <div class="submenu">
+          <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
+            本期代收利息是指该笔债权自本期计息日至今天说产生的待收利息：<br><br>
+            债权本金*原项目年均回报率*本期计息天数/365天<br>
+            {{transferAmount || 0}} * {{project.annualEarnings || 0}}% * {{profitDate || 0}} / 365 = {{profit | number}}元<br><br> 
+            如果该数值为负数，表示本期利息已经提前还款给您，此时债权转让需要扣除今日至本期还款日所产生的利息
+          </span>  
+        </div>
+      </div>
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
+          <div class="fl">债权转让奖金</div>
+          <div class="fa-down txt-right fr">
+          </div>
+          <p class="fr">
+            {{transferReward | number}}元
+          </p>
+        </div>
+        <div class="submenu">
+          <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
+            债权转让奖金是指您为了尽快转出债权，自愿提高项目回报率而补贴给受让人的奖励金额：<br><br>
+            债权本金 *（转让利率 - 原项目年均回报率）* 项目剩余天数/365天<br>
+            {{transferAmount || 0}} *（{{transferAnnul || 0}}% - {{project.annualEarnings || 0}}%）* {{remainDay}} / 365 = {{transferReward | number}}元
+          </span>  
+        </div>
+      </div>
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
+          <div class="fl">现金券奖励扣款</div>
+          <div class="fa-down txt-right fr">
+          </div>
+          <p class="fr">
+            {{deduction | number}}元
+          </p>
+        </div>
+        <div class="submenu">
+          <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
+            现金券奖励扣款是指宏财网按照您成功转出的债权金额等比例扣除您该笔投资所获得的现金券奖励：<br><br>
+            现金券奖励 * 债权本金  /初始投资总额<br>
+            {{couponVal || 0}} * {{transferAmount || 0}} / {{creditAmount || 0}} = {{deduction}}元
+          </span>  
+        </div>
+      </div>
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
+          <div class="fl">债权转让手续费</div>
+          <div class="fa-down txt-right fr">
+          </div>
+          <p class="fr">
+            {{counterFee}}元
+          </p>
+        </div>
+        <div class="submenu">
+          <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
+            债权转让手续费是宏财网为您和受让人提供信息匹配和交易撮合所收取的费用，<br><br>
+            该笔债权持有时间 < 30天，手续费 = {{transferAmount || 0}} * 1%，<br>
+            持有时间 ≥ 30天，手续费 = {{transferAmount || 0}} * 0.5%，手续费最低收取3元。<br>
+            {{transferAmount || 0}} * 0.5% = 5元
+          </span>  
+        </div>
+      </div>
+    </div>
     <!-- 理解宏财 -->
     <div v-if="type === '1'">
       <div class="content">
@@ -653,35 +736,88 @@
 <script>
   // import {Utils} from '../../service/Utils'
   var submenu = document.getElementsByClassName('submenu')
+  import {dateUtil} from '../../service/Utils'
   export default {
     name: 'help',
     data () {
       return {
         type: '1',
-        titles: ['了解宏财', '产品介绍', '投资相关', '注册登录', '账户管理', '充值提现', '用户福利', '客户服务'],
-        bankLimit: []
+        titles: ['了解宏财', '产品介绍', '投资相关', '注册登录', '账户管理', '充值提现', '用户福利', '客户服务', '预计回款'],
+        bankLimit: [],
+        number: '',
+        projectNum: '',
+        project: {},
+        rule: {},
+        orderAmount: 0,
+        transferAmount: 0,
+        profit: 0,
+        currentDate: 0,
+        profitDate: 0,
+        transferReward: 0,
+        remainDay: 0,
+        transferAnnul: 0,
+        deduction: 0,
+        creditAmount: 0,
+        counterFee: 0,
+        couponVal: 0
+      }
+    },
+    props: ['token'],
+    watch: {
+      token: function (val) {
+        if (val && val !== '') {
+          this.getAssignmentRule()
+        }
       }
     },
     created: function () {
       this.type = this.$route.params.type.toString()
+      this.number = this.$route.query.number
+      this.transferAmount = this.$route.query.amount
+      this.transferAnnul = this.$route.query.annualEarnings
+      var current = new Date()
+      current.setHours(0)
+      current.setMinutes(0)
+      current.setSeconds(0)
+      current.setMilliseconds(0)
+      this.currentDate = current.getTime()
       document.title = this.titles[Number(this.type - 1)]
-      this.getBankLimit()
+      if (this.type === '6') {
+        this.getBankLimit()
+      }
+      if (this.type === '9') {
+        if (this.token && this.token !== '') {
+          this.getAssignmentRule()
+        }
+      }
     },
     methods: {
       showContent: function (e, content, submenu) {
         for (var i = 0; i < submenu.length; i++) {
           submenu[i].style.display = 'none'
           submenu[i].parentElement.classList.remove('open')
-          submenu[i].previousElementSibling.lastChild.classList.remove('rotate')
+          if (this.type === '9') {
+            submenu[i].previousElementSibling.lastChild.previousElementSibling.classList.remove('rotate')
+          } else {
+            submenu[i].previousElementSibling.lastChild.classList.remove('rotate')
+          }
         }
         content.parentElement.lastChild.style.display = 'block'
         content.parentElement.className += ' open'
-        content.lastChild.className += ' rotate'
+        if (this.type === '9') {
+          content.lastChild.previousElementSibling.className += ' rotate'
+        } else {
+          content.lastChild.className += ' rotate'
+        }
       },
       hideContent: function (e, content, submenu) {
         content.parentElement.lastChild.style.display = 'none'
         content.parentElement.classList.remove('open')
-        content.lastChild.classList.remove('rotate')
+        if (this.type === '9') {
+          content.lastChild.previousElementSibling.classList.remove('rotate')
+        } else {
+          content.lastChild.classList.remove('rotate')
+        }
       },
       showOrHide: function (e) {
         var content = e.target
@@ -706,12 +842,52 @@
         .then(function (res) {
           that.bankLimit = res.data
         })
+      },
+      getAssignmentRule: function () {
+        this.$http({
+          url: '/hongcai/rest/assignments/assignmentRule' + '?token=' + this.token
+        }).then((res) => {
+          this.rule = res.data
+          this.getCreditDetail()
+        })
+      },
+      getCreditDetail: function () {
+        this.$http({
+          method: 'get',
+          url: '/hongcai/rest/creditRights/' + this.number + '/creditDetail' + '?token=' + this.token
+        }).then((response) => {
+          this.project = response.data.project
+          this.creditAmount = response.data.creditRight.amount
+          // 剩余期限
+          this.remainDay = dateUtil.intervalDays(this.project.repaymentDate, this.currentDate)
+          // 待收利息天数
+          this.profitDate = dateUtil.intervalDays(this.currentDate, response.data.projectBill.lastRepaymentTime)
+          // 待收未收利息
+          this.profit = this.transferAmount * this.project.annualEarnings / 100 * this.profitDate / 365
+          // 转让奖金
+          this.transferReward = this.transferAmount * (this.transferAnnul - this.project.annualEarnings) * this.remainDay / 36500
+          // 现金券金额
+          this.couponVal = response.increaseRateCoupon && response.increaseRateCoupon.type === 2 ? response.increaseRateCoupon.value : 0
+          // 现金券奖励扣款
+          this.deduction = this.couponVal * (this.transferAmount / this.creditAmount)
+          // 手续费
+          if (this.currentDate - response.data.creditRight.creatTime <= this.rule.borderDay * 24 * 60 * 60 * 1000) {
+            this.counterFee = this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate > this.rul.minFee ? this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate : this.rule.minFee
+          } else {
+            this.counterFee = this.transferAmount * this.rule.greaterThanBorderDayFee / 100 * this.rule.discountFeeRate > this.rule.minFee ? this.transferAmount * this.rule.greaterThanBorderDayFee / 100 * this.rule.discountFeeRate : this.rule.minFee
+          }
+        })
       }
     }
   }
 </script>
 
 <style scoped>
+  p.fr {
+    margin-right: .05rem;
+    font-size: .28rem;
+    color: #f6611d;
+  }
   .help .content {
     overflow: hidden;
     padding: 0 .36rem;
@@ -740,7 +916,7 @@
     font-size: .28rem;
   }
   .column .rotate {
-    transform: rotateZ(180deg);
+    transform: rotateZ(0deg);
   }
   .submenu {
     display: none;
@@ -776,7 +952,8 @@
     display: block;
     width: .2rem;
     height: 1rem;
-    padding-top: .3rem;
+    padding-top: .25rem;
+    transform: rotateZ(-90deg);
     -webkit-transition: all .2s ease-in;
     -moz-transition: all .2s ease-in;
     transition: all .2s ease-in;
