@@ -20,7 +20,7 @@
               <td v-if="index === 0"><img src="../../images/summer-plan/no.1.png" alt="" width="35%"></td>
               <td v-if="index !== 0">{{index + 1}}</td> 
               <td>{{item.userMobile}}</td>
-              <td>{{item.score || '暂无'}}</td>
+              <td>{{item.score || 0}}</td>
             </tr>
           </tbody>
         </table>
