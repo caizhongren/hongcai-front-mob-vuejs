@@ -59,7 +59,7 @@
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
             现金券奖励扣款是指宏财网按照您成功转出的债权金额等比例扣除您该笔投资所获得的现金券奖励：<br><br>
-            现金券奖励 * 债权本金  /初始投资总额<br>
+            现金券奖励 * 债权本金 / 初始投资总额<br>
             {{couponVal || 0}} * {{transferAmount || 0}} / {{creditAmount || 0}} = {{deduction}}元
           </span>  
         </div>

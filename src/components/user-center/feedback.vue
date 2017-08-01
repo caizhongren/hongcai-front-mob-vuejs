@@ -1,6 +1,6 @@
 <template>
   <div class="feedback">
-    <div class="title">
+    <div class="title" @click="test">
       <p>尊敬的用户：</p>
       <p>为了给您更好的服务，请详细描述您的问题或建议，我们将及时跟进解决，不断优化产品！</p>
     </div>
@@ -65,6 +65,10 @@
             console.log(err)
           })
         }, null)
+      },
+      test () {
+        window.location.href = 'http://192.168.80.76:8080/user-center/help/9'
+        // this.$router.push({name: 'Help', params: { type: '9' }})
       }
     }
   }
