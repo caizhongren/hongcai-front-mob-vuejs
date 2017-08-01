@@ -380,16 +380,27 @@
         page.addEventListener('touchend', endTouchScroll, false)
         document.querySelector('.project').addEventListener('touchmove', function (event) {
           event.stopPropagation()
-          event.preventDefault()
+          // event.preventDefault()
         }, false)
+        var startPos = {}
+        var endPos = {}
         function startTouchScroll (event) {
           // event.preventDefault()
+          var touch = event.targetTouches[0]
+          startPos = {x: touch.pageX, y: touch.pageY}
           window.touchStartY = event.targetTouches[0].pageY
           window.offsetY = 0
           touchY = window.offsetY
           $('#product-page1').addClass('animate')
         }
         function moveTouchScroll (event) {
+          var touch = event.targetTouches[0]
+          endPos = {x: touch.pageX - startPos.x, y: touch.pageY - startPos.y}
+          // isScrolling为1时，表示纵向滑动，0为横向滑动
+          var isScrolling = Math.abs(endPos.x) < Math.abs(endPos.y) ? 1 : 0
+          if (isScrolling === 1) {
+            event.preventDefault()
+          }
           // event.preventDefault()
           window.offsetY += 0.25 * (event.targetTouches[0].pageY - window.touchStartY)
           window.touchStartY = event.targetTouches[0].pageY
@@ -418,18 +429,26 @@
         var touchStartY = 0
         var lastY
         var sub
+        var startPos = {}
+        var endPos = {}
         page.addEventListener('touchstart', startTouchScroll, true)
         page.addEventListener('touchmove', moveTouchScroll, true)
         page.addEventListener('touchend', endTouchScroll, true)
         document.querySelector('.product-page2').addEventListener('touchstart', function (event) {
           lastY = event.changedTouches[0].clientY
+          var touch = event.targetTouches[0]
+          startPos = {x: touch.pageX, y: touch.pageY}
         }, false)
         document.querySelector('.product-page2').addEventListener('touchmove', function (event) {
+          event.stopPropagation()
+          var touch = event.targetTouches[0]
+          endPos = {x: touch.pageX - startPos.x, y: touch.pageY - startPos.y}
+          var isScrolling = Math.abs(endPos.x) < Math.abs(endPos.y) ? 1 : 0
           var y = event.changedTouches[0].clientY
           var st = $(this).scrollTop()
           sub = $('.scroll').offset().top - $('.details-more').offset().top
-          event.stopPropagation()
-          if (sub === 0 && y >= lastY && st <= 10) {
+          // isScrolling为1时，表示纵向滑动，0为横向滑动
+          if (sub === 0 && y >= lastY && st <= 10 && isScrolling === 1) {
             lastY = y
             event.preventDefault()
           }
