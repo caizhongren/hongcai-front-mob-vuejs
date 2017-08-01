@@ -107,7 +107,6 @@
     methods: {
       getContracts: function () {
         var that = this
-        alert(that.token)
         that.$http({
           method: 'get',
           url: '/hongcai/rest/contracts/' + that.creditRightNum + '/credit/?token=' + that.token
