@@ -94,13 +94,21 @@
     },
     created: function () {
       this.creditRightNum = this.$route.query.creditRightNum
-      this.creditRightNum ? this.getContracts() : null
+      this.creditRightNum && this.token !== '' ? this.getContracts() : null
     },
     props: ['token'],
+    watch: {
+      token: function (val) {
+        if (val && val !== '' && this.creditRightNum) {
+          this.getContracts()
+        }
+      }
+    },
     methods: {
       getContracts: function () {
         var that = this
-        this.$http({
+        alert(that.token)
+        that.$http({
           method: 'get',
           url: '/hongcai/rest/contracts/' + that.creditRightNum + '/credit/?token=' + that.token
         }).then(function (res) {
