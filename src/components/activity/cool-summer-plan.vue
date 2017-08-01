@@ -303,7 +303,7 @@
         ModalHelper.beforeClose()
         var regesterHandCallback = function (data) {
           data = Utils.isAndroid() ? JSON.parse(data) : data
-          window.location.replace(window.location.pathname)
+          // window.location.replace(window.location.pathname)
         }
         bridgeUtil.webConnectNative('HCNative_Login', 'HCWeb_LoginSuccess', {}, function (response) {}, regesterHandCallback)
       }
