@@ -73,7 +73,7 @@
   .table-wrap {
     /* height: 80%; */
     padding: 0 2%;
-    overflow-y: scroll;
+    overflow-y: auto;
     background-color: #fff;
     border-radius: 0 0 .1rem .1rem;
     -webkit-overflow-scrolling: touch;

@@ -380,7 +380,7 @@
     border: 1px solid #00ffe4;
     background: #1e9781;
     border-radius: .25rem;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding: .56rem;
     color: #effffd;
     font-size: .26rem;
