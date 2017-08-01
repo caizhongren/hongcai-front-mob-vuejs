@@ -70,15 +70,16 @@
           <div class="fa-down txt-right fr">
           </div>
           <p class="fr">
-            {{counterFee}}元
+            {{counterFee | number}}元
           </p>
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
             债权转让手续费是宏财网为您和受让人提供信息匹配和交易撮合所收取的费用，<br><br>
-            该笔债权持有时间 < 30天，手续费 = {{transferAmount || 0}} * 1%，<br>
-            持有时间 ≥ 30天，手续费 = {{transferAmount || 0}} * 0.5%，手续费最低收取3元。<br>
-            {{transferAmount || 0}} * 0.5% = 5元
+            该笔债权持有时间 < 30天，手续费 = 转让本金 * 1%，<br>
+            持有时间 ≥ 30天，手续费 = 转让本金 * 0.5%，手续费最低收取3元。<br>
+            <span v-if="currentDate - creditCreateTime < rule.borderDay * 24 * 60 * 60 * 1000">{{transferAmount || 0}} * 1% = {{transferAmount / 100 | number}}元</span>
+            <span v-if="currentDate - creditCreateTime >= rule.borderDay * 24 * 60 * 60 * 1000">{{transferAmount || 0}} * 0.5% = {{transferAmount * 0.5 / 100 | number}}元</span>
           </span>  
         </div>
       </div>
@@ -734,7 +735,6 @@
 </template>
 
 <script>
-  // import {Utils} from '../../service/Utils'
   var submenu = document.getElementsByClassName('submenu')
   import {dateUtil} from '../../service/Utils'
   export default {
@@ -759,7 +759,8 @@
         deduction: 0,
         creditAmount: 0,
         counterFee: 0,
-        couponVal: 0
+        couponVal: 0,
+        creditCreateTime: 0
       }
     },
     props: ['token'],
@@ -858,10 +859,16 @@
         }).then((response) => {
           this.project = response.data.project
           this.creditAmount = response.data.creditRight.amount
-          // 剩余期限
-          this.remainDay = dateUtil.intervalDays(this.project.repaymentDate, this.currentDate)
+          var createTime = new Date(response.data.creditRight.createTime)
+          createTime.setHours(0)
+          createTime.setMinutes(0)
+          createTime.setSeconds(0)
+          createTime.setMilliseconds(0)
+          this.creditCreateTime = createTime.getTime()
           // 待收利息天数
           this.profitDate = dateUtil.intervalDays(this.currentDate, response.data.projectBill.lastRepaymentTime)
+          // 剩余期限
+          this.remainDay = dateUtil.intervalDays(this.project.repaymentDate, this.currentDate)
           // 待收未收利息
           this.profit = this.transferAmount * this.project.annualEarnings / 100 * this.profitDate / 365
           // 转让奖金
@@ -871,8 +878,8 @@
           // 现金券奖励扣款
           this.deduction = this.couponVal * (this.transferAmount / this.creditAmount)
           // 手续费
-          if (this.currentDate - response.data.creditRight.creatTime <= this.rule.borderDay * 24 * 60 * 60 * 1000) {
-            this.counterFee = this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate > this.rul.minFee ? this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate : this.rule.minFee
+          if (this.currentDate - this.creditCreateTime < this.rule.borderDay * 24 * 60 * 60 * 1000) {
+            this.counterFee = this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate > this.rule.minFee ? this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate : this.rule.minFee
           } else {
             this.counterFee = this.transferAmount * this.rule.greaterThanBorderDayFee / 100 * this.rule.discountFeeRate > this.rule.minFee ? this.transferAmount * this.rule.greaterThanBorderDayFee / 100 * this.rule.discountFeeRate : this.rule.minFee
           }
