@@ -8,7 +8,7 @@
           <div class="fa-down txt-right fr">
           </div>
           <p class="fr">
-            {{transferAmount || 0}}元
+             {{transferAmount || 0}}元
           </p>
         </div>
       </div>
@@ -774,14 +774,9 @@
     created: function () {
       this.type = this.$route.params.type.toString()
       this.number = this.$route.query.number
-      this.transferAmount = this.$route.query.amount
-      this.transferAnnul = this.$route.query.annualEarnings
-      var current = new Date()
-      current.setHours(0)
-      current.setMinutes(0)
-      current.setSeconds(0)
-      current.setMilliseconds(0)
-      this.currentDate = current.getTime()
+      this.transferAmount = Number(this.$route.query.amount)
+      this.transferAnnul = Number(this.$route.query.annualEarnings)
+      this.currentDate = new Date().getTime()
       document.title = this.titles[Number(this.type - 1)]
       if (this.type === '6') {
         this.getBankLimit()
@@ -859,18 +854,13 @@
         }).then((response) => {
           this.project = response.data.project
           this.creditAmount = response.data.creditRight.amount
-          var createTime = new Date(response.data.creditRight.createTime)
-          createTime.setHours(0)
-          createTime.setMinutes(0)
-          createTime.setSeconds(0)
-          createTime.setMilliseconds(0)
-          this.creditCreateTime = createTime.getTime()
+          this.creditCreateTime = response.data.creditRight.createTime
           // 待收利息天数
-          this.profitDate = dateUtil.intervalDays(this.currentDate, response.data.projectBill.lastRepaymentTime)
+          this.profitDate = dateUtil.intervalDays(this.currentDate, response.data.projectBill.lastRepaymentTime) * (this.currentDate > response.data.projectBill.lastRepaymentTime ? 1 : -1)
           // 剩余期限
           this.remainDay = dateUtil.intervalDays(this.project.repaymentDate, this.currentDate)
           // 待收未收利息
-          this.profit = this.transferAmount * this.project.annualEarnings / 100 * this.profitDate / 365
+          this.profit = this.transferAmount * this.project.annualEarnings * this.profitDate / 36500
           // 转让奖金
           this.transferReward = this.transferAmount * (this.transferAnnul - this.project.annualEarnings) * this.remainDay / 36500
           // 现金券金额
@@ -878,7 +868,7 @@
           // 现金券奖励扣款
           this.deduction = this.couponVal * (this.transferAmount / this.creditAmount)
           // 手续费
-          if (this.currentDate - this.creditCreateTime < this.rule.borderDay * 24 * 60 * 60 * 1000) {
+          if (dateUtil.intervalDays(this.currentDate, this.creditCreateTime) < this.rule.borderDay * 24 * 60 * 60 * 1000) {
             this.counterFee = this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate > this.rule.minFee ? this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate : this.rule.minFee
           } else {
             this.counterFee = this.transferAmount * this.rule.greaterThanBorderDayFee / 100 * this.rule.discountFeeRate > this.rule.minFee ? this.transferAmount * this.rule.greaterThanBorderDayFee / 100 * this.rule.discountFeeRate : this.rule.minFee
