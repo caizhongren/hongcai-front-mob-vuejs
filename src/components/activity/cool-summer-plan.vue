@@ -271,6 +271,9 @@
           return
         }
         that.busy = true
+        setTimeout(function () {
+          that.busy = false
+        }, 300)
         that.$http.post('/hongcai/rest/users/0/coupons/takeCoolCoupons', {
           token: that.token,
           level: level
@@ -286,9 +289,6 @@
             that.activityEnd = true
           }
           that.ShowReceive()
-          setTimeout(function () {
-            that.busy = false
-          }, 500)
         })
       },
       toCoolRank: function () {
