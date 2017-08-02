@@ -31,6 +31,9 @@ const BindWechat = r => require.ensure([], () => r(require('../components/bindWe
 const Report2 = r => require.ensure([], () => r(require('../components/news/report2.vue')), 'News')
 const Report1 = r => require.ensure([], () => r(require('../components/news/report1.vue')), 'News')
 const Events = r => require.ensure([], () => r(require('../components/events.vue')), 'Events')
+const UserCenter = r => require.ensure([], () => r(require('../components/user-center/userCenter.vue')), 'UserCenter')
+const Activity = r => require.ensure([], () => r(require('../components/activity/activity.vue')), 'Activity')
+const News = r => require.ensure([], () => r(require('../components/news/news.vue')), 'News')
 Vue.use(Router)
 const routes = [
   {
@@ -50,39 +53,64 @@ const routes = [
     meta: {title: '走进宏财'}
   },
   {
-    path: '/user-center/help-center',
-    name: 'HelpCenter',
-    component: HelpCenter,
-    meta: {title: '帮助中心'}
-  },
-  {
-    path: '/user-center/help/:type',
-    name: 'Help',
-    component: Help
-  },
-  {
-    path: '/user-center/questionnaire',
-    name: 'Question',
-    component: Question,
-    meta: {title: '风险测评'}
-  },
-  {
-    path: '/user-center/feedback',
-    name: 'Feedback',
-    component: Feedback,
-    meta: {title: '意见反馈'}
-  },
-  {
-    path: '/user-center/invite-rebate',
-    name: 'InviteRebate',
-    component: InviteRebate,
-    meta: {title: '我的邀请'}
-  },
-  {
-    path: '/user-center/invite-rebate-list',
-    name: 'inviteRebateList',
-    component: inviteRebateList,
-    meta: {title: '邀请列表'}
+    path: '/user-center',
+    name: 'UserCenter',
+    component: UserCenter,
+    children: [
+      {
+        path: 'help-center',
+        name: 'HelpCenter',
+        component: HelpCenter,
+        meta: {title: '帮助中心'}
+      },
+      {
+        path: 'help/:type',
+        name: 'Help',
+        component: Help
+      },
+      {
+        path: 'questionnaire',
+        name: 'Question',
+        component: Question,
+        meta: {title: '风险测评'}
+      },
+      {
+        path: 'feedback',
+        name: 'Feedback',
+        component: Feedback,
+        meta: {title: '意见反馈'}
+      },
+      {
+        path: 'invite-rebate',
+        name: 'InviteRebate',
+        component: InviteRebate,
+        meta: {title: '我的邀请'}
+      },
+      {
+        path: 'invite-rebate-list',
+        name: 'inviteRebateList',
+        component: inviteRebateList,
+        meta: {title: '邀请列表'}
+      },
+      {
+        path: 'bankcard-limit',
+        name: 'bankCardLimit',
+        component: bankCardLimit,
+        meta: {title: '银行卡限额'}
+      },
+      {
+        path: 'assignment-list/:number',
+        name: 'AssignmentList',
+        component: AssignmentList,
+        meta: {title: '转让记录'}
+      },
+      {
+        path: 'messages/:id',
+        name: 'NoticeDetail',
+        component: NoticeDetail,
+        meta: {title: '公告详情'}
+      }
+    ]
   },
   {
     path: '/project/:number',
@@ -90,70 +118,59 @@ const routes = [
     component: ProjectDetail
   },
   {
-    path: '/activity/invite',
-    name: 'Invite',
-    component: Invite,
-    meta: {title: '邀请好友'}
-  },
-  {
-    path: '/activity/reward',
-    name: 'ActivityReward',
-    component: ActivityReward,
-    meta: {title: '我的奖励'}
-  },
-  {
-    path: '/activity/lottery',
-    name: 'Lottery',
-    component: Lottery,
-    meta: {title: '幸运大抽奖'}
-  },
-  {
-    path: '/activity/user-lottery-record',
-    name: 'LotteryRecord',
-    component: LotteryRecord,
-    meta: {title: '我的奖励'}
-  },
-  {
-    path: '/user-center/bankcard-limit',
-    name: 'bankCardLimit',
-    component: bankCardLimit,
-    meta: {title: '银行卡限额'}
-  },
-  {
-    path: '/user-center/assignment-list/:number',
-    name: 'AssignmentList',
-    component: AssignmentList,
-    meta: {title: '转让记录'}
-  },
-  {
-    path: '/user-center/messages/:id',
-    name: 'NoticeDetail',
-    component: NoticeDetail,
-    meta: {title: '公告详情'}
-  },
-  {
-    path: '/activity/novice-landing',
-    name: 'Novice',
-    component: Novice,
-    meta: {title: '新手大礼包'}
-  },
-  {
-    path: '/activity/cool-summer-plan',
-    name: 'CoolSummerPlan',
-    component: CoolSummerPlan,
-    meta: {title: '夏日清凉计划'}
-  },
-  {
-    path: '/activity/cool-Ranking',
-    name: 'CoolRanking',
-    component: CoolRanking,
-    meta: {title: '前十名排行榜'}
-  },
-  {
-    path: '/activity/integral-detail',
-    name: 'IntegralDetail',
-    component: IntegralDetail,
-    meta: {title: '清凉积分明细'}
+    path: '/activity',
+    name: 'Activity',
+    component: Activity,
+    children: [
+      {
+        path: 'invite',
+        name: 'Invite',
+        component: Invite,
+        meta: {title: '邀请好友'}
+      },
+      {
+        path: 'reward',
+        name: 'ActivityReward',
+        component: ActivityReward,
+        meta: {title: '我的奖励'}
+      },
+      {
+        path: 'lottery',
+        name: 'Lottery',
+        component: Lottery,
+        meta: {title: '幸运大抽奖'}
+      },
+      {
+        path: 'user-lottery-record',
+        name: 'LotteryRecord',
+        component: LotteryRecord,
+        meta: {title: '我的奖励'}
+      },
+      {
+        path: 'novice-landing',
+        name: 'Novice',
+        component: Novice,
+        meta: {title: '新手大礼包'}
+      },
+      {
+        path: 'cool-summer-plan',
+        name: 'CoolSummerPlan',
+        component: CoolSummerPlan,
+        meta: {title: '夏日清凉计划'}
+      },
+      {
+        path: 'cool-Ranking',
+        name: 'CoolRanking',
+        component: CoolRanking,
+        meta: {title: '前十名排行榜'}
+      },
+      {
+        path: 'integral-detail',
+        name: 'IntegralDetail',
+        component: IntegralDetail,
+        meta: {title: '清凉积分明细'}
+      }
+    ]
   },
   {
     path: '/register-agree',
@@ -198,16 +215,23 @@ const routes = [
     meta: {title: '绑定微信有钱领'}
   },
   {
-    path: '/news/report2',
-    name: 'Report2',
-    component: Report2,
-    meta: {title: '宏财网CEO王斌首谈经验'}
-  },
-  {
-    path: '/news/report1',
-    name: 'Report1',
-    component: Report1,
-    meta: {title: '宏财网合规经营练内功'}
+    path: '/news',
+    name: 'News',
+    component: News,
+    children: [
+      {
+        path: 'report2',
+        name: 'Report2',
+        component: Report2,
+        meta: {title: '宏财网CEO王斌首谈经验'}
+      },
+      {
+        path: 'report1',
+        name: 'Report1',
+        component: Report1,
+        meta: {title: '宏财网合规经营练内功'}
+      }
+    ]
   },
   {
     path: '/events',
