@@ -39,7 +39,7 @@
           prizeType: 4
         },
         userLotteryRecord: [],
-        showRecord: Boolean
+        showRecord: false
       }
     },
     created: function () {

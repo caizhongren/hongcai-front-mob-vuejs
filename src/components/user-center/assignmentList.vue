@@ -29,7 +29,7 @@
         assignmentOrderList: [],
         assignmentOrder: [],
         limit: 10,
-        showOrder: Boolean
+        showOrder: false
       }
     },
     created: function () {

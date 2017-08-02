@@ -43,7 +43,7 @@
         inviteList: [],
         page: 1,
         pageSize: 10,
-        showList: Boolean
+        showList: false
       }
     },
     props: ['token'],
