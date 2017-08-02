@@ -5,7 +5,7 @@
       <div class="content">
         <div class="column">
           <div class="fl">债权本金</div>
-          <div class="fa-down txt-right fr">
+          <div class="fa-down-no txt-right fr">
           </div>
           <p class="fr">
              {{transferAmount || 0}}元
@@ -80,6 +80,22 @@
             持有时间 ≥ 30天，手续费 = 转让本金 * 0.5%，手续费最低收取3元。<br>
             <span v-if="currentDate - creditCreateTime < rule.borderDay * 24 * 60 * 60 * 1000">{{transferAmount || 0}} * 1% = {{transferAmount / 100 | number}}元</span>
             <span v-if="currentDate - creditCreateTime >= rule.borderDay * 24 * 60 * 60 * 1000">{{transferAmount || 0}} * 0.5% = {{transferAmount * 0.5 / 100 | number}}元</span>
+          </span>  
+        </div>
+      </div>
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
+          <div class="fl">预计回款</div>
+          <div class="fa-down txt-right fr">
+          </div>
+          <p class="fr">
+            {{transferAmount + profit - counterFee - transferReward - deduction ? transferAmount + profit - counterFee - transferReward - deduction : 0 | number}}元
+          </p>
+        </div>
+        <div class="submenu">
+          <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
+            预计回款金额：债权本金 + 本期待收利息 - 债权转让奖金 - 现金券奖励扣款 - 债权转让手续费<br><br>
+            {{transferAmount || 0}} + {{profit | number}} - {{transferReward | number}} - {{deduction | number}} - {{counterFee || 0}} = {{transferAmount + profit - counterFee - transferReward - deduction | number}}元
           </span>  
         </div>
       </div>
@@ -883,7 +899,7 @@
   p.fr {
     margin-right: .05rem;
     font-size: .28rem;
-    color: #f6611d;
+    color: #f66000;
   }
   .help .content {
     overflow: hidden;
@@ -943,7 +959,7 @@
   .border-none {
     border-bottom: none !important;
   }
-  .fa-down {
+  .fa-down, .fa-down-no {
     background: url('../../images/user-center/angle-down.png') no-repeat center .4rem;
     background-size: contain;
     display: block;
@@ -954,5 +970,8 @@
     -webkit-transition: all .2s ease-in;
     -moz-transition: all .2s ease-in;
     transition: all .2s ease-in;
+  }
+  .fa-down-no {
+    background: rgba(0,0,0,0);
   }
 </style> 
