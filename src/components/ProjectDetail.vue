@@ -694,6 +694,7 @@
     padding: 0 .38rem;
     margin-top: .6rem;
     margin-bottom: .3rem;
+    z-index: 1;
   }
   .project-process .start-circle, .project-process .end-circle {
     width: .15rem;
@@ -708,6 +709,7 @@
   }
   .project-process .end-circle {
     border: 1px solid #75c4f6;
+    z-index: 3;
   }
   .project-process .start-circle .start-circle-center, .project-process .end-circle .end-circle-center {
     width: 0.08rem;
@@ -734,11 +736,10 @@
     height: 2px;
     top: 0;
     left: 0;
-    z-index: 99;
   }
   .process-bar img {
     position: absolute;
-    /*left: 75%;*/
+    z-index: 2;
     top: -0.18rem;
     width: 8%;
   }
@@ -869,10 +870,10 @@
     height: 1.22rem;
   }
   .repayment-plan .each-line .column1{
-    width: 32%;
+    width: 30%;
     font-size: .24rem;
     color: #999;
-    text-align: left;
+    text-align: center;
     margin-top: -.4rem;
     vertical-align: text-top;
     height: 100%;
@@ -896,7 +897,7 @@
    }
   .column2.ed .circle {
     background-color: #ddd;
-    box-shadow: 0 2px 16px #ddd, 0 0 2px #ddd, 0 0 2px #ff611d;
+    box-shadow: 0 2px 16px #ddd, 0 0 2px #ddd, 0 0 2px #ddd;
    }
   .column2 .vertical-line {
     height: .98rem;
@@ -915,7 +916,7 @@
   }
   .column3 {
     padding-left: .2rem;
-    width: 59.5%;
+    width: 62.5%;
     color: #666;
     font-size: .25rem;
     text-align: left;

@@ -241,7 +241,7 @@
       </div>
       <div class="content">
         <div class="column" @click="showOrHide($event)">
-          <div class="fl">6.债权转让的实际支付金额为什么大于认购金额？</div>
+          <div class="fl">6.债权转让实际支付金额为何大于认购金额？</div>
           <div class="fa-down txt-right fr">
           </div>
         </div>
@@ -565,7 +565,7 @@
       </div>
       <div class="content">
         <div class="column" @click="showOrHide($event)">
-          <div class="fl">3.提现有手续费吗？提现次数和金额有什么限制？</div>
+          <div class="fl">3.提现有手续费？提现次数和金额有何限制？</div>
           <div class="fa-down txt-right fr">
           </div>
         </div>
@@ -704,7 +704,7 @@
       </div>
       <div class="content">
         <div class="column" @click="showOrHide($event)">
-          <div class="fl">5.如何进入宏财网VIP群？进群后享受哪些特权？</div>
+          <div class="fl">5.如何进入宏财网VIP群？进群享受哪些特权？</div>
           <div class="fa-down txt-right fr">
           </div>
         </div>
