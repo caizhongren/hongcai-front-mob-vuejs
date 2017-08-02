@@ -1,5 +1,5 @@
 <template>
-  <div class="report">
+  <div class="report2">
     <h2>从金蛋到财神到宏财网，老兵王斌练就“互金心经”</h2>
     <p>说起王斌，很多“蛋友”和“财迷”们对他可谓“情有独钟”。</p>
     <img src="../../images/find/wb.png" alt="老兵王斌">
@@ -29,3 +29,31 @@
     <p>“他能站在我们的角度为我们思考问题，争取权益，有一次他甚至在半夜还在群里为我们解决活动奖励未及时到账的问题。而且他经历的平台都是优质合规的好平台，这一路走来，我们对他充满了信任，相较于他高管的身份，他更像一个处处为你着想的暖男。”一位追随王斌两年多的粉丝如是说道。</p>
   </div>
 </template>
+<script>
+  export default {
+    name: 'report2',
+    data () {
+      return {
+      }
+    }
+  }
+</script>
+<style scoped>
+  .report2 {
+    padding: .3rem;
+  }
+  h2 {
+    margin-bottom: .4rem;
+  }
+  p {
+    text-indent: 2em;
+    text-align: justify;
+    font-size: 0.26rem;
+    margin-bottom: .2rem;
+  }
+  img {
+    width: 100%;
+    display: block;
+    margin: .2rem auto;
+  }
+</style>
