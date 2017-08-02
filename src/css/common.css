@@ -205,7 +205,7 @@ input,button,select,textarea {
   right: 0;
   max-width: 640px;
   margin: 0 auto;
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgba(0,0,0,0.6);
   -webkit-overflow-scrolling: touch;
   overflow-y: hidden !important;
 }
