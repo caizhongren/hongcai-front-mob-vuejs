@@ -66,6 +66,9 @@
           })
         }, null)
       }
+      // test () {
+      //   window.location.href = 'http://192.168.80.76:8080/user-center/feedback'
+      // }
     }
   }
 </script>
@@ -123,13 +126,12 @@
     background-color: #fff; 
   }
   p.btn {
-    height: .85rem;
+    height: 1.1rem;
     line-height: 1rem;
     display: block;
     background: url(../../images/user-center/invite-btn.png) no-repeat;
     background-size: cover;
     font-size: .28rem;
-    padding: 0;
     border: none;
     color: #fff;
     text-align: center;
@@ -137,13 +139,12 @@
     margin-left: -2%;
   }
   p.btn.disabled-btn {
-    height: .85rem;
+    height: 1.1rem;
     line-height: 1rem;
     display: block;
     background: url(../../images/user-center/disabled-btn.png) no-repeat;
     background-size: cover;
     font-size: .28rem;
-    padding: 0;
     border: none;
     color: #fff;
     text-align: center;

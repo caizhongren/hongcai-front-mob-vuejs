@@ -302,25 +302,23 @@
     background-size: contain;
   }
   .questionnaire .submit-btn {
-    width: 94%;
-    height: .8rem;
-    line-height: 0.9rem;
+    padding: 0rem 0rem 0.05rem;
+    width: 100%;
+    height: 1rem;
     background: url('../../images/user-center/invite-btn.png') no-repeat 0 0;
     background-size: cover;
-    margin: 0 auto;
     font-weight: 400;
     font-size: .28rem;
     margin-top: .5rem;
   }
   .questionnaire .button-disabled {
-    width: 94%;
-    height: .8rem;
-    line-height: .9rem;
+    width: 100%;
+    height: 1rem;
+    padding: 0rem 0rem 0.05rem;
     background: url('../../images/user-center/disabled-btn.png') no-repeat 0 0;
     background-size: cover;
-    margin: 0 auto;
     font-weight: 400;
-    font-size: .24rem;
+    font-size: .28rem;
     margin-top: .5rem;
   }
   .questionnaire .errMsg {
