@@ -31,6 +31,7 @@ const BindWechat = r => require.ensure([], () => r(require('../components/bindWe
 const Report2 = r => require.ensure([], () => r(require('../components/news/report2.vue')), 'News')
 const Report1 = r => require.ensure([], () => r(require('../components/news/report1.vue')), 'News')
 const Events = r => require.ensure([], () => r(require('../components/events.vue')), 'Events')
+const RiskEducation = r => require.ensure([], () => r(require('../components/riskEducation.vue')), 'RiskEducation')
 Vue.use(Router)
 const routes = [
   {
@@ -214,6 +215,12 @@ const routes = [
     name: 'Events',
     component: Events,
     meta: {title: '宏财大事件'}
+  },
+  {
+    path: '/risk-education',
+    name: 'RiskEducation',
+    component: RiskEducation,
+    meta: {title: '风险安全教育'}
   },
   {
     path: '*',
