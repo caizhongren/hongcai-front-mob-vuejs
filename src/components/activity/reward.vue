@@ -215,7 +215,7 @@
 .con-invite-btn p {
   -webkit-transform: scale(0.8);
   transform: scale(0.8);
-  font-size: .2rem;
+  font-size: .1rem;
   color: #fff;
 }
 .con-invite-btn img {
