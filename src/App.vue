@@ -33,6 +33,10 @@ export default {
         that.token = Utils.isAndroid() ? JSON.parse(data).token : data.token
       })
     }
+  },
+    watch: {
+    // 如果路由有变化，会再次执行该方法
+    '$route': 'getToken'
   }
 }
 Object.keys(custom).forEach(key => {
