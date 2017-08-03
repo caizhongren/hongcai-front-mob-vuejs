@@ -82,7 +82,7 @@
     <div class="iosTips" v-show="isIos">
       该活动与设备生产商APPLE INC.公司无关
     </div>
-    <div class="btns" @click="toHCNative">{{(!userAuth.active && userAuth.authStatus === 2) || userAuth.authStatus === 0 ? '立即开通银行存管' : '立即投资'}}</div>
+    <div class="btns" @click="toHCNative">{{userAuth.active && userAuth.authStatus === 2 ? '立即投资' : '立即开通银行存管'}}</div>
   </div>
 </template>
 
@@ -129,10 +129,10 @@
         })
       },
       toHCNative: function () {
-        if ((!this.userAuth.active && this.userAuth.authStatus === 2) || this.userAuth.authStatus === 0) {
-          bridgeUtil.webConnectNative('HCNative_CheckUserAuth', null, {}, function (response) {}, null)
-        } else {
+        if (this.userAuth.active && this.userAuth.authStatus === 2) {
           bridgeUtil.webConnectNative('HCNative_GoInvestList', null, {}, function (response) {}, null)
+        } else {
+          bridgeUtil.webConnectNative('HCNative_CheckUserAuth', null, {}, function (response) {}, null)
         }
       }
     }
