@@ -298,9 +298,7 @@
         this.$router.push({name: 'IntegralDetail'})
       },
       toLogin: function () {
-        ModalHelper.afterOpen()
         this.receiveBG ? this.receiveBG = false : null
-        ModalHelper.beforeClose()
         bridgeUtil.webConnectNative('HCNative_Login', '', {}, function (response) {}, null)
       }
     }
