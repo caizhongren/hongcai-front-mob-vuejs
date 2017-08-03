@@ -884,7 +884,7 @@
           // 现金券奖励扣款
           this.deduction = this.couponVal * (this.transferAmount / this.creditAmount)
           // 手续费
-          if (dateUtil.intervalDays(this.currentDate, this.creditCreateTime) < this.rule.borderDay * 24 * 60 * 60 * 1000) {
+          if (dateUtil.intervalDays(this.currentDate, this.creditCreateTime) < this.rule.borderDay) {
             this.counterFee = this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate > this.rule.minFee ? this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate : this.rule.minFee
           } else {
             this.counterFee = this.transferAmount * this.rule.greaterThanBorderDayFee / 100 * this.rule.discountFeeRate > this.rule.minFee ? this.transferAmount * this.rule.greaterThanBorderDayFee / 100 * this.rule.discountFeeRate : this.rule.minFee
