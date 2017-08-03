@@ -190,8 +190,7 @@
           },
           turnEndCallback: function (prizeId, obj) {
             that.showDrawBox = true
-            var $lottry = document.querySelector('#lottery')
-            $lottry.className = 'position-fix'
+            that.showDrawBox ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
             $('.lottery-item').addClass('selecting')
           },
           startBtnClick: function ($btn) {
@@ -216,7 +215,7 @@
       },
       closeDraw: function (showDrawBox) {
         this.showDrawBox = !this.showDrawBox
-        this.showDrawBox ? document.querySelector('#lottery').className = 'position-fix' : document.querySelector('#lottery').className = ' '
+        this.showDrawBox ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       },
       toLogin: function () {
         bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function (response) {}, null)
@@ -244,6 +243,7 @@
               // alert(response.data.msg)
               this.showDrawBox = false
             }
+            this.showDrawBox ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
           } else {
             this.receiveDraw = true
             this.usedAndcanShare = false
@@ -332,6 +332,7 @@
           'imageUrl': 'https://mmbiz.qlogo.cn/mmbiz_jpg/8MZDOEkib8AlvibTmbDkqwbDiasl9BphCGgYnicBzl9VfX4Sm9cpvFiarGsV73IRYurUF9LPibzL0JLR5SGmd1TeO3ug/0?wx_fmt=jpeg'
         }, function () {}, this.shareRegisterCallback)
         this.showDrawBox = false
+        this.showDrawBox ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       },
       getLuckyUsers: function () {
         var that = this
