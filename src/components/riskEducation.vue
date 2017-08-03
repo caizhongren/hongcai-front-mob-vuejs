@@ -12,7 +12,7 @@
       </div>
       <div class="risk-content">
         <div class="overflow-hid clear">
-          <div class="questioner fl"><img src="../images/risk/questioner1.png" alt="" width="100%"></div>
+          <div class="questioner fl"></div>
           <div class="question-one fl">
             <span class="left-triangle"></span>
             什么是互联网金融信息服务平台?
@@ -25,12 +25,12 @@
             <span class="right-triangle"></span>
             互联网金融信息服务平台将第三方机构做好风控的项目发布到平台上与投资者对接，从而撮合实现个人和个人以及机构之间的借贷服务。
           </div>
-          <div class="answerer fl"><img src="../images/risk/answer1.png" alt="" width="100%"></div>
+          <div class="answerer fl"></div>
         </div>
       </div>
       <div class="risk-content">
         <div class="overflow-hid clear">
-          <div class="questioner fl"><img src="../images/risk/questioner1.png" alt="" width="100%"></div>
+          <div class="questioner fl"></div>
           <div class="question-one fl">
             <span class="left-triangle"></span>
             互联网金融信息服务平台的主要义务是什么?
@@ -44,12 +44,12 @@
             平台将根据依法、诚信、自愿、公平的原则为出借人和借款人提供信息服务，维护出借人与借款人的合法权益，不得直接或间接归集资金，不得非法集资。
             <br>平台有义务对第三方机构提供的借款企业及个人融资信息的真实性、抵质押物的有效性、 评估借款风险进行审核，确保将还款风险降到最低。
           </div>
-          <div class="answerer fl"><img src="../images/risk/answer1.png" alt="" width="100%"></div>
+          <div class="answerer fl"></div>
         </div>
       </div>
       <div class="risk-content">
         <div class="overflow-hid clear">
-          <div class="questioner fl"><img src="../images/risk/questioner1.png" alt="" width="100%"></div>
+          <div class="questioner fl"></div>
           <div class="question-one fl">
             <span class="left-triangle"></span>
             银行资金存管的必要性是什么?
@@ -63,7 +63,7 @@
             按照有关法律规定，网贷平台需要与银行合作建立资金存管，实现合法合规，对于用户资金安全将更有保障。与此同时，用户的资金流转也更加透明，高效、便捷。
             <br>银行将全程管控用户资金，每笔交易指令均由银行响应并记录，同时报备相关监管机构。平台无法触碰到用户的资金，杜绝了资金池的产生。
           </div>
-          <div class="answerer fl"><img src="../images/risk/answer1.png" alt="" width="100%"></div>
+          <div class="answerer fl"></div>
         </div>
       </div>
     </div>
@@ -73,7 +73,7 @@
       </div>
       <div class="risk-content">
         <div class="overflow-hid clear">
-          <div class="questioner fl"><img src="../images/risk/questioner2.png" alt="" width="100%"></div>
+          <div class="questioner fl"></div>
           <div class="question-two fl">
             <span class="left-triangle"></span>
             投资人需要了解的风险有哪些?
@@ -93,12 +93,12 @@
             【技术风险】<br>
             由于技术设计及管理不周而产生的风险，如系统故障、工程质量不达标或环境污染等引发的风险。
           </div>
-          <div class="answerer fl"><img src="../images/risk/answer2.png" alt="" width="100%"></div>
+          <div class="answerer fl"></div>
         </div>
       </div>
       <div class="risk-content">
         <div class="overflow-hid clear">
-          <div class="questioner fl"><img src="../images/risk/questioner2.png" alt="" width="100%"></div>
+          <div class="questioner fl"></div>
           <div class="question-two fl">
             <span class="left-triangle"></span>
             投资人的基本义务有哪些?
@@ -114,7 +114,7 @@
             <br>3.出借资金均为个人合法持有，不得利用本平台从事洗钱、窃取商业秘密、窃取个人信息等违法犯罪活动；
             <br>4.以及《宏财网服务协议》中约定的各项义务。
           </div>
-          <div class="answerer fl"><img src="../images/risk/answer2.png" alt="" width="100%"></div>
+          <div class="answerer fl"></div>
         </div>
       </div>
     </div>
@@ -124,7 +124,7 @@
       </div>
       <div class="risk-content">
         <div class="overflow-hid clear">
-          <div class="questioner fl"><img src="../images/risk/questioner3.png" alt="" width="100%"></div>
+          <div class="questioner fl"></div>
           <div class="question-three fl">
             <span class="left-triangle"></span>
             借款人可能面临的风险有哪些?
@@ -140,12 +140,12 @@
             【借款失败风险】<br>
             宏财网仅为借贷双方提供中介服务，并不承诺为每一个借款人成功获得借款。因此，在借款人的预期时效内，借款人有无法借款成功的风险。
           </div>
-          <div class="answerer fl"><img src="../images/risk/answer3.png" alt="" width="100%"></div>
+          <div class="answerer fl"></div>
         </div>
       </div>
       <div class="risk-content">
         <div class="overflow-hid clear">
-          <div class="questioner fl"><img src="../images/risk/questioner3.png" alt="" width="100%"></div>
+          <div class="questioner fl"></div>
           <div class="question-three fl">
             <span class="left-triangle"></span>
             借款人的基本义务有哪些?
@@ -162,7 +162,7 @@
             <br>4.借款人应当按照约定的期限向第三方机构返还贷款并支付利息；
             <br>5.借款人未按约定期限返还借款。违约应当按约定支付违约金。没有约定违约金的，应当按照实际借款的时间支付利息或滞纳金。
           </div>
-          <div class="answerer fl"><img src="../images/risk/answer3.png" alt="" width="100%"></div>
+          <div class="answerer fl"></div>
         </div>
       </div>
     </div>
@@ -232,6 +232,30 @@
     border-bottom: .09rem solid transparent;
     left: -.1rem;
     top: .3rem;
+  }
+  .part1 .questioner {
+    background: url('../images/risk/questioner1.png') no-repeat center center;
+    background-size: contain;
+  }
+  .part2 .questioner {
+    background: url('../images/risk/questioner2.png') no-repeat center center;
+    background-size: contain;
+  }
+  .part3 .questioner {
+    background: url('../images/risk/questioner3.png') no-repeat center center;
+    background-size: contain;
+  }
+  .part1 .answerer {
+    background: url('../images/risk/answer1.png') no-repeat center center;
+    background-size: contain;
+  }
+  .part2 .answerer {
+    background: url('../images/risk/answer2.png') no-repeat center center;
+    background-size: contain;
+  }
+  .part3 .answerer {
+    background: url('../images/risk/answer3.png') no-repeat center center;
+    background-size: contain;
   }
   .question-one .left-triangle {
     border-right: .15rem solid #ff5b10; 
