@@ -146,6 +146,9 @@
         if (value !== '') {
           this.getDrawCount(this.token)
         }
+      },
+      showDrawBox: function (val) {
+        val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
     created: function () {
@@ -190,7 +193,6 @@
           },
           turnEndCallback: function (prizeId, obj) {
             that.showDrawBox = true
-            that.showDrawBox ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
             $('.lottery-item').addClass('selecting')
           },
           startBtnClick: function ($btn) {
@@ -215,7 +217,6 @@
       },
       closeDraw: function (showDrawBox) {
         this.showDrawBox = !this.showDrawBox
-        this.showDrawBox ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       },
       toLogin: function () {
         bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function (response) {}, null)
@@ -243,7 +244,6 @@
               // alert(response.data.msg)
               this.showDrawBox = false
             }
-            this.showDrawBox ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
           } else {
             this.receiveDraw = true
             this.usedAndcanShare = false
@@ -330,9 +330,8 @@
           'subTitle': '100%有礼！随机奖金、特权本金、返现加息券样样都有！好运从这里开始！',
           'url': that.domain + '/lottery',
           'imageUrl': 'https://mmbiz.qlogo.cn/mmbiz_jpg/8MZDOEkib8AlvibTmbDkqwbDiasl9BphCGgYnicBzl9VfX4Sm9cpvFiarGsV73IRYurUF9LPibzL0JLR5SGmd1TeO3ug/0?wx_fmt=jpeg'
-        }, function () {}, this.shareRegisterCallback)
-        this.showDrawBox = false
-        this.showDrawBox ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+        }, function () {}, that.shareRegisterCallback)
+        that.showDrawBox = false
       },
       getLuckyUsers: function () {
         var that = this
@@ -497,15 +496,15 @@
   .draw-box .receive-draw .getPrize {
     background: url('../../images/lottery/receive-draw-02.png') no-repeat center center;
     background-size: contain;
-    height: 3.6rem;
-    padding-top: 2rem;
+    height: 4rem;
+    padding-top: 2.15rem;
     margin-top: .3rem;
     font-size: .24rem;
   }
   .draw-box .receive-draw .getPrize p {
     color: #fc7371;
     margin-bottom: 0;
-    line-height: .4rem;
+    line-height: .5rem;
   }
   .draw-box .receive-draw .prize-effect {
     color: #fff;
