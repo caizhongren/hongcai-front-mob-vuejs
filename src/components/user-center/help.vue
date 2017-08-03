@@ -880,7 +880,7 @@
           // 转让奖金
           this.transferReward = this.transferAmount * (this.transferAnnul - this.project.annualEarnings) * this.remainDay / 36500
           // 现金券金额
-          this.couponVal = response.increaseRateCoupon && response.increaseRateCoupon.type === 2 ? response.increaseRateCoupon.value : 0
+          this.couponVal = response.data.increaseRateCoupon && response.data.increaseRateCoupon.type === 2 ? response.data.increaseRateCoupon.value : 0
           // 现金券奖励扣款
           this.deduction = this.couponVal * (this.transferAmount / this.creditAmount)
           // 手续费
