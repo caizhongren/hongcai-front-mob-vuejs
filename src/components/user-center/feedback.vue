@@ -13,61 +13,51 @@
   </div>
 </template>
 <script>
-  import {bridgeUtil, Utils} from '../../service/Utils'
+  import {bridgeUtil} from '../../service/Utils'
   export default {
     data () {
       return {
         feedbackInfo: '',
-        busy: false,
-        isLogged: false,
-        token: ''
+        busy: false
       }
     },
+    props: ['token'],
     watch: {
-      feedbackInfo: function (newVal, oldVal) {
-        if (newVal && newVal !== oldVal) {
-          this.feedbackInfo = document.getElementById('feedbackInfo').value
-        }
+      token: function (val) {
+        this.feedbackInfo = document.getElementById('feedbackInfo').value
       }
     },
     methods: {
       postFeesback: function () {
         var that = this
-        if (that.busy) {
+        if (that.busy || !that.feedbackInfo) {
           return
         }
-        bridgeUtil.webConnectNative('HCNative_GetToken', '', {}, function (res) {
-          that.token = Utils.isAndroid() ? JSON.parse(res).token : res.token
-          that.isLogged = that.token && that.token !== '' ? that.isLogged = true : that.isLogged = false
-          if (!that.isLogged) {
-            bridgeUtil.webConnectNative('HCNative_Login', null, {}, function () {}, null)
-            return
+        if (!that.token || that.token === '') {
+          bridgeUtil.webConnectNative('HCNative_Login', null, {}, function () {}, null)
+          return
+        }
+        that.busy = true
+        that.$http({
+          method: 'post',
+          url: '/hongcai/api/v1/feedback/saveFeedback?feedbackInfo=' + that.feedbackInfo
+        }).then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            bridgeUtil.webConnectNative('HCNative_BackToPrePage', null, {
+              successMsg: '反馈成功！'
+            }, function (response) {}, null)
+            that.feedbackInfo = ''
+            setTimeout(function () {
+              that.busy = false
+            }, 1000)
           }
-          if (!that.feedbackInfo || that.feedbackInfo === '') {
-            return
-          }
-          that.busy = true
-          that.$http({
-            method: 'post',
-            url: '/hongcai/api/v1/feedback/saveFeedback?feedbackInfo=' + that.feedbackInfo
-          }).then(function (res) {
-            if (res.data && res.data.ret !== -1) {
-              bridgeUtil.webConnectNative('HCNative_BackToPrePage', null, {
-                successMsg: '反馈成功！'
-              }, function (response) {}, null)
-              that.feedbackInfo = ''
-              setTimeout(function () {
-                that.busy = false
-              }, 1000)
-            }
-          })
-          .catch(function (err) {
-            console.log(err)
-          })
-        }, null)
+        })
+        .catch(function (err) {
+          console.log(err)
+        })
       }
       // test () {
-      //   window.location.href = 'http://192.168.80.76:8080/user-center/feedback'
+      //   window.location.href = 'http://192.168.80.76:8080/activity/lottery'
       // }
     }
   }

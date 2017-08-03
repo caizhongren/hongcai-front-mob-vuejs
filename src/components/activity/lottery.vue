@@ -496,20 +496,20 @@
   .draw-box .receive-draw .getPrize {
     background: url('../../images/lottery/receive-draw-02.png') no-repeat center center;
     background-size: contain;
-    height: 4rem;
-    padding-top: 2.2rem;
-    margin-top: .5rem;
+    height: 3.6rem;
+    padding-top: 2rem;
+    margin-top: .3rem;
     font-size: .24rem;
   }
   .draw-box .receive-draw .getPrize p {
     color: #fc7371;
     margin-bottom: 0;
-    line-height: .5rem;
+    line-height: .4rem;
   }
   .draw-box .receive-draw .prize-effect {
     color: #fff;
     font-size: .24rem;
-    margin: 0.3rem 0;
+    margin: 0.1rem 0 0.3rem;
   }
   .draw-box .upper-limit {
     padding: 40% 0 .4rem;
@@ -555,60 +555,44 @@
     color: #000;
     margin: 0.7rem 0 0;
   }
-  @media(min-width: 320px) {
-    .lottery .lottery-wrap {
-      padding-top: 1.5rem;
-      height: 15rem;
-    }
-    .lottery .lottery-wrap .draw-lottery {
-      height: 7.6rem;
-    }
-    .lottery .lottery-wrap .draw-lottery p {
-      height: 1.3rem;
-      line-height: 2.4rem;
-      margin-bottom: 0;
-      color: #222;
-    }
-    .lottery .lottery-wrap .draw-lottery .draw-count {
-      font-size: .37rem;
-      margin-right: .1rem;
-      color: #f5fb60;
-    }
-    .lottery .lottery-wrap .draw-lottery .lottery-box {
-        padding-top: .88rem;
-    }
-    .lottery .lottery-wrap .lucky-users .lucky-users-wrap {
-      height: 5.7rem;
-    }
-    .lottery .lottery-wrap .lucky-users .lucky-users-wrap li{
-      font-size: .24rem;
-      margin-bottom: 0;
-      height: .5rem;
-      line-height: .5rem;
-    }
-    .lottery .lottery-wrap .lucky-users .lucky-users-wrap li span{
-      display: inline-block;
-      width: 46%;
-    }
-    .about-background, .bank-custody, .risk-safety ul li {
-      width: 92%;
-    }
-    /*.rule-box {
-      padding: 20% .2rem .1rem;
-    }
-    .rule-box .rule-bg {
-      height: 6rem;
-    }
-    .rule-box .rule-bg .rule-content {
-      height: 4.86rem;
-      top: .5rem;
-      padding: 0 1rem;
-    }
-    .rule-box .rule-title .hongcai-portrait {
-      top: -.6rem;
-    }*/
-    .draw-box .receive-draw {
-      padding: 22% 0 .2rem;
-    }
+  .lottery .lottery-wrap {
+    padding-top: 1.5rem;
+    height: 15rem;
+  }
+  .lottery .lottery-wrap .draw-lottery {
+    height: 7.6rem;
+  }
+  .lottery .lottery-wrap .draw-lottery p {
+    height: 1.3rem;
+    line-height: 2.4rem;
+    margin-bottom: 0;
+    color: #222;
+  }
+  .lottery .lottery-wrap .draw-lottery .draw-count {
+    font-size: .37rem;
+    margin-right: .1rem;
+    color: #f5fb60;
+  }
+  .lottery .lottery-wrap .draw-lottery .lottery-box {
+      padding-top: .88rem;
+  }
+  .lottery .lottery-wrap .lucky-users .lucky-users-wrap {
+    height: 5.7rem;
+  }
+  .lottery .lottery-wrap .lucky-users .lucky-users-wrap li{
+    font-size: .24rem;
+    margin-bottom: 0;
+    height: .5rem;
+    line-height: .5rem;
+  }
+  .lottery .lottery-wrap .lucky-users .lucky-users-wrap li span{
+    display: inline-block;
+    width: 46%;
+  }
+  .about-background, .bank-custody, .risk-safety ul li {
+    width: 92%;
+  }
+  .draw-box .receive-draw {
+    padding: 18% 0 .2rem;
   }
 </style>
