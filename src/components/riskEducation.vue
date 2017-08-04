@@ -5,6 +5,7 @@
       <img src="../images/risk/header2.png" alt="">
       <img src="../images/risk/header3.png" alt="">
       <img src="../images/risk/header4.png" alt="">
+      <img src="../images/risk/header5.png" alt="">
     </div>
     <div class="part1">
       <div class="risk-title">
@@ -184,6 +185,7 @@
   .risk-header img {
     width: 100%;
     vertical-align: top;
+    display: block;
   }
   .risk-title {
     margin-bottom: .2rem;
