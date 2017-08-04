@@ -159,24 +159,25 @@
             </div>
           </div>
           <div v-show="activeTab === 3" class="repayment-plan bg-white">
-            <div class="each-line" v-for="preRepayment in preRepaymentList">
+            <div class="each-line" v-for="(preRepayment, index) in preRepaymentList">
               <div class="column1"><span v-show="preRepayment.status !== 1">预计</span>{{preRepayment.repaymentTime | date}}</div>
-              <div class="column2" :class="{'ed': preRepayment && preRepayment.status === 1 }">
-                <span class="circle"></span>
-                <span class="vertical-line"></span>
+              <div class="column2" v-if="index < preRepaymentList.length">
+                <span class="circle" :class="{'ed': preRepayment && preRepayment.status === 1 }" v-if="index === 0"></span>
+                <span class="vertical-line" :class="{'ed': preRepaymentList[index].status === 1 }"></span>
+                <span class="circle" :class="{'ed': preRepayment && preRepayment.status === 1 }"></span>
               </div>
               <div class="column3" :class="{'ed': preRepayment && preRepayment.status === 1 }">
-                回款:利息{{preRepayment.repaymentInterest | number}}元
+                回款利息：{{preRepayment.repaymentInterest | number}}元
               </div>
             </div>
             <div class="each-line">
               <div class="column1"><span v-show="final.status !== 1">预计</span>{{final.repaymentTime | date}}</div>
               <div class="column2" :class="{'ed': final && final.status === 1 }">
-                <span class="circle"></span>
-                <span class="vertical-line last-line"></span>
+                <!-- <span class="vertical-line last-line"></span>
+                <span class="circle"></span> -->
               </div>
               <div class="column3" :class="{'ed': final && final.status === 1 }">
-                回款:本金{{final.repaymentPrincipal | number}}元
+                回款本金：{{final.repaymentPrincipal | number}}元
               </div>
             </div>
           </div>
@@ -856,8 +857,9 @@
     font-size: .22rem;
     color: #999;
     text-align: center;
-    margin-top: -.4rem;
-    vertical-align: text-top;
+    /* margin-top: -.4rem; */
+    /* vertical-align: text-top; */
+    vertical-align: -webkit-baseline-middle;
     height: 100%;
   }
   .repayment-plan .each-line .column2{
@@ -877,10 +879,14 @@
     position: absolute;
     bottom: -.8rem;
    }
-  .column2.ed .circle {
+  .column2 .ed.circle {
     background-color: #ddd;
     box-shadow: 0 2px 16px #ddd, 0 0 2px #ddd, 0 0 2px #ddd;
    }
+  /* .column2.ed .circle {
+    background-color: #ddd;
+    box-shadow: 0 2px 16px #ddd, 0 0 2px #ddd, 0 0 2px #ddd;
+   } */
   .column2 .vertical-line {
     height: .98rem;
     width: 1px;
@@ -890,9 +896,12 @@
     margin-top: .07rem;
     margin-bottom: -0.6rem;
   }
-  .column2.ed .vertical-line {
+  .column2 .ed.vertical-line {
     background-color: #ddd;
   }
+  /* .column2.ed .vertical-line {
+    background-color: #ddd;
+  } */
   .column2 .vertical-line.last-line {
     opacity: 0;
   }
@@ -903,7 +912,7 @@
     text-align: left;
     height: 100%;
     vertical-align: top;
-    margin-top: -.1rem;
+    margin-top: -.01rem;
   }
   .column3.ed {
     color: #999;
