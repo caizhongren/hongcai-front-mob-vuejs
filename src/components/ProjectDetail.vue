@@ -830,6 +830,8 @@
     height: 2.6rem;
     display: inline-block;
     border: 1px solid #fdb62b;
+  }
+  .content .license-list .license-item img {
     margin-bottom: .3rem;
   }
   .license-item:nth-child(even) {
