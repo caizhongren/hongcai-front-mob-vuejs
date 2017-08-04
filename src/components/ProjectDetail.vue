@@ -166,7 +166,7 @@
                 <span class="vertical-line"></span>
               </div>
               <div class="column3" :class="{'ed': preRepayment && preRepayment.status === 1 }">
-                项目回款:利息{{preRepayment.repaymentInterest | number}}元
+                回款:利息{{preRepayment.repaymentInterest | number}}元
               </div>
             </div>
             <div class="each-line">
@@ -176,7 +176,7 @@
                 <span class="vertical-line last-line"></span>
               </div>
               <div class="column3" :class="{'ed': final && final.status === 1 }">
-                项目回款:本金{{final.repaymentPrincipal | number}}元
+                回款:本金{{final.repaymentPrincipal | number}}元
               </div>
             </div>
           </div>
@@ -826,15 +826,15 @@
     width: 100%;
   }
   .content .license-list .license-item {
-    width: 2.6rem;
+    width: 2.5rem;
     height: 2.6rem;
-    display: inline-block;
+    float: left; 
     border: 1px solid #fdb62b;
   }
   .content .license-list .license-item img {
     margin-bottom: .3rem;
   }
-  .license-item:nth-child(even) {
+  .content .license-list .license-item:nth-child(even) {
     float: right;
   }
   .overlay{
@@ -872,8 +872,8 @@
     height: 1.22rem;
   }
   .repayment-plan .each-line .column1{
-    width: 30%;
-    font-size: .24rem;
+    width: 32%;
+    font-size: .22rem;
     color: #999;
     text-align: center;
     margin-top: -.4rem;
@@ -881,7 +881,7 @@
     height: 100%;
   }
   .repayment-plan .each-line .column2{
-    width: 5%;
+    width: 6%;
     position: relative;
     padding-left: .15rem;
   }
@@ -918,9 +918,8 @@
   }
   .column3 {
     padding-left: .2rem;
-    width: 62.5%;
+    width: 56%;
     color: #666;
-    font-size: .25rem;
     text-align: left;
     height: 100%;
     vertical-align: top;

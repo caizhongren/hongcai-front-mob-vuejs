@@ -23,7 +23,7 @@
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            本期代收利息是指该笔债权自本期计息日至今天说产生的待收利息：<br><br>
+            本期代收利息是指该笔债权自本期计息日至今天所产生的待收利息：<br><br>
             债权本金*原项目年均回报率*本期计息天数/365天<br>
             {{transferAmount || 0}} * {{project.annualEarnings || 0}}% * {{profitDate || 0}} / 365 = {{profit | number}}元<br><br> 
             如果该数值为负数，表示本期利息已经提前还款给您，此时债权转让需要扣除今日至本期还款日所产生的利息
