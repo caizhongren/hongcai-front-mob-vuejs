@@ -726,7 +726,7 @@
     <div v-if="type === '8'">
       <div class="content">
         <div class="column">
-          <div class="fl">1.客服电话：400-9907626</div>
+          <div class="fl">1.客服电话：400-990-7626</div>
         </div>
       </div>
       <div class="content">
