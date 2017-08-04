@@ -115,14 +115,14 @@
           <div v-show="activeTab === 1" class="business-license project-details bg-white">
             <div class="project-brief">
               <div class="content">
-                <ul class="license-list">
-                  <li class="license-item" v-show="categoryCode !== '0115'" v-for="(contract, index) in contractThumbnailFileList" @click="preview(index, $event, contractOriginalFileList)">
+                <ul class="license-list clearfix">
+                  <li class="license-item" v-if="categoryCode !== '0115'" v-for="(contract, index) in contractThumbnailFileList" @click="preview(index, $event, contractOriginalFileList)">
                     <img v-bind:src="baseFileUrl + contract.uploadFile.url" width="100%" height="100%">
                   </li>
-                  <li class="license-item" v-show="categoryCode !=='0112' && categoryCode !== '0115' && categoryCode !== '0116'" @click="preview(index, $event, enterpriseOriginalFileList)" v-for="(enterPrise, index) in enterpriseThumbnailFileList">
+                  <li class="license-item" v-if="categoryCode !=='0112' && categoryCode !== '0115' && categoryCode !== '0116'" @click="preview(index, $event, enterpriseOriginalFileList)" v-for="(enterPrise, index) in enterpriseThumbnailFileList">
                     <img v-bind:src="baseFileUrl + enterPrise.uploadFile.url" width="100%" height="100%">
                   </li>
-                  <li class="license-item" v-show="projectThumbnailFileList.length > 0" @click="preview(index, $event, projectOriginalFileList)" v-for="(project, index) in projectThumbnailFileList">
+                  <li class="license-item" v-if="projectThumbnailFileList.length > 0" @click="preview(index, $event, projectOriginalFileList)" v-for="(project, index) in projectThumbnailFileList">
                     <img v-bind:src="baseFileUrl + project.uploadFile.url" width="100%" height="100%">
                   </li>
                 </ul>
@@ -826,37 +826,17 @@
     width: 100%;
   }
   .content .license-list .license-item {
-    width: 2.5rem;
+    width: 2.55rem;
     height: 2.6rem;
-    float: left; 
+    float: left;
     border: 1px solid #fdb62b;
+    margin-bottom: .3rem;
   }
   .content .license-list .license-item img {
-    margin-bottom: .3rem;
+    display: block;
   }
   .content .license-list .license-item:nth-child(even) {
     float: right;
-  }
-  .overlay{
-    position: fixed;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    z-index:999;
-    background: rgba(0, 0, 0, 1);
-    width:100%;
-    height:100%;
-    display:none;
-  }
-  .overlay img{
-    position: absolute;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    margin:auto;
-    z-index:9999;
   }
   /*还款计划*/
   .repayment-plan {
