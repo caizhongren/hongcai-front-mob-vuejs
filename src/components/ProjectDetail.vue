@@ -161,9 +161,9 @@
           <div v-show="activeTab === 3" class="repayment-plan bg-white">
             <div class="each-line" v-for="preRepayment in preRepaymentList">
               <div class="column1"><span v-show="preRepayment.status !== 1">预计</span>{{preRepayment.repaymentTime | date}}</div>
-              <div class="column2" :class="{'ed': preRepayment && preRepayment.status === 1 }">
-                <span class="circle"></span>
-                <span class="vertical-line"></span>
+              <div class="column2">
+                <span class="circle" :class="{'ed': preRepayment && preRepayment.status === 1 }"></span>
+                <span class="vertical-line" :class="{'ed': preRepayment && preRepayment.nextStatus === 1 }"></span>
               </div>
               <div class="column3" :class="{'ed': preRepayment && preRepayment.status === 1 }">
                 回款:利息{{preRepayment.repaymentInterest | number}}元
@@ -336,6 +336,11 @@
         }).then(function (res) {
           that.preRepaymentList = res.data
           that.final = that.preRepaymentList[that.preRepaymentList.length - 1]
+          for (var i = 0; i < that.preRepaymentList.length - 1; i++) {
+            console.log(that.preRepaymentList[i + 1].status)
+            that.preRepaymentList[i].nextStatus = that.preRepaymentList[i + 1].status
+          }
+          console.log(that.preRepaymentList)
         })
         .catch(function (err) {
           console.log(err)
@@ -881,6 +886,10 @@
     background-color: #ddd;
     box-shadow: 0 2px 16px #ddd, 0 0 2px #ddd, 0 0 2px #ddd;
    }
+  .column2 .ed.circle {
+    background-color: #ddd;
+    box-shadow: 0 2px 16px #ddd, 0 0 2px #ddd, 0 0 2px #ddd;
+   }
   .column2 .vertical-line {
     height: .98rem;
     width: 1px;
@@ -891,6 +900,9 @@
     margin-bottom: -0.6rem;
   }
   .column2.ed .vertical-line {
+    background-color: #ddd;
+  }
+  .column2 .ed.vertical-line {
     background-color: #ddd;
   }
   .column2 .vertical-line.last-line {
