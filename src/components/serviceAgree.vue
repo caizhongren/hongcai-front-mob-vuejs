@@ -549,7 +549,12 @@
         }
       },
       'projectId': function (val) {
-        if (this.token !== '' && val !== '' && this.status === '1') {
+        if (this.token !== '' && val !== '' && this.status === '1' && this.isLoan === 1) {
+          this.getContracts()
+        }
+      },
+      'isLoan': function (val) {
+        if (this.token !== '' && val === 1 && this.status === '1' && this.projectId !== '') {
           this.getContracts()
         }
       }
@@ -570,7 +575,7 @@
         var that = this
         this.$http({
           method: 'get',
-          url: '/hongcai/rest/contracts/' + that.projectNumber + '/contractTemplate?token=' + that.token
+          url: '/hongcai/rest/contracts/' + that.projectNumber + '/contractTemplate'
         }).then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.contractType = res.data.type
@@ -588,8 +593,6 @@
           if (res.data && res.data.ret !== -1) {
             that.preRepaymentList = res.data
             that.projectId = that.token !== '' && that.status === '1' ? that.preRepaymentList[0].projectId : ''
-            that.isLoan = that.preRepaymentList[0].id
-            that.token !== '' && that.projectId !== '' && that.status === '1' ? this.getContracts() : null
           }
         }).catch(function (err) {
           console.log(err)
