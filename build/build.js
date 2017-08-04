@@ -1,7 +1,12 @@
 // https://github.com/shelljs/shelljs
 require('./check-versions')()
 
-process.env.NODE_ENV = 'production'
+var env = process.argv[2];
+if(!env) {
+  env = 'production'
+}
+
+process.env.NODE_ENV = env
 
 var ora = require('ora')
 var path = require('path')
@@ -11,7 +16,11 @@ var webpack = require('webpack')
 var config = require('../config')
 var webpackConfig = require('./webpack.prod.conf')
 
-var spinner = ora('building for production...')
+if (env == 'test') {
+  webpackConfig = require('./webpack.test.conf')
+}
+
+var spinner = ora('building for ' + env + '.... ')
 spinner.start()
 
 var assetsPath = path.join(config.build.assetsRoot, config.build.assetsSubDirectory)
