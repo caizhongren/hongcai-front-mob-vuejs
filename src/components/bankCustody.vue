@@ -70,7 +70,7 @@
           this.toLogin()
           return
         }
-        bridgeUtil.webConnectNative('HCNative_CheckUserAuth', null, {}, function (response) {}, null)
+        bridgeUtil.webConnectNative('HCNative_CheckUserAuth', '', {}, function (response) {}, null)
       }
     }
   }
