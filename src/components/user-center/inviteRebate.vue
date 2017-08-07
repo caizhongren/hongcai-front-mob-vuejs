@@ -5,7 +5,7 @@
         <p>{{inviteStat.totalNum || 0}}</p>
         <p>邀请好友(人)</p>
       </div>
-      <div class="clearfix" @click="test">
+      <div class="clearfix">
         <div class="count2 fl">
           <p>{{inviteStat.realNameAuthNum || 0}}</p>
           <p>注册认证(人)</p>
@@ -79,9 +79,6 @@
       }
     },
     methods: {
-      test () {
-        window.location.href = 'http://192.168.80.76:8080/activity/cool-summer-plan'
-      },
       getInviteStat: function () {
         var that = this
         this.$http({

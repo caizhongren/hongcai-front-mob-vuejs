@@ -700,6 +700,29 @@
     margin-bottom: .3rem;
     z-index: 1;
   }
+  @media(max-height: 480px) {
+    .project-detail-top {
+      padding: 0.1rem 0 0.2rem;
+      margin-bottom: .2rem;
+    }
+    .project-detail-top span {
+      font-size: .8rem;
+    }
+    .project-detail-top p.ft-Arial {
+      font-size: 0.4rem;
+      margin-bottom: .1rem;
+    }
+    .project-process {
+      margin-top: .5rem;
+    }
+    .project-detail-top p.second {
+      margin-bottom: .1rem;
+    }
+    .project-detail-bottom .detail-item {
+      height: .65rem !important;
+      line-height: .65rem !important;
+    }
+  }
   .project-process .start-circle, .project-process .end-circle {
     width: .15rem;
     height: .15rem;
