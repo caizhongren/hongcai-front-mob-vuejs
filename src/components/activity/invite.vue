@@ -372,4 +372,15 @@ export default {
             left: 0.7rem;
         }
     }
+    @media(max-height: 480px) {
+      .ruleBox {
+        height: 8rem;
+      }
+      .box {
+        top: 1rem;
+      }
+      .close-rule {
+        bottom: 2%;
+      }
+    }
 </style>

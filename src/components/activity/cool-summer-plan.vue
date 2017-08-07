@@ -384,6 +384,11 @@
     margin: 1.8rem auto;
     -webkit-overflow-scrolling: touch;
   }
+  @media(max-height: 480px) {
+    .ruleBox {
+      height: 5.18rem;
+    }
+  }
   .ruleBox .rule {
     margin-bottom: .2rem;
   }

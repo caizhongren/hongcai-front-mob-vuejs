@@ -519,7 +519,7 @@
   }
   /*规则弹窗*/
   .rule-box {
-    padding: 21% .2rem .5rem;
+    padding: 20% .2rem .5rem;
     -webkit-overflow-scrolling: touch;
   }
   .rule-box .rule-title {
@@ -594,5 +594,14 @@
   }
   .draw-box .receive-draw {
     padding: 18% 0 .2rem;
+  }
+  @media(max-height: 480px) {
+    .draw-box .receive-draw {
+      padding:  0 0 .4rem;
+    }
+    .rule-box {
+      padding: 0 .2rem .5rem;
+      -webkit-overflow-scrolling: touch;
+    }
   }
 </style>
