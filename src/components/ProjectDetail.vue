@@ -166,7 +166,7 @@
                 <span class="vertical-line" :class="{'ed': (preRepayment && preRepayment.nextStatus === 1) || (index === preRepaymentList.length - 1 && preRepaymentList[preRepaymentList.length - 1].status === 1)}"></span>
               </div>
               <div class="column3" :class="{'ed': preRepayment && preRepayment.status === 1 }">
-                回款:利息{{preRepayment.repaymentInterest | number}}元
+                回款利息：{{preRepayment.repaymentInterest | number}}元
               </div>
             </div>
             <div class="each-line">
@@ -176,7 +176,7 @@
                 <span class="vertical-line last-line"></span>
               </div>
               <div class="column3" :class="{'ed': final && final.status === 1 }">
-                回款:本金{{final.repaymentPrincipal | number}}元
+                回款本金：{{final.repaymentPrincipal | number}}元
               </div>
             </div>
           </div>
