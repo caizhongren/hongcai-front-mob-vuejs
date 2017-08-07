@@ -90,11 +90,16 @@
   }
   .lottery-record .lottery-list-wrap {
     width: 92%;
-    height: 130%;
+    height: 128%;
     margin: 0 auto;
     background: url('../../images/lottery/record-list-bg.png') 0 0 no-repeat;
     background-size: 100% 100%;
     -webkit-overflow-scrolling: touch;
+  }
+  @media(max-height: 480px) {
+    .lottery-record .lottery-list-wrap {
+      height: 150%;
+    }
   }
   .lottery-record .lottery-list-wrap .lottery-list-header {
     width: 93%;
