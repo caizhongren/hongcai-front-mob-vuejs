@@ -159,11 +159,11 @@
             </div>
           </div>
           <div v-show="activeTab === 3" class="repayment-plan bg-white">
-            <div class="each-line" v-for="preRepayment in preRepaymentList">
+            <div class="each-line" v-for="(preRepayment, index) in preRepaymentList">
               <div class="column1"><span v-show="preRepayment.status !== 1">预计</span>{{preRepayment.repaymentTime | date}}</div>
               <div class="column2">
                 <span class="circle" :class="{'ed': preRepayment && preRepayment.status === 1 }"></span>
-                <span class="vertical-line" :class="{'ed': preRepayment && preRepayment.nextStatus === 1 }"></span>
+                <span class="vertical-line" :class="{'ed': (preRepayment && preRepayment.nextStatus === 1) || (index === preRepaymentList.length - 1 && preRepaymentList[preRepaymentList.length - 1].status === 1)}"></span>
               </div>
               <div class="column3" :class="{'ed': preRepayment && preRepayment.status === 1 }">
                 回款:利息{{preRepayment.repaymentInterest | number}}元
@@ -336,9 +336,8 @@
         }).then(function (res) {
           that.preRepaymentList = res.data
           that.final = that.preRepaymentList[that.preRepaymentList.length - 1]
-          for (var i = 0; i < that.preRepaymentList.length - 1; i++) {
-            console.log(that.preRepaymentList[i + 1].status)
-            that.preRepaymentList[i].nextStatus = that.preRepaymentList[i + 1].status
+          for (var i = 1; i < that.preRepaymentList.length; i++) {
+            that.preRepaymentList[i - 1].nextStatus = that.preRepaymentList[i].status
           }
           console.log(that.preRepaymentList)
         })
