@@ -565,7 +565,7 @@
       </div>
       <div class="content">
         <div class="column" @click="showOrHide($event)">
-          <div class="fl">3.提现有手续费？提现次数和金额有何限制？</div>
+          <div class="fl">3.提现有手续费吗？提现次数和金额有何限制？</div>
           <div class="fa-down txt-right fr">
           </div>
         </div>
@@ -926,7 +926,7 @@
     color: #666;
   }
   .help .content .column div.fl {
-    font-size: .28rem;
+    font-size: .26rem;
   }
   .column .rotate {
     transform: rotateZ(0deg);

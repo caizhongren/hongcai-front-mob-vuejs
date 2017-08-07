@@ -1,5 +1,5 @@
 <template>
-  <div class="lottery-record">
+  <div class="lottery-record" v-auto-height>
     <div class="lottery-list-wrap">
       <div class="lottery-list-header">(最近两周内)</div>
       <!-- prizeType：1, "当日加息"" ; 2, "现金奖励 ; 3, "加息券 ; 4, "现金券" ; 5, "特权本金" -->
@@ -90,7 +90,7 @@
   }
   .lottery-record .lottery-list-wrap {
     width: 92%;
-    height: 8rem;
+    height: 130%;
     margin: 0 auto;
     background: url('../../images/lottery/record-list-bg.png') 0 0 no-repeat;
     background-size: 100% 100%;
