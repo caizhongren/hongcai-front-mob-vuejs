@@ -94,21 +94,6 @@
       toInvite: function () {
         this.$router.push({name: 'Invite'})
       }
-    },
-    directives: {
-      'auto-h': {
-        inserted: function (el) {
-          function setHeight () {
-            el.style.height = window.innerHeight - 150 + 'px'
-          }
-          setHeight()
-          window.addEventListener('load', function () {
-            setHeight()
-          }, window.addEventListener('resize', function () {
-            setHeight()
-          }))
-        }
-      }
     }
   }
 </script>
@@ -150,12 +135,14 @@
     background-color: #fff;
     border-radius: .3rem;
     overflow: hidden;
+    height: 98%;
   }
   .rebate-list {
     padding: .5rem 0 .2rem;
     overflow-y: auto;
     position: relative;
     z-index: 2222;
+    height: 100%;
     -webkit-overflow-scrolling: touch;
   }
   .rebate-list ul li {
@@ -230,8 +217,16 @@
   .loadMuch {
     color: #666;
     font-size: .24rem;
-    padding: .1rem 0 .3rem;
+    padding: .1rem 0 2rem;
     position: relative;
     z-index: 2222;
+  }
+  @media(max-height: 480px) {
+    .noList img {
+      margin: .5rem auto .3rem;
+    }
+    .noList .InviteBtn {
+      margin: .5rem auto .3rem;
+    }
   }
 </style>

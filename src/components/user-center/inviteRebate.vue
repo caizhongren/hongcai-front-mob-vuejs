@@ -236,4 +236,18 @@
     border-radius: .1rem;
     background-color: #eee;
   }
+  @media(max-height: 480px) {
+    .invite-rebate-wrap {
+      padding-top: 0;
+    }
+    .tip {
+      margin: 8% 0 4%;
+    }
+    .share-route p {
+      margin: 8% 0 5%;
+    }
+    .circles {
+      top: -15%;
+    }
+  }
 </style>
