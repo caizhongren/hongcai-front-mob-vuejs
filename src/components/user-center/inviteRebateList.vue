@@ -177,11 +177,11 @@
   }
   .circle .right-c {
     border-radius: 0 100px 100px 0;
-    left: 0;
+    left: -1px;
   }
   .circle .left-c {
     border-radius: 100px 0 0 100px;
-    right: 0;
+    right: -1px;
   }
   .list-title {
     padding: .65rem 0 .3rem;
