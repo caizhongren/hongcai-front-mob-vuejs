@@ -71,7 +71,7 @@
       <div class="child">向下滑动, 查看项目</div>
       <div class="scroll">
         <div class="details-more">
-          <div class="project-details" v-show="activeTab === 0">
+          <div class="project-details" v-if="activeTab === 0">
             <div class="project-brief">
               <div class="title">
                 <span></span>
@@ -112,7 +112,7 @@
               </div>
             </div>
           </div>
-          <div v-show="activeTab === 1" class="business-license project-details bg-white">
+          <div v-if="activeTab === 1" class="business-license project-details bg-white">
             <div class="project-brief">
               <div class="content">
                 <ul class="license-list clearfix">
@@ -129,7 +129,7 @@
               </div>
             </div>
           </div>
-          <div class="orders" v-show="activeTab == 2">
+          <div class="orders" v-if="activeTab == 2">
             <div class="investor-record">
               <table>
                 <thead>
@@ -158,7 +158,7 @@
               </div>
             </div>
           </div>
-          <div v-show="activeTab === 3" class="repayment-plan bg-white">
+          <div v-if="activeTab === 3" class="repayment-plan bg-white">
             <div class="each-line" v-for="(preRepayment, index) in preRepaymentList">
               <div class="column1"><span v-show="preRepayment.status !== 1">预计</span>{{preRepayment.repaymentTime | date}}</div>
               <div class="column2">
@@ -237,6 +237,12 @@
     watch: {
       orderList: function (value) {
         value.length > 0 ? this.showOrderList = true : this.showOrderList = false
+      },
+      activeTab: function (oldVal, newVal) {
+        // 每次tab切换页面回到初始位置
+        if (oldVal !== newVal) {
+          $('.scroll').scrollTop(0)
+        }
       }
     },
     created: function () {
@@ -336,6 +342,9 @@
         }).then(function (res) {
           that.preRepaymentList = res.data
           that.final = that.preRepaymentList[that.preRepaymentList.length - 1]
+          if (that.preRepaymentList.length === 1) {
+            that.preRepaymentList[0].nextStatus = that.preRepaymentList[0].status
+          }
           for (var i = 1; i < that.preRepaymentList.length; i++) {
             that.preRepaymentList[i - 1].nextStatus = that.preRepaymentList[i].status
             if (i === that.preRepaymentList.length - 1) {

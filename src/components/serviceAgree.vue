@@ -56,7 +56,8 @@
             </tr>
             <tr>
               <td width="120" align="center">每月还款本息数额及还款日</td>
-              <td width="400" align="center">详情见附件2《还款计划表》</td>
+              <td width="400" align="center" v-show="contractType === 4">详情见附件1《还款计划表》</td>
+              <td width="400" align="center" v-show="contractType === 1">详情见附件2《还款计划表》</td>
             </tr>
             <tr>
               <td width="120" align="center">借款放款日</td>
