@@ -1,0 +1,211 @@
+body {
+  max-width: 7.2rem;
+  height: 100%;
+  margin: 0 auto;
+  font-family: "微软雅黑" !important;
+  overflow-x: hidden;
+  font-size: .24rem;
+  font-weight: normal;
+  line-height: 1.6;
+  color: #222;
+}
+body.modal-open{
+  position:fixed;
+  width:100%;
+}
+* {
+  padding: 0;
+  margin: 0;
+}
+div, a, p, img, span, ul, li {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select:none;
+}
+.normal-mid {
+  max-width: 640px;
+  margin: 0 auto;
+  margin-left: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+a {
+  text-decoration: none;
+}
+a:-webkit-any-link {
+  text-decoration: none;
+}
+div,
+p {
+  box-sizing: border-box;
+}
+a,button,input{
+  -webkit-tap-highlight-color:rgba(255,0,0,0);
+}
+ul,li {
+  list-style: none;
+}
+input,button,select,textarea {
+  outline:none;
+  -webkit-appearance: none;
+}
+/*button*/
+.button {
+  display: inline-block;
+  text-align: center;
+  color: #555;
+  font-size: .24rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border-radius: .1rem;
+  border: 1px solid #bbb;
+  cursor: pointer;
+  box-sizing: border-box;
+  height: 50px;
+  line-height: 50px;
+  font-family: "微软雅黑";
+}
+.button-primary {
+  color: #FFF;
+  background-color: #fd8f3f;
+  border-color: #fd8f3f;
+  border: none !important;
+}
+/* .button-disabled {
+    background-color: #FEB682 !important;
+    color: #fff;
+    border: none !important;
+} */
+/* setposition */
+
+.position-re {
+  position: relative;
+}
+.position-ab {
+  position: absolute;
+}
+.position-fix {
+  position: fixed !important;
+}
+.position-static {
+  position: static !important;
+}
+.bottom-0 {
+  bottom: 0;
+}
+.left-0 {
+  left: 0;
+}
+.top-0 {
+  top: 0;
+}
+.right-0 {
+  right: 0;
+}
+.text-left {
+  text-align: left;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-justify {
+  text-align: justify;
+}
+.text-underline {
+  text-decoration: underline;
+}
+/* display*/
+.display-bl{
+  display: block;
+}
+.display-inb {
+  display: inline-block;
+}
+
+/* clear float */
+
+.overflow-hid {
+  overflow: hidden;
+}
+.overflow-aut{
+  overflow: auto;
+}
+.clear {
+  clear: both;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.clearfix::after, .clearfix::before {
+    content: ".";
+    height: 0;
+    line-height: 0;
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+.clearfix {
+  clear: both;
+}
+/*font color*/
+
+.ft-444 {
+  color: #444;
+}
+.ft-999 {
+  color: #999;
+}
+.ft-red {
+  color: #ff2424;
+}
+/*font size*/
+/*font family*/
+.ft-Arial {
+  font-family: Arial;
+}
+.ft-bold {
+  font-weight: bold;
+}
+/*background-color*/
+.bg-blue {
+  background-color: #31cfff;
+}
+.bg-white {
+  background-color: #fff;
+}
+/*margin & padding*/
+.margin-r-0 {
+  margin-right: 0 !important;
+}
+.margin-auto {
+  margin: 0 auto;
+}
+
+/*公用蒙层*/
+.mask-common {
+  position: fixed;
+  top: 0;
+  z-index: 999999;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  max-width: 640px;
+  margin: 0 auto;
+  background-color: rgba(0,0,0,0.6);
+  -webkit-overflow-scrolling: touch;
+  overflow-y: hidden !important;
+}
