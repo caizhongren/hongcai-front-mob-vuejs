@@ -9,7 +9,7 @@
         <img src="../../images/summer-plan/header5.png" alt="">
       </div>
       <div class="time">
-        活动时间：2017.8.1—2017.8.22
+        活动时间：2017.8.8—2017.8.31
       </div>
     </div>
     <div class="High-temperature-subsidies">
@@ -113,7 +113,7 @@
         <img src="../../images/summer-plan/close.png" alt="" width="8%" class="closeRule"  @click="ruleSelect">
         <div class="rule">
           1.活动时间
-          <br>本次活动仅限于2017年8月xx日至2017年8月xx日内参与有效；
+          <br>本次活动仅限于2017年8月8日至2017年8月31日内参与有效；
         </div>
         <div class="rule">
           2.参与方式
