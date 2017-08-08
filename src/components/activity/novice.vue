@@ -67,7 +67,7 @@
           </div>
         </div>
     </div>
-    <div class="rules" v-bind:class="{'rules-bottom' : !isIos}">
+    <div class="rules" v-bind:class="{'rules-bottom' : !isIos}" v-if="false">
       <img src="../../images/novice/rule-01.png" alt="">
       <img src="../../images/novice/rule-02.png" alt="">
       <img src="../../images/novice/rule-03.png" alt="">
@@ -78,6 +78,14 @@
       <img src="../../images/novice/rule-08.png" alt="">
       <img src="../../images/novice/rule-09.png" alt="">
       <img src="../../images/novice/rule-10.png" alt="">
+    </div>
+    <div class="rules2" v-bind:class="{'rules-bottom' : !isIos}">
+      <img src="../../images/novice/rule-11.png" alt="" class="img-header">
+      <img src="../../images/novice/rule-12.png" alt="">
+      <img src="../../images/novice/rule-13.png" alt="">
+      <img src="../../images/novice/rule-14.png" alt="">
+      <img src="../../images/novice/rule-15.png" alt="">
+      <img src="../../images/novice/rule-16.png" alt="">
     </div>
     <div class="iosTips" v-show="isIos">
       该活动与设备生产商APPLE INC.公司无关
@@ -152,8 +160,11 @@
   .header img {
     vertical-align: top;
     width: 100%;
-  } 
-  .rules img {
+  }
+  .rules2 .img-header {
+    margin-top: .5rem;
+  }
+  .rules img, .rules2 img {
     vertical-align: bottom;
     width: 100%;
   }
@@ -193,7 +204,7 @@
     margin: 0 auto;
   }
   .rules-bottom {
-    padding-bottom: .3rem;
+    padding-bottom: .5rem;
   }
   .iosTips {
     text-align: center;

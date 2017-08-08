@@ -342,6 +342,9 @@
         }).then(function (res) {
           that.preRepaymentList = res.data
           that.final = that.preRepaymentList[that.preRepaymentList.length - 1]
+          if (that.preRepaymentList.length === 1) {
+            that.preRepaymentList[0].nextStatus = that.preRepaymentList[0].status
+          }
           for (var i = 1; i < that.preRepaymentList.length; i++) {
             that.preRepaymentList[i - 1].nextStatus = that.preRepaymentList[i].status
             if (i === that.preRepaymentList.length - 1) {
