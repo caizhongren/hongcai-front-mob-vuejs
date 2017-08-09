@@ -28,10 +28,10 @@
           },
           {
             tab: '联系我们',
-            name: 'Introduction'
+            name: 'ContactUs'
           }
         ],
-        activeTab: 0
+        activeTab: 3
       }
     },
     created: function () {
