@@ -2,7 +2,7 @@
   <div class="about">
     <div class="bg-White overflow-hid">
       <ul class="about-tab1 columns ten offset-by-one aboutorange clearfix">
-        <li class="column text-center ft-1p4" :class="{active: activeTab == index}" v-for="(tab, index) in tabs" @click="switchTab(index)">{{tab}}</li>
+        <li class="column text-center ft-1p4" :class="{active: activeTab == index}" v-for="(tab, index) in tabs" @click="switchTab(index)">{{tab.tab}}</li>
       </ul>
     </div>
     <router-view></router-view>
@@ -13,7 +13,24 @@
     name: 'ActivityReward',
     data () {
       return {
-        tabs: ['宏财简介', '高管团队', '战略伙伴', '联系我们'],
+        tabs: [
+          {
+            tab: '宏财介绍',
+            name: 'Introduction'
+          },
+          {
+            tab: '高管团队',
+            name: 'ManagementTeam'
+          },
+          {
+            tab: '战略伙伴',
+            name: 'Introduction'
+          },
+          {
+            tab: '联系我们',
+            name: 'Introduction'
+          }
+        ],
         activeTab: 0
       }
     },
@@ -22,42 +39,19 @@
     methods: {
       switchTab: function (index) {
         this.activeTab = index
+        this.$router.push({name: this.tabs[index].name})
       }
     }
   }
 </script>
  <style scoped>
-  .about hr {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    width: 100%;
-  }
   .about .column {
     float: left;
-  }
-  .margin-l--8 {
-    margin-left: -8%;
-  }
-  .margin-l-10 {
-    margin-left: 10%;
-  }
-  .margin-l-16 {
-    margin-left: 15%;
-    width: 88%;
-  }
-  .border-none {
-    border: none !important;
   }
   .about .about-tab1 li {
     width: 20%;
     margin-left: 2.5%;
     margin-right: 2.5%;
-  }
-  .about .half {
-    width: 48%;
-  }
-  .about .base-background {
-    background-color: #F5F5F5;
   }
   .about .aboutorange li {
     color: #757575;
