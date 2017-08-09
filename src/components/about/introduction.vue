@@ -1,11 +1,5 @@
 <template>
   <div class="introduction">
-    <div class="header">
-      <img src="../../images/about/introduce.png" alt="" width="100%">
-      <div class="mask">
-        <span class="line1 display-inbl"></span><span class="title">宏财介绍</span><span class="line2 display-inbl"></span>
-      </div>
-    </div>
     <div class="company-profile">
       <img src="../../images/about/company-profile.png" alt="" class="profile-title">
     </div>

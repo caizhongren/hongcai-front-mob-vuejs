@@ -12,6 +12,7 @@ const Novice = r => require.ensure([], () => r(require('../components/activity/n
 const About = r => require.ensure([], () => r(require('../components/about/about.vue')), 'About')
 const ManagementTeam = r => require.ensure([], () => r(require('../components/about/managementTeam.vue')), 'About')
 const Introduction = r => require.ensure([], () => r(require('../components/about/introduction.vue')), 'About')
+const ContactUs = r => require.ensure([], () => r(require('../components/about/contactUs.vue')), 'About')
 const Safe = r => require.ensure([], () => r(require('../components/safe.vue')), 'Safe')
 const Home = r => require.ensure([], () => r(require('../components/Home.vue')), 'others')
 const NoticeDetail = r => require.ensure([], () => r(require('../components/user-center/noticeDetail.vue')), 'others')
@@ -61,6 +62,12 @@ const routes = [
         path: '',
         name: 'Introduction',
         component: Introduction,
+        meta: {title: '走进宏财'}
+      },
+      {
+        path: 'contact-us',
+        name: 'ContactUs',
+        component: ContactUs,
         meta: {title: '走进宏财'}
       }
     ]
