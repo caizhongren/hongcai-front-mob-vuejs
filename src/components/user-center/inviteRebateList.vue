@@ -21,7 +21,7 @@
         <div class="noList" v-show="!showList">
           <img src="../../images/user-center/invite-rebate-no.png" alt="">
           <div class="textTip">您暂时还没有邀请到好友哦～</div>
-          <div class="InviteBtn" @click="toInvite">立即邀请</div>
+          <!-- <div class="InviteBtn" @click="toInvite">立即邀请</div> -->
         </div>
         <div class="loadMuch text-center" @click="loadMuch();" v-show="page < loadMoreData">查看更多</p>
         </div>
