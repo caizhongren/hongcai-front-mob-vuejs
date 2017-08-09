@@ -9,9 +9,7 @@ const CoolRanking = r => require.ensure([], () => r(require('../components/activ
 const IntegralDetail = r => require.ensure([], () => r(require('../components/activity/integralDetail.vue')), 'CoolSummerPlan')
 const CoolSummerPlan = r => require.ensure([], () => r(require('../components/activity/cool-summer-plan.vue')), 'CoolSummerPlan')
 const Novice = r => require.ensure([], () => r(require('../components/activity/novice.vue')), 'Novice')
-const About = r => require.ensure([], () => r(require('../components/about/about.vue')), 'About')
-const ManagementTeam = r => require.ensure([], () => r(require('../components/about/managementTeam.vue')), 'About')
-const Introduction = r => require.ensure([], () => r(require('../components/about/introduction.vue')), 'About')
+const About = r => require.ensure([], () => r(require('../components/about.vue')), 'About')
 const Safe = r => require.ensure([], () => r(require('../components/safe.vue')), 'Safe')
 const Home = r => require.ensure([], () => r(require('../components/Home.vue')), 'others')
 const NoticeDetail = r => require.ensure([], () => r(require('../components/user-center/noticeDetail.vue')), 'others')
@@ -50,20 +48,7 @@ const routes = [
     path: '/about',
     name: 'About',
     component: About,
-    children: [
-      {
-        path: 'management-team',
-        name: 'ManagementTeam',
-        component: ManagementTeam,
-        meta: {title: '高管团队'}
-      },
-      {
-        path: '',
-        name: 'Introduction',
-        component: Introduction,
-        meta: {title: '走进宏财'}
-      }
-    ]
+    meta: {title: '走进宏财'}
   },
   {
     path: '/user-center/help-center',
