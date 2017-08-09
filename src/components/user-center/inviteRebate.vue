@@ -19,7 +19,8 @@
         <p>成功邀请一位好友</p>
         <p>最高可获得1315元现金奖励</p>
       </div>
-      <p class="invite-btn" @click="toInviteActivity">立即参与</p>
+      <!-- <p class="invite-btn" @click="toInviteActivity">立即参与</p> -->
+      <p class="invite-btn"></p>
       <div class="share-route position-re">
         <ul class="circles">
           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
@@ -186,7 +187,7 @@
     font-size: .27rem;
     color: #fff;
     border-radius: .4rem;
-    background: url('../../images/user-center/invite-btn.png') no-repeat 0 0;
+    /* background: url('../../images/user-center/invite-btn.png') no-repeat 0 0; */
     background-size: 100%;
     padding: 0;
     margin: 0 auto;
