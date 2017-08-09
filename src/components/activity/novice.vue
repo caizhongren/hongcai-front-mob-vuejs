@@ -90,7 +90,7 @@
     <div class="iosTips" v-show="isIos">
       该活动与设备生产商APPLE INC.公司无关
     </div>
-    <div class="btns" @click="toHCNative">{{userAuth.active && userAuth.authStatus === 2 ? '立即投资' : '立即开通银行存管'}}{{userAuth.active}}{{userAuth.authStatus}}</div>
+    <div class="btns" @click="toHCNative">{{userAuth.active && userAuth.authStatus === 2 ? '立即投资' : '立即开通银行存管'}}</div>
   </div>
 </template>
 
@@ -114,7 +114,6 @@
     props: ['token'],
     watch: {
       token: function (val) {
-        alert(this.token)
         if (val && val !== '') {
           this.getUserAuth()
         }
@@ -135,7 +134,6 @@
           url: '/hongcai/rest/users/0/userAuth?token=' + this.token
         }).then((response) => {
           this.userAuth = response.data
-          alert(response.data.userId)
         })
       },
       toHCNative: function () {
