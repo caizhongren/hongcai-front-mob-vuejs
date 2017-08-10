@@ -50,7 +50,7 @@
           },
           {
             index: 2,
-            imgSrc: '.../../../static/images/introduce.png',
+            imgSrc: '.../../../static/images/strategic-partner.png',
             text: '战略伙伴'
           },
           {
