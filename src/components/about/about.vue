@@ -16,7 +16,7 @@
 </template>
 <script>
   export default {
-    name: 'ActivityReward',
+    name: 'About',
     data () {
       return {
         tabs: [
@@ -59,7 +59,7 @@
             text: '联系我们'
           }
         ],
-        activeTab: 2
+        activeTab: 0
       }
     },
     created: function () {
