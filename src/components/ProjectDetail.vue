@@ -270,6 +270,7 @@
     methods: {
       toggleTab: function (i) {
         this.activeTab = i
+        $('.scroll').css('transform', 'translateY(0px)')
         document.querySelector('.scroll').style.webkitTransform = 'translateY(0px)'
         this.page = 1
       },
@@ -399,6 +400,7 @@
         var endPos = {}
         function startTouchScroll (event) {
           // event.preventDefault()
+          console.log(event)
           var touch = event.targetTouches[0]
           startPos = {x: touch.pageX, y: touch.pageY}
           window.touchStartY = event.targetTouches[0].pageY
@@ -419,6 +421,7 @@
           window.touchStartY = event.targetTouches[0].pageY
           touchY = window.offsetY
           if (window.offsetY < -1) {
+            $('.product-page1').css('transform', 'translateY(' + window.offsetY + 'px)')
             page.style.webkitTransform = 'translateY(' + window.offsetY + 'px)'
           }
         }
@@ -427,9 +430,12 @@
           window.speed = -(document.body.clientHeight - Math.abs(window.offsetY)) / 10
           window.offsetY += window.speed
           if (touchY < -1) {
+            $('.product-page1').css('transform', 'translate3d(0, -' + Height + 'px, 0)')
             page.style.webkitTransform = 'translate3d(0, -' + Height + 'px, 0)'
             var page2 = document.querySelector('.product-page2')
+            $('.product-page2').css('transform', 'transform', 'translate3d(0, -' + Height + 'px, 0)')
             page2.style.webkitTransform = 'translate3d(0, -' + Height + 'px, 0)'
+            $('.details-more').css('transform', 'transform', 'translateY(' + 0 + 'px)')
             document.querySelector('.details-more').style.webkitTransform = 'translateY(' + 0 + 'px)'
             window.vue.activeTab = 0
           }
@@ -478,13 +484,16 @@
           touchStartY = event.targetTouches[0].pageY
           scrollDirection = offsetY
           if (scrollDirection < 0) {
+            $('.scroll').css('transform', 'translateY(0px)')
             document.querySelector('.scroll').style.webkitTransform = 'translateY(0px)'
           }
           if (scrollDirection > 15 && $('.details-more').offset().top - screenTop >= 15) {
+            $('.scroll').css('transform', 'translateY(' + scrollDirection + 'px)')
             document.querySelector('.scroll').style.webkitTransform = 'translateY(' + scrollDirection + 'px)'
           }
           if (scrollDirection >= 50) {
             scrollDirection = 50
+            $('.scroll').css('transform', 'translateY(' + scrollDirection + 'px)')
             document.querySelector('.scroll').style.webkitTransform = 'translateY(' + scrollDirection + 'px)'
           }
         }
@@ -493,12 +502,16 @@
           if ((sub === 0 && scrollDirection >= 20) || $('.scroll').offset().top > 80) {
             $('.scroll').addClass('animate')
             setTimeout(function () {
+              $('.scroll').css('transform', 'translateY(0px)')
               document.querySelector('.scroll').style.webkitTransform = 'translateY(0px)'
+              $('.product-page1').css('transform', 'translate3d(0, 0px, 0)')
               document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, 0px, 0)'
+              $('.product-page2').css('transform', 'translate3d(0, 0px, 0)')
               document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, 0px, 0)'
             }, 300)
             scrollDirection = 0
           } else if (sub === 0 && scrollDirection < 20) {
+            $('.scroll').css('transform', 'translateY(0px)')
             document.querySelector('.scroll').style.webkitTransform = 'translateY(0px)'
           } else if (sub === 0) {
             offsetY = 0
