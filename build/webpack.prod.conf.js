@@ -1,3 +1,6 @@
+require('es6-promise').polyfill()
+var Promise = require('es6-promise').Promise
+global.Promise = global.Promise || require('es6-promise').Promise
 var path = require('path')
 var utils = require('./utils')
 var webpack = require('webpack')

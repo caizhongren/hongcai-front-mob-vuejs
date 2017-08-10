@@ -1,11 +1,10 @@
+require('es6-promise').polyfill()
+var Promise = require('es6-promise').Promise
 var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
 var webpack = require("webpack")
-global.Promise = global.Promise || require('es6-promise')
-var Promise = global.Promise || require('es6-promise')
-require('es6-promise').polyfill()
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
