@@ -456,10 +456,10 @@
             $('.product-page1').css('transform', 'translate3d(0, -' + Height + 'px, 0)')
             page.style.webkitTransform = 'translate3d(0, -' + Height + 'px, 0)'
             var page2 = document.querySelector('.product-page2')
-            $('.product-page2').css('transform', 'transform', 'translate3d(0, -' + Height + 'px, 0)')
+            $('.product-page2').css('transform', 'translate3d(0, -' + Height + 'px, 0)')
             page2.style.webkitTransform = 'translate3d(0, -' + Height + 'px, 0)'
-            $('.details-more').css('transform', 'transform', 'translateY(' + 0 + 'px)')
-            document.querySelector('.details-more').style.webkitTransform = 'translateY(' + 0 + 'px)'
+            $('.details-more').css('transform', 'translateY(0px)')
+            document.querySelector('.details-more').style.webkitTransform = 'translateY(0px)'
             window.vue.activeTab = 0
           }
         }
@@ -527,10 +527,10 @@
             setTimeout(function () {
               $('.scroll').css('transform', 'translateY(0px)')
               document.querySelector('.scroll').style.webkitTransform = 'translateY(0px)'
-              $('.product-page1').css('transform', 'translate3d(0, 0px, 0)')
-              document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, 0px, 0)'
-              $('.product-page2').css('transform', 'translate3d(0, 0px, 0)')
-              document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, 0px, 0)'
+              $('.product-page1').css('transform', 'translateY(0px)')
+              document.querySelector('.product-page1').style.webkitTransform = 'translateY(0px)'
+              $('.product-page2').css('transform', 'translateY(0px)')
+              document.querySelector('.product-page2').style.webkitTransform = 'translateY(0px)'
             }, 300)
             scrollDirection = 0
           } else if (sub === 0 && scrollDirection < 20) {
