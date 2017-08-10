@@ -265,6 +265,10 @@
           page2.addEventListener('load', window.vue.scrollBack(pagedetail), false)
         }
         document.querySelector('.scroll').style.height = window.innerHeight - 2 * document.querySelector('#detail-tabs').offsetHeight - 20 + 'px'
+        document.querySelector('.project').addEventListener('touchmove', function (event) {
+          event.stopPropagation()
+          // event.preventDefault()
+        }, false)
       }
     },
     methods: {
