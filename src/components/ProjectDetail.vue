@@ -1,5 +1,5 @@
 <template>
-  <div class="project" id="project" v-auto-height>
+  <div class="project" id="project" v-auto-height v-load>
     <div class="fist-frame product-page1 animate" id="product-page1">
       <div class="project-detail-top bg-white">
         <p class="ft-Arial"><span>{{project.annualEarnings || 0}}</span>%</p>
@@ -254,22 +254,47 @@
       this.getProjectBill()
       this.getOrderList(this.page, this.pageSize)
       window.vue = this
-      window.onload = function (e) {
-        var page1 = document.querySelector('.product-page1')
-        var page2 = document.querySelector('.product-page2')
-        var pagedetail = document.querySelector('.details-more')
-        if (page1) {
-          page1.addEventListener('load', window.vue.scrollDetail(page1), false)
+      // window.onload = function (e) {
+      //   var page1 = document.querySelector('.product-page1')
+      //   var page2 = document.querySelector('.product-page2')
+      //   var pagedetail = document.querySelector('.details-more')
+      //   if (page1) {
+      //     page1.addEventListener('load', window.vue.scrollDetail(page1), false)
+      //   }
+      //   if (page2 && pagedetail) {
+      //     page2.addEventListener('load', window.vue.scrollBack(pagedetail), false)
+      //   }
+      //   document.querySelector('.scroll').style.height = window.innerHeight - 2 * document.querySelector('#detail-tabs').offsetHeight - 20 + 'px'
+      //   document.querySelector('.project').addEventListener('touchmove', function (event) {
+      //     event.stopPropagation()
+      //     // event.preventDefault()
+      //   }, false)
+      // }
+    },
+    directives: {
+      'load': {
+        inserted: function (el) {
+          var page1 = document.querySelector('.product-page1')
+          var page2 = document.querySelector('.product-page2')
+          var pagedetail = document.querySelector('.details-more')
+          if (page1) {
+            page1.addEventListener('load', window.vue.scrollDetail(page1), false)
+          }
+          if (page2 && pagedetail) {
+            page2.addEventListener('load', window.vue.scrollBack(pagedetail), false)
+          }
+          document.querySelector('.scroll').style.height = window.innerHeight - 2 * document.querySelector('#detail-tabs').offsetHeight - 20 + 'px'
+          document.querySelector('.project').addEventListener('touchmove', function (event) {
+            event.stopPropagation()
+            // event.preventDefault()
+          }, false)
         }
-        if (page2 && pagedetail) {
-          page2.addEventListener('load', window.vue.scrollBack(pagedetail), false)
-        }
-        document.querySelector('.scroll').style.height = window.innerHeight - 2 * document.querySelector('#detail-tabs').offsetHeight - 20 + 'px'
       }
     },
     methods: {
       toggleTab: function (i) {
         this.activeTab = i
+        $('.scroll').css('transform', 'translateY(0px)')
         document.querySelector('.scroll').style.webkitTransform = 'translateY(0px)'
         this.page = 1
       },
@@ -419,6 +444,7 @@
           window.touchStartY = event.targetTouches[0].pageY
           touchY = window.offsetY
           if (window.offsetY < -1) {
+            $('.product-page1').css('transform', 'translateY(' + window.offsetY + 'px)')
             page.style.webkitTransform = 'translateY(' + window.offsetY + 'px)'
           }
         }
@@ -427,10 +453,13 @@
           window.speed = -(document.body.clientHeight - Math.abs(window.offsetY)) / 10
           window.offsetY += window.speed
           if (touchY < -1) {
+            $('.product-page1').css('transform', 'translate3d(0, -' + Height + 'px, 0)')
             page.style.webkitTransform = 'translate3d(0, -' + Height + 'px, 0)'
             var page2 = document.querySelector('.product-page2')
+            $('.product-page2').css('transform', 'translate3d(0, -' + Height + 'px, 0)')
             page2.style.webkitTransform = 'translate3d(0, -' + Height + 'px, 0)'
-            document.querySelector('.details-more').style.webkitTransform = 'translateY(' + 0 + 'px)'
+            $('.details-more').css('transform', 'translateY(0px)')
+            document.querySelector('.details-more').style.webkitTransform = 'translateY(0px)'
             window.vue.activeTab = 0
           }
         }
@@ -478,13 +507,16 @@
           touchStartY = event.targetTouches[0].pageY
           scrollDirection = offsetY
           if (scrollDirection < 0) {
+            $('.scroll').css('transform', 'translateY(0px)')
             document.querySelector('.scroll').style.webkitTransform = 'translateY(0px)'
           }
           if (scrollDirection > 15 && $('.details-more').offset().top - screenTop >= 15) {
+            $('.scroll').css('transform', 'translateY(' + scrollDirection + 'px)')
             document.querySelector('.scroll').style.webkitTransform = 'translateY(' + scrollDirection + 'px)'
           }
           if (scrollDirection >= 50) {
             scrollDirection = 50
+            $('.scroll').css('transform', 'translateY(' + scrollDirection + 'px)')
             document.querySelector('.scroll').style.webkitTransform = 'translateY(' + scrollDirection + 'px)'
           }
         }
@@ -493,12 +525,16 @@
           if ((sub === 0 && scrollDirection >= 20) || $('.scroll').offset().top > 80) {
             $('.scroll').addClass('animate')
             setTimeout(function () {
+              $('.scroll').css('transform', 'translateY(0px)')
               document.querySelector('.scroll').style.webkitTransform = 'translateY(0px)'
-              document.querySelector('.product-page1').style.webkitTransform = 'translate3d(0, 0px, 0)'
-              document.querySelector('.product-page2').style.webkitTransform = 'translate3d(0, 0px, 0)'
+              $('.product-page1').css('transform', 'translateY(0px)')
+              document.querySelector('.product-page1').style.webkitTransform = 'translateY(0px)'
+              $('.product-page2').css('transform', 'translateY(0px)')
+              document.querySelector('.product-page2').style.webkitTransform = 'translateY(0px)'
             }, 300)
             scrollDirection = 0
           } else if (sub === 0 && scrollDirection < 20) {
+            $('.scroll').css('transform', 'translateY(0px)')
             document.querySelector('.scroll').style.webkitTransform = 'translateY(0px)'
           } else if (sub === 0) {
             offsetY = 0
