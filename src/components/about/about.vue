@@ -30,7 +30,7 @@
           },
           {
             tab: '战略伙伴',
-            name: 'Introduction'
+            name: 'Partner'
           },
           {
             tab: '联系我们',
@@ -59,7 +59,7 @@
             text: '联系我们'
           }
         ],
-        activeTab: 0
+        activeTab: 2
       }
     },
     created: function () {
