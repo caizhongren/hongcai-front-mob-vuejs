@@ -1,10 +1,63 @@
 <template>
-  <div class="management">
+  <div class="contact-us">
+    <div class="contact-way">
+      <div class="icon-l">
+        <img src="../../images/about/customer.png" alt="客服电话" class="display-bl margin-0p8">
+      </div>
+      <div class="text-r">
+        <p class="font-666">客服电话</p>
+        <p class="font-666">400-990-7626</p>
+        <p class="font-999">(工作时间：9:00 - 18:00)</p>
+      </div>
+    </div>
+    <div class="contact-way">
+      <div class="icon-l">
+        <img src="../../images/about/mail.png" alt="客服邮箱" class="display-bl">
+      </div>
+      <div class="text-r">
+        <p class="font-666">客服邮箱</p>
+        <p class="font-666">hckf@hongcai.com</p>
+      </div>
+    </div>
+    <div class="contact-way">
+      <div class="icon-l">
+        <img src="../../images/about/qq.png" alt="商务合作QQ" class="display-bl">
+      </div>
+      <div class="text-r">
+        <p class="font-666">商务合作QQ</p>
+        <p class="font-666"> 2880667849</p>
+      </div>
+    </div>
+    <div class="contact-way">
+      <div class="icon-l">
+        <img src="../../images/about/internet.png" alt="网址" class="display-bl">
+      </div>
+      <div class="text-r">
+        <p class="font-666">网址</p>
+        <p class="font-666">www.hongcai.com</p>
+      </div>
+    </div>
+    <div class="contact-way">
+      <div class="icon-l">
+        <img src="../../images/about/adress.png" alt="地址" class="display-bl margin-0p8">
+      </div>
+      <div class="text-r">
+        <p class="font-666">地址</p>
+        <p class="font-666">北京市朝阳区天辰东路7号</p>
+        <p class="font-666">国家会议中心北区四层</p>
+      </div>
+    </div>
+    <div class="code">
+      <img src="../../images/about/code.png" alt="公众号" class="display-bl">
+      <div class="class1">
+        <span class="line1 display-inbl"></span><span>扫描关注宏财网公众号</span><span class="line2 display-inbl"></span>
+      </div>
+    </div>
   </div>
 </template>
 <script>
   export default {
-    name: 'managementTeam',
+    name: 'ContactUs',
     data () {
       return {
       }
@@ -12,4 +65,63 @@
   }
 </script>
 <style scoped>
+  .contact-us .font-666 {
+    font-size: .28rem;
+    color: #666;
+  }
+  .contact-us .font-999 {
+    font-size: .26rem;
+    color: #999;
+    margin-top: -0.05rem;
+  }
+  .contact-way, .code {
+    width: 90%;
+    margin: .32rem auto;
+    border: 1px solid rgba(255, 77, 0, 0.69);
+    box-shadow: 0 0 2px 0 rgba(255, 77, 0, 0.69);
+  }
+  .contact-way {
+    height: 1.9rem;
+    margin-bottom: 0;
+    padding-left: 15.3px;
+    text-align: left;
+  }
+  .contact-way .icon-l {
+    display: inline-block;
+    padding-right: 26px;
+    padding-top: .35rem;
+  }
+  .contact-way .icon-l img {
+    margin: 0 auto;
+    margin-bottom: -.25rem;
+  }
+  .contact-way .icon-l img.margin-0p8 {
+    margin-bottom: -.08rem;
+  }
+  .contact-way .text-r {
+    display: inline-block;
+    text-align: left;
+  }
+  .code {
+    text-align: center;
+    font-size: .28rem;
+    padding-bottom: .25rem;
+    margin-bottom: .5rem;
+  }
+  .code img {
+    margin: .1rem auto .21rem;
+  }
+  .line1, .line2 {
+    display: inline-block;
+    width: 20%;
+    height: 1px;
+    background-color: rgba(255, 77, 0, 0.69);
+    margin-bottom: 0.08rem;
+  }
+  .line1 {
+    margin-right: .2rem;
+  }
+  .line2 {
+    margin-left: .2rem;
+  }
 </style>
