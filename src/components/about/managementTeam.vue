@@ -20,6 +20,70 @@
         </div>
       </div>
     </div>
+    <img src="../../images/about/parting-line.png" alt="" class="display-bl margin-auto" width="99%">
+    <!-- 我们想要对您说  -->
+    <div class="want-to-say">
+      <div class="head">
+        <span class="us-circle">
+        </span>
+        <p class="head-text">
+          <span class="font-w">我们</span>想要对您说
+          <p class="talk">WE WANT TO TALK TO YOU</p>
+        </p>
+      </div>
+      <div class="content">
+        <ul>
+           <li>
+            <img src="../../images/about/wwt.png" alt="" width="100%" height="100%">
+            <p>产品经理</p>
+          </li>
+          <li>
+            <img src="../../images/about/triangle4.png" alt="">
+            <p>我们用最严谨的态度做金融，只为您更放心地用产品。</p>
+          </li>
+          <li>
+            <img src="../../images/about/fs.png" alt="" width="100%" height="100%">
+            <p>产品经理</p>
+          </li>
+          <li>
+            <img src="../../images/about/triangle2.png" alt="">
+            <p>每个细节的优化，都是为了带给您更好的体验。</p>
+          </li>
+          <li>
+            <img src="../../images/about/lj.png" alt="" width="100%" height="100%">
+            <p>技术经理</p>
+          </li>
+          <li>
+            <img src="../../images/about/triangle5.png" alt="">
+            <p>三年的上千次迭代，只为等待你的到来。</p>
+          </li>
+          <li>
+            <img src="../../images/about/yxy.png" alt="" width="100%" height="100%">
+            <p>运营经理</p>
+          </li>
+          <li>
+            <img src="../../images/about/triangle3.png" alt="">
+             <p>想做那个比你更了解你自己的人</p>
+          </li>
+          <li>
+            <img src="../../images/about/ywb.png" alt="" width="100%" height="100%">
+            <p>运营经理</p>
+          </li>
+          <li>
+            <img src="../../images/about/triangle5.png" alt="">
+             <p>汇金融财，尽在宏财！</p>
+          </li>
+          <li>
+            <img src="../../images/about/wxt.png" alt="" width="100%" height="100%">
+            <p>公关经理</p>
+          </li>
+          <li>
+            <img src="../../images/about/triangle2.png" alt="">
+             <p>让宏财开启你的“睡”后收入。</p>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -55,9 +119,14 @@
 </script>
 <style scoped>
   .management {
-    padding: .3rem .3rem .5rem;
+    padding: .3rem 0 .5rem;
+    overflow-x: hidden;
+  }
+  .font-w {
+    color: #fff !important;
   }
   .management-introduction {
+    padding: 0 .3rem;
     color: #666;
   }
   .management-introduction .title {
@@ -123,9 +192,119 @@
     left: -0.14rem;
     bottom: -.45rem;
   }
-  .content {
+  .management-introduction .content {
     padding: .5rem 0 .5rem .1rem;
     text-align: justify;
     font-size: .26rem;
+  }
+  .head {
+    background: url('../../images/about/triangle.png') no-repeat 34% 0.9rem;
+    text-align: center;
+    margin: .4rem 0;
+  }
+  .head .us-circle {
+    height: 1.2rem;
+    width: 1.2rem;
+    border-radius: 50%;
+    background-color: #ff611d;
+    position: absolute;
+    left: 18%;
+    z-index: 1;
+  }
+  .head .head-text {
+    position: relative;
+    color: #666;
+    letter-spacing: 5px;
+    font-size: .45rem;
+    line-height: 1.26rem;
+    z-index: 22;
+  }
+  p.talk {
+    font-size: .15rem;
+	  letter-spacing: 1.3px;
+    position: relative;
+    left: 8%;
+    bottom: .4rem;
+  }
+  .want-to-say .content ul {
+    width: 100%;
+  }
+  .want-to-say .content ul li {
+    float: left;
+    display: block;
+    width: 33.3%;
+    height: 2rem;
+    position: relative;
+    font-size: .24rem;
+    color: #fff;
+  }
+  .want-to-say .content ul li:nth-child(2n-1) p{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.5rem;
+    line-height: 0.6rem;
+    opacity: 0.6;
+	  background-color: #000000;
+  }
+  .want-to-say .content ul li:nth-child(2n){
+    text-align: justify;
+    color: #ffffff;
+  }
+  .want-to-say .content ul li:nth-child(2n) img {
+    position: absolute;
+  }
+  .want-to-say .content ul li:nth-child(2n) p{
+    width: 90%;
+    margin: auto auto;
+  }
+  .want-to-say .content ul li:nth-child(2) {
+    background-color: #fd8855;
+  }
+  .want-to-say .content ul li:nth-child(2) img {
+    top: 10%;
+    left: -8%;
+  }
+  .want-to-say .content ul li:nth-child(4) img {
+    top: 10%;
+    right: -8%;
+    z-index: 2;
+  }
+  .want-to-say .content ul li:nth-child(6) img {
+    top: -8%;
+    right: 10%;
+  }
+  .want-to-say .content ul li:nth-child(8) img {
+    top: 10%;
+    right: -8%;
+    z-index: 2;
+  }
+  .want-to-say .content ul li:nth-child(10) img {
+    top: 10%;
+    right: -9%;
+    z-index: 2;
+    transform: rotateZ(90deg);
+  }
+  .want-to-say .content ul li:nth-child(12) img {
+    top: 10%;
+    left: -8%;
+    z-index: 2;
+     transform: rotateZ(180deg); 
+  }
+  .want-to-say .content ul li:nth-child(2) p, .want-to-say .content ul li:nth-child(4) p, .want-to-say .content ul li:nth-child(6) p {
+    margin-top: .45rem;
+  }
+  .want-to-say .content ul li:nth-child(8) p, .want-to-say .content ul li:nth-child(10) p, .want-to-say .content ul li:nth-child(12) p {
+    margin-top: .6rem;
+  }
+  .want-to-say .content ul li:nth-child(4), .want-to-say .content ul li:nth-child(12) {
+    background-color: #646464;
+  }
+  .want-to-say .content ul li:nth-child(6), .want-to-say .content ul li:nth-child(10) {
+    background-color: #fdaa7d;
+  }
+  .want-to-say .content ul li:nth-child(8) {
+    background-color: #fd6202;
   }
 </style>
