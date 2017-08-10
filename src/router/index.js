@@ -57,7 +57,7 @@ const routes = [
         path: 'management-team',
         name: 'ManagementTeam',
         component: ManagementTeam,
-        meta: {title: '高管团队'}
+        meta: {title: '走进宏财'}
       },
       {
         path: '',
