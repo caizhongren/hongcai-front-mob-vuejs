@@ -302,7 +302,7 @@
           <table border="1">
             <tr >
               <td width="120" align="center">原债权用途</td>
-              <td width="400" align="center">{{contracts.financingPurpose}}</td>
+              <td width="400" align="center" v-html="contracts.financingPurpose"></td>
             </tr>
             <tr >
               <td width="120" align="center">债权金额</td>
