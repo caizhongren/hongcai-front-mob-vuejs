@@ -255,6 +255,7 @@
       this.getOrderList(this.page, this.pageSize)
       window.vue = this
       window.onload = function (e) {
+        alert('onload')
         var page1 = document.querySelector('.product-page1')
         var page2 = document.querySelector('.product-page2')
         var pagedetail = document.querySelector('.details-more')
