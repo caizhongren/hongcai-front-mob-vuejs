@@ -274,8 +274,6 @@
     directives: {
       'load': {
         inserted: function (el) {
-          alert('load')
-          console.log(document.querySelector('.product-page1'))
           var page1 = document.querySelector('.product-page1')
           var page2 = document.querySelector('.product-page2')
           var pagedetail = document.querySelector('.details-more')
@@ -426,7 +424,6 @@
         var endPos = {}
         function startTouchScroll (event) {
           // event.preventDefault()
-          console.log(event)
           var touch = event.targetTouches[0]
           startPos = {x: touch.pageX, y: touch.pageY}
           window.touchStartY = event.targetTouches[0].pageY
