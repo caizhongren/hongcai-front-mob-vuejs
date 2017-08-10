@@ -71,6 +71,9 @@
     float: left;
     width: 33.333%;
   }
+  ul.companys li img {
+    width: 64%;
+  }
   ul.companys li p {
     font-size: .22rem;
     font-weight: 500;

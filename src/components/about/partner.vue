@@ -37,8 +37,7 @@
 <style>
   .partner {
     width: 100%;
-    padding: .3rem 0 .5rem;
-    background: #f9f4f3;
+    padding: 0 0 .5rem;
   }
   .part {
     width: 90%;
