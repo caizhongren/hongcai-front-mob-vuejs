@@ -40,8 +40,10 @@
         </li>
       </ul>
     </div>
+    <div class="parting-line"></div>
     <div class="organizing">
-
+      <img src="../../images/about/organizing.png" alt="" class="organizing-title">
+      <img src="../../images/about/organizing-frame.png" alt="" width="96%">
     </div>
   </div>
 </template>
@@ -59,6 +61,7 @@
   }
   .profile-title {
     margin-bottom: .3rem;
+    width: 25%;
   }
   ul.companys {
     overflow: hidden;
@@ -66,31 +69,40 @@
   }
   ul.companys li {
     float: left;
-    width: 33%;
+    width: 33.333%;
   }
   ul.companys li p {
-    font-size: .2rem;
+    font-size: .22rem;
     font-weight: 500;
     line-height: 1.25;
     text-align: center;
   }
   .profiles {
-    font-size: .21rem;
+    font-size: .23rem;
     font-weight: 500;
     text-align: justify;
     padding: .5rem .4rem .4rem;
   }
   .shareholder p {
-    font-size: .24rem;
+    font-size: .26rem;
     padding: .2rem 0 .4rem;
   }
   .shareholder-title {
     margin-top: .3rem;
+    width: 36%;
   }
   .shareholder-img {
     height: 4.5rem;
     background: url('../../images/about/shareholder-img.png') no-repeat center center;
     background-size: contain;
+  }
+  .project-title {
+    margin-top: .3rem;
+    width: 30%;
+  }
+  .info {
+    text-align: justify;
+    padding: .3rem .4rem 0;
   }
   .info .title{
     font-size: .26rem;
@@ -99,6 +111,32 @@
     font-stretch: normal;
     line-height: normal;
     letter-spacing: 2.7px;
-    text-align: justify;
+    margin-bottom: .2rem;
+  }
+  .info .title span {
+    width: .32rem;
+	  height: .35rem;
+    border-radius: 50%;
+    background-color: #ff611d;
+    box-shadow: 0 0.5px 12px 0 rgba(255, 77, 0, 0.69);
+    color: #fff;
+    text-align: center;
+    line-height: .38rem;
+    display: inline-block;
+    padding-left: .03rem;
+  }
+  .info li p {
+    font-size: .23rem;
+    margin-bottom: .5rem;
+  }
+  .info li p:nth-child(2) {
+    margin-bottom: .4rem;
+  }
+  .organizing {
+    padding-bottom: 1rem;
+  }
+  .organizing-title {
+    margin-top: .3rem;
+    width: 26.5%;
   }
 </style>
