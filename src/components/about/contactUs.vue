@@ -65,6 +65,9 @@
   }
 </script>
 <style scoped>
+  .contact-us {
+    padding-bottom: .5rem;
+  }
   .contact-us .font-666 {
     font-size: .28rem;
     color: #666;
@@ -77,8 +80,8 @@
   .contact-way, .code {
     width: 90%;
     margin: .32rem auto;
-    border: 1px solid rgba(255, 77, 0, 0.69);
-    box-shadow: 0 0 2px 0 rgba(255, 77, 0, 0.69);
+    border: 1px solid #faad8c;
+    box-shadow: 0 0 4px 0 rgba(250, 173, 140, 0.3);
   }
   .contact-way {
     height: 1.9rem;
@@ -106,14 +109,13 @@
     text-align: center;
     font-size: .28rem;
     padding-bottom: .25rem;
-    margin-bottom: .5rem;
   }
   .code img {
     margin: .1rem auto .21rem;
   }
   .line1, .line2 {
     display: inline-block;
-    width: 20%;
+    width: 18%;
     height: 1px;
     background-color: rgba(255, 77, 0, 0.69);
     margin-bottom: 0.08rem;

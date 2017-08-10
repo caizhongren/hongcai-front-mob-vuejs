@@ -1,5 +1,25 @@
 <template>
   <div class="management">
+    <div class="management-carousel">
+      <!-- 高管轮播  -->
+      <div style="height:3rem;"></div>
+      <!-- 高管介绍  -->
+      <div class="management-introduction" v-for="people in managements">
+        <div class="title">
+          <span class="line1"></span>
+          <span class="line2"></span>
+          <div>
+            <span class="fl vertical-line"></span>
+            <p>{{people.name}} <span class="position">{{people.position}}</span></p>
+          </div>
+          <span class="circle"></span>
+          <span class="line3"></span>
+        </div>
+        <div class="content">
+          {{people.description}}
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -7,9 +27,105 @@
     name: 'managementTeam',
     data () {
       return {
+        managements: [
+          {
+            name: '刘刚',
+            position: '董事长',
+            description: '中国人民大学管理学博士。曾在国务院国资委下属的中国企业联合会担任管理创新处处长，参与国务院国资委发起的中央企业管理提升工作，非常熟悉国内企业管理状况，执笔起草的多份企业管理方面的报告获政治局常委等中央领导的重要批示。2014年辞职下海创业。现担任宏财网董事长，同时担任首都企业改革研究会常务理事、首都经济贸易大学MBA导师（金融学方向）、芜湖市镜湖区人力资源和社会保障局创业导师。2015年成为《当代经理人》杂志封面人物。'
+          },
+          {
+            name: '李青',
+            position: '执行董事兼风控委员会首席风控官 ',
+            description: '厦门大学金融学博士。曾在深圳创投、正道及大型金融控股集团任职，擅长行业状况分析，精通价格投资，长期负责企业上市及并购重组事宜，在创新创投项目工作方面具有深刻的见解与丰富的实战经验，擅长消费金融、小微金融产品设计和全流程风险管理。'
+          },
+          {
+            name: '王斌',
+            position: 'CEO',
+            description: '安徽大学经济学系金融专业毕业。曾于搜狐、TOM网、千橡集团、超图软件等公司长期负责品牌营销、市场公关工作。2014年进入互联网金融领域，作为市场合伙人加入金蛋理财，负责市场、品牌、运营工作。后任麦子金服旗下财神爷爷COO。曾为央视财经频道编著《对话》一书。'
+          },
+          {
+            name: '张枫',
+            position: '技术总监',
+            description: '北京航空航天大学硕士研究生毕业，2014年进入互联网金融领域。'
+          }
+        ]
       }
     }
   }
 </script>
 <style scoped>
+  .management {
+    padding: .3rem .3rem .5rem;
+  }
+  .management-introduction {
+    color: #666;
+  }
+  .management-introduction .title {
+    border-bottom: 1px solid #ff611d;
+    box-shadow: 0 2px 0 0 rgba(250, 173, 140, 0.3);
+    text-align: left;
+    position: relative;
+  }
+  .line1, .line2, .line3 {
+    width: 1px;
+    background-color: #ff611d;
+    transform: rotateZ(40deg);
+    position: absolute;
+  }
+  .line1 {
+    height: .65rem;
+    left: 23%;
+    top: -1rem;
+  }
+  .line2, .line3 {
+    height: 0.3rem;
+  }
+  .line2 {
+    left: 14%;
+    bottom: 0.9rem;
+  }
+  .line3 {
+    left: -.2rem;
+    bottom: -0.9rem;
+  }
+  .title div {
+    display: inline-block;
+    min-width: 46%;
+    line-height: 2.1;
+    height: .65rem;
+    box-shadow: 0 0.5px 2px 0 rgba(255, 77, 0, 0.69);
+    border-radius: 5px;
+  }
+  .title div .fl {
+    width: .08rem;
+    height: .53rem;
+    margin-top: .06rem;
+    margin-left: -0.04rem;
+    background-color: #ff611d;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(255, 77, 0, 0.51);
+  }
+  .title div p{
+    margin-left: .2rem;
+    font-size: .4rem;
+  }
+  .title div p span {
+    margin: 0 .2rem;
+    color: #ff611d;
+    font-size: .28rem;
+  }
+  .title .circle {
+    width: .32rem;
+    height: .32rem;
+    border-radius: 50%;
+    background-color: #ff611d;
+    position: absolute;
+    left: -0.14rem;
+    bottom: -.45rem;
+  }
+  .content {
+    padding: .5rem 0 .5rem .1rem;
+    text-align: justify;
+    font-size: .26rem;
+  }
 </style>

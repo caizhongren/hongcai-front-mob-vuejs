@@ -59,7 +59,7 @@
             text: '联系我们'
           }
         ],
-        activeTab: 3
+        activeTab: 0
       }
     },
     created: function () {
