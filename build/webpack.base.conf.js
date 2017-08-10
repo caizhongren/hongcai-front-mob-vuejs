@@ -3,7 +3,7 @@ var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
 var webpack = require("webpack")
-
+require('es6-promise').polyfill()
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
