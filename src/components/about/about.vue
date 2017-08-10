@@ -59,7 +59,7 @@
             text: '联系我们'
           }
         ],
-        activeTab: 0
+        activeTab: 3
       }
     },
     created: function () {
@@ -90,7 +90,7 @@
   .about .aboutorange li.active {
     color: #f5762f;
   }
-  .class1, .class2, .class3, .class4, .class5, .class6, .class7, .class8 {
+  .class1 {
     margin-bottom: .3rem; 
     width: 100%;
     position: relative;
@@ -102,16 +102,13 @@
     width: 20%;
     height: 1px;
     background-color: #fff;
-    margin-bottom: 0.08rem;
+    margin-bottom: 0.1rem;
   }
   .line1 {
     margin-right: .2rem;
   }
   .line2 {
     margin-left: .2rem;
-  }
-  .class8 {
-    margin-bottom: .5rem;
   }
   .mask {
     position: absolute;
@@ -120,8 +117,7 @@
     height: 100%;
     width: 100%;
     background-color: rgba(0,0,0,.5);
-    border-radius: .2rem;
     z-index: 999;
-    font-size: .46rem;
+    font-size: .3rem;
   }
 </style> 
