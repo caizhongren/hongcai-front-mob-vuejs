@@ -2,7 +2,26 @@
   <div class="management">
     <div class="management-carousel">
       <!-- 高管轮播  -->
-      <div style="height:3rem;"></div>
+      <div id="carousel"data-setting='{
+							"width": 400,
+							"height":300,
+							"posterWidth":400,
+							"posterHeight":300,
+							"scale":0.8,
+							"speed":1000,
+							"autoPlay":true,
+							"delay":3000,
+							"verticalAlign":"middle"
+							}'>
+        <ul class="poster-list">
+           <li class="poster-item overflow-hi"><img src="../../images/about/lg.png" alt=""></li>
+           <li class="poster-item overflow-hi"><img src="../../images/about/lq.png" alt=""></li>
+           <li class="poster-item overflow-hi"><img src="../../images/about/wb.png" alt=""></li>
+           <li class="poster-item overflow-hi"><img src="../../images/about/zf.png" alt=""></li>
+        </ul>
+        <img src="../../images/about/customer.png" class="poster-prev-btn" alt="">
+        <img src="../../images/about/qq.png" class="poster-next-btn" alt="">
+      </div>
       <!-- 高管介绍  -->
       <div class="management-introduction" v-for="people in managements">
         <div class="title">
@@ -87,6 +106,8 @@
   </div>
 </template>
 <script>
+  import $ from 'zepto'
+  import {myCarousel} from '../../service/my-carousel.js'
   export default {
     name: 'managementTeam',
     data () {
@@ -113,6 +134,12 @@
             description: '北京航空航天大学硕士研究生毕业，2014年进入互联网金融领域。'
           }
         ]
+      }
+    },
+    created () {
+      myCarousel.carousel($('#carousel'), $('.poster-prev-btn'), $('.poster-next-btn'), $('.poster-item'))
+      myCarousel.autoPlay()
+      window.onload = function () {
       }
     }
   }
