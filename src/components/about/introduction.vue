@@ -81,13 +81,13 @@
     text-align: center;
   }
   .profiles {
-    font-size: .23rem;
+    font-size: .26rem;
     font-weight: 500;
     text-align: justify;
     padding: .5rem .4rem .4rem;
   }
   .shareholder p {
-    font-size: .26rem;
+    font-size: .28rem;
     padding: .2rem 0 .4rem;
   }
   .shareholder-title {
@@ -108,7 +108,7 @@
     padding: .3rem .4rem 0;
   }
   .info .title{
-    font-size: .26rem;
+    font-size: .28rem;
     font-weight: 500;
     font-style: normal;
     font-stretch: normal;
@@ -129,7 +129,7 @@
     padding-left: .03rem;
   }
   .info li p {
-    font-size: .23rem;
+    font-size: .26rem;
     margin-bottom: .5rem;
   }
   .info li p:nth-child(2) {

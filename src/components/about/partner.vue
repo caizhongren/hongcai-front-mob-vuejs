@@ -45,7 +45,7 @@
     border: 1px solid #faad8c;
     box-shadow: 0 0 4px 0 rgba(250, 173, 140, 0.3);
     font-family: PingFang-SC;
-    font-size: .22rem;
+    font-size: .26rem;
     font-weight: 500;
     color: #666666;
     padding: .35rem 0;
