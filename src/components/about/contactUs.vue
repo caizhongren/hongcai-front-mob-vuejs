@@ -2,7 +2,7 @@
   <div class="contact-us">
     <div class="contact-way">
       <div class="icon-l">
-        <img src="../../images/about/customer.png" alt="客服电话" class="display-bl margin-0p8">
+        <img src="../../images/about/customer.png" width="100%" alt="客服电话" class="display-bl margin-0p8">
       </div>
       <div class="text-r">
         <p class="font-666">客服电话</p>
@@ -12,7 +12,7 @@
     </div>
     <div class="contact-way">
       <div class="icon-l">
-        <img src="../../images/about/mail.png" alt="客服邮箱" class="display-bl">
+        <img src="../../images/about/mail.png" width="100%" alt="客服邮箱" class="display-bl">
       </div>
       <div class="text-r">
         <p class="font-666">客服邮箱</p>
@@ -21,7 +21,7 @@
     </div>
     <div class="contact-way">
       <div class="icon-l">
-        <img src="../../images/about/qq.png" alt="商务合作QQ" class="display-bl">
+        <img src="../../images/about/qq.png" width="100%" alt="商务合作QQ" class="display-bl">
       </div>
       <div class="text-r">
         <p class="font-666">商务合作QQ</p>
@@ -30,7 +30,7 @@
     </div>
     <div class="contact-way">
       <div class="icon-l">
-        <img src="../../images/about/internet.png" alt="网址" class="display-bl">
+        <img src="../../images/about/internet.png" width="100%" alt="网址" class="display-bl">
       </div>
       <div class="text-r">
         <p class="font-666">网址</p>
@@ -39,7 +39,7 @@
     </div>
     <div class="contact-way">
       <div class="icon-l">
-        <img src="../../images/about/adress.png" alt="地址" class="display-bl margin-0p8">
+        <img src="../../images/about/adress.png" width="100%" alt="地址" class="display-bl margin-0p8">
       </div>
       <div class="text-r">
         <p class="font-666">地址</p>
@@ -48,7 +48,7 @@
       </div>
     </div>
     <div class="code">
-      <img src="../../images/about/code.png" alt="公众号" class="display-bl">
+      <img src="../../images/about/code.png" width="50%" alt="公众号" class="display-bl">
       <div class="class1">
         <span class="line1 display-inbl"></span><span>扫描关注宏财网公众号</span><span class="line2 display-inbl"></span>
       </div>
@@ -91,11 +91,12 @@
   }
   .contact-way .icon-l {
     display: inline-block;
-    padding-right: 26px;
+    width: 21%;
+    /* padding-right: 26px; */
     padding-top: .35rem;
   }
   .contact-way .icon-l img {
-    margin: 0 auto;
+    /* margin: 0 auto; */
     margin-bottom: -.25rem;
   }
   .contact-way .icon-l img.margin-0p8 {
@@ -104,6 +105,7 @@
   .contact-way .text-r {
     display: inline-block;
     text-align: left;
+    padding-left: 0.3rem;
   }
   .code {
     text-align: center;
