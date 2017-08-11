@@ -76,6 +76,14 @@
   .about .column {
     float: left;
   }
+  .about .about-tab1 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    z-index: 9999;
+  }
   .about .about-tab1 li {
     width: 20%;
     margin-left: 2.5%;
@@ -91,6 +99,7 @@
     color: #f5762f;
   }
   .class1 {
+    margin-top: 1rem;
     margin-bottom: .3rem; 
     width: 100%;
     position: relative;
@@ -117,7 +126,7 @@
     height: 100%;
     width: 100%;
     background-color: rgba(0,0,0,.5);
-    z-index: 999;
+    z-index: 9;
     font-size: .3rem;
   }
 </style> 

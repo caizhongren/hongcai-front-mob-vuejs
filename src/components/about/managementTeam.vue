@@ -3,8 +3,8 @@
     <div class="management-carousel">
       <!-- 高管轮播  -->
       <div class="btns position-re">
-        <img class="prev position-ab" src="../../images/about/prev.png" alt="" width="6%">
-        <img class="next position-ab" src="../../images/about/next.png" alt="" width="6%">
+        <img class="prev position-ab" src="../../images/about/prev.png" alt="" width="5%">
+        <img class="next position-ab" src="../../images/about/next.png" alt="" width="5%">
         <!-- <b class="prev">PREV</b> <b class="next">NEXT</b> -->
       </div>
       <div class="position-re carousel-mask">
@@ -170,7 +170,7 @@
         index: 0,
         active: 'active',
         scale: 0.6,
-        duration: 500,
+        duration: 300,
         locked: true,
         before: function () {
           that.carouselId = this.index
@@ -187,36 +187,6 @@
       document.querySelector('.prev').onclick = function () {
         Carousel.prev()
       }
-    },
-    methods: {
-      startCarousel () {
-        var that = this
-        var wrapper = document.getElementById('wrapper')
-        document.querySelector('.next').onclick = function () {
-          that.carouselId = Carousel.index
-          Carousel.next()
-          // alert(that.carouselId)
-        }
-        document.querySelector('.prev').onclick = function () {
-          Carousel.prev()
-          that.carouselId = Carousel.index - 1
-          // alert(that.carouselId)
-        }
-        Carousel.mCarousel(wrapper, {
-          // index: 2,
-          // active: 'active',
-          // scale: 0.6,
-          // duration: 500,
-          locked: true,
-          before: function () {
-            that.showImg0 = false
-            console.log('切换开始')
-          },
-          after: function () {
-            console.log('切换结束')
-          }
-        })
-      }
     }
   }
 </script>
@@ -226,7 +196,7 @@
     overflow-x: hidden;
   }
   #wrapper {
-    height: 5rem;
+    height: 4.6rem;
     width: 120%;
     left: -10%;
     margin: 0 auto;
@@ -239,16 +209,16 @@
   }
    .management-carousel .carousel-mask {
     overflow-x: hidden;
-    width: 86%;
-    left: 7%;
+    width: 78%;
+    left: 11%;
   } 
   .btns img:first-child {
-    left: 0rem;
+    left: 0.25rem;
     top: 1.7rem;
     z-index: 90;
   }
   .btns img:last-child {
-    right: 0rem;
+    right: 0.25rem;
     top: 1.7rem;
     z-index: 90;
   }
@@ -394,31 +364,31 @@
   }
   .want-to-say .content ul li:nth-child(2) img {
     top: 10%;
-    left: -8%;
+    left: -7%;
   }
   .want-to-say .content ul li:nth-child(4) img {
     top: 10%;
-    right: -8%;
+    right: -7%;
     z-index: 2;
   }
   .want-to-say .content ul li:nth-child(6) img {
-    top: -8%;
+    top: -7%;
     right: 10%;
   }
   .want-to-say .content ul li:nth-child(8) img {
     top: 10%;
-    right: -8%;
+    right: -7%;
     z-index: 2;
   }
   .want-to-say .content ul li:nth-child(10) img {
     top: 10%;
-    right: -9%;
+    right: -8%;
     z-index: 2;
     transform: rotateZ(90deg);
   }
   .want-to-say .content ul li:nth-child(12) img {
     top: 10%;
-    left: -8%;
+    left: -7%;
     z-index: 2;
      transform: rotateZ(180deg); 
   }
