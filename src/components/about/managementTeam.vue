@@ -2,28 +2,24 @@
   <div class="management">
     <div class="management-carousel">
       <!-- 高管轮播  -->
-      <div id="carousel"data-setting='{
-							"width": 400,
-							"height":300,
-							"posterWidth":400,
-							"posterHeight":300,
-							"scale":0.8,
-							"speed":1000,
-							"autoPlay":true,
-							"delay":3000,
-							"verticalAlign":"middle"
-							}'>
-        <ul class="poster-list">
-           <li class="poster-item overflow-hi"><img src="../../images/about/lg.png" alt=""></li>
-           <li class="poster-item overflow-hi"><img src="../../images/about/lq.png" alt=""></li>
-           <li class="poster-item overflow-hi"><img src="../../images/about/wb.png" alt=""></li>
-           <li class="poster-item overflow-hi"><img src="../../images/about/zf.png" alt=""></li>
-        </ul>
-        <img src="../../images/about/customer.png" class="poster-prev-btn" alt="">
-        <img src="../../images/about/qq.png" class="poster-next-btn" alt="">
+      <div class="btns position-re">
+        <img class="prev position-ab" src="../../images/about/prev.png" alt="" width="6%">
+        <img class="next position-ab" src="../../images/about/next.png" alt="" width="6%">
+        <!-- <b class="prev">PREV</b> <b class="next">NEXT</b> -->
+      </div>
+      <div class="position-re carousel-mask">
+        <div id="wrapper">
+          <ul class="poster-list">
+            <li><img class="poster-item" src="../../images/about/lg.png" alt="" width="80%"></li>
+            <li><img class="poster-item" src="../../images/about/lq.png" alt="" width="80%"></li>
+            <li><img class="poster-item" src="../../images/about/wb.png" alt="" width="80%"></li>
+            <li><img class="poster-item" src="../../images/about/zf.png" alt="" width="80%"></li>
+          </ul>
+        </div>
       </div>
       <!-- 高管介绍  -->
-      <div class="management-introduction" v-for="people in managements">
+      <div class="management-introduction" v-for="(people, index) in managements">
+        <!-- {{index}}{{carouselId}} -->
         <div class="title">
           <span class="line1"></span>
           <span class="line2"></span>
@@ -38,6 +34,36 @@
           {{people.description}}
         </div>
       </div>
+      <!-- <div class="management-introduction">
+        <div class="title">
+          <span class="line1"></span>
+          <span class="line2"></span>
+          <div>
+            <span class="fl vertical-line"></span>
+            <p>李青<span class="position">执行董事兼风控委员会首席风控官</span></p>
+          </div>
+          <span class="circle"></span>
+          <span class="line3"></span>
+        </div>
+        <div class="content">
+          厦门大学金融学博士。曾在深圳创投、正道及大型金融控股集团任职，擅长行业状况分析，精通价格投资，长期负责企业上市及并购重组事宜，在创新创投项目工作方面具有深刻的见解与丰富的实战经验，擅长消费金融、小微金融产品设计和全流程风险管理。
+        </div>
+      </div>
+      <div class="management-introduction">
+        <div class="title">
+          <span class="line1"></span>
+          <span class="line2"></span>
+          <div>
+            <span class="fl vertical-line"></span>
+            <p>王斌<span class="position">CEO</span></p>
+          </div>
+          <span class="circle"></span>
+          <span class="line3"></span>
+        </div>
+        <div class="content">
+          安徽大学经济学系金融专业毕业。曾于搜狐、TOM网、千橡集团、超图软件等公司长期负责品牌营销、市场公关工作。2014年进入互联网金融领域，作为市场合伙人加入金蛋理财，负责市场、品牌、运营工作。后任麦子金服旗下财神爷爷COO。曾为央视财经频道编著《对话》一书。
+        </div>
+      </div> -->
     </div>
     <img src="../../images/about/parting-line.png" alt="" class="display-bl margin-auto" width="99%">
     <!-- 我们想要对您说  -->
@@ -106,8 +132,7 @@
   </div>
 </template>
 <script>
-  import $ from 'zepto'
-  import {myCarousel} from '../../service/my-carousel.js'
+  import {Carousel} from '../../service/mCarousel.js'
   export default {
     name: 'managementTeam',
     data () {
@@ -136,10 +161,70 @@
         ]
       }
     },
+    watch: {
+      carouselId: function (val) {
+        alert(val)
+      }
+    },
     created () {
-      myCarousel.carousel($('#carousel'), $('.poster-prev-btn'), $('.poster-next-btn'), $('.poster-item'))
-      myCarousel.autoPlay()
       window.onload = function () {
+        var that = this
+        var wrapper = document.getElementById('wrapper')
+        document.querySelector('.next').onclick = function () {
+          that.carouselId = Carousel.index
+          Carousel.next()
+          // alert(that.carouselId)
+        }
+        document.querySelector('.prev').onclick = function () {
+          Carousel.prev()
+          that.carouselId = Carousel.index - 1
+          // alert(that.carouselId)
+        }
+        Carousel.mCarousel(wrapper, {
+          index: 0,
+          active: 'active',
+          scale: 0.6,
+          duration: 500,
+          locked: true,
+          before: function () {
+            that.carouselId = this.index
+            console.log('切换开始')
+          },
+          after: function () {
+            that.carouselId = this.index
+            console.log('切换结束')
+          }
+        })
+      }
+    },
+    methods: {
+      startCarousel () {
+        var that = this
+        var wrapper = document.getElementById('wrapper')
+        document.querySelector('.next').onclick = function () {
+          that.carouselId = Carousel.index
+          Carousel.next()
+          // alert(that.carouselId)
+        }
+        document.querySelector('.prev').onclick = function () {
+          Carousel.prev()
+          that.carouselId = Carousel.index - 1
+          // alert(that.carouselId)
+        }
+        Carousel.mCarousel(wrapper, {
+          // index: 2,
+          // active: 'active',
+          // scale: 0.6,
+          // duration: 500,
+          locked: true,
+          before: function () {
+            that.showImg0 = false
+            console.log('切换开始')
+          },
+          after: function () {
+            console.log('切换结束')
+          }
+        })
       }
     }
   }
@@ -148,6 +233,33 @@
   .management {
     padding: .3rem 0 .5rem;
     overflow-x: hidden;
+  }
+  #wrapper {
+    height: 5rem;
+    width: 120%;
+    left: -10%;
+    margin: 0 auto;
+  }
+   #wrapper ul {
+    overflow-x: hidden;
+  } 
+   #wrapper .btns {
+     width: 100%;
+  }
+   .management-carousel .carousel-mask {
+    overflow-x: hidden;
+    width: 86%;
+    left: 7%;
+  } 
+  .btns img:first-child {
+    left: 0rem;
+    top: 1.7rem;
+    z-index: 90;
+  }
+  .btns img:last-child {
+    right: 0rem;
+    top: 1.7rem;
+    z-index: 90;
   }
   .font-w {
     color: #fff !important;
