@@ -108,7 +108,7 @@ var utils = (function() {
 var Carousel = {
   _init: function() {
     this._setup();
-    this._bindEvent();
+    // this._bindEvent();
   },
   _setup: function() {
     if (utils.css(this.wrapper, 'position') === 'static') this.wrapper.style.position = 'relative';
