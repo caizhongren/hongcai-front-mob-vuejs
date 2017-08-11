@@ -10,10 +10,10 @@
       <div class="position-re carousel-mask">
         <div id="wrapper">
           <ul class="poster-list">
-            <li><img class="poster-item" src="../../images/about/lg.png" alt="" width="80%"></li>
-            <li><img class="poster-item" src="../../images/about/lq.png" alt="" width="80%"></li>
-            <li><img class="poster-item" src="../../images/about/wb.png" alt="" width="80%"></li>
-            <li><img class="poster-item" src="../../images/about/zf.png" alt="" width="80%"></li>
+            <li class=""><img class="poster-item" src="../../images/about/lg.png" alt="" width="80%"></li>
+            <li class=""><img class="poster-item" src="../../images/about/lq.png" alt="" width="80%"></li>
+            <li class=""><img class="poster-item" src="../../images/about/wb.png" alt="" width="80%"></li>
+            <li class=""><img class="poster-item" src="../../images/about/zf.png" alt="" width="80%"></li>
           </ul>
         </div>
       </div>
@@ -161,40 +161,31 @@
         ]
       }
     },
-    watch: {
-      carouselId: function (val) {
-        alert(val)
-      }
-    },
     created () {
-      window.onload = function () {
-        var that = this
-        var wrapper = document.getElementById('wrapper')
-        document.querySelector('.next').onclick = function () {
-          that.carouselId = Carousel.index
-          Carousel.next()
-          // alert(that.carouselId)
+    },
+    mounted () {
+      var that = this
+      var wrapper = document.getElementById('wrapper')
+      Carousel.mCarousel(wrapper, {
+        index: 0,
+        active: 'active',
+        scale: 0.6,
+        duration: 500,
+        locked: true,
+        before: function () {
+          that.carouselId = this.index
+          console.log('切换开始')
+        },
+        after: function () {
+          that.carouselId = this.index
+          console.log('切换结束')
         }
-        document.querySelector('.prev').onclick = function () {
-          Carousel.prev()
-          that.carouselId = Carousel.index - 1
-          // alert(that.carouselId)
-        }
-        Carousel.mCarousel(wrapper, {
-          index: 0,
-          active: 'active',
-          scale: 0.6,
-          duration: 500,
-          locked: true,
-          before: function () {
-            that.carouselId = this.index
-            console.log('切换开始')
-          },
-          after: function () {
-            that.carouselId = this.index
-            console.log('切换结束')
-          }
-        })
+      })
+      document.querySelector('.next').onclick = function () {
+        Carousel.next()
+      }
+      document.querySelector('.prev').onclick = function () {
+        Carousel.prev()
       }
     },
     methods: {
