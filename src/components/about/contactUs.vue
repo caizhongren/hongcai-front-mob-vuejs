@@ -91,9 +91,9 @@
   }
   .contact-way .icon-l {
     display: inline-block;
-    width: 21%;
+    width: 23%;
     /* padding-right: 26px; */
-    padding-top: .35rem;
+    padding-top: .3rem;
   }
   .contact-way .icon-l img {
     /* margin: 0 auto; */
@@ -105,7 +105,7 @@
   .contact-way .text-r {
     display: inline-block;
     text-align: left;
-    padding-left: 0.3rem;
+    padding-left: 0.4rem;
   }
   .code {
     text-align: center;
