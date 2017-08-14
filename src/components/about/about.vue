@@ -62,8 +62,6 @@
         activeTab: 0
       }
     },
-    created: function () {
-    },
     methods: {
       switchTab: function (index) {
         if (this.activeTab !== index) {

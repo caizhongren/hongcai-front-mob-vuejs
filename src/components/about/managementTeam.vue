@@ -60,7 +60,7 @@
           </li>
           <li>
             <img src="../../images/about/triangle2.png" alt="">
-            <p>每个细节的优化，都是为了带给您更好的体验。</p>
+            <p>三年的上千次迭代，只为等待你的到来。</p>
           </li>
           <li>
             <img src="../../images/about/lj.png" alt="" width="100%" height="100%">
@@ -68,7 +68,7 @@
           </li>
           <li>
             <img src="../../images/about/triangle5.png" alt="">
-            <p>三年的上千次迭代，只为等待你的到来。</p>
+            <p>每个细节的优化，都是为了带给您更好的体验。</p>
           </li>
           <li>
             <img src="../../images/about/yxy.png" alt="" width="100%" height="100%">
@@ -76,7 +76,7 @@
           </li>
           <li>
             <img src="../../images/about/triangle3.png" alt="">
-             <p>想做那个比你更了解你自己的人</p>
+             <p>汇金融财，尽在宏财！</p>
           </li>
           <li>
             <img src="../../images/about/ywb.png" alt="" width="100%" height="100%">
@@ -84,7 +84,7 @@
           </li>
           <li>
             <img src="../../images/about/triangle5.png" alt="">
-             <p>汇金融财，尽在宏财！</p>
+             <p>想做那个比你更了解你自己的人</p>
           </li>
           <li>
             <img src="../../images/about/wxt.png" alt="" width="100%" height="100%">
@@ -299,7 +299,7 @@
     float: left;
     display: block;
     width: 33.3%;
-    height: 2rem;
+    height: 1.9rem;
     position: relative;
     font-size: .24rem;
     color: #fff;
@@ -347,10 +347,9 @@
     z-index: 2;
   }
   .want-to-say .content ul li:nth-child(10) img {
-    top: 10%;
-    right: -8%;
+    left: 10%;
+    top: -7%;
     z-index: 2;
-    transform: rotateZ(90deg);
   }
   .want-to-say .content ul li:nth-child(12) img {
     top: 10%;

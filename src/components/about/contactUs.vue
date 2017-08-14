@@ -69,7 +69,7 @@
     padding-bottom: .5rem;
   }
   .contact-us .font-666 {
-    font-size: .28rem;
+    font-size: .26rem;
     color: #666;
   }
   .contact-us .font-999 {
@@ -84,20 +84,19 @@
     box-shadow: 0 0 4px 0 rgba(250, 173, 140, 0.3);
   }
   .contact-way {
-    height: 1.9rem;
+    height: 1.6rem;
     margin-bottom: 0;
     padding-left: 15.3px;
     text-align: left;
   }
   .contact-way .icon-l {
     display: inline-block;
-    width: 23%;
+    width: 15%;
     /* padding-right: 26px; */
-    padding-top: .3rem;
+    padding-top: .35rem;
   }
   .contact-way .icon-l img {
-    /* margin: 0 auto; */
-    margin-bottom: -.25rem;
+    margin-bottom: -.1rem;
   }
   .contact-way .icon-l img.margin-0p8 {
     margin-bottom: -.08rem;
@@ -107,9 +106,12 @@
     text-align: left;
     padding-left: 0.4rem;
   }
+  .contact-way:nth-child(1) .icon-l img, .contact-way:nth-child(5) .icon-l img {
+    margin-bottom: .12rem;
+  }
   .code {
     text-align: center;
-    font-size: .28rem;
+    font-size: .26rem;
     padding-bottom: .25rem;
   }
   .code img {
