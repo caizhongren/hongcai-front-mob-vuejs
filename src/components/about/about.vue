@@ -68,6 +68,7 @@
       switchTab: function (index) {
         this.activeTab = index
         this.$router.push({name: this.tabs[index].name})
+        window.scrollTo(0, 0)
       }
     }
   }
