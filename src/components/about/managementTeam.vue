@@ -5,7 +5,6 @@
       <div class="btns position-re">
         <img class="prev position-ab" src="../../images/about/prev.png" alt="" width="5%">
         <img class="next position-ab" src="../../images/about/next.png" alt="" width="5%">
-        <!-- <b class="prev">PREV</b> <b class="next">NEXT</b> -->
       </div>
       <div class="position-re carousel-mask">
         <div id="wrapper">
@@ -19,7 +18,6 @@
       </div>
       <!-- 高管介绍  -->
       <div class="management-introduction" v-for="(people, index) in managements">
-        <!-- {{index}}{{carouselId}} -->
         <div class="title">
           <span class="line1"></span>
           <span class="line2"></span>
@@ -34,36 +32,6 @@
           {{people.description}}
         </div>
       </div>
-      <!-- <div class="management-introduction">
-        <div class="title">
-          <span class="line1"></span>
-          <span class="line2"></span>
-          <div>
-            <span class="fl vertical-line"></span>
-            <p>李青<span class="position">执行董事兼风控委员会首席风控官</span></p>
-          </div>
-          <span class="circle"></span>
-          <span class="line3"></span>
-        </div>
-        <div class="content">
-          厦门大学金融学博士。曾在深圳创投、正道及大型金融控股集团任职，擅长行业状况分析，精通价格投资，长期负责企业上市及并购重组事宜，在创新创投项目工作方面具有深刻的见解与丰富的实战经验，擅长消费金融、小微金融产品设计和全流程风险管理。
-        </div>
-      </div>
-      <div class="management-introduction">
-        <div class="title">
-          <span class="line1"></span>
-          <span class="line2"></span>
-          <div>
-            <span class="fl vertical-line"></span>
-            <p>王斌<span class="position">CEO</span></p>
-          </div>
-          <span class="circle"></span>
-          <span class="line3"></span>
-        </div>
-        <div class="content">
-          安徽大学经济学系金融专业毕业。曾于搜狐、TOM网、千橡集团、超图软件等公司长期负责品牌营销、市场公关工作。2014年进入互联网金融领域，作为市场合伙人加入金蛋理财，负责市场、品牌、运营工作。后任麦子金服旗下财神爷爷COO。曾为央视财经频道编著《对话》一书。
-        </div>
-      </div> -->
     </div>
     <img src="../../images/about/parting-line.png" alt="" class="display-bl margin-auto" width="99%">
     <!-- 我们想要对您说  -->
@@ -160,8 +128,6 @@
           }
         ]
       }
-    },
-    created () {
     },
     mounted () {
       var that = this
