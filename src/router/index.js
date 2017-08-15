@@ -32,8 +32,10 @@ const ServiceAgree = r => require.ensure([], () => r(require('../components/serv
 const BusinessSuccess = r => require.ensure([], () => r(require('../components/businessSuccess.vue')), 'BusinessSuccess')
 const BankCustody = r => require.ensure([], () => r(require('../components/bankCustody.vue')), 'BankCustody')
 const BindWechat = r => require.ensure([], () => r(require('../components/bindWechat.vue')), 'BindWechat')
-const Report2 = r => require.ensure([], () => r(require('../components/news/report2.vue')), 'News')
+const News = r => require.ensure([], () => r(require('../components/news/news.vue')), 'News')
 const Report1 = r => require.ensure([], () => r(require('../components/news/report1.vue')), 'News')
+const Report2 = r => require.ensure([], () => r(require('../components/news/report2.vue')), 'News')
+const Report3 = r => require.ensure([], () => r(require('../components/news/report3.vue')), 'News')
 const Events = r => require.ensure([], () => r(require('../components/events.vue')), 'Events')
 const RiskEducation = r => require.ensure([], () => r(require('../components/riskEducation.vue')), 'RiskEducation')
 Vue.use(Router)
@@ -228,16 +230,29 @@ const routes = [
     meta: {title: '绑定微信有钱领'}
   },
   {
-    path: '/news/report2',
-    name: 'Report2',
-    component: Report2,
-    meta: {title: '宏财网CEO王斌首谈经验'}
-  },
-  {
-    path: '/news/report1',
-    name: 'Report1',
-    component: Report1,
-    meta: {title: '宏财网合规经营练内功'}
+    path: '/news',
+    name: 'News',
+    component: News,
+    children: [
+      {
+        path: 'report1',
+        name: 'Report1',
+        component: Report1,
+        meta: {title: '宏财网合规经营练内功'}
+      },
+      {
+        path: 'report2',
+        name: 'Report2',
+        component: Report2,
+        meta: {title: '宏财网CEO王斌首谈经验'}
+      },
+      {
+        path: 'report3',
+        name: 'Report3',
+        component: Report3,
+        meta: {title: '媒体报道'}
+      }
+    ]
   },
   {
     path: '/events',
