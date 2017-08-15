@@ -21,7 +21,9 @@
     display: block;
     margin: .2rem auto;
   }
-  .news .text-indent {
+  .news .line-page {
     text-indent: initial;
+    color: red;
+    font-size: .3rem;
   }
 </style>
