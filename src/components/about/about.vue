@@ -66,7 +66,7 @@
       switchTab: function (index) {
         if (this.activeTab !== index) {
           this.activeTab = index
-          this.$router.push({name: this.tabs[index].name})
+          this.$router.replace({name: this.tabs[index].name})
           window.scrollTo(0, 0)
         }
       }
