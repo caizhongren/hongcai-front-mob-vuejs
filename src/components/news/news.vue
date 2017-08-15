@@ -1,0 +1,27 @@
+<template>
+  <div class="news">
+    <router-view></router-view>
+  </div>
+</template>
+<style>
+  .news {
+    padding: .3rem;
+  }
+  .news h2 {
+    margin-bottom: .4rem;
+  }
+  .news p {
+    text-indent: 2em;
+    text-align: justify;
+    font-size: 0.26rem;
+    margin-bottom: .2rem;
+  }
+  .news img {
+    width: 100%;
+    display: block;
+    margin: .2rem auto;
+  }
+  .news .text-indent {
+    text-indent: initial;
+  }
+</style>
