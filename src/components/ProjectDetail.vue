@@ -160,7 +160,7 @@
           </div>
           <div v-if="activeTab === 3" class="repayment-plan bg-white">
             <div class="each-line" v-for="(preRepayment, index) in preRepaymentList">
-              <div class="column1"><span v-show="preRepayment.status !== 1">预计</span>{{preRepayment.repaymentTime | date}}</div>
+              <div class="column1"><span :class="{'ed': preRepayment.status === 1}">预计</span>{{preRepayment.repaymentTime | date}}</div>
               <div class="column2">
                 <span class="circle" :class="{'ed': preRepayment && preRepayment.status === 1 }"></span>
                 <span class="vertical-line" :class="{'ed': preRepayment && preRepayment.nextStatus === 1}"></span>
@@ -170,7 +170,7 @@
               </div>
             </div>
             <div class="each-line">
-              <div class="column1"><span v-show="final.status !== 1">预计</span>{{final.repaymentTime | date}}</div>
+              <div class="column1"><span :class="{'ed': final.status === 1}">预计</span>{{final.repaymentTime | date}}</div>
               <div class="column2" :class="{'ed': final && final.status === 1 }">
                 <span class="circle"></span>
                 <span class="vertical-line last-line"></span>
@@ -933,6 +933,9 @@
     margin-top: -.4rem;
     vertical-align: text-top;
     height: 100%;
+  }
+  .column1 span.ed {
+    opacity: 0;
   }
   .repayment-plan .each-line .column2{
     width: 6%;
