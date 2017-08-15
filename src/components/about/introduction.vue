@@ -5,7 +5,7 @@
       <ul class="companys">
         <li>
           <img src="../../images/about/profile-1.png" alt="">
-          <p>国有企业<br>A轮亿元投资</p>
+          <p>国有企业<br>A轮亿元融资</p>
         </li>
         <li>
           <img src="../../images/about/profile-2.png" alt="">
