@@ -7,7 +7,7 @@
       <div class="text-r">
         <p class="font-666">客服电话</p>
         <p class="font-666">400-990-7626</p>
-        <p class="font-999">(工作时间：9:00 - 18:00)</p>
+        <p class="font-999">(工作时间：工作日9:00 - 18:00)</p>
       </div>
     </div>
     <div class="contact-way">
@@ -25,7 +25,7 @@
       </div>
       <div class="text-r">
         <p class="font-666">商务合作QQ</p>
-        <p class="font-666"> 2880667849</p>
+        <p class="font-666"> 2880865201</p>
       </div>
     </div>
     <div class="contact-way">
