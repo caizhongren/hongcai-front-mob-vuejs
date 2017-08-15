@@ -44,53 +44,53 @@
           <p class="talk">WE WANT TO TALK TO YOU</p>
         </p>
       </div>
-      <div class="content">
+      <div class="content clearfix">
         <ul>
-           <li>
+           <li class="people">
             <img src="../../images/about/wwt.png" alt="" width="100%" height="100%">
             <p>产品经理</p>
           </li>
-          <li>
+          <li class="people">
             <img src="../../images/about/triangle4.png" alt="">
             <p>我们用最严谨的态度做金融，只为您更放心地用产品。</p>
           </li>
-          <li>
+          <li class="people">
             <img src="../../images/about/fs.png" alt="" width="100%" height="100%">
             <p>产品经理</p>
           </li>
-          <li>
+          <li class="people">
             <img src="../../images/about/triangle2.png" alt="">
             <p>三年的上千次迭代，只为等待你的到来。</p>
           </li>
-          <li>
+          <li class="people">
             <img src="../../images/about/lj.png" alt="" width="100%" height="100%">
             <p>技术经理</p>
           </li>
-          <li>
+          <li class="people">
             <img src="../../images/about/triangle5.png" alt="">
             <p>每个细节的优化，都是为了带给您更好的体验。</p>
           </li>
-          <li>
+          <li class="people">
             <img src="../../images/about/yxy.png" alt="" width="100%" height="100%">
             <p>运营经理</p>
           </li>
-          <li>
+          <li class="people">
             <img src="../../images/about/triangle3.png" alt="">
              <p>汇金融财，尽在宏财！</p>
           </li>
-          <li>
+          <li class="people">
             <img src="../../images/about/ywb.png" alt="" width="100%" height="100%">
             <p>运营经理</p>
           </li>
-          <li>
+          <li class="people">
             <img src="../../images/about/triangle5.png" alt="">
              <p>想做那个比你更了解你自己的人</p>
           </li>
-          <li>
+          <li class="people">
             <img src="../../images/about/wxt.png" alt="" width="100%" height="100%">
             <p>公关经理</p>
           </li>
-          <li>
+          <li class="people">
             <img src="../../images/about/triangle2.png" alt="">
              <p>让宏财开启你的“睡”后收入。</p>
           </li>
@@ -100,6 +100,7 @@
   </div>
 </template>
 <script>
+  import $ from 'zepto'
   import {Carousel} from '../../service/mCarousel.js'
   export default {
     name: 'managementTeam',
@@ -109,7 +110,7 @@
           {
             name: '刘刚',
             position: '董事长',
-            description: '中国人民大学管理学博士。曾在国务院国资委下属的中国企业联合会担任管理创新处处长，参与国务院国资委发起的中央企业管理提升工作，非常熟悉国内企业管理状况，执笔起草的多份企业管理方面的报告获政治局常委等中央领导的重要批示。2014年辞职下海创业。现担任宏财网董事长，同时担任首都企业改革研究会常务理事、首都经济贸易大学MBA导师（金融学方向）、芜湖市镜湖区人力资源和社会保障局创业导师。2015年成为《当代经理人》杂志封面人物。'
+            description: '中国人民大学管理学博士。曾在国务院国资委下属的中国企业联合会担任管理创新处处长，参与国务院国资委发起的中央企业管理提升工作，非常熟悉国内企业管理状况，执笔起草的多份企业管理方面的报告获政治局常委等中央领导的重要批示。现担任宏财网董事长，同时担任首都企业改革研究会常务理事、首都经济贸易大学MBA导师（金融学方向）、芜湖市镜湖区人力资源和社会保障局创业导师。2015年成为《当代经理人》杂志封面人物。'
           },
           {
             name: '李青',
@@ -129,7 +130,15 @@
         ]
       }
     },
+    created () {
+    },
     mounted () {
+      var peopleList = $('.people')
+      var firstPeople = $('.people')[0]
+      var h = $(firstPeople).width() * 0.884
+      for (let i = 0; i < peopleList.length; i++) {
+        peopleList[i].style.height = h + 'px'
+      }
       var that = this
       var wrapper = document.getElementById('wrapper')
       Carousel.mCarousel(wrapper, {
@@ -158,7 +167,7 @@
 </script>
 <style scoped>
   .management {
-    padding: .3rem 0 .5rem;
+    padding: .3rem 0 0;
     overflow-x: hidden;
   }
   #wrapper {
@@ -292,6 +301,9 @@
     left: 8%;
     bottom: .4rem;
   }
+  .want-to-say .content {
+    overflow-y: hidden;
+  }
   .want-to-say .content ul {
     width: 100%;
   }
@@ -299,7 +311,6 @@
     float: left;
     display: block;
     width: 33.3%;
-    height: 1.9rem;
     position: relative;
     font-size: .24rem;
     color: #fff;
@@ -358,7 +369,7 @@
      transform: rotateZ(180deg); 
   }
   .want-to-say .content ul li:nth-child(2) p, .want-to-say .content ul li:nth-child(4) p, .want-to-say .content ul li:nth-child(6) p {
-    margin-top: .45rem;
+    margin-top: .3rem;
   }
   .want-to-say .content ul li:nth-child(8) p, .want-to-say .content ul li:nth-child(10) p, .want-to-say .content ul li:nth-child(12) p {
     margin-top: .6rem;
