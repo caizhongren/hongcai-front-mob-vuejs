@@ -21,7 +21,7 @@
       }
     },
     created: function () {
-      this.b = this.$route.query.business
+      this.b = this.$route.query.b
       this.amount = this.$route.query.amount
       this.number = this.$route.query.number
       this.rechargeAmount = this.$route.query.rechargeAmount
