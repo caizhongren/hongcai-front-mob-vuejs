@@ -202,7 +202,7 @@ const routes = [
     meta: {title: '债权转让协议'}
   },
   {
-    path: '/service-agree/:number/:status',
+    path: '/service-agree/:number/:status/:creditNum',
     name: 'ServiceAgree',
     component: ServiceAgree,
     meta: {title: '宏财网服务协议'}

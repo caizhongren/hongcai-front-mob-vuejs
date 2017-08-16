@@ -1,7 +1,7 @@
 <template>
-  <!-- 宏财网服务协议-直投、宏财网服务协议-债转、老项目合同区分 contractType：1——直投，2——债转，4——老合同，3——债权转让协议 -->
+  <!-- 宏财网服务协议-直投、宏财网服务协议-债转、老项目合同区分 contractType：1——直投，2——债转，4——老合同，3——债权转让协议 ，5——降息换物渠道项目合同 -->
   <div>
-    <div class="agreement-area row" v-show="contractType !== 2">
+    <div class="agreement-area row" v-show="contractType === 1 || contractType === 4">
       <p class="text-title">宏财网服务协议</p>
       <p class="text-right" v-if="!contracts.total">合同编号：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
       <p class="text-right" v-else="contracts">合同编号：{{contracts.contractNumber}}</p>
@@ -518,6 +518,64 @@
         </table>
       </div>
     </div>
+    <div class="agreement-area row" v-show="creditNum === '0'">
+      <hr>
+      <br>
+      <br>
+      <p class="text-title">宏财网服务协议补充协议</p>
+      <p class="text-right" v-if="!contracts.total">合同编号：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
+      <p class="text-right" v-else="contracts">合同编号：{{contracts.contractNumber}}</p>
+      <div class="row">
+        <p><strong class="agree-mg text-justify">为了维护您的权益，请在签署本协议前，仔细阅读、充分理解本协议各条款（特别是加重、免除或限制协议一方责任条款），关注您在协议中的权利、义务。请您审慎阅读并选择接受或不接受本协议。您一经选择接受即视为对本协议全部条款已充分理解并完全接受。</strong></p>
+        <p v-if="!contracts.total"><strong class="agree-mg">本协议由以下双方于【&nbsp&nbsp&nbsp】年【&nbsp&nbsp&nbsp】月【&nbsp&nbsp 】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
+        <p v-else="contracts"><strong class="agree-mg">本协议由以下双方于【{{contracts.year}}】年【{{contracts.month}}】月【{{contracts.day}}】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
+        <br>
+        <p><strong class="agree-mg">协议双方：</strong></p>
+        <p><strong class="agree-mg">甲方（出借人）：</strong>{{contracts.userRealName}}</p>
+        <p><strong class="agree-mg">宏财网会员号：</strong>{{contracts.userName}}</p>
+        <br>
+        <p><strong class="agree-mg">乙方（居间人）：北京竞财投资服务有限公司</strong></p>
+        <p>企业法人营业执照注册号：110107018557568</p>
+        <br>
+        <p class="agree-tx">本协议中，甲方、乙方单称“一方”，合称“双方”。</p>
+        <br>
+        <p><strong class="agree-mg">鉴于：</strong></p>
+        <p class="agree-tx">1、甲方（出借人）系符合中国法律规定的具有完全民事权利能力和民事行为能力，独立行使和承担本协议项下权利义务的自然人、法人或其他组织。</p>
+        <p class="agree-tx">2、乙方是依法成立并运营的网络借贷信息中介机构（域名：www.hongcai.com，以下简称“宏财网”）。甲方通过宏财网向借款人提供借款，乙方为本协议项下借款提供居间服务。</p>
+        <p class="agree-tx">3、甲、乙双方已经于【 】年【 】月【 】日签订了协议编号为【 】《宏财网服务协议》。</p>
+        <p class="agree-tx">4、甲方自主选择参与宏财网活动，接受活动各项条款。</p>
+        <p class="agree-tx">为此，根据国家有关法律法规，甲、乙双方本着平等自愿、诚实守信、互惠互利的原则，立此补充协议，共同遵守。</p>
+        <br>
+        <p class="text-center"><strong class="agree-mg">协议条款</strong></p>
+        <p><strong class="agree-mg">第一条 &nbsp&nbsp双方的权利和义务</strong></p>
+        <p class="agree-tx">1.1 甲方签署本协议，即表示其已经知悉并接受所参与活动的各项条款。</p>
+        <p class="agree-tx">1.2 甲方明确知悉参与本活动，其在宏财网的协议编号为【 】投资，期望年均回报率由【 】降为【 】，多余部分作为宏财网的服务费，由宏财网在借款人每期还款时自动扣取。</p>
+        <p class="agree-tx">1.3 乙方应将活动条款，在其网站或App的相关页面做全面、清晰的展示。</p>
+        <p class="agree-tx">1.4 乙方按活动条款及时兑付甲方获得的奖品，具体奖品以乙方最终发放为准。</p>
+        <p><strong class="agree-mg">第二条 &nbsp&nbsp其他事项</strong></p>
+        <p class="agree-tx">2.1 本协议中部分条款根据相关法律法规等的规定为无效，或部分无效时，该等无效不影响本协议项下其他条款的效力，各方仍应履行其在本协议项下的义务。</p>
+        <p class="agree-tx">2.2 本协议是《宏财网服务协议》不可分割的一部分，未约定事宜以《宏财网服务协议》为准。</p>
+        <p class="agree-tx">2.3 本协议未尽事宜，遵照有关法律法规和执行。</p>
+        <p><strong class="agree-mg">（以下无正文) </strong></p>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p><strong class="agree-mg">各方签章：</strong></p>
+        <br>
+        <br>
+        <p><strong class="agree-mg">甲方：</strong></p>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p><strong class="agree-mg">乙方：北京竞财投资服务有限公司</strong></p>
+        <br>
+        <br>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -528,6 +586,7 @@
         projectNumber: '',
         preRepaymentList: [],
         projectId: '',
+        creditNum: '',
         contracts: {},
         LenderNames: Array,
         contractType: Number,
@@ -537,10 +596,12 @@
     },
     created: function () {
       this.projectNumber = this.$route.params.number
+      this.creditNum = this.$route.params.creditNum
       this.status = this.$route.params.status
       this.getProjectBill()
       this.contractTemplate()
-      this.getProject()
+      this.status === '1' ? this.getProject() : null
+      this.creditNum !== '0' ? this.extraContracts() : null
     },
     watch: {
       'token': function (val) {
@@ -550,25 +611,24 @@
         }
       },
       'projectId': function (val) {
-        if (this.token !== '' && val !== '' && this.status === '1' && this.isLoan === 1) {
-          this.getContracts()
-        }
-      },
-      'isLoan': function (val) {
-        if (this.token !== '' && val === 1 && this.status === '1' && this.projectId !== '') {
+        if (this.token !== '' && val !== '') {
           this.getContracts()
         }
       }
     },
     methods: {
       getProject: function () {
-        this.$http({
+        var that = this
+        that.$http({
           method: 'get',
-          url: '/hongcai/rest/projects/' + this.projectNumber
+          url: '/hongcai/rest/projects/' + that.projectNumber
         }).then((response) => {
           if (response.data && response.data.ret !== -1) {
             var status = response.data.status
-            status === 9 || status === 10 ? this.isLoan = 1 : this.isLoan = 0
+            if (status === 9 || status === 10) {
+              that.isLoan = 1
+              that.projectId = response.data.id
+            }
           }
         })
       },
@@ -593,7 +653,6 @@
         }).then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.preRepaymentList = res.data
-            that.projectId = that.token !== '' && that.status === '1' ? that.preRepaymentList[0].projectId : ''
           }
         }).catch(function (err) {
           console.log(err)
@@ -601,7 +660,7 @@
       },
       getContracts: function () {
         var that = this
-        this.$http({
+        that.$http({
           method: 'get',
           url: '/hongcai/rest/contracts/0/' + that.projectId + '/?token=' + that.token
         }).then(function (res) {
@@ -614,6 +673,26 @@
             }
             var LenderNames = Array.from(new Set(name))
             that.LenderNames = LenderNames
+          }
+        })
+      },
+      extraContracts: function () {
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest/contracts/' + that.creditNum + '/contractTemplate/cutInterestRate'
+        }).then(function (response) {
+          if (response.data && response.data.ret !== -1) {
+          }
+        })
+      },
+      cutRateContracts: function () {
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest/contracts/' + that.creditNum + '/cutInterestRate/?token=' + that.token
+        }).then(function (response) {
+          if (response.data && response.data.ret !== -1) {
           }
         })
       }
