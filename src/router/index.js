@@ -178,7 +178,7 @@ const routes = [
     meta: {title: '夏日清凉计划'}
   },
   {
-    path: '/activity/cool-Ranking',
+    path: '/activity/cool-ranking',
     name: 'CoolRanking',
     component: CoolRanking,
     meta: {title: '前十名排行榜'}
