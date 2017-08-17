@@ -241,7 +241,7 @@
       activeTab: function (oldVal, newVal) {
         // 每次tab切换页面回到初始位置
         if (oldVal !== newVal) {
-          $('.scroll').scrollTop(0)
+          // $('.scroll').scrollTop(0)
         }
       }
     },
@@ -253,7 +253,7 @@
       this.getFiles()
       this.getProjectBill()
       this.getOrderList(this.page, this.pageSize)
-      window.vue = this
+      // window.vue = this
       // window.onload = function (e) {
       //   var page1 = document.querySelector('.product-page1')
       //   var page2 = document.querySelector('.product-page2')
@@ -304,12 +304,16 @@
           url: '/hongcai/rest/projects/' + this.paramsNum
         }).then((response) => {
           this.project = response.data
-          document.title = this.project.name
-          var proWidth = (this.project.total - this.project.amount) / this.project.total * 100
-          this.processWith = parseInt(proWidth) === proWidth ? proWidth : proWidth.toFixed(2)
-          this.expectEarning = (10000 * this.project.annualEarnings * this.project.projectDays / 36500).toFixed(2)
-          this.projectId = response.data.id
-          this.getProjectInfo()
+          var that = this
+          bridgeUtil.webConnectNative('', 'HCWeb_ChangeAnnualEarnings', {}, null, function (data) {
+            that.project.annualEarnings = Utils.isAndroid() ? JSON.parse(data).annualEarnings : data.annualEarnings
+          })
+          document.title = that.project.name
+          var proWidth = (that.project.total - that.project.amount) / that.project.total * 100
+          that.processWith = parseInt(proWidth) === proWidth ? proWidth : proWidth.toFixed(2)
+          that.expectEarning = (10000 * that.project.annualEarnings * that.project.projectDays / 36500).toFixed(2)
+          that.projectId = response.data.id
+          that.getProjectInfo()
         })
       },
       getProjectInfo: function () {
@@ -399,7 +403,8 @@
           'annualEarnings': that.project.annualEarnings,
           'projectDays': that.project.projectDays,
           'projectId': that.project.id,
-          'number': that.paramsNum
+          'number': that.paramsNum,
+          'type': that.project.type
         }
         bridgeUtil.webConnectNative('HCNative_ImmediateInvestment', 'HCWeb_LoginSuccess', nativeNeedDatas, null, null)
       },
