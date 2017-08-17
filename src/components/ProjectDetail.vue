@@ -253,10 +253,6 @@
       this.getFiles()
       this.getProjectBill()
       this.getOrderList(this.page, this.pageSize)
-      var that = this
-      bridgeUtil.webConnectNative('', 'HCWeb_ChangeAnnualEarnings', {}, null, function (data) {
-        that.project.annualEarnings = Utils.isAndroid() ? JSON.parse(data).annualEarnings : data.annualEarnings
-      })
       // window.vue = this
       // window.onload = function (e) {
       //   var page1 = document.querySelector('.product-page1')
