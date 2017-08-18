@@ -131,6 +131,8 @@
     background-image: linear-gradient(to bottom, #ff611d 0%, #f6363f 100%);
     overflow: hidden;
     -webkit-overflow-scrolling: touch;
+    position: fixed;
+    width: 100%;
   }
   .invite-rebate-list {
     background-color: #fff;
