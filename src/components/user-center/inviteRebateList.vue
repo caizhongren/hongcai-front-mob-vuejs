@@ -11,7 +11,7 @@
           <span class="left-c"></span>
         </div>
       </div>
-      <div class="rebate-list" v-auto-h>
+      <div class="rebate-list">
         <ul v-show="showList">
           <li v-for="item in inviteList">
             <p class="ft-Arail">{{item.user.mobile}}</p>
@@ -25,8 +25,8 @@
         </div>
         <div class="loadMuch text-center" @click="loadMuch();" v-show="page < loadMoreData">查看更多</p>
         </div>
-        <img class="invite-rebate-bg" src="../../images/common-bg.png" alt="">
       </div>
+      <img class="invite-rebate-bg" src="../../images/common-bg.png" alt="">
     </div>
   </div>
 </template>
@@ -130,19 +130,21 @@
     background-image: -webkit-linear-gradient(to bottom, #ff611d 0%, #f6363f 100%);
     background-image: linear-gradient(to bottom, #ff611d 0%, #f6363f 100%);
     overflow: hidden;
+    -webkit-overflow-scrolling: touch;
   }
   .invite-rebate-list {
     background-color: #fff;
     border-radius: .3rem;
     overflow: hidden;
     height: 98%;
+    -webkit-overflow-scrolling: touch;
   }
   .rebate-list {
     padding: .5rem 0 .2rem;
-    overflow-y: auto;
+    overflow-y: scroll;
     position: relative;
     z-index: 2222;
-    height: 100%;
+    height: 80%;
     -webkit-overflow-scrolling: touch;
   }
   .rebate-list ul li {
@@ -217,7 +219,7 @@
   .loadMuch {
     color: #666;
     font-size: .24rem;
-    padding: .1rem 0 2rem;
+    padding: .1rem 0;
     position: relative;
     z-index: 2222;
   }
