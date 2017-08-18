@@ -499,8 +499,8 @@
       <div class="annex">
         <p class="text-left">附件2</p>
         <br>
-        <p class="text-center" v-if="preRepaymentList.length >0 && status ==='1' && isLoan !== 0">还款计划（单位：元、月/日）</p>
-        <table v-if="preRepaymentList.length >0 && status ==='1' && isLoan !== 0">
+        <p class="text-center" v-if="preRepaymentList.length >0 && isLoan !== 0">还款计划（单位：元、月/日）</p>
+        <table v-if="preRepaymentList.length >0 && isLoan !== 0">
           <thead>
             <td>序号</td>
             <td>还款日</td>
