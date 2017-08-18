@@ -241,35 +241,18 @@
       activeTab: function (oldVal, newVal) {
         // 每次tab切换页面回到初始位置
         if (oldVal !== newVal) {
-          // $('.scroll').scrollTop(0)
+          $('.scroll').scrollTop(0)
         }
       }
     },
     created: function () {
-      // $('body')[0].addEventListener('touchstart', function (e) { e.preventDefault() }, false)
       this.paramsNum = this.$route.params.number
       this.getProject()
       this.getProjectRisk()
       this.getFiles()
       this.getProjectBill()
       this.getOrderList(this.page, this.pageSize)
-      // window.vue = this
-      // window.onload = function (e) {
-      //   var page1 = document.querySelector('.product-page1')
-      //   var page2 = document.querySelector('.product-page2')
-      //   var pagedetail = document.querySelector('.details-more')
-      //   if (page1) {
-      //     page1.addEventListener('load', window.vue.scrollDetail(page1), false)
-      //   }
-      //   if (page2 && pagedetail) {
-      //     page2.addEventListener('load', window.vue.scrollBack(pagedetail), false)
-      //   }
-      //   document.querySelector('.scroll').style.height = window.innerHeight - 2 * document.querySelector('#detail-tabs').offsetHeight - 20 + 'px'
-      //   document.querySelector('.project').addEventListener('touchmove', function (event) {
-      //     event.stopPropagation()
-      //     // event.preventDefault()
-      //   }, false)
-      // }
+      window.vue = this
     },
     directives: {
       'load': {
