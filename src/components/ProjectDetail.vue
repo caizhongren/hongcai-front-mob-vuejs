@@ -246,7 +246,6 @@
       }
     },
     created: function () {
-      // $('body')[0].addEventListener('touchstart', function (e) { e.preventDefault() }, false)
       this.paramsNum = this.$route.params.number
       this.getProject()
       this.getProjectRisk()
@@ -254,22 +253,6 @@
       this.getProjectBill()
       this.getOrderList(this.page, this.pageSize)
       window.vue = this
-      // window.onload = function (e) {
-      //   var page1 = document.querySelector('.product-page1')
-      //   var page2 = document.querySelector('.product-page2')
-      //   var pagedetail = document.querySelector('.details-more')
-      //   if (page1) {
-      //     page1.addEventListener('load', window.vue.scrollDetail(page1), false)
-      //   }
-      //   if (page2 && pagedetail) {
-      //     page2.addEventListener('load', window.vue.scrollBack(pagedetail), false)
-      //   }
-      //   document.querySelector('.scroll').style.height = window.innerHeight - 2 * document.querySelector('#detail-tabs').offsetHeight - 20 + 'px'
-      //   document.querySelector('.project').addEventListener('touchmove', function (event) {
-      //     event.stopPropagation()
-      //     // event.preventDefault()
-      //   }, false)
-      // }
     },
     directives: {
       'load': {
@@ -399,7 +382,8 @@
           'annualEarnings': that.project.annualEarnings,
           'projectDays': that.project.projectDays,
           'projectId': that.project.id,
-          'number': that.paramsNum
+          'number': that.paramsNum,
+          'type': that.project.type
         }
         bridgeUtil.webConnectNative('HCNative_ImmediateInvestment', 'HCWeb_LoginSuccess', nativeNeedDatas, null, null)
       },
