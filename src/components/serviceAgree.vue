@@ -523,12 +523,12 @@
       <br>
       <br>
       <p class="text-title">宏财网服务协议补充协议</p>
-      <p class="text-right" v-if="creditNum === '0'">合同编号：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
-      <p class="text-right" v-else="cutRateType === 5">合同编号：{{cutContracts.projectContractNumber}}</p>
+      <p class="text-right" v-if="!cutContracts.contractNumber">合同编号：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
+      <p class="text-right" v-else="cutContracts">合同编号：{{cutContracts.projectContractNumber}}</p>
       <div class="row">
         <p><strong class="agree-mg text-justify">为了维护您的权益，请在签署本协议前，仔细阅读、充分理解本协议各条款（特别是加重、免除或限制协议一方责任条款），关注您在协议中的权利、义务。请您审慎阅读并选择接受或不接受本协议。您一经选择接受即视为对本协议全部条款已充分理解并完全接受。</strong></p>
-        <p v-if="creditNum === '0'"><strong class="agree-mg">本协议由以下双方于【&nbsp&nbsp&nbsp】年【&nbsp&nbsp&nbsp】月【&nbsp&nbsp 】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
-        <p v-else="cutRateType === 5"><strong class="agree-mg">本协议由以下双方于【{{cutContracts.year}}】年【{{cutContracts.month}}】月【{{cutContracts.month}}】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
+        <p v-if="!cutContracts.contractNumber"><strong class="agree-mg">本协议由以下双方于【&nbsp&nbsp&nbsp】年【&nbsp&nbsp&nbsp】月【&nbsp&nbsp 】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
+        <p v-else="cutContracts"><strong class="agree-mg">本协议由以下双方于【{{cutContracts.year}}】年【{{cutContracts.month}}】月【{{cutContracts.month}}】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
         <br>
         <p><strong class="agree-mg">协议双方：</strong></p>
         <p><strong class="agree-mg">甲方（出借人）：</strong>{{cutContracts.userRealName}}</p>
@@ -542,16 +542,16 @@
         <p><strong class="agree-mg">鉴于：</strong></p>
         <p class="agree-tx">1、甲方（出借人）系符合中国法律规定的具有完全民事权利能力和民事行为能力，独立行使和承担本协议项下权利义务的自然人、法人或其他组织。</p>
         <p class="agree-tx">2、乙方是依法成立并运营的网络借贷信息中介机构（域名：www.hongcai.com，以下简称“宏财网”）。甲方通过宏财网向借款人提供借款，乙方为本协议项下借款提供居间服务。</p>
-        <p class="agree-tx" v-if="creditNum === '0'">3、甲、乙双方已经于【&nbsp&nbsp&nbsp】年【&nbsp&nbsp&nbsp】月【&nbsp&nbsp&nbsp】日签订了协议编号为【&nbsp&nbsp&nbsp】《宏财网服务协议》。</p>
-        <p class="agree-tx" v-else="cutRateType === 5">3、甲、乙双方已经于【{{cutContracts.year}}】年【{{cutContracts.month}}】月【{{cutContracts.month}}】日签订了协议编号为【{{cutContracts.contractNumber}}】《宏财网服务协议》。</p>
+        <p class="agree-tx" v-if="!cutContracts.contractNumber">3、甲、乙双方已经于【&nbsp&nbsp&nbsp】年【&nbsp&nbsp&nbsp】月【&nbsp&nbsp&nbsp】日签订了协议编号为【&nbsp&nbsp&nbsp】《宏财网服务协议》。</p>
+        <p class="agree-tx" v-else="cutContracts">3、甲、乙双方已经于【{{cutContracts.year}}】年【{{cutContracts.month}}】月【{{cutContracts.month}}】日签订了协议编号为【{{cutContracts.contractNumber}}】《宏财网服务协议》。</p>
         <p class="agree-tx">4、甲方自主选择参与宏财网活动，接受活动各项条款。</p>
         <p class="agree-tx">为此，根据国家有关法律法规，甲、乙双方本着平等自愿、诚实守信、互惠互利的原则，立此补充协议，共同遵守。</p>
         <br>
         <p class="text-center"><strong class="agree-mg">协议条款</strong></p>
         <p><strong class="agree-mg">第一条 &nbsp&nbsp双方的权利和义务</strong></p>
         <p class="agree-tx">1.1 甲方签署本协议，即表示其已经知悉并接受所参与活动的各项条款。</p>
-        <p class="agree-tx" v-if="creditNum === '0'">1.2 甲方明确知悉参与本活动，其在宏财网的协议编号为【&nbsp&nbsp&nbsp】投资，期望年均回报率由【&nbsp&nbsp&nbsp】降为【&nbsp&nbsp&nbsp】，多余部分作为宏财网的服务费，由宏财网在借款人每期还款时自动扣取。</p>
-        <p class="agree-tx" v-else="cutRateType === 5">1.2 甲方明确知悉参与本活动，其在宏财网的协议编号为【{{cutContracts.contractNumber}}】投资，期望年均回报率由【{{cutContracts.oldRate}}%】降为【{{cutContracts.newRate}}%】，多余部分作为宏财网的服务费，由宏财网在借款人每期还款时自动扣取。</p>
+        <p class="agree-tx" v-if="!cutContracts.contractNumber">1.2 甲方明确知悉参与本活动，其在宏财网的协议编号为【&nbsp&nbsp&nbsp】投资，期望年均回报率由【&nbsp&nbsp&nbsp】降为【&nbsp&nbsp&nbsp】，多余部分作为宏财网的服务费，由宏财网在借款人每期还款时自动扣取。</p>
+        <p class="agree-tx" v-else="cutContracts">1.2 甲方明确知悉参与本活动，其在宏财网的协议编号为【{{cutContracts.contractNumber}}】投资，期望年均回报率由【{{cutContracts.oldRate}}%】降为【{{cutContracts.newRate}}%】，多余部分作为宏财网的服务费，由宏财网在借款人每期还款时自动扣取。</p>
         <p class="agree-tx">1.3 乙方应将活动条款，在其网站或App的相关页面做全面、清晰的展示。</p>
         <p class="agree-tx">1.4 乙方按活动条款及时兑付甲方获得的奖品，具体奖品以乙方最终发放为准。</p>
         <p><strong class="agree-mg">第二条 &nbsp&nbsp其他事项</strong></p>
@@ -688,7 +688,7 @@
         }).then(function (response) {
           if (response.data && response.data.ret !== -1) {
             that.cutRateType = response.data.type
-            that.cutRateType === 5 ? that.cutRateContracts() : null
+            that.cutRateType === 5 && that.isLoan === 1 ? that.cutRateContracts() : null
           } else {
           }
         })
