@@ -90,6 +90,22 @@
                   'coupon': that.coupon,
                   'status': status
                 }
+              } else {
+                that.$http({
+                  url: '/hongcai/rest/orders/' + that.number + '/cutInerest?token=' + that.token
+                }).then(function (res) {
+                  if (!res.data || res.data.ret === -1) {
+                    return
+                  }
+                  if (res.data.isJoin) {
+                    dataList = {
+                      'business': that.b,
+                      'amount': that.amount,
+                      'privilegesRewards': res.data.desc,
+                      'status': status
+                    }
+                  }
+                })
               }
               that.connectNative(dataList)
             }
@@ -129,7 +145,7 @@
       getCutInerest: function () {
         var that = this
         that.$http({
-          url: '/hongcai/rest/orders/' + that.number + '/cutInerest?token=' + that.token
+          url: '/hongcai/rest/orders/' + '965342017082111205996372_712' + '/cutInerest?token=' + '15dcd01befb1ca0f107f66139925f6ca625353acabf2490f'
         }).then(function (res) {
           if (!res.data || res.data.ret === -1) {
             return
