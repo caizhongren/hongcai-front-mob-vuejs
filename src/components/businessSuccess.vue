@@ -25,6 +25,7 @@
       this.amount = this.$route.query.amount
       this.number = this.$route.query.number
       this.rechargeAmount = this.$route.query.rechargeAmount
+      this.getCutInerest()
       if (this.token && this.token !== '') {
         if (this.b === 'TRANSFER') {
           this.goTransfer(1)
@@ -123,6 +124,16 @@
         })
         .catch(function (err) {
           console.log(err)
+        })
+      },
+      getCutInerest: function () {
+        var that = this
+        that.$http({
+          url: '/hongcai/rest/orders/' + that.number + '/cutInerest?token=' + that.token
+        }).then(function (res) {
+          if (!res.data || res.data.ret === -1) {
+            return
+          }
         })
       }
     }
