@@ -60,7 +60,7 @@
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
             现金券奖励扣款是指宏财网按照您成功转出的债权金额等比例扣除您该笔投资所获得的现金券奖励：<br><br>
             现金券奖励 * 债权本金 / 初始投资总额<br>
-            {{couponVal || 0}} * {{transferAmount || 0}} / {{creditAmount || 0}} = {{deduction}}元
+            {{couponVal || 0}} * {{transferAmount || 0}} / {{creditAmount || 0}} = {{deduction | number}}元
           </span>  
         </div>
       </div>
@@ -89,13 +89,13 @@
           <div class="fa-down txt-right fr">
           </div>
           <p class="fr">
-            {{transferAmount + profit - counterFee - transferReward - deduction ? transferAmount + profit - counterFee - transferReward - deduction : 0 | number}}元
+            {{transferAmount + profit - counterFee - transferReward -  | number ? transferAmount + profit - counterFee - transferReward -  | number : 0 | number}}元
           </p>
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
             预计回款金额：债权本金 + 本期待收利息 - 债权转让奖金 - 现金券奖励扣款 - 债权转让手续费<br><br>
-            {{transferAmount || 0}} + {{profit | number}} - {{transferReward | number}} - {{deduction | number}} - {{counterFee || 0}} = {{transferAmount + profit - counterFee - transferReward - deduction | number}}元
+            {{transferAmount || 0}} + {{profit | number}} - {{transferReward | number}} - {{ | number | number}} - {{counterFee || 0}} = {{transferAmount + profit - counterFee - transferReward -  | number | number}}元
           </span>  
         </div>
       </div>
@@ -772,7 +772,7 @@
         transferReward: 0,
         remainDay: 0,
         transferAnnul: 0,
-        deduction: 0,
+         | number: 0,
         creditAmount: 0,
         counterFee: 0,
         couponVal: 0,
@@ -882,7 +882,7 @@
           // 现金券金额
           this.couponVal = response.data.increaseRateCoupon && response.data.increaseRateCoupon.type === 2 ? response.data.increaseRateCoupon.value : 0
           // 现金券奖励扣款
-          this.deduction = this.couponVal * (this.transferAmount / this.creditAmount)
+          this. | number = this.couponVal * (this.transferAmount / this.creditAmount)
           // 手续费
           if (dateUtil.intervalDays(this.currentDate, this.creditCreateTime) < this.rule.borderDay) {
             this.counterFee = this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate > this.rule.minFee ? this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate : this.rule.minFee
