@@ -25,7 +25,6 @@
       this.amount = this.$route.query.amount
       this.number = this.$route.query.number
       this.rechargeAmount = this.$route.query.rechargeAmount
-      this.getCutInerest()
       if (this.token && this.token !== '') {
         if (this.b === 'TRANSFER') {
           this.goTransfer(1)
@@ -94,7 +93,7 @@
                     dataList = {
                       'business': that.b,
                       'amount': that.amount,
-                      'privilegesRewards': res.data.desc,
+                      'privilegesRewards': res.data.desc + '\n' + res.data.tel,
                       'status': status
                     }
                   } else {
@@ -139,16 +138,6 @@
         })
         .catch(function (err) {
           console.log(err)
-        })
-      },
-      getCutInerest: function () {
-        var that = this
-        that.$http({
-          url: '/hongcai/rest/orders/' + '180392017082111464425893_712' + '/cutInerest?token=' + '15dcd01befb1ca0f107f66139925f6ca625353acabf2490f'
-        }).then(function (res) {
-          if (!res.data || res.data.ret === -1) {
-            return
-          }
         })
       }
     }
