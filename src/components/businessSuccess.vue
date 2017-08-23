@@ -75,11 +75,6 @@
             url: '/hongcai/rest/orders/' + that.number + '/orderCoupon?token=' + that.token
           }).then(function (response) {
             if (response && response.data.ret !== -1) {
-              dataList = {
-                'business': that.b,
-                'amount': that.amount,
-                'status': status
-              }
               if (response.data.coupon) {
                 that.coupon.type = response.data.coupon.type
                 that.coupon.value = response.data.coupon.value
@@ -89,8 +84,28 @@
                   'coupon': that.coupon,
                   'status': status
                 }
+                that.connectNative(dataList)
+              } else {
+                that.$http({
+                  url: '/hongcai/rest/orders/' + that.number + '/cutInerest?token=' + that.token
+                }).then(function (res) {
+                  if (res.data.isJoin) {
+                    dataList = {
+                      'business': that.b,
+                      'amount': that.amount,
+                      'privilegesRewards': res.data.desc + '\n' + res.data.tel,
+                      'status': status
+                    }
+                  } else {
+                    dataList = {
+                      'business': that.b,
+                      'amount': that.amount,
+                      'status': status
+                    }
+                  }
+                  that.connectNative(dataList)
+                })
               }
-              that.connectNative(dataList)
             }
           })
         }

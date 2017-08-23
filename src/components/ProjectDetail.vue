@@ -192,7 +192,7 @@
   </div>
 </template>
 <script>
-  import {Utils, bridgeUtil} from '../service/Utils'
+  import {bridgeUtil} from '../service/Utils'
   import $ from 'zepto'
   export default {
     name: 'projectDetail',
@@ -220,8 +220,6 @@
         pageSize: 10,
         page: 1,
         totalPage: 1,
-        isIos: Utils.isIos(),
-        isAndroid: Utils.isAndroid(),
         categoryCode: '0115',
         final: {},
         preRepaymentList: {},

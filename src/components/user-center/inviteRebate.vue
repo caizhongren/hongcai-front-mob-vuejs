@@ -7,7 +7,7 @@
       </div>
       <div class="clearfix">
         <div class="count2 fl">
-          <p>{{inviteStat.realNameAuthNum || 0}}</p>
+          <p>{{inviteStat.realNameAuthNum < inviteStat.investNum ? inviteStat.investNum : inviteStat.realNameAuthNum || 0}}</p>
           <p>注册认证(人)</p>
         </div>
         <div class="count3 fr">

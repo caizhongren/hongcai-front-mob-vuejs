@@ -279,7 +279,7 @@
         <p><strong class="agree-mg">协议各方：</strong></p>
         <p><strong class="agree-mg">甲方（受让方/投资人）：</strong>{{contracts.total ? '详见附件1' : ' '}}</p>
         <br>
-        <p><strong class="agree-mg">乙方（转让方／原债权人）：</strong>{{contracts.enterpriseName}}
+        <p><strong class="agree-mg">乙方（转让方/原债权人）：</strong>{{contracts.enterpriseName}}
         <p>身份证号码：{{contracts.assignorIdNo}}</p>
         </p>
         <br>

@@ -143,7 +143,7 @@
   }
   .rebate-list {
     padding: .5rem 0 .2rem;
-    overflow-y: scroll;
+    overflow-y: auto;
     position: relative;
     z-index: 2222;
     height: 80%;
