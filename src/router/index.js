@@ -40,6 +40,7 @@ const Report2 = r => require.ensure([], () => r(require('../components/news/repo
 const Report3 = r => require.ensure([], () => r(require('../components/news/report3.vue')), 'News')
 const Events = r => require.ensure([], () => r(require('../components/events.vue')), 'Events')
 const RiskEducation = r => require.ensure([], () => r(require('../components/riskEducation.vue')), 'RiskEducation')
+const DownLoad = r => require.ensure([], () => r(require('../components/downLoad.vue')), 'other')
 Vue.use(Router)
 const routes = [
   {
@@ -267,6 +268,11 @@ const routes = [
     name: 'RiskEducation',
     component: RiskEducation,
     meta: {title: '风险安全教育'}
+  },
+  {
+    path: '/download',
+    name: 'DownLoad',
+    component: DownLoad
   },
   {
     path: '*',
