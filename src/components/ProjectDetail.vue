@@ -244,7 +244,6 @@
       }
     },
     created: function () {
-      console.log('test')
       this.paramsNum = this.$route.params.number
       this.getProject()
       this.getProjectRisk()
