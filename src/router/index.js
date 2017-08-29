@@ -11,6 +11,7 @@ const CoolRanking = r => require.ensure([], () => r(require('../components/activ
 const IntegralDetail = r => require.ensure([], () => r(require('../components/activity/integralDetail.vue')), 'CoolSummerPlan')
 const CoolSummerPlan = r => require.ensure([], () => r(require('../components/activity/cool-summer-plan.vue')), 'CoolSummerPlan')
 const Novice = r => require.ensure([], () => r(require('../components/activity/novice.vue')), 'Novice')
+const MgPromotion = r => require.ensure([], () => r(require('../components/activity/mgPromotion.vue')), 'MgPromotion')
 const About = r => require.ensure([], () => r(require('../components/about/about.vue')), 'About')
 const ManagementTeam = r => require.ensure([], () => r(require('../components/about/managementTeam.vue')), 'About')
 const Introduction = r => require.ensure([], () => r(require('../components/about/introduction.vue')), 'About')
@@ -189,6 +190,12 @@ const routes = [
     name: 'IntegralDetail',
     component: IntegralDetail,
     meta: {title: '清凉积分明细'}
+  },
+  {
+    path: '/activity/mgTV',
+    name: 'MgPromotion',
+    component: MgPromotion,
+    meta: {title: '芒果TV'}
   },
   {
     path: '/register-agree',

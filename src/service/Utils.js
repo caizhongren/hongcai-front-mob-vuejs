@@ -53,12 +53,6 @@ let InviteShareUtils = {
     return imageUrl
   }
 }
-let ruleBox = {
-  showRuleBox: function (el, vue, showRules) {
-    vue.showRules = !vue.showRules
-    vue.showRules ? el.className = 'position-fix' : el.className = ' '
-  }
-}
 let bridgeUtil = {
   setupWebViewJavascriptBridge: function (callback) {
     if (Utils.isIos()) {
@@ -110,7 +104,6 @@ let bridgeUtil = {
       }
       return
     }
-
     this.setupWebViewJavascriptBridge(function (bridge) {
       // 调用native方法
       if (callHandlerName) {
@@ -157,7 +150,6 @@ let dateUtil = {
 }
 export {Utils}
 export {InviteShareUtils}
-export {ruleBox}
 export {bridgeUtil}
 export {ModalHelper}
 export {dateUtil}
