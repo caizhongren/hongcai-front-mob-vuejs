@@ -1,6 +1,7 @@
 <template>
   <div class="Mango" v-bind:class="{ 'padding-b-5': !isIos }" v-if="token">
     <div class="head-img">
+      <div class="logo"></div>
       <div class="head-txt">携手宏财网 &nbsp;&nbsp;&nbsp; 开启新视界</div>
     </div>
     <!-- 礼遇1\2 -->
@@ -10,18 +11,18 @@
         <p class="courtesy-title">0元变身VIP，追星看剧更华丽</p>
       </div>
       <div class="courtesy1-content comm-bg">
-        <div class="courtesy1-lf">
+        <div class="courtesy1-lf" v-bind:class="{ 'courtesy1-lf-end': actEnding === 2 }">
           <div class="pic"></div>
           <div class="stock" v-show="actEnding === 1"><p>剩余：{{monthCount}}份</p></div>
         </div>
-        <div class="courtesy1-rt">
+        <div class="courtesy1-rt" v-show="actEnding === 1">
           <div class="txt margin-b-1" v-if="userAuth.active === true">您的<span class="ft-org">芒果TV会员1个月</span>奖励兑换码已自动发送至您的站内信提醒</div>
           <div class="txt" v-if="userAuth.active === false">您已获得<span class="ft-org">芒果TV会员1个月</span>奖励资格，开通银行存管后，兑换码将自动发送至您的站内信提醒</div>
           <div class="InvestBtn" @click="toCheckAuth">{{userAuth.active === false ? '立即开通' : '查看兑换码'}}</div>
         </div>
-        <!-- <div class="courtesy1-rt">
-          活动已结束
-        </div> -->
+        <div class="courtesy1-end fr" v-show="actEnding === 2">
+          <img src="../../images/mangoTV/activityEnd.png" alt="">
+        </div>
       </div>
       <!-- 礼遇2 -->
       <div class="courtesy2">
@@ -33,7 +34,7 @@
             <div class="card">
               <p class="card-limit">首笔投资满{{card.minInvestAmount}}元</p>
             </div>
-            <p class="stock" v-show="actEnding === 1">{{card.countNum < 0 ? '补货中' : '剩余：' + card.countNum + '份'}}</p>
+            <p class="stock" v-show="actEnding === 1">{{actEnding === 1 && card.countNum <= 0 ? '补货中' : '剩余：' + card.countNum + '份'}}</p>
           </li>
           <img src="../../images/mangoTV/act-ending.png" alt="" class="actEnd" v-show="actEnding === 2">
         </ul>
@@ -51,7 +52,7 @@
             <p>您首次投资金额未满足以上奖励兑换条件，前往首页，还有更多精彩活动等您参与～</p>
           </div>
           <!-- 获得奖励未兑换 -->
-          <div class="notExchange reward-2" v-show="notExchange">
+          <div class="notExchange" v-show="notExchange" v-bind:class="{ 'reward-1': rewardType===2, 'reward-2': rewardType===3, 'reward-3': rewardType===4, 'reward-4': rewardType===5 }">
             <!-- 奖励已兑换 -->
             <img src="../../images/mangoTV/act-exchange.png" alt="" class="exchange" v-show="hasExchange">
           </div>
@@ -153,8 +154,9 @@
         hasExchange: false,
         actEnding: 1,
         showMask: false,
-        upperLimit: true,
-        receiveBox: false
+        upperLimit: false,
+        receiveBox: true,
+        rewardType: 5
       }
     },
     created: function () {
@@ -192,7 +194,7 @@
             that.Member = response.data.list
             that.monthCount = response.data.monthCount
             // that.actEnding = response.data.activityStatus
-            that.actEnding = 2
+            that.actEnding = 1
           }
         })
       },
@@ -250,11 +252,19 @@
   .courtesies {
     padding: 0 .3rem 0 .15rem;
   }
+  .logo {
+    width: 100%;
+    height: 0.65rem;
+    position: absolute;
+    top: .6rem;
+    background: url('../../images/mangoTV/logo.png') no-repeat center center;
+    background-size: contain;
+  }
   .head-img {
     width: 100%;
     height: 6.4rem;
     position: relative;
-    margin-top: -1.2rem;
+    margin-top: -.6rem;
     background: url('../../images/mangoTV/act-head.png') no-repeat center center;
     background-size: contain;
   }
@@ -335,6 +345,19 @@
     color: #8e8c8c;
     margin-top: .15rem;
   }
+  .courtesy1-end {
+    width: 40%;
+  }
+  .courtesy1-end img {
+    width: 94%;
+    margin-top: .7rem;
+  }
+  .courtesy1-lf.courtesy1-lf-end {
+    width: 55%;
+  }
+  .courtesy1-lf.courtesy1-lf-end .pic {
+    height: 1.8rem;
+  }
   .courtesy1-rt .txt {
     font-size: .23rem;
     font-weight: 500;
@@ -352,7 +375,7 @@
     width: 100%;
     height: .93rem;
     line-height: .95rem;
-    font-size: .22rem;
+    font-size: .3rem;
     font-weight: bold;
     letter-spacing: 0.7px;
     text-align: center;
@@ -436,7 +459,7 @@
   }
   .notExchange {
     height: 2.2rem;
-    margin: 0.2rem auto .5rem;
+    margin: 0.2rem auto;
     position: relative;
   }
   .reward-1 {
@@ -560,7 +583,7 @@
     box-shadow: 0px 2.5px 0 0 rgba(4, 122, 87, 0.55);
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
-    padding: .3rem;
+    padding: .2rem;
     background: #fff;
   }
   @media only screen 
