@@ -2,13 +2,13 @@
   <div>
     <div class="mg-promotion">
         <header>
-          <img class="header" src="../../images/mango/header.png" alt="" width="100%">
+          <img class="header" src="../../images/mangoTV/act-head.png" alt="" width="100%">
           <p>携手宏财网&nbsp;&nbsp;&nbsp;开启新视野</p>
         </header>
         <div class="gift">
           <p class="title">0元变身VIP，追星看剧更华丽</p>
           <div>
-            <img src="../../images/mango/gift01.png" alt="" class="vip-img">
+            <img src="../../images/mangoTV/act-courtesy1.png" alt="" class="vip-img">
             <div class="content">
               <p>现在注册认证宏财网，即可免费获得<span class="ft-important">芒果TV会员</span>1个月</p>
               <p>*每个账号限领一次</p>
@@ -16,7 +16,7 @@
             </div>
           </div>
           <div class="success" v-show="false">
-            <img src="../../images/mango/success-msg.png" width="60%" alt="">
+            <img src="../../images/mangoTV/success-msg.png" width="60%" alt="">
             <p>您已获得芒果TV会员1个月奖励资格<br>下载宏财网App，登录首页开通存管即可获取</p>
             <!-- <p>下载宏财网App，登录首页开通存管即可获取</p> -->
             <span class="take-btn">立即变身VIP</span>
@@ -49,7 +49,7 @@
           </p>
         </div>
         <div class="about">
-          <img src="../../images/mango/about.png" alt="" width="60%" class="margin-auto">
+          <img src="../../images/mangoTV/about.png" alt="" width="60%" class="margin-auto">
           <ul class="about-list">
             <li>
               <div class="title">
@@ -92,7 +92,7 @@
           <div>
             <input type="mobile" name="mobile" placeholder="请输入手机号" required>
             <input type="text" name="picCapcha" placeholder="请输入图形验证码" required>
-            <span></span>
+            <span @click="refreshCode"><img id="checkCaptcha" v-bind:src="getPicCaptcha" alt="" class="margin-auto displa-bl" width="100%"></span>
             <input type="text" name="capcha" placeholder="请输入短信验证码" required>
             <span class="capcha-wrap">获取</span>
             <button @click="showRegister = false">立即注册</button>
@@ -103,11 +103,23 @@
   </div>
 </template>
 <script>
+  import $ from 'zepto'
+  // export {sendMobCaptcha} from '../../service/Utils'
   export default {
     name: 'mgPromotion',
     data () {
       return {
-        showRegister: false
+        showRegister: false,
+        getPicCaptcha: ''
+      }
+    },
+    created () {
+      this.getPicCaptcha = process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getPicCaptcha?'
+    },
+    methods: {
+      // 图形验证码
+      refreshCode () {
+        $('#checkCaptcha').attr('src', $('#checkCaptcha').attr('src').substr(0, $('#checkCaptcha').attr('src').indexOf('?')) + '?code=' + Math.random())
       }
     }
   }
@@ -124,7 +136,7 @@
     background-color: #fab281;
   }
   .mg-promotion {
-    background: url('../../images/mango/bg.png') no-repeat 0 0;
+    background: url('../../images/mangoTV/bg.png') no-repeat 0 0;
     background-size: 100% 100%;
     overflow: hidden;
     font-family: PingFang-SC;
@@ -181,7 +193,7 @@
     color: #fd6300;
     font-size: .25rem;
     text-align: center;
-    background: #000; 
+    background: #fff; 
   }
   form .capcha-wrap {
     background-color: #ffde01;
@@ -195,7 +207,7 @@
     font-weight: bold;
     text-align: center;
     margin: 0 auto;
-    background: url('../../images/mango/change-btn.png') no-repeat 0 0;
+    background: url('../../images/mangoTV/change-btn.png') no-repeat 0 0;
     background-size: 100% 100%;
     border: none;
   }
@@ -207,7 +219,7 @@
     width: 96%;
     margin-left: 0.5%;
     margin-top: -1rem;
-    background: url('../../images/mango/gift01.png') no-repeat center top;
+    background: url('../../images/mangoTV/gift01.png') no-repeat center top;
     background-size: 100% 100%;
   }
   .gift .title {
@@ -257,7 +269,7 @@
     margin-top: .03rem;
   }
   .gift .take-btn {
-    background: url('../../images/mango/change-btn.png') no-repeat 0 0;
+    background: url('../../images/mangoTV/change-btn.png') no-repeat 0 0;
     margin-top: .05rem;
     height: .93rem;
     line-height: .95rem;
@@ -272,7 +284,7 @@
     margin-top: .1rem;
     margin-bottom: .9rem;
     height: 8rem;
-    background: url('../../images/mango/gift02.png') no-repeat center top;
+    background: url('../../images/mangoTV/gift02.png') no-repeat center top;
     background-size: 100% 100%;
   }
   .gift2 p.tip {
@@ -339,7 +351,7 @@
     line-height: 1.8;
     text-align: justify;
     padding-left: .42rem;
-    background: url('../../images/mango/yes-icon.png') no-repeat .1rem .13rem;
+    background: url('../../images/mangoTV/yes-icon.png') no-repeat .1rem .13rem;
     background-size: 4%;
   }
   .about-list li .title {
@@ -348,7 +360,7 @@
     width: 102%;
     margin-left: -1%;
 	  background-color: #45c7a9;
-    background-image: url('../../images/mango/about-title-bg.png');
+    background-image: url('../../images/mangoTV/about-title-bg.png');
     background-repeat: no-repeat;
     background-size: 50%;
     background-position: center center;
@@ -358,7 +370,7 @@
     margin: 1.8rem auto;
     width: 88%;
     height: 56%;
-    background: url('../../images/mango/mask-bg.png') no-repeat 0 0;
+    background: url('../../images/mangoTV/mask-bg.png') no-repeat 0 0;
     background-size: 100% 100%;
   }
 </style>
