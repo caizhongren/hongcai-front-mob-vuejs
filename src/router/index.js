@@ -195,13 +195,13 @@ const routes = [
     path: '/activity/MangoTV',
     name: 'MangoTV',
     component: MangoTV,
-    meta: {title: '芒果TV'}
+    meta: {title: '0元变身VIP'}
   },
   {
     path: '/activity/mgTV',
     name: 'MgPromotion',
     component: MgPromotion,
-    meta: {title: '芒果TV'}
+    meta: {title: '0元变身VIP'}
   },
   {
     path: '/register-agree',

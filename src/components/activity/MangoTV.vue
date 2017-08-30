@@ -375,7 +375,7 @@
     text-align: justify;
     color: rgba(51, 51, 51, 0.87);
     font-size: .24rem;
-    margin: 0 .28rem .3rem .29rem;
+    margin: -1px .28rem .3rem .29rem;
     
   }
   .rule-head {
@@ -409,8 +409,8 @@
   .iosTip {
     font-size: .21rem;
     color: #333333;
-    height: .8rem;
-    line-height: .8rem;
+    height: 1rem;
+    line-height: 1rem;
 	  background-color: #fab281;
   }
   .successBg {
@@ -460,5 +460,20 @@
     border-bottom-left-radius: 5px;
     padding: .3rem;
     background: #fff;
+  }
+  @media only screen 
+    and (min-device-width : 768px) 
+    and (max-device-width : 1024px) 
+    and (orientation : portrait) { 
+    /* STYLES */ 
+    .courtesy1-content {
+      margin: 0rem 0.42rem 0 .6rem;
+    }
+    .courtesy2-content {
+      margin: 0rem 0.42rem 0 .58rem;
+    }
+    .ruleBox {
+      margin: -1px .68rem .3rem .69rem;
+    }
   }
 </style>
