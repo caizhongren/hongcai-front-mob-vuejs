@@ -1,91 +1,80 @@
 <template>
   <div>
     <div class="mg-promotion">
-        <header>
-          <img class="logo" src="../../images/mangoTV/logo.png" alt="宏财网" width="60%">
-          <img class="header" src="../../images/mangoTV/act-head.png" alt="" width="100%">
-          <p>携手宏财网&nbsp;&nbsp;&nbsp;开启新视野</p>
-        </header>
-        <div class="gift">
-          <p class="title">0元变身VIP，追星看剧更华丽</p>
-          <div v-show="!user.registerSuccess">
-            <img src="../../images/mangoTV/courtesy1-vip.png" alt="" class="vip-img">
-            <div class="content">
-              <p>现在注册认证宏财网，即可免费获得<span class="ft-important">芒果TV会员</span>1个月</p>
-              <p>*每个账号限领一次</p>
-              <span class="take-btn" @click="showRegister = true">立即变身VIP</span>
+      <header>
+        <img class="logo" src="../../images/mangoTV/logo.png" alt="宏财网" width="60%">
+        <img class="header" src="../../images/mangoTV/act-head.png" alt="" width="100%">
+        <p>携手宏财网&nbsp;&nbsp;&nbsp;开启新视野</p>
+      </header>
+      <div class="gift">
+        <p class="title">0元变身VIP，追星看剧更华丽</p>
+        <div>
+          <img src="../../images/mangoTV/courtesy1-vip.png" alt="" class="vip-img">
+          <div class="content" v-show="actEnding === 1 && !user.registerSuccess">
+            <p>现在注册认证宏财网，即可免费获得<span class="ft-important">芒果TV会员</span>1个月</p>
+            <p>*每个账号限领一次</p>
+            <span class="take-btn" @click="showRegister = true">立即变身VIP</span>
+          </div>
+          <img src="../../images/mangoTV/activityEnd.png" class="ending-img" alt="活动已结束" width="40%" v-show="actEnding === 2">
+        </div>
+        <div class="success" v-show="actEnding === 1 && user.registerSuccess">
+          <img src="../../images/mangoTV/success-msg.png" width="60%" alt="">
+          <p>您已获得芒果TV会员1个月奖励资格<br>下载宏财网App，登录首页开通存管即可获取</p>
+          <!-- <p>下载宏财网App，登录首页开通存管即可获取</p> -->
+          <span class="take-btn" onclick="javascript:window.location.href='http://a.app.qq.com/o/simple.jsp?pkgname=com.hoolai.hongcai'">前往下载APP</span>
+        </div>
+      </div>
+      <div class="gift gift2">
+        <p class="title">首投VIP再升级，季卡年卡送给你</p>
+        <ul class="card-list">
+          <li class="vip-card" v-for="card in cards">
+            <p>首笔投资满{{card.minInvestAmount || 0}}元</p>
+            <img src="../../images/mangoTV/act-ending.png" width="50%" class="position-ab" v-if="card.status === 2">
+          </li>
+        </ul>
+        <p class="tip">
+          *温馨提示:<br>
+          活动首投仅限宏财精选、宏财尊贵项目有效，债权转让项目不参与本次活动。<br>
+          奖励剩余数量每分钟更新一次。
+        </p>
+      </div>
+      <div class="about">
+        <img src="../../images/mangoTV/about.png" alt="" width="60%" class="margin-auto">
+        <ul class="about-list">
+          <li>
+            <div class="title">
+              国资背景
             </div>
-          </div>
-          <div class="success" v-show="user.registerSuccess">
-            <img src="../../images/mangoTV/success-msg.png" width="60%" alt="">
-            <p>您已获得芒果TV会员1个月奖励资格<br>下载宏财网App，登录首页开通存管即可获取</p>
-            <!-- <p>下载宏财网App，登录首页开通存管即可获取</p> -->
-            <span class="take-btn" onclick="javascript:window.location.href='http://a.app.qq.com/o/simple.jsp?pkgname=com.hoolai.hongcai'">前往下载APP</span>
-          </div>
-        </div>
-        <div class="gift gift2">
-          <p class="title">首投VIP再升级，季卡年卡送给你</p>
-          <ul class="card-list">
-            <li class="vip-card">
-              <!-- <p>3个月VIP</p> -->
-              <p>首笔投资满1000元</p>
-            </li>
-            <li class="vip-card">
-              <!-- <p>半年VIP</p> -->
-              <p>首笔投资满2000元</p>
-            </li>
-            <li class="vip-card">
-              <!-- <p>年度VIP</p> -->
-              <p>首笔投资满5000元</p>
-            </li>
-            <li class="vip-card">
-              <!-- <p>年度全屏VIP</p> -->
-              <p>首笔投资满10000元</p>
-            </li>
-          </ul>
-          <p class="tip">
-            *温馨提示:<br>
-            活动首投仅限宏财精选、宏财尊贵项目有效，债权转让项目不参与本次活动。<br>
-            奖励剩余数量每分钟更新一次。
-          </p>
-        </div>
-        <div class="about">
-          <img src="../../images/mangoTV/about.png" alt="" width="60%" class="margin-auto">
-          <ul class="about-list">
-            <li>
-              <div class="title">
-                国资背景
-              </div>
-              <div class="words">
-                <p>2016年获国有企业一亿元A轮战略投资</p>
-                <p>新三板金控第一股入主</p>
-                <p>拥有博士高管团队的互联网金融平台</p>
-              </div>
-            </li>
-            <li>
-              <div class="title">
-                银行存管
-              </div>
-              <div class="words">
-                <p>2016年加入网贷行业协会，首批接入北京存管通平台，所有投资信息实时上传北京金融局等监管部门</p>
-                <p>2017年6月正式上线海口农商银行资金存管，实现银行级资金安全保障</p>
-              </div>
-            </li>
-            <li>
-              <div class="title">
-                风控安全
-              </div>
-              <div class="words">
-                <p>十多年金融生态圈，积累优质资产</p>
-                <p>银行级存管确保用户投资资金万无一失</p>
-                <p>所有项目借款方知根知底，铸造闭环征信体系</p>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div class="statement">
-          该活动与设备生产商Apple Inc.公司无关
-        </div>
+            <div class="words">
+              <p>2016年获国有企业一亿元A轮战略投资</p>
+              <p>新三板金控第一股入主</p>
+              <p>拥有博士高管团队的互联网金融平台</p>
+            </div>
+          </li>
+          <li>
+            <div class="title">
+              银行存管
+            </div>
+            <div class="words">
+              <p>2016年加入网贷行业协会，首批接入北京存管通平台，所有投资信息实时上传北京金融局等监管部门</p>
+              <p>2017年6月正式上线海口农商银行资金存管，实现银行级资金安全保障</p>
+            </div>
+          </li>
+          <li>
+            <div class="title">
+              风控安全
+            </div>
+            <div class="words">
+              <p>十多年金融生态圈，积累优质资产</p>
+              <p>银行级存管确保用户投资资金万无一失</p>
+              <p>所有项目借款方知根知底，铸造闭环征信体系</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="statement" v-if="isIos">
+      该活动与设备生产商Apple Inc.公司无关
     </div>
     <div class="mask-common" v-show="showRegister" @click="closeMask">
       <div class="register-wrap" id="register">
@@ -115,8 +104,10 @@
         showErr: false,
         canGetCaptch: true,
         busy: false,
+        actEnding: 1,
         getPicCaptcha: '',
         errMsg: '',
+        isIos: Utils.isIos(),
         user: {
           registerSuccess: false,
           mobileCaptchaType: 1,
@@ -124,7 +115,8 @@
           mobile: '',
           picCaptcha: '',
           captcha: ''
-        }
+        },
+        cards: []
       }
     },
     watch: {
@@ -142,11 +134,24 @@
       }
     },
     created () {
+      this.getAward()
     },
     mounted () {
       this.refreshCode()
     },
     methods: {
+      getAward () {
+        var that = this
+        that.$http({
+          methods: 'get',
+          url: '/hongcai/rest/activitys/mango/award'
+        }).then(function (response) {
+          if (response && response.ret !== -1) {
+            that.cards = response.data.list
+            that.actEnding = response.data.activityStatus
+          }
+        })
+      },
       // 图形验证码
       refreshCode () {
         var that = this
@@ -255,7 +260,6 @@
 </script>
 <style scoped>
   .statement {
-    margin-top: .8rem;
     width: 100%;
     height: .9rem;
     line-height: 1rem;
@@ -280,6 +284,7 @@
   }
   /* 主页面 */
   .mg-promotion {
+    padding-bottom: .6rem;
     background: url('../../images/mangoTV/bg.png') no-repeat 0 0;
     background-size: 100% 100%;
     overflow: hidden;
@@ -321,6 +326,9 @@
     font-size: .28rem;
     text-align: left;
   }
+  .gift .ending-img {
+    margin-top: 1rem;
+  }
   .gift .success img{
     margin: .3rem 0 .05rem;
   }
@@ -339,7 +347,7 @@
     width: 42%;
     border-radius: 5px;
     float: left;
-    margin: .4rem .3rem 0 .4rem;
+    margin: .6rem .3rem 0 .4rem;
   }
   .gift .content {
     float: left;
@@ -365,7 +373,8 @@
     line-height: .95rem;
     width: 100%;
     background-size: 100% 100%;
-    font-size: .32rem;
+    font-size: .3rem;
+    font-weight: bold;
     text-align: center;
     color: #fd6200;
     display: block;
@@ -388,6 +397,7 @@
     padding: .55rem 0.05rem 0 0rem;
   }
   .gift2 .card-list li {
+    position: relative;
     width: 44%;
     height: 1.8rem;
     box-sizing: content-box;
@@ -395,10 +405,12 @@
     border-radius: .1rem;
     margin-bottom: .35rem;
     margin-left: .3rem;
-    /* border: solid 1px #ffee5d; */
-    /* box-shadow: 0 2px 3.5px 0 rgba(167, 76, 36, 0.74); */
     background: url('../../images/mangoTV/vip1.png') no-repeat 0 0;
     background-size: 100% 100%;
+  }
+  .gift2 .card-list li img {
+    left: 25%;
+    top: 18%;
   }
   .vip-card:first-child + li {
     background: url('../../images/mangoTV/vip2.png') no-repeat 0 0;
