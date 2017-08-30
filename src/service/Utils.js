@@ -1,4 +1,8 @@
 let Utils = {
+  isWeixin: function () {
+    var ua = navigator.userAgent.toLowerCase()
+    return ua.match(/MicroMessenger/i) === 'micromessenger'
+  },
   isAndroid: function () {
     let userAgent = navigator.userAgent || navigator.vendor || window.opera
     return /android/i.test(userAgent) && !/windows phone/i.test(userAgent)
@@ -10,6 +14,23 @@ let Utils = {
   isWinPhone: function () {
     var userAgent = navigator.userAgent || navigator.vendor || window.opera
     return /windows phone/i.test(userAgent)
+  },
+  deviceCode: function () {
+    var deviceCode = 0
+    if (Utils.isAndroid()) {
+      deviceCode = 2
+    }
+    if (this.isWeixin() && Utils.isAndroid()) {
+      deviceCode = 3
+    }
+    if (Utils.isIos()) {
+      deviceCode = 5
+    }
+    if (this.isWeixin() && Utils.isIos()) {
+      deviceCode = 6
+    }
+    console.log(deviceCode)
+    return deviceCode
   }
 }
 let InviteShareUtils = {
@@ -148,34 +169,34 @@ let dateUtil = {
     return Math.abs((t1.getTime() - t2.getTime()) / DAY_TIME_IN_MILLS)
   }
 }
-// let sendMobCaptcha = {
-//   countDown: function ($mobilecode) {
-//     var second = 60
-//     // 如果秒数还是大于0，则表示倒计时还没结束
-//     if (second >= 0) {
-//       // 倒计时不结束按钮不可点
-//       // $scope.canGetMobileCapcha = false
-//       $mobilecode.innerHTML = null
-//       $mobilecode.innerHTML = second + 's'
-//       $mobilecode.className = 'sent'
-//       // 时间减一
-//       second -= 1
-//       // 一秒后重复执行
-//       setTimeout(function () {
-//         this.countDown()
-//       }, 1000)
-//       // 否则，按钮重置为初始状态,可点击
-//     } else {
-//       $mobilecode.className = 'sent'
-//       $mobilecode.innerHTML = '重新发送'
-//       second = 60
-//       // $scope.canGetMobileCapcha = true
-//     }
-//   }
-// }
+let sendMobCaptcha = {
+  second: 60,
+  countDown: function ($mobilecode) {
+    // 如果秒数还是大于0，则表示倒计时还没结束
+    if (sendMobCaptcha.second >= 0) {
+      // 倒计时不结束按钮不可点
+      // $scope.canGetMobileCapcha = false
+      $mobilecode.innerHTML = null
+      $mobilecode.innerHTML = sendMobCaptcha.second + 's'
+      $mobilecode.className = 'sent'
+      // 时间减一
+      sendMobCaptcha.second -= 1
+      // 一秒后重复执行
+      setTimeout(function () {
+        sendMobCaptcha.countDown($mobilecode)
+      }, 1000)
+      // 否则，按钮重置为初始状态,可点击
+    } else {
+      $mobilecode.class.classList.remove('send')
+      $mobilecode.innerHTML = '再次获取'
+      sendMobCaptcha.second = 60
+      // $scope.canGetMobileCapcha = true
+    }
+  }
+}
 export {Utils}
 export {InviteShareUtils}
 export {bridgeUtil}
 export {ModalHelper}
 export {dateUtil}
-// export {sendMobCaptcha}
+export {sendMobCaptcha}

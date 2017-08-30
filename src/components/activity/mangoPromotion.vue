@@ -7,7 +7,7 @@
         </header>
         <div class="gift">
           <p class="title">0元变身VIP，追星看剧更华丽</p>
-          <div>
+          <div v-show="!user.registerSuccess">
             <img src="../../images/mangoTV/courtesy1-vip.png" alt="" class="vip-img">
             <div class="content">
               <p>现在注册认证宏财网，即可免费获得<span class="ft-important">芒果TV会员</span>1个月</p>
@@ -15,7 +15,7 @@
               <span class="take-btn" @click="showRegister = true">立即变身VIP</span>
             </div>
           </div>
-          <div class="success" v-show="false">
+          <div class="success" v-show="user.registerSuccess">
             <img src="../../images/mangoTV/success-msg.png" width="60%" alt="">
             <p>您已获得芒果TV会员1个月奖励资格<br>下载宏财网App，登录首页开通存管即可获取</p>
             <!-- <p>下载宏财网App，登录首页开通存管即可获取</p> -->
@@ -86,40 +86,188 @@
           该活动与设备生产商Apple Inc.公司无关
         </div>
     </div>
-    <div class="mask-common" v-auto-height v-show="showRegister">
+    <div class="mask-common" v-show="showRegister">
       <div class="register-wrap">
         <form action="" name="registerForm">
           <div>
-            <input type="mobile" name="mobile" placeholder="请输入手机号" required>
-            <input type="text" name="picCapcha" placeholder="请输入图形验证码" required>
-            <span @click="refreshCode"><img id="checkCaptcha" v-bind:src="getPicCaptcha" alt="" class="margin-auto displa-bl" width="100%"></span>
-            <input type="text" name="capcha" placeholder="请输入短信验证码" required>
-            <span class="capcha-wrap">获取</span>
-            <button @click="showRegister = false">立即注册</button>
+            <input type="mobile" id="mobile" name="mobile" placeholder="请输入手机号" v-model="user.mobile ">
+            <input type="text" id="picCaptcha" name="picCaptcha" placeholder="请输入图形验证码" v-model="user.picCaptcha">
+            <span @click="refreshCode"><img id="checkCaptcha" v-bind:src="getPicCaptcha" alt="图形验证码" class="margin-auto displa-bl" width="100%"></span>
+            <input type="text" id="captcha" name="captcha" placeholder="请输入短信验证码" v-model="user.captcha">
+            <span class="capcha-wrap" id="send" @click="getCaptcha">获取</span>
+            <button type="button" @click="register(user)">立即注册</button>
           </div>
         </form>
       </div>
     </div>
+    <p id="err" v-show="showErr">{{errMsg}}</p>
   </div>
 </template>
 <script>
   import $ from 'zepto'
-  // export {sendMobCaptcha} from '../../service/Utils'
+  import {Utils, sendMobCaptcha, ModalHelper} from '../../service/Utils'
   export default {
     name: 'mgPromotion',
     data () {
       return {
         showRegister: false,
-        getPicCaptcha: ''
+        showErr: false,
+        canGetCaptch: true,
+        busy: false,
+        getPicCaptcha: '',
+        errMsg: '',
+        user: {
+          registerSuccess: false,
+          mobileCaptchaType: 1,
+          mobileCaptchaBusiness: 0,
+          mobile: '',
+          picCaptcha: '',
+          captcha: ''
+        }
+      }
+    },
+    watch: {
+      'user.mobile': function (newVal, oldVal) {
+        this.user.mobile = newVal.length > 11 ? newVal.slice(0, 11) : newVal
+      },
+      'user.picCaptcha': function (newVal, oldVal) {
+        this.user.picCaptcha = newVal.length > 4 ? newVal.slice(0, 4) : newVal
+      },
+      'user.captcha': function (newVal, oldVal) {
+        this.user.captcha = newVal.length > 6 ? newVal.slice(0, 6) : newVal
+      },
+      'showRegister': function (val) {
+        val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
     created () {
       this.getPicCaptcha = process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getPicCaptcha?'
     },
+    mounted () {
+      console.log(document.getElementById('send').classList.remove('send'))
+    },
     methods: {
       // 图形验证码
       refreshCode () {
         $('#checkCaptcha').attr('src', $('#checkCaptcha').attr('src').substr(0, $('#checkCaptcha').attr('src').indexOf('?')) + '?code=' + Math.random())
+      },
+      // 短信验证码接口 & 动画
+      send () {
+        var that = this
+        that.$http.post('/hongcai/rest/users/mobileCaptcha', {
+          mobile: that.user.mobile,
+          picCaptcha: that.user.picCaptcha,
+          type: that.user.mobileCaptchaType,
+          business: that.user.mobileCaptchaBusiness,
+          device: Utils.deviceCode()
+          // guestId: ipCookie('guestId')
+        })
+        .then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            var $send = document.getElementById('send')
+            sendMobCaptcha.countDown($send)
+            return
+          }
+          that.errMsg = res.data.msg
+        })
+        .catch(function (err) {
+          console.log(err)
+          that.showErrMsg(true, '验证码发送失败')
+        })
+      },
+      // 验证图形验证码是否正确
+      checkPic () {
+        var that = this
+        that.$http.post('/hongcai/rest/captchas/checkPic', {
+          captcha: that.user.picCaptcha
+        })
+        .then(function (res) {
+          if (!res.data || res.data.ret === -1) {
+            that.showErrMsg(true, '图形验证码错误')
+          } else {
+            // 发送短信验证码并执行倒计时动画
+            that.send()
+          }
+        })
+        .catch(function (err) {
+          console.log(err)
+        })
+      },
+      // 用户点击获取
+      getCaptcha () {
+        if (!this.canGetCaptch || !this.user.mobile || !this.user.picCaptcha) { return }
+        // 校验手机号
+        var mobilePattern = /^((13[0-9])|(15[^4,\D])|(18[0-9])|(17[03678])|(14[0-9]))\d{8}$/
+        var that = this
+        if (!mobilePattern.test(that.user.mobile)) {
+          that.showErrMsg(true, '手机号码格式有误')
+          return
+        }
+        that.canGetCaptch = false
+        // 验证手机号是否注册
+        that.$http.post('/hongcai/rest/users/isUnique', {
+          account: that.user.mobile
+        })
+        .then(function (res) {
+          setTimeout(function () {
+            that.canGetCaptch = true
+          }, 1000)
+          if (res.data.ret !== 1) {
+            that.showErrMsg(true, '您已是宏财用户，请前往App参与')
+          } else {
+            that.checkPic()
+          }
+        })
+        .catch(function (err) {
+          setTimeout(function () {
+            that.canGetCaptch = true
+          }, 1000)
+          console.log(err)
+        })
+      },
+      register (user) {
+        if (this.busy) { return }
+        var that = this
+        if (!user.mobile || !user.picCaptcha || !user.captcha) {
+          return
+        }
+        that.busy = true
+        that.$http.post('/hongcai/rest/users/register', {
+          picCaptcha: user.picCaptcha,
+          mobile: user.mobile,
+          password: '',
+          captcha: user.captcha,
+          channelCode: that.$route.query.f,
+          act: that.$route.query.act,
+          device: Utils.deviceCode()
+          // guestId: ipCookie('guestId')
+        })
+        .then(function (res) {
+          setTimeout(function () {
+            that.busy = false
+          }, 1000)
+          if (res.data.code && res.data.ret === -1) {
+            that.showErrMsg(true, res.data.msg)
+            return
+          }
+          // 注册成功
+          that.user.registerSuccess = true
+        })
+        .catch(function (err) {
+          setTimeout(function () {
+            that.busy = false
+          }, 1000)
+          console.log(err)
+        })
+      },
+      showErrMsg (isShow, msg) {
+        this.showErr = isShow
+        this.errMsg = msg
+        var that = this
+        setTimeout(function () {
+          that.showErr = false
+          that.errMsg = ''
+        }, 2000)
       }
     }
   }
@@ -135,15 +283,25 @@
     font-size: .22rem;
     background-color: #fab281;
   }
+  /* 错误提示 */
+  #err {
+    position: fixed;
+    top: 2.8rem;
+    left: 1.4rem;
+    right: 1.4rem;
+    padding: .15rem 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: .2rem;
+    text-align: center;
+    font-size: .23rem;
+    color: #fff;
+    z-index: 10000000;
+  }
   .mg-promotion {
     background: url('../../images/mangoTV/bg.png') no-repeat 0 0;
     background-size: 100% 100%;
     overflow: hidden;
     font-family: PingFang-SC;
-  }
-  p {
-    color: #fff;
-    font-size: .28rem;
   }
   header {
     position: relative;
@@ -155,61 +313,8 @@
     width: 100%;
     left: 0;
     bottom: 24.5%;
-  }
-  form {
-    padding-top: 1.5rem;
-  }
-  .register-wrap input {
-    padding: 0 .4rem;
-    margin: 0 0 .35rem 0;
-    height: 0.64rem;
-    line-height: 1.6;
-    width: 60%;
-    border-radius: .1rem;
-    border: none !important;
-    color: #666;
-    font-size: .24rem;
-  }
-  input:-moz-placeholder, input::-webkit-input-placeholder, input:-ms-input-placeholder {
-    color: #999;
-  }
-  .register-wrap input:first-child {
-    width: 60%;
-  }
-  .register-wrap input:nth-child(2), .register-wrap input:nth-child(4) {
-    float: left;
-    width: 36%;
-    margin-left: 13%;
-    margin-right: 2%;
-  }
-  form span {
-    width: 18%;
-    float: left;
-    border-radius: .1rem;
-    padding: 0 .1rem;
-    margin: 0 0 .35rem 0;
-    height: .64rem;
-    line-height: .68rem;
-    color: #fd6300;
-    font-size: .25rem;
-    text-align: center;
-    background: #fff; 
-  }
-  form .capcha-wrap {
-    background-color: #ffde01;
-  }
-  form button {
-    width: 46%;
-    height: .9rem;
-    line-height: .9rem;
-    color: #fd6300;
-    font-size: .3rem;
-    font-weight: bold;
-    text-align: center;
-    margin: 0 auto;
-    background: url('../../images/mangoTV/change-btn.png') no-repeat 0 0;
-    background-size: 100% 100%;
-    border: none;
+    color: #fff;
+    font-size: .28rem;
   }
   .ft-important {
     color: #fd6200 !important;
@@ -364,10 +469,63 @@
   }
   /* 注册弹窗 */
   .mask-common .register-wrap {
-    margin: 1.8rem auto;
+    margin: 1.5rem auto;
     width: 88%;
     height: 56%;
     background: url('../../images/mangoTV/mask-bg.png') no-repeat 0 0;
     background-size: 100% 100%;
+  }
+  .register-wrap input {
+    padding: 0 .4rem;
+    margin: 0 0 .35rem 0;
+    height: 0.64rem;
+    width: 60%;
+    border-radius: .1rem;
+    border: none !important;
+    color: #666;
+    font-size: .24rem;
+  }
+  input:-moz-placeholder, input::-webkit-input-placeholder, input:-ms-input-placeholder {
+    color: #999;
+  }
+  .register-wrap input:first-child {
+    width: 60%;
+    margin-top: 1.6rem;
+  }
+  .register-wrap input:nth-child(2), .register-wrap input:nth-child(4) {
+    float: left;
+    width: 36%;
+    margin-left: 13%;
+    margin-right: 2%;
+  }
+  form span {
+    width: 20%;
+    float: left;
+    border-radius: .1rem;
+    padding: 0 .05rem;
+    margin: 0 0 .35rem 0;
+    height: .64rem;
+    line-height: .68rem;
+    color: #fd6300;
+    font-size: .25rem;
+    text-align: center;
+    background: #fff; 
+  }
+  form .capcha-wrap {
+    background-color: #ffde01;
+  }
+  form button {
+    width: 46%;
+    height: .9rem;
+    line-height: .9rem;
+    color: #fd6300;
+    font-size: .3rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 auto;
+    background: url('../../images/mangoTV/change-btn.png') no-repeat 0 0;
+    background-size: 100% 100%;
+    border: none;
+    outline: none;
   }
 </style>
