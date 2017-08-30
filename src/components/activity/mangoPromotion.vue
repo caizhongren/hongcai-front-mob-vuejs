@@ -8,7 +8,7 @@
         <div class="gift">
           <p class="title">0元变身VIP，追星看剧更华丽</p>
           <div>
-            <img src="../../images/mangoTV/act-courtesy1.png" alt="" class="vip-img">
+            <img src="../../images/mangoTV/courtesy1-vip.png" alt="" class="vip-img">
             <div class="content">
               <p>现在注册认证宏财网，即可免费获得<span class="ft-important">芒果TV会员</span>1个月</p>
               <p>*每个账号限领一次</p>
@@ -26,19 +26,19 @@
           <p class="title">首投VIP再升级，季卡年卡送给你</p>
           <ul class="card-list">
             <li class="vip-card">
-              <p>3个月VIP</p>
+              <!-- <p>3个月VIP</p> -->
               <p>首笔投资满1000元</p>
             </li>
             <li class="vip-card">
-              <p>半年VIP</p>
+              <!-- <p>半年VIP</p> -->
               <p>首笔投资满2000元</p>
             </li>
             <li class="vip-card">
-              <p>年度VIP</p>
+              <!-- <p>年度VIP</p> -->
               <p>首笔投资满5000元</p>
             </li>
             <li class="vip-card">
-              <p>年度全屏VIP</p>
+              <!-- <p>年度全屏VIP</p> -->
               <p>首笔投资满10000元</p>
             </li>
           </ul>
@@ -128,11 +128,11 @@
   .statement {
     margin-top: .8rem;
     width: 100%;
-    height: 1rem;
+    height: .9rem;
     line-height: 1rem;
     text-align: center;
     color: #333;
-    font-size: .24rem;
+    font-size: .22rem;
     background-color: #fab281;
   }
   .mg-promotion {
@@ -244,16 +244,14 @@
     margin: 0 auto;
   }
   .gift .vip-img {
-    width: 36%;
-    height: 2rem;
+    width: 42%;
     border-radius: 5px;
     float: left;
-    margin: .3rem .4rem 0 .4rem;
-     /* background-color: #5ba4f1; */
+    margin: .4rem .3rem 0 .4rem;
   }
   .gift .content {
     float: left;
-    width: 2.8rem;
+    width: 2.6rem;
     text-align: justify;
   }
   .content p {
@@ -295,40 +293,39 @@
     padding: 0 8.5%;
   }
   .gift2 .card-list {
-    padding: .55rem 0.1rem 0 0rem;
+    padding: .55rem 0.05rem 0 0rem;
   }
   .gift2 .card-list li {
-    width: 43%;
+    width: 44%;
     height: 1.8rem;
     box-sizing: content-box;
     display: inline-block;
     border-radius: .1rem;
-    border: solid 1px #ffee5d;
-    margin-left: .32rem;
     margin-bottom: .35rem;
-    box-shadow: 0 2px 3.5px 0 rgba(167, 76, 36, 0.74);
+    margin-left: .3rem;
+    /* border: solid 1px #ffee5d; */
+    /* box-shadow: 0 2px 3.5px 0 rgba(167, 76, 36, 0.74); */
+    background: url('../../images/mangoTV/vip1.png') no-repeat 0 0;
+    background-size: 100% 100%;
+  }
+  .vip-card:first-child + li {
+    background: url('../../images/mangoTV/vip2.png') no-repeat 0 0;
+    background-size: 100% 100%;
+    margin-left: .2rem;
+  }
+  .vip-card:first-child + li + li{
+    background: url('../../images/mangoTV/vip3.png') no-repeat 0 0;
+    background-size: 100% 100%;
+  }
+  .vip-card:first-child + li + li + li {
+    background: url('../../images/mangoTV/vip4.png') no-repeat 0 0;
+    background-size: 100% 100%;
+    margin-left: .2rem;
   }
   .vip-card p:first-child {
-    width: 102%;
-    margin-left: -1%;
-    height: 50%;
-    background-image: linear-gradient(to left, #ffde01, #ffba25);
-    border-radius: .1rem .1rem 0 0;
-    color: #fff;
-    font-weight: bold;
-    line-height: 2.8;
-    text-align: center;
-    letter-spacing: -0.6px;
-    font-family: PingFang-SC;
-    font-size: .34rem;
-  }
-  .gift2 li:first-child p:first-child, .gift2 li:nth-child(3) p:first-child {
-    background-image: linear-gradient(to left, #ffba25, #ffde01);
-  }
-  .vip-card p:first-child + p {
     color: #666;
     font-size: .26rem;
-    line-height: 3.8;
+    line-height: 11.9;
   }
   /* 关于我们 */
   .about .about-list li {
