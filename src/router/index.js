@@ -11,7 +11,8 @@ const CoolRanking = r => require.ensure([], () => r(require('../components/activ
 const IntegralDetail = r => require.ensure([], () => r(require('../components/activity/integralDetail.vue')), 'CoolSummerPlan')
 const CoolSummerPlan = r => require.ensure([], () => r(require('../components/activity/cool-summer-plan.vue')), 'CoolSummerPlan')
 const Novice = r => require.ensure([], () => r(require('../components/activity/novice.vue')), 'Novice')
-const MangoPromotion = r => require.ensure([], () => r(require('../components/activity/mangoPromotion.vue')), 'MgPromotion')
+const MangoPromotion = r => require.ensure([], () => r(require('../components/activity/mangoPromotion.vue')), 'MangoTV')
+const MangoTV = r => require.ensure([], () => r(require('../components/activity/MangoTV.vue')), 'MangoTV')
 const About = r => require.ensure([], () => r(require('../components/about/about.vue')), 'About')
 const ManagementTeam = r => require.ensure([], () => r(require('../components/about/managementTeam.vue')), 'About')
 const Introduction = r => require.ensure([], () => r(require('../components/about/introduction.vue')), 'About')
@@ -41,7 +42,6 @@ const Report2 = r => require.ensure([], () => r(require('../components/news/repo
 const Report3 = r => require.ensure([], () => r(require('../components/news/report3.vue')), 'News')
 const Events = r => require.ensure([], () => r(require('../components/events.vue')), 'Events')
 const RiskEducation = r => require.ensure([], () => r(require('../components/riskEducation.vue')), 'RiskEducation')
-const DownLoad = r => require.ensure([], () => r(require('../components/downLoad.vue')), 'other')
 Vue.use(Router)
 const routes = [
   {
@@ -192,7 +192,13 @@ const routes = [
     meta: {title: '清凉积分明细'}
   },
   {
-    path: '/activity/mango',
+    path: '/activity/mangoTV',
+    name: 'MangoTV',
+    component: MangoTV,
+    meta: {title: '芒果TV'}
+  },
+  {
+    path: '/activity/mango-push',
     name: 'MangoPromotion',
     component: MangoPromotion,
     meta: {title: '芒果TV'}
@@ -275,11 +281,6 @@ const routes = [
     name: 'RiskEducation',
     component: RiskEducation,
     meta: {title: '风险安全教育'}
-  },
-  {
-    path: '/download',
-    name: 'DownLoad',
-    component: DownLoad
   },
   {
     path: '*',
