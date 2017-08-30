@@ -1,27 +1,22 @@
 <template>
   <div>
     <div class="mg-promotion">
-        <!-- <form action="" name="registerForm">
-          <input type="mobile" name="mobile" placeholder="请输入手机号" required>
-          <input type="text" name="" placeholder="请输入图形验证码" required>
-          <input type="text" placeholder="请输入短信验证码" required>
-        </form> -->
         <header>
-          <img class="header" src="../../images/mangguo/header.png" alt="" width="100%">
+          <img class="header" src="../../images/mango/header.png" alt="" width="100%">
           <p>携手宏财网&nbsp;&nbsp;&nbsp;开启新视野</p>
         </header>
         <div class="gift">
           <p class="title">0元变身VIP，追星看剧更华丽</p>
           <div>
-            <img src="../../images/mangguo/gift01.png" alt="" class="vip-img">
+            <img src="../../images/mango/gift01.png" alt="" class="vip-img">
             <div class="content">
               <p>现在注册认证宏财网，即可免费获得<span class="ft-important">芒果TV会员</span>1个月</p>
               <p>*每个账号限领一次</p>
-              <span class="take-btn">立即变身VIP</span>
+              <span class="take-btn" @click="showRegister = true">立即变身VIP</span>
             </div>
           </div>
           <div class="success" v-show="false">
-            <img src="../../images/mangguo/success-msg.png" width="60%" alt="">
+            <img src="../../images/mango/success-msg.png" width="60%" alt="">
             <p>您已获得芒果TV会员1个月奖励资格<br>下载宏财网App，登录首页开通存管即可获取</p>
             <!-- <p>下载宏财网App，登录首页开通存管即可获取</p> -->
             <span class="take-btn">立即变身VIP</span>
@@ -54,7 +49,7 @@
           </p>
         </div>
         <div class="about">
-          <img src="../../images/mangguo/about.png" alt="" width="60%" class="margin-auto">
+          <img src="../../images/mango/about.png" alt="" width="60%" class="margin-auto">
           <ul class="about-list">
             <li>
               <div class="title">
@@ -91,6 +86,20 @@
           该活动与设备生产商Apple Inc.公司无关
         </div>
     </div>
+    <div class="mask-common" v-auto-height v-show="showRegister">
+      <div class="register-wrap">
+        <form action="" name="registerForm">
+          <div>
+            <input type="mobile" name="mobile" placeholder="请输入手机号" required>
+            <input type="text" name="picCapcha" placeholder="请输入图形验证码" required>
+            <span></span>
+            <input type="text" name="capcha" placeholder="请输入短信验证码" required>
+            <span class="capcha-wrap">获取</span>
+            <button @click="showRegister = false">立即注册</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -98,7 +107,7 @@
     name: 'mgPromotion',
     data () {
       return {
-
+        showRegister: false
       }
     }
   }
@@ -115,7 +124,7 @@
     background-color: #fab281;
   }
   .mg-promotion {
-    background: url('../../images/mangguo/bg.png') no-repeat 0 0;
+    background: url('../../images/mango/bg.png') no-repeat 0 0;
     background-size: 100% 100%;
     overflow: hidden;
     font-family: PingFang-SC;
@@ -135,10 +144,60 @@
     left: 0;
     bottom: 24.5%;
   }
-  input {
-    height: 1rem;
+  form {
+    padding-top: 1.5rem;
+  }
+  .register-wrap input {
+    padding: 0 .4rem;
+    margin: 0 0 .35rem 0;
+    height: 0.64rem;
+    line-height: 1.6;
     width: 60%;
-    margin: .3rem 0;
+    border-radius: .1rem;
+    border: none !important;
+    color: #666;
+    font-size: .24rem;
+  }
+  input:-moz-placeholder, input::-webkit-input-placeholder, input:-ms-input-placeholder {
+    color: #999;
+  }
+  .register-wrap input:first-child {
+    width: 60%;
+  }
+  .register-wrap input:nth-child(2), .register-wrap input:nth-child(4) {
+    float: left;
+    width: 36%;
+    margin-left: 13%;
+    margin-right: 2%;
+  }
+  form span {
+    width: 18%;
+    float: left;
+    border-radius: .1rem;
+    padding: 0 .1rem;
+    margin: 0 0 .35rem 0;
+    height: .64rem;
+    line-height: .68rem;
+    color: #fd6300;
+    font-size: .25rem;
+    text-align: center;
+    background: #000; 
+  }
+  form .capcha-wrap {
+    background-color: #ffde01;
+  }
+  form button {
+    width: 46%;
+    height: .9rem;
+    line-height: .9rem;
+    color: #fd6300;
+    font-size: .3rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 auto;
+    background: url('../../images/mango/change-btn.png') no-repeat 0 0;
+    background-size: 100% 100%;
+    border: none;
   }
   .ft-important {
     color: #fd6200 !important;
@@ -148,7 +207,7 @@
     width: 96%;
     margin-left: 0.5%;
     margin-top: -1rem;
-    background: url('../../images/mangguo/gift01.png') no-repeat center top;
+    background: url('../../images/mango/gift01.png') no-repeat center top;
     background-size: 100% 100%;
   }
   .gift .title {
@@ -198,7 +257,7 @@
     margin-top: .03rem;
   }
   .gift .take-btn {
-    background: url('../../images/mangguo/change-btn.png') no-repeat 0 0;
+    background: url('../../images/mango/change-btn.png') no-repeat 0 0;
     margin-top: .05rem;
     height: .93rem;
     line-height: .95rem;
@@ -211,9 +270,9 @@
   }
   .gift2 {
     margin-top: .1rem;
-    margin-bottom: .8rem;
+    margin-bottom: .9rem;
     height: 8rem;
-    background: url('../../images/mangguo/gift02.png') no-repeat center top;
+    background: url('../../images/mango/gift02.png') no-repeat center top;
     background-size: 100% 100%;
   }
   .gift2 p.tip {
@@ -279,8 +338,8 @@
     font-size: .23rem;
     line-height: 1.8;
     text-align: justify;
-    padding-left: .5rem;
-    background: url('../../images/mangguo/yes-icon.png') no-repeat .1rem .1rem;
+    padding-left: .42rem;
+    background: url('../../images/mango/yes-icon.png') no-repeat .1rem .13rem;
     background-size: 4%;
   }
   .about-list li .title {
@@ -289,9 +348,17 @@
     width: 102%;
     margin-left: -1%;
 	  background-color: #45c7a9;
-    background-image: url('../../images/mangguo/about-title-bg.png');
+    background-image: url('../../images/mango/about-title-bg.png');
     background-repeat: no-repeat;
     background-size: 50%;
     background-position: center center;
+  }
+  /* 注册弹窗 */
+  .mask-common .register-wrap {
+    margin: 1.8rem auto;
+    width: 88%;
+    height: 56%;
+    background: url('../../images/mango/mask-bg.png') no-repeat 0 0;
+    background-size: 100% 100%;
   }
 </style>
