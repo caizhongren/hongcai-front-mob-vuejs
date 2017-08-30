@@ -143,9 +143,6 @@
     created () {
       this.getPicCaptcha = process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getPicCaptcha?'
     },
-    mounted () {
-      console.log(document.getElementById('send').classList.remove('send'))
-    },
     methods: {
       // 图形验证码
       refreshCode () {
@@ -160,37 +157,18 @@
           type: that.user.mobileCaptchaType,
           business: that.user.mobileCaptchaBusiness,
           device: Utils.deviceCode()
-          // guestId: ipCookie('guestId')
         })
         .then(function (res) {
-          if (res.data && res.data.ret !== -1) {
-            var $send = document.getElementById('send')
-            sendMobCaptcha.countDown($send)
+          if (!res.data || res.data.ret === -1) {
+            that.showErrMsg(true, res.data.msg)
             return
           }
-          that.errMsg = res.data.msg
+          var $send = document.getElementById('send')
+          sendMobCaptcha.countDown($send)
         })
         .catch(function (err) {
           console.log(err)
           that.showErrMsg(true, '验证码发送失败')
-        })
-      },
-      // 验证图形验证码是否正确
-      checkPic () {
-        var that = this
-        that.$http.post('/hongcai/rest/captchas/checkPic', {
-          captcha: that.user.picCaptcha
-        })
-        .then(function (res) {
-          if (!res.data || res.data.ret === -1) {
-            that.showErrMsg(true, '图形验证码错误')
-          } else {
-            // 发送短信验证码并执行倒计时动画
-            that.send()
-          }
-        })
-        .catch(function (err) {
-          console.log(err)
         })
       },
       // 用户点击获取
@@ -215,7 +193,7 @@
           if (res.data.ret !== 1) {
             that.showErrMsg(true, '您已是宏财用户，请前往App参与')
           } else {
-            that.checkPic()
+            that.send()
           }
         })
         .catch(function (err) {
@@ -240,7 +218,6 @@
           channelCode: that.$route.query.f,
           act: that.$route.query.act,
           device: Utils.deviceCode()
-          // guestId: ipCookie('guestId')
         })
         .then(function (res) {
           setTimeout(function () {
@@ -297,6 +274,7 @@
     color: #fff;
     z-index: 10000000;
   }
+  /* 主页面 */
   .mg-promotion {
     background: url('../../images/mangoTV/bg.png') no-repeat 0 0;
     background-size: 100% 100%;
@@ -306,7 +284,7 @@
   header {
     position: relative;
     width: 100%;
-    margin-top: -1.2rem;
+    margin-top: -0.5rem;
   }
   header p {
     position: absolute;
