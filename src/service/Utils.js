@@ -188,7 +188,7 @@ let sendMobCaptcha = {
       // 否则，按钮重置为初始状态,可点击
     } else {
       $mobilecode.class.classList.remove('send')
-      $mobilecode.innerHTML = '再次获取'
+      $mobilecode.innerHTML = '重新获取'
       sendMobCaptcha.second = 60
       // $scope.canGetMobileCapcha = true
     }

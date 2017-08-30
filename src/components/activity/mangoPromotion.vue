@@ -86,13 +86,13 @@
           该活动与设备生产商Apple Inc.公司无关
         </div>
     </div>
-    <div class="mask-common" v-show="showRegister">
-      <div class="register-wrap">
+    <div class="mask-common" v-show="showRegister" @click="closeMask">
+      <div class="register-wrap" id="register">
         <form action="" name="registerForm">
           <div>
             <input type="mobile" id="mobile" name="mobile" placeholder="请输入手机号" v-model="user.mobile ">
             <input type="text" id="picCaptcha" name="picCaptcha" placeholder="请输入图形验证码" v-model="user.picCaptcha">
-            <span @click="refreshCode"><img id="checkCaptcha" v-bind:src="getPicCaptcha" alt="图形验证码" class="margin-auto displa-bl" width="100%"></span>
+            <span @click="refreshCode"><img id="checkCaptcha" alt="图形验证码" class="margin-auto displa-bl" width="100%"></span>
             <input type="text" id="captcha" name="captcha" placeholder="请输入短信验证码" v-model="user.captcha">
             <span class="capcha-wrap" id="send" @click="getCaptcha">获取</span>
             <button type="button" @click="register(user)">立即注册</button>
@@ -141,34 +141,23 @@
       }
     },
     created () {
-      this.getPicCaptcha = process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getPicCaptcha?'
+    },
+    mounted () {
+      this.refreshCode()
     },
     methods: {
       // 图形验证码
       refreshCode () {
-        $('#checkCaptcha').attr('src', $('#checkCaptcha').attr('src').substr(0, $('#checkCaptcha').attr('src').indexOf('?')) + '?code=' + Math.random())
-      },
-      // 短信验证码接口 & 动画
-      send () {
         var that = this
-        that.$http.post('/hongcai/rest/users/mobileCaptcha', {
-          mobile: that.user.mobile,
-          picCaptcha: that.user.picCaptcha,
-          type: that.user.mobileCaptchaType,
-          business: that.user.mobileCaptchaBusiness,
-          device: Utils.deviceCode()
+        this.$http.get('/hongcai/rest/captchas', {
+          code: Math.random()
         })
         .then(function (res) {
-          if (!res.data || res.data.ret === -1) {
-            that.showErrMsg(true, res.data.msg)
-            return
-          }
-          var $send = document.getElementById('send')
-          sendMobCaptcha.countDown($send)
+          $('#checkCaptcha').attr({'src': 'data:image/png;base64,' + res.data.data})
+          console.log(that.getCaptcha)
         })
         .catch(function (err) {
           console.log(err)
-          that.showErrMsg(true, '验证码发送失败')
         })
       },
       // 用户点击获取
@@ -182,25 +171,31 @@
           return
         }
         that.canGetCaptch = false
-        // 验证手机号是否注册
-        that.$http.post('/hongcai/rest/users/isUnique', {
-          account: that.user.mobile
+        // 短信验证码接口 & 动画
+        that.$http.post('/hongcai/rest/users/mobileCaptcha', {
+          mobile: that.user.mobile,
+          picCaptcha: that.user.picCaptcha,
+          type: that.user.mobileCaptchaType,
+          business: that.user.mobileCaptchaBusiness,
+          device: Utils.deviceCode()
         })
         .then(function (res) {
           setTimeout(function () {
             that.canGetCaptch = true
           }, 1000)
-          if (res.data.ret !== 1) {
-            that.showErrMsg(true, '您已是宏财用户，请前往App参与')
-          } else {
-            that.send()
+          if (!res.data || res.data.ret === -1) {
+            that.showErrMsg(true, res.data.msg)
+            return
           }
+          var $send = document.getElementById('send')
+          sendMobCaptcha.countDown($send)
         })
         .catch(function (err) {
           setTimeout(function () {
             that.canGetCaptch = true
           }, 1000)
           console.log(err)
+          that.showErrMsg(true, '验证码发送失败')
         })
       },
       register (user) {
@@ -245,6 +240,13 @@
           that.showErr = false
           that.errMsg = ''
         }, 2000)
+      },
+      // 点击蒙层关闭弹窗
+      closeMask ($event) {
+        var _con = $('#register')
+        if (_con.has($event.target).length === 0) {
+          this.showRegister = false
+        }
       }
     }
   }
