@@ -148,8 +148,34 @@ let dateUtil = {
     return Math.abs((t1.getTime() - t2.getTime()) / DAY_TIME_IN_MILLS)
   }
 }
+// let sendMobCaptcha = {
+//   countDown: function ($mobilecode) {
+//     var second = 60
+//     // 如果秒数还是大于0，则表示倒计时还没结束
+//     if (second >= 0) {
+//       // 倒计时不结束按钮不可点
+//       // $scope.canGetMobileCapcha = false
+//       $mobilecode.innerHTML = null
+//       $mobilecode.innerHTML = second + 's'
+//       $mobilecode.className = 'sent'
+//       // 时间减一
+//       second -= 1
+//       // 一秒后重复执行
+//       setTimeout(function () {
+//         this.countDown()
+//       }, 1000)
+//       // 否则，按钮重置为初始状态,可点击
+//     } else {
+//       $mobilecode.className = 'sent'
+//       $mobilecode.innerHTML = '重新发送'
+//       second = 60
+//       // $scope.canGetMobileCapcha = true
+//     }
+//   }
+// }
 export {Utils}
 export {InviteShareUtils}
 export {bridgeUtil}
 export {ModalHelper}
 export {dateUtil}
+// export {sendMobCaptcha}

@@ -4,5 +4,6 @@ var prodEnv = require('./prod.env')
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
   baseFileUrl: '"http://test321.hongcai.com/uploads/"',
-  domain: '"http://m.test321.hongcai.com"'
+  domain: '"http://m.test321.hongcai.com"',
+  WEB_DEFAULT_DOMAIN: '"/hongcai/api/v1"'
 })
