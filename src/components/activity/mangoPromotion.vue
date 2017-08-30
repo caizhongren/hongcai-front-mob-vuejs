@@ -2,6 +2,7 @@
   <div>
     <div class="mg-promotion">
         <header>
+          <img class="logo" src="../../images/mangoTV/logo.png" alt="宏财网" width="60%">
           <img class="header" src="../../images/mangoTV/act-head.png" alt="" width="100%">
           <p>携手宏财网&nbsp;&nbsp;&nbsp;开启新视野</p>
         </header>
@@ -19,7 +20,7 @@
             <img src="../../images/mangoTV/success-msg.png" width="60%" alt="">
             <p>您已获得芒果TV会员1个月奖励资格<br>下载宏财网App，登录首页开通存管即可获取</p>
             <!-- <p>下载宏财网App，登录首页开通存管即可获取</p> -->
-            <span class="take-btn">立即变身VIP</span>
+            <span class="take-btn" onclick="javascript:window.location.href='http://a.app.qq.com/o/simple.jsp?pkgname=com.hoolai.hongcai'">前往下载APP</span>
           </div>
         </div>
         <div class="gift gift2">
@@ -223,6 +224,7 @@
             return
           }
           // 注册成功
+          that.showRegister = false
           that.user.registerSuccess = true
         })
         .catch(function (err) {
@@ -295,6 +297,11 @@
     bottom: 24.5%;
     color: #fff;
     font-size: .28rem;
+  }
+  .logo {
+    position: absolute;
+    top: 0.5rem;
+    left: 20%;
   }
   .ft-important {
     color: #fd6200 !important;
