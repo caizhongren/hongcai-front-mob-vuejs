@@ -1,4 +1,5 @@
 <template>
+  <!-- activityStatus(1: 活动未结束，2: 活动结束), firstInvest: 是否首投, takeStatus: (1: 未领取, 2: 已领取, 3: 未达标), rewardType: (0: 无奖励, 2: 三个月VIP, 3: 半年VIP, 4: 全年VIP, 5: 全年全屏VIP) -->
   <div class="Mango" v-bind:class="{ 'padding-b-5': !isIos }" v-if="token">
     <div class="head-img">
       <div class="logo"></div>
@@ -11,16 +12,16 @@
         <p class="courtesy-title">0元变身VIP，追星看剧更华丽</p>
       </div>
       <div class="courtesy1-content comm-bg">
-        <div class="courtesy1-lf" v-bind:class="{ 'courtesy1-lf-end': actEnding === 2 }">
+        <div class="courtesy1-lf" v-bind:class="{ 'courtesy1-lf-end': activityStatus === 2 }">
           <div class="pic"></div>
-          <div class="stock" v-show="actEnding === 1"><p>剩余：{{monthCount}}份</p></div>
+          <div class="stock" v-show="activityStatus === 1"><p>{{activityStatus === 1 && monthCount <= 0 ? '补货中' : '剩余：' + monthCount + '份'}}</p></div>
         </div>
-        <div class="courtesy1-rt" v-show="actEnding === 1">
-          <div class="txt margin-b-1" v-if="userAuth.active === true">您的<span class="ft-org">芒果TV会员1个月</span>奖励兑换码已自动发送至您的站内信提醒</div>
-          <div class="txt" v-if="userAuth.active === false">您已获得<span class="ft-org">芒果TV会员1个月</span>奖励资格，开通银行存管后，兑换码将自动发送至您的站内信提醒</div>
-          <div class="InvestBtn" @click="toCheckAuth">{{userAuth.active === false ? '立即开通' : '查看兑换码'}}</div>
+        <div class="courtesy1-rt" v-show="activityStatus === 1">
+          <div class="txt margin-b-1" v-if="userAuth.active && userAuth.authStatus === 2">您的<span class="ft-org">芒果TV会员1个月</span>奖励兑换码已自动发送至您的站内信提醒</div>
+          <div class="txt" v-if="!userAuth.active || userAuth.authStatus !== 2">您已获得<span class="ft-org">芒果TV会员1个月</span>奖励资格，开通银行存管后，兑换码将自动发送至您的站内信提醒</div>
+          <div class="InvestBtn" @click="toCheckAuth">{{userAuth.active && userAuth.authStatus === 2 ? '查看兑换码' : '立即开通'}}</div>
         </div>
-        <div class="courtesy1-end fr" v-show="actEnding === 2">
+        <div class="courtesy1-end fr" v-show="activityStatus === 2">
           <img src="../../images/mangoTV/activityEnd.png" alt="">
         </div>
       </div>
@@ -34,29 +35,29 @@
             <div class="card">
               <p class="card-limit">首笔投资满{{card.minInvestAmount}}元</p>
             </div>
-            <p class="stock" v-show="actEnding === 1">{{actEnding === 1 && card.countNum <= 0 ? '补货中' : '剩余：' + card.countNum + '份'}}</p>
+            <p class="stock" v-show="activityStatus === 1">{{activityStatus === 1 && card.countNum <= 0 ? '补货中' : '剩余：' + card.countNum + '份'}}</p>
           </li>
-          <img src="../../images/mangoTV/act-ending.png" alt="" class="actEnd" v-show="actEnding === 2">
+          <img src="../../images/mangoTV/act-ending.png" alt="" class="actEnd" v-show="activityStatus === 2">
         </ul>
         <!-- 我的奖励 -->
-        <div class="reward" v-show="!noInvest">
+        <div class="reward" v-show="showRewardHead">
           <img src="../../images/mangoTV/act-reward.png" alt="" width="70%">
           <!-- 未进行过投资 -->
-          <div class="noInvest" v-show="noInvest">
+          <div class="noInvest" v-show="activityStatus === 1 && !firstInvest">
             您还未进行过投资呢！<br>
             快去挑选好想要的奖励，
             <p class="tips-red">投资达标再来活动页兑换吧～</p>
           </div>
           <!-- 投资为满足兑换条件 -->
-          <div class="noInvest" v-show="InvestLimit">
+          <div class="noInvest" v-show="firstInvest && takeStatus === 3">
             <p>您首次投资金额未满足以上奖励兑换条件，前往首页，还有更多精彩活动等您参与～</p>
           </div>
           <!-- 获得奖励未兑换 -->
-          <div class="notExchange" v-show="notExchange" v-bind:class="{ 'reward-1': rewardType===2, 'reward-2': rewardType===3, 'reward-3': rewardType===4, 'reward-4': rewardType===5 }">
+          <div class="notExchange" v-show="firstInvest && takeStatus !== 3" v-bind:class="{ 'reward-1': rewardType===2, 'reward-2': rewardType===3, 'reward-3': rewardType===4, 'reward-4': rewardType===5 }">
             <!-- 奖励已兑换 -->
-            <img src="../../images/mangoTV/act-exchange.png" alt="" class="exchange" v-show="hasExchange">
+            <img src="../../images/mangoTV/act-exchange.png" alt="" class="exchange" v-show="takeStatus === 2">
           </div>
-          <div class="InvestBtn" @click="toExchange()" v-show="noInvest || notExchange || hasExchange">{{noInvest ? '立即投资' : notExchange && hasExchange ? '查看兑换码' : '立即兑换'}}</div>
+          <div class="InvestBtn" @click="toExchange()" v-show="takeStatus !== 3">{{!firstInvest ? '立即投资' : firstInvest && takeStatus === 2 ? '查看兑换码' : '立即兑换'}}</div>
         </div>
         <div class="hot-tips">
           *温馨提示: <br>
@@ -148,19 +149,20 @@
           authStatus: Number
         },
         monthCount: 0,
-        noInvest: false,
-        notExchange: true,
-        InvestLimit: false,
-        hasExchange: false,
-        actEnding: 1,
+        showRewardHead: true,
+        firstInvest: false,
+        takeStatus: 3,
+        activityStatus: 1,
         showMask: false,
+        receiveBox: false,
         upperLimit: false,
-        receiveBox: true,
-        rewardType: 5
+        rewardType: 0
       }
     },
     created: function () {
-      this.getAward()
+      this.getAllaward()
+      this.getMyReward()
+      this.getUserAuth()
       if (!this.token) {
         alert('请先登录！')
       }
@@ -168,6 +170,8 @@
     props: ['token'],
     methods: {
       ShowReceive: function () {
+        this.receiveBox = false
+        this.upperLimit = false
         this.showMask = !this.showMask
         this.showMask ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       },
@@ -177,43 +181,59 @@
           methods: 'get',
           url: '/hongcai/rest/users/0/userAuth?token=' + that.token
         }).then(function (response) {
-          if (response && response.ret !== -1) {
+          if (response.data && response.data.ret !== -1) {
             that.userAuth = response.data
-            console.log(that.userAuth.active)
-            console.log(that.userAuth.authStatus)
           }
         })
       },
-      getAward: function () {
+      getAllaward: function () {
         var that = this
         that.$http({
           methods: 'get',
           url: '/hongcai/rest/activitys/mango/award'
         }).then(function (response) {
-          if (response && response.ret !== -1) {
+          if (response.data && response.data.ret !== -1) {
             that.Member = response.data.list
             that.monthCount = response.data.monthCount
-            // that.actEnding = response.data.activityStatus
-            that.actEnding = 1
+            that.activityStatus = response.data.activityStatus
+            // that.activityStatus = 1
           }
         })
       },
-      getReward: function () {
+      getMyReward: function () {
         var that = this
         that.$http({
           methods: 'get',
-          url: '/hongcai/rest/users/0/userAuth?token=' + that.token
+          url: '/hongcai/rest/activitys/mango/0/myReward?token=' + that.token
         }).then(function (response) {
-          if (response && response.ret !== -1) {
+          if (response.data && response.data.ret !== -1) {
+            that.firstInvest = true
+            that.takeStatus = response.data.takeStatus
+            that.rewardType = response.data.rewardType
+            if (!that.firstInvest && that.activityStatus === 2) {
+              that.showRewardHead = false
+            } else {
+              that.showRewardHead = true
+            }
+          }
+        })
+      },
+      takeReward: function () {
+        var that = this
+        that.$http.post('/hongcai/rest/activitys/mango/0/takeReward?token=' + that.token, {
+        }).then(function (response) {
+          if (response.data && response.data.ret !== -1) {
+            that.showMask = true
+            response.data.success ? that.receiveBox = true : that.upperLimit = true
+          } else {
+            alert(response.data.msg)
           }
         })
       },
       toMessage: function () {
-        this.ShowReceive()
         bridgeUtil.webConnectNative('HCNative_GoMessage', null, {}, function (response) {}, null)
       },
       toCheckAuth: function () {
-        this.ShowReceive()
         if (this.userAuth.active && this.userAuth.authStatus === 2) {
           this.toMessage()
         } else {
@@ -221,12 +241,12 @@
         }
       },
       toExchange: function () {
-        if (this.noInvest) {
+        if (!this.firstInvest) {
           bridgeUtil.webConnectNative('HCNative_GoInvestList', null, {}, function (response) {}, null)
-        } else if (this.notExchange && this.hasExchange) {
+        } else if (this.firstInvest && this.takeStatus === 2) {
           this.toMessage()
         } else {
-          this.getReward()
+          this.takeReward()
         }
       }
     }
