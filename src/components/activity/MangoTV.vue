@@ -156,7 +156,8 @@
         showMask: false,
         receiveBox: false,
         upperLimit: false,
-        rewardType: 0
+        rewardType: 0,
+        busy: false
       }
     },
     props: ['token'],
@@ -173,6 +174,8 @@
     },
     created: function () {
       this.getAllaward()
+      this.token ? this.getUserAuth() : ''
+      this.token ? this.getMyReward() : ''
     },
     methods: {
       ShowReceive: function () {
@@ -225,17 +228,30 @@
       },
       takeReward: function () {
         var that = this
-        that.$http.post('/hongcai/rest/activitys/mango/0/takeReward?token=' + that.token, {
+        if (that.busy) {
+          return
+        }
+        if (that.token === '') {
+          return
+        }
+        that.busy = true
+        setTimeout(function () {
+          that.busy = false
+        }, 300)
+        that.$http.post('/hongcai/rest/activitys/mango/0/takeReward', {
+          token: that.token
         }).then(function (response) {
           if (response.data && response.data.ret !== -1) {
             that.showMask = true
             response.data.success ? that.receiveBox = true : that.upperLimit = true
+            that.getMyReward()
           } else {
             alert(response.data.msg)
           }
         })
       },
       toMessage: function () {
+        this.showMask = false
         bridgeUtil.webConnectNative('HCNative_GoMessage', null, {}, function (response) {}, null)
       },
       toCheckAuth: function () {
