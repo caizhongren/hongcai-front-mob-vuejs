@@ -200,7 +200,6 @@
             that.Member = response.data.list
             that.monthCount = response.data.monthCount
             that.activityStatus = response.data.activityStatus
-            // that.activityStatus = 1
           }
         })
       },
@@ -211,7 +210,7 @@
           url: '/hongcai/rest/activitys/mango/0/myReward?token=' + that.token
         }).then(function (response) {
           if (response.data && response.data.ret !== -1) {
-            that.firstInvest = true
+            that.firstInvest = response.data.firstInvest
             that.takeStatus = response.data.takeStatus
             that.rewardType = response.data.rewardType
             if (!that.firstInvest && that.activityStatus === 2) {
