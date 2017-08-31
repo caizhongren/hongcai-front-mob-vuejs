@@ -138,6 +138,9 @@ let bridgeUtil = {
     })
   }
 }
+/**
+ * 滚动穿透问题
+ */
 let ModalHelper = (function (bodyCls) {
   return {
     scrollTop: document.scrollingElement ? document.scrollingElement.scrollTop : document.body.scrollTop,
@@ -157,8 +160,10 @@ let ModalHelper = (function (bodyCls) {
     }
   }
 })('modal-open')
+/**
+ * 两个日期相差天数
+ */
 let dateUtil = {
-  // 两个日期相差天数
   intervalDays: function (timeInMills1, timeInMills2) {
     var t1 = new Date(timeInMills1)
     var t2 = new Date(timeInMills2)
@@ -174,6 +179,9 @@ let dateUtil = {
     return Math.abs((t1.getTime() - t2.getTime()) / DAY_TIME_IN_MILLS)
   }
 }
+/**
+ * 发送验证码动画
+ */
 let sendMobCaptcha = {
   second: 60,
   countDown: function ($mobilecode) {
@@ -183,7 +191,7 @@ let sendMobCaptcha = {
       // $scope.canGetMobileCapcha = false
       $mobilecode.innerHTML = null
       $mobilecode.innerHTML = sendMobCaptcha.second + 's'
-      $mobilecode.className = 'sent'
+      $mobilecode.className = ''
       // 时间减一
       sendMobCaptcha.second -= 1
       // 一秒后重复执行
@@ -192,14 +200,16 @@ let sendMobCaptcha = {
       }, 1000)
       // 否则，按钮重置为初始状态,可点击
     } else {
-      $mobilecode.classList.remove('send')
+      $mobilecode.className += ' send'
       $mobilecode.innerHTML = '重新获取'
       sendMobCaptcha.second = 60
       // $scope.canGetMobileCapcha = true
     }
   }
 }
-// 安卓键盘弹出挡住输入框解决方法
+/**
+ * 安卓键盘弹出挡住输入框解决方法
+ */
 let InputMaskHelper = (function (eleCls) {
   return {
     focus: function (ele) {

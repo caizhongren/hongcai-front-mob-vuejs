@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mg-promotion">
-      <header @click="toActive">
+      <header>
         <img class="logo" src="../../images/mangoTV/logo.png" alt="宏财网" width="60%">
         <img class="header" src="../../images/mangoTV/act-head.png" alt="" width="100%">
         <p>携手宏财网&nbsp;&nbsp;&nbsp;开启新视野</p>
@@ -78,14 +78,15 @@
     </div>
     <div class="mask-common" v-show="showRegister" @click="closeMask">
       <div class="register-wrap" id="register">
+        <img src="../../images/mangoTV/mask-header.png" width="70%" alt="" class="mask-header">
         <form action="" name="registerForm">
           <div>
             <input type="mobile" id="mobile" name="mobile" placeholder="请输入手机号" v-model="user.mobile">
             <input type="text" id="picCaptcha" name="picCaptcha" placeholder="请输入图形验证码" v-model="user.picCaptcha">
             <span @click="refreshCode"><img id="checkCaptcha" alt="图形验证码" class="margin-auto displa-bl" width="100%"></span>
             <input type="text" id="captcha" name="captcha" placeholder="请输入短信验证码" v-model="user.captcha">
-            <span class="capcha-wrap" id="send" @click="getCaptcha">获取</span>
-            <button type="button" @click="register(user)" @blur="blurHandler">立即注册</button>
+            <span class="send" id="send" @click="getCaptcha">获取</span>
+            <button type="button" @click="register(user)">立即注册</button>
           </div>
         </form>
       </div>
@@ -153,9 +154,6 @@
             that.actEnding = response.data.activityStatus
           }
         })
-      },
-      toActive () {
-        window.location.href = 'http://192.168.80.226:8080/activity/mangoTv'
       },
       // 图形验证码
       refreshCode () {
@@ -256,7 +254,6 @@
         var _con = $('#register')
         if (_con.has($event.target).length === 0) {
           this.showRegister = false
-          this.blurHandler()
         }
       }
     }
@@ -278,7 +275,7 @@
     top: 2.8rem;
     left: 1.4rem;
     right: 1.4rem;
-    padding: .15rem 0;
+    padding: .14rem 0;
     background-color: rgba(0, 0, 0, 0.8);
     border-radius: .2rem;
     text-align: center;
@@ -474,13 +471,21 @@
   }
   /* 注册弹窗 */
   .mask-common .register-wrap {
-    margin: 1.5rem auto;
+    position: relative;
+    margin: 2.5rem auto;
     width: 88%;
-    /* height: 56%; */
-    height: 5.8rem;
-    background: url('../../images/mangoTV/mask-bg.png') no-repeat 0 0;
-    background-size: 100% 100%;
+    height: 4.8rem;
+    background-image: linear-gradient(to top, #f1456d, #fdd386);
+    border-radius: 12.5px;
+    /* background: url('../../images/mangoTV/mask-bg.png') no-repeat 0 0; */
+    box-shadow: 0 1px 0 0 rgba(61, 66, 64, 0.21);
+    border: solid 1px #5e1534;
     -webkit-overflow-scrolling: touch;
+  }
+  .register-wrap .mask-header {
+    position: absolute;
+    left: 14%;
+    top: -.9rem;
   }
   .register-wrap input {
     padding: 0 .4rem;
@@ -497,7 +502,7 @@
   }
   .register-wrap input:first-child {
     width: 60%;
-    margin-top: 1.6rem;
+    margin-top: 0.6rem;
   }
   .register-wrap input:nth-child(2), .register-wrap input:nth-child(4) {
     float: left;
@@ -518,7 +523,7 @@
     text-align: center;
     background: #fff; 
   }
-  form .capcha-wrap {
+  form .send {
     background-color: #ffde01;
   }
   form button {
