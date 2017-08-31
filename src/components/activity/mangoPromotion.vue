@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mg-promotion">
-      <header>
+      <header @click="toActive">
         <img class="logo" src="../../images/mangoTV/logo.png" alt="宏财网" width="60%">
         <img class="header" src="../../images/mangoTV/act-head.png" alt="" width="100%">
         <p>携手宏财网&nbsp;&nbsp;&nbsp;开启新视野</p>
@@ -80,12 +80,12 @@
       <div class="register-wrap" id="register">
         <form action="" name="registerForm">
           <div>
-            <input type="mobile" id="mobile" name="mobile" placeholder="请输入手机号" v-model="user.mobile ">
+            <input type="mobile" id="mobile" name="mobile" placeholder="请输入手机号" v-model="user.mobile">
             <input type="text" id="picCaptcha" name="picCaptcha" placeholder="请输入图形验证码" v-model="user.picCaptcha">
             <span @click="refreshCode"><img id="checkCaptcha" alt="图形验证码" class="margin-auto displa-bl" width="100%"></span>
             <input type="text" id="captcha" name="captcha" placeholder="请输入短信验证码" v-model="user.captcha">
             <span class="capcha-wrap" id="send" @click="getCaptcha">获取</span>
-            <button type="button" @click="register(user)">立即注册</button>
+            <button type="button" @click="register(user)" @blur="blurHandler">立即注册</button>
           </div>
         </form>
       </div>
@@ -95,7 +95,7 @@
 </template>
 <script>
   import $ from 'zepto'
-  import {Utils, sendMobCaptcha, ModalHelper} from '../../service/Utils'
+  import {Utils, sendMobCaptcha, ModalHelper, InputMaskHelper} from '../../service/Utils'
   export default {
     name: 'mgPromotion',
     data () {
@@ -131,18 +131,6 @@
       },
       'showRegister': function (newVal, oldVal) {
         newVal ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
-        // var that = this
-        // console.log(window.scrollY)
-        // if (that.showRegister) {
-        //   that.scrollTop = document.scrollingElement ? document.scrollingElement.scrollTop : $(window).scrollTop()
-        //   document.body.style.position = 'fixed'
-        //   document.body.style.width = '100%'
-        //   document.body.style.top = -that.scrollTop + 'px'
-        // } else {
-        //   document.body.style.position = 'static'
-        //   document.body.style.width = 'auto'
-        //   $(window).scrollTop(that.scrollTop)
-        // }
       }
     },
     created () {
@@ -150,6 +138,8 @@
     },
     mounted () {
       this.refreshCode()
+      var handleEle = document.getElementById('register')
+      InputMaskHelper.windowChange(handleEle)
     },
     methods: {
       getAward () {
@@ -163,6 +153,9 @@
             that.actEnding = response.data.activityStatus
           }
         })
+      },
+      toActive () {
+        window.location.href = 'http://192.168.80.226:8080/activity/mangoTv'
       },
       // 图形验证码
       refreshCode () {
@@ -263,6 +256,7 @@
         var _con = $('#register')
         if (_con.has($event.target).length === 0) {
           this.showRegister = false
+          this.blurHandler()
         }
       }
     }

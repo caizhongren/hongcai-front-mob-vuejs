@@ -56,9 +56,6 @@
           console.log(err)
         })
       }
-      // test () {
-      //   window.location.href = 'http://192.168.80.76:8080/activity/lottery'
-      // }
     }
   }
 </script>
