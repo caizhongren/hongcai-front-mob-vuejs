@@ -165,12 +165,14 @@
         if (!value || value === '') {
           alert('请先登录！')
         }
+        if (value && value !== '') {
+          this.getUserAuth()
+          this.getMyReward()
+        }
       }
     },
     created: function () {
       this.getAllaward()
-      this.getMyReward()
-      this.getUserAuth()
     },
     methods: {
       ShowReceive: function () {
