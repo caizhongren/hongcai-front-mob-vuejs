@@ -242,7 +242,7 @@
           token: that.token
         }).then(function (response) {
           if (response.data && response.data.ret !== -1) {
-            that.showMask = true
+            that.ShowReceive()
             response.data.success ? that.receiveBox = true : that.upperLimit = true
             that.getMyReward()
           } else {
