@@ -9,15 +9,15 @@
       <div class="gift">
         <p class="title">0元变身VIP，追星看剧更华丽</p>
         <div>
-          <img src="../../images/mangoTV/courtesy1-vip.png" alt="" class="vip-img">
-          <div class="content" v-show="actEnding === 1 && !user.registerSuccess">
+          <img src="../../images/mangoTV/courtesy1-vip.png" alt="" class="vip-img" v-if="actEnding === 1 && !user.registerSuccess || actEnding === 2">
+          <div class="content" v-if="actEnding === 1 && !user.registerSuccess">
             <p>现在注册认证宏财网，即可免费获得<span class="ft-important">芒果TV会员</span>1个月</p>
             <p>*每个账号限领一次</p>
             <span class="take-btn" @click="showRegister = true">立即变身VIP</span>
           </div>
           <img src="../../images/mangoTV/activityEnd.png" class="ending-img" alt="活动已结束" width="40%" v-show="actEnding === 2">
         </div>
-        <div class="success" v-show="actEnding === 1 && user.registerSuccess">
+        <div class="success" v-if="actEnding === 1 && user.registerSuccess">
           <img src="../../images/mangoTV/success-msg.png" width="60%" alt="">
           <p>您已获得芒果TV会员1个月奖励资格<br>下载宏财网App，登录首页开通存管即可获取</p>
           <!-- <p>下载宏财网App，登录首页开通存管即可获取</p> -->
@@ -105,9 +105,9 @@
         canGetCaptch: true,
         busy: false,
         actEnding: 1,
-        getPicCaptcha: '',
         errMsg: '',
         isIos: Utils.isIos(),
+        scrollTop: 0,
         user: {
           registerSuccess: false,
           mobileCaptchaType: 1,
@@ -129,8 +129,20 @@
       'user.captcha': function (newVal, oldVal) {
         this.user.captcha = newVal.length > 6 ? newVal.slice(0, 6) : newVal
       },
-      'showRegister': function (val) {
-        val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+      'showRegister': function (newVal, oldVal) {
+        newVal ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+        // var that = this
+        // console.log(window.scrollY)
+        // if (that.showRegister) {
+        //   that.scrollTop = document.scrollingElement ? document.scrollingElement.scrollTop : $(window).scrollTop()
+        //   document.body.style.position = 'fixed'
+        //   document.body.style.width = '100%'
+        //   document.body.style.top = -that.scrollTop + 'px'
+        // } else {
+        //   document.body.style.position = 'static'
+        //   document.body.style.width = 'auto'
+        //   $(window).scrollTop(that.scrollTop)
+        // }
       }
     },
     created () {
@@ -154,13 +166,11 @@
       },
       // 图形验证码
       refreshCode () {
-        var that = this
         this.$http.get('/hongcai/rest/captchas', {
           code: Math.random()
         })
         .then(function (res) {
           $('#checkCaptcha').attr({'src': 'data:image/png;base64,' + res.data.data})
-          console.log(that.getCaptcha)
         })
         .catch(function (err) {
           console.log(err)
@@ -289,6 +299,8 @@
     background-size: 100% 100%;
     overflow: hidden;
     font-family: PingFang-SC;
+    width: 100%;
+    /* position: fixed; */
   }
   header {
     position: relative;
@@ -470,9 +482,11 @@
   .mask-common .register-wrap {
     margin: 1.5rem auto;
     width: 88%;
-    height: 56%;
+    /* height: 56%; */
+    height: 5.8rem;
     background: url('../../images/mangoTV/mask-bg.png') no-repeat 0 0;
     background-size: 100% 100%;
+    -webkit-overflow-scrolling: touch;
   }
   .register-wrap input {
     padding: 0 .4rem;

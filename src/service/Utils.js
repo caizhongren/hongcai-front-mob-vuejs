@@ -138,18 +138,21 @@ let bridgeUtil = {
   }
 }
 let ModalHelper = (function (bodyCls) {
-  var scrollTop
   return {
+    scrollTop: document.scrollingElement ? document.scrollingElement.scrollTop : document.body.scrollTop,
     afterOpen: function () {
-      scrollTop = document.scrollingElement.scrollTop
+      ModalHelper.scrollTop = document.scrollingElement ? document.scrollingElement.scrollTop : document.body.scrollTop
       document.body.classList.add(bodyCls)
-      document.body.style.top = -scrollTop + 'px'
+      document.body.style.top = -ModalHelper.scrollTop + 'px'
     },
     beforeClose: function () {
       document.body.classList.remove(bodyCls)
       document.body.removeAttribute('style')
-      // scrollTop lost after set position:fixed, restore it back.
-      document.scrollingElement.scrollTop = scrollTop
+      if (document.scrollingElement) {
+        document.scrollingElement.scrollTop = ModalHelper.scrollTop
+      } else {
+        document.body.scrollTop = ModalHelper.scrollTop
+      }
     }
   }
 })('modal-open')
@@ -187,7 +190,7 @@ let sendMobCaptcha = {
       }, 1000)
       // 否则，按钮重置为初始状态,可点击
     } else {
-      $mobilecode.class.classList.remove('send')
+      $mobilecode.classList.remove('send')
       $mobilecode.innerHTML = '重新获取'
       sendMobCaptcha.second = 60
       // $scope.canGetMobileCapcha = true
