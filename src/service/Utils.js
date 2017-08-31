@@ -1,3 +1,4 @@
+import $ from 'zepto'
 let Utils = {
   isWeixin: function () {
     var ua = navigator.userAgent.toLowerCase()
@@ -157,6 +158,7 @@ let ModalHelper = (function (bodyCls) {
   }
 })('modal-open')
 let dateUtil = {
+  // 两个日期相差天数
   intervalDays: function (timeInMills1, timeInMills2) {
     var t1 = new Date(timeInMills1)
     var t2 = new Date(timeInMills2)
@@ -197,9 +199,35 @@ let sendMobCaptcha = {
     }
   }
 }
+// 安卓键盘弹出挡住输入框解决方法
+let InputMaskHelper = (function (eleCls) {
+  return {
+    focus: function (ele) {
+      if (Utils.isAndroid()) {
+        ele.classList.add(eleCls)
+      }
+    },
+    blur: function (ele) {
+      if (Utils.isAndroid()) {
+        ele.classList.remove(eleCls)
+      }
+    },
+    windowChange: function (ele) {
+      var winHeight = $(window).height()
+      window.addEventListener('resize', function () {
+        if ($(window).height() < winHeight) {
+          setTimeout(InputMaskHelper.focus(ele), 0)
+        } else {
+          InputMaskHelper.blur(ele)
+        }
+      })
+    }
+  }
+})('input-focus')
 export {Utils}
 export {InviteShareUtils}
 export {bridgeUtil}
 export {ModalHelper}
 export {dateUtil}
 export {sendMobCaptcha}
+export {InputMaskHelper}
