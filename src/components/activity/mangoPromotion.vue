@@ -227,7 +227,7 @@
             that.busy = false
           }, 1000)
           if (res.data.code && res.data.ret === -1) {
-            that.showErrMsg(true, res.data.msg)
+            that.showErrMsg(res.data.msg)
             return
           }
           // 注册成功
