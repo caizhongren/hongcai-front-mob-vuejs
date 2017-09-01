@@ -92,7 +92,6 @@
         </form>
       </div>
     </div>
-    <p id="err" v-show="showErr">{{errMsg}}</p>
   </div>
 </template>
 <script>
@@ -103,11 +102,11 @@
     data () {
       return {
         showRegister: false,
-        showErr: false,
+        // showErr: false,
         canGetCaptch: true,
         busy: false,
         actEnding: 1,
-        errMsg: '',
+        // errMsg: '',
         isIos: Utils.isIos(),
         scrollTop: 0,
         user: {
@@ -121,6 +120,7 @@
         cards: []
       }
     },
+    props: ['showErrMsg'],
     watch: {
       'user.mobile': function (newVal, oldVal) {
         this.user.mobile = newVal.length > 11 ? newVal.slice(0, 11) : newVal
@@ -175,7 +175,7 @@
         var mobilePattern = /^((13[0-9])|(15[^4,\D])|(18[0-9])|(17[03678])|(14[0-9]))\d{8}$/
         var that = this
         if (!mobilePattern.test(that.user.mobile)) {
-          that.showErrMsg(true, '手机号码格式有误')
+          that.showErrMsg('手机号码格式有误')
           return
         }
         that.canGetCaptch = false
@@ -192,7 +192,7 @@
             that.canGetCaptch = true
           }, 1000)
           if (!res.data || res.data.ret === -1) {
-            that.showErrMsg(true, res.data.msg)
+            that.showErrMsg(res.data.msg)
             return
           }
           var $send = document.getElementById('send')
@@ -203,7 +203,7 @@
             that.canGetCaptch = true
           }, 1000)
           console.log(err)
-          that.showErrMsg(true, '验证码发送失败')
+          that.showErrMsg('验证码发送失败')
         })
       },
       register (user) {
@@ -241,16 +241,6 @@
           console.log(err)
         })
       },
-      showErrMsg (isShow, msg) {
-        this.showErr = isShow
-        this.errMsg = msg
-        var that = this
-        setTimeout(function () {
-          that.showErr = false
-          that.errMsg = ''
-        }, 2000)
-      },
-      // 点击蒙层关闭弹窗
       closeMask ($event) {
         var _con = $('#register')
         if (_con.has($event.target).length === 0) {
@@ -269,20 +259,6 @@
     color: #333;
     font-size: .22rem;
     background-color: #fab281;
-  }
-  /* 错误提示 */
-  #err {
-    position: fixed;
-    top: 2.8rem;
-    left: 1.4rem;
-    right: 1.4rem;
-    padding: .14rem 0;
-    background-color: rgba(0, 0, 0, 0.8);
-    border-radius: .2rem;
-    text-align: center;
-    font-size: .23rem;
-    color: #fff;
-    z-index: 10000000;
   }
   /* 主页面 */
   .mg-promotion {

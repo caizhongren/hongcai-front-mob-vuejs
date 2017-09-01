@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <router-view :token="token"></router-view>
+    <router-view :token="token" :showErrMsg="showErrMsg"></router-view>
+    <p id="err" v-show="showErr">{{errMsg}}</p>
   </div>
 </template>
 
@@ -13,7 +14,9 @@ export default {
   name: 'app',
   data () {
     return {
-      token: ''
+      token: '',
+      showErr: false,
+      errMsg: ''
     }
   },
   created: function () {
@@ -32,6 +35,15 @@ export default {
       bridgeUtil.webConnectNative('', 'HCWeb_LoginSuccess', {}, function (res) {}, function (data) {
         that.token = Utils.isAndroid() ? JSON.parse(data).token : data.token
       })
+    },
+    showErrMsg (msg) {
+      this.showErr = true
+      this.errMsg = msg
+      var that = this
+      setTimeout(function () {
+        that.showErr = false
+        that.errMsg = ''
+      }, 2000)
     }
   },
   watch: {
@@ -80,5 +92,18 @@ Vue.directive('auto-height', function (el, binding) {
     float: left;
     width: 33.33%;
   }
-  
+  /* 错误提示 */
+  #err {
+    position: fixed;
+    top: 2.8rem;
+    left: 1.4rem;
+    right: 1.4rem;
+    padding: .14rem 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: .2rem;
+    text-align: center;
+    font-size: .23rem;
+    color: #fff;
+    z-index: 10000000;
+  }
 </style>
