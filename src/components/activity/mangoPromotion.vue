@@ -30,8 +30,8 @@
         <ul class="card-list">
           <li class="vip-card" v-for="card in cards">
             <p>首笔投资满{{card.minInvestAmount || 0}}元</p>
-            <img src="../../images/mangoTV/act-ending.png" width="50%" class="position-ab" v-if="card.status === 2">
           </li>
+          <img src="../../images/mangoTV/act-ending.png" width="50%" class="position-ab" v-if="actEnding === 2">
         </ul>
         <p class="tip">
           *温馨提示:<br>
@@ -102,11 +102,9 @@
     data () {
       return {
         showRegister: false,
-        // showErr: false,
         canGetCaptch: true,
         busy: false,
         actEnding: 1,
-        // errMsg: '',
         isIos: Utils.isIos(),
         scrollTop: 0,
         user: {
@@ -375,9 +373,9 @@
   }
   .gift2 .card-list {
     padding: .55rem 0.05rem 0 0rem;
+    position: relative;
   }
   .gift2 .card-list li {
-    position: relative;
     width: 44%;
     height: 1.8rem;
     box-sizing: content-box;
@@ -388,9 +386,9 @@
     background: url('../../images/mangoTV/vip1.png') no-repeat 0 0;
     background-size: 100% 100%;
   }
-  .gift2 .card-list li img {
+  .gift2 .card-list img {
     left: 25%;
-    top: 18%;
+    top: 19%;
   }
   .vip-card:first-child + li {
     background: url('../../images/mangoTV/vip2.png') no-repeat 0 0;
