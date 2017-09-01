@@ -1,6 +1,6 @@
 <template>
   <!-- activityStatus(1: 活动未结束，2: 活动结束), firstInvest: 是否首投, takeStatus: (1: 未领取, 2: 已领取, 3: 未达标), rewardType: (0: 无奖励, 2: 三个月VIP, 3: 半年VIP, 4: 全年VIP, 5: 全年全屏VIP) -->
-  <div class="Mango" v-bind:class="{ 'padding-b-5': !isIos }" v-if="token !== ''">
+  <div class="Mango" v-bind:class="{ 'padding-b-5': !isIos }">
     <div class="head-img">
       <div class="logo"></div>
       <div class="head-txt">携手宏财网 &nbsp;&nbsp;&nbsp; 开启新视界</div>
