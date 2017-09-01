@@ -57,7 +57,9 @@
             <!-- 奖励已兑换 -->
             <img src="../../images/mangoTV/act-exchange.png" alt="" class="exchange" v-show="takeStatus === 2">
           </div>
-          <div class="InvestBtn" @click="toExchange()" v-show="takeStatus !== 3">{{!firstInvest ? '立即投资' : firstInvest && takeStatus === 2 ? '查看兑换码' : '立即兑换'}}</div>
+          <div class="InvestBtn" @click="toMessage()" v-show="firstInvest && takeStatus === 2">查看兑换码</div>
+          <div class="InvestBtn" @click="takeReward()" v-show="firstInvest && takeStatus === 1">立即兑换</div>
+          <div class="InvestBtn" @click="toInvestList()" v-show="!firstInvest">立即投资</div>
         </div>
         <div class="hot-tips">
           *温馨提示: <br>
@@ -261,14 +263,8 @@
           bridgeUtil.webConnectNative('HCNative_CheckUserAuth', null, {}, function (response) {}, null)
         }
       },
-      toExchange: function () {
-        if (!this.firstInvest) {
-          bridgeUtil.webConnectNative('HCNative_GoInvestList', null, {}, function (response) {}, null)
-        } else if (this.firstInvest && this.takeStatus === 2) {
-          this.toMessage()
-        } else {
-          this.takeReward()
-        }
+      toInvestList: function () {
+        bridgeUtil.webConnectNative('HCNative_GoInvestList', null, {}, function (response) {}, null)
       }
     }
   }
