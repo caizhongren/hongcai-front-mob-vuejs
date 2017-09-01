@@ -1,6 +1,6 @@
 <template>
   <!-- activityStatus(1: 活动未结束，2: 活动结束), firstInvest: 是否首投, takeStatus: (1: 未领取, 2: 已领取, 3: 未达标), rewardType: (0: 无奖励, 2: 三个月VIP, 3: 半年VIP, 4: 全年VIP, 5: 全年全屏VIP) -->
-  <div class="Mango" v-bind:class="{ 'padding-b-5': !isIos }">
+  <div class="Mango">
     <div class="head-img">
       <div class="logo"></div>
       <div class="head-txt">携手宏财网 &nbsp;&nbsp;&nbsp; 开启新视界</div>
@@ -270,9 +270,6 @@
   }
 </script>
 <style scoped>
-  .padding-b-5 {
-    padding-bottom: .5rem;
-  }
   .margin-b-1 {
     margin-bottom: .35rem;
   }
@@ -287,7 +284,7 @@
     font-family: PingFang-SC;
   }
   .courtesies {
-    padding: 0 .3rem 0 .15rem;
+    /* padding: 0 .29rem 0 .14rem; */
   }
   .logo {
     width: 100%;
@@ -320,17 +317,16 @@
   .courtesy1 {
     width: 100%;
     margin-top: -.8rem;
-    padding-top: 1rem;
-    padding-left: .1rem;
-    height: 1.6rem;
-    background: url('../../images/mangoTV/act-courtesy1.png') no-repeat center center;
+    padding-top: 1.02rem;
+    height: 1.63rem;
+    background: url('../../images/mangoTV/act-courtesy1.png') no-repeat .09rem 0;
     background-size: contain;
   }
   .courtesy2 {
     width: 100%;
-    height: 1.6rem;
-    padding-top: 1rem;
-    background: url('../../images/mangoTV/act-courtesy2-head.png') no-repeat center center;
+    height: 1.63rem;
+    padding-top: 1.02rem;
+    background: url('../../images/mangoTV/act-courtesy2-head.png') no-repeat .098rem 0;
     background-size: contain;
     margin-top: .25rem;
   }
@@ -345,7 +341,7 @@
   .courtesy1-content {
     overflow: hidden;
     clear: both;
-    margin: 0rem 0.02rem 0 .2rem;
+    margin: -1px 4.4% 0 4.3%;
     text-align: center;
   }
   .courtesy1-lf, .courtesy1-rt {
@@ -422,7 +418,7 @@
     background-size: contain;
   }
   .courtesy2-content {
-    margin: 0 0.02rem 0 .17rem;
+    margin: -1px 4.2% 0 4.2%;
     padding: 0 .25rem .2rem;
   }
   .courtesy2-card {
@@ -528,12 +524,13 @@
   .hot-tips {
     color: #ff4b64;
     text-align: justify;
+    font-size: .2rem;
   }
   .ruleBox {
     text-align: justify;
     color: rgba(51, 51, 51, 0.87);
     font-size: .24rem;
-    margin: -1px .28rem .3rem .29rem;
+    margin: -1px 4.31% .8rem 4.4%;
     
   }
   .rule-head {
@@ -567,8 +564,8 @@
   .iosTip {
     font-size: .21rem;
     color: #333333;
-    height: 1rem;
-    line-height: 1rem;
+    height: .6rem;
+    line-height: .62rem;
 	  background-color: #fab281;
   }
   .successBg {
@@ -628,14 +625,17 @@
     and (max-device-width : 1024px) 
     and (orientation : portrait) { 
     /* STYLES */ 
-    .courtesy1-content {
-      margin: 0rem 0.42rem 0 .6rem;
+    .courtesy1 {
+      height: 1.838rem;
     }
-    .courtesy2-content {
-      margin: 0rem 0.42rem 0 .58rem;
+    .courtesy2 {
+      height: 1.838rem;
+    }
+    .rule-head {
+      height: 2.2rem;
     }
     .ruleBox {
-      margin: -1px .68rem .3rem .69rem;
+      margin: -1px .32rem .8rem .32rem;
     }
   }
 </style>

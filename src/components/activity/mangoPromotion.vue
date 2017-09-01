@@ -262,8 +262,8 @@
 <style scoped>
   .statement {
     width: 100%;
-    height: .9rem;
-    line-height: 1rem;
+    height: .6rem;
+    line-height: .7rem;
     text-align: center;
     color: #333;
     font-size: .22rem;
