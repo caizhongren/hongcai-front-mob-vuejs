@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <div class="mg-promotion">
@@ -35,7 +36,7 @@
         <p class="tip">
           *温馨提示:<br>
           活动首投仅限宏财精选、宏财尊贵项目有效，债权转让项目不参与本次活动。<br>
-          奖励剩余数量每分钟更新一次。
+          奖励数量每分钟更新一次。
         </p>
       </div>
       <div class="about">
@@ -57,7 +58,7 @@
             </div>
             <div class="words">
               <p>2016年加入网贷行业协会，首批接入北京存管通平台，所有投资信息实时上传北京金融局等监管部门</p>
-              <p>2017年6月正式上线海口农商银行资金存管，实现银行级资金安全保障</p>
+              <p>2017年6月正式上线海口联合农商银行资金存管，实现银行级资金安全保障</p>
             </div>
           </li>
           <li>
@@ -461,8 +462,8 @@
   .about-list li .title {
     height: 53px;
     line-height: 53px;
-    width: 102%;
-    margin-left: -1%;
+    width: 100%;
+    border-radius: .1rem .1rem 0 0;
 	  background-color: #45c7a9;
     background-image: url('../../images/mangoTV/about-title-bg.png');
     background-repeat: no-repeat;
