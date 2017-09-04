@@ -84,7 +84,7 @@
           <div>
             <input type="tel" id="mobile" name="mobile" placeholder="请输入手机号" v-model="user.mobile" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler">
             <input type="text" id="picCaptcha" name="picCaptcha" placeholder="请输入图形验证码" v-model="user.picCaptcha" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler(e)">
-            <span @click="refreshCode"><img id="checkCaptcha" alt="图形验证码" class="margin-auto displa-bl" width="100%"></span>
+            <span @click="refreshCode"><img id="checkCaptcha" alt="图形验证码" class="margin-auto displa-bl" width="100%" height="100%"></span>
             <input type="tel" id="captcha" name="captcha" placeholder="请输入短信验证码" v-model="user.captcha" v-on:input="oninputHandler2" v-on:beforepaste="beforepasteHandler(e)">
             <span class="send" id="send" @click="getCaptcha">获取</span>
             <button type="button" @click="register(user)">立即注册</button>
@@ -215,8 +215,8 @@
           setTimeout(function () {
             that.canGetCaptch = true
           }, 1000)
-          if (!res.data || res.data.ret === -1) {
-            that.showErrMsg(res.data.msg)
+          if (res.data.code || res.data.ret === -1) {
+            res.data.code === -1005 ? alert('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！') : that.showErrMsg(res.data.msg)
             return
           }
           var $send = document.getElementById('send')
@@ -251,7 +251,13 @@
             that.busy = false
           }, 1000)
           if (res.data.code && res.data.ret === -1) {
-            res.data.code === -1003 ? that.showErrMsg('请输入正确的手机号！') : that.showErrMsg(res.data.msg)
+            if (res.data.code === -1003) {
+              that.showErrMsg('请输入正确的手机号！')
+            } else if (res.data.code === -1005) {
+              alert('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！')
+            } else {
+              that.showErrMsg(res.data.msg)
+            }
             return
           }
           // 注册成功
