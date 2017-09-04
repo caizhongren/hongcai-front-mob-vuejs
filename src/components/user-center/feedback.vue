@@ -5,7 +5,7 @@
       <p>为了给您更好的服务，请详细描述您的问题或建议，我们将及时跟进解决，不断优化产品！</p>
     </div>
     <form action="" name="fadebackForm">
-      <textarea name="" id="feedbackInfo" cols="6" rows="5" placeholder="你想吐槽的原因：" v-model="feedbackInfo" required></textarea>
+      <textarea name="" id="feedbackInfo" cols="6" rows="5" placeholder="您想吐槽的原因：" v-model="feedbackInfo" required></textarea>
       <p class="btn" :disabled="busy || !feedbackInfo" :class="{'disabled-btn': busy || !feedbackInfo}" @click="postFeesback()">
         提交
       </p>
