@@ -5,7 +5,7 @@
       <header class="position-re">
         <img class="logo position-ab" src="../../images/mangoTV/logo.png" alt="宏财网" width="60%">
         <img class="header" src="../../images/mangoTV/act-head.png" alt="" width="100%">
-        <p class="ft-white position-ab">携手宏财网&nbsp;&nbsp;&nbsp;开启新视野</p>
+        <p class="ft-white position-ab">携手宏财网&nbsp;&nbsp;&nbsp;开启新视界</p>
       </header>
       <div class="gift">
         <p class="title ft-white">0元变身VIP，追星看剧更华丽</p>
@@ -35,8 +35,7 @@
         </ul>
         <p class="tip text-justify">
           *温馨提示:<br>
-          活动首投仅限宏财精选、宏财尊贵项目有效，债权转让项目不参与本次活动。<br>
-          奖励数量每分钟更新一次。
+          活动首投仅限宏财精选、宏财尊贵项目有效，债权转让项目不参与本次活动。
         </p>
       </div>
       <div class="about">
@@ -168,7 +167,17 @@
       },
       // 用户点击获取
       getCaptcha () {
-        if (!this.canGetCaptch || !this.user.mobile || !this.user.picCaptcha) { return }
+        if (!this.canGetCaptch) {
+          return
+        }
+        if (!this.user.mobile) {
+          this.showErrMsg('请输入手机号！')
+          return
+        }
+        if (!this.user.picCaptcha) {
+          this.showErrMsg('请输入图形验证码！')
+          return
+        }
         // 校验手机号
         var mobilePattern = /^((13[0-9])|(15[^4,\D])|(18[0-9])|(17[03678])|(14[0-9]))\d{8}$/
         var that = this
@@ -206,10 +215,19 @@
       },
       register (user) {
         if (this.busy) { return }
-        var that = this
-        if (!user.mobile || !user.picCaptcha || !user.captcha) {
+        if (!user.mobile) {
+          this.showErrMsg('请输入手机号！')
           return
         }
+        if (!user.picCaptcha) {
+          this.showErrMsg('请输入图形验证码！')
+          return
+        }
+        if (!user.captcha) {
+          this.showErrMsg('请输入短信验证码！')
+          return
+        }
+        var that = this
         that.busy = true
         that.$http.post('/hongcai/rest/users/register', {
           picCaptcha: user.picCaptcha,

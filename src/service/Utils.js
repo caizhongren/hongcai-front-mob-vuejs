@@ -186,7 +186,7 @@ let sendMobCaptcha = {
   second: 60,
   countDown: function ($mobilecode) {
     // 如果秒数还是大于0，则表示倒计时还没结束
-    if (sendMobCaptcha.second >= 0) {
+    if (sendMobCaptcha.second > 0) {
       // 倒计时不结束按钮不可点
       // $scope.canGetMobileCapcha = false
       $mobilecode.innerHTML = null
