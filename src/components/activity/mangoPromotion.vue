@@ -185,17 +185,17 @@
           this.showErrMsg('请输入手机号！')
           return
         }
+        // 校验手机号
+        var mobilePattern = /^((13[0-9])|(15[^4,\D])|(18[0-9])|(17[03678])|(14[0-9]))\d{8}$/
+        if (!mobilePattern.test(this.user.mobile)) {
+          this.showErrMsg('请输入正确的手机号！')
+          return
+        }
         if (!this.user.picCaptcha) {
           this.showErrMsg('请输入图形验证码！')
           return
         }
-        // 校验手机号
-        var mobilePattern = /^((13[0-9])|(15[^4,\D])|(18[0-9])|(17[03678])|(14[0-9]))\d{8}$/
         var that = this
-        if (!mobilePattern.test(that.user.mobile)) {
-          that.showErrMsg('请输入正确的手机号！')
-          return
-        }
         that.canGetCaptch = false
         // 短信验证码接口 & 动画
         that.$http.post('/hongcai/rest/users/mobileCaptcha', {
