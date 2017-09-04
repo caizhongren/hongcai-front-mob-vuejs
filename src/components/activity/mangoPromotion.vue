@@ -84,7 +84,7 @@
           <div>
             <input type="tel" id="mobile" name="mobile" placeholder="请输入手机号" v-model="user.mobile" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler">
             <input type="text" id="picCaptcha" name="picCaptcha" placeholder="请输入图形验证码" v-model="user.picCaptcha" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler(e)">
-            <span @click="refreshCode"><img id="checkCaptcha" alt="图形验证码" class="margin-auto displa-bl" width="100%" height="100%"></span>
+            <span @click="refreshCode"><img id="checkCaptcha" alt="图形验证码" class="margin-auto displa-bl" width="100%" height="90%"></span>
             <input type="tel" id="captcha" name="captcha" placeholder="请输入短信验证码" v-model="user.captcha" v-on:input="oninputHandler2" v-on:beforepaste="beforepasteHandler(e)">
             <span class="send" id="send" @click="getCaptcha">获取</span>
             <button type="button" @click="register(user)">立即注册</button>
@@ -121,15 +121,6 @@
     },
     props: ['showErrMsg'],
     watch: {
-      'user.mobile': function (newVal, oldVal) {
-        this.user.mobile = newVal.length > 11 ? newVal.slice(0, 11) : newVal
-      },
-      'user.picCaptcha': function (newVal, oldVal) {
-        this.user.picCaptcha = newVal.length > 4 ? newVal.slice(0, 4) : newVal
-      },
-      'user.captcha': function (newVal, oldVal) {
-        this.user.captcha = newVal.length > 6 ? newVal.slice(0, 6) : newVal
-      },
       'showRegister': function (newVal, oldVal) {
         newVal ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
@@ -145,17 +136,20 @@
     methods: {
       oninputHandler () {
         this.user.mobile = this.user.mobile.replace(/\D/g, '')
+        this.user.mobile = this.user.mobile.length > 11 ? this.user.mobile.slice(0, 11) : this.user.mobile
       },
       beforepasteHandler (e) {
         e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/\D/g, ''))
       },
       oninputHandler1 () {
+        this.user.picCaptcha = this.user.picCaptcha.length > 4 ? this.user.picCaptcha.slice(0, 4) : this.user.picCaptcha
         this.user.picCaptcha = this.user.picCaptcha.replace(/[\W]/g, '')
       },
       beforepasteHandler1 (e) {
         e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/[\W]/g, ''))
       },
       oninputHandler2 () {
+        this.user.captcha = this.user.captcha.length > 6 ? this.user.captcha.slice(0, 6) : this.user.captcha
         this.user.captcha = this.user.captcha.replace(/\D/g, '')
       },
       getAward () {

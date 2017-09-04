@@ -234,6 +234,9 @@ let InputMaskHelper = (function (eleCls) {
     }
   }
 })('input-focus')
+/**
+ * TODO 输入框粘贴限制 & 输入类型
+ */
 let checkInputUtil = {
   beforepasteHandler: function (e, reg) {
     e.clipboardData.setData('text', e.clipboardData.getData('text').replace(reg, ''))
