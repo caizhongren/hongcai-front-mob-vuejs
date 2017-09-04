@@ -182,7 +182,7 @@
         var mobilePattern = /^((13[0-9])|(15[^4,\D])|(18[0-9])|(17[03678])|(14[0-9]))\d{8}$/
         var that = this
         if (!mobilePattern.test(that.user.mobile)) {
-          that.showErrMsg('手机号码格式有误')
+          that.showErrMsg('请输入正确的手机号！')
           return
         }
         that.canGetCaptch = false
@@ -215,16 +215,7 @@
       },
       register (user) {
         if (this.busy) { return }
-        if (!user.mobile) {
-          this.showErrMsg('请输入手机号！')
-          return
-        }
-        if (!user.picCaptcha) {
-          this.showErrMsg('请输入图形验证码！')
-          return
-        }
-        if (!user.captcha) {
-          this.showErrMsg('请输入短信验证码！')
+        if (!user.mobile || !user.picCaptcha || !user.captcha) {
           return
         }
         var that = this
