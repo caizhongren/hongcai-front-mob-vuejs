@@ -78,13 +78,14 @@
     </div>
     <div class="mask-common" v-show="showRegister" @click="closeMask">
       <div class="register-wrap position-re" id="register">
+        <img src="../../images/summer-plan/close.png" alt="" width="13.5%" height="33%" class="position-ab close" @click="showRegister = false">
         <img src="../../images/mangoTV/mask-header.png" width="70%" alt="" class="mask-header position-ab">
-        <form action="" name="registerForm">
+        <form action="#" name="registerForm">
           <div>
-            <input type="mobile" id="mobile" name="mobile" placeholder="请输入手机号" v-model="user.mobile">
-            <input type="text" id="picCaptcha" name="picCaptcha" placeholder="请输入图形验证码" v-model="user.picCaptcha">
+            <input type="tel" id="mobile" name="mobile" placeholder="请输入手机号" v-model="user.mobile" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler">
+            <input type="text" id="picCaptcha" name="picCaptcha" placeholder="请输入图形验证码" v-model="user.picCaptcha" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler(e)">
             <span @click="refreshCode"><img id="checkCaptcha" alt="图形验证码" class="margin-auto displa-bl" width="100%"></span>
-            <input type="text" id="captcha" name="captcha" placeholder="请输入短信验证码" v-model="user.captcha">
+            <input type="tel" id="captcha" name="captcha" placeholder="请输入短信验证码" v-model="user.captcha" v-on:input="oninputHandler2" v-on:beforepaste="beforepasteHandler(e)">
             <span class="send" id="send" @click="getCaptcha">获取</span>
             <button type="button" @click="register(user)">立即注册</button>
           </div>
@@ -95,7 +96,7 @@
 </template>
 <script>
   import $ from 'zepto'
-  import {Utils, sendMobCaptcha, ModalHelper, InputMaskHelper} from '../../service/Utils'
+  import {Utils, sendMobCaptcha, ModalHelper, InputMaskHelper, checkInputUtil} from '../../service/Utils'
   export default {
     name: 'mgPromotion',
     data () {
@@ -105,6 +106,7 @@
         busy: false,
         actEnding: 1,
         isIos: Utils.isIos(),
+        inputUtil: checkInputUtil,
         scrollTop: 0,
         user: {
           registerSuccess: false,
@@ -141,6 +143,21 @@
       InputMaskHelper.windowChange(handleEle)
     },
     methods: {
+      oninputHandler () {
+        this.user.mobile = this.user.mobile.replace(/\D/g, '')
+      },
+      beforepasteHandler (e) {
+        e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/\D/g, ''))
+      },
+      oninputHandler1 () {
+        this.user.picCaptcha = this.user.picCaptcha.replace(/[\W]/g, '')
+      },
+      beforepasteHandler1 (e) {
+        e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/[\W]/g, ''))
+      },
+      oninputHandler2 () {
+        this.user.captcha = this.user.captcha.replace(/\D/g, '')
+      },
       getAward () {
         var that = this
         that.$http({
@@ -444,12 +461,19 @@
     margin: 2.5rem auto;
     width: 88%;
     height: 4.8rem;
+    background-image: -moz-linear-gradient(top, #f1456d, #fdd386);
+    background-image: -webkit-linear-gradient(top, #f1456d, #fdd386);
+    background-image: -o-linear-gradient(top, #f1456d, #fdd386);
     background-image: linear-gradient(to top, #f1456d, #fdd386);
     border-radius: 12.5px;
     /* background: url('../../images/mangoTV/mask-bg.png') no-repeat 0 0; */
     box-shadow: 0 1px 0 0 rgba(61, 66, 64, 0.21);
     border: solid 1px #5e1534;
     -webkit-overflow-scrolling: touch;
+  }
+  .register-wrap .close {
+    right: 0;
+    top: -1.55rem;
   }
   .register-wrap .mask-header {
     left: 14%;
