@@ -165,9 +165,6 @@
     props: ['token'],
     watch: {
       token: function (value) {
-        if (!value || value === '') {
-          alert('请先登录！')
-        }
         if (value && value !== '') {
           this.getUserAuth()
           this.getMyReward()
@@ -257,6 +254,10 @@
         bridgeUtil.webConnectNative('HCNative_GoMessage', null, {}, function (response) {}, null)
       },
       toCheckAuth: function () {
+        if (!this.token || this.token === '') {
+          alert('您还未登录，请先登录！')
+          return
+        }
         if (this.userAuth.active && this.userAuth.authStatus === 2) {
           this.toMessage()
         } else {
@@ -264,6 +265,10 @@
         }
       },
       toInvestList: function () {
+        if (!this.token || this.token === '') {
+          alert('您还未登录，请先登录！')
+          return
+        }
         bridgeUtil.webConnectNative('HCNative_GoInvestList', null, {}, function (response) {}, null)
       }
     }
