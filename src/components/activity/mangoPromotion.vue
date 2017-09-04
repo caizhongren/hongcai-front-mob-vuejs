@@ -234,7 +234,7 @@
             that.busy = false
           }, 1000)
           if (res.data.code && res.data.ret === -1) {
-            that.showErrMsg(res.data.msg)
+            res.data.code === -1003 ? that.showErrMsg('请输入正确的手机号！') : that.showErrMsg(res.data.msg)
             return
           }
           // 注册成功
@@ -366,7 +366,7 @@
   .gift2 {
     margin-top: .1rem;
     margin-bottom: .9rem;
-    height: 8rem;
+    height: 7.6rem;
     background: url('../../images/mangoTV/gift02.png') no-repeat center top;
     background-size: 100% 100%;
   }
@@ -409,7 +409,7 @@
   }
   .vip-card p:first-child {
     font-size: .26rem;
-    line-height: 11.9;
+    line-height: 11.86;
   }
   /* 关于我们 */
   .about .about-list li {
