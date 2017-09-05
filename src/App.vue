@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <router-view :token="token" :showErrMsg="showErrMsg"></router-view>
-    <p id="err" v-show="showErr">{{errMsg}}</p>
-    <div class="mask-common mask1" v-show="showLongErr">
-      <div class="alert-wrap">
+    <div class="mask-common mask1" v-show="showLongErr || showErr">
+      <p id="err" v-show="showErr">{{errMsg}}</p>
+      <div class="alert-wrap" v-show="showLongErr">
         <div class="text">
           {{errMsg}}
         </div>

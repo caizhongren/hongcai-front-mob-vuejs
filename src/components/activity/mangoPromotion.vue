@@ -130,6 +130,7 @@
           that.user.mobile = ''
           that.user.picCaptcha = ''
           that.user.captcha = ''
+          $('#send').innerHTML = '获取'
         }
       }
     },
