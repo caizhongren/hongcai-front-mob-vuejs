@@ -122,7 +122,15 @@
     props: ['showErrMsg'],
     watch: {
       'showRegister': function (newVal, oldVal) {
-        newVal ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+        var that = this
+        if (newVal) {
+          ModalHelper.afterOpen()
+        } else {
+          ModalHelper.beforeClose()
+          that.user.mobile = ''
+          that.user.picCaptcha = ''
+          that.user.captcha = ''
+        }
       }
     },
     created () {
@@ -210,7 +218,12 @@
             that.canGetCaptch = true
           }, 1000)
           if (res.data.code || res.data.ret === -1) {
-            res.data.code === -1005 ? alert('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！') : that.showErrMsg(res.data.msg)
+            if (res.data.code === -1005) {
+              that.showRegister = false
+              that.showErrMsg('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！', 1)
+            } else {
+              that.showErrMsg(res.data.msg)
+            }
             return
           }
           var $send = document.getElementById('send')
@@ -248,7 +261,8 @@
             if (res.data.code === -1003) {
               that.showErrMsg('请输入正确的手机号！')
             } else if (res.data.code === -1005) {
-              alert('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！')
+              that.showRegister = false
+              that.showErrMsg('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！', 1)
             } else {
               that.showErrMsg(res.data.msg)
             }
