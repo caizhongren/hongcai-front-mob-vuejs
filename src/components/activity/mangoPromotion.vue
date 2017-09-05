@@ -203,6 +203,9 @@
           this.showErrMsg('请输入图形验证码！')
           return
         }
+        if (!sendMobCaptcha.canGetMobileCapcha) {
+          return
+        }
         var that = this
         that.canGetCaptch = false
         // 短信验证码接口 & 动画

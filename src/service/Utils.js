@@ -184,11 +184,12 @@ let dateUtil = {
  */
 let sendMobCaptcha = {
   second: 60,
+  canGetMobileCapcha: true,
   countDown: function ($mobilecode) {
     // 如果秒数还是大于0，则表示倒计时还没结束
     if (sendMobCaptcha.second > 0) {
       // 倒计时不结束按钮不可点
-      // $scope.canGetMobileCapcha = false
+      sendMobCaptcha.canGetMobileCapcha = false
       $mobilecode.innerHTML = null
       $mobilecode.innerHTML = sendMobCaptcha.second + 's'
       $mobilecode.className = ''
@@ -200,10 +201,10 @@ let sendMobCaptcha = {
       }, 1000)
       // 否则，按钮重置为初始状态,可点击
     } else {
+      sendMobCaptcha.canGetMobileCapcha = true
       $mobilecode.className += ' send'
       $mobilecode.innerHTML = '重新获取'
       sendMobCaptcha.second = 60
-      // $scope.canGetMobileCapcha = true
     }
   }
 }
