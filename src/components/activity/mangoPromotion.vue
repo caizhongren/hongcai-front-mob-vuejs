@@ -175,6 +175,7 @@
       },
       // 图形验证码
       refreshCode () {
+        $('#picCaptcha').focus()
         this.$http.get('/hongcai/rest/captchas', {
           code: Math.random()
         })
@@ -187,6 +188,7 @@
       },
       // 用户点击获取
       getCaptcha () {
+        $('#captcha').focus()
         if (!this.canGetCaptch) {
           return
         }
@@ -225,6 +227,9 @@
             if (res.data.code === -1005) {
               that.showRegister = false
               that.showErrMsg('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！', 1)
+              $('#mobile').blur()
+              $('#picCaptcha').blur()
+              $('#captcha').blur()
             } else {
               that.showErrMsg(res.data.msg)
             }
@@ -242,6 +247,7 @@
         })
       },
       register (user) {
+        $('#captcha').focus()
         if (this.busy) { return }
         if (!user.mobile || !user.picCaptcha || !user.captcha) {
           return
@@ -267,12 +273,16 @@
             } else if (res.data.code === -1005) {
               that.showRegister = false
               that.showErrMsg('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！', 1)
+              $('#mobile').blur()
+              $('#picCaptcha').blur()
+              $('#captcha').blur()
             } else {
               that.showErrMsg(res.data.msg)
             }
             return
           }
           // 注册成功
+          $('#captcha').blur()
           that.showRegister = false
           that.user.registerSuccess = true
         })
@@ -284,10 +294,10 @@
         })
       },
       closeMask ($event) {
-        var _con = $('#register')
-        if (_con.has($event.target).length === 0) {
-          this.showRegister = false
-        }
+        // var _con = $('#register')
+        // if (_con.has($event.target).length === 0) {
+        //   this.showRegister = false
+        // }
       }
     }
   }

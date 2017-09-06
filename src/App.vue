@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <router-view :token="token" :showErrMsg="showErrMsg"></router-view>
-    <div class="mask-common mask1" v-show="showLongErr || showErr">
-      <p id="err" v-show="showErr">{{errMsg}}</p>
+    <p id="err" v-show="showErr">{{errMsg}}</p>
+    <div class="mask-common mask1" v-show="showLongErr">
       <div class="alert-wrap" v-show="showLongErr">
         <div class="text">
           {{errMsg}}
@@ -27,7 +27,8 @@ export default {
       token: '',
       showErr: false,
       showLongErr: false,
-      errMsg: ''
+      errMsg: '',
+      timer: null
     }
   },
   created: function () {
@@ -48,6 +49,8 @@ export default {
       })
     },
     showErrMsg (msg, isLong) {
+      clearTimeout(this.timer)
+      this.showErr = false
       var that = this
       if (isLong) {
         that.showLongErr = true
@@ -55,10 +58,10 @@ export default {
       } else {
         that.showErr = true
         that.errMsg = msg
-        setTimeout(function () {
+        that.timer = setTimeout(function () {
           that.showErr = false
           that.errMsg = ''
-        }, 2000)
+        }, 1000)
       }
     }
   },
@@ -112,7 +115,7 @@ Vue.directive('auto-height', function (el, binding) {
     width: 72%;
     background-color: transparent;
     font-size: .22rem;
-    margin: 2rem auto;
+    margin: 3rem auto;
     z-index: 100000000;
   }
   .mask1 .alert-wrap .text {
@@ -120,10 +123,9 @@ Vue.directive('auto-height', function (el, binding) {
     line-height: 1.5;
     font-size: .24rem;
     padding: .6rem .2rem 0;
-    margin-bottom: .5px;
+    border-bottom: 1px solid #ddd;
     border-radius: .2rem .2rem 0 0;
     background-color: #fff;
-    opacity: 0.98;
   }
   .mask1 .alert-wrap .i-know {
     color: #505ee0;
@@ -131,7 +133,6 @@ Vue.directive('auto-height', function (el, binding) {
     line-height: .8rem;
     background-color: #fff;
     border-radius: 0 0 .2rem .2rem;
-    opacity: 0.95;
   }
   ul#footer li {
     float: left;
