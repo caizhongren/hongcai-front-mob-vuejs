@@ -115,7 +115,7 @@ Vue.directive('auto-height', function (el, binding) {
     width: 72%;
     background-color: transparent;
     font-size: .22rem;
-    margin: 2rem auto;
+    margin: 3rem auto;
     z-index: 100000000;
   }
   .mask1 .alert-wrap .text {
@@ -123,10 +123,9 @@ Vue.directive('auto-height', function (el, binding) {
     line-height: 1.5;
     font-size: .24rem;
     padding: .6rem .2rem 0;
-    margin-bottom: .5px;
+    border-bottom: 1px solid #ddd;
     border-radius: .2rem .2rem 0 0;
     background-color: #fff;
-    opacity: 0.98;
   }
   .mask1 .alert-wrap .i-know {
     color: #505ee0;
@@ -134,7 +133,6 @@ Vue.directive('auto-height', function (el, binding) {
     line-height: .8rem;
     background-color: #fff;
     border-radius: 0 0 .2rem .2rem;
-    opacity: 0.95;
   }
   ul#footer li {
     float: left;

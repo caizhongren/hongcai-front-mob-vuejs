@@ -227,6 +227,9 @@
             if (res.data.code === -1005) {
               that.showRegister = false
               that.showErrMsg('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！', 1)
+              $('#mobile').blur()
+              $('#picCaptcha').blur()
+              $('#captcha').blur()
             } else {
               that.showErrMsg(res.data.msg)
             }
@@ -270,6 +273,9 @@
             } else if (res.data.code === -1005) {
               that.showRegister = false
               that.showErrMsg('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！', 1)
+              $('#mobile').blur()
+              $('#picCaptcha').blur()
+              $('#captcha').blur()
             } else {
               that.showErrMsg(res.data.msg)
             }
