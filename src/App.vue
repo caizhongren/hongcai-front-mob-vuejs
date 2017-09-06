@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <router-view :token="token" :showErrMsg="showErrMsg"></router-view>
-    <div class="mask-common mask1" v-show="showLongErr || showErr">
-      <p id="err" v-show="showErr">{{errMsg}}</p>
+    <p id="err" v-show="showErr">{{errMsg}}</p>
+    <div class="mask-common mask1" v-show="showLongErr">
       <div class="alert-wrap" v-show="showLongErr">
         <div class="text">
           {{errMsg}}
@@ -27,7 +27,8 @@ export default {
       token: '',
       showErr: false,
       showLongErr: false,
-      errMsg: ''
+      errMsg: '',
+      timer: null
     }
   },
   created: function () {
@@ -48,6 +49,8 @@ export default {
       })
     },
     showErrMsg (msg, isLong) {
+      clearTimeout(this.timer)
+      this.showErr = false
       var that = this
       if (isLong) {
         that.showLongErr = true
@@ -55,10 +58,10 @@ export default {
       } else {
         that.showErr = true
         that.errMsg = msg
-        setTimeout(function () {
+        that.timer = setTimeout(function () {
           that.showErr = false
           that.errMsg = ''
-        }, 2000)
+        }, 1000)
       }
     }
   },
