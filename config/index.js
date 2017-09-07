@@ -29,7 +29,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/hongcai': {
-        // target: 'http://192.168.70.63:8080', // 目标域名
+        // target: 'http://192.168.70.63:8100', // 目标域名
         target: 'http://m.test321.hongcai.com',
         changeOrigin: true,
         pathRewrite: {

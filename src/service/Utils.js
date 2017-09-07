@@ -1,4 +1,9 @@
+import $ from 'zepto'
 let Utils = {
+  isWeixin: function () {
+    var ua = navigator.userAgent.toLowerCase()
+    return ua.match(/MicroMessenger/i) === 'micromessenger'
+  },
   isAndroid: function () {
     let userAgent = navigator.userAgent || navigator.vendor || window.opera
     return /android/i.test(userAgent) && !/windows phone/i.test(userAgent)
@@ -10,6 +15,23 @@ let Utils = {
   isWinPhone: function () {
     var userAgent = navigator.userAgent || navigator.vendor || window.opera
     return /windows phone/i.test(userAgent)
+  },
+  deviceCode: function () {
+    var deviceCode = 0
+    if (Utils.isAndroid()) {
+      deviceCode = 2
+    }
+    if (this.isWeixin() && Utils.isAndroid()) {
+      deviceCode = 3
+    }
+    if (Utils.isIos()) {
+      deviceCode = 5
+    }
+    if (this.isWeixin() && Utils.isIos()) {
+      deviceCode = 6
+    }
+    console.log(deviceCode)
+    return deviceCode
   }
 }
 let InviteShareUtils = {
@@ -51,12 +73,6 @@ let InviteShareUtils = {
   shareImageUrl: function () {
     var imageUrl = 'https://mmbiz.qlogo.cn/mmbiz_jpg/8MZDOEkib8Akr3KNzVxtZ95xUPndUzXu3CvoSK2iap7RdeDEU69hTG8tSSL0no6uV9T75FqVsJXj54hVicu40KMicw/0?wx_fmt=jpeg'
     return imageUrl
-  }
-}
-let ruleBox = {
-  showRuleBox: function (el, vue, showRules) {
-    vue.showRules = !vue.showRules
-    vue.showRules ? el.className = 'position-fix' : el.className = ' '
   }
 }
 let bridgeUtil = {
@@ -110,7 +126,6 @@ let bridgeUtil = {
       }
       return
     }
-
     this.setupWebViewJavascriptBridge(function (bridge) {
       // 调用native方法
       if (callHandlerName) {
@@ -123,22 +138,31 @@ let bridgeUtil = {
     })
   }
 }
+/**
+ * 滚动穿透问题
+ */
 let ModalHelper = (function (bodyCls) {
-  var scrollTop
   return {
+    scrollTop: document.scrollingElement ? document.scrollingElement.scrollTop : document.body.scrollTop,
     afterOpen: function () {
-      scrollTop = document.scrollingElement.scrollTop
+      ModalHelper.scrollTop = document.scrollingElement ? document.scrollingElement.scrollTop : document.body.scrollTop
       document.body.classList.add(bodyCls)
-      document.body.style.top = -scrollTop + 'px'
+      document.body.style.top = -ModalHelper.scrollTop + 'px'
     },
     beforeClose: function () {
       document.body.classList.remove(bodyCls)
       document.body.removeAttribute('style')
-      // scrollTop lost after set position:fixed, restore it back.
-      document.scrollingElement.scrollTop = scrollTop
+      if (document.scrollingElement) {
+        document.scrollingElement.scrollTop = ModalHelper.scrollTop
+      } else {
+        document.body.scrollTop = ModalHelper.scrollTop
+      }
     }
   }
 })('modal-open')
+/**
+ * 两个日期相差天数
+ */
 let dateUtil = {
   intervalDays: function (timeInMills1, timeInMills2) {
     var t1 = new Date(timeInMills1)
@@ -155,9 +179,78 @@ let dateUtil = {
     return Math.abs((t1.getTime() - t2.getTime()) / DAY_TIME_IN_MILLS)
   }
 }
+/**
+ * 发送验证码动画
+ */
+let sendMobCaptcha = {
+  second: 60,
+  canGetMobileCapcha: true,
+  countDown: function ($mobilecode) {
+    // 如果秒数还是大于0，则表示倒计时还没结束
+    if (sendMobCaptcha.second > 0) {
+      // 倒计时不结束按钮不可点
+      sendMobCaptcha.canGetMobileCapcha = false
+      $mobilecode.innerHTML = null
+      $mobilecode.innerHTML = sendMobCaptcha.second + 's'
+      $mobilecode.className = ''
+      // 时间减一
+      sendMobCaptcha.second -= 1
+      // 一秒后重复执行
+      setTimeout(function () {
+        sendMobCaptcha.countDown($mobilecode)
+      }, 1000)
+      // 否则，按钮重置为初始状态,可点击
+    } else {
+      sendMobCaptcha.canGetMobileCapcha = true
+      $mobilecode.className += ' send'
+      $mobilecode.innerHTML = '重新获取'
+      sendMobCaptcha.second = 60
+    }
+  }
+}
+/**
+ * 安卓键盘弹出挡住输入框解决方法
+ */
+let InputMaskHelper = (function (eleCls) {
+  return {
+    focus: function (ele) {
+      if (Utils.isAndroid()) {
+        ele.classList.add(eleCls)
+      }
+    },
+    blur: function (ele) {
+      if (Utils.isAndroid()) {
+        ele.classList.remove(eleCls)
+      }
+    },
+    windowChange: function (ele) {
+      var winHeight = $(window).height()
+      window.addEventListener('resize', function () {
+        if ($(window).height() < winHeight) {
+          setTimeout(InputMaskHelper.focus(ele), 0)
+        } else {
+          InputMaskHelper.blur(ele)
+        }
+      })
+    }
+  }
+})('input-focus')
+/**
+ * TODO 输入框粘贴限制 & 输入类型
+ */
+let checkInputUtil = {
+  beforepasteHandler: function (e, reg) {
+    e.clipboardData.setData('text', e.clipboardData.getData('text').replace(reg, ''))
+  },
+  oninputHandler: function (item, reg) {
+    item = item.replace(reg, '')
+  }
+}
 export {Utils}
 export {InviteShareUtils}
-export {ruleBox}
 export {bridgeUtil}
 export {ModalHelper}
 export {dateUtil}
+export {sendMobCaptcha}
+export {InputMaskHelper}
+export {checkInputUtil}

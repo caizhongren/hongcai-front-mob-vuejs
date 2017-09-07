@@ -280,7 +280,7 @@
         <p><strong class="agree-mg">甲方（受让方/投资人）：</strong>{{contracts.total ? '详见附件1' : ' '}}</p>
         <br>
         <p><strong class="agree-mg">乙方（转让方/原债权人）：</strong>{{contracts.enterpriseName}}
-        <p>身份证号码：{{contracts.assignorIdNo}}</p>
+        <p>身份证号码：{{contracts.entRegistrationNo}}</p>
         </p>
         <br>
         <p><strong class="agree-mg">丙方（居间人）：北京竞财投资服务有限公司</strong></p>
@@ -292,7 +292,7 @@
         <p><strong class="agree-mg">鉴于：</strong></p>
         <p class="agree-tx">1、甲方（受让方）系符合中华人民共和国法律（以下简称“中国法律”）（仅为本协议之目的，不包括香港特别行政区、澳门特别行政区和台湾省的法律法规）规定的具有完全民事权利能力和民事行为能力，独立承担本协议项下权利义务的自然人。在特定情况下，债权转让后的甲方或受让方可能是符合中国法律规定的企业法人或其他机构。</p>
         <p class="agree-tx">2、乙方（转让方）系符合中国法律规定的具有完全民事权利能力和民事行为能力，独立行使和承担本协议项下权利义务的自然人、法人或其他组织。</p>
-        <p class="agree-tx">3、丙方是依法成立并运营的网络借贷信息中介机构（域名：HYPERLINK "http://www.hongcai.com/" www.hongcai.com，以下简称“宏财网”）。甲方通过宏财网受让乙方原债权，丙方为本协议项下债权转让提供居间服务。</p>
+        <p class="agree-tx">3、丙方是依法成立并运营的网络借贷信息中介机构（域名：www.hongcai.com，以下简称“宏财网”）。甲方通过宏财网受让乙方原债权，丙方为本协议项下债权转让提供居间服务。</p>
         <p class="agree-tx">4、原债务人是指原《借款协议》中的借款人。</p>
         <p class="agree-tx">为此，根据国家有关法律法规，甲、乙、丙三方本着平等自愿、诚实守信、互惠互利的原则，立此协议，共同遵守。</p>
         <br>
