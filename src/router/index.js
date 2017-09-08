@@ -42,6 +42,7 @@ const Report2 = r => require.ensure([], () => r(require('../components/news/repo
 const Report3 = r => require.ensure([], () => r(require('../components/news/report3.vue')), 'News')
 const Events = r => require.ensure([], () => r(require('../components/events.vue')), 'Events')
 const RiskEducation = r => require.ensure([], () => r(require('../components/riskEducation.vue')), 'RiskEducation')
+const Register = r => require.ensure([], () => r(require('../components/activity/oldPeople.vue')), 'Register')
 Vue.use(Router)
 const routes = [
   {
@@ -281,6 +282,12 @@ const routes = [
     name: 'RiskEducation',
     component: RiskEducation,
     meta: {title: '风险安全教育'}
+  },
+  {
+    path: '/activity/register',
+    name: 'Register',
+    component: Register,
+    meta: {title: '超多好礼,免费送'}
   },
   {
     path: '*',
