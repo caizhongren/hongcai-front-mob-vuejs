@@ -287,7 +287,7 @@ const routes = [
     path: '/activity/register',
     name: 'Register',
     component: Register,
-    meta: {title: '超多好礼,免费送'}
+    meta: {title: '宏财网'}
   },
   {
     path: '*',
