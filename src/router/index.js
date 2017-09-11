@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Promise from 'es6-promise'
+var VueCookie = require('vue-cookie')
+Vue.use(VueCookie)
 window.Promise = Promise
 const ProjectDetail = r => require.ensure([], () => r(require('../components/ProjectDetail.vue')), 'ProjectDetail')
 const Invite = r => require.ensure([], () => r(require('../components/activity/invite.vue')), 'Invite')

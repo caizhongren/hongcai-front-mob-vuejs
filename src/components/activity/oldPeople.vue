@@ -127,17 +127,17 @@
           }
         ],
         eyes: true,
-        guestId: Utils.guestId(32, 16),
+        guestId: this.$cookie.get('guestId') || Utils.guestId(32, 16),
         checkCode: true
       }
     },
     props: ['showErrMsg'],
-    watch: {
-    },
     created () {
       this.offlineCode()
-    },
-    mounted () {
+      if (!this.$cookie.get('guestId')) {
+        this.$cookie.set('guestId', Utils.guestId(32, 16), 1)
+      }
+      console.log(this.guestId)
     },
     methods: {
       oninputHandler () {
@@ -216,6 +216,9 @@
           }
         })
       }
+    },
+    destory: function () {
+      // this.$cookie.delete('guestId')
     }
   }
 </script>

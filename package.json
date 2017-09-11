@@ -21,6 +21,7 @@
     "strip-ansi": "^3.0.1",
     "vue": "^2.1.10",
     "vue-axios": "^2.0.2",
+    "vue-cookie": "^1.1.4",
     "vue-router": "^2.2.0",
     "webpack-zepto": "^0.0.1"
   },
