@@ -1,18 +1,33 @@
 <template>
   <div>
-    <div id="qrcode"></div>
-    <div class='change' @click="change">切换二维码</div>
+    <div v-if="isLogged">
+      <div id="qrcode"></div>
+      <div class='change' @click="change">切换二维码</div>
+    </div>
+    <div v-if="!isLogged" class="loginForm" v-auto-height>
+      <form name="loginForm">
+        <input type="tel" class="mobile" name="mobile" placeholder="请输入手机号" v-model="user.mobile">
+        <input type="text" id="password" name="password" placeholder="请设置登录密码" v-model="user.password">
+        <button type="button" @click="login(user)">立即登录</button>
+      </form>
+    </div>
   </div>
 </template>
-
 <script>
   import {QRCode} from '../service/qrcode.js'
+  import {Utils} from '../service/Utils'
+  import {md5} from '../service/md5.js'
   export default {
     name: 'QRcode',
     data () {
       return {
         url: '',
-        qrcode: Object
+        qrcode: Object,
+        isLogged: true,
+        user: {
+          mobile: '',
+          password: ''
+        }
       }
     },
     watch: {
@@ -31,8 +46,9 @@
         colorLight: '#ffffff'
       })
     },
+    props: ['showErrMsg'],
     created () {
-      this.change()
+      this.isLogged ? this.change() : null
     },
     methods: {
       change () {
@@ -47,6 +63,26 @@
           if (response && response.data.ret !== -1) {
             that.url = process.env.vue_domain + '/activity/register?act=33&code=' + response.data.code
             that.qrcode.makeCode(that.url)
+            that.isLogged = true
+          } else if (response.data.code === -1000) {
+            that.isLogged = false
+          }
+        })
+      },
+      login (user) {
+        var that = this
+        if (!user.mobile || !user.password) {
+          return
+        }
+        that.$http({
+          method: 'get',
+          url: process.env.WEB_DEFAULT_DOMAIN + '/siteUser/login?account=' + user.mobile + '&guestId=' + Utils.guestId(32, 16) + '&password=' + md5(user.password)
+        }).then(function (response) {
+          if (response && response.data.ret !== -1) {
+            that.isLogged = true
+            that.change()
+          } else {
+            that.showErrMsg('用户名或密码错误')
           }
         })
       }
@@ -66,6 +102,30 @@
     line-height: .65rem;
     border-radius: .5rem;
     color: #fff;
+    font-size: .3rem;
+  }
+  .loginForm {
+    width: 100%;
+    margin: 0 auto;
+    padding: 1rem 0;
+  }
+  .loginForm input {
+    width: 70%;
+    height: 0.7rem;
+    font-size: .24rem;
+    border: 1px solid #999;
+    margin-bottom: .5rem;
+    font-size: .26rem;
+    color: #333;
+    padding: .1rem .3rem;
+  }
+  button {
+    width: 30%;
+    color: #fff;
+    background: orange;
+    border: none;
+    height: .6rem;
+    border-radius: .5rem;
     font-size: .3rem;
   }
 </style>

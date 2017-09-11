@@ -202,7 +202,7 @@
           code: that.$route.query.code,
           mobile: user.mobile,
           password: md5(user.password),
-          channelCode: that.$route.query.act
+          channelCode: that.$route.query.f
         }).then(function (response) {
           setTimeout(function () {
             that.busy = false
