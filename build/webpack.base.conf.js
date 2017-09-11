@@ -31,7 +31,8 @@ module.exports = {
       'src': resolve('src'),
       'assets': resolve('src/assets'),
       'components': resolve('src/components'),
-      'zepto': resolve('node_modules/webpack-zepto/index.js')
+      'zepto': resolve('node_modules/webpack-zepto/index.js'),
+      'js-md5': resolve('node_modules/js-md5//src/md5.js')
       // 'zepto': 'zepto'
     }
   },

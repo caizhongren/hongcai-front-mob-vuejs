@@ -69,24 +69,3 @@
     font-size: .3rem;
   }
 </style>
-
-<!-- <template>
-  <div>
-    <qrcode-vue :value="value" :size="size" level="H"></qrcode-vue>
-    <div class='change'>切换</div>
-  </div>
-</template>
-<script>
-  import QrcodeVue from 'qrcode.vue'
-  export default {
-    data () {
-      return {
-        value: 'https://example.com',
-        size: 200
-      }
-    },
-    components: {
-      QrcodeVue
-    }
-  }
-</script> -->
