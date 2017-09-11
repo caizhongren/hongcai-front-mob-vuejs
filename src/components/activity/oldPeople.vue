@@ -179,7 +179,9 @@
           }, 1000)
           if (response && response.data.ret !== -1) {
             if (response.data.status) {
-              this.$router.push({name: 'RegisterSuccess'})
+              that.$router.push({name: 'RegisterSuccess'})
+            } else {
+              that.showErrMsg('注册失败')
             }
           }
         })
