@@ -13,8 +13,8 @@
         <form name="registerForm">
           <input type="tel" class="mobile" name="mobile" placeholder="请输入手机号" v-model="user.mobile" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler">
           <div class="pwd">
-            <input type="text" id="password" name="password" placeholder="请设置登录密码" v-model="user.password" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler(e)">
-            <span class="eyes"></span>
+            <input type="text" id="password" name="password" placeholder="请设置登录密码" v-model="user.password">
+            <span class="eyes" @click="changeEyes($event)"></span>
           </div>
           <button type="button" @click="register(user)">立即注册</button>
         </form>
@@ -91,6 +91,7 @@
 </template>
 <script>
   import {Utils} from '../../service/Utils'
+  import $ from 'zepto'
   export default {
     name: 'mgPromotion',
     data () {
@@ -118,7 +119,8 @@
             rate: 10.7,
             date: 270
           }
-        ]
+        ],
+        eyes: true
       }
     },
     props: ['showErrMsg'],
@@ -136,12 +138,51 @@
       beforepasteHandler (e) {
         e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/\D/g, ''))
       },
-      oninputHandler1 () {
-        this.user.password = this.user.password.length > 4 ? this.user.password.slice(0, 4) : this.user.password
-        this.user.password = this.user.password.replace(/[\W]/g, '')
+      changeEyes (event) {
+        var el = $(event.currentTarget)
+        var pwd = el.prev()
+        if (this.eyes) {
+          el.removeClass('eyes-grey').addClass('eyes')
+          pwd.attr('type', 'text')
+        } else {
+          el.removeClass('eyes').addClass('eyes-grey')
+          pwd.attr('type', 'password')
+        }
+        this.eyes = !this.eyes
       },
-      beforepasteHandler1 (e) {
-        e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/[\W]/g, ''))
+      register (user) {
+        var that = this
+        if (that.busy) { return }
+        var mobilePattern = /^((13[0-9])|(15[^4,\D])|(18[0-9])|(17[03678])|(14[0-9]))\d{8}$/
+        var pwdPattern = /^(?=.*\d)(?=.*[a-zA-Z]).{6,16}$/
+        if (!user.mobile || !user.password) {
+          return
+        }
+        if (!mobilePattern.test(user.mobile)) {
+          that.showErrMsg('请输入正确手机号码')
+          return
+        }
+        if (!pwdPattern.test(user.password)) {
+          that.showErrMsg('登录密码由6-16位数字、字母组合而成，请重新设置！')
+          return
+        }
+        that.busy = true
+        that.$http.post('/hongcai/rest/users/offline/register', {
+          guestId: Utils.guestId(32, 16),
+          code: that.$route.query.code,
+          mobile: user.mobile,
+          password: user.password,
+          channelCode: that.$route.query.act
+        }).then(function (response) {
+          setTimeout(function () {
+            that.busy = false
+          }, 1000)
+          if (response && response.data.ret !== -1) {
+            if (response.data.status) {
+              this.$router.push({name: 'RegisterSuccess'})
+            }
+          }
+        })
       }
     }
   }
@@ -174,12 +215,9 @@
   .contents {
     font-family: PingFang-SC;
     margin-top: -.1rem;
-    filter:alpha(opacity=100 finishopacity=50 style=1 startx=0,starty=0,finishx=0,finishy=150) progid:DXImageTransform.Microsoft.gradient(startcolorstr=#ff8401,endcolorstr=#ffa62e,gradientType=0);
-    -ms-filter:alpha(opacity=100 finishopacity=50 style=1 startx=0,starty=0,finishx=0,finishy=150) progid:DXImageTransform.Microsoft.gradient(startcolorstr=#ff8401,endcolorstr=#ffa62e,gradientType=0);/*IE8*/	
     background:#ff8401; /* 一些不支持背景渐变的浏览器 */  
-    background:-moz-linear-gradient(top, #ff8401, #ffa62e);  
-    background:-webkit-gradient(linear, 0 0, 0 bottom, from(#ff8401), to(#ffa62e));  
-    background:-o-linear-gradient(top, #ff8401, #ffa62e); 
+    background:linear-gradient(to bottom, #ff8401 0%, #ffa62e 20%, #ff8401 100%);  
+    background:-webkit-gradient(linear, 0 0, 0 bottom, #ff8401 0%, #ffa62e 20%, #ff8401 100%);  
   }
   .register-tip {
     font-size: .24rem;
@@ -290,7 +328,8 @@
   }
   .about .title, .about2 .title, .about3 .title {
     background: linear-gradient(to right, transparent 0%, #ed6728 40%, transparent 100%);
-    background: -webkit-linear-gradient(to right,rgba(255,255,255,0.001) 0%,#ed6728 40%,rgba(255,255,255,0.001) 100%);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, #ed6728 40%, rgba(255, 255, 255, 0) 100%);
+    background: url('../../images/register/title-bg.png') no-repeat center center;
     width: 60%;
     height: .9rem;
     line-height: .95rem;
