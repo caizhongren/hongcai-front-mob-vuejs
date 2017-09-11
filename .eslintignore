@@ -1,5 +1,5 @@
 build/*.js
 config/*.js
 mCarousel.js
-qrcode.min.js
+md5.js
 qrcode.js

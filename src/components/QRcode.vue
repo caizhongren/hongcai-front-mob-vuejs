@@ -46,7 +46,7 @@
         }).then(function (response) {
           if (response && response.data.ret !== -1) {
             that.url = process.env.vue_domain + '/activity/register?act=33&code=' + response.data.code
-            that.qrcode.makeCode(that.url + Math.random())
+            that.qrcode.makeCode(that.url)
           }
         })
       }
