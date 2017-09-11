@@ -5,5 +5,6 @@ module.exports = merge(devEnv, {
   NODE_ENV: '"test"',
   baseFileUrl: '"http://test321.hongcai.com/uploads/"',
   domain: '"http://m.test321.hongcai.com"',
-  WEB_DEFAULT_DOMAIN: '"/hongcai/api/v1"'
+  WEB_DEFAULT_DOMAIN: '"/hongcai/api/v1"',
+  vue_domain: '"http://vue.test321.hongcai.com"'
 })

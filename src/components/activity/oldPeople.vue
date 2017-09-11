@@ -1,97 +1,103 @@
 <template>
-  <div class="register">
-    <div class="header">
-      <img src="../../images/register/header1.png" alt="" width="58%">
-      <img src="../../images/register/header2.png" alt="" width="51%">
-      <img src="../../images/register/vinda.png" alt="" width="27%">
+  <div>
+    <div class="register" v-if="checkCode">
+      <div class="header">
+        <img src="../../images/register/header1.png" alt="" width="58%">
+        <img src="../../images/register/header2.png" alt="" width="51%">
+        <img src="../../images/register/vinda.png" alt="" width="27%">
+      </div>
+      <div class="contents">
+        <div class="register-tip">
+          现在注册下载宏财网app，并加入宏财网50+会员专属群，即可免费领取维达抽纸三连包一提。
+        </div>
+        <div class="registerForm">
+          <form name="registerForm">
+            <input type="tel" class="mobile" name="mobile" placeholder="请输入手机号" v-model="user.mobile" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler">
+            <div class="pwd">
+              <input type="text" id="password" name="password" placeholder="请设置登录密码" v-model="user.password">
+              <span class="eyes" @click="changeEyes($event)"></span>
+            </div>
+            <button type="button" @click="register(user)">立即注册</button>
+          </form>
+        </div>
+        <div class="good-projects">
+          <img src="../../images/register/good-project.png" alt="" width="65%">
+          <ul class="projects">
+            <li v-for="item in projects">
+              <p class="rate-txt">预计年化收益率</p>
+              <p class="rate-num">{{item.rate || 8}}%</p>
+              <p class="date">投资期限：{{item.date || 55}}天</p>
+            </li>
+          </ul>
+        </div>
+        <div class="choose-us">
+          <img src="../../images/register/choose-us.png" alt="" width="65%">
+          <div class="about">
+            <div class="title">国资背景</div>
+            <div class="content">
+              <div class="text fr">
+                <p>
+                  <span class="icon"></span>
+                  <span>2016年获国有企业一亿元A轮战略投资</span>
+                </p>
+                <p>
+                  <span class="icon"></span>
+                  <span>新三板金控第一股鑫融基入股</span>
+                </p>
+                <p>
+                  <span class="icon"></span>
+                  <span>拥有博士高管团队的互联网金融平台</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="about2">
+            <div class="title">银行存管</div>
+            <div class="content">
+              <div class="text fl">
+                <p>
+                  <span class="icon"></span>
+                  <span>2016年加入网贷行业协会，首批接入北京存管通平台，所有投资信息实时上传北京金融局等监管部门</span>
+                </p>
+                <p>
+                  <span class="icon"></span>
+                  <span>2017年6月正式上线海口联合农商银行资金存管，实现银行级资金安全保障</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="about3">
+            <div class="title">风控安全</div>
+            <div class="content">
+              <div class="text fr">
+                <p>
+                  <span class="icon"></span>
+                  <span>十多年金融生态圈，积累优质资产</span>
+                </p>
+                <p>
+                  <span class="icon"></span>
+                  <span>银行级存管确保用户投资资金万无一失</span>
+                </p>
+                <p>
+                  <span class="icon"></span>
+                  <span>所有项目借款方知根知底，铸造闭环征信体系</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="iosTip" v-show="isIos">该活动与设备生产商Apple Inc.公司无关</div>
+      </div>
     </div>
-    <div class="contents">
-      <div class="register-tip">
-        现在注册下载宏财网app，并加入宏财网50+会员专属群，即可免费领取维达抽纸三连包一提。
-      </div>
-      <div class="registerForm">
-        <form name="registerForm">
-          <input type="tel" class="mobile" name="mobile" placeholder="请输入手机号" v-model="user.mobile" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler">
-          <div class="pwd">
-            <input type="text" id="password" name="password" placeholder="请设置登录密码" v-model="user.password">
-            <span class="eyes" @click="changeEyes($event)"></span>
-          </div>
-          <button type="button" @click="register(user)">立即注册</button>
-        </form>
-      </div>
-      <div class="good-projects">
-        <img src="../../images/register/good-project.png" alt="" width="65%">
-        <ul class="projects">
-          <li v-for="item in projects">
-            <p class="rate-txt">预计年化收益率</p>
-            <p class="rate-num">{{item.rate || 8}}%</p>
-            <p class="date">投资期限：{{item.date || 55}}天</p>
-          </li>
-        </ul>
-      </div>
-      <div class="choose-us">
-        <img src="../../images/register/choose-us.png" alt="" width="65%">
-        <div class="about">
-          <div class="title">国资背景</div>
-          <div class="content">
-            <div class="text fr">
-              <p>
-                <span class="icon"></span>
-                <span>2016年获国有企业一亿元A轮战略投资</span>
-              </p>
-              <p>
-                <span class="icon"></span>
-                <span>新三板金控第一股鑫融基入股</span>
-              </p>
-              <p>
-                <span class="icon"></span>
-                <span>拥有博士高管团队的互联网金融平台</span>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="about2">
-          <div class="title">银行存管</div>
-          <div class="content">
-            <div class="text fl">
-              <p>
-                <span class="icon"></span>
-                <span>2016年加入网贷行业协会，首批接入北京存管通平台，所有投资信息实时上传北京金融局等监管部门</span>
-              </p>
-              <p>
-                <span class="icon"></span>
-                <span>2017年6月正式上线海口联合农商银行资金存管，实现银行级资金安全保障</span>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="about3">
-          <div class="title">风控安全</div>
-          <div class="content">
-            <div class="text fr">
-              <p>
-                <span class="icon"></span>
-                <span>十多年金融生态圈，积累优质资产</span>
-              </p>
-              <p>
-                <span class="icon"></span>
-                <span>银行级存管确保用户投资资金万无一失</span>
-              </p>
-              <p>
-                <span class="icon"></span>
-                <span>所有项目借款方知根知底，铸造闭环征信体系</span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="iosTip" v-show="isIos">该活动与设备生产商Apple Inc.公司无关</div>
+    <div v-if="!checkCode" class="checkCode">
+       该二维码已失效 <br>请重新扫描二维码
     </div>
   </div>
 </template>
 <script>
   import {Utils} from '../../service/Utils'
   import $ from 'zepto'
+  import md5 from 'js-md5'
   export default {
     name: 'mgPromotion',
     data () {
@@ -120,13 +126,16 @@
             date: 270
           }
         ],
-        eyes: true
+        eyes: true,
+        guestId: Utils.guestId(32, 16),
+        checkCode: true
       }
     },
     props: ['showErrMsg'],
     watch: {
     },
     created () {
+      this.offlineCode()
     },
     mounted () {
     },
@@ -150,6 +159,18 @@
         }
         this.eyes = !this.eyes
       },
+      offlineCode () {
+        var that = this
+        that.$http.post('/hongcai/rest/users/offline/checkCode', {
+          guestId: that.guestId,
+          code: that.$route.query.code
+        }).then(function (response) {
+          if (response && response.data.ret !== -1) {
+            that.checkCode = response.data.status
+            // that.checkCode = false
+          }
+        })
+      },
       register (user) {
         var that = this
         if (that.busy) { return }
@@ -168,10 +189,10 @@
         }
         that.busy = true
         that.$http.post('/hongcai/rest/users/offline/register', {
-          guestId: Utils.guestId(32, 16),
+          guestId: that.guestId,
           code: that.$route.query.code,
           mobile: user.mobile,
-          password: user.password,
+          password: md5(user.password),
           channelCode: that.$route.query.act
         }).then(function (response) {
           setTimeout(function () {
@@ -190,6 +211,11 @@
   }
 </script>
 <style scoped>
+  .checkCode {
+    font-size: .35rem;
+    font-weight: bold;
+    margin: 2rem auto;
+  }
   .register {
     width: 100%;
   }

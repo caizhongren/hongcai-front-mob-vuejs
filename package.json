@@ -18,7 +18,7 @@
     "axios": "^0.16.2",
     "eslint-config-standard": "^6.2.1",
     "html-entities": "^1.2.0",
-    "qrcode.vue": "^1.5.0",
+    "js-md5": "^0.6.0",
     "strip-ansi": "^3.0.1",
     "vue": "^2.1.10",
     "vue-axios": "^2.0.2",
