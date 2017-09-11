@@ -1,5 +1,6 @@
 require('es6-promise').polyfill()
 var Promise = require('es6-promise').Promise
+var md5 = require('md5')
 var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
@@ -31,8 +32,7 @@ module.exports = {
       'src': resolve('src'),
       'assets': resolve('src/assets'),
       'components': resolve('src/components'),
-      'zepto': resolve('node_modules/webpack-zepto/index.js'),
-      'js-md5': resolve('node_modules/js-md5//src/md5.js')
+      'zepto': resolve('node_modules/webpack-zepto/index.js')
       // 'zepto': 'zepto'
     }
   },
