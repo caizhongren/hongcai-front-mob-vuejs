@@ -61,7 +61,7 @@
           url: 'hongcai/rest/users/offline/code'
         }).then(function (response) {
           if (response && response.data.ret !== -1) {
-            that.url = process.env.vue_domain + '/activity/register?act=33&code=' + response.data.code
+            that.url = process.env.vue_domain + '/activity/register?f=50jia&code=' + response.data.code
             that.qrcode.makeCode(that.url)
             that.isLogged = true
           } else if (response.data.code === -1000) {
