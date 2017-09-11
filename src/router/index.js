@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Promise from 'es6-promise'
-var VueCookie = require('vue-cookie')
-Vue.use(VueCookie)
+import VueCookie from 'vue-cookie'
 window.Promise = Promise
 const ProjectDetail = r => require.ensure([], () => r(require('../components/ProjectDetail.vue')), 'ProjectDetail')
 const Invite = r => require.ensure([], () => r(require('../components/activity/invite.vue')), 'Invite')
@@ -48,6 +47,7 @@ const Register = r => require.ensure([], () => r(require('../components/activity
 const RegisterSuccess = r => require.ensure([], () => r(require('../components/activity/registerSuccess.vue')), 'Register')
 const QRcode = r => require.ensure([], () => r(require('../components/QRcode.vue')), 'QRcode')
 Vue.use(Router)
+Vue.use(VueCookie)
 const routes = [
   {
     path: '/',
