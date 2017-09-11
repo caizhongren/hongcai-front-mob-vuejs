@@ -38,7 +38,7 @@
   </div>
 </template>
 <script>
-  import QrcodeVue from 'qrcode.vue'
+  // import QrcodeVue from 'qrcode.vue'
   export default {
     data () {
       return {
@@ -47,7 +47,7 @@
       }
     },
     components: {
-      QrcodeVue
+      // QrcodeVue
     }
   }
-</script> 
+</script>

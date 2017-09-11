@@ -43,6 +43,7 @@ const Report3 = r => require.ensure([], () => r(require('../components/news/repo
 const Events = r => require.ensure([], () => r(require('../components/events.vue')), 'Events')
 const RiskEducation = r => require.ensure([], () => r(require('../components/riskEducation.vue')), 'RiskEducation')
 const Register = r => require.ensure([], () => r(require('../components/activity/oldPeople.vue')), 'Register')
+const RegisterSuccess = r => require.ensure([], () => r(require('../components/activity/registerSuccess.vue')), 'Register')
 const QRcode = r => require.ensure([], () => r(require('../components/QRcode.vue')), 'QRcode')
 Vue.use(Router)
 const routes = [
@@ -287,11 +288,16 @@ const routes = [
   {
     path: '/activity/register',
     name: 'Register',
-    component: Register,
-    meta: {title: '宏财网'}
+    component: Register
+  },
+  {
+    path: '/activity/register-success',
+    name: 'RegisterSuccess',
+    component: RegisterSuccess
   },
   {
     path: '/qrcode',
+    name: 'QRcode',
     component: QRcode
   },
   {
