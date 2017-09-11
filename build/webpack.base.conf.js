@@ -1,6 +1,5 @@
 require('es6-promise').polyfill()
 var Promise = require('es6-promise').Promise
-var md5 = require('md5')
 var path = require('path')
 var utils = require('./utils')
 var config = require('../config')

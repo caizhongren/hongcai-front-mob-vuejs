@@ -97,7 +97,7 @@
 <script>
   import {Utils} from '../../service/Utils'
   import $ from 'zepto'
-  var md5 = require('md5')
+  import md5 from 'js-md5'
   export default {
     name: 'mgPromotion',
     data () {
