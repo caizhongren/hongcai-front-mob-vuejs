@@ -90,7 +90,7 @@
       </div>
     </div>
     <div v-if="!checkCode" class="checkCode">
-       该二维码已失效 <br>请重新扫描二维码
+       二维码已失效 <br>请重新扫描
     </div>
   </div>
 </template>
@@ -127,15 +127,16 @@
           }
         ],
         eyes: true,
-        guestId: this.$cookie.get('guestId') || Utils.guestId(32, 16),
+        guestId: this.$cookie.get('guestId'),
         checkCode: true
       }
     },
     props: ['showErrMsg'],
     created () {
       this.offlineCode()
-      if (!this.$cookie.get('guestId')) {
+      if (!this.guestId) {
         this.$cookie.set('guestId', Utils.guestId(32, 16), 1)
+        this.guestId = this.$cookie.get('guestId')
       }
       console.log(this.guestId)
     },
@@ -176,7 +177,7 @@
         }).then(function (response) {
           if (response && response.data.ret !== -1) {
             that.checkCode = response.data.status
-            // that.checkCode = false
+            // that.checkCode = true
           }
         })
       },
@@ -211,7 +212,7 @@
             if (response.data.status) {
               that.$router.push({name: 'RegisterSuccess'})
             } else {
-              that.showErrMsg('注册失败')
+              that.showErrMsg(response.data.msg)
             }
           }
         })
@@ -224,7 +225,7 @@
 </script>
 <style scoped>
   .checkCode {
-    font-size: .35rem;
+    font-size: .6rem;
     font-weight: bold;
     margin: 2rem auto;
   }
