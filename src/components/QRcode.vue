@@ -2,7 +2,7 @@
   <div>
     <div v-if="isLogged">
       <div id="qrcode"></div>
-      <div class='change' @click="change">切换二维码</div>
+      <div class='change' @click="getQrcodeUrl()">切换二维码</div>
     </div>
     <div v-if="!isLogged" class="loginForm" v-auto-height>
       <form name="loginForm">
@@ -31,8 +31,9 @@
       }
     },
     watch: {
-      url: function (val) {
-        if (val !== '') {
+      isLogged: function (val) {
+        if (val) {
+          this.getQrcodeUrl()
         }
       }
     },
@@ -48,12 +49,9 @@
     },
     props: ['showErrMsg'],
     created () {
-      this.isLogged ? this.change() : null
+      this.isLogged ? this.getQrcodeUrl() : null
     },
     methods: {
-      change () {
-        this.getQrcodeUrl()
-      },
       getQrcodeUrl () {
         var that = this
         that.$http({
@@ -80,7 +78,7 @@
         }).then(function (response) {
           if (response && response.data.ret !== -1) {
             that.isLogged = true
-            that.change()
+            that.getQrcodeUrl()
           } else {
             that.showErrMsg('用户名或密码错误')
           }

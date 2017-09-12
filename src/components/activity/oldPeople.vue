@@ -133,12 +133,12 @@
     },
     props: ['showErrMsg'],
     created () {
-      this.offlineCode()
       if (!this.guestId) {
         this.$cookie.set('guestId', Utils.guestId(32, 16), 1)
         this.guestId = this.$cookie.get('guestId')
       }
       console.log(this.guestId)
+      this.offlineCode()
     },
     methods: {
       oninputHandler () {
@@ -209,17 +209,12 @@
             that.busy = false
           }, 1000)
           if (response && response.data.ret !== -1) {
-            if (response.data.status) {
-              that.$router.push({name: 'RegisterSuccess'})
-            } else {
-              that.showErrMsg(response.data.msg)
-            }
+            that.$router.push({name: 'RegisterSuccess'})
+          } else {
+            that.showErrMsg(response.data.msg)
           }
         })
       }
-    },
-    destory: function () {
-      // this.$cookie.delete('guestId')
     }
   }
 </script>
