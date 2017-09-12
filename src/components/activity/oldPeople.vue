@@ -209,7 +209,9 @@
             that.busy = false
           }, 1000)
           if (response && response.data.ret !== -1) {
-            that.$router.push({name: 'RegisterSuccess'})
+            if (response.data.status) {
+              that.$router.push({name: 'RegisterSuccess'})
+            }
           } else {
             that.showErrMsg(response.data.msg)
           }

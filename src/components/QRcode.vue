@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div v-if="isLogged">
+    <div v-show="isLogged">
       <div id="qrcode"></div>
       <div class='change' @click="getQrcodeUrl()">切换二维码</div>
     </div>
-    <div v-if="!isLogged" class="loginForm" v-auto-height>
+    <div v-show="!isLogged" class="loginForm" v-auto-height>
       <form name="loginForm">
         <input type="tel" class="mobile" name="mobile" placeholder="请输入手机号" v-model="user.mobile">
         <input type="text" id="password" name="password" placeholder="请设置登录密码" v-model="user.password">
