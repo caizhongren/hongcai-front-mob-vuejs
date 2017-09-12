@@ -61,7 +61,7 @@ export default {
         that.timer = setTimeout(function () {
           that.showErr = false
           that.errMsg = ''
-        }, 1000)
+        }, 2000)
       }
     }
   },
