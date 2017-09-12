@@ -31,8 +31,7 @@ module.exports = {
       'src': resolve('src'),
       'assets': resolve('src/assets'),
       'components': resolve('src/components'),
-      'zepto': resolve('node_modules/webpack-zepto/index.js'),
-      'vue-cookie': resolve('node_modules/vue-cookie/build/vue-cookie.js')
+      'zepto': resolve('node_modules/webpack-zepto/index.js')
       // 'zepto': 'zepto'
     }
   },

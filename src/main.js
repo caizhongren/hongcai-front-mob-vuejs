@@ -3,8 +3,7 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import VueCookie from '../static/vue-cookie'
-Vue.use(VueAxios, axios, VueCookie)
+Vue.use(VueAxios, axios)
 
 /* eslint-disable */
 new Vue({
