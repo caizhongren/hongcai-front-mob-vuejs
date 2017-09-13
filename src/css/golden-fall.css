@@ -1,3 +1,16 @@
+
+.border-none {
+  border: none !important;
+}
 .golden-fall {
   background-color: #e68935;
+  font-weight: 500;
+}
+.statement {
+  width: 100%;
+  height: .7rem;
+  line-height: .73rem;
+  background-color: #fc622d;
+  font-size: .2rem;
+	color: #fefefe;
 }
