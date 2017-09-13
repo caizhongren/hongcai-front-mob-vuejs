@@ -14,6 +14,7 @@ const CoolSummerPlan = r => require.ensure([], () => r(require('../components/ac
 const Novice = r => require.ensure([], () => r(require('../components/activity/novice.vue')), 'Novice')
 const MangoPromotion = r => require.ensure([], () => r(require('../components/activity/mangoPromotion.vue')), 'MangoTV')
 const MangoTV = r => require.ensure([], () => r(require('../components/activity/MangoTV.vue')), 'MangoTV')
+const GoldenFall = r => require.ensure([], () => r(require('../components/activity/goldenFall.vue')), 'GoldenFall')
 const About = r => require.ensure([], () => r(require('../components/about/about.vue')), 'About')
 const ManagementTeam = r => require.ensure([], () => r(require('../components/about/managementTeam.vue')), 'About')
 const Introduction = r => require.ensure([], () => r(require('../components/about/introduction.vue')), 'About')
@@ -207,6 +208,12 @@ const routes = [
     name: 'MangoPromotion',
     component: MangoPromotion,
     meta: {title: '0元变身VIP'}
+  },
+  {
+    path: '/activity/golden-fall',
+    name: 'GoldenFall',
+    component: GoldenFall,
+    meta: {title: '蟹逅金秋'}
   },
   {
     path: '/register-agree',
