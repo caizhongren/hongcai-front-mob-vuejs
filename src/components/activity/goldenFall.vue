@@ -1,7 +1,7 @@
 <template>
   <div class="golden-fall">
     <div class="fall-header">
-      <img src="../../images/golden-fall/title-words.jpg" alt="" width="72%">
+      <img src="../../images/golden-fall/title-words.png" alt="" width="72%">
       <p>活动时间：2017.9.17——2017.9.17</p>
       <p v-if="false">（活动已结束）</p>
     </div>
@@ -29,17 +29,13 @@
           第一道大礼
         </p>
         <ul>
-          <li>
-          </li>
-          <li>
-          </li>
-          <li>
-          </li>
-          <li>
-          </li>
-          <li>
-          </li>
-          <li>
+          <li v-for="coupon in cashCoupons">
+            <p class="coupon-left">现金券</p>
+            <div class="coupon-right">
+              <p class="value"><span>¥</span>{{coupon.value}}</p>
+              <p class="take-btn">立即领取</p>
+              <p class="premise">投资项目:{{coupon.type === 1 ? '精选' : '尊贵'}}起投金额:{{coupon.premiseValue}}</p>
+            </div>
           </li>
         </ul>
       </div>
@@ -55,14 +51,23 @@
             活动期间，新增投资<span>精选项目</span>每满1000元，可获得<span>1金秋积分</span>，新增投资<span>尊贵项目</span>每满1000元，可获得<span>4金秋积分</span>。金秋积分可用于兑换虚拟或实物奖励。
         </div>
         <div class="crab-gift">
-          <div class="crab-coupon">
-
+          <div class="crab-coupon position-re">
+            <p>大闸蟹</p>
+            <p>礼<br>券</p>
+            <img src="../../images/golden-fall/circle.png" alt="" class="position-ab">
+            <img src="../../images/golden-fall/crab-bag.png" alt="" class="crab-bag" width="56%">
+            <img src="../../images/golden-fall/circle.png" alt="" class="position-ab">
           </div>
           <div class="crab-list">
             <ul>
-              <li></li>
-              <li></li>
-              <li class="border-none"></li>
+              <li v-for="(crab, index) in crabs" v-bind:class="{'border-none' : index === 2}">
+                <p><img src="../../images/golden-fall/crab2.png" alt="" width="18%">{{crab.integral}}积分</p>
+                <p>公蟹{{crab.count1}}两/只</p>
+                <p>母蟹{{crab.count2}}两/只</p>
+                <p>4对共8只</p>
+                <p>市场价：{{crab.price}}元</p>
+                <p class="exchange-btn">立即兑换</p>
+              </li>
             </ul>
           </div>
         </div>
@@ -72,20 +77,33 @@
         <div class="jd-card-list">
           <ul>
             <li>
-              <img src="../../images/golden-fall/jd01.png" alt="" width="100%">
+              <img src="../../images/golden-fall/jd01.png" alt="" width="95%" height="51%" class="display-bl">
+              <p class="first"><img src="../../images/golden-fall/crab2.png" alt="" width="14%"> 50积分</p>
+              <p>50元京东卡</p>
+              <p class="exchange-btn margin-auto">立即兑换</p>
             </li>
             <li class="border-none">
-                <img src="../../images/golden-fall/jd02.png" alt="" width="100%">
+              <img src="../../images/golden-fall/jd02.png" alt="" width="95%" height="51%" class="display-bl">
+              <p class="first"><img src="../../images/golden-fall/crab2.png" alt="" width="14%"> 85积分</p>
+              <p class="text">100元京东卡</p>
+              <p class="exchange-btn margin-auto">立即兑换</p>
             </li>
           </ul>
         </div>
-        <img src="../../images/golden-fall/bottom-bg.png" alt="" width="98%">
+        <img src="../../images/golden-fall/bottom-bg.png" alt="" width="98%" class="display-bl">
         <div class="exchange-priviledge">
-          <div class="priviledge-coupon border-none">
-
+          <div class="priviledge-coupon border-none position-re">
+            <p class="position-ab left1">特权本金</p>
+            <p class="position-ab left2">收益一天</p>
+            <div class="right">
+              <p>3000元</p>
+              <p><img src="../../images/golden-fall/crab2.png" alt="" width="8%"> 10积分</p>
+            </div>
           </div>
           <div class="btns">
-
+            <span class="exchange-btn">兑换1次</span>
+            <span class="exchange-btn">连续兑换5次</span>
+            <span class="exchange-btn">连续兑换10次</span>
           </div>
         </div>
       </div>
@@ -227,6 +245,58 @@
     data () {
       return {
         isIos: Utils.isIos(),
+        cashCoupons: [
+          {
+            value: 5,
+            premiseValue: '5千',
+            type: 1
+          },
+          {
+            value: 38,
+            premiseValue: '5千',
+            type: 2
+          },
+          {
+            value: 12,
+            premiseValue: '1万',
+            type: 1
+          },
+          {
+            value: 78,
+            premiseValue: '1万',
+            type: 2
+          },
+          {
+            value: 28,
+            premiseValue: '2万',
+            type: 1
+          },
+          {
+            value: 238,
+            premiseValue: '3万',
+            type: 2
+          }
+        ],
+        crabs: [
+          {
+            integral: ' 125',
+            count1: 3,
+            count2: 2,
+            price: 168
+          },
+          {
+            integral: ' 200',
+            count1: 4,
+            count2: 3,
+            price: 268
+          },
+          {
+            integral: ' 300',
+            count1: 4.5,
+            count2: 3.5,
+            price: 498
+          }
+        ],
         PrizeMask: false,
         activityEnd: false,
         CashReceive: false,
@@ -252,6 +322,8 @@
       })
     },
     prop: ['token'],
+    created () {
+    },
     methods: {
       closeAdress () {
         this.AdressMask = false
@@ -271,226 +343,49 @@
   }
 </script>
 <style scoped>
-  /* header */
-  .fall-header {
-    height: 5rem;
-    background: url('../../images/golden-fall/header-bg2.jpg') no-repeat 0 0;
-    background-size: 100%;
+  @import '../../css/golden-fall.css';
+  .exchange-priviledge {
+    color: #ff611d;
+    height: 3.15rem;
+    padding-top: .1rem;
   }
-  .fall-header img {
-    margin: .6rem auto 0;
-  }
-  .fall-header p {
-    font-size: .24rem;
-    color: #eb4234;
-    line-height: .3;
-    margin-bottom: .2rem;
-  }
-  /* 我的积分 */
-  .fall-score-header {
-    height: 2rem;
-    background: url('../../images/golden-fall/bg-header.png')
-  }
-  .fall-score-wrapper .score-tip, .gift1-wrapper .gift1-tip, .gift2 .coupon-tip, .gift2-wrapper .gift2-tip {
-    font-size: .2rem;
-    line-height: 2.5;
-    letter-spacing: -0.4px;
-    color: #ffffff;
-    margin-bottom: .5rem;
-  }
-  .fall-score, .gift1, .gift2, .rules-wrapper .rules {
-    width: 96%;
-    margin-left: 2%;
-    margin-top: -.7rem;
-    height: 4.28rem;
-    background: url('../../images/golden-fall/bg-header.png') no-repeat 60% top, url('../../images/golden-fall/score-bg.png') no-repeat center bottom;
-    background-size: 76%, 100%;
-  }
-  .fall-score img, .crab {
-    top: 28%;
-    right: 28%;
-  }
-  .title {
-    height: 2.2rem;
-    font-size: .31rem;
-    font-weight: bold;
-    line-height: 8;
-    letter-spacing: -0.5px;
-    color: #ec812c;
-  }
-  .fall-score .content span.display-inb {
-    height: 1.1rem;
-    line-height: 1.8;
-    font-size: .66rem;
-    font-weight: bold;
-    letter-spacing: -1px;
-    text-align: justify;
-    color: #ec812c;
-  }
-  .fall-score .btns span {
+  .exchange-priviledge .btns span {
     display: inline-block;
-    width: 32%;
-    margin: 1.5% 3%;
-    height: .7rem;
-    line-height: .75rem;
-    font-size: .3rem;
-    letter-spacing: -0.4px;
-    color: #fed771;
-    border-radius: .2rem;
-    background-color: #fc4239;
+    margin: 0 .07rem;
   }
-  /* 第一道大礼 */
-  .gift1 {
-    padding: 0 .35rem;
-    height: 9.38rem;
-    background: url('../../images/golden-fall/bg-header.png') no-repeat 60% top, url('../../images/golden-fall/gift-bg1.png') no-repeat center bottom;
-    background-size: 76%, 100%;
-  }
-  .gift1 .crab {
-    top: 13%;
-  }
-  .gift1 .title {
-    height: 2.46rem;
-    line-height: 8.2;
-  }
-  .gift1 ul li {
-    float: left;
-    width: 49%;
+  .exchange-priviledge .priviledge-coupon {
     height: 2.1rem;
-  }
-  .gift1 ul li:nth-child(odd) {
-    background: url('../../images/golden-fall/coupon-bg2.png') no-repeat 0 0;
-    background-size: 100%;
-    margin-right: 1%;
-  }
-  .gift1 ul li:nth-child(even) {
-    background: url('../../images/golden-fall/coupon-bg2.png') no-repeat 0 0;
-    background-size: 100%;
-  }
-
-  .gift1-wrapper .gift1-tip {
-    line-height: 1.3;
-    width: 80%;
-    text-align: justify;
-    margin-left: 10%;
-    margin-top: .12rem;
+    margin: .13rem 0 .13rem;
   }
   /* 第二道大礼 */
-  .gift2 {
-    /* padding: 0 .35rem; */
-    height: 16.92rem;
-    background: url('../../images/golden-fall/bg-header.png') no-repeat 60% top, url('../../images/golden-fall/gift-bg2.png') no-repeat center bottom;
-    background-size: 76%, 100%;
+  .exchange-priviledge .priviledge-coupon .left1 {
+    width: 5%;
+    top: -27%;
+    left: -4%;
+    font-size: .32rem;
   }
-  .gift2 .crab {
-    top: 7%;
+  .exchange-priviledge .priviledge-coupon .left2 {
+    width: 5%;
+    top: -18%;
+    left: 2.5%;
+    font-size: .25rem;
+    color: #ea973f;
   }
-  .gift2 .gift2-rule {
-    height: 1.9rem;
-    margin: 0 .35rem;
-    padding: .3rem .25rem;
-    margin-top: -.3rem;
-    object-fit: contain;
-    border-radius: .2rem;
-    font-size: .26rem;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.38;
-    letter-spacing: 0.7px;
-    text-align: justify;
-    color: #ec812c;
-    background: url('../../images/golden-fall/border-bg.png') no-repeat 0 0;
-    background-size: 100% 100%;
+  .priviledge-coupon .right {
+    padding-top: .3rem;
+    text-align: left;
+    width: 60%;
+    margin-left: 39%;
   }
-  .gift2 .gift2-rule span {
+  .priviledge-coupon .right p:first-child {
     font-weight: bold;
-    color: #ea4d24;
+    font-size: .66rem;
+    font-weight: bold;
+    line-height: 1.2;
+    letter-spacing: -1.2px;
   }
-  .gift2 .crab-gift, .gift2 .jd-card-list, .gift2 .exchange-priviledge {
-    width: 97%;
-    background-color: #fff;
-    margin-left: 1.3%;
-    margin-top: .15rem;
-  }
-  .gift2 .crab-gift .crab-coupon, .gift2 .exchange-priviledge .priviledge-coupon {
-    padding: .2rem;
-    height: 2.6rem;
-    background: url('../../images/golden-fall/gift-coupon-bg.png') no-repeat center center;
-    background-size: 93%;
-    border-bottom: solid 1px rgba(249, 200, 153, 0.95);
-    border-top: solid 1px rgba(249, 200, 153, 0.95);
-  }
-  .gift2 .crab-gift .crab-list {
-    height: 2.6rem;
-    border-bottom: solid 1px rgba(249, 200, 153, 0.95);
-  }
-  .gift2 .crab-gift .crab-list ul li {
-    height: 2.6rem;
-    float: left;
-    width: 33%;
-    border-right: solid 1px rgba(249, 200, 153, 0.95);
-  }
-  .gift2 .coupon-tip {
-    width: 98%;
-    padding: 2.8% 7.5%;
-    margin-bottom: 0;
-    margin-left: 1%;
-    height: .9rem;
-    font-size: .2rem;
-    line-height: 1.1;
-    letter-spacing: 0.6px;
-    text-align: justify;
-    /* background: url('../../images/golden-fall/bottom-bg.png') no-repeat 0 0; */
-    background: url('../../images/golden-fall/tip-bg.png') no-repeat 0 0;
-    background-size: 100%;
-  }
-  .gift2 .jd-card-list, .gift2 .exchange-priviledge {
-    margin-top: 0;
-    height: 3.04rem;
-    background-color: #fff;
-  }
-  .gift2 .jd-card-list ul li {
-    float: left;
-    padding: .2rem .2rem .1rem .3rem;
-    width: 41%;
-    height: 2.74rem;
-    border-right: solid 1px rgba(249, 200, 153, 0.95);
-  }
-  .gift2 .jd-card-list ul li:last-child {
-    float: right;
-    padding: .2rem .3rem .1rem .2rem;
-  }
-  .gift2 .exchange-priviledge {
-    margin-top: -.1rem;
-    border-radius: 0 0 .1rem .1rem;
-  }
-  .gift2 .exchange-priviledge .priviledge-coupon {
-
-  }
-  /* 活动规则 */
-  .rules-wrapper {
-    padding-bottom: .5rem;
-  }
-  .rules-wrapper .rules {
-    height: 13.5rem;
-    background: url('../../images/golden-fall/bg-header.png') no-repeat 60% top, url('../../images/golden-fall/rules-bg.png') no-repeat center bottom;
-    background-size: 76%, 100%;
-  }
-  .rules-wrapper .rules .crab {
-    top: 8.5%;
-  }
-  .rules div {
-    padding: 2% 10% 1%;
-    font-size: .24rem;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.5;
-    letter-spacing: 0.6px;
-    text-align: justify;
-    color: #ec812c;
-  }
-  .rules div span {
-    font-weight: 900;
-	  color: #ff611d;
+  /* 第二道大礼 */
+  .priviledge-coupon .right p:last-child {
+    font-size: .25rem;
   }
 </style>
