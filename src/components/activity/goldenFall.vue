@@ -180,18 +180,36 @@
     <div class="dialog mask-common" v-if="AdressMask">
       <div class="adressBg">
         <!-- 表单填写 -->
-        <div class="formAdress">
+        <div class="formAdress" v-if="PreAdress">
           <div class="adress-title">
             <span>收</span><span>货</span><span>地</span><span>址</span>
           </div>
           <form action="">
-            <input type="text" placeholder="请输入您的收件人姓名" v-model="user.name">
-            <input type="tel" placeholder="请输入联系电话" v-model="user.mobile">
+            <input type="text" placeholder="请输入您的收件人姓名" v-model="user.name" maxlength="4">
+            <input type="tel" placeholder="请输入联系电话" v-model="user.mobile" maxlength="11">
             <textarea id="adress" type="text" placeholder="请在此处输入您的详细收货地址\n(建议包含省/市、区级、详细街道名称)" v-model="user.adress"></textarea>
           </form>
           <div class="btns">
-            <div class="mask-btn IKnowBtn fl">稍后填写</div>
-            <div class="mask-btn toMessage fr">确认</div>
+            <div class="mask-btn IKnowBtn fl" @click="closeAdress">稍后填写</div>
+            <div class="mask-btn toMessage fr" @click="PreAdressForm(user)">确认</div>
+          </div>
+        </div>
+        <!-- 表单提交 -->
+        <div class="formAdress" v-if="PutAdress">
+          <div class="adress-title">
+            <span>收</span><span>货</span><span>地</span><span>址</span>
+          </div>
+          <div class="formContent">
+            <div class="account">
+              <p>{{user.name}}</p>
+              <p>{{user.mobile}}</p>
+            </div>
+            <div class="adress">{{user.adress}}</div>
+          </div>
+          <div class="adressTips">*设置后将不可自行修改，请准确核实后再提交</div>
+          <div class="btns">
+            <div class="mask-btn IKnowBtn fl" @click="toPreAdress">修改</div>
+            <div class="mask-btn toMessage fr" @click="PreAdressForm(user)">提交</div>
           </div>
         </div>
       </div>
@@ -200,6 +218,7 @@
 </template>
 <style>
   @import '../../css/golden-fall.css';
+  @import '../../css/golden-mask.css';
 </style>
 <script>
   import {Utils} from '../../service/Utils'
@@ -214,13 +233,15 @@
         CashUpperLimit: false,
         NoIntegral: false,
         virtualPrizes: false,
-        materialPrize: true,
+        materialPrize: false,
         isExchange: false,
-        AdressMask: true,
+        AdressMask: false,
+        PreAdress: false,
+        PutAdress: false,
         user: {
-          name: '',
-          mobile: '',
-          adress: ''
+          name: '张三',
+          mobile: '18443225359',
+          adress: '吉林省通化市通化县快大茂镇茂盛家园31号楼8888单元33333333哈哈哈哈哈'
         }
       }
     },
@@ -232,7 +253,20 @@
     },
     prop: ['token'],
     methods: {
-
+      closeAdress () {
+        this.AdressMask = false
+      },
+      PreAdressForm (user) {
+        if (!user.name || !user.mobile || !user.adress) {
+          return
+        }
+        this.PreAdress = false
+        this.PutAdress = true
+      },
+      toPreAdress () {
+        this.PreAdress = true
+        this.PutAdress = false
+      }
     }
   }
 </script>
@@ -333,102 +367,7 @@
     background: url('../../images/golden-fall/coupon-bg2.png') no-repeat 0 0;
     background-size: 100%;
   }
-  
 
-
-  /* 弹窗 */
-  .adressBg {
-    background: url('../../images/golden-fall/adress.png') no-repeat center center;
-    background-size: contain;
-    padding: .8rem .6rem .3rem;
-  }
-  .successBg {
-    background: url('../../images/golden-fall/exchange-bg.png') no-repeat center center;
-    background-size: contain;
-    padding: 1.8rem .6rem;
-  }
-  .adressBg, .successBg {
-    margin: 1.5rem auto;
-    text-align: center;
-    width: 5.72rem;
-    height: 6rem;
-    font-family: PingFang-SC;
-  }
-  .mask-title {
-    font-size: .33rem;
-    font-weight: bold;
-    line-height: 1.06;
-    letter-spacing: -0.5px;
-    text-align: center;
-    color: #ee8118;
-    margin: .35rem auto .3rem;
-  }
-  .mask-content {
-    font-size: .25rem;
-	  color: #666666;
-    margin: .3rem auto;
-    text-align: justify;
-    line-height: 1.25;
-  }
-  .mask-btn {
-    width: 1.8rem;
-    height: .6rem;
-    line-height: .65rem;
-    border-radius: .2rem;
-    background-color: #ff4030;
-    font-size: .31rem;
-    font-weight: bold;
-    letter-spacing: -0.4px;
-    text-align: center;
-    color: #ffd869;
-  }
-  .cashPrize .mask-btn, .activityEnd .mask-btn {
-    margin-top: .5rem; 
-  }
-  .NoIntegral .mask-content{
-    margin-bottom: .5rem !important;
-  }
-  .formAdress .adress-title {
-    text-align: left;
-    margin-bottom: .1rem;
-  }
-  .formAdress .adress-title span {
-    display: inline-block;
-    width: .31rem;
-    height: .63rem;
-    line-height: .65rem;
-    background-color: #faf1ca;
-    border: solid 2px #dfb986;
-    font-size: .32rem;
-    font-weight: bold;
-    letter-spacing: 24px;
-    text-align: center;
-    color: #dfb986;
-    padding: 0 .17rem;
-    margin-right: .2rem;
-  }
-  .formAdress form {
-    background: #faf1ca;
-  }
-  .formAdress form input, textarea {
-    margin-bottom: 0;
-    width: 100%;
-    border: none;
-    font-family: "微软雅黑";
-    border-bottom: 1px solid #e78826;
-    border-radius: 0;
-    height: .9rem;
-    background-color: #faf1ca;
-    color: #666666;
-  }
-  .formAdress form textarea {
-    resize: none;
-    height: .8rem;
-    padding-top: .2rem;
-  }
-  .formAdress .btns {
-    margin-top: .3rem;
-  }
   .gift1-wrapper .gift1-tip {
     line-height: 1.3;
     width: 80%;
