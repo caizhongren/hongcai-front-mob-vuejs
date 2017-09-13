@@ -149,13 +149,11 @@
         e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/\D/g, ''))
       },
       oninputHandler1 () {
-        this.user.password = this.user.password.replace(/[^u4e00-u9fa5w]/g, '')
-        this.user.password = this.user.password.replace(/[@^':_=<>%?;)(&+]/g, '')
+        this.user.password = this.user.password.replace(/[\W]/g, '')
         this.user.password = this.user.password.length > 16 ? this.user.password.slice(0, 16) : this.user.password
       },
       beforepasteHandler1 (e) {
-        e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/[^u4e00-u9fa5w]/g, ''))
-        e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/[@^':_=<>%?;)(&+]/g, ''))
+        this.user.password = this.user.password.replace(/[\W]/g, '')
       },
       changeEyes (event) {
         var el = $(event.currentTarget)
