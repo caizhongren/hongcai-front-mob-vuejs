@@ -182,6 +182,7 @@
         })
       },
       register (user) {
+        $('#password').focus()
         var that = this
         if (that.busy) { return }
         var mobilePattern = /^((13[0-9])|(15[^4,\D])|(18[0-9])|(17[03678])|(14[0-9]))\d{8}$/
