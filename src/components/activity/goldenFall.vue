@@ -144,6 +144,76 @@
     <p class="statement" v-if="isIos">
       该活动与设备生产商Apple Inc.公司无关
     </p>
+    <!-- 领取成功弹窗 -->
+    <div class="dialog mask-common" v-if="PrizeMask">
+      <div class="successBg">
+        <!-- 现金券领取 -->
+        <div v-if="CashReceive || CashUpperLimit" class="cashPrize">
+          <div class="receive" v-if="CashReceive">
+            <p class="mask-title">领取成功！</p>
+            <p class="mask-title">可前往我的优惠券查看～</p>
+          </div>
+          <div class="UpperLimit" v-if="CashUpperLimit">
+            <p class="mask-title">您已经领取10次啦!</p>
+            <p class="mask-title">明天再来哦～</p>
+          </div>
+          <div class="mask-btn IKnowBtn margin-auto">我知道了</div>
+        </div>
+        <!-- 活动已结束 -->
+        <div class="activityEnd" v-if="activityEnd">
+          <p class="mask-title">活动已结束</p>
+          <p class="mask-title">去每日抽奖试试手气吧～</p>
+          <div class="mask-btn IKnowBtn margin-auto">我知道了</div>
+        </div>
+        <!-- 积分不足 -->
+        <div v-if="NoIntegral" class="NoIntegral">
+          <p class="mask-title">啊哦，积分不足哎...</p>
+          <p class="mask-content">您当前积分不足，快去投资赚取积分吧！</p>
+          <div class="mask-btn IKnowBtn fl">我知道了</div>
+          <div class="mask-btn toInvest fr">去投资</div>
+        </div>
+        <!-- 确认是否兑换 -->
+        <div v-if="isExchange">
+          <p class="mask-title">哇！奖励即将到手</p>
+          <p class="mask-content">兑换该奖励将消耗您【xx】积分，是否确认兑换？</p>
+          <div class="mask-btn IKnowBtn fl">再看看</div>
+          <div class="mask-btn toExchange fr">确认兑换</div>
+        </div>
+        <!-- 特权本金兑换成功-->
+        <div v-if="virtualPrizes">
+          <p class="mask-title">恭喜您兑换成功！</p>
+          <p class="mask-content">前往【我的】页面点击特权本金，即可查看咯!</p>
+          <div class="mask-btn IKnowBtn fl">我知道了</div>
+          <div class="mask-btn toMessage fr">去查看</div>
+        </div>
+        <!-- 实物奖品兑换成功-->
+        <div v-if="materialPrize">
+          <p class="mask-title">恭喜您兑换成功！</p>
+          <p class="mask-content">你已成功兑换【168大闸蟹礼券】！奖品将在活动结束后7个工作日内寄出，请注意接听客服电话核对收货地址哟～</p>
+          <div class="mask-btn IKnowBtn margin-auto">我知道了</div>
+        </div>
+      </div>
+    </div>
+    <!-- 收货地址弹窗 -->
+    <div class="dialog mask-common" v-if="AdressMask">
+      <div class="adressBg">
+        <!-- 表单填写 -->
+        <div class="formAdress">
+          <div class="adress-title">
+            <span>收</span><span>货</span><span>地</span><span>址</span>
+          </div>
+          <form action="">
+            <input type="text" placeholder="请输入您的收件人姓名" v-model="user.name">
+            <input type="tel" placeholder="请输入联系电话" v-model="user.mobile">
+            <textarea id="adress" type="text" placeholder="请在此处输入您的详细收货地址\n(建议包含省/市、区级、详细街道名称)" v-model="user.adress"></textarea>
+          </form>
+          <div class="btns">
+            <div class="mask-btn IKnowBtn fl">稍后填写</div>
+            <div class="mask-btn toMessage fr">确认</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -204,8 +274,28 @@
             count2: 3.5,
             price: 498
           }
-        ]
+        ],
+        PrizeMask: false,
+        activityEnd: false,
+        CashReceive: false,
+        CashUpperLimit: false,
+        NoIntegral: false,
+        virtualPrizes: false,
+        materialPrize: true,
+        isExchange: false,
+        AdressMask: true,
+        user: {
+          name: '',
+          mobile: '',
+          adress: ''
+        }
       }
+    },
+    mounted () {
+      var textAreas = document.getElementsByTagName('textarea')
+      Array.prototype.forEach.call(textAreas, function (elem) {
+        elem.placeholder = elem.placeholder.replace(/\\n/g, '\n')
+      })
     },
     prop: ['token'],
     created () {
@@ -256,6 +346,7 @@
     line-height: 1.2;
     letter-spacing: -1.2px;
   }
+  /* 第二道大礼 */
   .priviledge-coupon .right p:last-child {
     font-size: .25rem;
   }

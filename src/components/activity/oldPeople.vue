@@ -12,9 +12,9 @@
         </div>
         <div class="registerForm">
           <form name="registerForm">
-            <input type="tel" class="mobile" name="mobile" placeholder="请输入手机号" v-model="user.mobile" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler">
+            <input type="tel" class="mobile" name="mobile" placeholder="请输入手机号" autocomplete="off" v-model="user.mobile" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler">
             <div class="pwd">
-              <input type="text" id="password" name="password" placeholder="请设置登录密码" v-model="user.password" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler1">
+              <input type="text" id="password" name="password" placeholder="请设置登录密码" autocomplete="off" v-model="user.password" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler1">
               <span class="eyes" @click="changeEyes($event)"></span>
             </div>
             <button type="button" @click="register(user)">立即注册</button>
@@ -149,13 +149,11 @@
         e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/\D/g, ''))
       },
       oninputHandler1 () {
-        this.user.password = this.user.password.replace(/[^u4e00-u9fa5w]/g, '')
-        this.user.password = this.user.password.replace(/[@^':_=<>%?;)(&+]/g, '')
+        this.user.password = this.user.password.replace(/[\W]/g, '')
         this.user.password = this.user.password.length > 16 ? this.user.password.slice(0, 16) : this.user.password
       },
       beforepasteHandler1 (e) {
-        e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/[^u4e00-u9fa5w]/g, ''))
-        e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/[@^':_=<>%?;)(&+]/g, ''))
+        this.user.password = this.user.password.replace(/[\W]/g, '')
       },
       changeEyes (event) {
         var el = $(event.currentTarget)
