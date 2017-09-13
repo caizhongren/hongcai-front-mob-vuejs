@@ -12,9 +12,9 @@
         </div>
         <div class="registerForm">
           <form name="registerForm">
-            <input type="tel" class="mobile" name="mobile" placeholder="请输入手机号" v-model="user.mobile" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler">
+            <input type="tel" class="mobile" name="mobile" placeholder="请输入手机号" autocomplete="off" v-model="user.mobile" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler">
             <div class="pwd">
-              <input type="text" id="password" name="password" placeholder="请设置登录密码" v-model="user.password" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler1">
+              <input type="text" id="password" name="password" placeholder="请设置登录密码" autocomplete="off" v-model="user.password" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler1">
               <span class="eyes" @click="changeEyes($event)"></span>
             </div>
             <button type="button" @click="register(user)">立即注册</button>
