@@ -57,9 +57,9 @@
 }
 .formAdress .adress-title span {
   display: inline-block;
-  width: .31rem;
-  height: .63rem;
-  line-height: .65rem;
+  width: .33rem;
+  height: .56rem;
+  line-height: .63rem;
   background-color: #faf1ca;
   border: solid 2px #dfb986;
   font-size: .32rem;
@@ -67,8 +67,8 @@
   letter-spacing: 24px;
   text-align: center;
   color: #dfb986;
-  padding: 0 .17rem;
-  margin-right: .2rem;
+  padding: 0 .12rem;
+  margin-right: .15rem;
 }
 .formAdress form {
   background: #faf1ca;
