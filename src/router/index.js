@@ -47,6 +47,7 @@ const Events = r => require.ensure([], () => r(require('../components/events.vue
 const RiskEducation = r => require.ensure([], () => r(require('../components/riskEducation.vue')), 'RiskEducation')
 const Register = r => require.ensure([], () => r(require('../components/activity/oldPeople.vue')), 'Register')
 const RegisterSuccess = r => require.ensure([], () => r(require('../components/activity/registerSuccess.vue')), 'Register')
+const WanduRegister = r => require.ensure([], () => r(require('../components/activity/wandu-register.vue')), 'WanduRegister')
 const QRcode = r => require.ensure([], () => r(require('../components/QRcode.vue')), 'QRcode')
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -310,6 +311,11 @@ const routes = [
     path: '/activity/register-success',
     name: 'RegisterSuccess',
     component: RegisterSuccess
+  },
+  {
+    path: '/wandu-register',
+    name: 'WanduRegister',
+    component: WanduRegister
   },
   {
     path: '/qrcode',
