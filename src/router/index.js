@@ -15,6 +15,7 @@ const Novice = r => require.ensure([], () => r(require('../components/activity/n
 const MangoPromotion = r => require.ensure([], () => r(require('../components/activity/mangoPromotion.vue')), 'MangoTV')
 const MangoTV = r => require.ensure([], () => r(require('../components/activity/MangoTV.vue')), 'MangoTV')
 const GoldenFall = r => require.ensure([], () => r(require('../components/activity/goldenFall.vue')), 'GoldenFall')
+const GoldenDetail = r => require.ensure([], () => r(require('../components/activity/goldenDetail.vue')), 'GoldenDetail')
 const About = r => require.ensure([], () => r(require('../components/about/about.vue')), 'About')
 const ManagementTeam = r => require.ensure([], () => r(require('../components/about/managementTeam.vue')), 'About')
 const Introduction = r => require.ensure([], () => r(require('../components/about/introduction.vue')), 'About')
@@ -214,6 +215,12 @@ const routes = [
     name: 'GoldenFall',
     component: GoldenFall,
     meta: {title: '蟹逅金秋'}
+  },
+  {
+    path: '/activity/golden-detail',
+    name: 'GoldenDetail',
+    component: GoldenDetail,
+    meta: {title: '积分明细'}
   },
   {
     path: '/register-agree',
