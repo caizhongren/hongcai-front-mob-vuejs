@@ -5,16 +5,16 @@
     </div>
     <div class="register-form">
       <form action="#">
-        <input type="tel" name="mobile" class="mobile" placeholder="请输入手机号">
+        <input type="tel" name="mobile" class="mobile" placeholder="请输入手机号" v-model="user.mobile" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler">
         <div class="pic">
-          <input type="text" name="picCaptcha" placeholder="请输入图形验证码">
+          <input type="text" name="picCaptcha" placeholder="请输入图形验证码" v-model="user.picCaptcha" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler(e)">
           <span @click="refreshCode"><img alt="图形验证码" id="picCaptcha"></span>
         </div>
         <div class="captcha">
-          <input type="tel" name="picCaptcha" placeholder="请输入短信验证码">
-          <span @click="getCaptcha">获取</span>
+          <input type="tel" name="captcha" placeholder="请输入短信验证码" v-model="user.captcha" v-on:input="oninputHandler2" v-on:beforepaste="beforepasteHandler(e)">
+          <span class="send" @click="getCaptcha">获取</span>
         </div>
-        <button type="button">立即注册</button>
+        <button type="button" @click="register(user)">立即注册</button>
       </form>
     </div>
     <div class="act-rules">
@@ -40,7 +40,7 @@
       </ul>
     </div>
     <div class="title-btn">
-      优质项目推荐        
+      关于宏财        
     </div>
     <div class="choose-us">
       <div class="about">
@@ -98,6 +98,12 @@
       </div>
     </div>
     <div class="iosTip" v-show="isIos">该活动与设备生产商Apple Inc.公司无关</div>
+    <div class="mask-common" v-show="actEnd">
+      <div class="red-bag">
+        <p>本活动已结束!<br>请前往App参与其<br>他活动吧!</p>
+      </div>
+      <p class="upload-btn" onclick="javascript:window.location.href='http://a.app.qq.com/o/simple.jsp?pkgname=com.hoolai.hongcai'">下载宏财网App</p>
+    </div>
   </div>
 </template>
 <script>
@@ -107,8 +113,10 @@
     name: 'wanduRegister',
     data () {
       return {
-        canGetCaptch: false,
+        canGetCaptch: true,
         isIos: false,
+        busy: false,
+        actEnd: false,
         projects: [
           {
             rate: 8.0,
@@ -155,6 +163,24 @@
           console.log(err)
         })
       },
+      oninputHandler () {
+        this.user.mobile = this.user.mobile.replace(/\D/g, '')
+        this.user.mobile = this.user.mobile.length > 11 ? this.user.mobile.slice(0, 11) : this.user.mobile
+      },
+      beforepasteHandler (e) {
+        e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/\D/g, ''))
+      },
+      oninputHandler1 () {
+        this.user.picCaptcha = this.user.picCaptcha.length > 4 ? this.user.picCaptcha.slice(0, 4) : this.user.picCaptcha
+        this.user.picCaptcha = this.user.picCaptcha.replace(/[\W]/g, '')
+      },
+      beforepasteHandler1 (e) {
+        e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/[\W]/g, ''))
+      },
+      oninputHandler2 () {
+        this.user.captcha = this.user.captcha.length > 6 ? this.user.captcha.slice(0, 6) : this.user.captcha
+        this.user.captcha = this.user.captcha.replace(/\D/g, '')
+      },
       getCaptcha () {
         // $('#captcha').focus()
         if (!this.canGetCaptch) {
@@ -195,9 +221,6 @@
             if (res.data.code === -1005) {
               that.showRegister = false
               that.showErrMsg('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！', 1)
-              $('#mobile').blur()
-              $('#picCaptcha').blur()
-              $('#captcha').blur()
             } else {
               that.showErrMsg(res.data.msg)
             }
@@ -213,244 +236,51 @@
           console.log(err)
           that.showErrMsg('验证码发送失败')
         })
+      },
+      register (user) {
+        if (this.busy) { return }
+        if (!user.mobile || !user.picCaptcha || !user.captcha) {
+          return
+        }
+        var that = this
+        that.busy = true
+        that.$http.post('/hongcai/rest/users/register', {
+          picCaptcha: user.picCaptcha,
+          mobile: user.mobile,
+          password: '',
+          captcha: user.captcha,
+          channelCode: that.$route.query.f,
+          act: that.$route.query.act,
+          device: Utils.deviceCode()
+        })
+        .then(function (res) {
+          setTimeout(function () {
+            that.busy = false
+          }, 1000)
+          if (res.data.code && res.data.ret === -1) {
+            if (res.data.code === -1003) {
+              that.showErrMsg('请输入正确的手机号！')
+            } else if (res.data.code === -1005) {
+              that.showErrMsg('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！', 1)
+            } else {
+              that.showErrMsg(res.data.msg)
+            }
+            return
+          }
+          // 注册成功
+          that.$router.replace({name: 'WanduSuccess'})
+        })
+        .catch(function (err) {
+          setTimeout(function () {
+            that.busy = false
+          }, 1000)
+          console.log(err)
+        })
       }
     }
   }
 </script>
 <style scoped>
-  .wandu-register {
-    background-color: #e81352;
-  }
-  .header-img {
-    height: 4.25rem;
-    background: url('../../images/register/wandu-header.jpg') no-repeat 0 0;
-    background-size: 100%;
-  }
-  .header-img p {
-    margin-left: 10%;
-    color: #fff;
-    height: 100%;
-    width: 90%;
-    line-height: 8rem;
-  }
-  .register-form input {
-    color:#666;
-    font-size: .24rem;
-  }
-  .register-form input:-ms-input-placeholder, .register-form input:-moz-placeholder, .register-form input::-webkit-input-placeholder, .register-form input:placeholder {
-    color: #999;
-    font-size: .24rem;
-  }
-  .register-form {
-    padding-top: .2rem;
-    height: 5rem;
-  }
-  form input, form button {
-    width: 68%;
-    padding: 0 .4rem;
-    margin: 0 0 .35rem 0;
-    height: 0.76rem;
-    border: none !important;
-    color: #666;
-    border-radius: .1rem;
-    font-size: .24rem;
-  }
-  form .pic, form .captcha {
-    width: 80%;
-    margin: 0 auto;
-  }
-  form .pic input, form .captcha input {
-    width: 50%;
-    float: left;
-  }
-  form .pic span, form .captcha span {
-    width: 30%;
-    height: .77rem;
-    background-color: #fff;
-    border-radius: .1rem;
-    float: right;
-  }
-  form .captcha span {
-    font-size: .32rem;
-    line-height: .82rem;
-    font-weight: bold;
-    color: #e81352;
-    background-color: #feec1c;
-  }
-  form .captcha span.send {
-    background-color: #fff;
-  }
-  form button {
-    width: 80%;
-    font-size: .32rem;
-    font-weight: bold;
-    color: #e71e59;
-    border-radius: .1rem;
-    background-color: #feec1c;
-  }
-  /* 活动规则 */
-  .act-rules {
-    padding: .3rem .35rem;
-    width: 88%;
-    height: 3.5rem;
-    margin: 0 auto;
-    border-radius: 15px;
-    background-color: #ec4475;
-    font-weight: 500;
-    text-align: justify;
-    color: #fff;
-  }
-  .act-rules p {
-    color: #fefefe;
-    font-size: .24rem;
-    font-weight: 500;
-	  text-align: justify;
-  }
-  .act-rules .rule-title .line {
-    width: 20%;
-    height: 1px;
-    background-color: #fff;
-    margin-left: 13%;
-    float: left;
-    margin-top: .2rem;
-    margin-bottom: .35rem;
-  }
-  .act-rules .rule-title p {
-    float: left;
-    font-size: .28rem;
-    font-weight: bold;
-    margin-left: 6%;
-    margin-right: -8%;
-    height: .2rem;
-    color: #f0d730;
-  }
-  .act-rules .item span:first-child {
-    float: left;
-  }
-  .act-rules .item span:last-child {
-    line-height: 1.7;
-    width: 95%;
-    display: inline-block;
-  }
-  /* 优质项目 */
-  .title-btn {
-    height: 1rem;
-    width: 60%;
-    margin: .8rem auto;
-    background: url('../../images/register/wandu-btn.png') no-repeat 0 0;
-    background-size: 100%;
-    font-size: 24px;
-    font-weight: bold;
-    line-height: .9rem;
-    color: #e81352;
-  }
-  .projects {
-    overflow: hidden;
-    clear: both;
-  }
-  .projects li {
-    float: left;
-    width: 46%;
-    height: 2.5rem;
-    background: url('../../images/register/bg-rate1.png') no-repeat center center;
-    background-size: 100%;
-    text-align: center;
-    color: #e81352;
-    margin-bottom: .2rem;
-  }
-  .projects li:nth-child(odd) {
-    margin: 0 2%;
-  }
-  .rate-txt {
-    font-size: .3rem;
-    font-weight: 500;
-    line-height: 2.4;
-    margin-left: .24rem;
-  }
-  .rate-num {
-    height: .95rem;
-    line-height: 1.1rem;
-    border-radius: 5px;
-    font-size: .56rem;
-    font-weight: 500;
-    margin-left: 8%;
-  }
-  .date {
-    font-size: .26rem;
-    font-weight: 500;
-    line-height: 1.78;
-    margin-left: .3rem;
-    margin-top: .2rem;
-  }
-  /* 选择我们 */
-  .choose-us {
-    padding-bottom: 1.2rem;
-  }
-  .about .title, .about2 .title, .about3 .title {
-    background: linear-gradient(to right, transparent 0%, #ed6728 40%, transparent 100%);
-    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, #ed6728 40%, rgba(255, 255, 255, 0) 100%);
-    background: url('../../images/register/wandu-title.png') no-repeat center center;
-    width: 60%;
-    height: .9rem;
-    line-height: .95rem;
-    text-align: center;
-    color: #fff;
-    font-size: .48rem;
-  }
-  .about .content, .about3 .content {
-    background: url('../../images/register/background-gz.png') no-repeat .2rem .3rem;
-    background-size: 100% 100%;
-    height: 3rem;
-    padding-right: .3rem;
-  }
-  .about2 .content {
-    background: url('../../images/register/custody-bg.png') no-repeat -.18rem 0;
-    background-size: 100% 100%;
-    height: 2.8rem;
-  }
-  .about3 .content {
-    background: url('../../images/register/control-bg.png') no-repeat .2rem .3rem;
-    background-size: 100% 100%;
-  }
-  .about .text, .about2 .text, .about3 .text {
-    width: 50%;
-    text-align: justify;
-    color: rgba(255, 255, 255, 0.87);
-    font-size: .26rem;
-    font-weight: 500;
-    line-height: 1.55;
-    margin-top: .2rem;
-  }
-  .about .icon, .about2 .icon, .about3 .icon {
-    float: left;
-    width: .28rem;
-    height: .5rem;
-    background: url('../../images/register/icon.png') no-repeat 0 5px;
-    background-size: 100%;
-    margin-right: .12rem;
-  }
-  .about2 .title{
-    margin: .6rem 0 .5rem 40%;
-  }
-  .about2 .text {
-    margin: -1.5rem 0 0 .15rem;
-  }
-  .about3 .text {
-    margin-top: -.3rem;
-  }
-  .about .text span:nth-child(2), .about2 .text span:nth-child(2), .about3 .text span:nth-child(2) {
-    display: inline-block;
-    width: 85%;
-  }
-  .about3 .title{
-    margin: .3rem 0;
-  }
-  .iosTip {
-    font-size: .21rem;
-    color: #fff;
-    height: .6rem;
-    line-height: .62rem;
-	  background-color: #f8638f;
-  }
+  @import '../../css/wandu.css';
 </style>
 
