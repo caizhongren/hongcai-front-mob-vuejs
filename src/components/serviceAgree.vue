@@ -18,11 +18,13 @@
         </div>
         <br>
         <p><strong class="agree-mg">乙方（借款人）：</strong>{{contracts.enterpriseName}}
-        <p>企业法人营业执照注册号：{{contracts.entRegistrationNo}}</p>
+        <p>企业法人营业执照注册号：{{contracts.entRegistrationNo}}</p> 直投 + 老合同
+        <p>身份证号码：</p> 借款方个人
         </p>
         <br>
         <p><strong class="agree-mg">丙方（居间人）：北京竞财投资服务有限公司</strong></p>
-        <p>企业法人营业执照注册号：110107018557568</p>
+        <p>企业法人营业执照注册号：110107018557568</p>  直投 + 老合同
+        <p>统一社会信用代码：91110107330246732H</p>  借款方个人 + 借款方企业
         <br>
         <p class="agree-tx">本协议中，甲方、乙方、丙方单称“一方”，合称“各方”。</p>
         <br>
@@ -108,6 +110,8 @@
         <p class="agree-tx">5.2 有权依照本协议约定收回本金及收取利息。</p>
         <p class="agree-tx">5.3 乙方违约时，授权丙方向乙方主张权利，包括但不限于追偿借款本金及利息、罚息、违约金、损害赔偿金以及诉讼（仲裁）费、律师费等实现债权、担保权的费用等。</p>
         <p class="agree-tx">5.4.有权了解借款人基本情况、借款使用情况、担保人及担保物情况。</p>
+        借款方个人 + 借款方企业
+        <p class="agree-tx">5.5 应当对借款人信息予以保密，不得非法收集、使用、加工、传输借款人信息，不得非法买卖、提供或者公开借款人个人信息。</p>
         <br>
         <p><strong class="agree-mg">第六条 &nbsp&nbsp乙方权利和义务</strong></p>
         <p class="agree-tx">6.1 按照本协议的约定取得和使用借款。</p>
@@ -280,12 +284,16 @@
         <p><strong class="agree-mg">甲方（受让方/投资人）：</strong>{{contracts.total ? '详见附件1' : ' '}}</p>
         <br>
         <p><strong class="agree-mg">乙方（转让方/原债权人）：</strong>{{contracts.enterpriseName}}
-        <p>身份证号码：{{contracts.entRegistrationNo}}</p>
+        <p>身份证号码：{{contracts.entRegistrationNo}}</p>原债转 + 债转方-个人
+        <p>统一社会信用代码：</p> 债转方-企业
         </p>
         <br>
         <p><strong class="agree-mg">丙方（居间人）：北京竞财投资服务有限公司</strong></p>
-        <p>企业法人营业执照注册号：110107018557568</p>
-        <p>组织机构代码：33024673-2</p>
+        <div>原债转
+          <p>企业法人营业执照注册号：110107018557568</p>
+          <p>组织机构代码：33024673-2</p>
+        </div>
+        <p>统一社会信用代码：91110107330246732H</p>  债转方-个人 + 债转方-企业
         <br>
         <p class="agree-tx">本协议中，甲方、乙方、丙方单称“一方”，合称“各方”。</p>
         <br>
@@ -367,6 +375,8 @@
         <p class="agree-tx">5.2 授权乙方依照《借款协议》的约定向原债务人收取本金和利息，有权要求乙方依照本协议约定向其支付乙方代收的本金及利息。</p>
         <p class="agree-tx">5.3 乙方违约时，授权丙方向乙方主张权利，包括但不限于追偿债权本金及利息、罚息、违约金、损害赔偿金以及诉讼（仲裁）费、律师费等实现债权、担保权的费用等。</p>
         <p class="agree-tx">5.4 有权了解乙方以及债务人基本情况、借款使用情况、担保人及担保物情况。</p>
+        债转方-个人 + 债转方-企业
+        <p class="agree-tx">5.5 应当对借款人信息予以保密，不得非法收集、使用、加工、传输借款人信息，不得非法买卖、提供或者公开借款人个人信息。</p>
         <br>
         <p><strong class="agree-mg">第六条 &nbsp&nbsp乙方权利和义务</strong></p>
         <p class="agree-tx">6.1 按照本协议的约定取得债权转让款。</p>
