@@ -140,10 +140,10 @@
   font-size: .2rem;
   line-height: 1.15;
   width: 70%;
-  margin-left: 20%;
+  margin-left: 22%;
   margin-top: .1rem;
   letter-spacing: 0.5px;
-  text-align: justify;
+  text-align: left;
 }
 .gift1 ul li:nth-child(odd) {
   background: url('../images/golden-fall/coupon-bg1.png') no-repeat 0 0;
@@ -342,5 +342,10 @@ img.crab-bag {
 .rules div span {
   font-weight: 900;
   color: #ff611d;
+}
+@media(max-width: 320px) {
+  .gift1 ul li .coupon-right p.value {
+    font-size: .35rem;
+  }
 }
 

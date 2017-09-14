@@ -34,7 +34,7 @@
             <div class="coupon-right">
               <p class="value"><span>¥</span>{{coupon.value}}</p>
               <p class="take-btn">立即领取</p>
-              <p class="premise">投资项目:{{coupon.type === 1 ? '精选' : '尊贵'}}起投金额:{{coupon.premiseValue}}</p>
+              <p class="premise">投资项目:{{coupon.type === 1 ? '精选' : '尊贵'}}<br>起投金额:{{coupon.premiseValue}}</p>
             </div>
           </li>
         </ul>
