@@ -268,7 +268,7 @@
             return
           }
           // 注册成功
-          that.$router.replace({name: 'WanduSuccess'})
+          that.$router.push({name: 'WanduSuccess'})
         })
         .catch(function (err) {
           setTimeout(function () {
