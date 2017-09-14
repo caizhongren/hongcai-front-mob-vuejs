@@ -220,7 +220,7 @@
           if (res.data.code || res.data.ret === -1) {
             if (res.data.code === -1005) {
               that.showRegister = false
-              that.showErrMsg('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！', 1)
+              that.showErrMsg('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！')
             } else {
               that.showErrMsg(res.data.msg)
             }
@@ -261,7 +261,7 @@
             if (res.data.code === -1003) {
               that.showErrMsg('请输入正确的手机号！')
             } else if (res.data.code === -1005) {
-              that.showErrMsg('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！', 1)
+              that.showErrMsg('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！')
             } else {
               that.showErrMsg(res.data.msg)
             }
