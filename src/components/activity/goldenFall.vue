@@ -33,7 +33,7 @@
             <p class="coupon-left">现金券</p>
             <div class="coupon-right">
               <p class="value"><span>¥</span>{{coupon.value}}</p>
-              <p class="take-btn">立即领取</p>
+              <p class="take-btn" @click="showAdress">立即领取</p>
               <p class="premise">投资项目:{{coupon.type === 1 ? '精选' : '尊贵'}}<br>起投金额:{{coupon.premiseValue}}</p>
             </div>
           </li>
@@ -194,44 +194,6 @@
         </div>
       </div>
     </div>
-    <!-- 收货地址弹窗 -->
-    <div class="dialog mask-common" v-if="AdressMask">
-      <div class="adressBg">
-        <!-- 表单填写 -->
-        <div class="formAdress" v-if="PreAdress">
-          <div class="adress-title">
-            <span>收</span><span>货</span><span>地</span><span>址</span>
-          </div>
-          <form action="">
-            <input type="text" placeholder="请输入您的收件人姓名" v-model="user.name" maxlength="4">
-            <input type="tel" placeholder="请输入联系电话" v-model="user.mobile" maxlength="11">
-            <textarea id="adress" type="text" placeholder="请在此处输入您的详细收货地址\n(建议包含省/市、区级、详细街道名称)" v-model="user.adress"></textarea>
-          </form>
-          <div class="btns">
-            <div class="mask-btn IKnowBtn fl" @click="closeAdress">稍后填写</div>
-            <div class="mask-btn toMessage fr" @click="PreAdressForm(user)">确认</div>
-          </div>
-        </div>
-        <!-- 表单提交 -->
-        <div class="formAdress" v-if="PutAdress">
-          <div class="adress-title">
-            <span>收</span><span>货</span><span>地</span><span>址</span>
-          </div>
-          <div class="formContent">
-            <div class="account">
-              <p>{{user.name}}</p>
-              <p>{{user.mobile}}</p>
-            </div>
-            <div class="adress">{{user.adress}}</div>
-          </div>
-          <div class="adressTips">*设置后将不可自行修改，请准确核实后再提交</div>
-          <div class="btns">
-            <div class="mask-btn IKnowBtn fl" @click="toPreAdress">修改</div>
-            <div class="mask-btn toMessage fr" @click="PreAdressForm(user)">提交</div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 <style>
@@ -304,46 +266,24 @@
         NoIntegral: false,
         virtualPrizes: false,
         materialPrize: false,
-        isExchange: false,
-        AdressMask: false,
-        PreAdress: false,
-        PutAdress: false,
-        user: {
-          name: '张三',
-          mobile: '18443225359',
-          adress: '吉林省通化市通化县快大茂镇茂盛家园31号楼8888单元33333333哈哈哈哈哈'
-        }
+        isExchange: false
       }
     },
     mounted () {
-      var textAreas = document.getElementsByTagName('textarea')
-      Array.prototype.forEach.call(textAreas, function (elem) {
-        elem.placeholder = elem.placeholder.replace(/\\n/g, '\n')
-      })
     },
-    prop: ['token'],
+    props: ['token', 'showAdressMask'],
     created () {
     },
     methods: {
-      closeAdress () {
-        this.AdressMask = false
-      },
-      PreAdressForm (user) {
-        if (!user.name || !user.mobile || !user.adress) {
-          return
-        }
-        this.PreAdress = false
-        this.PutAdress = true
-      },
-      toPreAdress () {
-        this.PreAdress = true
-        this.PutAdress = false
+      showAdress () {
+        this.showAdressMask()
       }
     }
   }
 </script>
 <style scoped>
   @import '../../css/golden-fall.css';
+  @import '../../css/golden-mask.css';
   .exchange-priviledge {
     color: #ff611d;
     height: 3.15rem;

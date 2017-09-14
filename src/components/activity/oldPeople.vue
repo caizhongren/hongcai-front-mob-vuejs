@@ -99,7 +99,7 @@
   import {md5} from '../../service/md5.js'
   import $ from 'zepto'
   export default {
-    name: 'mgPromotion',
+    name: 'Register',
     data () {
       return {
         busy: false,

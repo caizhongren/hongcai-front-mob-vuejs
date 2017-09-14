@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view :token="token" :showErrMsg="showErrMsg"></router-view>
+    <router-view :token="token" :showErrMsg="showErrMsg" :showAdressMask="showAdressMask"></router-view>
     <p id="err" v-show="showErr">{{errMsg}}</p>
     <div class="mask-common mask1" v-show="showLongErr">
       <div class="alert-wrap" v-show="showLongErr">
@@ -9,6 +9,44 @@
         </div>
         <div class="i-know" @click="showLongErr = false">
           我知道了
+        </div>
+      </div>
+    </div>
+    <!-- 收货地址弹窗 -->
+    <div class="dialog mask-common" v-if="AdressMask">
+      <div class="adressBg">
+        <!-- 表单填写 -->
+        <div class="formAdress" v-if="PreAdress">
+          <div class="adress-title">
+            <span>收</span><span>货</span><span>地</span><span>址</span>
+          </div>
+          <form action="">
+            <input type="text" placeholder="请输入您的收件人姓名" v-model="user.name" maxlength="4">
+            <input type="tel" placeholder="请输入联系电话" v-model="user.mobile" maxlength="11">
+            <textarea id="adress" type="text" placeholder="请在此处输入您的详细收货地址\n(建议包含省/市、区级、详细街道名称)" v-model="user.adress"></textarea>
+          </form>
+          <div class="btns">
+            <div class="mask-btn IKnowBtn fl" @click="closeAdress">稍后填写</div>
+            <div class="mask-btn toMessage fr" @click="PreAdressForm(user)">确认</div>
+          </div>
+        </div>
+        <!-- 表单提交 -->
+        <div class="formAdress" v-if="PutAdress">
+          <div class="adress-title">
+            <span>收</span><span>货</span><span>地</span><span>址</span>
+          </div>
+          <div class="formContent">
+            <div class="account">
+              <p>{{user.name}}</p>
+              <p>{{user.mobile}}</p>
+            </div>
+            <div class="adress">{{user.adress}}</div>
+          </div>
+          <div class="adressTips">*设置后将不可自行修改，请准确核实后再提交</div>
+          <div class="btns">
+            <div class="mask-btn IKnowBtn fl" @click="toPreAdress">修改</div>
+            <div class="mask-btn toMessage fr" @click="PreAdressForm(user)">提交</div>
+          </div>
         </div>
       </div>
     </div>
@@ -28,7 +66,15 @@ export default {
       showErr: false,
       showLongErr: false,
       errMsg: '',
-      timer: null
+      timer: null,
+      AdressMask: false,
+      PreAdress: false,
+      PutAdress: false,
+      user: {
+        name: '张三',
+        mobile: '18443225359',
+        adress: ''
+      }
     }
   },
   created: function () {
@@ -70,11 +116,36 @@ export default {
           that.errMsg = ''
         }, 2000)
       }
+    },
+    closeAdress () {
+      this.AdressMask = false
+    },
+    PreAdressForm (user) {
+      if (!user.name || !user.mobile || !user.adress) {
+        return
+      }
+      this.PreAdress = false
+      this.PutAdress = true
+    },
+    toPreAdress () {
+      this.PreAdress = true
+      this.PutAdress = false
+    },
+    showAdressMask () {
+      this.AdressMask = true
+      this.PreAdress = true
     }
   },
   watch: {
     // 如果路由有变化，会再次执行该方法
-    '$route': 'getToken'
+    '$route': 'getToken',
+    'AdressMask': function (val) {
+      if (val) {
+        var textAreas = document.getElementsByTagName('textarea')
+        console.log(textAreas[0].adress)
+        // textAreas.placeholder = textAreas.placeholder.replace(/\\n/g, '\n')
+      }
+    }
   }
 }
 Object.keys(custom).forEach(key => {
@@ -95,6 +166,7 @@ Vue.directive('auto-height', function (el, binding) {
 
 <style lang="css">
   @import 'css/common.css';
+  @import 'css/golden-mask.css';
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
