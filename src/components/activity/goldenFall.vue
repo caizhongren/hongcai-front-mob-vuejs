@@ -16,8 +16,8 @@
           <span class="display-inb">13145</span>
         </div>
         <div class="btns">
-          <span>积分明细</span>
-          <span>兑换记录</span>
+          <router-link :to="{ name: 'GoldenDetail'}"><span>积分明细</span></router-link>
+          <router-link :to="{ name: 'GoldenRecord'}"><span>兑换记录</span></router-link>
         </div>
       </div>
       <p class="score-tip">*积分数据更新可能存在网络延迟现象，稍等一会就好了哟～</p>
