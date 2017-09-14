@@ -12,7 +12,7 @@
         </div>
         <div class="captcha">
           <input type="tel" name="captcha" placeholder="请输入短信验证码" v-model="user.captcha" v-on:input="oninputHandler2" v-on:beforepaste="beforepasteHandler(e)">
-          <span class="send" @click="getCaptcha">获取</span>
+          <span class="send" @click="getCaptcha" id="sent">获取</span>
         </div>
         <button type="button" @click="register(user)">立即注册</button>
       </form>
@@ -226,7 +226,7 @@
             }
             return
           }
-          var $send = document.getElementById('send')
+          var $send = document.getElementById('sent')
           sendMobCaptcha.countDown($send)
         })
         .catch(function (err) {
