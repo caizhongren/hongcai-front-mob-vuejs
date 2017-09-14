@@ -233,14 +233,14 @@
 	  background-color: #f8638f;
   }
   /* 活动结束蒙层 */
-  .red-bag {
+  .red-package {
     margin-top: 1rem;
     padding-top: 0.6rem;
     height: 6rem;
     background: url('../images/register/red-bag1.png') no-repeat top center;
     background-size: 100%;
   }
-  .red-bag p:last-child {
+  .red-package p:last-child {
     margin-top: 2rem;
     line-height: 1.4;
     font-size: .36rem;

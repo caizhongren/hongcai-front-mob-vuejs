@@ -1,6 +1,6 @@
 <template>
   <div class="wandu-register">
-    <div class="header-img">
+    <div class="header-img" @click="tSuccess">
       <p>活动时间：2017.9.17——2017.9.17</p>
     </div>
     <div class="register-form">
@@ -99,7 +99,7 @@
     </div>
     <div class="iosTip" v-show="isIos">该活动与设备生产商Apple Inc.公司无关</div>
     <div class="mask-common" v-show="actEnd">
-      <div class="red-bag">
+      <div class="red-package">
         <p>本活动已结束!<br>请前往App参与其<br>他活动吧!</p>
       </div>
       <p class="upload-btn" onclick="javascript:window.location.href='http://a.app.qq.com/o/simple.jsp?pkgname=com.hoolai.hongcai'">下载宏财网App</p>
@@ -276,6 +276,10 @@
           }, 1000)
           console.log(err)
         })
+      },
+      tSuccess () {
+        this.$router.push({name: 'WanduSuccess'})
+        window.reload()
       }
     }
   }
