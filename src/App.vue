@@ -21,8 +21,8 @@
             <span>收</span><span>货</span><span>地</span><span>址</span>
           </div>
           <form action="">
-            <input type="text" placeholder="请输入您的收件人姓名" v-model="user.name" maxlength="5">
-            <input type="tel" placeholder="请输入联系电话" v-model="user.mobile" maxlength="11">
+            <input type="text" placeholder="请输入您的收件人姓名" v-model="user.name">
+            <input type="number" placeholder="请输入联系电话" v-model="user.mobile">
             <textarea id="adress" type="text" placeholder="请在此处输入您的详细收货地址\n(建议包含省/市、区级、详细街道名称)" v-model="user.adress"></textarea>
           </form>
           <div class="btns">
