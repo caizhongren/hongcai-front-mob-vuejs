@@ -119,16 +119,16 @@
         actInfo: {},
         projects: [
           {
-            rate: 8.0,
-            date: 30
-          },
-          {
             rate: 8.6,
-            date: 60
+            date: 55
           },
           {
             rate: 9.3,
             date: 85
+          },
+          {
+            rate: 9.8,
+            date: 180
           },
           {
             rate: 11.6,

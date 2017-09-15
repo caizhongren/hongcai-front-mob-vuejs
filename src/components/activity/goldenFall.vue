@@ -94,7 +94,7 @@
             </li>
           </ul>
         </div>
-        <img src="../../images/golden-fall/bottom-bg.png" alt="" width="98%" class="display-bl">
+        <img src="../../images/golden-fall/bottom-bg.png" alt="" width="98%" height="1.5%" class="margin-t--1">
         <div class="exchange-priviledge">
           <div class="priviledge-coupon border-none position-re">
             <p class="position-ab left1">特权本金</p>
@@ -338,7 +338,7 @@
   @import '../../css/golden-mask.css';
   .exchange-priviledge {
     color: #ff611d;
-    height: 3.15rem;
+    height: 3.22rem;
     padding-top: .1rem;
   }
   .exchange-priviledge .btns span {
