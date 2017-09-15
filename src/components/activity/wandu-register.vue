@@ -1,6 +1,6 @@
 <template>
   <div class="wandu-register">
-    <div class="header-img" @click="tSuccess">
+    <div class="header-img">
       <p>活动时间：2017.9.17——2017.9.17</p>
     </div>
     <div class="register-form">
@@ -276,10 +276,6 @@
           }, 1000)
           console.log(err)
         })
-      },
-      tSuccess () {
-        this.$router.push({name: 'WanduSuccess'})
-        window.reload()
       }
     }
   }
