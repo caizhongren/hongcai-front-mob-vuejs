@@ -1,6 +1,6 @@
 <template>
   <div class="goldenRecord" v-auto-height>
-    <div class="addAdress" v-if="!hasAdress" @click="addAdress()">
+    <div class="addAdress" v-if="!hasAdress" @click="showAdressMask()">
       <p class="tip display-inb">提示：兑换实物奖品需要先设置收货地址，请点击此处添加</p>
       <img src="../../images/golden-fall/add.png" alt="" width="5%">
     </div>
@@ -90,9 +90,6 @@
     created () {
     },
     methods: {
-      addAdress () {
-        this.showAdressMask()
-      }
     }
   }
 </script>

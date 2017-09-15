@@ -114,19 +114,21 @@
 .formContent .account {
   overflow: hidden;
   clear: both;
-  /* margin-bottom: .25rem; */
+  margin-bottom: .2rem;
 }
 .formContent .account p {
   float: left;
   text-align: left;
 }
 .formContent .account p:nth-child(1) {
-  width: 25%;
-  margin-right: .5rem;
+  width: 30%;
 }
 .formContent .account p:nth-child(2) {
   width: 60%;
+  margin-left: .2rem;
 }
 .formContent .adress {
   text-align: justify;
+  height: 1rem;
+  overflow: auto
 }
