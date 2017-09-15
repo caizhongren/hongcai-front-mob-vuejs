@@ -28,9 +28,9 @@
     margin-top: 0rem;
   }
   .red-bag {
-    height: 5.6rem;
+    height: 4.8rem;
     background: url('../../images/register/red-bag2.png') no-repeat center center;
-    background-size: 100%;
+    background-size: 80%;
   }
   .red-bag p:first-child {
     font-size: 20px;
@@ -38,9 +38,9 @@
     color: #fefeff;
   }
   .red-bag p:last-child {
-    margin-top: 2.8rem;
+    margin-top: 2.3rem;
     line-height: 1.4;
-    font-size: .36rem;
+    font-size: .26rem;
     font-weight: bold;
     color: #feef1d;
   }
@@ -48,10 +48,9 @@
     width: 80%;
     height: .9rem;
     line-height: .95rem;
-    font-size: .34rem;
-    font-weight: bold;
+    font-size: .3rem;
     color: #e71e59;
-    margin:0 auto .2rem;
+    margin: 0 auto .2rem;
 	  border-radius: .1rem;
     background-color: #feec1c;
   }

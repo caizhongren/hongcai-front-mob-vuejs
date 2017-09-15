@@ -94,7 +94,7 @@
             </li>
           </ul>
         </div>
-        <img src="../../images/golden-fall/bottom-bg.png" alt="" width="98%" class="display-bl">
+        <img src="../../images/golden-fall/bottom-bg.png" alt="" width="98%" height="1.5%" class="margin-t--1">
         <div class="exchange-priviledge">
           <div class="priviledge-coupon border-none position-re">
             <p class="position-ab left1">特权本金</p>
@@ -174,21 +174,21 @@
           <p class="mask-title">啊哦，积分不足哎...</p>
           <p class="mask-content">您当前积分不足，快去投资赚取积分吧！</p>
           <div class="mask-btn IKnowBtn fl" @click="closeMask()">我知道了</div>
-          <div class="mask-btn toInvest fr">去投资</div>
+          <div class="mask-btn toInvest fr" @click="toProjectList">去投资</div>
         </div>
         <!-- 确认是否兑换 -->
         <div v-if="isExchange">
           <p class="mask-title">哇！奖励即将到手</p>
           <p class="mask-content">兑换该奖励将消耗您【xx】积分，是否确认兑换？</p>
           <div class="mask-btn IKnowBtn fl" @click="closeMask()">再看看</div>
-          <div class="mask-btn toExchange fr">确认兑换</div>
+          <div class="mask-btn toExchange fr" @click="confirmExchange(exchangeInfo)">确认兑换</div>
         </div>
         <!-- 特权本金兑换成功-->
         <div v-if="virtualPrizes">
           <p class="mask-title">恭喜您兑换成功！</p>
           <p class="mask-content">前往【我的】页面点击特权本金，即可查看咯!</p>
           <div class="mask-btn IKnowBtn fl" @click="closeMask()">我知道了</div>
-          <div class="mask-btn toMessage fr">去查看</div>
+          <div class="mask-btn toMessage fr" @click="toPriviledge">去查看</div>
         </div>
         <!-- 实物奖品兑换成功-->
         <div v-if="materialPrize">
@@ -275,26 +275,31 @@
         materialPrize: false,
         isExchange: false,
         integral: 0,
-        hasAdress: false
+        hasAdress: false,
+        exchangeInfo: { // 兑换信息
+          type: 1,
+          score: 0,
+          num: 1
+        }
       }
     },
     mounted () {
     },
     props: ['token', 'showAdressMask', 'colseAdressMask'],
     watch: {
-      PrizeMask: function (val) {
-        val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+      PrizeMask: function (newVal, oldVal) {
+        newVal ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
     created () {
       this.colseAdressMask()
     },
     methods: {
-      showAdress () {
-        this.showAdressMask()
-      },
-      toLogin: function () {
-        bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function (response) {}, null)
+      toLogin () {
+        var that = this
+        bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function (response) {
+          that.closeMask()
+        }, null)
       },
       closeMask () {
         this.PrizeMask = false
@@ -308,28 +313,49 @@
         this.materialPrize = false
         this.isExchange = false
       },
-      exchange (type, score, num) {
-        // todo
+      toProjectList () {
+        var that = this
+        bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {
+          that.closeMask()
+        }, null)
+      },
+      toPriviledge () {
+        var that = this
+        bridgeUtil.webConnectNative('HCNative_GoPrivilegedCapital', undefined, {}, function (res) {
+          that.closeMask()
+        }, null)
+      },
+      exchange (exchangeInfo) {
+        // todo 移到app里
         alert('兑换接口？')
       },
-      toExchange (type, score, num) {
-        // type: 1 实物 2 京东券 3 特权本金, num:兑换次数
+      toExchange (type, score, num) { // type: 1 实物 2 京东券 3 特权本金, num:兑换次数
+        this.exchangeInfo = {
+          type: type,
+          score: score,
+          num: num
+        }
         if (!this.token) {
           this.toLogin()
           return
         }
-        if (this.integral < score * num) {
-          // 积分不足兑换
+        if (this.integral < score * num) { // 积分不足兑换
           this.PrizeMask = true
           this.NoIntegral = true
           ModalHelper.afterOpen()
           return
         }
-        if (type === 1) {
-          this.hasAdress ? this.exchange(type, score, num) : this.showAdressMask()
-          return
+        // 积分充足
+        this.PrizeMask = true
+        this.isExchange = true
+        ModalHelper.afterOpen()
+      },
+      confirmExchange (exchangeInfo) { // 确认兑换
+        if (exchangeInfo.type === 1) {
+          this.hasAdress ? this.exchange(exchangeInfo) : this.showAdressMask()
+        } else { // todo 调用app的方法
+          this.exchange(exchangeInfo)
         }
-        this.exchange(type, score, num)
       }
     }
   }
@@ -339,7 +365,7 @@
   @import '../../css/golden-mask.css';
   .exchange-priviledge {
     color: #ff611d;
-    height: 3.15rem;
+    height: 3.22rem;
     padding-top: .1rem;
   }
   .exchange-priviledge .btns span {

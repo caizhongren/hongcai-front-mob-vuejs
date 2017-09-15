@@ -97,7 +97,6 @@
         </div>
       </div>
     </div>
-    <div class="iosTip" v-show="isIos">该活动与设备生产商Apple Inc.公司无关</div>
     <div class="mask-common" v-show="!actInfo.status">
       <div class="red-package">
         <p>本活动已结束!<br>请前往App参与其<br>他活动吧!</p>
@@ -119,16 +118,16 @@
         actInfo: {},
         projects: [
           {
-            rate: 8.0,
-            date: 30
-          },
-          {
             rate: 8.6,
-            date: 60
+            date: 55
           },
           {
             rate: 9.3,
             date: 85
+          },
+          {
+            rate: 9.8,
+            date: 180
           },
           {
             rate: 11.6,

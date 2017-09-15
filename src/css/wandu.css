@@ -1,5 +1,7 @@
 .wandu-register {
   background-color: #e81352;
+  width: 100%;
+  overflow-x: hidden;
 }
 .header-img {
   height: 4.25rem;
@@ -51,9 +53,8 @@ form .pic span, form .captcha span {
   float: right;
 }
 form .captcha span {
-  font-size: .32rem;
+  font-size: .30rem;
   line-height: .82rem;
-  font-weight: bold;
   color: #e81352;
 }
 form .captcha span.send {
@@ -61,8 +62,7 @@ form .captcha span.send {
 }
 form button {
   width: 80%;
-  font-size: .32rem;
-  font-weight: bold;
+  font-size: .3rem;
   color: #e71e59;
   border-radius: .1rem;
   background-color: #feec1c;
@@ -113,14 +113,14 @@ form button {
 }
 /* 优质项目 */
 .title-btn {
-  height: 1.01rem;
-  width: 60%;
-  margin: .8rem auto;
+  height: 1rem;
+  width: 48%;
+  margin: 1rem auto .6rem;
   background: url('../images/register/wandu-btn.png') no-repeat 0 0;
   background-size: 100%;
-  font-size: .45rem;
+  font-size: .32rem;
   font-weight: bold;
-  line-height: .95rem;
+  line-height: .76rem;
   color: #e81352;
 }
 .projects {
@@ -141,18 +141,18 @@ form button {
   margin: 0 2%;
 }
 .rate-txt {
-  font-size: .3rem;
+  font-size: .28rem;
   font-weight: 500;
-  line-height: 2.4;
-  margin-left: .24rem;
+  line-height: 2.7;
+  margin-left: .22rem;
 }
 .rate-num {
   height: .95rem;
-  line-height: 1.1rem;
+  line-height: 1rem;
   border-radius: 5px;
-  font-size: .7rem;
+  font-size: .5rem;
   font-weight: 500;
-  margin-left: 8%;
+  margin-left: 12%;
 }
 .date {
   font-size: .26rem;
@@ -163,43 +163,45 @@ form button {
 }
 /* 选择我们 */
 .choose-us {
-  padding-bottom: 1.2rem;
+  padding-bottom: .3rem;
 }
 .about .title, .about2 .title, .about3 .title {
   background: linear-gradient(to right, transparent 0%, #ed6728 40%, transparent 100%);
   background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, #ed6728 40%, rgba(255, 255, 255, 0) 100%);
   background: url('../images/register/wandu-title.png') no-repeat center center;
+  background-size: cover;
   width: 60%;
   height: .9rem;
   line-height: .95rem;
   text-align: center;
   padding-left: .5rem;
+  margin-left: -.6rem;
   color: #fff;
-  font-size: .4rem;
+  font-size: .3rem;
 }
 .about .content, .about3 .content {
-  background: url('../images/register/background-gz.png') no-repeat .2rem .3rem;
-  background-size: 100% 100%;
+  background: url('../images/register/background-gz.png') no-repeat .4rem .6rem;
+  background-size: 90%;
   height: 3rem;
   padding-right: .3rem;
 }
 .about2 .content {
-  background: url('../images/register/custody-bg.png') no-repeat -.18rem 0;
-  background-size: 100% 100%;
+  background: url('../images/register/custody-bg.png') no-repeat .2rem -0rem;
+  background-size: 90%;
   height: 2.8rem;
 }
 .about3 .content {
-  background: url('../images/register/control-bg.png') no-repeat .2rem .3rem;
-  background-size: 100% 100%;
+  background: url('../images/register/control-bg.png') no-repeat .4rem .4rem;
+  background-size: 90%;
 }
 .about .text, .about2 .text, .about3 .text {
   width: 50%;
   text-align: justify;
   color: rgba(255, 255, 255, 0.87);
-  font-size: .26rem;
+  font-size: .24rem;
   font-weight: 500;
   line-height: 1.55;
-  margin-top: .2rem;
+  margin-top: .3rem;
 }
 .about .icon, .about2 .icon, .about3 .icon {
   float: left;
@@ -209,27 +211,22 @@ form button {
   border-left-color: #feec1c;
 }
 .about2 .title{
-  margin: .6rem 0 .5rem 40%;
+  margin: .6rem 0 .5rem 43%;
 }
 .about2 .text {
-  margin: -1.5rem 0 0 .15rem;
+  margin: -1.3rem 0 0 .35rem;
 }
 .about3 .text {
-  margin-top: -.3rem;
+  margin-top: 0rem;
 }
 .about .text span:nth-child(2), .about2 .text span:nth-child(2), .about3 .text span:nth-child(2) {
   display: inline-block;
   width: 85%;
 }
-.about3 .title{
-  margin: .3rem 0;
-}
-.iosTip {
-  font-size: .21rem;
-  color: #fff;
-  height: .6rem;
-  line-height: .62rem;
-  background-color: #f8638f;
+.about3 .title {
+  margin: .1rem 0;
+  margin-left: -.5rem;
+  padding-left: .4rem;
 }
 /* 活动结束蒙层 */
 .red-package {
@@ -237,23 +234,21 @@ form button {
   padding-top: 0.6rem;
   height: 6rem;
   background: url('../images/register/red-bag1.png') no-repeat top center;
-  background-size: 100%;
+  background-size: 80%;
 }
 .red-package p:last-child {
-  margin-top: 2rem;
+  margin-top: 1.75rem;
   line-height: 1.4;
-  font-size: .36rem;
-  font-weight: bold;
+  font-size: .26rem;
   color: #feef1d;
 }
 .upload-btn {
   width: 80%;
   height: .9rem;
   line-height: .95rem;
-  font-size: .34rem;
-  font-weight: bold;
+  font-size: .3rem;
   color: #e71e59;
-  margin: -.6rem auto .2rem;
+  margin: -1rem auto .2rem;
   border-radius: .1rem;
   background-color: #feec1c;
 }
