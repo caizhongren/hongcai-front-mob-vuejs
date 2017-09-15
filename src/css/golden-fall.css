@@ -70,7 +70,12 @@
   text-align: justify;
   color: #ec812c;
 }
-.fall-score .btns span {
+.fall-score .content p {
+  font-size: .3rem;
+  margin-top: .1rem;
+  color: #ec812c;
+}
+.fall-score .btns span, .fall-score .content p:last-child {
   display: inline-block;
   width: 32%;
   margin: 1.5% 3%;
@@ -78,7 +83,7 @@
   line-height: .75rem;
   font-size: .3rem;
   letter-spacing: -0.4px;
-  color: #fed771;
+  color: #fed771 !important;
   border-radius: .2rem;
   background-color: #fc4239;
 }

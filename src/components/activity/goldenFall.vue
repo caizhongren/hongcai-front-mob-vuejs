@@ -11,11 +11,15 @@
         <p class="title">
           我的金秋积分
         </p>
-        <div class="content">
+        <div class="content" v-if="token">
           <img src="../../images/golden-fall/crab2.png" alt="" width="12%" class="display-inb">
           <span class="display-inb">13145</span>
         </div>
-        <div class="btns">
+        <div class="content">
+          <p>登录后可查看您的金秋积分</p>
+          <p @click="toLogin">去登录</p>
+        </div>
+        <div class="btns" v-if="token">
           <router-link :to="{ name: 'GoldenDetail'}"><span>积分明细</span></router-link>
           <router-link :to="{ name: 'GoldenRecord'}"><span>兑换记录</span></router-link>
         </div>
@@ -33,7 +37,7 @@
             <p class="coupon-left">现金券</p>
             <div class="coupon-right">
               <p class="value"><span>¥</span>{{coupon.value}}</p>
-              <p class="take-btn" @click="showAdress">立即领取</p>
+              <p class="take-btn">立即领取</p>
               <p class="premise">投资项目:{{coupon.type === 1 ? '精选' : '尊贵'}}<br>起投金额:{{coupon.premiseValue}}</p>
             </div>
           </li>
@@ -66,7 +70,7 @@
                 <p>母蟹{{crab.count2}}两/只</p>
                 <p>4对共8只</p>
                 <p>市场价：{{crab.price}}元</p>
-                <p class="exchange-btn">立即兑换</p>
+                <p class="exchange-btn" @click="toExchange(1, crab.score, 1)">立即兑换</p>
               </li>
             </ul>
           </div>
@@ -80,13 +84,13 @@
               <img src="../../images/golden-fall/jd01.png" alt="" width="95%" height="51%" class="display-bl">
               <p class="first"><img src="../../images/golden-fall/crab2.png" alt="" width="14%"> 50积分</p>
               <p>50元京东卡</p>
-              <p class="exchange-btn margin-auto">立即兑换</p>
+              <p class="exchange-btn margin-auto" @click="toExchange(2, 50, 1)">立即兑换</p>
             </li>
             <li class="border-none">
               <img src="../../images/golden-fall/jd02.png" alt="" width="95%" height="51%" class="display-bl">
               <p class="first"><img src="../../images/golden-fall/crab2.png" alt="" width="14%"> 85积分</p>
               <p class="text">100元京东卡</p>
-              <p class="exchange-btn margin-auto">立即兑换</p>
+              <p class="exchange-btn margin-auto" @click="toExchange(2, 85, 1)">立即兑换</p>
             </li>
           </ul>
         </div>
@@ -101,9 +105,9 @@
             </div>
           </div>
           <div class="btns">
-            <span class="exchange-btn">兑换1次</span>
-            <span class="exchange-btn">连续兑换5次</span>
-            <span class="exchange-btn">连续兑换10次</span>
+            <span class="exchange-btn" @click="toExchange(3, 10, 1)">兑换1次</span>
+            <span class="exchange-btn" @click="toExchange(3, 10, 5)">连续兑换5次</span>
+            <span class="exchange-btn" @click="toExchange(3, 10, 10)">连续兑换10次</span>
           </div>
         </div>
       </div>
@@ -157,40 +161,40 @@
             <p class="mask-title">您已经领取10次啦!</p>
             <p class="mask-title">明天再来哦～</p>
           </div>
-          <div class="mask-btn IKnowBtn margin-auto">我知道了</div>
+          <div class="mask-btn IKnowBtn margin-auto" @click="closeMask()">我知道了</div>
         </div>
         <!-- 活动已结束 -->
         <div class="activityEnd" v-if="activityEnd">
           <p class="mask-title">活动已结束</p>
           <p class="mask-title">去每日抽奖试试手气吧～</p>
-          <div class="mask-btn IKnowBtn margin-auto">我知道了</div>
+          <div class="mask-btn IKnowBtn margin-auto" @click="closeMask()">我知道了</div>
         </div>
         <!-- 积分不足 -->
         <div v-if="NoIntegral" class="NoIntegral">
           <p class="mask-title">啊哦，积分不足哎...</p>
           <p class="mask-content">您当前积分不足，快去投资赚取积分吧！</p>
-          <div class="mask-btn IKnowBtn fl">我知道了</div>
+          <div class="mask-btn IKnowBtn fl" @click="closeMask()">我知道了</div>
           <div class="mask-btn toInvest fr">去投资</div>
         </div>
         <!-- 确认是否兑换 -->
         <div v-if="isExchange">
           <p class="mask-title">哇！奖励即将到手</p>
           <p class="mask-content">兑换该奖励将消耗您【xx】积分，是否确认兑换？</p>
-          <div class="mask-btn IKnowBtn fl">再看看</div>
+          <div class="mask-btn IKnowBtn fl" @click="closeMask()">再看看</div>
           <div class="mask-btn toExchange fr">确认兑换</div>
         </div>
         <!-- 特权本金兑换成功-->
         <div v-if="virtualPrizes">
           <p class="mask-title">恭喜您兑换成功！</p>
           <p class="mask-content">前往【我的】页面点击特权本金，即可查看咯!</p>
-          <div class="mask-btn IKnowBtn fl">我知道了</div>
+          <div class="mask-btn IKnowBtn fl" @click="closeMask()">我知道了</div>
           <div class="mask-btn toMessage fr">去查看</div>
         </div>
         <!-- 实物奖品兑换成功-->
         <div v-if="materialPrize">
           <p class="mask-title">恭喜您兑换成功！</p>
           <p class="mask-content">你已成功兑换【168大闸蟹礼券】！奖品将在活动结束后7个工作日内寄出，请注意接听客服电话核对收货地址哟～</p>
-          <div class="mask-btn IKnowBtn margin-auto">我知道了</div>
+          <div class="mask-btn IKnowBtn margin-auto" @click="closeMask()">我知道了</div>
         </div>
       </div>
     </div>
@@ -198,10 +202,10 @@
 </template>
 <style>
   @import '../../css/golden-fall.css';
-  @import '../../css/golden-mask.css';
+@import '../../css/golden-mask.css';
 </style>
 <script>
-  import {Utils} from '../../service/Utils'
+  import {Utils, bridgeUtil, ModalHelper} from '../../service/Utils'
   export default {
     name: 'goldenFall',
     data () {
@@ -242,18 +246,21 @@
         crabs: [
           {
             integral: ' 125',
+            score: 125,
             count1: 3,
             count2: 2,
             price: 168
           },
           {
             integral: ' 200',
+            score: 200,
             count1: 4,
             count2: 3,
             price: 268
           },
           {
             integral: ' 300',
+            score: 300,
             count1: 4.5,
             count2: 3.5,
             price: 498
@@ -266,17 +273,62 @@
         NoIntegral: false,
         virtualPrizes: false,
         materialPrize: false,
-        isExchange: false
+        isExchange: false,
+        integral: 0,
+        hasAdress: false
       }
     },
     mounted () {
     },
     props: ['token', 'showAdressMask'],
+    watch: {
+      PrizeMask: function (val) {
+        val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+      }
+    },
     created () {
     },
     methods: {
       showAdress () {
         this.showAdressMask()
+      },
+      toLogin: function () {
+        bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function (response) {}, null)
+      },
+      closeMask () {
+        this.PrizeMask = false
+        ModalHelper.beforeClose()
+        this.PrizeMask = false
+        this.activityEnd = false
+        this.CashReceive = false
+        this.CashUpperLimit = false
+        this.NoIntegral = false
+        this.virtualPrizes = false
+        this.materialPrize = false
+        this.isExchange = false
+      },
+      exchange (type, score, num) {
+        // todo
+        alert('兑换接口？')
+      },
+      toExchange (type, score, num) {
+        // type: 1 实物 2 京东券 3 特权本金, num:兑换次数
+        if (!this.token) {
+          this.toLogin()
+          return
+        }
+        if (this.integral < score * num) {
+          // 积分不足兑换
+          this.PrizeMask = true
+          this.NoIntegral = true
+          ModalHelper.afterOpen()
+          return
+        }
+        if (type === 1) {
+          this.hasAdress ? this.exchange(type, score, num) : this.showAdressMask()
+          return
+        }
+        this.exchange(type, score, num)
       }
     }
   }
