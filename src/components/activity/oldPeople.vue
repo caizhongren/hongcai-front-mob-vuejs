@@ -86,7 +86,6 @@
             </div>
           </div>
         </div>
-        <div class="iosTip" v-show="isIos">该活动与设备生产商Apple Inc.公司无关</div>
       </div>
     </div>
     <div v-if="!checkCode" class="checkCode">
@@ -103,7 +102,6 @@
     data () {
       return {
         busy: false,
-        isIos: Utils.isIos(),
         user: {
           mobile: '',
           password: ''
@@ -423,13 +421,6 @@
   }
   .about3 .title{
     margin: .3rem 0;
-  }
-  .iosTip {
-    font-size: .21rem;
-    color: #fff;
-    height: .6rem;
-    line-height: .62rem;
-	  background-color: #ff611d;
   }
   @media only screen 
     and (min-device-width : 768px) 

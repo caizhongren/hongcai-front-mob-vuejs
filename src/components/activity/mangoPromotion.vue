@@ -73,9 +73,6 @@
         </ul>
       </div>
     </div>
-    <div class="statement" v-if="isIos">
-      该活动与设备生产商Apple Inc.公司无关
-    </div>
     <div class="mask-common" v-show="showRegister" @click="closeMask">
       <div class="register-wrap position-re" id="register">
         <img src="../../images/summer-plan/close.png" alt="" width="13.5%" height="33%" class="position-ab close" @click="showRegister = false">
@@ -105,7 +102,6 @@
         canGetCaptch: true,
         busy: false,
         actEnding: 1,
-        isIos: Utils.isIos(),
         inputUtil: checkInputUtil,
         scrollTop: 0,
         user: {
@@ -303,16 +299,10 @@
   }
 </script>
 <style scoped>
-  .statement {
-    height: .6rem;
-    line-height: .7rem;
-    font-size: .22rem;
-    background-color: #fab281;
-  }
-  .statement, .gift .success p, .content p {
+  .gift .success p, .content p {
     color: #333;
   }
-  .statement, .mg-promotion, header, header p, .gift .take-btn, .about-list li .title {
+  .mg-promotion, header, header p, .gift .take-btn, .about-list li .title {
     width: 100%;
   }
   header p, .gift .title, .about .about-list li {
