@@ -10,6 +10,7 @@
     <div class="record-wrapper">
       <div class="fall-record position-re">
         <img src="../../images/golden-fall/crab1.png" alt="" width="7%" class="crab position-ab">
+        <img src="../../images/golden-fall/leaf.png" alt="" width="17%" class="leaf position-ab">
         <p class="title">兑换记录</p>
         <div class="table-wrap">
           <table v-if="exchange.length > 0">
@@ -183,8 +184,8 @@
     right: 28%;
   }
   .fall-record .leaf {
-    top: 21%;
-    left: 3%;
+    top: 46%;
+    left: -12%;
   }
   .fall-record .title {
     height: 1.88rem;

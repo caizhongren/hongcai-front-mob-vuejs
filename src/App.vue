@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view :token="token" :showErrMsg="showErrMsg" :showAdressMask="showAdressMask"></router-view>
+    <router-view :token="token" :showErrMsg="showErrMsg" :showAdressMask="showAdressMask" :colseAdressMask="colseAdressMask"></router-view>
     <p id="err" v-show="showErr">{{errMsg}}</p>
     <div class="mask-common mask1" v-show="showLongErr">
       <div class="alert-wrap" v-show="showLongErr">
@@ -14,7 +14,7 @@
     </div>
     <!-- 收货地址弹窗 -->
     <div class="dialog mask-common" v-show="AdressMask">
-      <div class="adressBg">
+      <div class="adressBg" id="AdressMask">
         <!-- 表单填写 -->
         <div class="formAdress" v-show="PreAdress">
           <div class="adress-title">
@@ -23,7 +23,7 @@
           <form action="">
             <input type="text" placeholder="请输入您的收件人姓名" v-model="user.name">
             <input type="number" placeholder="请输入联系电话" v-model="user.mobile">
-            <textarea id="adress" type="text" placeholder="请在此处输入您的详细收货地址\n(建议包含省/市、区级、详细街道名称)" v-model="user.adress"></textarea>
+            <textarea id="adress" type="text" placeholder="请在此处输入您的详细收货地址\n(建议包含省/市、区级、详细街道名称)" v-model="user.adress" v-on:focus="myScript" v-on:blur="myScript1"></textarea>
           </form>
           <div class="btns">
             <div class="mask-btn IKnowBtn fl" @click="AdressMask = false">稍后填写</div>
@@ -55,7 +55,7 @@
 
 <script>
 import Vue from 'vue'
-import {bridgeUtil, Utils, ModalHelper} from './service/Utils'
+import {bridgeUtil, Utils, ModalHelper, InputMaskHelper} from './service/Utils'
 import * as custom from './filters/custom'
 
 export default {
@@ -133,6 +133,17 @@ export default {
     showAdressMask () {
       this.AdressMask = true
       this.PreAdress = true
+      var handleEle = document.getElementById('AdressMask')
+      InputMaskHelper.windowChange(handleEle)
+    },
+    colseAdressMask () {
+      this.AdressMask = false
+    },
+    myScript () {
+      alert(window.innerHeight)
+    },
+    myScript1 () {
+      alert(window.innerHeight)
     }
   },
   watch: {

@@ -15,7 +15,7 @@
           <img src="../../images/golden-fall/crab2.png" alt="" width="12%" class="display-inb">
           <span class="display-inb">13145</span>
         </div>
-        <div class="content">
+        <div class="content" v-if="!token">
           <p>登录后可查看您的金秋积分</p>
           <p @click="toLogin">去登录</p>
         </div>
@@ -280,13 +280,14 @@
     },
     mounted () {
     },
-    props: ['token', 'showAdressMask'],
+    props: ['token', 'showAdressMask', 'colseAdressMask'],
     watch: {
       PrizeMask: function (val) {
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
     created () {
+      this.colseAdressMask()
     },
     methods: {
       showAdress () {
