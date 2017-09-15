@@ -367,7 +367,8 @@
     background: linear-gradient(to right, transparent 0%, #ed6728 40%, transparent 100%);
     background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, #ed6728 40%, rgba(255, 255, 255, 0) 100%);
     background: url('../../images/register/title-bg.png') no-repeat center center;
-    width: 60%;
+    background-size: contain;
+    width: 50%;
     height: .9rem;
     line-height: .95rem;
     text-align: center;
@@ -408,7 +409,7 @@
     margin-right: .12rem;
   }
   .about2 .title{
-    margin: .6rem 0 .5rem 40%;
+    margin: .6rem 0 .5rem 50%;
   }
   .about2 .text {
     margin: -1.5rem 0 0 .15rem;
