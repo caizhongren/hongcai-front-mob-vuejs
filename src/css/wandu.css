@@ -228,13 +228,6 @@ form button {
   margin-left: -.5rem;
   padding-left: .4rem;
 }
-.iosTip {
-  font-size: .21rem;
-  color: #fff;
-  height: .6rem;
-  line-height: .62rem;
-  background-color: #f8638f;
-}
 /* 活动结束蒙层 */
 .red-package {
   margin-top: 1rem;
