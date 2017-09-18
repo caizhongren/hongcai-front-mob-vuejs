@@ -23,12 +23,12 @@
           <form action="">
             <input type="text" placeholder="请输入您的收件人姓名" v-model="user.name">
             <input type="number" placeholder="请输入联系电话" v-model="user.mobile">
-            <textarea id="adress" type="text" placeholder="请在此处输入您的详细收货地址\n(建议包含省/市、区级、详细街道名称)" v-model="user.adress" v-on:focus="myScript" v-on:blur="myScript1"></textarea>
+            <textarea id="adress" type="text" placeholder="请在此处输入您的详细收货地址\n(建议包含省/市、区级、详细街道名称)" v-model="user.adress"></textarea>
+            <div class="btns">
+              <div class="mask-btn IKnowBtn fl" @click="AdressMask = false">稍后填写</div>
+              <div class="mask-btn toMessage fr" @click="PreAdressForm(user)">确认</div>
+            </div>
           </form>
-          <div class="btns">
-            <div class="mask-btn IKnowBtn fl" @click="AdressMask = false">稍后填写</div>
-            <div class="mask-btn toMessage fr" @click="PreAdressForm(user)">确认</div>
-          </div>
         </div>
         <!-- 表单提交 -->
         <div class="formAdress" v-show="PutAdress">
@@ -74,7 +74,8 @@ export default {
         name: '张三',
         mobile: '18443225359',
         adress: ''
-      }
+      },
+      busy: false
     }
   },
   created: function () {
@@ -91,6 +92,8 @@ export default {
     Array.prototype.forEach.call(textAreas, function (elem) {
       elem.placeholder = elem.placeholder.replace(/\\n/g, '\n')
     })
+    var handleEle = document.getElementById('AdressMask')
+    InputMaskHelper.windowChange(handleEle)
   },
   methods: {
     getToken: function () {
@@ -129,6 +132,18 @@ export default {
       this.PutAdress = true
     },
     PutAdressForm (user) {
+      if (this.busy) { return }
+      if (!user.mobile || !user.name || !user.adress) {
+        return
+      }
+      var that = this
+      that.busy = true
+      that.$http.post('/hongcai/rest/users/putAdress', {
+        name: user.name,
+        mobile: user.mobile,
+        adress: user.adress
+      })
+      .then(function (res) {})
     },
     showAdressMask () {
       this.AdressMask = true
@@ -138,12 +153,6 @@ export default {
     },
     colseAdressMask () {
       this.AdressMask = false
-    },
-    myScript () {
-      alert(window.innerHeight)
-    },
-    myScript1 () {
-      alert(window.innerHeight)
     }
   },
   watch: {
