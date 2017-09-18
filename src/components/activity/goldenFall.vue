@@ -179,7 +179,7 @@
         <!-- 确认是否兑换 -->
         <div v-if="isExchange">
           <p class="mask-title">哇！奖励即将到手</p>
-          <p class="mask-content">兑换该奖励将消耗您【xx】积分，是否确认兑换？</p>
+          <p class="mask-content">兑换该奖励将消耗您【{{exchangeInfo.score * exchangeInfo.num}}】积分，是否确认兑换？</p>
           <div class="mask-btn IKnowBtn fl" @click="closeMask()">再看看</div>
           <div class="mask-btn toExchange fr" @click="confirmExchange(exchangeInfo)">确认兑换</div>
         </div>
@@ -274,11 +274,11 @@
         virtualPrizes: false,
         materialPrize: false,
         isExchange: false,
-        integral: 0,
+        integral: 1000,
         hasAdress: false,
         exchangeInfo: { // 兑换信息
           type: 1,
-          score: 0,
+          score: 10,
           num: 1
         }
       }
@@ -302,8 +302,8 @@
         }, null)
       },
       closeMask () {
-        this.PrizeMask = false
         ModalHelper.beforeClose()
+        this.PrizeMask = false
         this.PrizeMask = false
         this.activityEnd = false
         this.CashReceive = false
@@ -340,15 +340,15 @@
           return
         }
         if (this.integral < score * num) { // 积分不足兑换
+          ModalHelper.afterOpen()
           this.PrizeMask = true
           this.NoIntegral = true
-          ModalHelper.afterOpen()
           return
         }
         // 积分充足
+        ModalHelper.afterOpen()
         this.PrizeMask = true
         this.isExchange = true
-        ModalHelper.afterOpen()
       },
       confirmExchange (exchangeInfo) { // 确认兑换
         if (exchangeInfo.type === 1) {
