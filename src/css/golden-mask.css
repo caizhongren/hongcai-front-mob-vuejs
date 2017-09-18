@@ -82,17 +82,22 @@
   font-family: "微软雅黑";
   border-bottom: 1px solid #e78826;
   border-radius: 0;
-  height: .9rem;
+  height: .85rem;
   background-color: #faf1ca;
   color: #666666;
+  padding: .05rem 0;
+  display: block;
 }
 .formAdress form textarea {
   resize: none;
-  height: .8rem;
+  height: .725rem;
   padding-top: .2rem;
 }
 .formAdress .btns {
   margin-top: .3rem;
+  overflow: hidden;
+}
+.btns.padding {
   padding: 0 .6rem;
 }
 .formContent {
