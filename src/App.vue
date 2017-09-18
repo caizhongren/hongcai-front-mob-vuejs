@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view :token="token" :showErrMsg="showErrMsg" :showAdressMask="showAdressMask" :colseAdressMask="colseAdressMask"></router-view>
+    <router-view :token="token" :showErrMsg="showErrMsg" :showAdressMask="showAdressMask" :colseAdressMask="colseAdressMask" ref="GoldenFall"></router-view>
     <p id="err" v-show="showErr">{{errMsg}}</p>
     <div class="mask-common mask1" v-show="showLongErr">
       <div class="alert-wrap" v-show="showLongErr">
@@ -129,6 +129,10 @@ export default {
       this.PutAdress = true
     },
     PutAdressForm (user) {
+      this.AdressMask = false
+      this.PreAdress = false
+      this.PutAdress = false
+      this.$refs.GoldenFall.showExchangeSuccess()
     },
     showAdressMask () {
       this.AdressMask = true
@@ -140,10 +144,10 @@ export default {
       this.AdressMask = false
     },
     myScript () {
-      alert(window.innerHeight)
+      // alert(window.innerHeight)
     },
     myScript1 () {
-      alert(window.innerHeight)
+      // alert(window.innerHeight)
     }
   },
   watch: {

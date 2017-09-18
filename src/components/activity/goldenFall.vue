@@ -121,7 +121,7 @@
         </p>
         <div>
           1.活动时间<br>
-          本次活动仅限于<span>年9月xx日至2017年10月xx日</span>内参与有效；
+          本次活动仅限于<span>2017年9月xx日至2017年10月xx日</span>内参与有效；
         </div>
         <div>
           2.参与方式<br>
@@ -285,7 +285,7 @@
         materialPrize: false,
         isExchange: false,
         integral: 1000,
-        hasAdress: true, // 是否已有地址
+        hasAdress: false, // 是否已有地址
         exchangeInfo: { // 兑换信息
           type: 1,
           score: 10,
@@ -303,6 +303,7 @@
     },
     created () {
       this.colseAdressMask()
+      // this.showAdressMask()
     },
     methods: {
       toLogin () {
@@ -322,6 +323,10 @@
         this.virtualPrizes = false
         this.materialPrize = false
         this.isExchange = false
+      },
+      showExchangeSuccess () {
+        this.PrizeMask = true
+        this.materialPrize = true
       },
       toProjectList () {
         var that = this
@@ -352,22 +357,18 @@
           this.toLogin()
           return
         }
+        this.PrizeMask = true
         if (this.integral < score * num) { // 积分不足兑换
-          ModalHelper.afterOpen()
-          this.PrizeMask = true
           this.NoIntegral = true
           return
         }
-        // 积分充足
-        ModalHelper.afterOpen()
-        this.PrizeMask = true
         this.isExchange = true
       },
       confirmExchange (exchangeInfo) { // 确认兑换
         var that = this
         that.isExchange = false
         exchangeInfo.type === 1 && !that.hasAdress ? that.PrizeMask = false : that.PrizeMask = true
-        setTimeout(function () {
+        setTimeout(function () { // 关掉确认兑换弹窗后再去判断是否弹出填写收货地址
           if (exchangeInfo.type === 1) {
             that.hasAdress ? that.exchange(exchangeInfo) : that.showAdressMask()
           } else { // todo 调用app的方法

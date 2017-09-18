@@ -137,7 +137,9 @@
         user: {
           mobile: '',
           picCaptcha: '',
-          captcha: ''
+          captcha: '',
+          mobileCaptchaType: 1,
+          mobileCaptchaBusiness: 0
         }
       }
     },
