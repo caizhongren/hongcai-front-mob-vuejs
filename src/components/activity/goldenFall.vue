@@ -13,7 +13,7 @@
         </p>
         <div class="content" v-if="token">
           <img src="../../images/golden-fall/crab2.png" alt="" width="12%" class="display-inb">
-          <span class="display-inb">13145</span>
+          <span class="display-inb">{{integral || 0}}</span>
         </div>
         <div class="content" v-if="!token">
           <p>登录后可查看您的金秋积分</p>
@@ -150,9 +150,9 @@
     </p>
     <!-- 领取成功弹窗 -->
     <div class="dialog mask-common" v-if="PrizeMask">
-      <div class="successBg">
+      <div class="successBg" v-if="CashReceive || CashUpperLimit">
         <!-- 现金券领取 -->
-        <div v-if="CashReceive || CashUpperLimit" class="cashPrize">
+        <div class="cashPrize">
           <div class="receive" v-if="CashReceive">
             <p class="mask-title">领取成功！</p>
             <p class="mask-title">可前往我的优惠券查看～</p>
@@ -163,35 +163,45 @@
           </div>
           <div class="mask-btn IKnowBtn margin-auto" @click="closeMask()">我知道了</div>
         </div>
-        <!-- 活动已结束 -->
-        <div class="activityEnd" v-if="activityEnd">
+      </div>
+      <!-- 活动已结束 -->
+      <div class="successBg" v-if="activityEnd">
+        <div class="activityEnd">
           <p class="mask-title">活动已结束</p>
           <p class="mask-title">去每日抽奖试试手气吧～</p>
           <div class="mask-btn IKnowBtn margin-auto" @click="closeMask()">我知道了</div>
         </div>
-        <!-- 积分不足 -->
-        <div v-if="NoIntegral" class="NoIntegral">
+      </div>
+      <!-- 积分不足 -->
+      <div class="successBg" v-if="NoIntegral">
+        <div class="NoIntegral">
           <p class="mask-title">啊哦，积分不足哎...</p>
           <p class="mask-content">您当前积分不足，快去投资赚取积分吧！</p>
           <div class="mask-btn IKnowBtn fl" @click="closeMask()">我知道了</div>
           <div class="mask-btn toInvest fr" @click="toProjectList">去投资</div>
         </div>
-        <!-- 确认是否兑换 -->
-        <div v-if="isExchange">
+      </div>
+      <!-- 确认是否兑换 -->
+      <div class="successBg" v-if="isExchange">
+        <div>
           <p class="mask-title">哇！奖励即将到手</p>
           <p class="mask-content">兑换该奖励将消耗您【{{exchangeInfo.score * exchangeInfo.num}}】积分，是否确认兑换？</p>
           <div class="mask-btn IKnowBtn fl" @click="closeMask()">再看看</div>
           <div class="mask-btn toExchange fr" @click="confirmExchange(exchangeInfo)">确认兑换</div>
         </div>
-        <!-- 特权本金兑换成功-->
-        <div v-if="virtualPrizes">
+      </div>
+      <!-- 特权本金兑换成功-->
+      <div class="successBg" v-if="virtualPrizes">
+        <div>
           <p class="mask-title">恭喜您兑换成功！</p>
           <p class="mask-content">前往【我的】页面点击特权本金，即可查看咯!</p>
           <div class="mask-btn IKnowBtn fl" @click="closeMask()">我知道了</div>
           <div class="mask-btn toMessage fr" @click="toPriviledge">去查看</div>
         </div>
-        <!-- 实物奖品兑换成功-->
-        <div v-if="materialPrize">
+      </div>
+      <!-- 实物奖品兑换成功-->
+      <div class="successBg" v-if="materialPrize">
+        <div>
           <p class="mask-title">恭喜您兑换成功！</p>
           <p class="mask-content">你已成功兑换【168大闸蟹礼券】！奖品将在活动结束后7个工作日内寄出，请注意接听客服电话核对收货地址哟～</p>
           <div class="mask-btn IKnowBtn margin-auto" @click="closeMask()">我知道了</div>
@@ -275,7 +285,7 @@
         materialPrize: false,
         isExchange: false,
         integral: 1000,
-        hasAdress: false,
+        hasAdress: true, // 是否已有地址
         exchangeInfo: { // 兑换信息
           type: 1,
           score: 10,
@@ -327,7 +337,10 @@
       },
       exchange (exchangeInfo) {
         // todo 移到app里
-        alert('兑换接口？')
+        var that = this
+        that.PrizeMask = true
+        that.integral -= exchangeInfo.score * exchangeInfo.num
+        exchangeInfo.type === 3 ? that.virtualPrizes = true : that.materialPrize = true
       },
       toExchange (type, score, num) { // type: 1 实物 2 京东券 3 特权本金, num:兑换次数
         this.exchangeInfo = {
@@ -351,11 +364,16 @@
         this.isExchange = true
       },
       confirmExchange (exchangeInfo) { // 确认兑换
-        if (exchangeInfo.type === 1) {
-          this.hasAdress ? this.exchange(exchangeInfo) : this.showAdressMask()
-        } else { // todo 调用app的方法
-          this.exchange(exchangeInfo)
-        }
+        var that = this
+        that.isExchange = false
+        exchangeInfo.type === 1 && !that.hasAdress ? that.PrizeMask = false : that.PrizeMask = true
+        setTimeout(function () {
+          if (exchangeInfo.type === 1) {
+            that.hasAdress ? that.exchange(exchangeInfo) : that.showAdressMask()
+          } else { // todo 调用app的方法
+            that.exchange(exchangeInfo)
+          }
+        }, 0)
       }
     }
   }
