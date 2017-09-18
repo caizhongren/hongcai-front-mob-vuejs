@@ -43,7 +43,7 @@
             <div class="adress">{{user.adress}}</div>
           </div>
           <div class="adressTips">*设置后将不可自行修改，请准确核实后再提交</div>
-          <div class="btns">
+          <div class="btns padding">
             <div class="mask-btn IKnowBtn fl" @click="PreAdress = true;PutAdress = false">修改</div>
             <div class="mask-btn toMessage fr" @click="PutAdressForm(user)">提交</div>
           </div>

@@ -97,6 +97,9 @@
   margin-top: .3rem;
   overflow: hidden;
 }
+.btns.padding {
+  padding: 0 .6rem;
+}
 .formContent {
   width: 5rem;
   height: 2.8rem;
