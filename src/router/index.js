@@ -51,6 +51,7 @@ const RegisterSuccess = r => require.ensure([], () => r(require('../components/a
 const WanduRegister = r => require.ensure([], () => r(require('../components/activity/wandu-register.vue')), 'WanduRegister')
 const WanduSuccess = r => require.ensure([], () => r(require('../components/activity/wandu-success.vue')), 'WanduRegister')
 const QRcode = r => require.ensure([], () => r(require('../components/QRcode.vue')), 'QRcode')
+const Updates = r => require.ensure([], () => r(require('../components/recommendUpdates.vue')), 'Updates')
 Vue.use(Router)
 Vue.use(VueCookie)
 const routes = [
@@ -334,6 +335,12 @@ const routes = [
     path: '/qrcode',
     name: 'QRcode',
     component: QRcode
+  },
+  {
+    path: '/updates',
+    name: 'Updates',
+    component: Updates,
+    meta: {title: '发现新版本'}
   },
   {
     path: '*',
