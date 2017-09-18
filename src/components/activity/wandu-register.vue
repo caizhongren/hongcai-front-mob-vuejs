@@ -4,14 +4,14 @@
       <p>活动时间：{{actInfo.startTime | date}}—{{actInfo.endTime | date}}</p>
     </div>
     <div class="register-form">
-      <form action="#">
-        <input type="tel" name="mobile" class="mobile" placeholder="请输入手机号" v-model="user.mobile" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler">
+      <form>
+        <input type="tel" name="mobile" class="mobile" placeholder="请输入手机号" v-model="user.mobile" v-bind:value="user.mobile" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler" autocomplete="off">
         <div class="pic">
-          <input type="text" name="picCaptcha" placeholder="请输入图形验证码" v-model="user.picCaptcha" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler(e)">
-          <span @click="refreshCode"><img alt="图形验证码" id="picCaptcha"></span>
+          <input type="text" name="picCaptcha" placeholder="请输入图形验证码" v-model="user.picCaptcha" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler(e)" autocomplete="off">
+          <span @click="refreshCode"><img alt="图形验证码" id="picCaptcha" width="100%" height="100%"></span>
         </div>
         <div class="captcha">
-          <input type="tel" name="captcha" placeholder="请输入短信验证码" v-model="user.captcha" v-on:input="oninputHandler2" v-on:beforepaste="beforepasteHandler(e)">
+          <input type="tel" name="captcha" placeholder="请输入短信验证码" v-model="user.captcha" v-on:input="oninputHandler2" v-on:beforepaste="beforepasteHandler(e)" autocomplete="off">
           <span class="send" @click="getCaptcha" id="sent">获取</span>
         </div>
         <button type="button" @click="register(user)">立即注册</button>
