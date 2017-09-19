@@ -1,6 +1,6 @@
 <template>
   <div class="goldenRecord" v-auto-height>
-    <div class="addAdress" v-if="!hasAdress" @click="showAdressMask()">
+    <div class="addAdress" v-if="!hasAdress" @click="AdressMask = true">
       <p class="tip display-inb">提示：兑换实物奖品需要先设置收货地址，请点击此处添加</p>
       <img src="../../images/golden-fall/add.png" alt="" width="5%">
     </div>
@@ -13,7 +13,7 @@
         <img src="../../images/golden-fall/leaf.png" alt="" width="17%" class="leaf position-ab">
         <p class="title">兑换记录</p>
         <div class="table-wrap">
-          <table v-if="recordList.length > 0">
+          <table v-if="showRecord">
             <thead>
               <tr>
                 <td>日期</td>
@@ -29,7 +29,7 @@
               </tr>
             </tbody>
           </table>
-          <div class="no-record" v-if="recordList.length <= 0">
+          <div class="no-record" v-if="!showRecord">
             这里空空如也～ <br>快去挑选心仪的奖励进行兑换吧
           </div>
         </div>
@@ -44,61 +44,46 @@
           <p>{{user.name}}</p>
           <p>{{user.mobile}}</p>
         </div>
-        <div class="adress">{{user.adress}}</div>
+        <div class="adress">{{user.address}}</div>
       </div>
       <div class="adress-tip">*如遇特殊原因需要更改地址，请于活动结束前联系客服</div>
+    </div>
+    <div class="dialog mask-common" v-if="AdressMask">
+      <golden-address :AdressMask="AdressMask" :closeMask="closeMask" :token="token" :getAddress="getAddress"></golden-address>
     </div>
   </div>
 </template>
 <script>
+  import GoldenAddress from './golden-adress.vue'
   export default {
     name: 'goldenRecord',
     data () {
       return {
         hasAdress: false,
-        recordList: [
-          // {
-          //   date: 10000000,
-          //   prize: '35000特权本金 x 5',
-          //   score: 300
-          // },
-          // {
-          //   date: 10000000,
-          //   prize: '35000特权本金 x 10',
-          //   score: 300
-          // },
-          // {
-          //   date: 10000000,
-          //   prize: '35000特权本金',
-          //   score: 300
-          // },
-          // {
-          //   date: 10000000,
-          //   prize: '498大闸蟹礼券',
-          //   score: 300
-          // },
-          // {
-          //   date: 10000000,
-          //   prize: '100元京东卡',
-          //   score: 300
-          // }
-        ],
+        recordList: [],
         user: [
           {
             name: '',
             mobile: '',
-            adress: ''
+            address: ''
           }
-        ]
+        ],
+        showRecord: false,
+        AdressMask: false
       }
     },
-    mounted () {
+    watch: {
+      recordList: function (val) {
+        val.length > 0 ? this.showRecord = true : this.showRecord = false
+      }
     },
-    props: ['token', 'showAdressMask'],
+    props: ['token'],
     created () {
-      this.isAdress()
       this.getRecordList()
-      // this.hasAdress ? this.getAdress() : null
+      this.getAddress()
+    },
+    components: {
+      GoldenAddress
     },
     methods: {
       getRecordList () {
@@ -142,32 +127,22 @@
           ]
         })
       },
-      isAdress () {
+      getAddress () {
         var that = this
         that.$http({
           method: 'get',
-          url: '/hongcai/rest/golden/isAdress'
-        })
-        .then(function (res) {
-          if (res && res.ret !== -1) {
-            that.hasAdress = res.data
+          url: '/hongcai/rest/addresses?token=' + that.token
+        }).then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.user = res.data
+            that.hasAdress = true
+          } else {
+            that.hasAdress = false
           }
-        })
-        .catch(function () {
-          that.hasAdress = false
         })
       },
-      getAdress () {
-        var that = this
-        that.$http({
-          method: 'get',
-          url: '/hongcai/rest/users/adress'
-        })
-        .then(function (res) {
-          if (res && res.ret !== -1) {
-            that.user = res.data
-          }
-        })
+      closeMask () {
+        this.AdressMask = false
       }
     }
   }
@@ -219,24 +194,24 @@
     color: #666;
   }
   .adress-content .account {
-    overflow: hidden;
+    overflow: auto;
     clear: both;
     margin-bottom: .05rem;
+    height: .4rem;
   }
   .adress-content .account p {
     float: left;
     text-align: left;
   }
   .adress-content .account p:nth-child(1) {
-    width: 25%;
-    margin-right: .5rem;
+    width: 35%;
   }
   .adress-content .account p:nth-child(2) {
     width: 60%;
   }
   .adress-content .adress {
     text-align: justify;
-    height: .75rem;
+    height: .72rem;
     overflow-y: auto;
   }
   .adress::-webkit-scrollbar {display:none}

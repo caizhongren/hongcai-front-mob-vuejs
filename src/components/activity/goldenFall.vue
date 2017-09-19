@@ -150,7 +150,11 @@
     </p>
     <!-- 领取成功弹窗 -->
     <div class="dialog mask-common" v-if="PrizeMask">
+<<<<<<< HEAD
       <golden-address :showExchangeSuccess="showExchangeSuccess" :exchangeInfo="exchangeInfo" :AdressMask="AdressMask" :closeMask="closeMask" :token="token" v-if="AdressMask"></golden-address>    
+=======
+      <golden-address :showExchangeSuccess="showExchangeSuccess" :exchangeInfo="exchangeInfo" :AdressMask="AdressMask" :closeMask="closeMask" :isFall="isFall" v-if="AdressMask"></golden-address>    
+>>>>>>> 00f5841763b707c5cde06f0cc645befe0da5ad71
       <div class="successBg" v-if="CashReceive || CashUpperLimit">
         <!-- 现金券领取 -->
         <div class="cashPrize">
@@ -303,10 +307,11 @@
           type: 1,
           score: 0,
           num: 1
-        }
+        },
+        isFall: true
       }
     },
-    props: ['token', 'showAdressMask', 'showErrMsg'],
+    props: ['token'],
     watch: {
       PrizeMask: function (newVal, oldVal) {
         newVal ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
