@@ -37,7 +37,7 @@
   </div>
 </template>
 <script>
-  import {ModalHelper, InputMaskHelper} from '../../service/Utils'
+  import {InputMaskHelper} from '../../service/Utils'
   export default {
     name: 'GoldenAddress',
     data () {
@@ -56,10 +56,7 @@
     watch: {
       'AdressMask': function (newVal, oldVal) {
         var that = this
-        if (newVal) {
-          ModalHelper.afterOpen()
-        } else {
-          ModalHelper.beforeClose()
+        if (!newVal) {
           that.user.mobile = ''
           that.user.name = ''
           that.user.adress = ''

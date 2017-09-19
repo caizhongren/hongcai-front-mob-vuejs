@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view :token="token" :showErrMsg="showErrMsg" :showAdressMask="showAdressMask" :colseAdressMask="colseAdressMask" ref="GoldenFall"></router-view>
+    <keep-alive>
+      <router-view :token="token" :showErrMsg="showErrMsg" :showAdressMask="showAdressMask" :colseAdressMask="colseAdressMask" ref="GoldenFall"></router-view>    
+    </keep-alive>
     <p id="err" v-show="showErr">{{errMsg}}</p>
     <div class="mask-common mask1" v-show="showLongErr">
       <div class="alert-wrap" v-show="showLongErr">
