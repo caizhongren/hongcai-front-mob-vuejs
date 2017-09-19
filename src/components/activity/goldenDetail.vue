@@ -52,7 +52,7 @@
 </template>
 <script>
   export default {
-    name: 'goldenFall',
+    name: 'goldenDetail',
     data () {
       return {
         userGoldenScoresDetail: {
@@ -72,7 +72,7 @@
         var that = this
         that.$http({
           method: 'get',
-          url: '/hongcai/rest/golden/score?token=' + that.token
+          url: '/hongcai/rest/activitys/summer/scores/0/detail?token=' + that.token
         })
         .then(function (res) {
           if (res && res.ret !== -1) {
@@ -81,10 +81,10 @@
         })
         .catch(function () {
           that.userGoldenScoresDetail = {
-            selectionTotalAmount: 10000,
-            selectionScore: 10,
-            honorTotalAmount: 20000,
-            honorScore: 8
+            selectionTotalAmount: -1,
+            selectionScore: -1,
+            honorTotalAmount: -1,
+            honorScore: -1
           }
         })
       }
