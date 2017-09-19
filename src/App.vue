@@ -35,6 +35,13 @@ export default {
     this.getToken()
     this.receiveToken()
   },
+  mounted () {
+    var vue = this
+    window.addEventListener('touchmove', function (event) {
+      event.stopPropagation()
+      vue.showErr ? vue.showErr = false : null
+    }, false)
+  },
   methods: {
     getToken: function () {
       var that = this
@@ -61,7 +68,7 @@ export default {
         that.timer = setTimeout(function () {
           that.showErr = false
           that.errMsg = ''
-        }, 1000)
+        }, 2000)
       }
     }
   },

@@ -1,28 +1,31 @@
 <template>
-  <!-- 宏财网服务协议-直投、宏财网服务协议-债转、老项目合同区分 contractType：1——直投，2——债转，4——老合同，3——债权转让协议 ，5——降息换物渠道项目合同 -->
+  <!-- 宏财网服务协议-直投、宏财网服务协议-债转、老项目合同区分 contractType：1——直投，2——债转，4——老合同，3——债权转让协议 ，5——降息换物渠道项目合同，6——借款方企业协议，7——借款方个人协议，8——债转方企业协议，9——债转方个人协议 -->
   <div>
-    <div class="agreement-area row" v-show="contractType === 1 || contractType === 4">
+    <div class="agreement-area row" v-show="contractType === 1 || contractType === 4 || contractType === 6 || contractType === 7">
       <p class="text-title">宏财网服务协议</p>
       <p class="text-right" v-if="!contracts.total">合同编号：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
-      <p class="text-right" v-else="contracts">合同编号：{{contracts.contractNumber}}</p>
+      <p class="text-right" v-if="contracts.total">合同编号：{{contracts.contractNumber}}</p>
       <div class="row">
         <p><strong class="agree-mg text-justify">为了维护您的权益，请在签署本协议前，仔细阅读、充分理解本协议各条款（特别是加重、免除或限制协议一方责任条款），关注您在协议中的权利、义务。请您审慎阅读并选择接受或不接受本协议。您一经选择接受即视为对本协议全部条款已充分理解并完全接受。</strong></p>
         <p v-if="!contracts.total"><strong class="agree-mg">本协议由以下双方于【&nbsp&nbsp&nbsp】年【&nbsp&nbsp&nbsp】月【&nbsp&nbsp 】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
-        <p v-else="contracts"><strong class="agree-mg">本协议由以下双方于【{{contracts.year}}】年【{{contracts.month}}】月【{{contracts.day}}】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
+        <p v-if="contracts.total"><strong class="agree-mg">本协议由以下双方于【{{contracts.year}}】年【{{contracts.month}}】月【{{contracts.day}}】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
         <br>
         <p><strong class="agree-mg">协议各方：</strong></p>
-        <p v-show="contractType === 1"><strong class="agree-mg">甲方（出借人）：</strong>{{contracts.total ? '详见附件1' : ' '}}</p>
+        <p v-show="contractType !== 4"><strong class="agree-mg">甲方（出借人）：</strong>{{contracts.total ? '详见附件1' : ' '}}</p>
         <div v-show="contractType === 4">
           <p><strong class="agree-mg">甲方（出借人）：</strong>{{contracts.userRealName}}</p>
           <p><strong class="agree-mg">宏财网用户/会员名：</strong>{{contracts.userName}}</p>
         </div>
         <br>
         <p><strong class="agree-mg">乙方（借款人）：</strong>{{contracts.enterpriseName}}
-        <p>企业法人营业执照注册号：{{contracts.entRegistrationNo}}</p>
+        <p v-show="contractType === 1 || contractType === 4">企业法人营业执照注册号：{{contracts.entRegistrationNo}}</p>
+        <p v-show="contractType === 7">身份证号码：{{contracts.entRegistrationNo}}</p>
+        <p v-show="contractType === 6" v-html="contracts.entRegistrationNo"></p>
         </p>
         <br>
         <p><strong class="agree-mg">丙方（居间人）：北京竞财投资服务有限公司</strong></p>
-        <p>企业法人营业执照注册号：110107018557568</p>
+        <p v-show="contractType === 1 || contractType === 4">企业法人营业执照注册号：110107018557568</p> 
+        <p v-show="contractType === 6 || contractType === 7">统一社会信用代码：91110107330246732H</p>
         <br>
         <p class="agree-tx">本协议中，甲方、乙方、丙方单称“一方”，合称“各方”。</p>
         <br>
@@ -44,7 +47,7 @@
             <tr >
               <td width="120" align="center">借款金额</td>
               <td width="400" align="center" v-if="!contracts.total">人民币（大写）<u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp整</u>（小写）RMB<u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp元</u><br></td>
-              <td width="400" align="center" v-else="contracts">人民币（大写）<u>{{contracts.Total}}</u>（小写）RMB<u>{{contracts.total}}元</u><br></td>
+              <td width="400" align="center" v-if="contracts.total">人民币（大写）<u>{{contracts.Total}}</u>（小写）RMB<u>{{contracts.total}}元</u><br></td>
             </tr>
             <tr>
               <td width="120" align="center">借款利率</td>
@@ -57,17 +60,17 @@
             <tr>
               <td width="120" align="center">每月还款本息数额及还款日</td>
               <td width="400" align="center" v-show="contractType === 4">详情见附件1《还款计划表》</td>
-              <td width="400" align="center" v-show="contractType === 1">详情见附件2《还款计划表》</td>
+              <td width="400" align="center" v-show="contractType !== 4">详情见附件2《还款计划表》</td>
             </tr>
             <tr>
               <td width="120" align="center">借款放款日</td>
               <td width="400" align="center" v-if="!contracts.total"><u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</u></td>
-              <td width="400" align="center" v-else="contracts"><u>{{contracts.loanTime}}</u></td>
+              <td width="400" align="center" v-if="contracts.total"><u>{{contracts.loanTime}}</u></td>
             </tr>
             <tr>
               <td width="120" align="center">借款最终到期日</td>
               <td width="400" align="center" v-if="!contracts.total"><u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</u></td>
-              <td width="400" align="center" v-else="contracts"><u>{{contracts.repaymentDate}}</u></td>
+              <td width="400" align="center" v-if="contracts.total"><u>{{contracts.repaymentDate}}</u></td>
             </tr>
           </table>
         </div>
@@ -82,7 +85,7 @@
         <br>
         <p><strong class="agree-mg">第二条 &nbsp&nbsp出借资金冻结与发放</strong></p>
         <p class="agree-tx">2.1 乙方或其受托人通过宏财网勾选“同意《宏财网服务协议》”并点击【确认】按钮后，视为签订本协议。</p>
-        <p class="agree-tx">2.2 甲方通过宏财网对乙方发布的借款需求勾选“同意《宏财网服务协议》”并点击【立即投资】按钮及完成相应支付时，视为甲方签订本协议，并不可撤销地授权第三方资金存管机构冻结甲方确认向乙方出借的金额{{ contractType === 1 ? '，出借金额详见附件1。' : '等同于本协议第1.1条中列明的“借款金额”的资金。'}}</p>
+        <p class="agree-tx">2.2 甲方通过宏财网对乙方发布的借款需求勾选“同意《宏财网服务协议》”并点击【立即投资】按钮及完成相应支付时，视为甲方签订本协议，并不可撤销地授权第三方资金存管机构冻结甲方确认向乙方出借的金额{{ contractType !== 4 ? '，出借金额详见附件1。' : '等同于本协议第1.1条中列明的“借款金额”的资金。'}}</p>
         <p class="agree-tx">2.3 协议成立：乙方在宏财网上发布借款需求，丙方、甲方在宏财网上依照约定进行相关操作完成本协议的签订后，本协议成立。</p>
         <p class="agree-tx">2.4 协议生效：出借资金累计等于乙方借款金额时本协议即时生效。</p>
         <p class="agree-tx">2.5 协议成立：乙方在宏财网上发布借款需求，丙方出具签署协议书面确认书，丁方、甲方在宏财网上依照约定进行相关操作完成本协议的签订后，本协议成立。</p>
@@ -108,6 +111,7 @@
         <p class="agree-tx">5.2 有权依照本协议约定收回本金及收取利息。</p>
         <p class="agree-tx">5.3 乙方违约时，授权丙方向乙方主张权利，包括但不限于追偿借款本金及利息、罚息、违约金、损害赔偿金以及诉讼（仲裁）费、律师费等实现债权、担保权的费用等。</p>
         <p class="agree-tx">5.4.有权了解借款人基本情况、借款使用情况、担保人及担保物情况。</p>
+        <p class="agree-tx" v-show="contractType === 6 || contractType === 7">5.5 应当对借款人信息予以保密，不得非法收集、使用、加工、传输借款人信息，不得非法买卖、提供或者公开借款人个人信息。</p>
         <br>
         <p><strong class="agree-mg">第六条 &nbsp&nbsp乙方权利和义务</strong></p>
         <p class="agree-tx">6.1 按照本协议的约定取得和使用借款。</p>
@@ -167,7 +171,7 @@
         <p><strong class="agree-mg">第十四条 &nbsp&nbsp法律适用及争议解决</strong></p>
         <p class="agree-tx">本协议的签订、履行、终止、解释均适用中国法律。各方同意，因本协议所产生的或与本协议有关的一切争议，各方应协商解决；协商无法达成一致的，各方一致同意将争议提交中国国际经济贸易仲裁委员会，在北京按照申请时该会现行有效的仲裁规则进行仲裁。仲裁裁决是终局的，对各方均有约束力。</p>
         <br>
-        <div v-show="contractType === 1">
+        <div v-show="contractType !== 4">
           <p><strong class="agree-mg">第十五条 &nbsp&nbsp风险提示 </strong></p>
           <p class="agree-tx">15.1 政策风险 国家因宏观政策、财政政策、货币政策、行业政策、地区发展、法律法规等因素引起的政策风险。</p>
           <p class="agree-tx">15.2 信用风险 当乙方发生资金状况的风险，或者乙方的还款意愿发生变化时，甲方的出借资金可能无法按时收回，但乙方需严格按照本协议承担违约责任。 </p>
@@ -196,7 +200,7 @@
         <br>
         <br>
         <p><strong class="agree-mg">（本页无正文，为签字页）</strong></p>
-        <div v-show="contractType === 1">
+        <div v-show="contractType !== 4">
           <p><strong class="agree-mg">各方签章：</strong></p>
           <p><strong class="agree-mg">甲方：<span v-for="(item, index) in LenderNames">{{item}}{{LenderNames.length === index + 1 ? '' : '、'}}</span></strong></p>
           <br>
@@ -222,7 +226,7 @@
       <div class="annex1">
         <p class="text-left">附件1</p>
         <br>
-        <table v-if="contracts.total" v-show="contractType === 1">
+        <table v-if="contracts.total" v-show="contractType !== 4">
           <thead>
             <td>甲方姓名 </td>
             <td>身份证号</td>
@@ -239,14 +243,14 @@
           </tbody>
         </table>
       </div>
-      <div v-show="contractType === 1">
+      <div v-show="contractType !== 4">
         <br>
         <br>
         <br>
         <br>
       </div>
       <div class="annex">
-        <p class="text-left" v-show="contractType === 1">附件2</p>
+        <p class="text-left" v-show="contractType !== 4">附件2</p>
         <br>
         <p class="text-center" v-if="preRepaymentList.length >0 && isLoan !== 0">还款计划（单位：元、月/日）</p>
         <table v-if="preRepaymentList.length >0 && isLoan !== 0">
@@ -267,25 +271,29 @@
         </table>
       </div>
     </div>
-    <div class="agreement-area row" v-show="contractType === 2">
+    <div class="agreement-area row" v-show="contractType === 2 || contractType === 8 || contractType === 9">
       <p class="text-title">宏财网服务协议</p>
       <p class="text-right" v-if="!contracts.total">合同编号：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>    
-      <p class="text-right" v-else="contracts">合同编号：{{contracts.contractNumber}}</p>
+      <p class="text-right" v-if="contracts.total">合同编号：{{contracts.contractNumber}}</p>
       <div class="row">
         <p><strong class="agree-mg text-justify">为了维护您的权益，请在签署本协议前，仔细阅读、充分理解本协议各条款（特别是加重、免除或限制协议一方责任条款），关注您在协议中的权利、义务。请您审慎阅读并选择接受或不接受本协议。您一经选择接受即视为对本协议全部条款已充分理解并完全接受。</strong></p>
         <p v-if="!contracts.total"><strong class="agree-mg">本协议由以下双方于【&nbsp&nbsp&nbsp】年【&nbsp&nbsp&nbsp】月【&nbsp&nbsp 】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
-        <p v-else="contracts"><strong class="agree-mg">本协议由以下双方于【{{contracts.year}}】年【{{contracts.month}}】月【{{contracts.day}}】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
+        <p v-if="contracts.total"><strong class="agree-mg">本协议由以下双方于【{{contracts.year}}】年【{{contracts.month}}】月【{{contracts.day}}】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
         <br>
         <p><strong class="agree-mg">协议各方：</strong></p>
         <p><strong class="agree-mg">甲方（受让方/投资人）：</strong>{{contracts.total ? '详见附件1' : ' '}}</p>
         <br>
         <p><strong class="agree-mg">乙方（转让方/原债权人）：</strong>{{contracts.enterpriseName}}
-        <p>身份证号码：{{contracts.entRegistrationNo}}</p>
+        <p v-show="contractType === 2 || contractType === 9">身份证号码：{{contracts.entRegistrationNo}}</p>
+        <p v-show="contractType === 8">统一社会信用代码：{{contracts.entRegistrationNo}}</p>
         </p>
         <br>
         <p><strong class="agree-mg">丙方（居间人）：北京竞财投资服务有限公司</strong></p>
-        <p>企业法人营业执照注册号：110107018557568</p>
-        <p>组织机构代码：33024673-2</p>
+        <div v-show="contractType === 2">
+          <p>企业法人营业执照注册号：110107018557568</p>
+          <p>组织机构代码：33024673-2</p>
+        </div>
+        <p v-show="contractType === 8 || contractType === 9">统一社会信用代码：91110107330246732H</p>
         <br>
         <p class="agree-tx">本协议中，甲方、乙方、丙方单称“一方”，合称“各方”。</p>
         <br>
@@ -324,12 +332,12 @@
             <tr>
               <td width="120" align="center">转让后债权起始日</td>
               <td width="400" align="center" v-if="!contracts.total"><u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</u></td>
-              <td width="400" align="center" v-else="contracts"><u>{{contracts.loanTime}}</u></td>
+              <td width="400" align="center" v-if="contracts.total"><u>{{contracts.loanTime}}</u></td>
             </tr>
             <tr>
               <td width="120" align="center">转让后债权到期日</td>
               <td width="400" align="center" v-if="!contracts.total"><u>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</u></td>
-              <td width="400" align="center" v-else="contracts"><u>{{contracts.repaymentDate}}</u></td>
+              <td width="400" align="center" v-if="contracts.total"><u>{{contracts.repaymentDate}}</u></td>
             </tr>
           </table>
         </div>
@@ -367,6 +375,7 @@
         <p class="agree-tx">5.2 授权乙方依照《借款协议》的约定向原债务人收取本金和利息，有权要求乙方依照本协议约定向其支付乙方代收的本金及利息。</p>
         <p class="agree-tx">5.3 乙方违约时，授权丙方向乙方主张权利，包括但不限于追偿债权本金及利息、罚息、违约金、损害赔偿金以及诉讼（仲裁）费、律师费等实现债权、担保权的费用等。</p>
         <p class="agree-tx">5.4 有权了解乙方以及债务人基本情况、借款使用情况、担保人及担保物情况。</p>
+        <p class="agree-tx" v-show="contractType === 8 || contractType === 9">5.5 应当对借款人信息予以保密，不得非法收集、使用、加工、传输借款人信息，不得非法买卖、提供或者公开借款人个人信息。</p>
         <br>
         <p><strong class="agree-mg">第六条 &nbsp&nbsp乙方权利和义务</strong></p>
         <p class="agree-tx">6.1 按照本协议的约定取得债权转让款。</p>
@@ -524,11 +533,11 @@
       <br>
       <p class="text-title">宏财网服务协议补充协议</p>
       <p class="text-right" v-if="!cutContracts.contractNumber">合同编号：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
-      <p class="text-right" v-else="cutContracts">合同编号：{{cutContracts.projectContractNumber}}</p>
+      <p class="text-right" v-if="cutContracts">合同编号：{{cutContracts.projectContractNumber}}</p>
       <div class="row">
         <p><strong class="agree-mg text-justify">为了维护您的权益，请在签署本协议前，仔细阅读、充分理解本协议各条款（特别是加重、免除或限制协议一方责任条款），关注您在协议中的权利、义务。请您审慎阅读并选择接受或不接受本协议。您一经选择接受即视为对本协议全部条款已充分理解并完全接受。</strong></p>
         <p v-if="!cutContracts.contractNumber"><strong class="agree-mg">本协议由以下双方于【&nbsp&nbsp&nbsp】年【&nbsp&nbsp&nbsp】月【&nbsp&nbsp 】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
-        <p v-else="cutContracts"><strong class="agree-mg">本协议由以下双方于【{{cutContracts.year}}】年【{{cutContracts.month}}】月【{{cutContracts.month}}】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
+        <p v-if="cutContracts"><strong class="agree-mg">本协议由以下双方于【{{cutContracts.year}}】年【{{cutContracts.month}}】月【{{cutContracts.month}}】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
         <br>
         <p><strong class="agree-mg">协议双方：</strong></p>
         <p><strong class="agree-mg">甲方（出借人）：</strong>{{cutContracts.userRealName}}</p>
@@ -543,7 +552,7 @@
         <p class="agree-tx">1、甲方（出借人）系符合中国法律规定的具有完全民事权利能力和民事行为能力，独立行使和承担本协议项下权利义务的自然人、法人或其他组织。</p>
         <p class="agree-tx">2、乙方是依法成立并运营的网络借贷信息中介机构（域名：www.hongcai.com，以下简称“宏财网”）。甲方通过宏财网向借款人提供借款，乙方为本协议项下借款提供居间服务。</p>
         <p class="agree-tx" v-if="!cutContracts.contractNumber">3、甲、乙双方已经于【&nbsp&nbsp&nbsp】年【&nbsp&nbsp&nbsp】月【&nbsp&nbsp&nbsp】日签订了协议编号为【&nbsp&nbsp&nbsp】《宏财网服务协议》。</p>
-        <p class="agree-tx" v-else="cutContracts">3、甲、乙双方已经于【{{cutContracts.year}}】年【{{cutContracts.month}}】月【{{cutContracts.month}}】日签订了协议编号为【{{cutContracts.contractNumber}}】《宏财网服务协议》。</p>
+        <p class="agree-tx" v-if="cutContracts">3、甲、乙双方已经于【{{cutContracts.year}}】年【{{cutContracts.month}}】月【{{cutContracts.month}}】日签订了协议编号为【{{cutContracts.contractNumber}}】《宏财网服务协议》。</p>
         <p class="agree-tx">4、甲方自主选择参与宏财网活动，接受活动各项条款。</p>
         <p class="agree-tx">为此，根据国家有关法律法规，甲、乙双方本着平等自愿、诚实守信、互惠互利的原则，立此补充协议，共同遵守。</p>
         <br>
@@ -551,7 +560,7 @@
         <p><strong class="agree-mg">第一条 &nbsp&nbsp双方的权利和义务</strong></p>
         <p class="agree-tx">1.1 甲方签署本协议，即表示其已经知悉并接受所参与活动的各项条款。</p>
         <p class="agree-tx" v-if="!cutContracts.contractNumber">1.2 甲方明确知悉参与本活动，其在宏财网的协议编号为【&nbsp&nbsp&nbsp】投资，期望年均回报率由【&nbsp&nbsp&nbsp】降为【&nbsp&nbsp&nbsp】，多余部分作为宏财网的服务费，由宏财网在借款人每期还款时自动扣取。</p>
-        <p class="agree-tx" v-else="cutContracts">1.2 甲方明确知悉参与本活动，其在宏财网的协议编号为【{{cutContracts.contractNumber}}】投资，期望年均回报率由【{{cutContracts.oldRate}}%】降为【{{cutContracts.newRate}}%】，多余部分作为宏财网的服务费，由宏财网在借款人每期还款时自动扣取。</p>
+        <p class="agree-tx" v-if="cutContracts">1.2 甲方明确知悉参与本活动，其在宏财网的协议编号为【{{cutContracts.contractNumber}}】投资，期望年均回报率由【{{cutContracts.oldRate}}%】降为【{{cutContracts.newRate}}%】，多余部分作为宏财网的服务费，由宏财网在借款人每期还款时自动扣取。</p>
         <p class="agree-tx">1.3 乙方应将活动条款，在其网站或App的相关页面做全面、清晰的展示。</p>
         <p class="agree-tx">1.4 乙方按活动条款及时兑付甲方获得的奖品，具体奖品以乙方最终发放为准。</p>
         <p><strong class="agree-mg">第二条 &nbsp&nbsp其他事项</strong></p>
@@ -606,12 +615,16 @@
       this.contractTemplate()
       this.getProject()
       this.creditNum !== '0' ? this.extraContracts() : null
+      this.projectId !== '' && this.token !== '' ? this.getContracts() : null
     },
     watch: {
       'token': function (val) {
         if (val !== '') {
           this.getProjectBill()
           this.contractTemplate()
+        }
+        if (this.projectId !== '' && val !== '') {
+          this.getContracts()
         }
       },
       'projectId': function (val) {

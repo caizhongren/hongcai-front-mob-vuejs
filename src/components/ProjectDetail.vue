@@ -32,7 +32,7 @@
           <span>还款方式：</span>按月付息，到期还本
         </div>
         <div class="detail-item">
-          <span>募集提示：</span>该项目将于募集结束后，进入锁定期
+          <span>到期日期：</span>{{project.status === 10 ? '' : '预计'}}{{project.repaymentDate | date}}
         </div>
         <div class="detail-item" v-if="project.status === 7">
           <span>项目状态：</span>融资中

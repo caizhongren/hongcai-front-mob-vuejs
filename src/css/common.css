@@ -169,6 +169,9 @@ div.input-focus, p.input-focus {
 .clearfix {
   clear: both;
 }
+.border-none {
+  border: none !important;
+}
 /*font color*/
 
 .ft-444 {
@@ -216,4 +219,7 @@ div.input-focus, p.input-focus {
   background-color: rgba(0,0,0,0.6);
   -webkit-overflow-scrolling: touch;
   overflow-y: hidden !important;
+}
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
 }

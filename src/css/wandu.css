@@ -1,0 +1,254 @@
+.wandu-register {
+  background-color: #e81352;
+  width: 100%;
+  overflow-x: hidden;
+}
+.header-img {
+  height: 4.25rem;
+  background: url('../images/register/wandu-header.jpg') no-repeat 0 0;
+  background-size: 100%;
+}
+.header-img p {
+  margin-left: 10%;
+  color: #fff;
+  height: 100%;
+  width: 90%;
+  line-height: 8rem;
+}
+.register-form input {
+  color:#666;
+  font-size: .24rem;
+}
+.register-form input:-ms-input-placeholder, .register-form input:-moz-placeholder, .register-form input::-webkit-input-placeholder, .register-form input:placeholder {
+  color: #999;
+  font-size: .24rem;
+}
+.register-form {
+  padding-top: .4rem;
+  height: 5rem;
+}
+form input, form button {
+  width: 68%;
+  padding: 0 .4rem;
+  margin: 0 0 .35rem 0;
+  height: 0.76rem;
+  border: none !important;
+  color: #666;
+  border-radius: .1rem;
+  font-size: .24rem;
+}
+form .pic, form .captcha {
+  width: 80%;
+  margin: 0 auto;
+}
+form .pic input, form .captcha input {
+  width: 50%;
+  float: left;
+}
+form .pic span, form .captcha span {
+  width: 30%;
+  height: .76rem;
+  background-color: #fff;
+  border-radius: .1rem;
+  float: right;
+}
+form .captcha span {
+  font-size: .30rem;
+  line-height: .82rem;
+  color: #e81352;
+}
+form .captcha span.send {
+  background-color: #feec1c;
+}
+form button {
+  width: 80%;
+  font-size: .3rem;
+  color: #e71e59;
+  border-radius: .1rem;
+  background-color: #feec1c;
+}
+/* 活动规则 */
+.act-rules {
+  padding: .3rem .35rem;
+  width: 88%;
+  height: 3.5rem;
+  margin: 0 auto;
+  border-radius: 15px;
+  background-color: #ec4475;
+  font-weight: 500;
+  text-align: justify;
+  color: #fff;
+}
+.act-rules p {
+  color: #fefefe;
+  font-size: .24rem;
+  font-weight: 500;
+  text-align: justify;
+}
+.act-rules .rule-title .line {
+  width: 20%;
+  height: 1px;
+  background-color: #fff;
+  margin-left: 13%;
+  float: left;
+  margin-top: .2rem;
+  margin-bottom: .35rem;
+}
+.act-rules .rule-title p {
+  float: left;
+  font-size: .28rem;
+  font-weight: bold;
+  margin-left: 6%;
+  margin-right: -8%;
+  height: .2rem;
+  color: #f0d730;
+}
+.act-rules .item span:first-child {
+  float: left;
+}
+.act-rules .item span:last-child {
+  line-height: 1.7;
+  width: 95%;
+  display: inline-block;
+}
+/* 优质项目 */
+.title-btn {
+  height: 1rem;
+  width: 48%;
+  margin: 1rem auto .6rem;
+  background: url('../images/register/wandu-btn.png') no-repeat 0 0;
+  background-size: 100%;
+  font-size: .32rem;
+  font-weight: bold;
+  line-height: .76rem;
+  color: #e81352;
+}
+.projects {
+  overflow: hidden;
+  clear: both;
+}
+.projects li {
+  float: left;
+  width: 46%;
+  height: 2.5rem;
+  background: url('../images/register/bg-rate1.png') no-repeat center center;
+  background-size: 100%;
+  text-align: center;
+  color: #e81352;
+  margin-bottom: .2rem;
+}
+.projects li:nth-child(odd) {
+  margin: 0 2%;
+}
+.rate-txt {
+  font-size: .28rem;
+  font-weight: 500;
+  line-height: 2.7;
+  margin-left: .22rem;
+}
+.rate-num {
+  height: .95rem;
+  line-height: 1rem;
+  border-radius: 5px;
+  font-size: .5rem;
+  font-weight: 500;
+  margin-left: 12%;
+}
+.date {
+  font-size: .26rem;
+  font-weight: 500;
+  line-height: 1.78;
+  margin-left: .3rem;
+  margin-top: .2rem;
+}
+/* 选择我们 */
+.choose-us {
+  padding-bottom: .3rem;
+}
+.about .title, .about2 .title, .about3 .title {
+  background: linear-gradient(to right, transparent 0%, #ed6728 40%, transparent 100%);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, #ed6728 40%, rgba(255, 255, 255, 0) 100%);
+  background: url('../images/register/wandu-title.png') no-repeat center center;
+  background-size: cover;
+  width: 60%;
+  height: .9rem;
+  line-height: .95rem;
+  text-align: center;
+  padding-left: .5rem;
+  margin-left: -.6rem;
+  color: #fff;
+  font-size: .3rem;
+}
+.about .content, .about3 .content {
+  background: url('../images/register/background-gz.png') no-repeat .4rem .6rem;
+  background-size: 90%;
+  height: 3rem;
+  padding-right: .3rem;
+}
+.about2 .content {
+  background: url('../images/register/custody-bg.png') no-repeat .2rem -0rem;
+  background-size: 90%;
+  height: 2.8rem;
+}
+.about3 .content {
+  background: url('../images/register/control-bg.png') no-repeat .4rem .4rem;
+  background-size: 90%;
+}
+.about .text, .about2 .text, .about3 .text {
+  width: 50%;
+  text-align: justify;
+  color: rgba(255, 255, 255, 0.87);
+  font-size: .24rem;
+  font-weight: 500;
+  line-height: 1.55;
+  margin-top: .3rem;
+}
+.about .icon, .about2 .icon, .about3 .icon {
+  float: left;
+  margin-top: .05rem;
+  background-size: 100%;
+  border: .14rem solid transparent;
+  border-left-color: #feec1c;
+}
+.about2 .title{
+  margin: .6rem 0 .5rem 43%;
+}
+.about2 .text {
+  margin: -1.3rem 0 0 .35rem;
+}
+.about3 .text {
+  margin-top: 0rem;
+}
+.about .text span:nth-child(2), .about2 .text span:nth-child(2), .about3 .text span:nth-child(2) {
+  display: inline-block;
+  width: 85%;
+}
+.about3 .title {
+  margin: .1rem 0;
+  margin-left: -.5rem;
+  padding-left: .4rem;
+}
+/* 活动结束蒙层 */
+.red-package {
+  margin-top: 1rem;
+  padding-top: 0.6rem;
+  height: 6rem;
+  background: url('../images/register/red-bag1.png') no-repeat top center;
+  background-size: 80%;
+}
+.red-package p:last-child {
+  margin-top: 1.75rem;
+  line-height: 1.4;
+  font-size: .26rem;
+  color: #feef1d;
+}
+.upload-btn {
+  width: 80%;
+  height: .9rem;
+  line-height: .95rem;
+  font-size: .3rem;
+  color: #e71e59;
+  margin: -1rem auto .2rem;
+  border-radius: .1rem;
+  background-color: #feec1c;
+}

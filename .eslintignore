@@ -1,3 +1,5 @@
 build/*.js
 config/*.js
 mCarousel.js
+md5.js
+qrcode.js

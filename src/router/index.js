@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Promise from 'es6-promise'
+import VueCookie from 'vue-cookie'
 window.Promise = Promise
 const ProjectDetail = r => require.ensure([], () => r(require('../components/ProjectDetail.vue')), 'ProjectDetail')
 const Invite = r => require.ensure([], () => r(require('../components/activity/invite.vue')), 'Invite')
@@ -42,7 +43,14 @@ const Report2 = r => require.ensure([], () => r(require('../components/news/repo
 const Report3 = r => require.ensure([], () => r(require('../components/news/report3.vue')), 'News')
 const Events = r => require.ensure([], () => r(require('../components/events.vue')), 'Events')
 const RiskEducation = r => require.ensure([], () => r(require('../components/riskEducation.vue')), 'RiskEducation')
+const Register = r => require.ensure([], () => r(require('../components/activity/oldPeople.vue')), 'Register')
+const RegisterSuccess = r => require.ensure([], () => r(require('../components/activity/registerSuccess.vue')), 'Register')
+const WanduRegister = r => require.ensure([], () => r(require('../components/activity/wandu-register.vue')), 'WanduRegister')
+const WanduSuccess = r => require.ensure([], () => r(require('../components/activity/wandu-success.vue')), 'WanduRegister')
+const QRcode = r => require.ensure([], () => r(require('../components/QRcode.vue')), 'QRcode')
+const Updates = r => require.ensure([], () => r(require('../components/recommendUpdates.vue')), 'Updates')
 Vue.use(Router)
+Vue.use(VueCookie)
 const routes = [
   {
     path: '/',
@@ -281,6 +289,37 @@ const routes = [
     name: 'RiskEducation',
     component: RiskEducation,
     meta: {title: '风险安全教育'}
+  },
+  {
+    path: '/activity/register',
+    name: 'Register',
+    component: Register
+  },
+  {
+    path: '/activity/register-success',
+    name: 'RegisterSuccess',
+    component: RegisterSuccess
+  },
+  {
+    path: '/wandu-register',
+    name: 'WanduRegister',
+    component: WanduRegister
+  },
+  {
+    path: '/wandu-success',
+    name: 'WanduSuccess',
+    component: WanduSuccess
+  },
+  {
+    path: '/qrcode',
+    name: 'QRcode',
+    component: QRcode
+  },
+  {
+    path: '/updates',
+    name: 'Updates',
+    component: Updates,
+    meta: {title: '发现新版本'}
   },
   {
     path: '*',
