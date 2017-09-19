@@ -23,9 +23,9 @@
             </thead>
             <tbody>
               <tr v-for="(item, index) in recordList" v-bind:class="{'border-none': index === recordList.length-1}">
-                <td>{{item.date | monthDay}}</td> 
-                <td> {{item.prize}}</td>
-                <td>{{item.score}}分</td>
+                <td>{{item.exchangeTime | monthDay}}</td> 
+                <td> {{item.awardDesc}}</td>
+                <td>{{item.exchangeScore}}分</td>
               </tr>
             </tbody>
           </table>
@@ -90,41 +90,14 @@
         var that = this
         that.$http({
           method: 'get',
-          url: '/hongcai/rest/golden/record?token=' + that.token
+          url: '/hongcai/rest/activitys/socreExchange/recored?token=' + that.token
         })
         .then(function (res) {
-          if (res && res.ret !== -1) {
-            that.recordList = res.data
+          if (res.data && res.data.ret !== -1) {
+            that.recordList = res.data.data
+          } else {
+            alert(res.data.msg)
           }
-        })
-        .catch(function () {
-          that.recordList = [
-            {
-              date: 10000000,
-              prize: '35000特权本金 x 5',
-              score: 300
-            },
-            {
-              date: 10000000,
-              prize: '35000特权本金 x 10',
-              score: 300
-            },
-            {
-              date: 10000000,
-              prize: '35000特权本金',
-              score: 300
-            },
-            {
-              date: 10000000,
-              prize: '498大闸蟹礼券',
-              score: 300
-            },
-            {
-              date: 10000000,
-              prize: '100元京东卡',
-              score: 300
-            }
-          ]
         })
       },
       getAddress () {
