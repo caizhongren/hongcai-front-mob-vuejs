@@ -13,7 +13,7 @@
         </p>
         <div class="content" v-if="token">
           <img src="../../images/golden-fall/crab2.png" alt="" width="12%" class="display-inb">
-          <span class="display-inb">{{integral || 0}}</span>
+          <span class="display-inb">{{userScores || 0}}</span>
         </div>
         <div class="content" v-if="!token">
           <p>登录后可查看您的金秋积分</p>
@@ -37,7 +37,7 @@
             <p class="coupon-left">现金券</p>
             <div class="coupon-right">
               <p class="value"><span>¥</span>{{coupon.value}}</p>
-              <p class="take-btn">立即领取</p>
+              <p class="take-btn" @click="getCashCoupons(coupon.level)">立即领取</p>
               <p class="premise">投资项目:{{coupon.type === 1 ? '精选' : '尊贵'}}<br>起投金额:{{coupon.premiseValue}}</p>
             </div>
           </li>
@@ -70,7 +70,7 @@
                 <p>母蟹{{crab.count2}}两/只</p>
                 <p>4对共8只</p>
                 <p>市场价：{{crab.price}}元</p>
-                <p class="exchange-btn" @click="toExchange(1, crab.score, 1)">立即兑换</p>
+                <p class="exchange-btn" :class="{'disable-btn': true}" @click="toExchange(1, crab.score, 1)">立即兑换</p>
               </li>
             </ul>
           </div>
@@ -84,13 +84,13 @@
               <img src="../../images/golden-fall/jd01.png" alt="" width="95%" height="51%" class="display-bl">
               <p class="first"><img src="../../images/golden-fall/crab2.png" alt="" width="14%"> 50积分</p>
               <p>50元京东卡</p>
-              <p class="exchange-btn margin-auto" @click="toExchange(2, 50, 1)">立即兑换</p>
+              <p class="exchange-btn margin-auto" :class="{'disable-btn': false}" @click="toExchange(2, 50, 1)">立即兑换</p>
             </li>
             <li class="border-none">
               <img src="../../images/golden-fall/jd02.png" alt="" width="95%" height="51%" class="display-bl">
               <p class="first"><img src="../../images/golden-fall/crab2.png" alt="" width="14%"> 85积分</p>
               <p class="text">100元京东卡</p>
-              <p class="exchange-btn margin-auto" @click="toExchange(2, 85, 1)">立即兑换</p>
+              <p class="exchange-btn margin-auto" :class="{'disable-btn': false}" @click="toExchange(2, 85, 1)">立即兑换</p>
             </li>
           </ul>
         </div>
@@ -105,9 +105,9 @@
             </div>
           </div>
           <div class="btns">
-            <span class="exchange-btn" @click="toExchange(3, 10, 1)">兑换1次</span>
-            <span class="exchange-btn" @click="toExchange(3, 10, 5)">连续兑换5次</span>
-            <span class="exchange-btn" @click="toExchange(3, 10, 10)">连续兑换10次</span>
+            <span class="exchange-btn" :class="{'disable-btn': false}" @click="toExchange(3, 10, 1)">兑换1次</span>
+            <span class="exchange-btn" :class="{'disable-btn': false}" @click="toExchange(3, 10, 5)">连续兑换5次</span>
+            <span class="exchange-btn" :class="{'disable-btn': false}" @click="toExchange(3, 10, 10)">连续兑换10次</span>
           </div>
         </div>
       </div>
@@ -210,9 +210,9 @@
     </div>
   </div>
 </template>
-<style>
+<style scoped>
   @import '../../css/golden-fall.css';
-@import '../../css/golden-mask.css';
+  @import '../../css/golden-mask.css';
 </style>
 <script>
   import {Utils, bridgeUtil, ModalHelper} from '../../service/Utils'
@@ -225,32 +225,38 @@
           {
             value: 5,
             premiseValue: '5千',
-            type: 1
+            type: 1,
+            level: 1
           },
           {
             value: 38,
             premiseValue: '5千',
-            type: 2
+            type: 2,
+            level: 4
           },
           {
             value: 12,
             premiseValue: '1万',
-            type: 1
+            type: 1,
+            level: 2
           },
           {
             value: 78,
             premiseValue: '1万',
-            type: 2
+            type: 2,
+            level: 5
           },
           {
             value: 28,
             premiseValue: '2万',
-            type: 1
+            type: 1,
+            level: 3
           },
           {
             value: 238,
             premiseValue: '3万',
-            type: 2
+            type: 2,
+            level: 6
           }
         ],
         crabs: [
@@ -276,6 +282,7 @@
             price: 498
           }
         ],
+        busy: false,
         PrizeMask: false,
         activityEnd: false,
         CashReceive: false,
@@ -284,7 +291,7 @@
         virtualPrizes: false,
         materialPrize: false,
         isExchange: false,
-        integral: 1000,
+        userScores: 100,
         hasAdress: false, // 是否已有地址
         exchangeInfo: { // 兑换信息
           type: 1,
@@ -295,15 +302,14 @@
     },
     mounted () {
     },
-    props: ['token', 'showAdressMask', 'colseAdressMask'],
+    props: ['token', 'showAdressMask'],
     watch: {
       PrizeMask: function (newVal, oldVal) {
         newVal ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
     created () {
-      this.colseAdressMask()
-      // this.showAdressMask()
+      this.getUserScores()
     },
     methods: {
       toLogin () {
@@ -313,8 +319,6 @@
         }, null)
       },
       closeMask () {
-        ModalHelper.beforeClose()
-        this.PrizeMask = false
         this.PrizeMask = false
         this.activityEnd = false
         this.CashReceive = false
@@ -324,11 +328,11 @@
         this.materialPrize = false
         this.isExchange = false
       },
-      showExchangeSuccess () {
+      showExchangeSuccess (exchangeInfo) {
         this.PrizeMask = true
-        this.materialPrize = true
+        exchangeInfo.type === 3 ? this.virtualPrizes = true : this.materialPrize = true
       },
-      toProjectList () {
+      toProjectList (exchangeInfo) {
         var that = this
         bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {
           that.closeMask()
@@ -340,12 +344,48 @@
           that.closeMask()
         }, null)
       },
+      getUserScores () {
+        var that = this
+        that.$http({
+          url: '/hongcai/rest/activitys/summer/scores/0?token=' + that.token
+        }).then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.userScores = res.data.score
+          }
+        })
+      },
+      getCashCoupons (level) {
+        var that = this
+        if (that.busy) {
+          return
+        }
+        if (that.token === '') {
+          that.toLogin()
+          return
+        }
+        that.busy = true
+        setTimeout(function () {
+          that.busy = false
+        }, 300)
+        that.$http.post('/hongcai/rest/users/0/coupons/takeCoolCoupons', {
+          token: that.token,
+          level: level
+        }).then((response) => {
+          that.PrizeMask = true
+          if (response.data && response.data.ret === 1) {
+            that.CashReceive = true
+          } else if (response.data.ret === -1 && response.data.code === -1304) {
+            that.CashUpperLimit = true
+          } else if (response.data.ret === -1 && response.data.code === -1041) {
+            that.activityEnd = true
+          }
+        })
+      },
       exchange (exchangeInfo) {
         // todo 移到app里
-        var that = this
-        that.PrizeMask = true
-        that.integral -= exchangeInfo.score * exchangeInfo.num
-        exchangeInfo.type === 3 ? that.virtualPrizes = true : that.materialPrize = true
+        this.userScores -= exchangeInfo.score * exchangeInfo.num
+        this.showExchangeSuccess(exchangeInfo)
+        // this.$refs.GoldenFall.showExchangeSuccess()
       },
       toExchange (type, score, num) { // type: 1 实物 2 京东券 3 特权本金, num:兑换次数
         this.exchangeInfo = {
@@ -353,16 +393,16 @@
           score: score,
           num: num
         }
+        // todo：活动结束判断
+        // if (this.isEnd) {
+        //   return
+        // }
         if (!this.token) {
           this.toLogin()
           return
         }
         this.PrizeMask = true
-        if (this.integral < score * num) { // 积分不足兑换
-          this.NoIntegral = true
-          return
-        }
-        this.isExchange = true
+        this.userScores < score * num ? this.NoIntegral = true : this.isExchange = true
       },
       confirmExchange (exchangeInfo) { // 确认兑换
         var that = this
@@ -380,8 +420,6 @@
   }
 </script>
 <style scoped>
-  @import '../../css/golden-fall.css';
-  @import '../../css/golden-mask.css';
   .exchange-priviledge {
     color: #ff611d;
     height: 3.22rem;
@@ -425,5 +463,9 @@
   /* 第二道大礼 */
   .priviledge-coupon .right p:last-child {
     font-size: .25rem;
+  }
+  .disable-btn {
+    background-color: #999 !important;
+    color: #fff !important;
   }
 </style>
