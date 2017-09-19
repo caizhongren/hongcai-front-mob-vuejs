@@ -121,7 +121,7 @@
         </p>
         <div>
           1.活动时间<br>
-          本次活动仅限于<span>2017年9月xx日至2017年10月xx日</span>内参与有效；
+          本次活动仅限于<span>{{activityInfo.statrYear || 2017}}年{{activityInfo.startMonth || 10}}月{{activityInfo.startDate || 1}}日至{{activityInfo.endYear|| 2017}}年{{activityInfo.endMonth || 10}}月{{activityInfo.endDate || 1}}日</span>内参与有效；
         </div>
         <div>
           2.参与方式<br>
@@ -373,6 +373,12 @@
         }).then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.activityInfo = res.data
+            that.activityInfo.startYear = new Date(res.data.activityStartTime).getFullYear()
+            that.activityInfo.startMonth = new Date(res.data.activityStartTime).getMonth() + 1
+            that.activityInfo.startDate = new Date(res.data.activityStartTime).getDate()
+            that.activityInfo.endYear = new Date(res.data.activityEndTime).getFullYear()
+            that.activityInfo.endMonth = new Date(res.data.activityEndTime).getMonth() + 1
+            that.activityInfo.endDate = new Date(res.data.activityEndTime).getDate()
           }
         })
       },
@@ -381,7 +387,7 @@
         if (that.busy) {
           return
         }
-        if (!that.activityInfo.exchangeStatus) {
+        if (that.activityInfo.activityStatus === 2) { // 活动结束
           that.PrizeMask = true
           that.activityEnd = true
           return
