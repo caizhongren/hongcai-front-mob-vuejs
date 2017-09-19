@@ -150,6 +150,7 @@
     </p>
     <!-- 领取成功弹窗 -->
     <div class="dialog mask-common" v-if="PrizeMask">
+      <golden-address :showExchangeSuccess="showExchangeSuccess" :exchangeInfo="exchangeInfo" :AdressMask="AdressMask" :closeMask="closeMask" v-if="AdressMask"></golden-address>    
       <div class="successBg" v-if="CashReceive || CashUpperLimit">
         <!-- 现金券领取 -->
         <div class="cashPrize">
@@ -216,6 +217,7 @@
 </style>
 <script>
   import {Utils, bridgeUtil, ModalHelper} from '../../service/Utils'
+  import GoldenAddress from './golden-adress.vue'
   export default {
     name: 'goldenFall',
     data () {
@@ -283,6 +285,7 @@
           }
         ],
         busy: false,
+        AdressMask: false,
         PrizeMask: false,
         activityEnd: false,
         CashReceive: false,
@@ -291,18 +294,18 @@
         virtualPrizes: false,
         materialPrize: false,
         isExchange: false,
-        userScores: 100,
+        userScores: 1000,
         hasAdress: false, // 是否已有地址
         exchangeInfo: { // 兑换信息
           type: 1,
-          score: 10,
+          score: 0,
           num: 1
         }
       }
     },
     mounted () {
     },
-    props: ['token', 'showAdressMask'],
+    props: ['token', 'showAdressMask', 'showErrMsg'],
     watch: {
       PrizeMask: function (newVal, oldVal) {
         newVal ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
@@ -310,6 +313,9 @@
     },
     created () {
       this.getUserScores()
+    },
+    components: {
+      GoldenAddress
     },
     methods: {
       toLogin () {
@@ -320,6 +326,7 @@
       },
       closeMask () {
         this.PrizeMask = false
+        this.AdressMask = false
         this.activityEnd = false
         this.CashReceive = false
         this.CashUpperLimit = false
@@ -329,7 +336,7 @@
         this.isExchange = false
       },
       showExchangeSuccess (exchangeInfo) {
-        this.PrizeMask = true
+        this.AdressMask = false
         exchangeInfo.type === 3 ? this.virtualPrizes = true : this.materialPrize = true
       },
       toProjectList (exchangeInfo) {
@@ -350,7 +357,7 @@
           url: '/hongcai/rest/activitys/summer/scores/0?token=' + that.token
         }).then(function (res) {
           if (res.data && res.data.ret !== -1) {
-            that.userScores = res.data.score
+            // that.userScores = res.data.score
           }
         })
       },
@@ -407,10 +414,9 @@
       confirmExchange (exchangeInfo) { // 确认兑换
         var that = this
         that.isExchange = false
-        exchangeInfo.type === 1 && !that.hasAdress ? that.PrizeMask = false : that.PrizeMask = true
         setTimeout(function () { // 关掉确认兑换弹窗后再去判断是否弹出填写收货地址
           if (exchangeInfo.type === 1) {
-            that.hasAdress ? that.exchange(exchangeInfo) : that.showAdressMask()
+            that.hasAdress ? that.exchange(exchangeInfo) : that.AdressMask = true
           } else { // todo 调用app的方法
             that.exchange(exchangeInfo)
           }
