@@ -63,7 +63,7 @@
         }
       }
     },
-    prop: ['token'],
+    props: ['token'],
     created () {
       this.getGoldenScore()
     },
@@ -75,16 +75,10 @@
           url: '/hongcai/rest/activitys/summer/scores/0/detail?token=' + that.token
         })
         .then(function (res) {
-          if (res && res.ret !== -1) {
+          if (res.data && res.data.ret !== -1) {
             that.userGoldenScoresDetail = res.data
-          }
-        })
-        .catch(function () {
-          that.userGoldenScoresDetail = {
-            selectionTotalAmount: -1,
-            selectionScore: -1,
-            honorTotalAmount: -1,
-            honorScore: -1
+          } else {
+            alert(res.data.msg)
           }
         })
       }
