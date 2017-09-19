@@ -13,7 +13,7 @@
         <img src="../../images/golden-fall/leaf.png" alt="" width="17%" class="leaf position-ab">
         <p class="title">兑换记录</p>
         <div class="table-wrap">
-          <table v-if="exchange.length > 0">
+          <table v-if="recordList.length > 0">
             <thead>
               <tr>
                 <td>日期</td>
@@ -22,14 +22,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, index) in exchange" v-bind:class="{'border-none': index === exchange.length-1}">
+              <tr v-for="(item, index) in recordList" v-bind:class="{'border-none': index === recordList.length-1}">
                 <td>{{item.date | monthDay}}</td> 
                 <td> {{item.prize}}</td>
                 <td>{{item.score}}分</td>
               </tr>
             </tbody>
           </table>
-          <div class="no-record" v-if="exchange.length <= 0">
+          <div class="no-record" v-if="recordList.length <= 0">
             这里空空如也～ <br>快去挑选心仪的奖励进行兑换吧
           </div>
         </div>
@@ -56,31 +56,38 @@
     data () {
       return {
         hasAdress: false,
-        exchange: [
+        recordList: [
+          // {
+          //   date: 10000000,
+          //   prize: '35000特权本金 x 5',
+          //   score: 300
+          // },
+          // {
+          //   date: 10000000,
+          //   prize: '35000特权本金 x 10',
+          //   score: 300
+          // },
+          // {
+          //   date: 10000000,
+          //   prize: '35000特权本金',
+          //   score: 300
+          // },
+          // {
+          //   date: 10000000,
+          //   prize: '498大闸蟹礼券',
+          //   score: 300
+          // },
+          // {
+          //   date: 10000000,
+          //   prize: '100元京东卡',
+          //   score: 300
+          // }
+        ],
+        user: [
           {
-            date: 10000000,
-            prize: '35000特权本金 x 5',
-            score: 300
-          },
-          {
-            date: 10000000,
-            prize: '35000特权本金 x 10',
-            score: 300
-          },
-          {
-            date: 10000000,
-            prize: '35000特权本金',
-            score: 300
-          },
-          {
-            date: 10000000,
-            prize: '498大闸蟹礼券',
-            score: 300
-          },
-          {
-            date: 10000000,
-            prize: '100元京东卡',
-            score: 300
+            name: '',
+            mobile: '',
+            adress: ''
           }
         ]
       }
@@ -89,8 +96,79 @@
     },
     props: ['token', 'showAdressMask'],
     created () {
+      this.isAdress()
+      this.getRecordList()
+      // this.hasAdress ? this.getAdress() : null
     },
     methods: {
+      getRecordList () {
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest/golden/record?token=' + that.token
+        })
+        .then(function (res) {
+          if (res && res.ret !== -1) {
+            that.recordList = res.data
+          }
+        })
+        .catch(function () {
+          that.recordList = [
+            {
+              date: 10000000,
+              prize: '35000特权本金 x 5',
+              score: 300
+            },
+            {
+              date: 10000000,
+              prize: '35000特权本金 x 10',
+              score: 300
+            },
+            {
+              date: 10000000,
+              prize: '35000特权本金',
+              score: 300
+            },
+            {
+              date: 10000000,
+              prize: '498大闸蟹礼券',
+              score: 300
+            },
+            {
+              date: 10000000,
+              prize: '100元京东卡',
+              score: 300
+            }
+          ]
+        })
+      },
+      isAdress () {
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest/golden/isAdress'
+        })
+        .then(function (res) {
+          if (res && res.ret !== -1) {
+            that.hasAdress = res.data
+          }
+        })
+        .catch(function () {
+          that.hasAdress = false
+        })
+      },
+      getAdress () {
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest/users/adress'
+        })
+        .then(function (res) {
+          if (res && res.ret !== -1) {
+            that.user = res.data
+          }
+        })
+      }
     }
   }
 </script>
@@ -114,6 +192,7 @@
     font-size: .2rem;
     font-weight: 500;
     text-align: left;
+    z-index: 9999999;
   }
   .addAdress img {
     vertical-align: text-bottom;
@@ -203,7 +282,7 @@
   .fall-record .table-wrap {
     width: 90%;
     margin: 0 auto;
-    height: 4.45rem;
+    height: 4.46rem;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }

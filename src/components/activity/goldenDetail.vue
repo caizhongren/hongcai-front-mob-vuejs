@@ -56,19 +56,38 @@
     data () {
       return {
         userGoldenScoresDetail: {
-          selectionTotalAmount: 10000,
-          selectionScore: 10,
-          honorTotalAmount: 20000,
-          honorScore: 8
+          selectionTotalAmount: 0,
+          selectionScore: 0,
+          honorTotalAmount: 0,
+          honorScore: 0
         }
       }
     },
-    mounted () {
-    },
     prop: ['token'],
     created () {
+      this.getGoldenScore()
     },
     methods: {
+      getGoldenScore () {
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest/golden/score?token=' + that.token
+        })
+        .then(function (res) {
+          if (res && res.ret !== -1) {
+            that.userGoldenScoresDetail = res.data
+          }
+        })
+        .catch(function () {
+          that.userGoldenScoresDetail = {
+            selectionTotalAmount: 10000,
+            selectionScore: 10,
+            honorTotalAmount: 20000,
+            honorScore: 8
+          }
+        })
+      }
     }
   }
 </script>
@@ -107,7 +126,7 @@
     color: #ec812c;
   }
   .fall-detail .table-wrap {
-    width: 90%;
+    width: 89.1%;
     height: 4.3rem;
     margin: 0 auto;
   }
