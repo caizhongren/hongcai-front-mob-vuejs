@@ -298,7 +298,7 @@
         virtualPrizes: false,
         materialPrize: false,
         isExchange: false,
-        userScores: 1000,
+        userScores: 0,
         activityInfo: {},
         exchangeInfo: { // 兑换信息
           type: 1,
@@ -314,10 +314,13 @@
     watch: {
       PrizeMask: function (newVal, oldVal) {
         newVal ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+      },
+      token (val) {
+        val && val !== '' ? this.getUserScores() : null
       }
     },
     created () {
-      this.getUserScores()
+      this.token && this.token !== '' ? this.getUserScores() : null
       this.getActivityInfo()
     },
     components: {GoldenAddress},
@@ -409,6 +412,8 @@
             that.CashUpperLimit = true
           } else if (response.data.ret === -1 && response.data.code === -1041) {
             that.activityEnd = true
+          } else {
+            alert(response.data.msg)
           }
         })
       },
