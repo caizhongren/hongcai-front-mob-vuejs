@@ -135,5 +135,9 @@
 .formContent .adress {
   text-align: justify;
   height: 1rem;
-  overflow: auto
+  overflow-y: auto
+}
+.disable-btn {
+  background-color: #999 !important;
+  color: #fff !important;
 }
