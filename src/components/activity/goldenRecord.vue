@@ -90,7 +90,7 @@
         var that = this
         that.$http({
           method: 'get',
-          url: '/hongcai/rest/activitys/socreExchange/recored?token=' + that.token
+          url: '/hongcai/rest/activitys/socreExchange/record?token=' + that.token
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
@@ -117,6 +117,10 @@
       closeMask () {
         this.AdressMask = false
       }
+    },
+    destroyed () {
+      alert(3)
+      this.AdressMask = false
     }
   }
 </script>
