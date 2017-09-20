@@ -119,8 +119,11 @@
       }
     },
     destroyed () {
-      alert(3)
-      this.AdressMask = false
+      // alert(3)
+    },
+    deactivated () {
+      // alert(11)
+      // this.$destory()
     }
   }
 </script>

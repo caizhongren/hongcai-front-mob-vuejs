@@ -8,7 +8,7 @@
       </div>
       <form name="addressForm" autocomplete="off">
         <input name="name" type="text" placeholder="请输入您的收件人姓名" v-model="user.name" maxlength="10">
-        <input name="mobile" type="number" placeholder="请输入联系电话" v-model="user.mobile" maxlength="15"  v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler">
+        <input name="mobile" type="text" placeholder="请输入联系电话" v-model="user.mobile" maxlength="15"  v-on:input="oninputHandler">
         <textarea name="address" id="adress" type="text" placeholder="请在此处输入您的详细收货地址\n(建议包含省/市、区级、详细街道名称)" v-model="user.address" maxlength="150"></textarea>
         <div class="btns">
           <div class="mask-btn IKnowBtn fl" @click="closeMask">稍后填写</div>
@@ -75,10 +75,8 @@
     },
     methods: {
       oninputHandler () {
+        this.user.mobile = this.user.mobile.replace(/[^0-9/-]/g, '')
         this.user.mobile = this.user.mobile.length > 15 ? this.user.mobile.slice(0, 15) : this.user.mobile
-      },
-      beforepasteHandler (e) {
-        e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/\D/g, ''))
       },
       PreAdressForm (user) {
         if (!user.name || !user.mobile || !user.address) {
