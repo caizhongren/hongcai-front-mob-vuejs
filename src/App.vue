@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <keep-alive>
-      <router-view :token="token" :showErrMsg="showErrMsg"></router-view>    
-    </keep-alive>
+    <!-- <keep-alive> -->
+    <router-view :token="token" :showErrMsg="showErrMsg"></router-view>    
+    <!-- </keep-alive> -->
     <p id="err" v-show="showErr">{{errMsg}}</p>
     <div class="mask-common mask1" v-show="showLongErr">
       <div class="alert-wrap" v-show="showLongErr">
