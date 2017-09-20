@@ -52,7 +52,7 @@
         busy: false
       }
     },
-    props: ['showExchangeSuccess', 'exchangeInfo', 'AdressMask', 'closeMask', 'token', 'isFall', 'getAddress'],
+    props: ['exchange', 'exchangeInfo', 'AdressMask', 'closeMask', 'token', 'isFall', 'getAddress'],
     watch: {
       'AdressMask': function (newVal, oldVal) {
         var that = this
@@ -88,14 +88,13 @@
         this.PutAdress = true
       },
       PutAdressForm (user) {
-        this.PreAdress = false
-        this.PutAdress = false
-        this.isFall ? this.showExchangeSuccess(this.exchangeInfo) : null
-        if (this.busy) { return }
+        var that = this
+        that.PreAdress = false
+        that.PutAdress = false
+        if (that.busy) { return }
         if (!user.mobile || !user.name || !user.address) {
           return
         }
-        var that = this
         that.busy = true
         that.$http.post('/hongcai/rest/addresses', {
           token: that.token,
@@ -104,11 +103,15 @@
           address: user.address
         })
         .then(function (res) {
+          setTimeout(function () {
+            that.busy = false
+          }, 1000)
           that.closeMask()
           if (res.data && res.data.ret === -1) {
             alert(res.data.msg)
           } else {
             that.isFall ? null : that.getAddress()
+            that.isFall ? that.exchange(that.exchangeInfo) : null
           }
         })
       }
