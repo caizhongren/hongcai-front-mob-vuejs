@@ -22,6 +22,7 @@
         <div class="btns" v-if="token">
           <router-link :to="{ name: 'GoldenDetail'}"><span>积分明细</span></router-link>
           <router-link :to="{ name: 'GoldenRecord'}"><span>兑换记录</span></router-link>
+          <!-- <span @click="toRecord">兑换记录</span> -->
         </div>
       </div>
       <p class="score-tip">*积分数据更新可能存在网络延迟现象，稍等一会就好了哟～</p>
@@ -70,7 +71,7 @@
                 <p>母蟹{{crab.count2}}两/只</p>
                 <p>4对共8只</p>
                 <p>市场价：{{crab.price}}元</p>
-                <p class="exchange-btn" :class="{'disable-btn': !activityInfo.exchangeStatus}" @click="toExchange(1, crab.score, 1)">立即兑换</p>
+                <p class="exchange-btn" :class="{'disable-btn': !activityInfo.exchangeStatus}" @click="toExchange(1, crab.score, 1, crab.level)">立即兑换</p>
               </li>
             </ul>
           </div>
@@ -84,13 +85,13 @@
               <img src="../../images/golden-fall/jd01.png" alt="" width="95%" height="51%" class="display-bl">
               <p class="first"><img src="../../images/golden-fall/crab2.png" alt="" width="14%"> 50积分</p>
               <p>50元京东卡</p>
-              <p class="exchange-btn margin-auto" :class="{'disable-btn': !activityInfo.exchangeStatus}" @click="toExchange(2, 50, 1)">立即兑换</p>
+              <p class="exchange-btn margin-auto" :class="{'disable-btn': !activityInfo.exchangeStatus}" @click="toExchange(1, 50, 1, 4)">立即兑换</p>
             </li>
             <li class="border-none">
               <img src="../../images/golden-fall/jd02.png" alt="" width="95%" height="51%" class="display-bl">
               <p class="first"><img src="../../images/golden-fall/crab2.png" alt="" width="14%"> 85积分</p>
               <p class="text">100元京东卡</p>
-              <p class="exchange-btn margin-auto" :class="{'disable-btn': !activityInfo.exchangeStatus}" @click="toExchange(2, 85, 1)">立即兑换</p>
+              <p class="exchange-btn margin-auto" :class="{'disable-btn': !activityInfo.exchangeStatus}" @click="toExchange(1, 85, 1, 5)">立即兑换</p>
             </li>
           </ul>
         </div>
@@ -105,9 +106,9 @@
             </div>
           </div>
           <div class="btns">
-            <span class="exchange-btn" :class="{'disable-btn': !activityInfo.exchangeStatus}" @click="toExchange(3, 10, 1)">兑换1次</span>
-            <span class="exchange-btn" :class="{'disable-btn': !activityInfo.exchangeStatus}" @click="toExchange(3, 10, 5)">连续兑换5次</span>
-            <span class="exchange-btn" :class="{'disable-btn': !activityInfo.exchangeStatus}" @click="toExchange(3, 10, 10)">连续兑换10次</span>
+            <span class="exchange-btn" :class="{'disable-btn': !activityInfo.exchangeStatus}" @click="toExchange(2, 10, 1, 6)">兑换1次</span>
+            <span class="exchange-btn" :class="{'disable-btn': !activityInfo.exchangeStatus}" @click="toExchange(2, 10, 5, 7)">连续兑换5次</span>
+            <span class="exchange-btn" :class="{'disable-btn': !activityInfo.exchangeStatus}" @click="toExchange(2, 10, 10, 8)">连续兑换10次</span>
           </div>
         </div>
       </div>
@@ -150,11 +151,7 @@
     </p>
     <!-- 领取成功弹窗 -->
     <div class="dialog mask-common" v-if="PrizeMask">
-<<<<<<< HEAD
-      <golden-address :showExchangeSuccess="showExchangeSuccess" :exchangeInfo="exchangeInfo" :AdressMask="AdressMask" :closeMask="closeMask" :token="token" v-if="AdressMask"></golden-address>    
-=======
-      <golden-address :showExchangeSuccess="showExchangeSuccess" :exchangeInfo="exchangeInfo" :AdressMask="AdressMask" :closeMask="closeMask" :isFall="isFall" v-if="AdressMask"></golden-address>    
->>>>>>> 00f5841763b707c5cde06f0cc645befe0da5ad71
+      <golden-address :exchange="exchange" :exchangeInfo="exchangeInfo" :AdressMask="AdressMask" :closeMask="closeMask" :token="token" :isFall="isFall" v-if="AdressMask"></golden-address>    
       <div class="successBg" v-if="CashReceive || CashUpperLimit">
         <!-- 现金券领取 -->
         <div class="cashPrize">
@@ -208,7 +205,7 @@
       <div class="successBg" v-if="materialPrize">
         <div>
           <p class="mask-title">恭喜您兑换成功！</p>
-          <p class="mask-content">你已成功兑换【168大闸蟹礼券】！奖品将在活动结束后7个工作日内寄出，请注意接听客服电话核对收货地址哟～</p>
+          <p class="mask-content">你已成功兑换【{{awardDesc}}】！奖品将在活动结束后7个工作日内寄出，请注意接听客服电话核对收货地址哟～</p>
           <div class="mask-btn IKnowBtn margin-auto" @click="closeMask()">我知道了</div>
         </div>
       </div>
@@ -306,9 +303,11 @@
         exchangeInfo: { // 兑换信息
           type: 1,
           score: 0,
-          num: 1
+          num: 1,
+          level: 0
         },
-        isFall: true
+        isFall: true,
+        awardDesc: ''
       }
     },
     props: ['token'],
@@ -323,6 +322,9 @@
     },
     components: {GoldenAddress},
     methods: {
+      toRecord () {
+        this.$router.push({name: 'GoldenRecord'})
+      },
       toLogin () {
         var that = this
         bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function (response) {
@@ -339,10 +341,6 @@
         this.virtualPrizes = false
         this.materialPrize = false
         this.isExchange = false
-      },
-      showExchangeSuccess (exchangeInfo) {
-        this.AdressMask = false
-        exchangeInfo.type === 3 ? this.virtualPrizes = true : this.materialPrize = true
       },
       toProjectList (exchangeInfo) {
         var that = this
@@ -362,7 +360,7 @@
           url: '/hongcai/rest/activitys/summer/scores/0?token=' + that.token
         }).then(function (res) {
           if (res.data && res.data.ret !== -1) {
-            // that.userScores = res.data.score
+            that.userScores = res.data.usableScore
           }
         })
       },
@@ -415,16 +413,48 @@
         })
       },
       exchange (exchangeInfo) {
-        // todo 移到app里
-        // this.userScores -= exchangeInfo.score * exchangeInfo.num
-        this.showExchangeSuccess(exchangeInfo)
-        // this.$refs.GoldenFall.showExchangeSuccess()
+        var that = this
+        if (that.busy) { return }
+        that.busy = true
+        that.$http.post('/hongcai/rest/activitys/socreExchange/0/exchange', {
+          token: that.token,
+          level: exchangeInfo.level
+        })
+        .then(function (res) {
+          setTimeout(function () {
+            that.busy = false
+          }, 1000)
+          if (res.data && res.data.ret !== -1) {
+            var awardDesc = res.data.awardDesc
+            that.showExchangeSuccess(exchangeInfo, awardDesc)
+          } else {
+            alert(res.data.msg)
+          }
+        })
       },
-      toExchange (type, score, num) { // type: 1 实物 2 京东券 3 特权本金, num:兑换次数
+      showExchangeSuccess (exchangeInfo, awardDesc) {
+        this.AdressMask = false
+        this.PrizeMask = true
+        if (exchangeInfo.type === 2) {
+          this.virtualPrizes = true
+        } else {
+          this.materialPrize = true
+          this.awardDesc = awardDesc
+        }
+        this.getUserScores()
+      },
+      // exchange (exchangeInfo) {
+      //   // todo 移到app里
+      //   // this.userScores -= exchangeInfo.score * exchangeInfo.num
+      //   this.showExchangeSuccess(exchangeInfo)
+      //   // this.$refs.GoldenFall.showExchangeSuccess()
+      // },
+      toExchange (type, score, num, level) { // type: 1 大闸蟹、京东券; 2 特权本金, num:兑换次数
         this.exchangeInfo = {
           type: type,
           score: score,
-          num: num
+          num: num,
+          level: level
         }
         // 是否可兑换
         if (!this.activityInfo.exchangeStatus) {
@@ -440,7 +470,7 @@
       confirmExchange (exchangeInfo) { // 确认兑换
         var that = this
         that.isExchange = false
-        if (exchangeInfo.type === 1) {
+        if (exchangeInfo.type !== 2) {
           that.$http({
             url: '/hongcai/rest/addresses?token=' + that.token
           }).then(function (res) {
