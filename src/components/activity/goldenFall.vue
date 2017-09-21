@@ -102,7 +102,7 @@
             <p class="position-ab left2">收益一天</p>
             <div class="right">
               <p>3000元</p>
-              <p><img src="../../images/golden-fall/crab2.png" alt="" width="8%"> 10积分</p>
+              <p><img src="../../images/golden-fall/crab2.png" alt="" width="10.5%"> 10积分</p>
             </div>
           </div>
           <div class="btns">

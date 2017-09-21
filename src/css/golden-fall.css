@@ -222,9 +222,13 @@
   padding: .2rem;
   height: 2.6rem;
   background: url('../images/golden-fall/gift-coupon-bg.png') no-repeat center center;
-  background-size: 93%;
+  background-size: 93% 100%;
   border-bottom: solid 1px rgba(249, 200, 153, 0.95);
   border-top: solid 1px rgba(249, 200, 153, 0.95);
+}
+.gift2 .crab-gift .crab-coupon {
+  background: url('../images/golden-fall/gift-coupon-bg.png') no-repeat center center;
+  background-size: 93%;
 }
 .gift2 .crab-gift .crab-coupon p {
   color: #ff611d;
