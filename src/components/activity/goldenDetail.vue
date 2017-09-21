@@ -91,6 +91,10 @@
     overflow: hidden;
     position: fixed;
     width: 100%;
+    background: #e98c28;
+  }
+  .detail-header {
+    height: 3.9rem;
   }
   .detail-wrapper {
     background: #e98c28;

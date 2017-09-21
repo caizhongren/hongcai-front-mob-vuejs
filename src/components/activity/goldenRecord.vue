@@ -134,6 +134,9 @@
     position: fixed;
     width: 100%;
   }
+  .record-header {
+    height: 4.2rem;
+  }
   .addAdress {
     color: #c82d00;
     width: 100%;
