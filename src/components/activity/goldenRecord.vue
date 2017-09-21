@@ -184,10 +184,10 @@
     text-align: left;
   }
   .adress-content .account p:nth-child(1) {
-    width: 35%;
+    width: 50%;
   }
   .adress-content .account p:nth-child(2) {
-    width: 60%;
+    width: 50%;
   }
   .adress-content .adress {
     text-align: justify;
