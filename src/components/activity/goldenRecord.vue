@@ -132,6 +132,7 @@
     font-family: PingFang-SC;
     overflow: hidden;
     position: fixed;
+    width: 100%;
   }
   .addAdress {
     color: #c82d00;
@@ -209,7 +210,7 @@
     width: 92%;
     margin-left: 2%;
     margin: -3.8rem auto 0;
-    height: 6.78rem;
+    height: 6.8rem;
     background: url('../../images/golden-fall/bg-header.png') no-repeat 60% top, url('../../images/golden-fall/list-box.png') no-repeat center bottom;
     background-size: 76%, 100%;
   }

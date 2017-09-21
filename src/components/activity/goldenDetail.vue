@@ -90,6 +90,7 @@
     font-family: PingFang-SC;
     overflow: hidden;
     position: fixed;
+    width: 100%;
   }
   .detail-wrapper {
     background: #e98c28;
