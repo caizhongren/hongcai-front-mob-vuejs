@@ -101,16 +101,17 @@
           address: user.address
         })
         .then(function (res) {
-          setTimeout(function () {
-            that.busy = false
-          }, 1000)
-          that.closeMask()
           if (res.data && res.data.ret === -1) {
             alert(res.data.msg)
+            that.closeMask()
           } else {
+            that.closeMask()
             that.isFall ? null : that.getAddress()
             that.isFall ? that.exchange(that.exchangeInfo) : null
           }
+          setTimeout(function () {
+            that.busy = false
+          }, 1000)
         })
       }
     }
