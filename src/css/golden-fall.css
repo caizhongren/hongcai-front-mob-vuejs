@@ -343,7 +343,7 @@ img.crab-bag {
   top: 8.5%;
 }
 .rules div {
-  padding: 2% 10% 1%;
+  padding: .15rem 10% 1%;
   font-size: .24rem;
   font-style: normal;
   font-stretch: normal;
@@ -351,6 +351,21 @@ img.crab-bag {
   letter-spacing: 0.6px;
   text-align: justify;
   color: #ec812c;
+}
+@media (min-height: 320px) {
+  .rules div {
+    padding: .15rem 10% 1%;
+  }
+}
+@media (min-height: 576px) {
+  .rules div {
+    padding: .04rem 10% 1%;
+  }
+}
+@media (min-height: 578px) {
+  .rules div {
+    padding: .15rem 10% 1%;
+  }
 }
 .rules div span {
   font-weight: 900;
