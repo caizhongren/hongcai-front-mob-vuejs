@@ -205,7 +205,7 @@
       <div class="successBg" v-if="materialPrize">
         <div>
           <p class="mask-title">恭喜您兑换成功！</p>
-          <p class="mask-content">你已成功兑换【{{awardDesc}}】！奖品将在活动结束后7个工作日内寄出，请注意接听客服电话核对收货地址哟～</p>
+          <p class="mask-content">您已成功兑换【{{awardDesc}}】！奖品将在活动结束后7个工作日内寄出，请注意接听客服电话核对收货地址哟～</p>
           <div class="mask-btn IKnowBtn margin-auto" @click="closeMask()">我知道了</div>
         </div>
       </div>
