@@ -388,13 +388,13 @@
         if (that.busy) {
           return
         }
+        if (that.token === '') {
+          that.toLogin()
+          return
+        }
         if (that.activityInfo.activityStatus === 2) { // 活动结束
           that.PrizeMask = true
           that.activityEnd = true
-          return
-        }
-        if (that.token === '') {
-          that.toLogin()
           return
         }
         that.busy = true
@@ -461,12 +461,12 @@
           num: num,
           level: level
         }
-        // 是否可兑换
-        if (!this.activityInfo.exchangeStatus) {
-          return
-        }
         if (!this.token) {
           this.toLogin()
+          return
+        }
+        // 是否可兑换
+        if (!this.activityInfo.exchangeStatus) {
           return
         }
         this.PrizeMask = true
