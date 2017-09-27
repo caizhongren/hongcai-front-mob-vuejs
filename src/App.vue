@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view :token="token" :showErrMsg="showErrMsg"></router-view>
+    <!-- <keep-alive> -->
+    <router-view :token="token" :showErrMsg="showErrMsg"></router-view>    
+    <!-- </keep-alive> -->
     <p id="err" v-show="showErr">{{errMsg}}</p>
     <div class="mask-common mask1" v-show="showLongErr">
       <div class="alert-wrap" v-show="showLongErr">
@@ -95,6 +97,7 @@ Vue.directive('auto-height', function (el, binding) {
 
 <style lang="css">
   @import 'css/common.css';
+  @import 'css/golden-mask.css';
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
