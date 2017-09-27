@@ -293,9 +293,9 @@ img.crab-bag {
   margin-left: 1%;
   height: .8rem;
   font-size: .2rem;
-  line-height: 1.1;
+  line-height: 2.1;
   letter-spacing: 0.6px;
-  text-align: justify;
+  text-align: center;
   background: url('../images/golden-fall/tip-bg.png') no-repeat 0 0;
   background-size: 100% 100%;
 }

@@ -2,7 +2,7 @@
   <div class="golden-fall">
     <div class="fall-header">
       <img src="../../images/golden-fall/title-words.png" alt="" width="72%">
-      <p>活动时间：{{activityInfo.activityStartTime | date}}—{{activityInfo.activityEndTime | date}}</p>
+      <p>活动时间：{{activityInfo.activityStartTime | date}} 00:00—{{activityInfo.activityEndTime | date}} 24:00</p>
       <p v-if="activityInfo.activityStatus === 2">（活动已结束）</p>
     </div>
     <div class="fall-score-wrapper">
@@ -44,7 +44,7 @@
           </li>
         </ul>
       </div>
-      <p class="gift1-tip">*每人每天限领取10次，现金券当日领取当日有效，过期作废，还请您及时使用。</p>
+      <p class="gift1-tip">*每人每天限领取10次，现金券当日领取当日有效，还请您及时使用。</p>
     </div>
     <div class="gift2-wrapper">
       <div class="gift2 position-re">
@@ -77,7 +77,7 @@
           </div>
         </div>
         <div class="coupon-tip">
-          *收到礼券后，扫码即可预约送货，24～48小时内送达，现捕现发，保证鲜活
+          *收到礼券后，即可预约送货，现捕现发，保证鲜活
         </div>
         <div class="jd-card-list">
           <ul>
@@ -122,7 +122,7 @@
         </p>
         <div>
           1.活动时间<br>
-          本次活动仅限于<span>{{activityInfo.statrYear || 2017}}年{{activityInfo.startMonth || 10}}月{{activityInfo.startDate || 1}}日至{{activityInfo.endYear|| 2017}}年{{activityInfo.endMonth || 10}}月{{activityInfo.endDate || 1}}日</span>内参与有效；
+          本次活动仅限于<span>{{activityInfo.statrYear || 2017}}年{{activityInfo.startMonth || 10}}月{{activityInfo.startDate || 1}}日0时至{{activityInfo.endYear|| 2017}}年{{activityInfo.endMonth || 10}}月{{activityInfo.endDate || 1}}日24时</span>内参与有效；
         </div>
         <div>
           2.参与方式<br>
@@ -130,7 +130,7 @@
         </div>
         <div>
           3.关于现金券<br>
-          现金券仅限活动期间领取，<span>每天每人限领10次</span>，现金券当日领取<span>当日有效</span>，过期作废，还请您及时使用;
+          现金券仅限活动期间领取，<span>每天每人限领10次</span>，现金券当日领取<span>当日有效</span>，还请您及时使用;
         </div>
         <div>
           4.奖励兑换<br>
