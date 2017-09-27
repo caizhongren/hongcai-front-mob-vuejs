@@ -22,7 +22,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, index) in recordList" v-bind:class="{'border-none': index === recordList.length-1}">
+              <tr v-for="(item, index) in recordList" v-bind:class="{'border-none': index >= 4}">
                 <td>{{item.exchangeTime | monthDay}}</td> 
                 <td> {{item.awardDesc}}</td>
                 <td>{{item.exchangeScore}}分</td>
