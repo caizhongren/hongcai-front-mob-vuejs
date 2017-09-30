@@ -28,7 +28,7 @@
       <div class="class1">
         <img src="../../images/user-center/dlzc.png" alt="" class="display-bl margin-auto" width="100%">
         <div class="mask">
-          <span class="line1 display-inbl"></span><span>注册登录</span><span class="line2 display-inbl"></span>
+          <span class="line1 display-inbl"></span><span>注册认证</span><span class="line2 display-inbl"></span>
         </div>
       </div>
     </router-link>
