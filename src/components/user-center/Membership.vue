@@ -8,6 +8,7 @@
         </div>
         <div class="content">会员体系共包含6个会员等级，会员等级由账户待收本金决定。</div>
         <div class="level">
+          <p class="Y-axis">待收本金(元)</p>
           <img src="../../images/membership/membership-level.png" alt="">
           <ul class="levelName">
             <li>普通</li>
@@ -106,6 +107,16 @@
     text-align: justify;
     font-weight: 500;
     line-height: 1.8;
+  }
+  .Membership-details .Membership-brief .level {
+    position: relative;
+  }
+  .Membership-details .Membership-brief .level .Y-axis {
+    position: absolute;
+    top: .2rem;
+    left: .2rem;
+    font-size: .23rem;
+	  color: #666666;
   }
   .Membership-details .Membership-brief .level img {
     width: 100%;
