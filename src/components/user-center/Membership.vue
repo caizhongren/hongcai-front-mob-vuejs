@@ -27,11 +27,11 @@
         </div>
         <ul class="explain">
           <li>
-            <p class="header"><span></span>待收本金：</p>
+            <p class="header">1.待收本金：</p>
             <p class="txt">待收本金为您当前账户投资精选项目、尊贵项目及债权转让项目的待收本金总和（不含收益及可用余额）。</p>
           </li>
           <li>
-            <p class="header"><span></span>会员评级规则：</p>
+            <p class="header">2.会员评级规则：</p>
             <p class="txt">
               用户在宏财网进行投资，且待收本金达到会员等级标准，即可拥有对应会员特权。<br>
               如因项目到期，待收本金下降导致的降级，会于次月1日根据待收本金重新计算级别。
@@ -78,7 +78,6 @@
     text-align: left;
     height: .37rem;
     border-bottom: 1px solid #ff611d;
-    font-weight: bold;
     letter-spacing: 1.2px;
   }
   .Membership-details .Membership-brief .title1 {
@@ -103,9 +102,8 @@
   }
   .Membership-details .Membership-brief .content {
     color: #666;
-    font-size: .25rem;
+    font-size: .24rem;
     text-align: justify;
-    font-weight: 500;
     line-height: 1.8;
   }
   .Membership-details .Membership-brief .level {
@@ -131,7 +129,6 @@
     display: inline-block;
     width: 15%;
     font-size: .23rem;
-    font-weight: 500;
     line-height: 0.75;
     letter-spacing: 0.8px;
     color: #666666;
@@ -147,16 +144,16 @@
   .explain {
     line-height: 1.8;
     color: #666;
-    font-size: .25rem;
-    font-weight: 500;
+    font-size: .24rem;
   }
   .explain .header {
     text-align: left;
+    font-weight: bold;
   }
   .explain .header span {
     display: inline-block;
     width: .12rem;
-    height: .1rem;
+    height: .12rem;
     border-radius: .5rem;
     background-color: #ff611d;
     vertical-align: middle;
