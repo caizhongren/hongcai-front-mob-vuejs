@@ -81,7 +81,7 @@
     letter-spacing: 1.2px;
   }
   .Membership-details .Membership-brief .title1 {
-    width: 2.08rem;
+    width: 2.15rem;
   }
   .Membership-details .Membership-brief .title2 {
     width: .95rem;
