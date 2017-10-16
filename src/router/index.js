@@ -33,6 +33,7 @@ const Question = r => require.ensure([], () => r(require('../components/user-cen
 const Feedback = r => require.ensure([], () => r(require('../components/user-center/feedback.vue')), 'Feedback')
 const InviteRebate = r => require.ensure([], () => r(require('../components/user-center/inviteRebate.vue')), 'InviteRebate')
 const inviteRebateList = r => require.ensure([], () => r(require('../components/user-center/inviteRebateList.vue')), 'InviteRebate')
+const Membership = r => require.ensure([], () => r(require('../components/user-center/Membership.vue')), 'Membership')
 const AssignmentQuestion = r => require.ensure([], () => r(require('../components/assignmentQuestion.vue')), 'Question')
 const RegisterAgree = r => require.ensure([], () => r(require('../components/registerAgree.vue')), 'RegisterAgree')
 const AssignmentAgree = r => require.ensure([], () => r(require('../components/assignmentAgree.vue')), 'AssignmentAgree')
@@ -130,6 +131,12 @@ const routes = [
     name: 'inviteRebateList',
     component: inviteRebateList,
     meta: {title: '邀请列表'}
+  },
+  {
+    path: '/user-center/membership',
+    name: 'Membership',
+    component: Membership,
+    meta: {title: '提升攻略'}
   },
   {
     path: '/project/:number',
