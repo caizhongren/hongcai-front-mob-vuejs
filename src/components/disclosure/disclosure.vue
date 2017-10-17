@@ -3,11 +3,11 @@
     <div class="class1">
       <img src="../../images/disclosure/comm-header.png" class="display-bl margin-auto" width="100%"> 
       <img src="../../images/disclosure/discolsure.png" width="35%" class="discolsure-title">
-    </div>
-    <div class="bg-White overflow-hid tab">
-      <ul class="discolsure-tab1 columns ten offset-by-one discolsureorange clearfix">
-        <li class="column text-center ft-1p4" :class="{active: activeTab == index}" v-for="(tab, index) in tabs" @click="switchTab(index)">{{tab.tab}}</li>
-      </ul>
+      <div class="tab">
+        <ul class="discolsure-tab1 columns ten offset-by-one discolsureorange clearfix">
+          <li class="column text-center ft-1p4" :class="{active: activeTab == index}" v-for="(tab, index) in tabs" @click="switchTab(index)">{{tab.tab}}</li>
+        </ul>
+      </div>
     </div>
     <router-view></router-view>
   </div>
@@ -60,21 +60,26 @@
   .discolsure .column {
     float: left;
   }
-  .discolsure .discolsure-tab1 {
-    /* position: fixed; */
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: #fff;
-    z-index: 9999;
-    background: #fff;
+  .discolsure .tab {
+    overflow: scroll;
+    overflow-y: hidden;
+    position: absolute;
+    bottom: 0;
+    left: 5%;
     border: 1px solid #fff;
     border-radius: .2rem;
+    background: #fff;
+  }
+  .discolsure .discolsure-tab1 {
+    width: 125%;
+    height: 1rem;
+    overflow-x: auto;
+    overflow-y: hidden;
   }
   .discolsure .discolsure-tab1 li {
-    width: 20%;
-    margin-left: 2.5%;
-    margin-right: 2.5%;
+    width: 16%;
+    margin-left: 2%;
+    margin-right: 2%;
     font-size: .28rem;
   }
   .discolsure .discolsureorange li {
@@ -86,8 +91,6 @@
     color: #f5762f;
   }
   .class1 {
-    /* margin-top: 1rem; */
-    margin-bottom: .3rem; 
     width: 100%;
     position: relative;
     line-height: 2.2rem;
