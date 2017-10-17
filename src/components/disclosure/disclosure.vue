@@ -1,5 +1,5 @@
 <template>
-  <div class="discolsure">
+  <div class="discolsure" v-auto-height>
     <div class="class1">
       <img src="../../images/disclosure/comm-header.png" class="display-bl margin-auto" width="100%"> 
       <img src="../../images/disclosure/discolsure.png" width="35%" class="discolsure-title">
@@ -78,10 +78,11 @@
     overflow-y: hidden;
     position: absolute;
     bottom: 0;
-    left: 5%;
+    left: 6.5%;
     border: 1px solid #fff;
     border-radius: .2rem;
     background: #fff;
+    box-shadow: 0.8px 1.3px 3.5px 0 rgba(80, 77, 75, 0.2);
   }
   .discolsure .discolsure-tab1 {
     width: 125%;
