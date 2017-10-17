@@ -36,17 +36,82 @@
       <img src="../../images/disclosure/organization.png" alt="" width="98%">
     </div>
     <div class="parting-line"></div>
-    <!-- 组织框架 -->
+    <!-- 从业人员概况 -->
     <div class="employees-profiles">
       <img src="../../images/disclosure/organization-04.png" alt="" class="employees-title">
       <div class="profiles">
         <ul class="profiles-tab">
-          <li>年龄分布</li>
-          <li>学历分布</li>
+          <li :class="{active: profilesTab == index}" v-for="(tab, index) in tabs" @click="switchTab(index)">{{tab.profilesName}}</li>
         </ul>
+        <div class="profiles-cont" v-if="profilesTab === 0">
+          <img src="../../images/disclosure/ages.png" alt="" width="80%">
+          <ul class="agesList">
+            <li>
+              <span>25岁-35岁</span>
+              <span>10人</span>
+            </li>
+            <li>
+              <span>25岁以下</span>
+              <span>7人</span>
+            </li>
+            <li>
+              <span>35岁以上</span>
+              <span>6人</span>
+            </li>
+          </ul>
+        </div>
+        <div class="profiles-cont" v-if="profilesTab === 1">
+          <img src="../../images/disclosure/education.png" alt="" width="90%">
+          <ul class="education">
+            <li>
+              <span>本科</span>
+              <span>13人</span>
+            </li>
+            <li>
+              <span>大专</span>
+              <span>4人</span>
+            </li>
+            <li>
+              <span>硕士</span>
+              <span>3人</span>
+            </li>
+            <li>
+              <span>博士及以上</span>
+              <span>3人</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="parting-line"></div>
+    <!-- 渠道信息 -->
+    <div class="channels-info">
+      <img src="../../images/disclosure/organization-05.png" alt="" class="channels-title">
+      <div class="channels">
+        <div class="information">
+          <p>官网域名：www.hongcai.com</p>
+        </div>
+        <img src="../../images/disclosure/channel-01.png" alt="">
+      </div>
+      <div class="channels">
+        <div class="information">
+          <p>IP地址：</p>
+        </div>
+        <img src="../../images/disclosure/channel-02.png" alt="">
+      </div>
+      <div class="channels">
+        <div class="information">
+          <p>微信公众号: </p>
+        </div>
+        <img src="../../images/disclosure/channel-03.png" alt="">
+      </div>
+      <div class="channels">
+        <div class="information">
+          <p>APP：宏财网（IOS及Android）</p>
+        </div>
+        <img src="../../images/disclosure/channel-04.png" alt="">
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -99,7 +164,23 @@
             name: '公司经营范围',
             content: '投资咨询；投资管理；资产管理；财务咨询（不得开展审计、验资、查账、评估、会计咨询、代理记账等需经专项审批的业务，不得出具相应的审计报告、验资报告、查账报告、评估报告等文字材料）；项目投资；企业管理咨询；公关策划；经济信息咨询；市场调查'
           }
+        ],
+        profilesTab: 0,
+        tabs: [
+          {
+            profilesName: '年龄分布'
+          },
+          {
+            profilesName: '学历分布'
+          }
         ]
+      }
+    },
+    methods: {
+      switchTab: function (index) {
+        if (this.profilesTab !== index) {
+          this.profilesTab = index
+        }
       }
     }
   }
@@ -107,7 +188,7 @@
 <style scoped>
   .organization {
     color: #666;    
-    padding-top: 1rem;
+    margin-bottom: 1rem;
   }
   .parting-line {
     width: 100%;
@@ -203,13 +284,122 @@
     margin: .5rem auto;
   }
   .profiles-tab {
-    background-color: #ffffff;
-    box-shadow: 0.8px 1.3px 3.5px 0 rgba(80, 77, 75, 0.2);
-    width: 30%;
     height: .55rem;
     line-height: .55rem;
     font-size: .24rem;
+    margin-left: 5%;  
+  }
+  .profiles-tab li {
+    width: 30%;
+    float: left;
     border-top-left-radius: .2rem;
     border-top-right-radius: .2rem;
+    background-color: #f9f4f3 ;
+    box-shadow: 0.8px 1.3px 3.5px 0 rgba(80, 77, 75, 0.2);
+  }
+  .profiles-tab li.active {
+    background-color: #ffffff;
+  }
+  .profiles-cont {
+    width: 90%;
+    margin: 0 auto;
+    background: #fff;
+    border-bottom-left-radius: .2rem;
+    border-top-right-radius: .2rem;
+    border-top-right-radius: .2rem;
+    box-shadow: 0.8px 1.3px 3.5px 0 rgba(80, 77, 75, 0.2);
+    padding: .5rem 0 0rem;
+  }
+  .agesList, .education {
+    overflow: hidden;
+    clear: both;
+    margin-top: .3rem;
+  }
+  .agesList li, .education li {
+    width: 34%;
+    border-radius: .1rem;
+    height: .55rem;
+    line-height: .55rem;
+    float: left;
+    font-size: .2rem;
+    color: #666;
+    margin: 0 7% .2rem;
+  }
+  .agesList li span:nth-child(2), .education li span:nth-child(2) {
+    display: inline-block;
+    height: .55rem;
+    line-height: .55rem;
+    float: right;
+    width: 30%;
+    color: #fff;
+  }
+  .agesList li:nth-child(1) {
+    border: 1px solid #fdab51;
+  }
+  .agesList li:nth-child(1) span:nth-child(2) {
+    background: #fdab51;
+  }
+  .agesList li:nth-child(2) {
+    border: 1px solid #6a649c;
+  }
+  .agesList li:nth-child(2) span:nth-child(2) {
+    background: #6a649c;
+  }
+  .agesList li:nth-child(3) {
+    border: 1px solid #fc7177;
+  }
+  .agesList li:nth-child(3) span:nth-child(2) {
+    background: #fc7177;
+  }
+  .education li:nth-child(1) {
+    border: 1px solid #a2dcfd;
+  }
+  .education li:nth-child(1) span:nth-child(2) {
+    background: #a2dcfd;
+  }
+  .education li:nth-child(2) {
+    border: 1px solid #7dc4ec;
+  }
+  .education li:nth-child(2) span:nth-child(2) {
+    background: #7dc4ec;
+  }
+  .education li:nth-child(3) {
+    border: 1px solid #388ec5;
+  }
+  .education li:nth-child(3) span:nth-child(2) {
+    background: #388ec5;
+  }
+  .education li:nth-child(4) {
+    border: 1px solid #2873b3;
+  }
+  .education li:nth-child(4) span:nth-child(2) {
+    background: #2873b3;
+  }
+  .channels-title {
+    width: 20%;
+    margin: .5rem auto .2rem;
+  }
+  .channels {
+    border-radius: 12.5px;
+    background-color: #ffffff;
+    box-shadow: 0 1.5px 3.5px 0 rgba(80, 77, 75, 0.2);
+    width: 90%;
+    height: 1.2rem;
+    margin: 0 auto;
+    position: relative;
+    font-size: .25rem;
+    margin-bottom: .58rem;
+    line-height: 1.1rem;
+    color: #666;
+  }
+  .channels img {
+    position: absolute;
+    width: 25%;
+    top: -.4rem;
+    left: -3px;
+  }
+  .channels .information {
+    text-align: left;
+    padding: 0rem 0 0 1.7rem;
   }
 </style>
