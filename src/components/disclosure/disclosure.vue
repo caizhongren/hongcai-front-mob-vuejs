@@ -13,6 +13,7 @@
   </div>
 </template>
 <script>
+  import $ from 'zepto'
   export default {
     name: 'Disclosure',
     data () {
@@ -47,9 +48,21 @@
         if (this.activeTab !== index) {
           this.activeTab = index
           this.$router.replace({name: this.tabs[index].name})
-          window.scrollTo(0, 0)
+          // window.scrollTo(0, 0)
+        }
+        if (this.activeTab === 3) {
+          $('.columns').addClass('transition-left')
+        }
+        if (this.activeTab === 1) {
+          $('.columns').removeClass('transition-left')
+        }
+        if (this.activeTab === 2) {
+          console.log(this.activeTab)
+          $('.columns').hasClass('transition-left') ? $('.columns').removeClass('transition-left') : $('.columns').addClass('transition-left')
         }
       }
+    },
+    mounted () {
     }
   }
 </script>
@@ -61,7 +74,7 @@
     float: left;
   }
   .discolsure .tab {
-    overflow: scroll;
+    overflow: auto;
     overflow-y: hidden;
     position: absolute;
     bottom: 0;
@@ -75,6 +88,18 @@
     height: 1rem;
     overflow-x: auto;
     overflow-y: hidden;
+    transform: translateX(0);
+    -webkit-transition:all .4s ease-in-out;
+    -moz-transition:all .4s ease-in-out;
+    -o-transition:all .4s ease-in-out;
+    -ms-transition:all .4s ease-in-out;    
+    transition:all .4s ease-in-out;
+  }
+  .discolsure .discolsure-tab1.transition-left {
+    transform: translateX(-20%);
+  }
+  .discolsure .discolsure-tab1.transition-right {
+    transform: translateX(0%);
   }
   .discolsure .discolsure-tab1 li {
     width: 16%;
