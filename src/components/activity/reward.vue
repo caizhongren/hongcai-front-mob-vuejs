@@ -128,7 +128,7 @@
       getInvitePrivilegedRewards: function (page, pageSize) {
         this.$http({
           method: 'get',
-          url: '/hongcai/rest/activitys/invitePrivilegedRewards?page' + page + '&pageSize=' + pageSize + '&token=' + this.token
+          url: '/hongcai/rest/activitys/invitePrivilegedRewards?page=' + page + '&pageSize=' + pageSize + '&token=' + this.token
         }).then((response) => {
           if (response.data && response.data.ret !== -1) {
             var details = response.data.data
