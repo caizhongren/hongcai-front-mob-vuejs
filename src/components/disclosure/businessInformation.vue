@@ -110,13 +110,13 @@
     text-align: left;
   }
   .commonBoxShadow .title {
-    font-size: .25rem;
+    font-size: .28rem;
     color: #666666;
     margin-bottom: .1rem;
     width: 105%;
   }
   .commonBoxShadow .data {
-    font-size: .3rem;
+    font-size: .32rem;
     font-weight: bold;
     color: #333333;
   }
@@ -131,7 +131,7 @@
     float: right;
     height: .9rem;
     margin-bottom: .3rem;
-    width: 37%;
+    width: 37.8%;
     text-align: justify;
     line-height: 1.2;
   }
@@ -139,6 +139,12 @@
     float: left;
   }
   .otherList li:nth-child(1) img, .otherList li:nth-child(2) img {
+    margin-top: -.14rem;
+  }
+  .otherList li:nth-child(4) img, .otherList li:nth-child(5) img {
     margin-top: -.1rem;
+  }
+  .otherList li:nth-child(3) img {
+    margin-top: -.05rem;
   }
 </style>

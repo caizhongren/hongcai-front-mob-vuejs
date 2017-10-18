@@ -210,11 +210,11 @@
     border-radius: .2rem;
     width: 90%;
     margin: 0 auto;
-    font-size: .24rem;
+    font-size: .2rem;
     box-shadow: 0 1.5px 3.5px 0 rgba(80, 77, 75, 0.2);
   }
   table.info div {
-    padding: .1rem .25rem;
+    padding: .1rem .15rem;
   }
   table.info tr {
     height: .65rem;
@@ -252,14 +252,14 @@
     height: 1.5rem;
     margin: 0 auto;
     position: relative;
-    font-size: .24rem;
+    font-size: .28rem;
   }
   .shareholder1 {
     margin-bottom: .75rem;
   }
   .shareholder1 img, .shareholder2 img {
     position: absolute;
-    width: 31%;
+    width: 28%;
     top: -.6rem;
   }
   .shareholder1 img {
@@ -270,11 +270,11 @@
   }
   .shareholder1 .information {
     text-align: left;
-    padding: .4rem 0 0 2.2rem;
+    padding: .35rem 0 0 2.2rem;
   }
   .shareholder2 .information {
     text-align: left;
-    padding: .4rem 0 0 0.2rem;
+    padding: .35rem 0 0 0.2rem;
   }
   .framework-title {
     width: 40%;
@@ -288,7 +288,7 @@
     height: .55rem;
     line-height: .55rem;
     font-size: .24rem;
-    margin-left: 5%;  
+    margin-left: 5%;
   }
   .profiles-tab li {
     width: 30%;
@@ -296,11 +296,14 @@
     border-top-left-radius: .2rem;
     border-top-right-radius: .2rem;
     background-color: #f9f4f3 ;
-    box-shadow: 0.8px 1.3px 3.5px 0 rgba(80, 77, 75, 0.2);
+    box-shadow: 0.8px -1.3px 3.5px 0 rgba(80, 77, 75, 0.2);
   }
   .profiles-tab li.active {
     background-color: #ffffff;
-    box-shadow: 0.8px 1.3px 3.5px 0 rgba(255,255,255,1);
+    box-shadow: 0.8px -1.3px 3.5px 0 rgba(80, 77, 75, 0.2);
+  }
+  .profiles-tab li:nth-child(1) {
+    margin-right: .05rem;
   }
   .profiles-cont {
     width: 90%;
@@ -393,7 +396,7 @@
     height: 1rem;
     margin: 0 auto;
     position: relative;
-    font-size: .25rem;
+    font-size: .28rem;
     margin-bottom: .5rem;
     color: #666;
   }
@@ -405,6 +408,6 @@
   }
   .channels .information {
     text-align: left;
-    padding: 0.32rem 0 0 1.4rem;
+    padding: 0.285rem 0 0 1.4rem;
   }
 </style>
