@@ -93,8 +93,8 @@
     z-index: 22222;
   }
   .discolsure .tab {
-    overflow: auto;
-    overflow-y: hidden;
+    /* overflow: auto; */
+    overflow: hidden;
     position: absolute;
     bottom: 0;
     left: 5%;
@@ -108,8 +108,8 @@
   .discolsure .discolsure-tab1 {
     width: 125%;
     height: 1rem;
-    overflow-x: auto;
-    overflow-y: hidden;
+    /* overflow-x: auto; */
+    overflow: hidden;
     -webkit-overflow-scrolling: touch;
     transform: translateX(0);
     -webkit-transition:all .4s ease-in-out;
