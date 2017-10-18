@@ -306,7 +306,7 @@
     border-width: .14rem;
     position: absolute;
     top: .28rem;
-    left: -.27rem;
+    left: -.269rem;
     border-style: solid dashed dashed;
     border-color: transparent #f69a73 transparent transparent ;
     font-size: 0;
@@ -319,7 +319,7 @@
     border-width: .12rem;
     position: absolute;
     top: .298rem;
-    left: -.23rem;
+    left: -.215rem;
     border-style: solid dashed dashed;
     border-color: transparent  #fff transparent transparent;
     font-size: 0;
@@ -375,7 +375,6 @@
   .list-right .right-item div:first-child{
     width: 30%;
     text-align: center;
-    font-size: .23rem;
   }
   .list-right .right-item div:last-child{
     margin-top: .3rem;
