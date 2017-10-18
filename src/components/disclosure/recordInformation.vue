@@ -27,6 +27,7 @@
   }
 </script>
 <style scoped>
+  ::-webkit-scrollbar {display:none}
   p {
     color: #666666;
     font-size: .26rem;
