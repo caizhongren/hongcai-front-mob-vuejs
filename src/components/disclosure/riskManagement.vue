@@ -203,6 +203,7 @@
   }
 </script>
 <style scoped>
+  ::-webkit-scrollbar {display:none}
   .display-inbl {
     display: inline-block;
   }
