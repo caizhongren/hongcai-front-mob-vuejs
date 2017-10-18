@@ -110,7 +110,7 @@ const routes = [
     component: Disclosure,
     children: [
       {
-        path: 'bank-disclosure',
+        path: '',
         name: 'BankDisclosure',
         component: BankDisclosure,
         meta: {title: '信息披露'}
