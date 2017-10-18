@@ -4,7 +4,7 @@
       <img src="../../images/disclosure/comm-header.png" class="display-bl margin-auto" width="100%"> 
       <img src="../../images/disclosure/discolsure.png" width="35%" class="discolsure-title">
       <div class="tab">
-        <ul class="discolsure-tab1 columns ten offset-by-one discolsureorange clearfix">
+        <ul class="discolsure-tab1 columns discolsureorange">
           <li class="column text-center ft-1p4" :class="{active: activeTab == index}" v-for="(tab, index) in tabs" @click="switchTab(index)">{{tab.tab}}</li>
         </ul>
       </div>
@@ -63,26 +63,42 @@
       }
     },
     mounted () {
+      window.onscroll = function () {
+        var t = document.documentElement.scrollTop || document.body.scrollTop
+        if (t >= 130) {
+          $('.tab').addClass('fixed')
+        } else {
+          $('.tab').removeClass('fixed')
+        }
+      }
     }
   }
 </script>
  <style scoped>
+   ::-webkit-scrollbar {display:none}
   .discolsure {
     background: #f9f4f3;
   }
   .discolsure .column {
     float: left;
   }
+  .discolsure .tab.fixed {
+    position: fixed;
+    top: 0;
+    z-index: 22222;
+  }
   .discolsure .tab {
     overflow: auto;
     overflow-y: hidden;
     position: absolute;
     bottom: 0;
-    left: 6.5%;
+    left: 5%;
     border: 1px solid #fff;
     border-radius: .2rem;
     background: #fff;
     box-shadow: 0.8px 1.3px 3.5px 0 rgba(80, 77, 75, 0.2);
+    width: 90%;
+    height: 1rem;
   }
   .discolsure .discolsure-tab1 {
     width: 125%;
