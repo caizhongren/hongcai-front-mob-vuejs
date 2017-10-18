@@ -104,7 +104,7 @@
     box-shadow: 0 1.5px 8px 0 rgba(80, 77, 75, 0.2);
   }
   .cumulativeTotal {
-    width: 86%;
+    width: 90%;
     height: 1.5rem;
     margin: 0.3rem auto;
     text-align: left;
@@ -123,7 +123,7 @@
   .otherList {
     overflow: hidden;
     clear: both;
-    width: 86%;
+    width: 90%;
     margin: 0 auto;
   }
   .otherList li {
@@ -131,7 +131,7 @@
     float: right;
     height: .9rem;
     margin-bottom: .3rem;
-    width: 36%;
+    width: 37%;
     text-align: justify;
     line-height: 1.2;
   }
