@@ -43,8 +43,8 @@
         <ul class="profiles-tab">
           <li :class="{active: profilesTab == index}" v-for="(tab, index) in tabs" @click="switchTab(index)">{{tab.profilesName}}</li>
         </ul>
-        <div class="profiles-cont" v-if="profilesTab === 0">
-          <img src="../../images/disclosure/ages.png" alt="" width="80%">
+        <div class="profiles-cont" v-show="profilesTab === 0">
+          <img src="../../images/disclosure/ages.png" class="agesImg" width="70%">
           <ul class="agesList">
             <li>
               <span>25岁-35岁</span>
@@ -60,7 +60,7 @@
             </li>
           </ul>
         </div>
-        <div class="profiles-cont" v-if="profilesTab === 1">
+        <div class="profiles-cont" v-show="profilesTab === 1">
           <img src="../../images/disclosure/education.png" alt="" width="90%">
           <ul class="education">
             <li>
@@ -95,13 +95,13 @@
       </div>
       <div class="channels">
         <div class="information">
-          <p>IP地址：</p>
+          <p>IP地址：119.254.147.66</p>
         </div>
         <img src="../../images/disclosure/channel-02.png" alt="">
       </div>
       <div class="channels">
         <div class="information">
-          <p>微信公众号: </p>
+          <p>微信公众号: 宏财服务中心</p>
         </div>
         <img src="../../images/disclosure/channel-03.png" alt="">
       </div>
@@ -116,7 +116,7 @@
 </template>
 <script>
   export default {
-    name: 'About',
+    name: 'Organization',
     data () {
       return {
         businessInfo: [
@@ -188,7 +188,8 @@
 <style scoped>
   .organization {
     color: #666;    
-    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    background: #f9f4f3;
   }
   .parting-line {
     width: 100%;
@@ -280,7 +281,7 @@
     margin: .5rem auto .2rem;
   }
   .employees-title {
-    width: 30%;
+    width: 28%;
     margin: .5rem auto;
   }
   .profiles-tab {
@@ -299,27 +300,32 @@
   }
   .profiles-tab li.active {
     background-color: #ffffff;
+    box-shadow: 0.8px 1.3px 3.5px 0 rgba(255,255,255,1);
   }
   .profiles-cont {
     width: 90%;
     margin: 0 auto;
     background: #fff;
     border-bottom-left-radius: .2rem;
-    border-top-right-radius: .2rem;
+    border-bottom-right-radius: .2rem;
     border-top-right-radius: .2rem;
     box-shadow: 0.8px 1.3px 3.5px 0 rgba(80, 77, 75, 0.2);
-    padding: .5rem 0 0rem;
+    padding: .35rem 0 0rem;
+    height: 6.2rem;
   }
   .agesList, .education {
     overflow: hidden;
     clear: both;
     margin-top: .3rem;
   }
+  .agesImg {
+    margin-top: .3rem;
+  }
   .agesList li, .education li {
     width: 34%;
     border-radius: .1rem;
     height: .55rem;
-    line-height: .55rem;
+    line-height: .56rem;
     float: left;
     font-size: .2rem;
     color: #666;
@@ -328,7 +334,7 @@
   .agesList li span:nth-child(2), .education li span:nth-child(2) {
     display: inline-block;
     height: .55rem;
-    line-height: .55rem;
+    line-height: .56rem;
     float: right;
     width: 30%;
     color: #fff;
@@ -376,7 +382,7 @@
     background: #2873b3;
   }
   .channels-title {
-    width: 20%;
+    width: 18%;
     margin: .5rem auto .2rem;
   }
   .channels {
@@ -384,22 +390,21 @@
     background-color: #ffffff;
     box-shadow: 0 1.5px 3.5px 0 rgba(80, 77, 75, 0.2);
     width: 90%;
-    height: 1.2rem;
+    height: 1rem;
     margin: 0 auto;
     position: relative;
     font-size: .25rem;
-    margin-bottom: .58rem;
-    line-height: 1.1rem;
+    margin-bottom: .5rem;
     color: #666;
   }
   .channels img {
     position: absolute;
-    width: 25%;
+    width: 22%;
     top: -.4rem;
     left: -3px;
   }
   .channels .information {
     text-align: left;
-    padding: 0rem 0 0 1.7rem;
+    padding: 0.32rem 0 0 1.4rem;
   }
 </style>
