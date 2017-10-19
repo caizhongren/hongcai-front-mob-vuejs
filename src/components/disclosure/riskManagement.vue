@@ -55,9 +55,10 @@
             </div>
             <div class="right fl">
               1.实地走访、资料核实</br>
-              2.资信核查</br>
+              2.资信审查  </br>
               3.抵押资产估值／检测</br>
-              4.制定抵押资产处置办法
+              4.办理资产抵押登记<br>
+              5.制定抵押资产处置办法
             </div>
           </div>
           <div class="column5 clearfix">
@@ -162,7 +163,7 @@
               <p>现场调查</p>
             </div>
             <div class="display-inbl">
-              1.每月到现场了解实际控制人情况<br>2.存货、订单及在手合同情况<br>3.生产经营情况是否有异常信号
+              1.每月到现场了解实际控制人情况<br>2.存货、订单及在手合同情况<br>3.生产经营情况是否有异常信号<br>4.押物价值是否有变化，是否涉诉
             </div>
           </div>
           <div class="right-item clearfix">
@@ -283,10 +284,10 @@
     height: 1.2rem;
   }
   .column4 .middle .line {
-    height: 1.7rem;
+    height: 2.1rem;
   }
   .column8 .middle .line {
-    height: 2rem;
+    height: 1.4rem;
   }
   .column3 .right, .column4 .right, .column8 .right {
     width: 47%;
@@ -298,6 +299,9 @@
     background-color: #ffffff;
     box-shadow: 0 1.5px 3.5px 0 rgba(80, 77, 75, 0.2);
     border: solid 1px #f69a73;
+  }
+  .column8 .right {
+    margin-top: -.5rem ;
   }
   .column3 .right::before, .column4 .right::before, .column8 .right::before {
     position: absolute;
@@ -325,6 +329,12 @@
     font-size: 0;
     line-height: 0;
   }
+  .column8 .right::before {
+    top: 1.01rem;
+  }
+  .column8 .right::after {
+    top: 1.027rem;
+  }
   .risk-3 .list {
     width: 90%;
     margin: .35rem auto 0;
@@ -343,7 +353,7 @@
     margin-top: -.1rem;
     margin-bottom: -.1rem;
     width: 1px;
-    background-color: #ff611d;
+    background-color: #fdaa7d;
   }
   .list .list-left .line1 {
     height: 1.83rem;
@@ -377,10 +387,10 @@
     text-align: center;
   }
   .list-right .right-item div:last-child{
-    margin-top: .3rem;
+    margin-top: .14rem;
     width: 70%;
   }
-  .list-right .right-item:nth-child(3) div:last-child, .list-right .right-item:last-child div:last-child {
-    margin-top: 0.15rem;
+  .list-right .right-item:first-child div:last-child {
+    margin-top: 0.3rem;
   }
 </style>

@@ -107,7 +107,7 @@
       </div>
       <div class="channels">
         <div class="information">
-          <p>APP：宏财网（IOS及Android）</p>
+          <p>APP：宏财网（iOS及Android）</p>
         </div>
         <img src="../../images/disclosure/channel-04.png" alt="">
       </div>
