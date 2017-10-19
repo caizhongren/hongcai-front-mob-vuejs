@@ -2,7 +2,7 @@
   <div class="discolsure" v-auto-height>
     <div class="class1">
       <img src="../../images/disclosure/comm-header.png" class="display-bl margin-auto" width="100%"> 
-      <img src="../../images/disclosure/discolsure.png" width="35%" class="discolsure-title" @click="test">
+      <img src="../../images/disclosure/discolsure.png" width="35%" class="discolsure-title">
       <div class="tab">
         <ul class="discolsure-tab1 columns discolsureorange">
           <li class="column text-center ft-1p4" :class="{active: activeTab == index}" v-for="(tab, index) in tabs" @click="switchTab(index)">{{tab.tab}}</li>
@@ -43,9 +43,6 @@
         activeTab: 0
       }
     },
-    created () {
-      console.log(this.activeTab)
-    },
     methods: {
       switchTab: function (index) {
         if (this.activeTab !== index) {
@@ -62,9 +59,6 @@
         if (this.activeTab === 2) {
           $('.columns').hasClass('transition-left') ? $('.columns').removeClass('transition-left') : $('.columns').addClass('transition-left')
         }
-      },
-      test () {
-        window.location.href = 'http://192.168.80.76:8080/project/707356081707261000'
       }
     },
     mounted () {

@@ -4,10 +4,10 @@
       <div class="slide position-re" id="slideBanner">
         <ul>
           <li class="position-re text-center">
-            <a class="pic display-bl" @click="preview('http://note.youdao.com/yws/api/personal/file/WEB18903db9e85459edcaf48d29c76a3e52?method=download&shareKey=64145b43d807078f4c40ce2753179538')"><img src="../../images/disclosure/contract1.png" /></a>
+            <a class="pic display-bl" @click="preview('https://www.hongcai.com/uploads/png/original/2017-10-19/image/9bcbea8d83f04b289b6b9c2cf8c3af9a-original.png')"><img src="../../images/disclosure/contract1.png" /></a>
           </li>
           <li class="position-re text-center">
-            <a class="pic display-bl" @click="preview('http://note.youdao.com/yws/api/personal/file/WEBcb594dff25b72a9ed99303b7022fa0cc?method=download&shareKey=0fe424fd2e14df1283ec482bef305885')"><img src="../../images/disclosure/contract2.png" /></a>
+            <a class="pic display-bl" @click="preview('https://www.hongcai.com/uploads/png/original/2017-10-19/image/e8b1d7c10f354901a532a91c4fd7439a-original.png')"><img src="../../images/disclosure/contract2.png" /></a>
           </li>
         </ul>
         <div class="dot">
@@ -47,7 +47,6 @@
           $('#slideBanner').find('.dot').children().first().addClass('cur')
         },
         callback: function (i, sum) {
-          console.log(sum)
           $('#slideBanner').find('.dot').children().eq(i).addClass('cur').siblings().removeClass('cur')
         }
       })
