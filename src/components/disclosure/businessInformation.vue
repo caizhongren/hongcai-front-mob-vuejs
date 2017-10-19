@@ -47,7 +47,7 @@
         <img src="../../images/disclosure/business-icon3.png" class="fr" width="22%">
       </li>
     </ul>
-    <div class="creatTime">数据统计期限：平台成立至2017-8-31日24：00</div>
+    <div class="creatTime">数据统计期限：平台成立至2017-8-31日24:00</div>
   </div>
 </template>
 <script>
