@@ -161,6 +161,10 @@
             content: '开业'
           },
           {
+            name: '公司法定代表人',
+            content: '刘刚'
+          },
+          {
             name: '公司经营范围',
             content: '投资咨询；投资管理；资产管理；财务咨询（不得开展审计、验资、查账、评估、会计咨询、代理记账等需经专项审批的业务，不得出具相应的审计报告、验资报告、查账报告、评估报告等文字材料）；项目投资；企业管理咨询；公关策划；经济信息咨询；市场调查'
           }
@@ -199,11 +203,8 @@
     margin-top: .6rem;
   }
   .bsuiness-title {
-    margin: .5rem;
-    width: 30%;
-  }
-  .bsuiness-info {
-
+    margin: .35rem 0 .5rem 0;
+    width: 29%;
   }
   table.info {
     background: #fff;
@@ -217,7 +218,7 @@
     padding: .1rem .15rem;
   }
   table.info tr {
-    height: .65rem;
+    height: .6rem;
     border-bottom: 1px solid #eee;
     vertical-align: middle;
   }
@@ -225,7 +226,7 @@
     width: 43%;
     text-align: left;
     border-right: 1px solid #eee;
-    line-height: .65rem;
+    line-height: .7rem;
     padding-left: .1rem;
   }
   table.info td:nth-child(2) {
@@ -241,8 +242,8 @@
     text-align: center;
   }
   .shareholder-title {
-    width: 37%;
-    margin: .5rem auto .7rem;
+    width: 34.5%;
+    margin: .5rem auto .5rem;
   }
   .shareholder1, .shareholder2 {
     border-radius: 12.5px;
@@ -277,11 +278,11 @@
     padding: .35rem 0 0 0.2rem;
   }
   .framework-title {
-    width: 40%;
+    width: 36.5%;
     margin: .5rem auto .2rem;
   }
   .employees-title {
-    width: 28%;
+    width: 25%;
     margin: .5rem auto;
   }
   .profiles-tab {
@@ -385,8 +386,8 @@
     background: #2873b3;
   }
   .channels-title {
-    width: 18%;
-    margin: .5rem auto .2rem;
+    width: 17.5%;
+    margin: .5rem auto .5rem;
   }
   .channels {
     border-radius: 12.5px;

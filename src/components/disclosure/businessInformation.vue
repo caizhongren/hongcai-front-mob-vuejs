@@ -88,8 +88,8 @@
     color: #666;
     font-size: .2rem;
     text-align: center;
-    -webkit-transform: scale(.9);
-    transform: scale(.9);
+    /* -webkit-transform: scale(.9);
+    transform: scale(.9); */
   }
   .business {
     color: #666;    
