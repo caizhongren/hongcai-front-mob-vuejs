@@ -204,7 +204,7 @@
   }
   .bsuiness-title {
     margin: .35rem 0 .5rem 0;
-    width: 29%;
+    width: 27%;
   }
   table.info {
     background: #fff;
@@ -242,7 +242,7 @@
     text-align: center;
   }
   .shareholder-title {
-    width: 34.5%;
+    width: 34%;
     margin: .5rem auto .5rem;
   }
   .shareholder1, .shareholder2 {
@@ -386,7 +386,7 @@
     background: #2873b3;
   }
   .channels-title {
-    width: 17.5%;
+    width: 16.5%;
     margin: .5rem auto .5rem;
   }
   .channels {
