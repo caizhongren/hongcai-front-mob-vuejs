@@ -19,12 +19,12 @@
       <li class="commonBoxShadow">
         <p class="title">逾期金额及笔数</p><br>
         <span class="data fl">0</span>
-        <img src="../../images/disclosure/business-icon2.png" class="fr" width="22%">
+        <img src="../../images/disclosure/business-icon2.png" class="fr" width="20%">
       </li>
       <li class="commonBoxShadow">
         <p class="title">逾期90天以上的金额及笔数</p>
         <span class="data fl">0</span>
-        <img src="../../images/disclosure/business-icon2.png" class="fr" width="22%">
+        <img src="../../images/disclosure/business-icon2.png" class="fr" width="20%">
       </li>
       <li class="commonBoxShadow">
         <p class="title">待偿金额及笔数</p><br>
@@ -34,12 +34,12 @@
       <li class="commonBoxShadow">
         <p class="title">前十大借款人待还金额占比</p>
         <span class="data fl">0</span>
-        <img src="../../images/disclosure/business-icon4.png" class="fr" width="22%">
+        <img src="../../images/disclosure/business-icon4.png" class="fr" width="20%">
       </li>
       <li class="commonBoxShadow">
         <p class="title">最大单一借款人待还金额占比</p>
         <span class="data fl">0</span>
-        <img src="../../images/disclosure/business-icon4.png" class="fr" width="22%">
+        <img src="../../images/disclosure/business-icon4.png" class="fr" width="20%">
       </li>
       <li class="commonBoxShadow">
         <p class="title">关联关系借款余额</p><br>
@@ -88,8 +88,6 @@
     color: #666;
     font-size: .2rem;
     text-align: center;
-    /* -webkit-transform: scale(.9);
-    transform: scale(.9); */
   }
   .business {
     color: #666;    

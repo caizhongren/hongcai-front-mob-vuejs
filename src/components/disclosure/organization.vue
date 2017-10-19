@@ -321,27 +321,33 @@
     overflow: hidden;
     clear: both;
     margin-top: .3rem;
+    padding: 0 8%;
   }
   .agesImg {
     margin-top: .3rem;
   }
   .agesList li, .education li {
-    width: 34%;
+    width: 45%;
     border-radius: .1rem;
     height: .55rem;
     line-height: .56rem;
-    float: left;
+    float: right;
     font-size: .2rem;
     color: #666;
-    margin: 0 7% .2rem;
+    margin: 0 0 .2rem;
+  }
+  .agesList li:nth-child(odd), .education li:nth-child(odd) {
+    float: left;
   }
   .agesList li span:nth-child(2), .education li span:nth-child(2) {
     display: inline-block;
     height: .55rem;
     line-height: .56rem;
     float: right;
-    width: 30%;
+    width: 32%;
     color: #fff;
+    border-top-right-radius: .08rem;
+    border-bottom-right-radius: .08rem;
   }
   .agesList li:nth-child(1) {
     border: 1px solid #fdab51;
@@ -403,8 +409,8 @@
   }
   .channels img {
     position: absolute;
-    width: 22%;
-    top: -.4rem;
+    width: 18%;
+    top: -.2rem;
     left: -3px;
   }
   .channels .information {

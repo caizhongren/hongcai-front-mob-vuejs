@@ -352,7 +352,7 @@
     margin-left: .18rem;
     margin-top: -.1rem;
     margin-bottom: -.1rem;
-    width: 1px;
+    width: 2px;
     background-color: #fdaa7d;
   }
   .list .list-left .line1 {
