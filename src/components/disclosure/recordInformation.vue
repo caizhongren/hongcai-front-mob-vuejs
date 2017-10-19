@@ -19,9 +19,9 @@
     },
     methods: {
       preview () {
-        bridgeUtil.webConnectNative('HCNative_ImgSrc', null, {'imgSrc': 'http://note.youdao.com/yws/api/personal/file/WEB18903db9e85459edcaf48d29c76a3e52?method=download&shareKey=64145b43d807078f4c40ce2753179538'}, function (response) {
-          alert(response)
-        }, function (data) {})
+        bridgeUtil.webConnectNative('HCNative_ImgSrc', null, {'imgSrc': 'https://www.hongcai.com/uploads/png/original/2017-10-19/image/262d332a885e48849a59e9a4b73a9984-original.png'}, function (response) {
+        }, function (data) {
+        })
       }
     }
   }
