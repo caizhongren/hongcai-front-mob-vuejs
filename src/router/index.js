@@ -136,7 +136,7 @@ const routes = [
     path: '/user-center/membership',
     name: 'Membership',
     component: Membership,
-    meta: {title: '提升攻略'}
+    meta: {title: '等级说明'}
   },
   {
     path: '/project/:number',
