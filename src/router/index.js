@@ -17,6 +17,9 @@ const MangoTV = r => require.ensure([], () => r(require('../components/activity/
 const GoldenFall = r => require.ensure([], () => r(require('../components/activity/goldenFall.vue')), 'GoldenFall')
 const GoldenDetail = r => require.ensure([], () => r(require('../components/activity/goldenDetail.vue')), 'GoldenDetail')
 const GoldenRecord = r => require.ensure([], () => r(require('../components/activity/goldenRecord.vue')), 'GoldenRecord')
+const gameStart = r => require.ensure([], () => r(require('../components/games/game-counting-start.vue')), 'gameStart')
+const gameCounting = r => require.ensure([], () => r(require('../components/games/game-counting.vue')), 'gameCounting')
+const gameOver = r => require.ensure([], () => r(require('../components/games/game-counting-over.vue')), 'gameOver')
 const About = r => require.ensure([], () => r(require('../components/about/about.vue')), 'About')
 const ManagementTeam = r => require.ensure([], () => r(require('../components/about/managementTeam.vue')), 'About')
 const Introduction = r => require.ensure([], () => r(require('../components/about/introduction.vue')), 'About')
@@ -238,6 +241,24 @@ const routes = [
     name: 'GoldenRecord',
     component: GoldenRecord,
     meta: {title: '兑换记录'}
+  },
+  {
+    path: '/games/game-counting-start',
+    name: 'gameStart',
+    component: gameStart,
+    meta: {title: '拼手速抢红包'}
+  },
+  {
+    path: '/games/game-counting',
+    name: 'gameCounting',
+    component: gameCounting,
+    meta: {title: '拼手速抢红包'}
+  },
+  {
+    path: '/games/game-counting-over',
+    name: 'gameOver',
+    component: gameOver,
+    meta: {title: '拼手速抢红包'}
   },
   {
     path: '/register-agree',
