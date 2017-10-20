@@ -96,7 +96,7 @@
             <div class="project-brief">
               <div class="title">
                 <span></span>
-                <p>项目评级</p>
+                <p>还款保障</p>
               </div>
               <div class="content">
                 <p v-html="projectInfo.riskManagementInfo"><span></span></p>   
