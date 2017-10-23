@@ -1,5 +1,10 @@
 <template>
   <div class="gameCounting">
+    <div class="rewardTitle">
+      <div class="rewardMoney">
+        <span>¥</span><span class="money">0</span>
+      </div>
+    </div>
     <div class="mask-common first-mask" v-show="showMask">
       <!-- 首次游戏引导蒙层 -->
       <div v-show="false">
@@ -20,9 +25,6 @@
         </div>
         <div class="count-down">{{warningText}}</div>
       </div>
-    </div>
-    <div class="rewardMoney">
-      <span>¥</span><span class="money">0</span>
     </div>
     <div class="box">
       <div class="moneyBox">
@@ -160,7 +162,7 @@
     margin-top: 1rem;
     overflow: hidden;
   }
-  .rewardMoney {
+  .rewardTitle {
     background: url('../../images/singles-day/reward-box.png') no-repeat center center;
     background-size: contain;
     width: 80%;
@@ -171,13 +173,21 @@
   }
   .money {
     font-family: ArialMT;
-    font-size: .32rem;
+    font-size: .36rem;
+  }
+  .rewardMoney {
+    overflow: hidden;
+    height: .7rem;
+    line-height: 1rem;
   }
   .rewardMoney span {
     float: left;
+    font-weight: bold;
   }
   .rewardMoney span:nth-child(1) {
-    font-size: .24rem;
+    font-size: .28rem;
+    width: 1rem;
+    text-align: left;
   }
   .box {
     background: #fbdc34;
