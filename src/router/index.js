@@ -249,7 +249,7 @@ const routes = [
     meta: {title: '拼手速抢红包'}
   },
   {
-    path: '/games/game-counting',
+    path: '/games/game-counting/:gameType',
     name: 'gameCounting',
     component: gameCounting,
     meta: {title: '拼手速抢红包'}
