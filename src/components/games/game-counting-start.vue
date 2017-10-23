@@ -10,8 +10,7 @@
         </div>
       </div>
       <ul class="startBtns">
-        <li>试玩练习</li>
-        <li>开始数钱</li>
+        <li v-for="item in startList" @click="goGame(item.gameType)">{{item.text}}</li>
       </ul>
       <div class="box">
         <div class="moneyBox">
@@ -27,17 +26,67 @@
     name: 'gameStart',
     data () {
       return {
+        startList: [
+          {
+            text: '试玩练习',
+            gameType: 2
+          },
+          {
+            text: '开始数钱',
+            gameType: 1
+          }
+        ],
+        activityStatus: true,
+        gameCounts: 10,
+        token: '239833f25433a3345d0740c1686249e87c2995c8fc4b6f5c'
       }
     },
     watch: {
     },
-    props: ['token'],
+    // props: ['token'],
     created () {
+      this.activityType = this.$route.query.act
+      this.getActivityStatus()
+      this.getGameCounts()
     },
     components: {
     },
     methods: {
-      getRecordList () {}
+      getActivityStatus () {
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest/activitys/' + that.activityType
+        })
+        .then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.activityStatus = res.data.status
+          } else {
+            alert(res.data.msg)
+          }
+        })
+      },
+      getGameCounts () {
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest/activity/countingKings/' + that.token + '/handSpeed'
+        })
+        .then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.gameCounts = res.data.data
+          } else {
+            alert(res.data.msg)
+          }
+        })
+      },
+      goGame (gameType) {
+        if (gameType === 1 && this.gameCounts <= 0) {
+          this.$router.push({name: 'gameOver'})
+        } else {
+          this.$router.push({name: 'gameCounting', params: { gameType: gameType }})
+        }
+      }
     }
   }
 </script>
@@ -96,7 +145,7 @@
     width: 35%;
     font-size: .22rem;
     height: .8rem;
-    line-height: .78rem;
+    line-height: .85rem;
   }
   .startBtns li:nth-child(1) {
     color: #4f0709;
