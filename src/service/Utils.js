@@ -256,6 +256,23 @@ let InputMaskHelper = (function (eleCls) {
   }
 })('input-focus')
 /**
+ * 添加音效
+ */
+let audioPlayUtil = {
+  // isPlay 默认不传是播放，传值是静音
+  playOrPaused: function (url, isPlay) {
+    !isPlay ? isPlay = true : isPlay
+    if (isPlay) {
+      let audio = new Audio()
+      audio.setAttribute('src', url)
+      if (audio.paused) {
+        // 暂停中
+        audio.play()
+      }
+    }
+  }
+}
+/**
  * TODO 输入框粘贴限制 & 输入类型
  */
 let checkInputUtil = {
@@ -274,3 +291,4 @@ export {dateUtil}
 export {sendMobCaptcha}
 export {InputMaskHelper}
 export {checkInputUtil}
+export {audioPlayUtil}

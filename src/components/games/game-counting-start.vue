@@ -20,6 +20,7 @@
     </div>
 </template>
 <script>
+  import {audioPlayUtil} from '../../service/Utils'
   import gameRules from './game-rules.vue'
   export default {
     name: 'gameStart',
@@ -82,6 +83,7 @@
         })
       },
       goGame (gameType) {
+        audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
         if (gameType === 1 && this.gameCounts <= 0) {
           this.$router.push({name: 'gameOver'})
         } else {
@@ -89,9 +91,11 @@
         }
       },
       goRecord () {
+        audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
         this.$router.push({name: 'gameRecord', query: { act: this.activityType }})
       },
       closeRules () {
+        audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
         this.showRulesMask = false
       }
     }
