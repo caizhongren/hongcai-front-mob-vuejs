@@ -148,7 +148,7 @@
   .startBtns li {
     display: inline-block;
     width: 35%;
-    font-size: .22rem;
+    font-size: .2rem;
     height: .8rem;
     line-height: .8rem;
   }
@@ -175,7 +175,6 @@
   }
   .box {
     background: #fbdc34;
-    /* height: 4.5rem; */
   }
   .record {
     width: 1rem;
@@ -184,8 +183,8 @@
     background: url('../../images/singles-day/rule-icon.png') no-repeat center bottom;
     background-size: contain;
     position: fixed;
-    right: 0;
     top: 38%;
+    right: -.1rem;
     padding: .1rem 0 .1rem .15rem;
     color: #fff;
     font-size: .24rem;

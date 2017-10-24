@@ -226,9 +226,9 @@
     bottom: -.8rem;
     left: 2.5%;
     width: 95%;
-    /* height: 9rem; */
+    height: 7.2rem;
     margin: 0 auto;
-    background: url('../../images/singles-day/money-box.png') no-repeat center bottom;
+    background: url('../../images/singles-day/money-box.png') no-repeat center 91%;
     background-size: contain;
   }
   .countTimes {
