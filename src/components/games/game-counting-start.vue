@@ -150,7 +150,7 @@
     width: 35%;
     font-size: .22rem;
     height: .8rem;
-    line-height: .85rem;
+    line-height: .8rem;
   }
   .startBtns li:nth-child(1) {
     color: #4f0709;
@@ -185,7 +185,7 @@
     background-size: contain;
     position: fixed;
     right: 0;
-    top: 40%;
+    top: 38%;
     padding: .1rem 0 .1rem .15rem;
     color: #fff;
     font-size: .24rem;
