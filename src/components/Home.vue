@@ -1,5 +1,5 @@
 <template>
-  <div class="home" v-auto-height>
+  <div class="home" v-auto-height @click="test">
       路径错了哦 
   </div>
 </template>
@@ -9,6 +9,11 @@
     name: 'home',
     data () {
       return {
+      }
+    },
+    methods: {
+      test () {
+        window.location.href = 'http://192.168.80.76:8080/games/game-counting-over'
       }
     }
   }

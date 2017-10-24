@@ -179,7 +179,7 @@
     background: url('../../images/singles-day/rule-icon.png') no-repeat center bottom;
     background-size: contain;
     position: fixed;
-    right: 0;
+    right: -.1rem;
     top: 40%;
     padding: .1rem 0 .1rem .15rem;
     color: #fff;
