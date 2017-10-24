@@ -60,7 +60,7 @@
         <div class="NoReward" v-if="rewardMoney <= 0">
           <img src="../../images/singles-day/emoji-04.png" width="25%">
           100块都没数到...
-          <div class="startAginBtn" @click="startAgin()">再玩一次</div>
+          <div class="startAginBtn" @click="startWarning">再玩一次</div>
         </div>
       </div>
     </div>
@@ -79,9 +79,10 @@
         showReward: false,
         showFirst: false,
         rewardMoney: 550,
-        second: 15,
+        second: 16,
         gameCounts: 5,
-        gameType: Number(this.$route.params.gameType) // 1: 试玩
+        gameType: Number(this.$route.params.gameType),
+        isPlay: true // 默认播放音效
       }
     },
     watch: {
@@ -93,11 +94,17 @@
     },
     props: ['token'],
     created () {
-      // this.showFirst = true
       this.gameType = Number(this.$route.params.gameType)
       this.getGameCounts()
-      // this.showRewardMoney($('#rewardMoney'), this.rewardMoney, 0, 800, 0)  弹窗获奖弹窗调用
-      this.countDown()
+      this.getMoneyList()
+      if (this.gameType === 1) {
+        this.getMoneyList(1)
+        this.showFirst = true
+      } else {
+        this.getMoneyList(2)
+        this.showFirst = false
+      }
+      // this.countDown()
     },
     mounted () {
       // console.log(this.showFirst)
@@ -116,34 +123,34 @@
           that.closeMask()
         }, null)
       },
-      startAgin () {
-        var that = this
-        if (that.gameType === 1 && that.gameCounts <= 0) {
-          that.$router.push({name: 'gameOver'})
-        } else {
-          that.showMask = false
-          that.showReward = false
-        }
-      },
       goBack () {
         this.$router.push({name: 'gameStart'})
       },
       startWarning () { // 高能预警倒计时
         var that = this
-        that.showMask = true
-        that.showWarning = true
-        var warningTimer = setInterval(function () {
-          that.warningText -= 1
-          if (that.warningText === 0) {
-            that.warningText = (that.warningText.toString() + '开始').slice(-2)
-            clearInterval(warningTimer)
-            that.updateGameCounts()
-            setInterval(function () {
-              that.showWarning = false
-              that.showMask = false
-            }, 1000)
-          }
-        }, 1000)
+        if (that.gameType === 1 && that.gameCounts <= 0) {
+          that.$router.push({name: 'gameOver'})
+        } else {
+          that.showReward = false
+          that.showWarning = true
+          var warningTimer = setInterval(function () {
+            that.warningText -= 1
+            if (that.warningText === 0) {
+              that.warningText = (that.warningText.toString() + '开始').slice(-2)
+              clearInterval(warningTimer)
+              if (that.gameType === 1) {
+                that.updateGameCounts()
+              }
+              setTimeout(function () {
+                that.showWarning = false
+                that.showMask = false
+                that.warningText = 3
+                that.second = 16
+                that.countDown()
+              }, 1000)
+            }
+          }, 1000)
+        }
       },
       getGameCounts () {
         var that = this
@@ -157,12 +164,26 @@
               that.gameCounts = res.data.freeCount + res.data.count - res.data.usedCount
               res.data.usedCount === 0 ? that.showFirst = true : that.showFirst = false
             } else {
-              alert(res.data.msg)
+              console.log(res.data.msg)
             }
           })
         } else { // 试玩
           that.startWarning()
         }
+      },
+      getMoneyList (type) {
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest//activity/countingKings/0/handSpeedConfig?token=' + that.token + '&type=' + type
+        })
+        .then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            console.log(res.data)
+          } else {
+            console.log(res.data.msg)
+          }
+        })
       },
       updateGameCounts () {
         var that = this
@@ -175,7 +196,7 @@
             that.gameCounts = res.data.freeCount + res.data.count - res.data.usedCount
             res.data.usedCount === 0 ? that.showFirst = true : that.showFirst = false
           } else {
-            alert(res.data.msg)
+            console.log(res.data.msg)
           }
         })
       },
@@ -211,7 +232,8 @@
       countDown: function () { // 倒计时
         var that = this
         if (that.second > 0) {
-          if (that.second <= 5) {
+          if (that.second <= 6) {
+            that.playOrPaused('../../static/audio/tip.mp3')
             that.hourglassAnimate(that.second * 1000 - 100)
           }
           that.second -= 1
@@ -220,9 +242,42 @@
           }, 1000)
         } else {
           clearTimeout(countTimer)
-          that.showMask = true
-          that.showReward = true
-          this.showRewardMoney($('#rewardMoney'), this.rewardMoney, 0, 800, 0)
+          // that.showMask = true
+          // that.showReward = true
+          // that.showRewardMoney($('#rewardMoney'), that.rewardMoney, 0, 800, 0)
+          // if (that.rewardMoney >= 100) {
+          //   that.playOrPaused('../../static/audio/get.mp3')
+          // }
+          that.gameOverGetPriviledge(that.gameType, that.rewardMoney, 100, 66)
+        }
+      },
+      gameOverGetPriviledge (type, amount, number, countingNum) { // 游戏结束获得特权本金
+        // type:1.正式游戏，2试玩游戏 amount:金额，number:金额配置编号，countingNum:点钞数
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/activity/countingKings/0/takeHandSpeedReward?token=' + that.token + '&type=' + type + '&amount=' + amount + '&number=' + number + '&countingNum=' + countingNum})
+        .then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.showMask = true
+            that.showReward = true
+            that.showRewardMoney($('#rewardMoney'), amount, 0, 800, 0)
+            if (amount >= 100) {
+              that.playOrPaused('../../static/audio/get.mp3')
+            }
+          } else {
+            console.log(res.data.msg)
+          }
+        })
+      },
+      playOrPaused (url) {
+        if (this.isPlay) {
+          var audio = new Audio()
+          audio.setAttribute('src', url)
+          if (audio.paused) {
+            // 暂停中
+            audio.play()
+          }
         }
       }
     }
