@@ -6,8 +6,8 @@
       </div>
       <div class="countTimes">
         <div class="countDown fl">
-          <img src="../../images/singles-day/clock.png" class="clock">
-          {{countTimer}}S
+          <img src="../../images/singles-day/clock.png" id="clock">
+          <span>{{second}}S</span>
         </div>
         <div class="gameCounts fr">剩余次数：{{gameCounts}}次</div> 
       </div>
@@ -69,8 +69,6 @@
 <script>
   import $ from 'zepto'
   import {bridgeUtil} from '../../service/Utils'
-  // import $ from 'zepto'
-  // import GoldenAddress from './golden-adress.vue'
   export default {
     name: 'gameCounting',
     data () {
@@ -81,7 +79,7 @@
         showReward: false,
         showFirst: false,
         rewardMoney: 550,
-        countTimer: 15,
+        second: 15,
         gameCounts: 5,
         gameType: Number(this.$route.params.gameType) // 1: 试玩
       }
@@ -95,10 +93,11 @@
     },
     props: ['token'],
     created () {
-      this.showFirst = true
+      // this.showFirst = true
       this.gameType = Number(this.$route.params.gameType)
       this.getGameCounts()
       // this.showRewardMoney($('#rewardMoney'), this.rewardMoney, 0, 800, 0)  弹窗获奖弹窗调用
+      this.countDown()
     },
     mounted () {
       // console.log(this.showFirst)
@@ -201,6 +200,30 @@
           progress < duration && requestAnimationFrame(startCount)
         }
         requestAnimationFrame(startCount)
+      },
+      hourglassAnimate (duration) {
+        $('#clock').addClass('hourglass')
+        var glassTimer = setTimeout(function () {
+          $('#clock').removeClass('hourglass')
+          clearTimeout(glassTimer)
+        }, duration)
+      },
+      countDown: function () {
+        var that = this
+        if (that.second > 0) {
+          if (that.second <= 5) {
+            that.hourglassAnimate(that.second * 1000 - 100)
+          }
+          that.second -= 1
+          var countTimer = setTimeout(function () {
+            that.countDown()
+          }, 1000)
+        } else {
+          clearTimeout(countTimer)
+          that.showMask = true
+          that.showReward = true
+          this.showRewardMoney($('#rewardMoney'), this.rewardMoney, 0, 800, 0)
+        }
       }
     }
   }
@@ -315,6 +338,9 @@
     text-align: left;
     margin-left: .1rem;
   }
+  .countDown {
+    width: 34%;
+  }
   .moneyBox {
     position: fixed;
     /* z-index: 2; */
@@ -334,10 +360,27 @@
     margin-top: .3rem;
     font-weight: bold;
   }
-  .clock {
+  #clock {
     width: 22%;
     vertical-align: text-top;
     margin-right: .15rem;
+  }
+  .countDown #clock.hourglass {
+    animation: clock .1s 0s infinite alternate;
+    -moz-animation: clock .1s 0s infinite alternate;
+    -webkit-animation: clock .1s 0s infinite alternate;
+    -o-animation: clock .1s 0s infinite alternate;
+  }
+  @keyframes clock {
+    0% {
+      transform: rotate(-30deg);
+    }
+    50% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(30deg);
+    }
   }
   .rewardBtns {
     margin: 0 auto;
