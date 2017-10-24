@@ -1,7 +1,7 @@
 <template>
   <div class="gameCounting" v-auto-height>
     <div class="rewardTitle">
-      <div class="rewardMoney">
+      <div class="totalMoney">
         <span>¥</span><span class="money">{{rewardMoney}}</span>
       </div>
       <div class="countTimes">
@@ -12,12 +12,14 @@
         <div class="gameCounts fr">剩余次数：{{gameCounts}}次</div> 
       </div>
     </div>
-    <!-- <div class="box"> -->
-      <div class="moneyBox">
-        <p class="i-know" @click="closeFirstAndStart">我知道了</p>
-        <img src="../../images/singles-day/money-100.png" width="57%">
-      </div>
-    <!-- </div> -->
+    <div class="moneyBox">
+      <p class="i-know" @click="closeFirstAndStart">我知道了</p>
+      <ul class="money-list">
+        <li class="money-100"></li>
+        <li class="money-500"></li>
+        <li class="money-10000"></li>
+      </ul>
+    </div>
     <div class="mask-common first-mask" v-show="showMask">
       <!-- 首次游戏引导蒙层 -->
       <div v-show="showFirst">
@@ -45,7 +47,7 @@
           <p v-if="gameType === 2">恭喜您数出</p>
           <div class="rewardBg">
             <P>特权本金</P>
-            <P>￥<span>{{rewardMoney}}</span></P>
+            <P>￥<span id="rewardMoney">{{rewardMoney}}</span></P>
             <p>有效期1天</p>
           </div>
           <div v-if="gameType === 2" class="demo">试玩将不会获得奖励，练好手速就去正式玩一局吧！</div>
@@ -67,6 +69,7 @@
 <script>
   import $ from 'zepto'
   import {bridgeUtil} from '../../service/Utils'
+  // import $ from 'zepto'
   // import GoldenAddress from './golden-adress.vue'
   export default {
     name: 'gameCounting',
@@ -87,14 +90,15 @@
       showFirst: function (newVal, oldVal) {
         document.getElementsByClassName('moneyBox')[0].style.zIndex = newVal ? 2 : 0
         document.getElementsByClassName('i-know')[0].style.zIndex = newVal ? 2 : 0
-        newVal ? $('.moneyBox img').addClass('example') : $('.moneyBox img').removeClass('example')
+        newVal ? $('.money-list li').addClass('example') : $('.money-list li').removeClass('example')
       }
     },
     props: ['token'],
     created () {
-      // this.showFirst = true
+      this.showFirst = true
       this.gameType = Number(this.$route.params.gameType)
       this.getGameCounts()
+      // this.showRewardMoney($('#rewardMoney'), this.rewardMoney, 0, 800, 0)  弹窗获奖弹窗调用
     },
     mounted () {
       // console.log(this.showFirst)
@@ -181,6 +185,22 @@
         document.getElementsByClassName('moneyBox')[0].style.zIndex = 1
         this.showFirst = false
         this.startWarning()
+      },
+      showRewardMoney (elem, endVal, startVal, duration, decimal) {
+        var that = this
+        var startTime = 0
+        var dec = Math.pow(10, decimal)
+        var progress, value
+        function startCount (timestamp) {
+          if (!startTime) startTime = timestamp
+          progress = timestamp - startTime
+          value = startVal + (endVal - startVal) * (progress / duration)
+          value = (value > endVal) ? endVal : value
+          value = Math.floor(value * dec) / dec
+          that.rewardMoney = value
+          progress < duration && requestAnimationFrame(startCount)
+        }
+        requestAnimationFrame(startCount)
       }
     }
   }
@@ -250,10 +270,10 @@
       transform: translateY(-0.55rem);
     }
   }
-  .moneyBox img {
+  .moneyBox .money-list {
     transform: translateY(.55rem);
   }
-  .moneyBox img.example {
+  .moneyBox .money-list li.example {
     animation: gyrate .8s 0s infinite alternate;
     -moz-animation: gyrate .8s 0s infinite alternate;
     -webkit-animation: gyrate .8s 0s infinite alternate;
@@ -280,16 +300,16 @@
     text-align: center;
     width: 65%;
   }
-  .rewardMoney {
+  .totalMoney {
     overflow: hidden;
     height: .7rem;
     line-height: .8rem;
   }
-  .rewardMoney span {
+  .totalMoney span {
     float: left;
     font-weight: bold;
   }
-  .rewardMoney span:nth-child(1) {
+  .totalMoney span:nth-child(1) {
     font-size: .4rem;
     width: 15%;
     text-align: left;
@@ -385,9 +405,10 @@
     padding: .035rem 0;
   }
   .rewardBg p:nth-child(2) span {
-    font-family: fantasy;
+    font-family: -webkit-body;
     font-size: .45rem;
     color: #fc2a42;
+    font-weight: bold;
   }
   .rewardBg p:nth-child(3) {
     font-size: .21rem;
@@ -407,5 +428,31 @@
     text-align: justify;
     color: #ffffff;
     vertical-align: middle;
+  }
+  .money-list {
+    width: 100%;
+    height: 7.1rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+  .money-list li {
+    width: 57%;
+    height: 7rem;
+    position: absolute;
+    bottom: 0;
+    left: 21.1%;
+  }
+  .money-100 {
+    background: url('../../images/singles-day/money-100.png') no-repeat center center;
+    background-size: 100% 100%;
+  }
+  .money-500 {
+    background: url('../../images/singles-day/money-500.png') no-repeat center center;
+    background-size: 100% 100%;
+  }
+  .money-10000 {
+    background: url('../../images/singles-day/money-10000.png') no-repeat center center;
+    background-size: 100% 100%;
   }
 </style>

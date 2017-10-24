@@ -26,12 +26,12 @@
                 </thead>
                 <tbody>
                   <tr v-for="item in CreditRightVo">
-                    <td>{{item.createTime | monthDay}}</td>
+                    <td>{{item.createTime | monthDotDay}}</td>
                     <td>{{item.projectDays}}天</td>
                     <td>{{item.amount}}</td>
                     <td>{{item.annualAmount}}</td>
                   </tr>
-                  <tr v-if="totalPage > page" class="loadMore" @click="loadMore"><td colspan="4">查看更多</td></tr>
+                  <tr v-if="investTotalPage > investPage" class="loadMore" @click="loadMore(investPage)"><td colspan="4">查看更多</td></tr>
                 </tbody>
               </table>
               <div v-if="CreditRightVo.length <= 0" class="noInvestRecord">
@@ -56,10 +56,10 @@
                 </thead>
                 <tbody>
                   <tr v-for="item in PrivilegedCapitailDetail">
-                    <td>{{item.createTime | monthDay}}</td>
+                    <td>{{item.createTime | monthDotDay}}</td>
                     <td>{{item.amount}}</td>
                   </tr>
-                  <tr v-if="totalPage > page" class="loadMore" @click="loadMore"><td colspan="2">查看更多</td></tr>
+                  <tr v-if="rewardTotalPage > rewardPage" class="loadMore" @click="loadMore(rewardPage)"><td colspan="2">查看更多</td></tr>
                 </tbody>
               </table>
               <div v-if="PrivilegedCapitailDetail.length <= 0" class="noInvestRecord">
@@ -82,47 +82,12 @@
         totalInvestAmount: 20000,
         totalPrivilegedCapital: 8888,
         CreditRightVo: [],
-        PrivilegedCapitailDetail: [
-          {
-            createTime: 111111,
-            amount: 1111
-          },
-          {
-            createTime: 111111,
-            amount: 1111
-          },
-          {
-            createTime: 111111,
-            amount: 1111
-          },
-          {
-            createTime: 111111,
-            amount: 1111
-          },
-          {
-            createTime: 111111,
-            amount: 1111
-          },
-          {
-            createTime: 111111,
-            amount: 1111
-          },
-          {
-            createTime: 111111,
-            amount: 1111
-          },
-          {
-            createTime: 111111,
-            amount: 1111
-          },
-          {
-            createTime: 111111,
-            amount: 1111
-          }
-        ],
-        page: 1,
+        PrivilegedCapitailDetail: [],
+        investPage: 1,
+        rewardPage: 1,
         pageSize: 10,
-        totalPage: 3,
+        investTotalPage: 1,
+        rewardTotalPage: 1,
         token: '04bc7a27e4eb1db06df0ca44bdefc7d78a6ab08bdd044e02'
       }
     },
@@ -131,8 +96,8 @@
     // props: ['token'],
     created () {
       this.activityType = this.$route.query.act
-      this.getInvestRecords()
-      this.getRewardRecords()
+      this.getInvestRecords(1, 10)
+      this.getRewardRecords(1, 10)
     },
     components: {
     },
@@ -140,19 +105,21 @@
       switchTab: function (index) {
         if (this.activeTab !== index) {
           this.activeTab = index
-          this.page = 1
+          this.CreditRightVo = []
+          this.PrivilegedCapitailDetail = []
+          index === 0 ? this.getInvestRecords(1, 10) : this.getRewardRecords(1, 10)
         }
       },
-      getInvestRecords () {
+      getInvestRecords (page, pageSize) {
         var that = this
         that.$http({
           method: 'get',
-          url: '/hongcai/rest/activity/countingKings/0/investRecords?token=' + that.token + '&activityType=' + that.activityType + '&page=' + that.page + '&pageSize=' + that.pageSize
+          url: '/hongcai/rest/activity/countingKings/0/investRecords?token=' + that.token + '&activityType=' + that.activityType + '&page=' + page + '&pageSize=' + pageSize
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
             var CreditRightVo = res.data.data
-            // that.totalPage = res.data.totalPage
+            that.investTotalPage = res.data.totalPage
             for (var i = 0; i < CreditRightVo.length; i++) {
               that.CreditRightVo.push(CreditRightVo[i])
             }
@@ -161,16 +128,16 @@
           }
         })
       },
-      getRewardRecords () {
+      getRewardRecords (page, pageSize) {
         var that = this
         that.$http({
           method: 'get',
-          url: '/hongcai/rest/activity/countingKings/0/takeRewardRecords?token=' + that.token + '&activityType=' + that.activityType + '&page=' + that.page + '&pageSize=' + that.pageSize
+          url: '/hongcai/rest/activity/countingKings/0/takeRewardRecords?token=' + that.token + '&activityType=' + that.activityType + '&page=' + page + '&pageSize=' + pageSize
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
             var PrivilegedCapitailDetail = res.data.data
-            // that.totalPage = res.data.totalPage
+            that.rewardTotalPage = res.data.totalPage
             for (var i = 0; i < PrivilegedCapitailDetail.length; i++) {
               that.PrivilegedCapitailDetail.push(PrivilegedCapitailDetail[i])
             }
@@ -179,9 +146,9 @@
           }
         })
       },
-      loadMore () {
-        this.page = this.page + 1
-        this.activeTab === 0 ? this.getInvestRecords(this.page, this.pageSize) : this.getRewardRecords(this.page, this.pageSize)
+      loadMore (index) {
+        var page = (index + 1)
+        this.activeTab === 0 ? this.getInvestRecords(page, this.pageSize) : this.getRewardRecords(page, this.pageSize)
       }
     }
   }
@@ -199,7 +166,7 @@
     font-size: .28rem;
     position: relative;
     height: 1rem;
-    padding-top: .5rem;
+    padding-top: .4rem;
     top: .23rem;
   }
   ul.recordTitle li span {
@@ -258,7 +225,8 @@
     border-top-left-radius: 0rem;
     background-color: #ffffff;
     border: solid .05rem #740e0b;
-    margin-top: -.06rem;
+    margin-top: -.05rem;
+    height: 8.1rem;
   }
   .totalInvest {
     font-size: .28rem;
