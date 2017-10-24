@@ -3,7 +3,7 @@
     <div class="rule-wrapper">
       <!-- 规则弹窗显示 -->
       <div class="discription" v-if="showRulesAbout">
-        活动期间，每人均有一次免费游戏机会，新增<img src="../../images/singles-day/icon-02.png" alt="" width="6%">年化投资金额每满<img src="../../images/singles-day/icon-01.png" alt="" width="9%">2000元
+        活动期间，每人均有一次免费游戏机会，新增<img src="../../images/singles-day/icon-02.png" alt="" width="5%">年化投资金额每满<img src="../../images/singles-day/icon-01.png" alt="" width="9%">2000元
         即可再获得&nbsp;<img src="../../images/singles-day/emoji-02.png" alt="" width="6%" class="position-ab">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1次游戏机会哦！
       </div>
       <div class="calculator">
@@ -173,7 +173,7 @@
 	  color: #4c1003;
   }
   form .input-item input {
-    height: .77rem;
+    height: .74rem;
     width: 63%;
     border: none;
     font-size: .24rem;

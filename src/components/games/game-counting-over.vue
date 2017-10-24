@@ -1,6 +1,6 @@
 <template>
     <div class="gameOver">
-      <div class="record">游戏<br>记录</div>
+      <div class="record" @click="getRecordList">游戏<br>记录</div>
       <div class="title">
         <img src="../../images/singles-day/emoji-03.png" alt="" width="15%">
         嘤嘤嘤...没有游戏机会咯！
@@ -30,11 +30,11 @@
         </div>
       </div>
       <p class="tip">奖励发放30天后，如仍未开通银行存管，奖励将会自动失效哦～</p>
-      <p class="invest-btn">立即投资</p>
+      <p class="invest-btn" @click="toInvestList">立即投资</p>
     </div>
 </template>
 <script>
-  // import gameRules from './game-rules.vue'
+  import {bridgeUtil} from '../../service/Utils'
   export default {
     name: 'gameOver',
     data () {
@@ -64,7 +64,7 @@
     },
     methods: {
       getRecordList () {
-        this.$router.push({name: 'gameCounting'})
+        this.$router.push({name: 'gameRecord'})
       },
       oninputHandler () {
         this.project.amount = this.project.amount.replace(/\D/g, '')
@@ -76,6 +76,12 @@
       oninputHandler1 () {
         this.project.term = this.project.term.replace(/\D/g, '')
         this.project.term = this.project.term.length >= 3 && this.project.term > 365 ? this.project.term.slice(0, 2) : this.project.term
+      },
+      toInvestList () {
+        var that = this
+        bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {
+          that.closeMask()
+        }, null)
       },
       last (elem, index) {
         var val = elem.value

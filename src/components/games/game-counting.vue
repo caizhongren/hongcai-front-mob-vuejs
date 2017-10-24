@@ -14,12 +14,13 @@
     </div>
     <!-- <div class="box"> -->
       <div class="moneyBox">
+        <p class="i-know" @click="closeFirstAndStart">我知道了</p>
         <img src="../../images/singles-day/money-100.png" width="57%">
       </div>
     <!-- </div> -->
     <div class="mask-common first-mask" v-show="showMask">
       <!-- 首次游戏引导蒙层 -->
-      <div v-show="false">
+      <div v-show="showFirst">
         <p class="mask-title">抢到多少，就送多少</p>
         <div class="mask-content">
           <img src="../../images/singles-day/top-hand.png" alt="" width="8%">
@@ -54,7 +55,7 @@
             <li @click="startAgin()">再玩一次</li>
           </ul>
         </div>
-        <div class="NoReward" v-if="rewardMoney <=0">
+        <div class="NoReward" v-if="rewardMoney <= 0">
           <img src="../../images/singles-day/emoji-04.png" width="25%">
           100块都没数到...
           <div class="startAginBtn" @click="startAgin()">再玩一次</div>
@@ -64,6 +65,7 @@
   </div>
 </template>
 <script>
+  import $ from 'zepto'
   import {bridgeUtil} from '../../service/Utils'
   // import GoldenAddress from './golden-adress.vue'
   export default {
@@ -72,33 +74,35 @@
       return {
         warningText: 3,
         showWarning: false,
-        showMask: false,
+        showMask: true,
         showReward: false,
+        showFirst: false,
         rewardMoney: 550,
         countTimer: 15,
         gameCounts: 5,
-        gameType: Number(this.$route.params.gameType)
+        gameType: Number(this.$route.params.gameType) // 1: 试玩
       }
     },
     watch: {
+      showFirst: function (newVal, oldVal) {
+        document.getElementsByClassName('moneyBox')[0].style.zIndex = newVal ? 2 : 0
+        document.getElementsByClassName('i-know')[0].style.zIndex = newVal ? 2 : 0
+        newVal ? $('.moneyBox img').addClass('example') : $('.moneyBox img').removeClass('example')
+      }
     },
     props: ['token'],
     created () {
+      // this.showFirst = true
       this.gameType = Number(this.$route.params.gameType)
+      this.getGameCounts()
     },
     mounted () {
-      var that = this
-      var warningTimer = setInterval(function () {
-        that.warningText -= 1
-        if (that.warningText === 0) {
-          that.warningText = (that.warningText.toString() + '开始').slice(-2)
-          clearInterval(warningTimer)
-          setInterval(function () {
-            that.showWarning = false
-            // that.showMask = false
-          }, 1000)
-        }
-      }, 1000)
+      // console.log(this.showFirst)
+      // if (this.showFirst) {
+      //   $('.moneyBox img').addClass('example')
+      // } else {
+      //   $('.moneyBox img').removeClass('example')
+      // }
     },
     components: {
     },
@@ -120,6 +124,63 @@
       },
       goBack () {
         this.$router.push({name: 'gameStart'})
+      },
+      startWarning () { // 高能预警倒计时
+        var that = this
+        that.showMask = true
+        that.showWarning = true
+        var warningTimer = setInterval(function () {
+          that.warningText -= 1
+          if (that.warningText === 0) {
+            that.warningText = (that.warningText.toString() + '开始').slice(-2)
+            clearInterval(warningTimer)
+            that.updateGameCounts()
+            setInterval(function () {
+              that.showWarning = false
+              that.showMask = false
+            }, 1000)
+          }
+        }, 1000)
+      },
+      getGameCounts () {
+        var that = this
+        if (that.gameType === 1) { // 正式玩
+          that.$http({
+            method: 'post',
+            url: '/hongcai/rest/activity/countingKings/0/handSpeed?token=' + that.token
+          })
+          .then(function (res) {
+            if (res.data && res.data.ret !== -1) {
+              that.gameCounts = res.data.freeCount + res.data.count - res.data.usedCount
+              res.data.usedCount === 0 ? that.showFirst = true : that.showFirst = false
+            } else {
+              alert(res.data.msg)
+            }
+          })
+        } else { // 试玩
+          that.startWarning()
+        }
+      },
+      updateGameCounts () {
+        var that = this
+        that.$http({
+          method: 'put',
+          url: '/hongcai/rest/activity/countingKings/0/handSpeed?token=' + that.token + '&type=1'
+        })
+        .then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.gameCounts = res.data.freeCount + res.data.count - res.data.usedCount
+            res.data.usedCount === 0 ? that.showFirst = true : that.showFirst = false
+          } else {
+            alert(res.data.msg)
+          }
+        })
+      },
+      closeFirstAndStart () { // 关闭首次引导并开始
+        document.getElementsByClassName('i-know')[0].style.zIndex = 0
+        document.getElementsByClassName('moneyBox')[0].style.zIndex = 1
+        this.showFirst = false
+        this.startWarning()
       }
     }
   }
@@ -144,6 +205,18 @@
   }
   .mask-content img {
     display: inline-block;
+  }
+  .i-know {
+    width: 35%;
+    color: #59060e;
+    background: url('../../images/singles-day/btn-green.png') no-repeat center center;
+    background-size: 100% 100%;
+    padding: .2rem .2rem .25rem;
+    position: absolute;
+    top: 69%;
+    left: 32.5%;
+    font-size: .27rem;
+    z-index: 0;
   }
   /* 高能预警 */
   .start-mask {
@@ -171,14 +244,16 @@
   /* animation */
   @keyframes gyrate {
     0% {
-      transform: translateY(0.3rem);
+      transform: translateY(0.55rem);
     }
     100% {
-      transform: translateY(-0.7rem);
+      transform: translateY(-0.55rem);
     }
   }
+  .moneyBox img {
+    transform: translateY(.55rem);
+  }
   .moneyBox img.example {
-    transform: translateY(.3rem);
     animation: gyrate .8s 0s infinite alternate;
     -moz-animation: gyrate .8s 0s infinite alternate;
     -webkit-animation: gyrate .8s 0s infinite alternate;
