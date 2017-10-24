@@ -18,10 +18,11 @@
         </div>
       </div>
       <div class="record">游戏<br>记录</div>
+      <game-rules></game-rules>
     </div>
 </template>
 <script>
-  // import GoldenAddress from './golden-adress.vue'
+  import gameRules from './game-rules.vue'
   export default {
     name: 'gameStart',
     data () {
@@ -50,6 +51,7 @@
       this.getGameCounts()
     },
     components: {
+      gameRules
     },
     methods: {
       getActivityStatus () {

@@ -34,6 +34,7 @@
     </div>
 </template>
 <script>
+  // import gameRules from './game-rules.vue'
   export default {
     name: 'gameOver',
     data () {
