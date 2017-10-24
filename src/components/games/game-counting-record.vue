@@ -12,7 +12,7 @@
             <div class="totalInvest" v-if="CreditRightVo.length > 0">
               <img src="../../images/singles-day/icon-01.png" class="icon-money">
               <span>累计年化投资金额 : {{totalInvestAmount}}元</span>
-              <img src="../../images/singles-day/question.png" class="icon-question">
+              <img src="../../images/singles-day/question.png" class="icon-question" @click="showRulesMask = !showRulesMask">
             </div>
             <div class="scrollBox">
               <table v-if="CreditRightVo.length > 0">
@@ -70,14 +70,16 @@
           </div>
         </div>
       </div>
+      <game-rules :showRulesMask="showRulesMask" :closeRules='closeRules'></game-rules>
     </div>
 </template>
 <script>
-  // import GoldenAddress from './golden-adress.vue'
+  import gameRules from './game-rules.vue'
   export default {
     name: 'gameRecord',
     data () {
       return {
+        showRulesMask: false,
         activeTab: 0,
         totalInvestAmount: 20000,
         totalPrivilegedCapital: 8888,
@@ -100,6 +102,7 @@
       this.getRewardRecords(1, 10)
     },
     components: {
+      gameRules
     },
     methods: {
       switchTab: function (index) {
@@ -149,6 +152,9 @@
       loadMore (index) {
         var page = (index + 1)
         this.activeTab === 0 ? this.getInvestRecords(page, this.pageSize) : this.getRewardRecords(page, this.pageSize)
+      },
+      closeRules () {
+        this.showRulesMask = false
       }
     }
   }
