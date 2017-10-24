@@ -75,6 +75,7 @@
 </template>
 <script>
   import gameRules from './game-rules.vue'
+  import {audioPlayUtil} from '../../service/Utils'
   export default {
     name: 'gameRecord',
     data () {
@@ -106,6 +107,7 @@
     },
     methods: {
       switchTab: function (index) {
+        audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
         if (this.activeTab !== index) {
           this.activeTab = index
           this.CreditRightVo = []

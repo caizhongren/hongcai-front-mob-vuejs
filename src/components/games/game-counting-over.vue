@@ -34,7 +34,7 @@
     </div>
 </template>
 <script>
-  import {bridgeUtil} from '../../service/Utils'
+  import {bridgeUtil, audioPlayUtil} from '../../service/Utils'
   export default {
     name: 'gameOver',
     data () {
@@ -64,6 +64,7 @@
     },
     methods: {
       getRecordList () {
+        audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
         this.$router.push({name: 'gameRecord'})
       },
       oninputHandler () {
@@ -78,6 +79,7 @@
         this.project.term = this.project.term.length >= 3 && this.project.term > 365 ? this.project.term.slice(0, 2) : this.project.term
       },
       toInvestList () {
+        audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
         var that = this
         bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {
           that.closeMask()

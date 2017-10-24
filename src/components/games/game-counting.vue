@@ -66,14 +66,14 @@
 </template>
 <script>
   import $ from 'zepto'
-  import {bridgeUtil} from '../../service/Utils'
+  import {bridgeUtil, audioPlayUtil} from '../../service/Utils'
   export default {
     name: 'gameCounting',
     data () {
       return {
         warningText: 3,
         showWarning: false,
-        showMask: false,
+        showMask: true,
         showReward: false,
         showFirst: false,
         rewardMoney: 0,
@@ -128,15 +128,20 @@
     },
     methods: {
       toPriviledge () {
+        audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
         var that = this
         bridgeUtil.webConnectNative('HCNative_GoPrivilegedCapital', undefined, {}, function (res) {
           that.closeMask()
         }, null)
       },
       goBack () {
+        audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
         this.$router.push({name: 'gameStart'})
       },
-      startWarning () { // 高能预警倒计时
+      startWarning (times) { // 高能预警倒计时
+        if (!times) { // times 不传是点击再次开始要加音效
+          audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
+        }
         var that = this
         if (that.gameType === 1 && that.gameCounts <= 0) {
           that.$router.push({name: 'gameOver'})
@@ -178,7 +183,7 @@
             }
           })
         } else { // 试玩
-          that.startWarning()
+          that.startWarning(1)
         }
       },
       getMoneyList (type) {
@@ -211,10 +216,11 @@
         })
       },
       closeFirstAndStart () { // 关闭首次引导并开始
+        audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
         document.getElementsByClassName('i-know')[0].style.zIndex = 0
         document.getElementsByClassName('moneyBox')[0].style.zIndex = 1
         this.showFirst = false
-        this.startWarning()
+        this.startWarning(1)
       },
       showRewardMoney (elem, endVal, startVal, duration, decimal) { // 获得奖励自增动画
         var that = this
@@ -243,7 +249,7 @@
         var that = this
         if (that.second > 0) {
           if (that.second <= 6) {
-            that.playOrPaused('../../static/audio/tip.mp3')
+            audioPlayUtil.playOrPaused('../../static/audio/tip.mp3')
             that.hourglassAnimate(that.second * 1000 - 100)
           }
           that.second -= 1
@@ -252,12 +258,12 @@
           }, 1000)
         } else {
           clearTimeout(countTimer)
-          // that.showMask = true
-          // that.showReward = true
-          // that.showRewardMoney($('#rewardMoney'), that.rewardMoney, 0, 800, 0)
-          // if (that.rewardMoney >= 100) {
-          //   that.playOrPaused('../../static/audio/get.mp3')
-          // }
+          that.showMask = true
+          that.showReward = true
+          that.showRewardMoney($('#rewardMoney'), that.rewardMoney, 0, 800, 0)
+          if (that.rewardMoney >= 100) {
+            audioPlayUtil.playOrPaused('../../static/audio/get.mp3')
+          }
           that.gameOverGetPriviledge(that.gameType, that.rewardMoney, 100, 66)
         }
       },
@@ -273,22 +279,12 @@
             that.showReward = true
             that.showRewardMoney($('#rewardMoney'), amount, 0, 800, 0)
             if (amount >= 100) {
-              that.playOrPaused('../../static/audio/get.mp3')
+              audioPlayUtil.playOrPaused('../../static/audio/get.mp3')
             }
           } else {
             console.log(res.data.msg)
           }
         })
-      },
-      playOrPaused (url) {
-        if (this.isPlay) {
-          var audio = new Audio()
-          audio.setAttribute('src', url)
-          if (audio.paused) {
-            // 暂停中
-            audio.play()
-          }
-        }
       },
       scrollMoney (event, index) {
 
