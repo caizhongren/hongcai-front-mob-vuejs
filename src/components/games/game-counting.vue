@@ -1,7 +1,7 @@
 <template>
   <div class="gameCounting" v-auto-height>
     <div class="rewardTitle">
-      <div class="rewardMoney">
+      <div class="totalMoney">
         <span>¥</span><span class="money">{{rewardMoney}}</span>
       </div>
       <div class="countTimes">
@@ -46,7 +46,7 @@
           <p v-if="gameType === 2">恭喜您数出</p>
           <div class="rewardBg">
             <P>特权本金</P>
-            <P>￥<span>{{rewardMoney}}</span></P>
+            <P>￥<span id="rewardMoney">{{rewardMoney}}</span></P>
             <p>有效期1天</p>
           </div>
           <div v-if="gameType === 2" class="demo">试玩将不会获得奖励，练好手速就去正式玩一局吧！</div>
@@ -67,6 +67,7 @@
 </template>
 <script>
   import {bridgeUtil} from '../../service/Utils'
+  // import $ from 'zepto'
   // import GoldenAddress from './golden-adress.vue'
   export default {
     name: 'gameCounting',
@@ -87,6 +88,7 @@
     props: ['token'],
     created () {
       this.gameType = Number(this.$route.params.gameType)
+      // this.showRewardMoney($('#rewardMoney'), this.rewardMoney, 0, 800, 0)  弹窗获奖弹窗调用
     },
     mounted () {
       var that = this
@@ -122,6 +124,22 @@
       },
       goBack () {
         this.$router.push({name: 'gameStart'})
+      },
+      showRewardMoney (elem, endVal, startVal, duration, decimal) {
+        var that = this
+        var startTime = 0
+        var dec = Math.pow(10, decimal)
+        var progress, value
+        function startCount (timestamp) {
+          if (!startTime) startTime = timestamp
+          progress = timestamp - startTime
+          value = startVal + (endVal - startVal) * (progress / duration)
+          value = (value > endVal) ? endVal : value
+          value = Math.floor(value * dec) / dec
+          that.rewardMoney = value
+          progress < duration && requestAnimationFrame(startCount)
+        }
+        requestAnimationFrame(startCount)
       }
     }
   }
@@ -207,16 +225,16 @@
     text-align: center;
     width: 65%;
   }
-  .rewardMoney {
+  .totalMoney {
     overflow: hidden;
     height: .7rem;
     line-height: .8rem;
   }
-  .rewardMoney span {
+  .totalMoney span {
     float: left;
     font-weight: bold;
   }
-  .rewardMoney span:nth-child(1) {
+  .totalMoney span:nth-child(1) {
     font-size: .4rem;
     width: 15%;
     text-align: left;
@@ -312,9 +330,10 @@
     padding: .035rem 0;
   }
   .rewardBg p:nth-child(2) span {
-    font-family: fantasy;
+    font-family: -webkit-body;
     font-size: .45rem;
     color: #fc2a42;
+    font-weight: bold;
   }
   .rewardBg p:nth-child(3) {
     font-size: .21rem;
