@@ -1,12 +1,12 @@
 <template>
-    <div class="gameStart">
+    <div class="gameStart" v-auto-height>
       <div class="game-title">
         <img src="../../images/singles-day/bg-01.png" alt="" width="100%">
         <img src="../../images/singles-day/bg-02.png" class="title2" width="100%">
         <div class="rule">
           <img src="../../images/singles-day/start-rule.png" class="ruleBg fl">
           <img src="../../images/singles-day/start-rule.png" class="ruleBg fr">
-          <div class="ruleIcon">游戏规则</div>
+          <div class="ruleIcon" @click="showRules()">游戏规则</div>
         </div>
       </div>
       <ul class="startBtns">
@@ -17,7 +17,7 @@
           <img src="../../images/singles-day/money-100.png" width="57%">
         </div>
       </div>
-      <div class="record">游戏<br>记录</div>
+      <div class="record" @click="goRecord()">游戏<br>记录</div>
     </div>
 </template>
 <script>
@@ -69,12 +69,12 @@
       getGameCounts () {
         var that = this
         that.$http({
-          method: 'get',
-          url: '/hongcai/rest/activity/countingKings/' + that.token + '/handSpeed'
+          method: 'post',
+          url: '/hongcai/rest/activity/countingKings/0/handSpeed?token=' + that.token
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
-            that.gameCounts = res.data.data
+            that.gameCounts = res.data.freeCount + res.data.count - res.data.usedCount
           } else {
             alert(res.data.msg)
           }
@@ -86,6 +86,12 @@
         } else {
           this.$router.push({name: 'gameCounting', params: { gameType: gameType }})
         }
+      },
+      goRecord () {
+        this.$router.push({name: 'gameRecord'})
+      },
+      showRules () {
+        alert('游戏规则')
       }
     }
   }
@@ -93,7 +99,6 @@
 <style scoped>
   .gameStart {
     background: #fbdc34;
-    margin-top: 1rem; 
   }
   .game-title {
     position: relative;
@@ -170,7 +175,7 @@
   }
   .box {
     background: #fbdc34;
-    height: 4.5rem;
+    /* height: 4.5rem; */
   }
   .record {
     width: 1rem;
