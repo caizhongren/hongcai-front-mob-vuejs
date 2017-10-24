@@ -6,7 +6,7 @@
         <div class="rule">
           <img src="../../images/singles-day/start-rule.png" class="ruleBg fl">
           <img src="../../images/singles-day/start-rule.png" class="ruleBg fr">
-          <div class="ruleIcon" @click="showRules()">游戏规则</div>
+          <div class="ruleIcon" @click="showRulesMask = !showRulesMask">游戏规则</div>
         </div>
       </div>
       <ul class="startBtns">
@@ -36,7 +36,7 @@
           }
         ],
         activityStatus: true,
-        showRulesMask: true,
+        showRulesMask: false,
         gameCounts: 10,
         token: '239833f25433a3345d0740c1686249e87c2995c8fc4b6f5c'
       }
@@ -90,9 +90,6 @@
       },
       goRecord () {
         this.$router.push({name: 'gameRecord', query: { act: this.activityType }})
-      },
-      showRules () {
-        alert('游戏规则')
       },
       closeRules () {
         this.showRulesMask = false
