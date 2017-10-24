@@ -1,5 +1,5 @@
 <template>
-  <div class="gameCounting">
+  <div class="gameCounting" v-auto-height>
     <div class="rewardTitle">
       <div class="rewardMoney">
         <span>¥</span><span class="money">{{rewardMoney}}</span>
@@ -12,11 +12,11 @@
         <div class="gameCounts fr">剩余次数：{{gameCounts}}次</div> 
       </div>
     </div>
-    <div class="box">
+    <!-- <div class="box"> -->
       <div class="moneyBox">
         <img src="../../images/singles-day/money-100.png" width="57%">
       </div>
-    </div>
+    <!-- </div> -->
     <div class="mask-common first-mask" v-show="showMask">
       <!-- 首次游戏引导蒙层 -->
       <div v-show="false">
@@ -187,7 +187,6 @@
   .gameCounting {
     background: #fbdc34;
     padding: 0.5rem 0;
-    margin-top: 1rem;
     overflow: hidden;
   }
   .rewardTitle {
@@ -198,6 +197,7 @@
     margin: 0 auto;
     color: #4f0709;
     padding: .3rem;
+    margin-top: .5rem;
   }
   .money {
     font-family: ArialMT;
@@ -220,19 +220,15 @@
     text-align: left;
     margin-left: .1rem;
   }
-  .box {
-    background: #fbdc34;
-    height: 6.155rem;
-  }
   .moneyBox {
     position: fixed;
     /* z-index: 2; */
-    bottom: -.4rem;
+    bottom: -.8rem;
     left: 2.5%;
     width: 95%;
-    height: 6rem;
+    height: 7.2rem;
     margin: 0 auto;
-    background: url('../../images/singles-day/money-box.png') no-repeat center bottom;
+    background: url('../../images/singles-day/money-box.png') no-repeat center 91%;
     background-size: contain;
   }
   .countTimes {

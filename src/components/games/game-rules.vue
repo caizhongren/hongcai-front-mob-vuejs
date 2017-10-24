@@ -1,8 +1,8 @@
 <template>
-  <div class="mask-common">
+  <div class="mask-common" v-if="showRulesMask">
     <div class="rule-wrapper">
       <!-- 规则弹窗显示 -->
-      <div class="discription" v-if="showRules">
+      <div class="discription" v-if="showRulesAbout">
         活动期间，每人均有一次免费游戏机会，新增<img src="../../images/singles-day/icon-02.png" alt="" width="6%">年化投资金额每满<img src="../../images/singles-day/icon-01.png" alt="" width="9%">2000元
         即可再获得&nbsp;<img src="../../images/singles-day/emoji-02.png" alt="" width="6%" class="position-ab">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1次游戏机会哦！
       </div>
@@ -33,8 +33,8 @@
         </div>
       </div>
       <!-- 规则弹窗显示 -->
-      <p class="calculator-tip" v-if="showRules">奖励发放30天后，如仍未开通银行存管，奖励将会自动失效哦～</p>
-      <p class="close-btn" v-if="showRules">我知道了<img src="../../images/singles-day/emoji-01.png" alt="" width="30%" class="fr"></p>
+      <p class="calculator-tip" v-if="showRulesAbout">奖励发放30天后，如仍未开通银行存管，奖励将会自动失效哦～</p>
+      <p class="close-btn" v-if="showRulesAbout" @click="closeRules">我知道了<img src="../../images/singles-day/emoji-01.png" alt="" width="30%" class="fr"></p>
       <!-- 投资记录弹窗显示 -->
       <p class="calculator-tip rules-tip" v-if="showAnnualInvest">活动期间，新增年化投资金额每满2000元，即可获得一次游戏机会！</p>
       <p class="calculator-tip" v-if="showAnnualInvest">
@@ -56,12 +56,14 @@
           amount: null,
           term: null
         },
-        showRules: true,
+        showRulesAbout: true,
+        showRules: false,
         showAnnualInvest: false,
         annualInvestment: 0,
         path: window.location.href.split('/')[4]
       }
     },
+    props: ['showRulesMask', 'closeRules'],
     watch: {
       'project.amount': function (newVal, oldVal) {
         this.annualInvestment = Math.ceil(this.project.amount * this.project.term / 365)
@@ -71,6 +73,7 @@
       }
     },
     created () {
+      this.showRules = this.showRulesMask
       this.path === 'game-counting-start' ? this.showRules = true : this.showAnnualInvest = true
     },
     methods: {
@@ -91,7 +94,7 @@
 <style scoped>
   .rule-wrapper {
     width: 80%;
-    margin: 40% auto;
+    margin: 30% auto;
     padding: .3rem .25rem;
     background-color: #fbdc34;
     border: solid 1px #740e0b;

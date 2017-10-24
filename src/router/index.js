@@ -20,6 +20,7 @@ const GoldenRecord = r => require.ensure([], () => r(require('../components/acti
 const gameStart = r => require.ensure([], () => r(require('../components/games/game-counting-start.vue')), 'gameStart')
 const gameCounting = r => require.ensure([], () => r(require('../components/games/game-counting.vue')), 'gameCounting')
 const gameOver = r => require.ensure([], () => r(require('../components/games/game-counting-over.vue')), 'gameOver')
+const gameRecord = r => require.ensure([], () => r(require('../components/games/game-counting-record.vue')), 'gameRecord')
 const About = r => require.ensure([], () => r(require('../components/about/about.vue')), 'About')
 const ManagementTeam = r => require.ensure([], () => r(require('../components/about/managementTeam.vue')), 'About')
 const Introduction = r => require.ensure([], () => r(require('../components/about/introduction.vue')), 'About')
@@ -252,6 +253,12 @@ const routes = [
     path: '/games/game-counting/:gameType',
     name: 'gameCounting',
     component: gameCounting,
+    meta: {title: '拼手速抢红包'}
+  },
+  {
+    path: '/games/game-counting-record',
+    name: 'gameRecord',
+    component: gameRecord,
     meta: {title: '拼手速抢红包'}
   },
   {
