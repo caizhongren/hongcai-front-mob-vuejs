@@ -15,7 +15,7 @@
     <div class="moneyBox">
       <p class="i-know" @click="closeFirstAndStart">我知道了</p>
       <ul class="money-list">
-        <li class="money-100" v-for="(item, index) in HandList" @touchmove="scrollMoney($event,index)">{{HandList[index]}}</li>
+        <li v-for="(item, index) in HandList" @touchstart="startTouchScroll($event,index)" @touchmove="moveTouchScroll($event,index)" @touchend="endTouchScroll($event,index)">{{HandList[index]}}</li>
       </ul>
     </div>
     <div class="mask-common first-mask" v-show="showMask">
@@ -76,7 +76,7 @@
         showMask: false,
         showReward: false,
         showFirst: false,
-        rewardMoney: 550,
+        rewardMoney: 0,
         second: 16,
         gameCounts: 5,
         gameType: Number(this.$route.params.gameType), // 2: 试玩
@@ -108,7 +108,7 @@
       'load': {
         inserted: function (el) {
           console.log(document.querySelector('.money-list'))
-          // document.querySelector('.money-list').addEventListener('load', window.vue.scrollMoney(), false)
+          // document.querySelector('.money-list').addEventListener('load', window.vue.moveTouchScroll(), false)
         }
       }
     },
@@ -119,6 +119,10 @@
       // } else {
       //   $('.moneyBox img').removeClass('example')
       // }
+      for (var i = 0; i < this.HandList.length; i++) {
+        $($('.money-list li')[i]).addClass('money-' + this.HandList[i])
+        // console.log('money-' + this.HandList[i])
+      }
     },
     components: {
     },
@@ -287,54 +291,47 @@
         }
       },
       scrollMoney (event, index) {
-        // var Height = window.innerHeight
-        // window.offsetY = 0
-        // window.touchStartY = 0
-        // window.speed = 0
-        // var touchY = 1
-        // var moneyList = document.querySelector('.money-list')
-        // moneyList.addEventListener('touchstart', startTouchScroll, false)
-        // moneyList.addEventListener('touchmove', moveTouchScroll, false)
-        // moneyList.addEventListener('touchend', endTouchScroll, false)
-        // var startPos = {}
-        // var endPos = {}
-        console.log(this)
-        console.log($($('.money-list li')[1]))
-        // function startTouchScroll (event) {
-        //   // event.preventDefault()
-        //   var touch = event.targetTouches[0]
-        //   startPos = {x: touch.pageX, y: touch.pageY}
-        //   window.touchStartY = event.targetTouches[0].pageY
-        //   window.offsetY = 0
-        //   touchY = window.offsetY
-        //   $('.money-list li').addClass('animate')
-        // }
-        // function moveTouchScroll (event) {
-        //   var touch = event.targetTouches[0]
-        //   console.log(this)
-        //   endPos = {x: touch.pageX - startPos.x, y: touch.pageY - startPos.y}
-        //   // isScrolling为1时，表示纵向滑动，0为横向滑动
-        //   var isScrolling = Math.abs(endPos.x) < Math.abs(endPos.y) ? 1 : 0
-        //   if (isScrolling === 1) {
-        //     event.preventDefault()
-        //   }
-        //   // event.preventDefault()
-        //   window.offsetY += 0.25 * (event.targetTouches[0].pageY - window.touchStartY)
-        //   window.touchStartY = event.targetTouches[0].pageY
-        //   touchY = window.offsetY
-        //   if (window.offsetY < -1) {
-        //     // $('.product-page1').css('transform', 'translateY(' + window.offsetY + 'px)')
-        //     // moneyList.style.webkitTransform = 'translateY(' + window.offsetY + 'px)'
-        //   }
-        // }
-        // function endTouchScroll (event) {
-        //   // event.preventDefault()
-        //   window.speed = -(document.body.clientHeight - Math.abs(window.offsetY)) / 10
-        //   window.offsetY += window.speed
-        //   if (touchY < -1) {
-        //     // moneyList.style.webkitTransform = 'translate3d(0, -' + Height + 'px, 0)'
-        //   }
-        // }
+
+      },
+      startTouchScroll (event, index) {
+        event.preventDefault()
+        var touch = event.targetTouches[0]
+        this.startPos = {x: touch.pageX, y: touch.pageY}
+        $($('.money-list li')[index]).addClass('animate')
+        // alert(1)
+        // document.querySelector('.money-list li').addEventListener('touchmove', this.moveTouchScroll(event, startPos, index), false)
+      },
+      moveTouchScroll (event, index) {
+        this.offsetY = 0
+        console.log(this.startPos)
+        var touch = event.targetTouches[0]
+        console.log(event.targetTouches[0].pageY)
+        console.log(window.touchStartY)
+        var endPos = {x: touch.pageX - this.startPos.x, y: touch.pageY - this.startPos.y}
+        // isScrolling为1时，表示纵向滑动，0为横向滑动
+        var isScrolling = Math.abs(endPos.x) < Math.abs(endPos.y) ? 1 : 0
+        console.log(isScrolling)
+        if (isScrolling === 1) {
+          event.preventDefault()
+        }
+        // event.preventDefault()
+        this.offsetY += 0.25 * (event.targetTouches[0].pageY - window.touchStartY)
+        window.touchStartY = event.targetTouches[0].pageY
+        // var touchY = window.offsetY
+        console.log(this.offsetY)
+        if (this.offsetY < -1) {
+          $($('.money-list li')[index]).css('transform', 'translateY(-3rem)')
+          document.querySelector('.money-list li').style.webkitTransform = 'translateY(-3rem)'
+        }
+      },
+      endTouchScroll (touchY, index) {
+        if (this.offsetY >= 0) {
+          $($('.money-list li')[index]).removeClass('animate')
+        } else {
+          $($('.money-list li')[index]).css('transform', 'translateY(-13rem)')
+          document.querySelector('.money-list li').style.webkitTransform = 'translateY(-13rem)'
+          this.rewardMoney += this.HandList[index]
+        }
       }
     }
   }
@@ -610,10 +607,11 @@
     background-size: 100% 100%;
   }
   .animate {
-    -webkit-transition:all .6s ease-in-out;
-    -moz-transition:all .6s ease-in-out;
-    -o-transition:all .6s ease-in-out;
-    -ms-transition:all .6s ease-in-out;    
-    transition:all .6s ease-in-out;
+    -webkit-transition:all .3s ease;
+    -moz-transition:all .3s ease;
+    -o-transition:all .3s ease;
+    -ms-transition:all .3s ease;    
+    transition:all .3s ease;
+    transform: scale(.9);
   }
 </style>
