@@ -12,11 +12,13 @@
         <div class="gameCounts fr">剩余次数：{{gameCounts}}次</div> 
       </div>
     </div>
-    <!-- <div class="box"> -->
-      <div class="moneyBox">
-        <img src="../../images/singles-day/money-100.png" width="57%">
-      </div>
-    <!-- </div> -->
+    <div class="moneyBox">
+      <ul class="money-list">
+        <li class="money-100"></li>
+        <li class="money-500"></li>
+        <li class="money-10000"></li>
+      </ul>
+    </div>
     <div class="mask-common first-mask" v-show="showMask">
       <!-- 首次游戏引导蒙层 -->
       <div v-show="false">
@@ -332,5 +334,31 @@
     text-align: justify;
     color: #ffffff;
     vertical-align: middle;
+  }
+  .money-list {
+    width: 100%;
+    height: 7.1rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+  .money-list li {
+    width: 57%;
+    height: 7rem;
+    position: absolute;
+    bottom: 0;
+    left: 21.1%;
+  }
+  .money-100 {
+    background: url('../../images/singles-day/money-100.png') no-repeat center center;
+    background-size: 100% 100%;
+  }
+  .money-500 {
+    background: url('../../images/singles-day/money-500.png') no-repeat center center;
+    background-size: 100% 100%;
+  }
+  .money-10000 {
+    background: url('../../images/singles-day/money-10000.png') no-repeat center center;
+    background-size: 100% 100%;
   }
 </style>
