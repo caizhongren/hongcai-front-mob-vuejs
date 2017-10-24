@@ -6,7 +6,7 @@
         <div class="rule">
           <img src="../../images/singles-day/start-rule.png" class="ruleBg fl">
           <img src="../../images/singles-day/start-rule.png" class="ruleBg fr">
-          <div class="ruleIcon" @click="showRulesMask = !showRulesMask;audioPlayUtil.playOrPaused('../../static/audio/click.mp3')">游戏规则</div>
+          <div class="ruleIcon" @click="showRule">游戏规则</div>
         </div>
       </div>
       <ul class="startBtns">
@@ -50,9 +50,7 @@
       this.getActivityStatus()
       this.getGameCounts()
     },
-    components: {
-      gameRules
-    },
+    components: {gameRules},
     methods: {
       getActivityStatus () {
         var that = this
@@ -97,6 +95,10 @@
       closeRules () {
         audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
         this.showRulesMask = false
+      },
+      showRule () {
+        this.showRulesMask = !this.showRulesMask
+        audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
       }
     }
   }

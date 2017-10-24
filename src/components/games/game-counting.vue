@@ -79,7 +79,7 @@
       return {
         warningText: 3,
         showWarning: false,
-        showMask: false,
+        showMask: true,
         showReward: false,
         showFirst: false,
         rewardMoney: 0,
@@ -120,7 +120,6 @@
     },
     mounted () {
       this.backgroundConfig()
-      // console.log(this.showFirst)
       // if (this.showFirst) {
       //   $('.moneyBox img').addClass('example')
       // } else {
@@ -134,13 +133,13 @@
     components: {
     },
     methods: {
-      getRandom (min, max) {
+      getRandom (min, max) { // 取一段数字中随机数
         var r = Math.random() * (max - min)
         var re = Math.round(r + min)
         re = Math.max(Math.min(re, max), min)
         return re
       },
-      backgroundConfig () {
+      backgroundConfig () { // 背景钱币动画
         var bgImgList = document.getElementsByClassName('img-bg')
         for (let i = 0; i < bgImgList.length; i++) {
           bgImgList[i].style.width = this.getRandom(5, 40) + '%'
@@ -157,6 +156,11 @@
           that.closeMask()
         }, null)
       },
+      showOrhideBackBtn (status) { // 显示或隐藏返回按钮 0隐藏 1显示
+        bridgeUtil.webConnectNative('HCNative_SetBackButtonStatus', undefined, {
+          status: status
+        }, function (res) {}, null)
+      },
       goBack () {
         audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
         this.$router.push({name: 'gameStart'})
@@ -165,6 +169,8 @@
         if (!times) { // times 不传是点击再次开始要加音效
           audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
         }
+        this.showOrhideBackBtn(0)
+        this.rewardMoney = 0
         var that = this
         if (that.gameType === 1 && that.gameCounts <= 0) {
           that.$router.push({name: 'gameOver'})
@@ -287,6 +293,7 @@
           if (that.rewardMoney >= 100) {
             audioPlayUtil.playOrPaused('../../static/audio/get.mp3')
           }
+          that.showOrhideBackBtn(1)
           that.gameOverGetPriviledge(that.gameType, that.rewardMoney, 100, 66)
         }
       },
@@ -350,6 +357,7 @@
           $($('.money-list li')[index]).css('transform', 'translateY(-13rem)')
           document.querySelector('.money-list li').style.webkitTransform = 'translateY(-13rem)'
           this.rewardMoney += this.HandList[index]
+          audioPlayUtil.playOrPaused('../../static/audio/xiuxiu.mp3')
         }
       }
     }
@@ -474,10 +482,10 @@
     transform: translateY(.55rem);
   }
   .moneyBox .money-list li.example {
-    animation: gyrate 1.8s 0s infinite linear;
-    -moz-animation: gyrate 1.8s 0s infinite linear;
-    -webkit-animation: gyrate 1.8s 0s infinite linear;
-    -o-animation: gyrate 1.8s 0s infinite linear;
+    animation: gyrate .8s 0s infinite alternate;
+    -moz-animation: gyrate .8s 0s infinite alternate;
+    -webkit-animation: gyrate .8s 0s infinite alternate;
+    -o-animation: gyrate .8s 0s infinite alternate;
   }
   .gameCounting {
     background: #fbdc34;
@@ -570,7 +578,7 @@
     width: 35%;
     font-size: .22rem;
     height: .8rem;
-    line-height: .85rem;
+    line-height: .8rem;
   }
   .rewardBtns li:nth-child(1) {
     color: #4f0709;
@@ -590,7 +598,7 @@
     width: 90%;
     font-size: .24rem;
     height: .8rem;
-    line-height: .85rem;
+    line-height: .8rem;
     text-align: center;
     margin: 1rem auto 0;
   }

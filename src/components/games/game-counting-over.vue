@@ -8,7 +8,7 @@
       <div class="position-re">
         <div class="notice-head">
           新增<img src="../../images/singles-day/icon-02.png" alt="" width="5%">年化投资金额每满<img src="../../images/singles-day/icon-01.png" alt="" width="8%">2000元
-          即可再获得<img src="../../images/singles-day/emoji-02.png" alt="" width="6%">1次游戏机会哦！
+          即可再获得 <img src="../../images/singles-day/emoji-02.png" class="position-ab" alt="" width="6%">&nbsp;&nbsp;&nbsp;&nbsp; 1次游戏机会哦！
         </div>
         <div class="calculator">
           <form action="">
