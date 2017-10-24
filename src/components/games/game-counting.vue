@@ -1,5 +1,11 @@
 <template>
   <div class="gameCounting" v-auto-height v-load>
+    <img class="img-bg position-ab" src="../../images/singles-day/money-bg01.png" width="10%" alt="">
+    <img class="img-bg position-ab" src="../../images/singles-day/money-bg02.png" width="30%" alt="">
+    <img class="img-bg position-ab" src="../../images/singles-day/money-bg03.png" width="44%" alt="">
+    <img class="img-bg position-ab" src="../../images/singles-day/money-bg04.png" width="17%" alt="">
+    <img class="img-bg position-ab" src="../../images/singles-day/money-bg05.png" width="44%" alt="">
+    <img class="img-bg position-ab" src="../../images/singles-day/money-bg06.png" width="30%" alt="">
     <div class="rewardTitle">
       <div class="totalMoney">
         <span>¥</span><span class="money">{{rewardMoney}}</span>
@@ -73,7 +79,7 @@
       return {
         warningText: 3,
         showWarning: false,
-        showMask: true,
+        showMask: false,
         showReward: false,
         showFirst: false,
         rewardMoney: 0,
@@ -113,6 +119,7 @@
       }
     },
     mounted () {
+      this.backgroundConfig()
       // console.log(this.showFirst)
       // if (this.showFirst) {
       //   $('.moneyBox img').addClass('example')
@@ -127,6 +134,22 @@
     components: {
     },
     methods: {
+      getRandom (min, max) {
+        var r = Math.random() * (max - min)
+        var re = Math.round(r + min)
+        re = Math.max(Math.min(re, max), min)
+        return re
+      },
+      backgroundConfig () {
+        var bgImgList = document.getElementsByClassName('img-bg')
+        for (let i = 0; i < bgImgList.length; i++) {
+          bgImgList[i].style.width = this.getRandom(5, 40) + '%'
+          bgImgList[i].style.left = this.getRandom(0, 80) + '%'
+          bgImgList[i].style.top = '-20%'
+          let classI = ' mix-drop' + this.getRandom(1, 6)
+          bgImgList[i].classList += classI
+        }
+      },
       toPriviledge () {
         audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
         var that = this
@@ -397,19 +420,69 @@
       transform: translateY(-0.55rem);
     }
   }
+  @keyframes bgAnimation {
+    0% {
+      top: -20%;
+      transform: rotate(0deg)
+    }
+    100% {
+      top: 100%;
+      transform: rotate(360deg)
+    }
+  }
+  /* 背景图片 */
+  .img-bg {
+    top: -20%;
+  }
+  .img-bg.mix-drop1 {
+    animation: bgAnimation 1.8s 0s infinite ease-out;
+    -moz-animation: bgAnimation 1.8s 0s infinite ease-out;
+    -webkit-animation: bgAnimation 1.8s 0s infinite ease-out;
+    -o-animation: bgAnimation 1.8s 0s infinite ease-out;
+  }
+  .img-bg.mix-drop2 {
+    animation: bgAnimation 2.5s 0.2s infinite linear;
+    -moz-animation: bgAnimation 2.5s 0.2s infinite linear;
+    -webkit-animation: bgAnimation 2.5s 0.2s infinite linear;
+    -o-animation: bgAnimation 2.5s 0.2s infinite linear;
+  }
+  .img-bg.mix-drop3 {
+    animation: bgAnimation 1.95s 0.1s infinite ease-in;
+    -moz-animation: bgAnimation 1.95s 0.1s infinite ease-in;
+    -webkit-animation: bgAnimation 1.95s 0.1s infinite ease-in;
+    -o-animation: bgAnimation 1.95s 0.1s infinite ease-in;
+  }
+  .img-bg.mix-drop4 {
+    animation: bgAnimation 1.6s 0s infinite linear;
+    -moz-animation: bgAnimation 1.6s 0s infinite linear;
+    -webkit-animation: bgAnimation 1.6s 0s infinite linear;
+    -o-animation: bgAnimation 1.6s 0s infinite linear;
+  }
+  .img-bg.mix-drop5 {
+    animation: bgAnimation 1.48s 0s infinite linear;
+    -moz-animation: bgAnimation 1.48s 0s infinite linear;
+    -webkit-animation: bgAnimation 1.48s 0s infinite linear;
+    -o-animation: bgAnimation 1.48s 0s infinite linear;
+  }
+  .img-bg.mix-drop6 {
+    animation: bgAnimation 1.8s 0s infinite ease-in-out;
+    -moz-animation: bgAnimation 1.8s 0s infinite ease-in-out;
+    -webkit-animation: bgAnimation 1.8s 0s infinite ease-in-out;
+    -o-animation: bgAnimation 1.8s 0s infinite ease-in-out;
+  }
   .moneyBox .money-list {
     transform: translateY(.55rem);
   }
   .moneyBox .money-list li.example {
-    animation: gyrate .8s 0s infinite alternate;
-    -moz-animation: gyrate .8s 0s infinite alternate;
-    -webkit-animation: gyrate .8s 0s infinite alternate;
-    -o-animation: gyrate .8s 0s infinite alternate;
+    animation: gyrate 1.8s 0s infinite linear;
+    -moz-animation: gyrate 1.8s 0s infinite linear;
+    -webkit-animation: gyrate 1.8s 0s infinite linear;
+    -o-animation: gyrate 1.8s 0s infinite linear;
   }
   .gameCounting {
     background: #fbdc34;
     padding: 0.5rem 0;
-    overflow: hidden;
+    overflow-x: hidden;
   }
   .rewardTitle {
     background: url('../../images/singles-day/reward-box.png') no-repeat center center;
@@ -420,6 +493,7 @@
     color: #4f0709;
     padding: .3rem;
     margin-top: .5rem;
+    position: relative;
   }
   .money {
     font-family: ArialMT;

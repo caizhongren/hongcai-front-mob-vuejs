@@ -13,7 +13,7 @@
     },
     methods: {
       test () {
-        window.location.href = 'http://192.168.80.76:8080/games/game-counting/1'
+        window.location.href = 'http://192.168.80.76:8080/games/game-counting-start'
       }
     }
   }

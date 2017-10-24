@@ -264,6 +264,7 @@ let audioPlayUtil = {
     !isPlay ? isPlay = true : isPlay
     if (isPlay) {
       let audio = new Audio()
+      audio.setAttribute('preload', 'true')
       audio.setAttribute('src', url)
       if (audio.paused) {
         // 暂停中
