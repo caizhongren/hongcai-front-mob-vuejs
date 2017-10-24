@@ -12,10 +12,8 @@
       <ul class="startBtns">
         <li v-for="item in startList" @click="goGame(item.gameType)">{{item.text}}</li>
       </ul>
-      <div class="box">
-        <div class="moneyBox">
-          <img src="../../images/singles-day/money-100.png" width="57%">
-        </div>
+      <div class="moneyBox">
+        <img src="../../images/singles-day/money-100.png" width="57%">
       </div>
       <div class="record" @click="goRecord()">游戏<br>记录</div>
       <game-rules :showRulesMask="showRulesMask" :closeRules='closeRules'></game-rules>
@@ -91,7 +89,7 @@
         }
       },
       goRecord () {
-        this.$router.push({name: 'gameRecord'})
+        this.$router.push({name: 'gameRecord', query: { act: this.activityType }})
       },
       showRules () {
         alert('游戏规则')
@@ -131,7 +129,7 @@
     border-radius: .15rem;
     background-color: #fc2a42;
     border: solid 1px #4b0d00;
-    font-size: .2rem;
+    font-size: .24rem;
     clear: both;
     width: 140%;
     color: #fffbfc;
@@ -154,7 +152,7 @@
   .startBtns li {
     display: inline-block;
     width: 35%;
-    font-size: .2rem;
+    font-size: .24rem;
     height: .8rem;
     line-height: .8rem;
   }
@@ -178,9 +176,6 @@
     margin: 0 auto;
     background: url('../../images/singles-day/money-box.png') no-repeat center bottom;
     background-size: contain;
-  }
-  .box {
-    background: #fbdc34;
   }
   .record {
     width: 1rem;
