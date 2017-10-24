@@ -1,6 +1,7 @@
 <template>
   <div class="mask-common" v-if="showRulesMask">
     <div class="rule-wrapper">
+      <img src="../../images/singles-day/close.png" class="closeRulesMask" v-if="showAnnualInvest" @click="closeRules">
       <!-- 规则弹窗显示 -->
       <div class="discription" v-if="showRulesAbout">
         活动期间，每人均有一次免费游戏机会，新增<img src="../../images/singles-day/icon-02.png" alt="" width="5%">年化投资金额每满<img src="../../images/singles-day/icon-01.png" alt="" width="9%">2000元
@@ -56,7 +57,7 @@
           amount: null,
           term: null
         },
-        showRulesAbout: true,
+        showRulesAbout: false,
         showRules: false,
         showAnnualInvest: false,
         annualInvestment: 0,
@@ -74,7 +75,7 @@
     },
     created () {
       this.showRules = this.showRulesMask
-      this.path === 'game-counting-start' ? this.showRules = true : this.showAnnualInvest = true
+      this.path === 'game-counting-start?act=34' ? this.showRulesAbout = true : this.showAnnualInvest = true
     },
     methods: {
       oninputHandler () {
@@ -215,5 +216,11 @@
     border-radius: 7.5px;
     background-color: #fbdc34;
     border: solid 1px #4b0d00;
+  }
+  .closeRulesMask {
+    width: 10%;
+    position: absolute;
+    right: 0;
+    top: -.92rem;
   }
 </style>

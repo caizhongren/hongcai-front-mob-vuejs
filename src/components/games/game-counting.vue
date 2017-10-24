@@ -185,7 +185,7 @@
         this.showFirst = false
         this.startWarning()
       },
-      showRewardMoney (elem, endVal, startVal, duration, decimal) {
+      showRewardMoney (elem, endVal, startVal, duration, decimal) { // 获得奖励自增动画
         var that = this
         var startTime = 0
         var dec = Math.pow(10, decimal)
@@ -201,14 +201,14 @@
         }
         requestAnimationFrame(startCount)
       },
-      hourglassAnimate (duration) {
+      hourglassAnimate (duration) { // 倒计时5s动画
         $('#clock').addClass('hourglass')
         var glassTimer = setTimeout(function () {
           $('#clock').removeClass('hourglass')
           clearTimeout(glassTimer)
         }, duration)
       },
-      countDown: function () {
+      countDown: function () { // 倒计时
         var that = this
         if (that.second > 0) {
           if (that.second <= 5) {
