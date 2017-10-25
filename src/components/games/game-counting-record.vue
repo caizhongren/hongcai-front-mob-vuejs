@@ -166,6 +166,8 @@
     background: #fbdc34;
     padding: 0 .2rem .5rem;
     overflow: hidden;
+    position: fixed;
+    width: 100%;
   }
   ul.recordTitle {
     overflow: hidden;

@@ -38,13 +38,12 @@
         ],
         activityStatus: true,
         showRulesMask: false,
-        gameCounts: 10,
-        token: '239833f25433a3345d0740c1686249e87c2995c8fc4b6f5c'
+        gameCounts: 0
       }
     },
     watch: {
     },
-    // props: ['token'],
+    props: ['token'],
     created () {
       this.activityType = this.$route.query.act
       this.getActivityStatus()
@@ -106,6 +105,8 @@
 <style scoped>
   .gameStart {
     background: #fbdc34;
+    position: fixed;
+    width: 100%;
   }
   .game-title {
     position: relative;
