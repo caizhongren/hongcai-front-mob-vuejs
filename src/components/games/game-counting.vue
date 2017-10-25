@@ -1,5 +1,5 @@
 <template>
-  <div class="gameCounting" v-auto-height v-load>
+  <div class="gameCounting" v-auto-height>
     <img class="img-bg position-ab" src="../../images/singles-day/money-bg01.png" width="10%" alt="">
     <img class="img-bg position-ab" src="../../images/singles-day/money-bg02.png" width="30%" alt="">
     <img class="img-bg position-ab" src="../../images/singles-day/money-bg03.png" width="44%" alt="">
@@ -21,7 +21,9 @@
     <div class="moneyBox">
       <p class="i-know" @click="closeFirstAndStart">我知道了</p>
       <ul class="money-list">
-        <li v-for="(item, index) in HandList" @touchstart="startTouchScroll($event,index)" @touchmove="moveTouchScroll($event,index)" @touchend="endTouchScroll($event,index)">{{HandList[index]}}</li>
+        <li v-for="(item, index) in HandList" @touchstart="startTouchScroll($event,index)" @touchmove="moveTouchScroll($event,index)" @touchend="endTouchScroll($event,index)">
+          <img v-bind:src="'../../../static/images/money-' + item + '.png'" alt="">
+        </li>
       </ul>
     </div>
     <div class="mask-common first-mask" v-show="showMask">
@@ -83,7 +85,7 @@
         showReward: false,
         showFirst: false,
         rewardMoney: 0,
-        second: 16,
+        second: 15,
         gameCounts: 5,
         gameType: Number(this.$route.params.gameType), // 2: 试玩
         HandList: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 500, 100, 100, 100, 100, 100, 500, 100, 100, 500, 100, 100, 100, 100, 100, 100, 100, 100, 100, 500, 100, 100, 100, 500, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 10000, 100, 10000, 100, 100, 100, 100, 100, 10000, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 500, 100, 500, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 500, 100, 500, 500, 100, 100, 100, 100, 100, 10000, 10000, 100, 100, 500, 500, 500, 100, 100, 100, 100, 100, 100, 500, 100, 100, 100, 500, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
@@ -113,21 +115,17 @@
     directives: {
       'load': {
         inserted: function (el) {
-          console.log(document.querySelector('.money-list'))
+          // console.log(document.querySelector('.money-list'))
           // document.querySelector('.money-list').addEventListener('load', window.vue.moveTouchScroll(), false)
         }
       }
     },
     mounted () {
       this.backgroundConfig()
-      // if (this.showFirst) {
-      //   $('.moneyBox img').addClass('example')
-      // } else {
-      //   $('.moneyBox img').removeClass('example')
-      // }
-      for (var i = 0; i < this.HandList.length; i++) {
-        $($('.money-list li')[i]).addClass('money-' + this.HandList[i])
-        // console.log('money-' + this.HandList[i])
+      if (this.showFirst) {
+        $('.moneyBox img').addClass('example')
+      } else {
+        $('.moneyBox img').removeClass('example')
       }
     },
     components: {
@@ -163,7 +161,7 @@
       },
       goBack () {
         audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
-        this.$router.push({name: 'gameStart'})
+        this.$router.push({name: 'gameStart', query: {act: 34}})
       },
       startWarning (times) { // 高能预警倒计时
         if (!times) { // times 不传是点击再次开始要加音效
@@ -189,7 +187,7 @@
                 that.showWarning = false
                 that.showMask = false
                 that.warningText = 3
-                that.second = 16
+                that.second = 15
                 that.countDown()
               }, 1000)
             }
@@ -346,8 +344,8 @@
         // var touchY = window.offsetY
         console.log(this.offsetY)
         if (this.offsetY < -1) {
-          $($('.money-list li')[index]).css('transform', 'translateY(-3rem)')
-          document.querySelector('.money-list li').style.webkitTransform = 'translateY(-3rem)'
+          // $($('.money-list li')[index]).css('transform', 'translateY(-3rem)')
+          // document.querySelector('.money-list li').style.webkitTransform = 'translateY(-3rem)'
         }
       },
       endTouchScroll (touchY, index) {
@@ -366,7 +364,7 @@
 <style scoped>
   /* 首次引导弹窗 */
   .mask-common.first-mask {
-    z-index: 1;
+    z-index: 2;
   }
   .mask-title {
     padding-top: 1rem;
@@ -490,7 +488,9 @@
   .gameCounting {
     background: #fbdc34;
     padding: 0.5rem 0;
-    overflow-x: hidden;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
   }
   .rewardTitle {
     background: url('../../images/singles-day/reward-box.png') no-repeat center center;
@@ -502,6 +502,7 @@
     padding: .3rem;
     margin-top: .5rem;
     position: relative;
+    z-index: 2;
   }
   .money {
     font-family: ArialMT;
@@ -528,7 +529,7 @@
     width: 34%;
   }
   .moneyBox {
-    position: fixed;
+    position: absolute;
     /* z-index: 2; */
     bottom: -.8rem;
     left: 2.5%;
@@ -545,9 +546,10 @@
     text-align: left;
     margin-top: .3rem;
     font-weight: bold;
+    height: .6rem;
   }
   #clock {
-    width: 22%;
+    width: 19%;
     vertical-align: text-top;
     margin-right: .15rem;
   }
@@ -671,18 +673,11 @@
     position: absolute;
     bottom: 0;
     left: 21.1%;
+    z-index: 1;
   }
-  .money-100 {
-    background: url('../../images/singles-day/money-100.png') no-repeat center center;
-    background-size: 100% 100%;
-  }
-  .money-500 {
-    background: url('../../images/singles-day/money-500.png') no-repeat center center;
-    background-size: 100% 100%;
-  }
-  .money-10000 {
-    background: url('../../images/singles-day/money-10000.png') no-repeat center center;
-    background-size: 100% 100%;
+  .money-list li img {
+    width: 100%;
+    height: 100%;
   }
   .animate {
     -webkit-transition:all .3s ease;
@@ -690,6 +685,6 @@
     -o-transition:all .3s ease;
     -ms-transition:all .3s ease;    
     transition:all .3s ease;
-    transform: scale(.9);
+    transform: scale(.9) translateY(-.8rem);
   }
 </style>
