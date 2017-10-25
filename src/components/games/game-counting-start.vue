@@ -1,5 +1,9 @@
 <template>
     <div class="gameStart" v-auto-height>
+      <div class="overflow-hid" @click="isPlay = !isPlay">
+        <img v-if="isPlay" src="../../images/singles-day/audio-play.png" width="8%" class="audioIcon fr">
+        <img v-if="!isPlay" src="../../images/singles-day/audio-pause.png" width="8%" class="audioIcon fr">
+      </div>
       <div class="game-title">
         <img src="../../images/singles-day/bg-01.png" alt="" width="100%">
         <img src="../../images/singles-day/bg-02.png" class="title2" width="100%">
@@ -9,9 +13,10 @@
           <div class="ruleIcon" @click="showRule">游戏规则</div>
         </div>
       </div>
-      <ul class="startBtns">
+      <ul class="startBtns" v-if="activityStatus === 1">
         <li v-for="item in startList" @click="goGame(item.gameType)">{{item.text}}</li>
       </ul>
+      <div class="activityEndBtns" v-if="activityStatus === 2">活动已结束</div>
       <div class="moneyBox">
         <img src="../../images/singles-day/money-100.png" width="57%">
       </div>
@@ -20,7 +25,7 @@
     </div>
 </template>
 <script>
-  import {audioPlayUtil} from '../../service/Utils'
+  import {bridgeUtil, audioPlayUtil} from '../../service/Utils'
   import gameRules from './game-rules.vue'
   export default {
     name: 'gameStart',
@@ -36,9 +41,10 @@
             gameType: 1
           }
         ],
-        activityStatus: true,
+        activityStatus: 1,
         showRulesMask: false,
-        gameCounts: 0
+        gameCounts: 0,
+        isPlay: true // 默认播放音效
       }
     },
     watch: {
@@ -79,30 +85,48 @@
           }
         })
       },
+      toLogin () {
+        bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function () {}, null)
+      },
       goGame (gameType) {
-        audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
+        audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
+        if (!this.token) {
+          this.toLogin()
+          return
+        }
         if (gameType === 1 && this.gameCounts <= 0) {
-          this.$router.push({name: 'gameOver'})
+          this.$router.push({name: 'gameOver', query: { act: this.activityType, isPlay: this.isPlay }})
         } else {
-          this.$router.replace({name: 'gameCounting', params: { gameType: gameType }})
+          this.$router.replace({name: 'gameCounting', params: { gameType: gameType }, query: { act: this.activityType, isPlay: this.isPlay }})
         }
       },
       goRecord () {
-        audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
-        this.$router.push({name: 'gameRecord', query: { act: this.activityType }})
+        audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
+        if (!this.token) {
+          this.toLogin()
+          return
+        }
+        this.$router.push({name: 'gameRecord', query: { act: this.activityType, isPlay: this.isPlay }})
       },
       closeRules () {
-        audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
+        audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
         this.showRulesMask = false
       },
       showRule () {
         this.showRulesMask = !this.showRulesMask
-        audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
+        audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
       }
     }
   }
 </script>
 <style scoped>
+  .audioIcon {
+    padding: .12rem .5rem;
+    position: fixed;
+    right: -0.3rem;
+    top: .2rem;
+    z-index: 44;
+  }
   .gameStart {
     background: #fbdc34;
     position: fixed;
@@ -147,6 +171,16 @@
     -moz-animation: ruleShow 1s 0s alternate;
     -webkit-animation: ruleShow 1s 0s alternate;
     -o-animation: ruleShow 1s 0s alternate;
+  }
+  .activityEndBtns {
+    width: 35%;
+    font-size: .24rem;
+    height: .8rem;
+    line-height: .8rem;
+    color: #4f0709;
+    background: url('../../images/singles-day/btn-grey.png') no-repeat center center;
+    background-size: contain;
+    margin: 0.5rem auto 0;
   }
   .startBtns {
     margin: 0 auto;
