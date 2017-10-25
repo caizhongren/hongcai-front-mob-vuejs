@@ -92,7 +92,8 @@
         gameType: Number(this.$route.params.gameType), // 2: 试玩
         isPlay: this.$route.query.isPlay,
         activityType: this.$route.query.act,
-        HandList: []
+        HandList: [],
+        num: null
       }
     },
     watch: {
@@ -279,6 +280,7 @@
             audioPlayUtil.playOrPaused('../../static/audio/get.mp3', that.isPlay)
           }
           that.showOrhideBackBtn(1)
+          
           that.gameOverGetPriviledge(that.gameType, that.rewardMoney, that.number, that.countNum)
         }
       },
@@ -293,9 +295,7 @@
           countingNum: countingNum
         })
         .then(function (res) {
-          alert(res.data)
           if (res.data && res.data.ret !== -1) {
-            alert(res.data)
             if (amount >= 100) {
               audioPlayUtil.playOrPaused('../../static/audio/get.mp3', that.isPlay)
             }
@@ -340,12 +340,16 @@
         }
       },
       endTouchScroll (touchY, index) {
+        console.log(index)
         if (this.offsetY >= 0) {
           $($('.money-list li')[index]).removeClass('animate')
         } else {
           $($('.money-list li')[index]).css('transform', 'translateY(-13rem)')
           document.querySelector('.money-list li').style.webkitTransform = 'translateY(-13rem)'
-          this.rewardMoney += this.HandList[index]
+          if (index !== this.num) {
+            this.rewardMoney += this.HandList[index]
+          }
+          this.num = index
           audioPlayUtil.playOrPaused('../../static/audio/count.mp3', this.isPlay)
           this.countNum = this.HandList.length - index
         }
