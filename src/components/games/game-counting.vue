@@ -248,7 +248,7 @@
           value = startVal + (endVal - startVal) * (progress / duration)
           value = (value > endVal) ? endVal : value
           value = Math.floor(value * dec) / dec
-          $('#rewardMoney').html(value)
+          $('#rewardMoney').html(value.toFixed(decimal))
           progress < duration && requestAnimationFrame(startCount)
         }
         requestAnimationFrame(startCount)
@@ -343,14 +343,16 @@
         if (this.offsetY >= 0) {
           $($('.money-list li')[index]).removeClass('animate')
         } else {
-          $($('.money-list li')[index]).css('transform', 'translateY(-13rem)')
-          document.querySelector('.money-list li').style.webkitTransform = 'translateY(-13rem)'
-          if (index !== this.num) {
-            this.rewardMoney += this.HandList[index]
+          if (this.second > 0) {
+            $($('.money-list li')[index]).css('transform', 'translateY(-13rem)')
+            document.querySelector('.money-list li').style.webkitTransform = 'translateY(-13rem)'
+            if (index !== this.num) {
+              this.rewardMoney += this.HandList[index]
+            }
+            this.num = index
+            audioPlayUtil.playOrPaused('../../static/audio/count.mp3', this.isPlay)
+            this.countNum = this.HandList.length - index
           }
-          this.num = index
-          audioPlayUtil.playOrPaused('../../static/audio/count.mp3', this.isPlay)
-          this.countNum = this.HandList.length - index
         }
       }
     }
