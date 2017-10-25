@@ -15,14 +15,14 @@
           <img src="../../images/singles-day/clock.png" id="clock">
           <span>{{second}}S</span>
         </div>
-        <div class="gameCounts fr">剩余次数：{{gameCounts}}次</div> 
+        <div v-if="gameType === 1" class="gameCounts fr">剩余次数：{{gameCounts}}次</div> 
       </div>
     </div>
     <div class="moneyBox">
       <p class="i-know" @click="closeFirstAndStart">我知道了</p>
       <ul class="money-list">
         <li v-for="(item, index) in HandList" @touchstart="startTouchScroll($event,index)" @touchmove="moveTouchScroll($event,index)" @touchend="endTouchScroll($event,index)">
-          <img v-bind:src="'../../../static/images/money-' + item + '.png'" alt="">
+          <img v-bind:src="'../../../static/images/money-' + HandList[index] + '.png'" alt="">
         </li>
       </ul>
     </div>
@@ -53,7 +53,7 @@
           <p v-if="gameType === 2">恭喜您数出</p>
           <div class="rewardBg">
             <P>特权本金</P>
-            <P>￥<span id="rewardMoney">{{totalMoney}}</span></P>
+            <P>￥<span id="rewardMoney">{{rewardMoney}}</span></P>
             <p>有效期1天</p>
           </div>
           <div v-if="gameType === 2" class="demo">试玩将不会获得奖励，练好手速就去正式玩一局吧！</div>
@@ -85,7 +85,6 @@
         showReward: false,
         showFirst: false,
         rewardMoney: 0,
-        totalMoney: 0,
         second: 15,
         gameCounts: 5,
         countNum: 0, // 数了几张
@@ -98,7 +97,6 @@
     },
     watch: {
       showFirst: function (newVal, oldVal) {
-        console.log(newVal)
         document.getElementsByClassName('moneyBox')[0].style.zIndex = newVal ? 3 : 0
         document.getElementsByClassName('i-know')[0].style.zIndex = newVal ? 9 : 0
         newVal ? $('.money-list li').addClass('example') : $('.money-list li').removeClass('example')
@@ -221,7 +219,9 @@
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
-            that.HandList = res.data.deftHandList
+            that.HandList = JSON.parse(res.data.deftHandValues).reverse()
+            console.log(res.data.deftHandValues)
+            console.log(that.HandList)
             that.number = res.data.number
           } else {
             console.log(res.data.msg)
@@ -236,7 +236,6 @@
         this.startWarning(1)
       },
       showRewardMoney (elem, endVal, startVal, duration, decimal) { // 获得奖励自增动画
-        var that = this
         var startTime = 0
         var dec = Math.pow(10, decimal)
         var progress, value
@@ -246,7 +245,7 @@
           value = startVal + (endVal - startVal) * (progress / duration)
           value = (value > endVal) ? endVal : value
           value = Math.floor(value * dec) / dec
-          that.totalMoney = value
+          $('#rewardMoney').html(value)
           progress < duration && requestAnimationFrame(startCount)
         }
         requestAnimationFrame(startCount)
@@ -273,8 +272,7 @@
           clearTimeout(countTimer)
           that.showMask = true
           that.showReward = true
-          that.totalMoney = that.rewardMoney
-          that.showRewardMoney($('#rewardMoney'), that.totalMoney, 0, 800, 0)
+          that.showRewardMoney($('#rewardMoney'), that.rewardMoney, 0, 800, 0)
           if (that.rewardMoney >= 100) {
             audioPlayUtil.playOrPaused('../../static/audio/get.mp3', that.isPlay)
           }
@@ -293,6 +291,7 @@
           countingNum: countingNum
         })
         .then(function (res) {
+          alert(res.data)
           if (res.data && res.data.ret !== -1) {
             alert(res.data)
             if (amount >= 100) {
