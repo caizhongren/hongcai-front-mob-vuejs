@@ -60,13 +60,13 @@
           <ul class="rewardBtns">
             <li v-if="gameType === 1" @click="toPriviledge">查看特权本金</li>
             <li v-if="gameType === 2" @click="goBack">返回</li>
-            <li @click="startWarning()">再玩一次</li>
+            <li @click="getGameCounts">再玩一次</li>
           </ul>
         </div>
         <div class="NoReward" v-if="rewardMoney <= 0">
           <img src="../../images/singles-day/emoji-04.png" width="25%">
           100块都没数到...
-          <div class="startAginBtn" @click="startWarning">再玩一次</div>
+          <div class="startAginBtn" @click="getGameCounts">再玩一次</div>
         </div>
       </div>
     </div>
@@ -81,7 +81,7 @@
       return {
         warningText: 3,
         showWarning: false,
-        showMask: false,
+        showMask: true,
         showReward: false,
         showFirst: false,
         rewardMoney: 0,
@@ -106,13 +106,6 @@
     created () {
       this.gameType = Number(this.$route.params.gameType)
       this.getGameCounts()
-      if (this.gameType === 1) {
-        this.getMoneyList(1)
-        this.showFirst = true
-      } else {
-        this.getMoneyList(2)
-        this.showFirst = false
-      }
     },
     directives: {
       'load': {
@@ -201,13 +194,21 @@
           })
           .then(function (res) {
             if (res.data && res.data.ret !== -1) {
+              that.showFirst = true
               that.gameCounts = res.data.freeCount + res.data.count - res.data.usedCount
               res.data.usedCount === 0 ? that.showFirst = true : that.showFirst = false
+              res.data.usedCount === 0 ? that.showWarning = false : that.showWarning = true
+              if (that.showWarning) {
+                that.startWarning()
+              }
+              that.getMoneyList(1)
             } else {
               console.log(res.data.msg)
             }
           })
         } else { // 试玩
+          that.getMoneyList(2)
+          that.showFirst = false
           that.startWarning(1)
         }
       },
@@ -219,6 +220,7 @@
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
+            that.gameCounts -= 1
             that.HandList = JSON.parse(res.data.deftHandValues).reverse()
             console.log(res.data.deftHandValues)
             console.log(that.HandList)
