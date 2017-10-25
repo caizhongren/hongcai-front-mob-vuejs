@@ -279,7 +279,9 @@
             audioPlayUtil.playOrPaused('../../static/audio/get.mp3', that.isPlay)
           }
           that.showOrhideBackBtn(1)
-          that.gameOverGetPriviledge(that.gameType, that.rewardMoney, that.number, that.countNum)
+          if (that.rewardMoney >= 100) {
+            that.gameOverGetPriviledge(that.gameType, that.rewardMoney, that.number, that.countNum)
+          }
         }
       },
       gameOverGetPriviledge (type, amount, number, countingNum) { // 游戏结束获得特权本金
