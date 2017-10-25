@@ -84,7 +84,7 @@
         if (gameType === 1 && this.gameCounts <= 0) {
           this.$router.push({name: 'gameOver'})
         } else {
-          this.$router.push({name: 'gameCounting', params: { gameType: gameType }})
+          this.$router.replace({name: 'gameCounting', params: { gameType: gameType }})
         }
       },
       goRecord () {

@@ -1,6 +1,6 @@
 <template>
   <div class="mask-common" v-if="showRulesMask">
-    <div class="rule-wrapper">
+    <div class="rule-wrapper" id="rule-wrapper">
       <img src="../../images/singles-day/close.png" class="closeRulesMask" v-if="showAnnualInvest" @click="closeRules">
       <!-- 规则弹窗显示 -->
       <div class="discription" v-if="showRulesAbout">
@@ -49,6 +49,7 @@
 </template>
 
 <script>
+  import {InputMaskHelper} from '../../service/Utils'
   export default {
     name: 'gameRules',
     data () {
@@ -72,6 +73,10 @@
       'project.term': function (newVal, oldVal) {
         this.annualInvestment = Math.ceil(this.project.amount * this.project.term / 365)
       }
+    },
+    mounted () {
+      var handleEle = document.getElementById('rule-wrapper')
+      InputMaskHelper.windowChange(handleEle)
     },
     created () {
       this.showRules = this.showRulesMask

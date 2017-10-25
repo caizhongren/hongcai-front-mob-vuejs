@@ -108,7 +108,7 @@
 </script>
 <style scoped>
   .gameOver {
-    padding: .8rem .35rem 0;
+    padding: .5rem .35rem 0;
     background-color: #fbdc34;
     overflow: hidden;
     height: 100%;
@@ -247,7 +247,6 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    width: 375px;
     height: .9rem;
     line-height: .9rem;
     color: #fff;

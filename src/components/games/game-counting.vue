@@ -142,7 +142,6 @@
         for (let i = 0; i < bgImgList.length; i++) {
           bgImgList[i].style.width = this.getRandom(5, 40) + '%'
           bgImgList[i].style.left = this.getRandom(0, 80) + '%'
-          bgImgList[i].style.top = '-20%'
           let classI = ' mix-drop' + this.getRandom(1, 6)
           bgImgList[i].classList += classI
         }
@@ -355,7 +354,7 @@
           $($('.money-list li')[index]).css('transform', 'translateY(-13rem)')
           document.querySelector('.money-list li').style.webkitTransform = 'translateY(-13rem)'
           this.rewardMoney += this.HandList[index]
-          audioPlayUtil.playOrPaused('../../static/audio/xiuxiu.mp3')
+          audioPlayUtil.playOrPaused('../../static/audio/count.mp3')
         }
       }
     }
