@@ -96,7 +96,7 @@
     },
     watch: {
     },
-    // props: ['token'],
+    props: ['token'],
     created () {
       this.activityType = this.$route.query.act
       this.getInvestRecords(1, 10)

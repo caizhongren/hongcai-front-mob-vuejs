@@ -53,7 +53,7 @@
           <p v-if="gameType === 2">恭喜您数出</p>
           <div class="rewardBg">
             <P>特权本金</P>
-            <P>￥<span id="rewardMoney">{{rewardMoney}}</span></P>
+            <P>￥<span id="rewardMoney">{{totalMoney}}</span></P>
             <p>有效期1天</p>
           </div>
           <div v-if="gameType === 2" class="demo">试玩将不会获得奖励，练好手速就去正式玩一局吧！</div>
@@ -81,15 +81,17 @@
       return {
         warningText: 3,
         showWarning: false,
-        showMask: true,
+        showMask: false,
         showReward: false,
         showFirst: false,
         rewardMoney: 0,
+        totalMoney: 0,
         second: 15,
         gameCounts: 5,
         gameType: Number(this.$route.params.gameType), // 2: 试玩
         HandList: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 500, 100, 100, 100, 100, 100, 500, 100, 100, 500, 100, 100, 100, 100, 100, 100, 100, 100, 100, 500, 100, 100, 100, 500, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 10000, 100, 10000, 100, 100, 100, 100, 100, 10000, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 500, 100, 500, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 500, 100, 500, 500, 100, 100, 100, 100, 100, 10000, 10000, 100, 100, 500, 500, 500, 100, 100, 100, 100, 100, 100, 500, 100, 100, 100, 500, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
-        isPlay: true // 默认播放音效
+        isPlay: this.$route.query.isPlay,
+        activityType: this.$route.query.act
       }
     },
     watch: {
@@ -110,7 +112,6 @@
         this.getMoneyList(2)
         this.showFirst = false
       }
-      window.vue = this
     },
     directives: {
       'load': {
@@ -147,11 +148,8 @@
         }
       },
       toPriviledge () {
-        audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
-        var that = this
-        bridgeUtil.webConnectNative('HCNative_GoPrivilegedCapital', undefined, {}, function (res) {
-          that.closeMask()
-        }, null)
+        audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
+        bridgeUtil.webConnectNative('HCNative_GoPrivilegedCapital', undefined, {}, function (res) {}, null)
       },
       showOrhideBackBtn (status) { // 显示或隐藏返回按钮 0隐藏 1显示
         bridgeUtil.webConnectNative('HCNative_SetBackButtonStatus', undefined, {
@@ -159,12 +157,12 @@
         }, function (res) {}, null)
       },
       goBack () {
-        audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
-        this.$router.push({name: 'gameStart', query: {act: 34}})
+        audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
+        this.$router.push({name: 'gameStart', query: { act: this.activityType }})
       },
       startWarning (times) { // 高能预警倒计时
         if (!times) { // times 不传是点击再次开始要加音效
-          audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
+          audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
         }
         this.showOrhideBackBtn(0)
         this.rewardMoney = 0
@@ -242,7 +240,7 @@
         })
       },
       closeFirstAndStart () { // 关闭首次引导并开始
-        audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
+        audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
         document.getElementsByClassName('i-know')[0].style.zIndex = 0
         document.getElementsByClassName('moneyBox')[0].style.zIndex = 1
         this.showFirst = false
@@ -259,7 +257,7 @@
           value = startVal + (endVal - startVal) * (progress / duration)
           value = (value > endVal) ? endVal : value
           value = Math.floor(value * dec) / dec
-          that.rewardMoney = value
+          that.totalMoney = value
           progress < duration && requestAnimationFrame(startCount)
         }
         requestAnimationFrame(startCount)
@@ -275,7 +273,7 @@
         var that = this
         if (that.second > 0) {
           if (that.second <= 6) {
-            audioPlayUtil.playOrPaused('../../static/audio/tip.mp3')
+            audioPlayUtil.playOrPaused('../../static/audio/tip.mp3', that.isPlay)
             that.hourglassAnimate(that.second * 1000 - 100)
           }
           that.second -= 1
@@ -286,9 +284,10 @@
           clearTimeout(countTimer)
           that.showMask = true
           that.showReward = true
-          that.showRewardMoney($('#rewardMoney'), that.rewardMoney, 0, 800, 0)
+          that.totalMoney = that.rewardMoney
+          that.showRewardMoney($('#rewardMoney'), that.totalMoney, 0, 800, 0)
           if (that.rewardMoney >= 100) {
-            audioPlayUtil.playOrPaused('../../static/audio/get.mp3')
+            audioPlayUtil.playOrPaused('../../static/audio/get.mp3', that.isPlay)
           }
           that.showOrhideBackBtn(1)
           that.gameOverGetPriviledge(that.gameType, that.rewardMoney, 100, 66)
@@ -306,23 +305,18 @@
             that.showReward = true
             that.showRewardMoney($('#rewardMoney'), amount, 0, 800, 0)
             if (amount >= 100) {
-              audioPlayUtil.playOrPaused('../../static/audio/get.mp3')
+              audioPlayUtil.playOrPaused('../../static/audio/get.mp3', that.isPlay)
             }
           } else {
             console.log(res.data.msg)
           }
         })
       },
-      scrollMoney (event, index) {
-
-      },
       startTouchScroll (event, index) {
         event.preventDefault()
         var touch = event.targetTouches[0]
         this.startPos = {x: touch.pageX, y: touch.pageY}
         $($('.money-list li')[index]).addClass('animate')
-        // alert(1)
-        // document.querySelector('.money-list li').addEventListener('touchmove', this.moveTouchScroll(event, startPos, index), false)
       },
       moveTouchScroll (event, index) {
         this.offsetY = 0
@@ -354,7 +348,7 @@
           $($('.money-list li')[index]).css('transform', 'translateY(-13rem)')
           document.querySelector('.money-list li').style.webkitTransform = 'translateY(-13rem)'
           this.rewardMoney += this.HandList[index]
-          audioPlayUtil.playOrPaused('../../static/audio/count.mp3')
+          audioPlayUtil.playOrPaused('../../static/audio/count.mp3', this.isPlay)
         }
       }
     }
