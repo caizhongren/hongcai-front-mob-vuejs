@@ -91,7 +91,7 @@
         pageSize: 10,
         investTotalPage: 1,
         rewardTotalPage: 1,
-        token: '04bc7a27e4eb1db06df0ca44bdefc7d78a6ab08bdd044e02'
+        isPlay: this.$route.query.isPlay
       }
     },
     watch: {
@@ -107,7 +107,7 @@
     },
     methods: {
       switchTab: function (index) {
-        audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
+        audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
         if (this.activeTab !== index) {
           this.activeTab = index
           this.CreditRightVo = []
@@ -177,7 +177,7 @@
     position: relative;
     height: 1rem;
     padding-top: .4rem;
-    top: .23rem;
+    top: .245rem;
   }
   ul.recordTitle li span {
     font-size: .2rem;

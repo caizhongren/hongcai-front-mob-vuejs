@@ -43,7 +43,9 @@
           amount: null,
           term: null
         },
-        annualInvestment: 0
+        annualInvestment: 0,
+        isPlay: this.$route.query.isPlay,
+        activityType: this.$route.query.act
       }
     },
     watch: {
@@ -64,8 +66,8 @@
     },
     methods: {
       getRecordList () {
-        audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
-        this.$router.push({name: 'gameRecord'})
+        audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
+        this.$router.push({name: 'gameRecord', query: { act: this.activityType, isPlay: this.isPlay }})
       },
       oninputHandler () {
         this.project.amount = this.project.amount.replace(/\D/g, '')
@@ -79,11 +81,8 @@
         this.project.term = this.project.term.length >= 3 && this.project.term > 365 ? this.project.term.slice(0, 2) : this.project.term
       },
       toInvestList () {
-        audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
-        var that = this
-        bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {
-          that.closeMask()
-        }, null)
+        audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
+        bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {}, null)
       },
       last (elem, index) {
         var val = elem.value

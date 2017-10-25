@@ -261,7 +261,6 @@ let InputMaskHelper = (function (eleCls) {
 let audioPlayUtil = {
   // isPlay 默认不传是播放，传值是静音
   playOrPaused: function (url, isPlay) {
-    !isPlay ? isPlay = true : isPlay
     if (isPlay) {
       let audio = new Audio()
       audio.setAttribute('preload', 'true')
