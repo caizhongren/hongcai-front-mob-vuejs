@@ -13,7 +13,7 @@
     },
     methods: {
       test () {
-        window.location.href = 'http://192.168.80.76:8080/games/game-counting-start'
+        this.$router.replace({name: 'gameCounting', params: { gameType: 2 }})
       }
     }
   }
