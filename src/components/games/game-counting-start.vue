@@ -47,13 +47,16 @@
         isPlay: true // 默认播放音效
       }
     },
-    watch: {
-    },
     props: ['token'],
+    watch: {
+      token (val) {
+        val && val !== '' ? this.getGameCounts() : null
+      }
+    },
     created () {
       this.activityType = this.$route.query.act
-      this.getActivityStatus()
-      this.getGameCounts()
+      this.activityType ? this.getActivityStatus() : null
+      this.token ? this.getGameCounts() : null
     },
     components: {gameRules},
     methods: {
