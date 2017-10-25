@@ -48,7 +48,7 @@
       </div>
       <!-- 获得奖励 -->
       <div class="reward-mask" v-show="showReward">
-        <div class="rewardBox" v-if="rewardMoney >0">
+        <div class="rewardBox" v-if="rewardMoney > 0">
           <p v-if="gameType === 1">恭喜您获得</p>
           <p v-if="gameType === 2">恭喜您数出</p>
           <div class="rewardBg">
@@ -87,15 +87,18 @@
         rewardMoney: 0,
         second: 15,
         gameCounts: 5,
+        countNum: 0, // 数了几张
+        number: '', // 钞票配置number
         gameType: Number(this.$route.params.gameType), // 2: 试玩
-        HandList: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 500, 100, 100, 100, 100, 100, 500, 100, 100, 500, 100, 100, 100, 100, 100, 100, 100, 100, 100, 500, 100, 100, 100, 500, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 10000, 100, 10000, 100, 100, 100, 100, 100, 10000, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 500, 100, 500, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 500, 100, 500, 500, 100, 100, 100, 100, 100, 10000, 10000, 100, 100, 500, 500, 500, 100, 100, 100, 100, 100, 100, 500, 100, 100, 100, 500, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+        HandList: [],
         isPlay: true // 默认播放音效
       }
     },
     watch: {
       showFirst: function (newVal, oldVal) {
-        document.getElementsByClassName('moneyBox')[0].style.zIndex = newVal ? 2 : 0
-        document.getElementsByClassName('i-know')[0].style.zIndex = newVal ? 2 : 0
+        console.log(newVal)
+        document.getElementsByClassName('moneyBox')[0].style.zIndex = newVal ? 3 : 0
+        document.getElementsByClassName('i-know')[0].style.zIndex = newVal ? 9 : 0
         newVal ? $('.money-list li').addClass('example') : $('.money-list li').removeClass('example')
       }
     },
@@ -160,7 +163,7 @@
       },
       goBack () {
         audioPlayUtil.playOrPaused('../../static/audio/click.mp3')
-        this.$router.push({name: 'gameStart', query: {act: 34}})
+        this.$router.replace({name: 'gameStart', query: {act: 34}})
       },
       startWarning (times) { // 高能预警倒计时
         if (!times) { // times 不传是点击再次开始要加音效
@@ -179,9 +182,9 @@
             if (that.warningText === 0) {
               that.warningText = (that.warningText.toString() + '开始').slice(-2)
               clearInterval(warningTimer)
-              if (that.gameType === 1) {
-                that.updateGameCounts()
-              }
+              // if (that.gameType === 1) {
+              //   that.updateGameCounts()
+              // }
               setTimeout(function () {
                 that.showWarning = false
                 that.showMask = false
@@ -216,26 +219,12 @@
         var that = this
         that.$http({
           method: 'get',
-          url: '/hongcai/rest//activity/countingKings/0/handSpeedConfig?token=' + that.token + '&type=' + type
+          url: '/hongcai/rest/activity/countingKings/0/handSpeedConfig?token=' + that.token + '&type=' + type
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
-            console.log(res.data)
-          } else {
-            console.log(res.data.msg)
-          }
-        })
-      },
-      updateGameCounts () {
-        var that = this
-        that.$http({
-          method: 'put',
-          url: '/hongcai/rest/activity/countingKings/0/handSpeed?token=' + that.token + '&type=1'
-        })
-        .then(function (res) {
-          if (res.data && res.data.ret !== -1) {
-            that.gameCounts = res.data.freeCount + res.data.count - res.data.usedCount
-            res.data.usedCount === 0 ? that.showFirst = true : that.showFirst = false
+            that.HandList = res.data.deftHandList
+            that.number = res.data.number
           } else {
             console.log(res.data.msg)
           }
@@ -291,20 +280,22 @@
             audioPlayUtil.playOrPaused('../../static/audio/get.mp3')
           }
           that.showOrhideBackBtn(1)
-          that.gameOverGetPriviledge(that.gameType, that.rewardMoney, 100, 66)
+          that.gameOverGetPriviledge(that.gameType, that.rewardMoney, that.number, that.countNum)
         }
       },
       gameOverGetPriviledge (type, amount, number, countingNum) { // 游戏结束获得特权本金
         // type:1.正式游戏，2试玩游戏 amount:金额，number:金额配置编号，countingNum:点钞数
         var that = this
-        that.$http({
-          method: 'get',
-          url: '/activity/countingKings/0/takeHandSpeedReward?token=' + that.token + '&type=' + type + '&amount=' + amount + '&number=' + number + '&countingNum=' + countingNum})
+        this.$http.post('/hongcai/rest/activity/countingKings/0/takeHandSpeedReward', {
+          token: that.token,
+          type: type,
+          amount: amount,
+          number: number,
+          countingNum: countingNum
+        })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
-            that.showMask = true
-            that.showReward = true
-            that.showRewardMoney($('#rewardMoney'), amount, 0, 800, 0)
+            alert(res.data)
             if (amount >= 100) {
               audioPlayUtil.playOrPaused('../../static/audio/get.mp3')
             }
@@ -312,11 +303,17 @@
             console.log(res.data.msg)
           }
         })
+        .catch(function (err) {
+          console.log(err)
+        })
       },
       scrollMoney (event, index) {
 
       },
       startTouchScroll (event, index) {
+        if (this.showFirst) {
+          return
+        }
         event.preventDefault()
         var touch = event.targetTouches[0]
         this.startPos = {x: touch.pageX, y: touch.pageY}
@@ -355,6 +352,7 @@
           document.querySelector('.money-list li').style.webkitTransform = 'translateY(-13rem)'
           this.rewardMoney += this.HandList[index]
           audioPlayUtil.playOrPaused('../../static/audio/count.mp3')
+          this.countNum = this.HandList.length - index
         }
       }
     }
@@ -475,7 +473,7 @@
     -webkit-animation: bgAnimation 1.8s 0s infinite ease-in-out;
     -o-animation: bgAnimation 1.8s 0s infinite ease-in-out;
   }
-  .moneyBox .money-list {
+  .moneyBox .money-list li img{
     transform: translateY(.55rem);
   }
   .moneyBox .money-list li.example {
