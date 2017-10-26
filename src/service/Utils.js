@@ -263,7 +263,7 @@ let audioPlayUtil = {
   playOrPaused: function (url, isPlay) {
     if (isPlay) {
       let audio = new Audio()
-      audio.setAttribute('preload', 'true')
+      audio.setAttribute('preload', 'load')
       audio.setAttribute('src', url)
       if (audio.paused) {
         // 暂停中
