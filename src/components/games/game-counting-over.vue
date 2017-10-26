@@ -11,7 +11,7 @@
           即可再获得 <img src="../../images/singles-day/emoji-02.png" class="position-ab" alt="" width="6%">&nbsp;&nbsp;&nbsp;&nbsp; 1次游戏机会哦！
         </div>
         <div class="calculator">
-          <form action="">
+          <form action="" autocomplete="off">
             <div class="input-item">
               <input type="tel" name="amount" id="amount" placeholder="投资金额" rows=6 cols=30 v-model="project.amount" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler" v-on:focus="">
               元
@@ -134,6 +134,7 @@
     padding: .1rem 0 .1rem .15rem;
     color: #fff;
     font-size: .26rem;
+    z-index: 3;
   }
   .gameOver .title {
     padding-top: .4rem;
@@ -242,7 +243,7 @@
     border: solid 1px #4b0d00;
   }
   .invest-btn {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;

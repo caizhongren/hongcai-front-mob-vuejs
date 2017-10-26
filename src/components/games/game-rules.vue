@@ -17,7 +17,7 @@
           <li>算</li>
           <li>器</li>
         </ul>
-        <form action="">
+        <form action="" autocomplete="off">
           <div class="input-item">
             <input type="tel" name="amount" id="amount" placeholder="投资金额" rows=6 cols=30 v-model="project.amount" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler" v-on:focus="">
             元
