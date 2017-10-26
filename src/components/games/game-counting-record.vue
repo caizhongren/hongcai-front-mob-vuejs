@@ -101,6 +101,8 @@
       this.activityType = this.$route.query.act
       this.getInvestRecords(1, 10)
       this.getRewardRecords(1, 10)
+      this.getCumulativeInvestAmount()
+      this.getPrivilegedCapital()
     },
     components: {
       gameRules
@@ -114,6 +116,34 @@
           this.PrivilegedCapitailDetail = []
           index === 0 ? this.getInvestRecords(1, 10) : this.getRewardRecords(1, 10)
         }
+      },
+      getCumulativeInvestAmount () {
+        var that = this
+        that.$http({
+          method: 'post',
+          url: '/hongcai/rest/activity/countingKings/0/handSpeed?token=' + that.token
+        })
+        .then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.totalInvestAmount = res.data.cumulativeInvestAmount
+          } else {
+            alert(res.data.msg)
+          }
+        })
+      },
+      getPrivilegedCapital () {
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest/activity/countingKings/0/privilegedCapital?token=' + that.token + '&activityType=' + that.activityType
+        })
+        .then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.totalPrivilegedCapital = res.data.privilegedCapital
+          } else {
+            alert(res.data.msg)
+          }
+        })
       },
       getInvestRecords (page, pageSize) {
         var that = this
@@ -153,7 +183,13 @@
       },
       loadMore (index) {
         var page = (index + 1)
-        this.activeTab === 0 ? this.getInvestRecords(page, this.pageSize) : this.getRewardRecords(page, this.pageSize)
+        if (this.activeTab === 0) {
+          this.getInvestRecords(page, this.pageSize)
+          this.investPage = page
+        } else {
+          this.getRewardRecords(page, this.pageSize)
+          this.rewardPage = page
+        }
       },
       closeRules () {
         this.showRulesMask = false

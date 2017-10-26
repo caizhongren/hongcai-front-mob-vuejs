@@ -334,12 +334,12 @@
         // var touchY = window.offsetY
         console.log(this.offsetY)
         if (this.offsetY < -1) {
-          // $($('.money-list li')[index]).css('transform', 'translateY(-3rem)')
-          // document.querySelector('.money-list li').style.webkitTransform = 'translateY(-3rem)'
+          $($('.money-list li')[index]).css('transform', 'translateY(-13rem)')
+          document.querySelector('.money-list li').style.webkitTransform = 'translateY(-13rem)'
         }
       },
       endTouchScroll (touchY, index) {
-        console.log(index)
+        console.log(this.offsetY)
         if (this.offsetY >= 0) {
           $($('.money-list li')[index]).removeClass('animate')
         } else {
