@@ -1,11 +1,11 @@
 <template>
   <div class="gameCounting" v-auto-height>
-    <img class="img-bg position-ab" src="../../images/singles-day/money-bg01.png" width="10%" alt="">
-    <img class="img-bg position-ab" src="../../images/singles-day/money-bg02.png" width="30%" alt="">
-    <img class="img-bg position-ab" src="../../images/singles-day/money-bg03.png" width="44%" alt="">
-    <img class="img-bg position-ab" src="../../images/singles-day/money-bg04.png" width="17%" alt="">
-    <img class="img-bg position-ab" src="../../images/singles-day/money-bg05.png" width="44%" alt="">
-    <img class="img-bg position-ab" src="../../images/singles-day/money-bg06.png" width="30%" alt="">
+    <!-- 滚动的图片 s -->
+    <div v-bind:draggable="false">
+      <img src="../../images/singles-day/money-bg06.png" class="qian-top" v-bind:draggable="false" v-bind:style="{top: qianTop + '%'}">
+      <img src="../../images/singles-day/money-bg03.png" class="qian-middle" v-bind:draggable="false" v-bind:style="{top: qianMiddle + '%'}">
+      <img src="../../images/singles-day/money-bg01.png" class="qian-bottom" v-bind:draggable="false" v-bind:style="{top: qianBottom + '%'}">
+    </div>
     <div class="rewardTitle">
       <div class="totalMoney">
         <span>¥</span><span class="money">{{rewardMoney}}</span>
@@ -21,8 +21,11 @@
     <div class="moneyBox">
       <p class="i-know" @click="closeFirstAndStart">我知道了</p>
       <ul class="money-list">
-        <li v-for="(item, index) in HandList" @touchstart="startTouchScroll($event,index)" @touchmove="moveTouchScroll($event,index)" @touchend="endTouchScroll($event,index)">
-          <img v-bind:src="'../../../static/images/money-' + HandList[index] + '.png'" alt="">
+        <li class="nextMoney">
+          <img src="../../../static/images/money-100.png" alt="">
+        </li>
+        <li v-bind:draggable="false" class="slideMoney" @touchstart="startTouchScroll($event)" @touchmove="moveTouchScroll($event)" @touchend="endTouchScroll($event)"  v-bind:style="{ top: moneyTop + 'rem' }">
+          <img v-bind:draggable="false" src="../../../static/images/money-100.png" alt="">
         </li>
       </ul>
     </div>
@@ -93,7 +96,14 @@
         isPlay: this.$route.query.isPlay,
         activityType: this.$route.query.act,
         HandList: [],
-        num: null
+        num: null,
+        qianTop: 0,
+        qianBottom: 20,
+        qianMiddle: 10,
+        rollSpeed: 5, // 背景滚动的速度
+        scrTimer: null, // 用于滚动背景的定时器
+        updateTimer: null, // 更新时间的定时器
+        moneyTop: 0 // 钱的top属性值
       }
     },
     watch: {
@@ -117,7 +127,6 @@
       }
     },
     mounted () {
-      this.backgroundConfig()
       if (this.showFirst) {
         $('.moneyBox img').addClass('example')
       } else {
@@ -127,19 +136,43 @@
     components: {
     },
     methods: {
-      getRandom (min, max) { // 取一段数字中随机数
-        var r = Math.random() * (max - min)
-        var re = Math.round(r + min)
-        re = Math.max(Math.min(re, max), min)
-        return re
+      // 循环滚动背景
+      scrollBackground: function () {
+        this.qianTop += this.rollSpeed
+        this.qianBottom += this.rollSpeed
+        this.qianMiddle += this.rollSpeed
+        // var Height = window.innerHeight
+        if (this.qianTop > 100) {
+          this.qianTop = 0
+        }
+        if (this.qianBottom > 100) {
+          this.qianBottom = 20
+        }
+        if (this.qianMiddle > 100) {
+          this.qianMiddle = 10
+        }
       },
-      backgroundConfig () { // 背景钱币动画
-        var bgImgList = document.getElementsByClassName('img-bg')
-        for (let i = 0; i < bgImgList.length; i++) {
-          bgImgList[i].style.width = this.getRandom(5, 40) + '%'
-          bgImgList[i].style.left = this.getRandom(0, 80) + '%'
-          let classI = ' mix-drop' + this.getRandom(1, 6)
-          bgImgList[i].classList += classI
+      // 更新时间
+      updateTime: function () {
+        this.second -= 1
+        if (this.second === 0) {
+          clearInterval(this.updateTimer)
+        }
+      },
+      // 用于检测
+      update: function () {
+        if (this.moneyTop <= -13) {
+          this.moneyTop = 0
+          $('.slideMoney img').attr('src', '../../../static/images/money-' + this.HandList[this.countNum] + '.png')
+          $('.nextMoney img').attr('src', '../../../static/images/money-' + this.HandList[this.countNum + 1] + '.png')
+          clearInterval(this.moveMoneyTimer)
+        }
+        // 如果数钱游戏结束
+        if (this.second <= 0) {
+          // 关闭定时器
+          clearInterval(this.scrTimer)
+          clearInterval(this.updateTimer)
+          clearInterval(this.moveMoneyTimer)
         }
       },
       toPriviledge () {
@@ -156,12 +189,12 @@
         this.$router.replace({name: 'gameStart', query: { act: this.activityType }})
       },
       startWarning (times) { // 高能预警倒计时
-        if (!times) { // times 不传是点击再次开始要加音效
-          audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
-        }
-        this.showOrhideBackBtn(0)
-        this.rewardMoney = 0
         var that = this
+        if (!times) { // times 不传是点击再次开始要加音效
+          audioPlayUtil.playOrPaused('../../static/audio/click.mp3', that.isPlay)
+        }
+        that.showOrhideBackBtn(0)
+        that.rewardMoney = 0
         if (that.gameType === 1 && that.gameCounts <= 0) {
           that.$router.push({name: 'gameOver'})
         } else {
@@ -181,6 +214,8 @@
                 that.warningText = 3
                 that.second = 15
                 that.countDown()
+                that.scrTimer = setInterval(that.scrollBackground, 30)
+                that.updateTimer = setInterval(that.update, 1)
               }, 1000)
             }
           }, 1000)
@@ -188,6 +223,8 @@
       },
       getGameCounts () {
         var that = this
+        that.countNum = 0
+        that.HandList = []
         if (that.gameType === 1) { // 正式玩
           that.$http({
             method: 'post',
@@ -222,10 +259,9 @@
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.gameCounts -= 1
-            that.HandList = JSON.parse(res.data.deftHandValues).reverse()
-            console.log(res.data.deftHandValues)
-            console.log(that.HandList)
+            that.HandList = JSON.parse(res.data.deftHandValues)
             that.number = res.data.number
+            $('.money-list li img').attr({'scr': '../../../static/images/money-' + that.HandList[0] + '.png'})
           } else {
             console.log(res.data.msg)
           }
@@ -272,6 +308,8 @@
             that.countDown()
           }, 1000)
         } else {
+          // 关闭定时器
+          clearInterval(that.scrTimer)
           clearTimeout(countTimer)
           that.showMask = true
           that.showReward = true
@@ -306,52 +344,50 @@
           console.log(err)
         })
       },
-      startTouchScroll (event, index) {
+      startTouchScroll (event) {
         if (this.showFirst) {
           return
         }
         event.preventDefault()
         var touch = event.targetTouches[0]
         this.startPos = {x: touch.pageX, y: touch.pageY}
-        $($('.money-list li')[index]).addClass('animate')
+        $('.slideMoney').addClass('animate')
       },
-      moveTouchScroll (event, index) {
+      moveTouchScroll (event) {
+        $('.slideMoney').removeClass('animate')
         this.offsetY = 0
-        console.log(this.startPos)
         var touch = event.targetTouches[0]
-        console.log(event.targetTouches[0].pageY)
-        console.log(window.touchStartY)
         var endPos = {x: touch.pageX - this.startPos.x, y: touch.pageY - this.startPos.y}
         // isScrolling为1时，表示纵向滑动，0为横向滑动
         var isScrolling = Math.abs(endPos.x) < Math.abs(endPos.y) ? 1 : 0
-        console.log(isScrolling)
         if (isScrolling === 1) {
           event.preventDefault()
         }
-        // event.preventDefault()
         this.offsetY += 0.25 * (event.targetTouches[0].pageY - window.touchStartY)
         window.touchStartY = event.targetTouches[0].pageY
-        // var touchY = window.offsetY
         console.log(this.offsetY)
         if (this.offsetY < -1) {
-          $($('.money-list li')[index]).css('transform', 'translateY(-13rem)')
-          document.querySelector('.money-list li').style.webkitTransform = 'translateY(-13rem)'
+          // $($('.money-list li')[index]).css('transform', 'translateY(-13rem)')
+          // document.querySelector('.money-list li').style.webkitTransform = 'translateY(-13rem)'
         }
       },
-      endTouchScroll (touchY, index) {
-        console.log(this.offsetY)
-        if (this.offsetY >= 0) {
-          $($('.money-list li')[index]).removeClass('animate')
-        } else {
-          if (this.second > 0) {
-            $($('.money-list li')[index]).css('transform', 'translateY(-13rem)')
-            document.querySelector('.money-list li').style.webkitTransform = 'translateY(-13rem)'
-            if (index !== this.num) {
-              this.rewardMoney += this.HandList[index]
-            }
-            this.num = index
-            audioPlayUtil.playOrPaused('../../static/audio/count.mp3', this.isPlay)
-            this.countNum = this.HandList.length - index
+      endTouchScroll (touchY) {
+        var that = this
+        console.log(that.offsetY)
+        if (that.offsetY >= 0) {
+          $('.slideMoney').removeClass('animate')
+        } else if (this.offsetY < -2) {
+          if (that.second > 0) {
+            // $($('.money-list li')[index]).css('transform', 'translateY(-13rem)')
+            // document.querySelector('.money-list li').style.webkitTransform = 'translateY(-13rem)'
+            that.moveMoneyTimer = setInterval(function () {
+              that.moneyTop -= 0.5
+            }, 1)
+            that.rewardMoney += that.HandList[that.countNum]
+            that.countNum += 1
+            audioPlayUtil.playOrPaused('../../static/audio/count.mp3', that.isPlay)
+            console.log(that.HandList[that.countNum])
+            console.log(that.countNum)
           }
         }
       }
@@ -359,6 +395,21 @@
   }
 </script>
 <style scoped>
+  .qian-top,
+  .qian-bottom,
+  .qian-middle {
+    width: 20%;
+    position: absolute;
+    z-index: 1;
+  }
+  .qian-top {
+    width: 23%;
+    left: 10%;
+  }
+  .qian-middle {
+    width: 15%;
+    left: 80%;
+  }
   /* 首次引导弹窗 */
   .mask-common.first-mask {
     z-index: 2;
@@ -423,56 +474,6 @@
       transform: translateY(-0.55rem);
     }
   }
-  @keyframes bgAnimation {
-    0% {
-      top: -20%;
-      transform: rotate(0deg)
-    }
-    100% {
-      top: 100%;
-      transform: rotate(360deg)
-    }
-  }
-  /* 背景图片 */
-  .img-bg {
-    top: -20%;
-  }
-  .img-bg.mix-drop1 {
-    animation: bgAnimation 1.8s 0s infinite ease-out;
-    -moz-animation: bgAnimation 1.8s 0s infinite ease-out;
-    -webkit-animation: bgAnimation 1.8s 0s infinite ease-out;
-    -o-animation: bgAnimation 1.8s 0s infinite ease-out;
-  }
-  .img-bg.mix-drop2 {
-    animation: bgAnimation 2.5s 0.2s infinite linear;
-    -moz-animation: bgAnimation 2.5s 0.2s infinite linear;
-    -webkit-animation: bgAnimation 2.5s 0.2s infinite linear;
-    -o-animation: bgAnimation 2.5s 0.2s infinite linear;
-  }
-  .img-bg.mix-drop3 {
-    animation: bgAnimation 1.95s 0.1s infinite ease-in;
-    -moz-animation: bgAnimation 1.95s 0.1s infinite ease-in;
-    -webkit-animation: bgAnimation 1.95s 0.1s infinite ease-in;
-    -o-animation: bgAnimation 1.95s 0.1s infinite ease-in;
-  }
-  .img-bg.mix-drop4 {
-    animation: bgAnimation 1.6s 0s infinite linear;
-    -moz-animation: bgAnimation 1.6s 0s infinite linear;
-    -webkit-animation: bgAnimation 1.6s 0s infinite linear;
-    -o-animation: bgAnimation 1.6s 0s infinite linear;
-  }
-  .img-bg.mix-drop5 {
-    animation: bgAnimation 1.48s 0s infinite linear;
-    -moz-animation: bgAnimation 1.48s 0s infinite linear;
-    -webkit-animation: bgAnimation 1.48s 0s infinite linear;
-    -o-animation: bgAnimation 1.48s 0s infinite linear;
-  }
-  .img-bg.mix-drop6 {
-    animation: bgAnimation 1.8s 0s infinite ease-in-out;
-    -moz-animation: bgAnimation 1.8s 0s infinite ease-in-out;
-    -webkit-animation: bgAnimation 1.8s 0s infinite ease-in-out;
-    -o-animation: bgAnimation 1.8s 0s infinite ease-in-out;
-  }
   .moneyBox .money-list li img{
     transform: translateY(.55rem);
   }
@@ -535,6 +536,7 @@
     margin: 0 auto;
     background: url('../../images/singles-day/money-box.png') no-repeat center 91%;
     background-size: contain;
+    z-index: 2;
   }
   .countTimes {
     overflow: hidden;
@@ -682,6 +684,6 @@
     -o-transition:all .3s ease;
     -ms-transition:all .3s ease;    
     transition:all .3s ease;
-    transform: scale(.9) translateY(-.8rem);
+    transform: scale(.9);
   }
 </style>
