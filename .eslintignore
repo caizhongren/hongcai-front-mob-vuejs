@@ -3,3 +3,5 @@ config/*.js
 mCarousel.js
 md5.js
 qrcode.js
+createjs.min.js
+test.vue
