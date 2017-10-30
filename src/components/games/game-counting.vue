@@ -91,22 +91,12 @@
         isPlay: this.$route.query.isPlay,
         activityType: this.$route.query.act,
         HandList: [],
-        num: null,
-        qianTop: 0,
-        qianBottom: 20,
-        qianMiddle: 10,
-        rollSpeed: 5, // 背景滚动的速度
-        scrTimer: null, // 用于滚动背景的定时器
-        updateTimer: null, // 更新时间的定时器
-        moneyTop: 0, // 钱的top属性值
         moneyBg1: [],
         moneyBg2: [],
+        backgroundTimer: null,
         moneyBgCount: 2, // qp_d背景图个数
         qp_e: 3,
         qipaStage: {},
-        qipaApp: {
-          score: 100
-        },
         W: 640,
         H: 1E3,
         IS_TOUCH: null,
@@ -203,14 +193,19 @@
           var c = 0,
           d = 0;
           a.on("mousedown", function(a) {
-            console.log(that.HandList[that.countNum])
+            if (that.second <= 0) {
+              return
+            }
             c = a.localY;
             d = that.qipaStage.stage.player.m[qp_f].y;
-            that.qipaStage.stage.player = new Qp_A(that.HandList[that.countNum])
+            that.qipaStage.stage.player = new drawMoney(that.HandList[that.countNum])
             that.qipaStage.stage.addChild(that.qipaStage.stage.player)
           });
           a.on("pressmove", function(e) {
             //  (1 == that.gameStatus && (qp_s(), that.gameStatus = 2), 2 == that.gameStatus && (that.qipaStage.stage.player.m[qp_f].visible = !0, that.qipaStage.stage.player.m[qp_f].y += (a.localY - c) / 1.5))
+            if (that.second <= 0) {
+              return
+            }
              if (1 == that.gameStatus) {
                 that.qp_m = 0, 
                 that.gameStatus = 2
@@ -225,34 +220,52 @@
           });
           var f = 0;
           a.on("pressup", function(a) {
-            // if(that.second === 0) {return}
-             2 != that.gameStatus || (50 < c - a.localY ? (a = (new Date).getTime(), 0 < qp_i.length && qp_i[qp_i.length - 1] + 50 > a ? qp_a("WARNING: Too fast! maybe engine error.") : (f = qp_y(a), f <= qp_j ? (that.qipaStage.stage.player.playAnimation(that.qipaStage.stage.player.m[qp_f]), createjs.Sound.play("count", !0), that.rewardMoney += that.HandList[that.countNum], that.countNum++) : (qp_i.length--, qp_a("WARN: " + f)))) : (qp_z(d), that.qipaStage.stage.player.m[qp_f].visible = !1))
+            //  2 != that.gameStatus || (50 < c - a.localY ? (a = (new Date).getTime(), 0 < qp_i.length && qp_i[qp_i.length - 1] + 50 > a ? qp_a("WARNING: Too fast! maybe engine error.") : (f = qp_y(a), f <= qp_j ? (that.qipaStage.stage.player.playAnimation(that.qipaStage.stage.player.m[qp_f]), createjs.Sound.play("count", !0), that.rewardMoney += that.HandList[that.countNum], that.countNum++) : (qp_i.length--, qp_a("WARN: " + f)))) : (qp_z(d), that.qipaStage.stage.player.m[qp_f].visible = !1))
+            if (that.second <= 0) {
+              return
+            }
+            if (50 < c - a.localY) {
+              a = (new Date).getTime()
+              if (0 < qp_i.length && qp_i[qp_i.length - 1] + 50 > a) {
+              } else {
+                f = qp_y(a)
+                if (f <= qp_j) {
+                  that.qipaStage.stage.player.playAnimation(that.qipaStage.stage.player.m[qp_f])
+                  createjs.Sound.play("count", !0)
+                  that.rewardMoney += that.HandList[that.countNum]
+                  that.countNum++
+                } else {
+                  qp_i.length--
+                }
+              }
+            } else {
+              qp_z(d)
+              that.qipaStage.stage.player.m[qp_f].visible = !1
+            }
           });
-          qp_c = [];
-          qp_c1 = [];
-          for (a = 0; a <= qp_e; a++) for (qp_c[a] = [], b = 0; b < qp_d; b++) {
+          for (a = 0; a <= qp_e; a++) for (that.moneyBg1[a] = [], b = 0; b < that.moneyBgCount; b++) {
             var e = new createjs.Bitmap(that.qipaStage.queue.getResult("d0"));
             e.regX = e.getBounds().width / 2;
             e.regY = e.getBounds().height / 2;
             e.x = genRandom(that.W);
             e.y = -that.H / 2 + genRandom(that.H);
             e.visible = !1;
-            qp_c[a].push(e);
-            that.qipaStage.stage.addChild(qp_c[a][b])
+            that.moneyBg1[a].push(e);
+            that.qipaStage.stage.addChild(that.moneyBg1[a][b])
           }
-          for (c = 0; c <= qp_e; c++) for (qp_c1[c] = [], d = 0; d < qp_d; d++) {
+          for (c = 0; c <= qp_e; c++) for (that.moneyBg2[c] = [], d = 0; d < that.moneyBgCount; d++) {
             var e1 = new createjs.Bitmap(that.qipaStage.queue.getResult("d1"));
             e1.regX = e1.getBounds().width / 2;
             e1.regY = e1.getBounds().height / 2;
             e1.x = genRandom(that.W);
             e1.y = -that.H / 2 + genRandom(that.H);
             e1.visible = !1;
-            qp_c1[c].push(e1);
-            that.qipaStage.stage.addChild(qp_c1[c][d])
+            that.moneyBg2[c].push(e1);
+            that.qipaStage.stage.addChild(that.moneyBg2[c][d])
           }
-          that.qipaStage.stage.player = new Qp_A(that.HandList[0]);
+          that.qipaStage.stage.player = new drawMoney(that.HandList[0]);
           that.qipaStage.stage.addChild(that.qipaStage.stage.player);
-          setInterval(qp_D, 1E3);
+          that.backgroundTimer = setInterval(setBackground, 1E3);
         }
         that.qipaStage.stage = new createjs.Stage("stage");
         that.qipaStage.queue = new createjs.LoadQueue(!1);
@@ -280,16 +293,14 @@
             src: "share_tip.png",
             id: "share_tip"
           }]
-        },
-        !1);
+        }, !1);
         that.images.followed || that.qipaStage.queue.loadManifest({
           path: "../../../static/images/",
           manifest: [{
             src: "follow_anim.png",
             id: "follow"
           }]
-        },
-        !1);
+        }, !1);
         that.qipaStage.queue.load()
         console.log('init')
         h = c
@@ -359,29 +370,25 @@
         }
       };
       that.H = 960; // canvas画布高。
-      function qp_a(a) {}
-      var qp_c, qp_c1, qp_d = 2,
-      qp_e = 3,
+      var qp_e = 3,
       qp_f = qp_e,
       qp_g = 400,
-      qp_h = 0,
       qp_i = [],
-      qp_j = 20,
-      qp_l
+      qp_j = 20
       function genRandom(a) {
         return parseInt(Math.random() * a)
       }
       /** 
       ** qQp_A 画出钞票
       **/
-      function Qp_A(money) {
+      function drawMoney(money) {
         this.initialize();
         this.box = new createjs.Bitmap(that.qipaStage.queue.getResult("box"));
         this.box.regX = this.box.getBounds().width / 2;
         this.box.regY = this.box.getBounds().height / 3;
         this.box.scaleX = .86;
-        this.box.scaleY = .86;
-        this.box.y = 465;
+        this.box.scaleY = .8;
+        this.box.y = 475;
         this.addChild(this.box);
 
         this.mb = new createjs.Bitmap(that.qipaStage.queue.getResult("m" + money));
@@ -404,74 +411,52 @@
         this.m[a].y = qp_g,
         this.m[a].visible = !1,
         this.addChild(this.m[a]);
-    
-        // for (a = 0; a <= qp_e; a++) this.m[a].image = that.qipaStage.queue.getResult("m0");
-        // for (a = 0; a < qp_c.length; a++) for (var b = 0; b < qp_c[a].length; b++) qp_c[a][b].image = that.qipaStage.queue.getResult("d0")
-        // for (a = 0; a < qp_c1.length; a++) for (var b = 0; b < qp_c1[a].length; b++) qp_c1[a][b].image = that.qipaStage.queue.getResult("d1")
       }
-      Qp_A.prototype = new createjs.Container;
-      Qp_A.prototype.playAnimation = function(a) {
+      drawMoney.prototype = new createjs.Container;
+      drawMoney.prototype.playAnimation = function(a) {
         a.visible = !0;
         createjs.Tween.get(a).to({
           scaleX: 0.5,
           scaleY: 0.5,
           y: -that.H
-        },
-        300).to({
+        }, 300).to({
           visible: !1,
           y: qp_g,
           scaleX: 1,
           scaleY: 1
-        },
-        0);
+        }, 0);
         0 < qp_f ? qp_f--:qp_f = qp_e
       };
       /** 
       ** qp_D 钞票随手势平滑滑出
       **/
       var qp_F = 0;
-      function qp_D() {
-        for (var a = 0; a < qp_d; a++) qp_c[qp_F][a].visible = !0,
-        createjs.Tween.get(qp_c[qp_F][a]).to({
-          y: that.H + qp_c[qp_F][a].getBounds().height / 2 + 100,
+      function setBackground() {
+        for (var a = 0; a < that.moneyBgCount; a++) that.moneyBg1[qp_F][a].visible = !0,
+        createjs.Tween.get(that.moneyBg1[qp_F][a]).to({
+          y: that.H + that.moneyBg1[qp_F][a].getBounds().height / 2 + 100,
           rotation: 720 + genRandom(400),
           x: genRandom(that.W)
-        },
-        1E3 + genRandom(800)).to({
+        }, 1E3 + genRandom(800)).to({
           visible: !1
-        },
-        10).to({
+        }, 10).to({
           x: genRandom(that.W),
           y: -that.H / 2 + genRandom(that.H / 2),
           rotation: 0
-        },
-        10);
-        for (var a = 0; a < qp_d; a++) qp_c1[qp_F][a].visible = !0,
-        createjs.Tween.get(qp_c1[qp_F][a]).to({
-          y: that.H + qp_c1[qp_F][a].getBounds().height / 2 + 100,
+        }, 10);
+        for (var a = 0; a < that.moneyBgCount; a++) that.moneyBg2[qp_F][a].visible = !0,
+        createjs.Tween.get(that.moneyBg2[qp_F][a]).to({
+          y: that.H + that.moneyBg2[qp_F][a].getBounds().height / 2 + 100,
           rotation: 720 + genRandom(400),
           x: genRandom(that.W)
-        },
-        1E3 + genRandom(800)).to({
+        }, 1E3 + genRandom(800)).to({
           visible: !1
-        },
-        10).to({
+        }, 10).to({
           x: genRandom(that.W),
           y: -that.H / 2 + genRandom(that.H / 2),
           rotation: 0
-        },
-        10);
+        }, 10);
         qp_F < qp_e ? qp_F++:qp_F = 0
-      }
-      /** 
-      ** qp_t 钞票随手势平滑滑出
-      **/
-      function qp_t() {
-        that.gameStatus = 3;
-        qp_l = setTimeout(function() {
-          window.clearTimeout(qp_l)
-        },900);
-        that.qipaStage.showFollowAnim(!0)
       }
       /** 
       ** qp_y 隐藏游戏开始箭头图标
@@ -495,8 +480,7 @@
         var b = Math.abs(that.qipaStage.stage.player.m[qp_f] - a);
         createjs.Tween.get(that.qipaStage.stage.player.m[qp_f]).to({
           y: a
-        },
-        20 * b)
+        }, 20 * b)
       }
       that.getGameCounts()
     },
@@ -507,8 +491,6 @@
       ** Qp_x 背景钞票动画
       **/
       qp_p () {
-        console.log(this.qipaStage)
-        var qp_q = this.qipaApp.score = 0;
         this.qp_m = -1;
         this.countNum = 0;
         this.gameStatus = 1;
@@ -554,29 +536,6 @@
           that.qipaStage.stage.addChild(that.moneyBg2[c][d])
         }
       },
-      // 更新时间
-      updateTime: function () {
-        this.second -= 1
-        if (this.second === 0) {
-          clearInterval(this.updateTimer)
-        }
-      },
-      // 用于检测
-      update: function () {
-        if (this.moneyTop <= -13) {
-          this.moneyTop = 0
-          $('.slideMoney img').attr('src', '../../../static/images/money-' + this.HandList[this.countNum] + '.png')
-          $('.nextMoney img').attr('src', '../../../static/images/money-' + this.HandList[this.countNum + 1] + '.png')
-          clearInterval(this.moveMoneyTimer)
-        }
-        // 如果数钱游戏结束
-        if (this.second <= 0) {
-          // 关闭定时器
-          clearInterval(this.scrTimer)
-          clearInterval(this.updateTimer)
-          clearInterval(this.moveMoneyTimer)
-        }
-      },
       toPriviledge () {
         audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
         bridgeUtil.webConnectNative('HCNative_GoPrivilegedCapital', undefined, {}, function (res) {}, null)
@@ -616,7 +575,6 @@
                 that.warningText = 3
                 that.second = 15
                 that.countDown()
-                that.updateTimer = setInterval(that.update, 1)
                 that.qp_p();
               }, 1000)
             }
@@ -627,6 +585,10 @@
         var that = this
         that.countNum = 0
         that.HandList = []
+        that.moneyBg1 = []
+        that.moneyBg2 = []
+        that.backgroundTimer = null
+        clearInterval(that.backgroundTimer)
         if (that.gameType === 1) { // 正式玩
           that.$http({
             method: 'post',
@@ -664,7 +626,6 @@
             that.HandList = JSON.parse(res.data.deftHandValues)
             that.number = res.data.number
             that.qipaStage.init(that.images)
-            $('.money-list li img').attr({'scr': '../../../static/images/money-' + that.HandList[0] + '.png'})
           } else {
             console.log(res.data.msg)
           }
@@ -746,53 +707,6 @@
         .catch(function (err) {
           console.log(err)
         })
-      },
-      startTouchScroll (event) {
-        if (this.showFirst) {
-          return
-        }
-        event.preventDefault()
-        var touch = event.targetTouches[0]
-        this.startPos = {x: touch.pageX, y: touch.pageY}
-        $('.slideMoney').addClass('animate')
-      },
-      moveTouchScroll (event) {
-        $('.slideMoney').removeClass('animate')
-        this.offsetY = 0
-        var touch = event.targetTouches[0]
-        var endPos = {x: touch.pageX - this.startPos.x, y: touch.pageY - this.startPos.y}
-        // isScrolling为1时，表示纵向滑动，0为横向滑动
-        var isScrolling = Math.abs(endPos.x) < Math.abs(endPos.y) ? 1 : 0
-        if (isScrolling === 1) {
-          event.preventDefault()
-        }
-        this.offsetY += 0.25 * (event.targetTouches[0].pageY - window.touchStartY)
-        window.touchStartY = event.targetTouches[0].pageY
-        console.log(this.offsetY)
-        if (this.offsetY < -1) {
-          // $($('.money-list li')[index]).css('transform', 'translateY(-13rem)')
-          // document.querySelector('.money-list li').style.webkitTransform = 'translateY(-13rem)'
-        }
-      },
-      endTouchScroll (touchY) {
-        var that = this
-        console.log(that.offsetY)
-        if (that.offsetY >= 0) {
-          $('.slideMoney').removeClass('animate')
-        } else if (this.offsetY < -2) {
-          if (that.second > 0) {
-            // $($('.money-list li')[index]).css('transform', 'translateY(-13rem)')
-            // document.querySelector('.money-list li').style.webkitTransform = 'translateY(-13rem)'
-            that.moveMoneyTimer = setInterval(function () {
-              that.moneyTop -= 0.5
-            }, 1)
-            that.rewardMoney += that.HandList[that.countNum]
-            that.countNum += 1
-            audioPlayUtil.playOrPaused('../../static/audio/count.mp3', that.isPlay)
-            console.log(that.HandList[that.countNum])
-            console.log(that.countNum)
-          }
-        }
       }
     }
   }

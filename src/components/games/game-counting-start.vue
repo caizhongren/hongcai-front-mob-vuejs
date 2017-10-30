@@ -18,7 +18,7 @@
       </ul>
       <div class="activityEndBtns" v-if="activityStatus === 2">活动已结束</div>
       <div class="moneyBox">
-        <img src="../../images/singles-day/money-100.png" width="57%">
+        <img src="../../images/singles-day/money-100.png" width="56%">
       </div>
       <div class="record" @click="goRecord()">游戏<br>记录</div>
       <game-rules :showRulesMask="showRulesMask" :closeRules='closeRules'></game-rules>
@@ -210,14 +210,17 @@
     background-size: contain;
   }
   .moneyBox {
-    position: fixed;
-    bottom: -.4rem;
+    position: absolute;
+    bottom: -.43rem;
     left: 2.5%;
     width: 95%;
     height: 4.5rem;
     margin: 0 auto;
     background: url('../../../static/images/money-box.png') no-repeat center bottom;
     background-size: contain;
+  }
+  .moneyBox img {
+    margin-left: -1%;
   }
   .record {
     width: 1rem;
