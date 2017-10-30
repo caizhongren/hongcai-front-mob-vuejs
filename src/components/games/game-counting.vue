@@ -35,6 +35,10 @@
           不止给你100块！<br>
           有机会出现面值500元和10000元的钞票哦！
         </div>
+        <div class="moneyBox">
+          <p class="i-know" @click="closeFirstAndStart">我知道了</p>
+          <img src="../../images/singles-day/money-100.png" width="57%">
+        </div>
       </div>
       <!-- 高能预警 -->
       <div class="start-mask" v-show="showWarning">
@@ -156,13 +160,6 @@
         }
       }
     },
-    watch: {
-      showFirst: function (newVal, oldVal) {
-        document.getElementsByClassName('moneyBox')[0].style.zIndex = newVal ? 3 : 0
-        document.getElementsByClassName('i-know')[0].style.zIndex = newVal ? 9 : 0
-        newVal ? $('.money-list li').addClass('example') : $('.money-list li').removeClass('example')
-      }
-    },
     props: ['token'],
     created () {
       // this.getGameCounts()
@@ -176,9 +173,9 @@
     },
     mounted () {
       if (this.showFirst) {
-        $('.moneyBox img').addClass('example')
+        // $('.moneyBox img').addClass('example')
       } else {
-        $('.moneyBox img').removeClass('example')
+        // $('.moneyBox img').removeClass('example')
       }
       this.gameType = Number(this.$route.params.gameType)
       var createjs = window.create || createjs
@@ -672,9 +669,9 @@
       },
       closeFirstAndStart () { // 关闭首次引导并开始
         audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
-        document.getElementsByClassName('i-know')[0].style.zIndex = 0
-        document.getElementsByClassName('moneyBox')[0].style.zIndex = 1
+        this.showMask = false
         this.showFirst = false
+        // this.showFirst = false
         this.startWarning(1)
       },
       showRewardMoney (elem, endVal, startVal, duration, decimal) { // 获得奖励自增动画
@@ -868,24 +865,6 @@
     letter-spacing: 2.9px;
     color: #ffffff;
   }
-  /* animation */
-  @keyframes gyrate {
-    0% {
-      transform: translateY(0.55rem);
-    }
-    100% {
-      transform: translateY(-0.55rem);
-    }
-  }
-  .moneyBox .money-list li img{
-    transform: translateY(.55rem);
-  }
-  .moneyBox .money-list li.example {
-    animation: gyrate .8s 0s infinite alternate;
-    -moz-animation: gyrate .8s 0s infinite alternate;
-    -webkit-animation: gyrate .8s 0s infinite alternate;
-    -o-animation: gyrate .8s 0s infinite alternate;
-  }
   .gameCounting {
     background: #fbdc34;
     /*padding: 0.5rem 0;*/
@@ -930,16 +909,14 @@
     width: 34%;
   }
   .moneyBox {
-    position: absolute;
-    /* z-index: 2; */
-    bottom: -.8rem;
-    left: 2.5%;
-    width: 95%;
-    height: 7.2rem;
+    position: fixed;
+    bottom: -.4rem;
+    left: 2%;
+    width: 96%;
+    height: 6.8rem;
     margin: 0 auto;
-    /*background: url('../../images/singles-day/money-box.png') no-repeat center 91%;
-    background-size: contain;*/
-    z-index: 2;
+    background: url('../../../static/images/money-box.png') no-repeat center 100%;
+    background-size: contain;
   }
   .countTimes {
     overflow: hidden;
