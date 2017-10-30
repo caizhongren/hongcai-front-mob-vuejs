@@ -1,6 +1,6 @@
 <template>
-  <div class="gameCounting" v-auto-height>
-    <div class="rewardTitle">
+  <div class="gameCounting" v-auto-height v-load>
+    <div class="rewardTitle" style=" position: absolute;left: 10%;top: .5rem">
       <div class="totalMoney">
         <span>¥</span><span class="money">{{rewardMoney}}</span>
       </div>
@@ -12,7 +12,7 @@
         <div v-if="gameType === 1" class="gameCounts fr">剩余次数：{{gameCounts}}次</div> 
       </div>
     </div>
-   <!--  <div class="moneyBox">
+    <!-- <div class="moneyBox">
       <p class="i-know" @click="closeFirstAndStart">我知道了</p>
       <ul class="money-list">
         <li class="nextMoney">
@@ -22,7 +22,7 @@
           <img v-bind:draggable="false" src="../../../static/images/money-100.png" alt="">
         </li>
       </ul>
-    </div>-->
+    </div> -->
     <canvas id='stage' width='300' height='300'></canvas>
     <div class="mask-common first-mask" v-show="showMask">
       <!-- 首次游戏引导蒙层 -->
@@ -99,12 +99,10 @@
         scrTimer: null, // 用于滚动背景的定时器
         updateTimer: null, // 更新时间的定时器
         moneyTop: 0, // 钱的top属性值
-        moneyBg1: [], // qp_c
-        moneyBg2: [], // qp_c1
+        moneyBg1: [],
+        moneyBg2: [],
         moneyBgCount: 2, // qp_d背景图个数
         qp_e: 3,
-        qp_m: 0,
-        gameStatus: 1,
         qipaStage: {},
         qipaApp: {
           score: 100
@@ -113,7 +111,49 @@
         H: 1E3,
         IS_TOUCH: null,
         IS_ANDROID: Utils.isAndroid(),
-        SCREEN_SHOW_ALL: true
+        SCREEN_SHOW_ALL: true,
+        gameStatus: 1,
+        qp_m: 0,
+        images: {
+          img: {
+            path: "../../../static/images/",
+            manifest: [{
+              src: "money-100.png",
+              id: "m100"
+            },
+            {
+              src: "money-500.png",
+              id: "m500"
+            },
+            {
+              src: "money-10000.png",
+              id: "m10000"
+            },
+            {
+              src: "money-box.png",
+              id: "box"
+            },
+            {
+              src: "money-100.png",
+              id: "mb0"
+            },
+            {
+              src: "money-bg05.png",
+              id: "d0"
+            },
+            {
+              src: "money-bg06.png",
+              id: "d1"
+            }]
+          },
+          audio: {
+            path: "../../../static/audio/",
+            manifest: [{
+              src: "count.mp3",
+              id: "count"
+            }]
+          }
+        }
       }
     },
     watch: {
@@ -125,14 +165,12 @@
     },
     props: ['token'],
     created () {
-      this.gameType = Number(this.$route.params.gameType)
-      this.getGameCounts()
+      // this.getGameCounts()
+      window.vue = this
     },
     directives: {
       'load': {
         inserted: function (el) {
-          // console.log(document.querySelector('.money-list'))
-          // document.querySelector('.money-list').addEventListener('load', window.vue.moveTouchScroll(), false)
         }
       }
     },
@@ -142,24 +180,9 @@
       } else {
         $('.moneyBox img').removeClass('example')
       }
+      this.gameType = Number(this.$route.params.gameType)
       var createjs = window.create || createjs
-        // 设置画布宽高
       var that = this;
-      function setCanvasSize() {
-        var c = that.qipaStage.stage.canvas,
-        k = window.innerWidth,
-        b = window.innerHeight
-        if (!0) k / b > that.W / that.H ? k = that.W * b / that.H : b = that.H * k / that.W,
-        c.style.marginTop = 0
-        else {
-          var d = that.W * b / that.H
-          k >= d ? (k = d, stage.x = 0) : stage.x = (k - d) / 2
-        }
-        c.width = that.W
-        c.height = that.H
-        c.style.width = k + 'px'
-        c.style.height = b + 'px'
-      }
       var l = null,
       d,
       f = null,
@@ -169,7 +192,106 @@
       that.qipaStage.stage = null
       that.qipaStage.queue = null
       that.qipaStage.init = function(c) {
-        console.log(that.qipaStage)
+        function qp_w() {
+          that.IS_ANDROID && (createjs.Sound.registMySound("count", 0), createjs.Sound.registMySound("silenttail", 0.25));
+          var a = new createjs.Shape;
+          a.graphics.beginFill("#fbdc34").drawRect(0, 0, that.W, that.H);
+          that.qipaStage.stage.addChild(a);
+          var b = new createjs.Shape;
+          b.graphics.beginFill("white").rect(0, 200, that.W, that.H);
+          a.hitArea = b;
+          var c = 0,
+          d = 0;
+          a.on("mousedown", function(a) {
+            console.log(that.HandList[that.countNum])
+            c = a.localY;
+            d = that.qipaStage.stage.player.m[qp_f].y;
+            that.qipaStage.stage.player = new Qp_A(that.HandList[that.countNum])
+            that.qipaStage.stage.addChild(that.qipaStage.stage.player)
+          });
+          a.on("pressmove", function(e) {
+            //  (1 == that.gameStatus && (qp_s(), that.gameStatus = 2), 2 == that.gameStatus && (that.qipaStage.stage.player.m[qp_f].visible = !0, that.qipaStage.stage.player.m[qp_f].y += (a.localY - c) / 1.5))
+             if (1 == that.gameStatus) {
+                that.qp_m = 0, 
+                that.gameStatus = 2
+             }
+             if (2 == that.gameStatus) {
+              that.qipaStage.stage.player.m[qp_f].visible = !0;
+              if (!that.qipaStage.stage.player.m[qp_f].y) {
+                that.qipaStage.stage.player.m[qp_f].y = 220;
+              }
+              that.qipaStage.stage.player.m[qp_f].y += (e.localY - c) / 1.5
+             }
+          });
+          var f = 0;
+          a.on("pressup", function(a) {
+            // if(that.second === 0) {return}
+             2 != that.gameStatus || (50 < c - a.localY ? (a = (new Date).getTime(), 0 < qp_i.length && qp_i[qp_i.length - 1] + 50 > a ? qp_a("WARNING: Too fast! maybe engine error.") : (f = qp_y(a), f <= qp_j ? (that.qipaStage.stage.player.playAnimation(that.qipaStage.stage.player.m[qp_f]), createjs.Sound.play("count", !0), that.rewardMoney += that.HandList[that.countNum], that.countNum++) : (qp_i.length--, qp_a("WARN: " + f)))) : (qp_z(d), that.qipaStage.stage.player.m[qp_f].visible = !1))
+          });
+          qp_c = [];
+          qp_c1 = [];
+          for (a = 0; a <= qp_e; a++) for (qp_c[a] = [], b = 0; b < qp_d; b++) {
+            var e = new createjs.Bitmap(that.qipaStage.queue.getResult("d0"));
+            e.regX = e.getBounds().width / 2;
+            e.regY = e.getBounds().height / 2;
+            e.x = genRandom(that.W);
+            e.y = -that.H / 2 + genRandom(that.H);
+            e.visible = !1;
+            qp_c[a].push(e);
+            that.qipaStage.stage.addChild(qp_c[a][b])
+          }
+          for (c = 0; c <= qp_e; c++) for (qp_c1[c] = [], d = 0; d < qp_d; d++) {
+            var e1 = new createjs.Bitmap(that.qipaStage.queue.getResult("d1"));
+            e1.regX = e1.getBounds().width / 2;
+            e1.regY = e1.getBounds().height / 2;
+            e1.x = genRandom(that.W);
+            e1.y = -that.H / 2 + genRandom(that.H);
+            e1.visible = !1;
+            qp_c1[c].push(e1);
+            that.qipaStage.stage.addChild(qp_c1[c][d])
+          }
+          that.qipaStage.stage.player = new Qp_A(that.HandList[0]);
+          that.qipaStage.stage.addChild(that.qipaStage.stage.player);
+          setInterval(qp_D, 1E3);
+        }
+        that.qipaStage.stage = new createjs.Stage("stage");
+        that.qipaStage.queue = new createjs.LoadQueue(!1);
+        that.qipaStage.queue.setMaxConnections(30);
+        if (that.IS_TOUCH = createjs.Touch.isSupported()) {
+          createjs.Touch.enable(that.qipaStage.stage, !0);
+          that.qipaStage.stage.mouseEnabled = !1;
+          var c = new createjs.Shape;
+          c.graphics.f("white").r(0, 0, that.W, that.H);
+          that.qipaStage.stage.addChild(c)
+        }
+        createjs.Ticker.setFPS(60);
+        setTimeout(that.setCanvasSize, 100);
+        createjs.Ticker.on("tick", that.qipaStage.stage);
+        that.qipaStage.queue.on("complete", qp_w, null, !0);
+        // h = c是图片集合， that.qipaStage.init调用时赋值
+        that.images.img && that.qipaStage.queue.loadManifest(that.images.img, !1);
+        that.images.audio && (that.IS_ANDROID ? that.qipaStage.queue.loadFile({
+          id: "sound",
+          src: "../../../static/audio/count.mp3"
+        }) : (createjs.Sound.alternateExtensions = ["ogg"], that.qipaStage.queue.installPlugin(createjs.Sound), that.qipaStage.queue.loadManifest(that.images.audio, !1)));
+        that.images.noshare || that.qipaStage.queue.loadManifest({
+          path: "../../../static/images/",
+          manifest: [{
+            src: "share_tip.png",
+            id: "share_tip"
+          }]
+        },
+        !1);
+        that.images.followed || that.qipaStage.queue.loadManifest({
+          path: "../../../static/images/",
+          manifest: [{
+            src: "follow_anim.png",
+            id: "follow"
+          }]
+        },
+        !1);
+        that.qipaStage.queue.load()
+        console.log('init')
         h = c
         if (that.IS_ANDROID) {
           createjs.Sound.play = function(c, b) {
@@ -187,46 +309,7 @@
           }
         }
       };
-      window.onload = function() {
-        that.qipaStage.stage = new createjs.Stage("stage");
-        that.qipaStage.queue = new createjs.LoadQueue(!1);
-        that.qipaStage.queue.setMaxConnections(30);
-        if (that.IS_TOUCH = createjs.Touch.isSupported()) {
-          createjs.Touch.enable(that.qipaStage.stage, !0);
-          that.qipaStage.stage.mouseEnabled = !1;
-          var c = new createjs.Shape;
-          c.graphics.f("white").r(0, 0, that.W, that.H);
-          that.qipaStage.stage.addChild(c)
-        }
-        createjs.Ticker.setFPS(60);
-        setTimeout(setCanvasSize, 100);
-        createjs.Ticker.on("tick", that.qipaStage.stage);
-        that.qipaStage.queue.on("complete", h.startFunc, null, !0);
-        // h = c是图片集合， that.qipaStage.init调用时赋值
-        h.img && that.qipaStage.queue.loadManifest(h.img, !1);
-        h.audio && (that.IS_ANDROID ? that.qipaStage.queue.loadFile({
-          id: "sound",
-          src: "../../../static/audio/count.mp3"
-        }) : (createjs.Sound.alternateExtensions = ["ogg"], that.qipaStage.queue.installPlugin(createjs.Sound), that.qipaStage.queue.loadManifest(h.audio, !1)));
-        h.noshare || that.qipaStage.queue.loadManifest({
-          path: "../../../static/images/",
-          manifest: [{
-            src: "share_tip.png",
-            id: "share_tip"
-          }]
-        },
-        !1);
-        h.followed || that.qipaStage.queue.loadManifest({
-          path: "../../../static/images/",
-          manifest: [{
-            src: "follow_anim.png",
-            id: "follow"
-          }]
-        },
-        !1);
-        that.qipaStage.queue.load()
-      };
-      window.onresize = setCanvasSize;
+      window.onresize = that.setCanvasSize;
       createjs.DisplayObject.prototype.do_cache = function() {
         var a = this.getBounds();
         this.cache(a.x, a.y, a.width, a.height)
@@ -277,37 +360,52 @@
       };
       that.H = 960; // canvas画布高。
       function qp_a(a) {}
-      var qp_d = 2,
+      var qp_c, qp_c1, qp_d = 2,
       qp_e = 3,
-      qp_f = 3,
-      qp_g = 220,
+      qp_f = qp_e,
+      qp_g = 400,
       qp_h = 0,
       qp_i = [],
       qp_j = 20,
-      qp_l,
-      qp_n = 0;
+      qp_l
+      function genRandom(a) {
+        return parseInt(Math.random() * a)
+      }
       /** 
       ** qQp_A 画出钞票
       **/
-      function Qp_A() {
+      function Qp_A(money) {
         this.initialize();
-        this.mb = new createjs.Bitmap(that.qipaStage.queue.getResult("mb0"));
+        this.box = new createjs.Bitmap(that.qipaStage.queue.getResult("box"));
+        this.box.regX = this.box.getBounds().width / 2;
+        this.box.regY = this.box.getBounds().height / 3;
+        this.box.scaleX = .86;
+        this.box.scaleY = .86;
+        this.box.y = 465;
+        this.addChild(this.box);
+
+        this.mb = new createjs.Bitmap(that.qipaStage.queue.getResult("m" + money));
         this.mb.regX = this.mb.getBounds().width / 2;
         this.mb.regY = this.mb.getBounds().height / 2;
+        this.mb.scaleX = .9;
+        this.mb.scaleY = .8;
         this.mb.y = qp_g;
+        this.mb.x = -3;
         this.x = that.W / 2;
         this.y = that.H / 2 - 150;
         this.addChild(this.mb);
     
         this.m = [];
-        for (var a = 0; 3 >= a; a++) this.m[a] = new createjs.Bitmap(that.qipaStage.queue.getResult("m0")),
+        for (var a = 0; 3 >= a; a++) this.m[a] = new createjs.Bitmap(that.qipaStage.queue.getResult("m" + money)),
         this.m[a].regX = this.m[a].getBounds().width / 2,
         this.m[a].regY = this.m[a].getBounds().height / 2,
+        this.m[a].scaleX = .9,
+        this.m[a].scaleY = .8,
         this.m[a].y = qp_g,
         this.m[a].visible = !1,
         this.addChild(this.m[a]);
     
-        // for (a = 0; a <= 3; a++) this.m[a].image = that.qipaStage.queue.getResult("m0");
+        // for (a = 0; a <= qp_e; a++) this.m[a].image = that.qipaStage.queue.getResult("m0");
         // for (a = 0; a < qp_c.length; a++) for (var b = 0; b < qp_c[a].length; b++) qp_c[a][b].image = that.qipaStage.queue.getResult("d0")
         // for (a = 0; a < qp_c1.length; a++) for (var b = 0; b < qp_c1[a].length; b++) qp_c1[a][b].image = that.qipaStage.queue.getResult("d1")
       }
@@ -326,86 +424,45 @@
           scaleY: 1
         },
         0);
-        0 < qp_f ? qp_f--:qp_f = 3
+        0 < qp_f ? qp_f--:qp_f = qp_e
       };
       /** 
-      ** qQp_B 画出倒计时 和 已数钱数
+      ** qp_D 钞票随手势平滑滑出
       **/
-      function Qp_B() {
-        // this.initialize();
-        // this.tmbg = new createjs.Bitmap(that.qipaStage.queue.getResult("tmbg"));
-        // this.tmbg.x = (that.W - this.tmbg.getBounds().width) / 2;
-        // this.tmbg.y = 30;
-        // this.addChild(this.tmbg);
-        // this.tmbg1 = new createjs.Bitmap(that.qipaStage.queue.getResult("tmbg"));
-        // this.tmbg1.scaleX = 0.7;
-        // this.tmbg1.x = (that.W - 0.7 * this.tmbg.getBounds().width) / 2;
-        // this.tmbg1.y = this.tmbg.y + this.tmbg.getBounds().height + 15;
-        // this.addChild(this.tmbg1);
-        // this.tmicon = new createjs.Bitmap(that.qipaStage.queue.getResult("tmicon"));
-        // this.tmicon.x = this.tmbg1.x + 14;
-        // this.tmicon.y = this.tmbg1.y + 14;
-        // this.addChild(this.tmicon);
+      var qp_F = 0;
+      function qp_D() {
+        for (var a = 0; a < qp_d; a++) qp_c[qp_F][a].visible = !0,
+        createjs.Tween.get(qp_c[qp_F][a]).to({
+          y: that.H + qp_c[qp_F][a].getBounds().height / 2 + 100,
+          rotation: 720 + genRandom(400),
+          x: genRandom(that.W)
+        },
+        1E3 + genRandom(800)).to({
+          visible: !1
+        },
+        10).to({
+          x: genRandom(that.W),
+          y: -that.H / 2 + genRandom(that.H / 2),
+          rotation: 0
+        },
+        10);
+        for (var a = 0; a < qp_d; a++) qp_c1[qp_F][a].visible = !0,
+        createjs.Tween.get(qp_c1[qp_F][a]).to({
+          y: that.H + qp_c1[qp_F][a].getBounds().height / 2 + 100,
+          rotation: 720 + genRandom(400),
+          x: genRandom(that.W)
+        },
+        1E3 + genRandom(800)).to({
+          visible: !1
+        },
+        10).to({
+          x: genRandom(that.W),
+          y: -that.H / 2 + genRandom(that.H / 2),
+          rotation: 0
+        },
+        10);
+        qp_F < qp_e ? qp_F++:qp_F = 0
       }
-      // Qp_B.prototype = new createjs.Container;
-      /** 
-      ** qQp_C 游戏结束重新开始／分享／排行弹窗
-      **/
-      function Qp_C() {
-        this.initialize();
-        var a = new createjs.Shape,
-        b = that.qipaStage.queue.getResult("dlgbg");
-        a.setBounds(0, 0, that.W, b.height);
-        a.graphics.bf(b).r(0, 0, that.W, b.height);
-        this.addChild(a);
-        b = new createjs.Bitmap(that.qipaStage.queue.getResult("start"));
-        b.x = 40;
-        b.y = a.y + a.getBounds().height - 160;
-        b.on("click",
-        function(a) {
-          that.qp_p();
-          that.qipaStage.stage.gameover.visible = !1
-        });
-        var c = new createjs.Bitmap(that.qipaStage.queue.getResult("rank"));
-        c.x = that.W / 2;
-        c.y = b.y;
-        c.regX = c.getBounds().width / 2;
-        c.on("click",
-        function(a) {
-          clickMore();
-        });
-        var d = new createjs.Bitmap(that.qipaStage.queue.getResult("share"));
-        d.x = that.W - 40;
-        d.y = b.y;
-        d.regX = c.getBounds().width;
-        d.on("click",
-        function(a) {
-          that.IS_TOUCH && a.nativeEvent instanceof MouseEvent || dp_share()
-        });
-        this.addChild(b);
-        this.addChild(c);
-        this.addChild(d);
-        this.scoreText = new createjs.Text("", "bold 50px Arial", "#fff");
-        this.scoreText.textAlign = "center";
-        this.scoreText.x = that.W / 2;
-        this.scoreText.y = a.y + 50;
-        this.addChild(this.scoreText);
-        this.shareText = new createjs.Text("", "38px Arial", "#eee");
-        this.shareText.textAlign = "center";
-        this.shareText.x = that.W / 2;
-        this.shareText.y = this.scoreText.y + 95;
-        this.addChild(this.shareText)
-      }
-      Qp_C.prototype = new createjs.Container;
-      Qp_C.prototype.refresh = function() {
-        this.scoreText.text = "\uffe5" + that.qipaApp.score;
-        // this.shareText.text = 0 < that.qipaApp.score ? qipaShare.desc.replace("\u6bd4", "\n\u6bd4").replace("\u6211\u662f", "\n\u6211\u662f") : ""
-      };
-      // Qp_x.prototype = new createjs.Container;
-      function SplashPressmoveEvent(a, b) {
-        that.qipaStage.stage.splash.start.y + a < b && (that.qipaStage.stage.splash.start.y += a)
-      }
-      
       /** 
       ** qp_t 钞票随手势平滑滑出
       **/
@@ -413,14 +470,8 @@
         that.gameStatus = 3;
         qp_l = setTimeout(function() {
           window.clearTimeout(qp_l)
-        },
-        900);
-        qp_u();
-        // that.qipaApp.onNewScore(that.qipaApp.score);
-        // that.qipaApp.onGameOver();
+        },900);
         that.qipaStage.showFollowAnim(!0)
-        that.qipaStage.stage.gameover.visible = !0;
-        that.qipaStage.stage.gameover.refresh()
       }
       /** 
       ** qp_y 隐藏游戏开始箭头图标
@@ -447,241 +498,61 @@
         },
         20 * b)
       }
-      /** 
-      ** qp_z 游戏结束分享弹窗
-      **/
-      function qp_u() {
-        // alert('游戏结束：获得分数' + that.qipaApp.score)
-        // qipaShare.title = "\u6570\u94b1\u6570\u5230\u624b\u62bd\u7b4b\uff01\u4f60\u662f\u6570\u94b1\u9ad8\u624b\u5417\uff1f";
-        // if (0 == qipaApp.score) qipaShare.desc = qipaShare.title;
-        // else {
-        //   var a = parseInt(Math.sqrt(1E4 * qipaApp.score / 17E3));
-        //   99 < a && (a = "99.9");
-        //   qipaShare.title = "\u6211\u6570\u4e86\uffe5" + qipaApp.score + "\uff0c\u6bd4" + a + "%\u7684\u4eba\u6709\u94b1\uff01\u6211\u662f" + (5E3 > qipaApp.score ? "\u5c4c\u4e1d": 1E4 > qipaApp.score ? "\u8d2b\u519c": 15E3 > qipaApp.score ? "\u5bcc\u519c": 2E4 > qipaApp.score ? "\u571f\u8c6a": 25E3 > qipaApp.score ? "\u7164\u8001\u677f": "\u8d44\u672c\u5bb6") + "\u3002"
-        // }
-        // dp_submitScore(qipaApp.score);
-      }
-      /** 
-      ** qp_w 画出画布颜色
-      **/
-      function qp_w() {
-        var a = new createjs.Shape;
-        a.graphics.beginFill('#fbdc34').drawRect(0, 0, that.W, that.H);
-        that.qipaStage.stage.addChild(a);
-        var b = new createjs.Shape;
-        b.graphics.beginFill("white").rect(0, 200, that.W, that.H);
-        a.hitArea = b;
-        var c = 0,
-        d = 0;
-        a.on("mousedown",
-        function(a) {
-          c = a.localY;
-          d = that.qipaStage.stage.player.m[qp_f].y;
-        });
-        a.on("pressmove",
-        function(e) {
-          //  (1 == that.gameStatus && (qp_s(), that.gameStatus = 2), 2 == that.gameStatus && (that.qipaStage.stage.player.m[qp_f].visible = !0, that.qipaStage.stage.player.m[qp_f].y += (a.localY - c) / 1.5))
-           if (1 == that.gameStatus) {
-             that.qp_m = 0, 
-             that.gameStatus = 2
-             console.log(1)
-           }
-           if (2 == that.gameStatus) {
-            console.log(2)
-            that.qipaStage.stage.player.m[qp_f].visible = !0;
-            if (!that.qipaStage.stage.player.m[qp_f].y) {
-              that.qipaStage.stage.player.m[qp_f].y = 420;
-            }
-            that.qipaStage.stage.player.m[qp_f].y += (e.localY - c) / 1.5
-            // console.log('c----:' + that.qipaStage.stage.player.m[qp_f].y);
-           }
-        });
-        var f = 0;
-        a.on("pressup",
-        function(a) {
-           2 != that.gameStatus || (50 < c - a.localY ? (a = (new Date).getTime(), 0 < qp_i.length && qp_i[qp_i.length - 1] + 50 > a ? qp_a("WARNING: Too fast! maybe engine error.") : (f = qp_y(a), f <= qp_j ? (that.countNum++, that.qipaApp.score += 100, that.qipaStage.stage.player.playAnimation(that.qipaStage.stage.player.m[qp_f]), createjs.Sound.play("count", !0)) : (qp_i.length--, qp_a("WARN: " + f)))) : (qp_z(d), that.qipaStage.stage.player.m[qp_f].visible = !1))
-        });
-        that.scrollBackground() // 设置背景动画
-        that.qipaStage.stage.player = new Qp_A;
-        that.qipaStage.stage.addChild(that.qipaStage.stage.player);
-        // that.qipaStage.stage.num = new Qp_B;
-        // that.qipaStage.stage.num.y = 30;
-        // that.qipaStage.stage.addChild(that.qipaStage.stage.num);
-        that.qipaStage.stage.gameover = new Qp_C;
-        that.qipaStage.stage.gameover.x = 0;
-        that.qipaStage.stage.gameover.y = 260;
-        that.qipaStage.stage.gameover.visible = !1;
-        that.qipaStage.stage.addChild(that.qipaStage.stage.gameover);
-        // that.qipaStage.stage.splash = new Qp_x;
-        // that.qipaStage.stage.addChild(that.qipaStage.stage.splash);
-        setInterval(that.setBackground, 1E3);
-        createjs.Ticker.addEventListener("tick",
-        function(a) {
-          // 0 <= qp_m && (qp_m += a.delta, a = 30 - parseInt(qp_m / 1E3), a != qp_n && (qp_n = a, that.qipaStage.stage.num.txt.text = qp_n + '"'), 0 >= qp_n && (qp_m = -1, qp_t()));
-          // that.qipaStage.stage.num.sum.text = "\uffe5" + that.qipaApp.score
-        })
-      }
-      function qp_v(a) {
-        that.IS_ANDROID && (createjs.Sound.registMySound("count", 0), createjs.Sound.registMySound("silenttail", 0.25));
-        qp_w()
-      }
-      var _cfg = {
-        startFunc: qp_v,
-        img: {
-          path: "../../../static/images/",
-          manifest: [{
-            src: "money-100.png",
-            id: "m0"
-          },
-          {
-            src: "money-100.png",
-            id: "mb0"
-          },
-          {
-            src: "money-bg05.png",
-            id: "d0"
-          },
-          {
-            src: "money-bg06.png",
-            id: "d1"
-          },
-          {
-            src: "starttip.png",
-            id: "starttip"
-          },
-          {
-            src: "tmbg.png",
-            id: "tmbg"
-          },
-          {
-            src: "splashtitle.png",
-            id: "splashtitle"
-          },
-          {
-            src: "tmicon.png",
-            id: "tmicon"
-          },
-          {
-            src: "start.png",
-            id: "start"
-          },
-          {
-            src: "rank.png",
-            id: "rank"
-          },
-          {
-            src: "share.png",
-            id: "share"
-          },
-          {
-            src: "dlgbg.png",
-            id: "dlgbg"
-          }]
-        },
-        audio: {
-          path: "../../../static/audio/",
-          manifest: [{
-            src: "count.mp3",
-            id: "count"
-          }]
-        }
-      };
-      that.qipaStage.init(_cfg)
-      that.qipaApp = {
-        // onGameStarted: that.qipaStage.showFollowAnim(!1),
-        // onGameOver: that.qipaStage.showFollowAnim(!0)
-      }
+      that.getGameCounts()
     },
     components: {
     },
     methods: {
-      genRandom (a) {
-        return parseInt(Math.random() * a)
+      /** 
+      ** Qp_x 背景钞票动画
+      **/
+      qp_p () {
+        console.log(this.qipaStage)
+        var qp_q = this.qipaApp.score = 0;
+        this.qp_m = -1;
+        this.countNum = 0;
+        this.gameStatus = 1;
+        this.qipaStage.showFollowAnim(!1)
+      },
+      setCanvasSize () { // 设置画布宽高
+        var c = this.qipaStage.stage.canvas,
+        k = window.innerWidth,
+        b = window.innerHeight
+        if (!0) k / b > this.W / this.H ? k = this.W * b / this.H : b = this.H * k / this.W,
+        c.style.marginTop = 0
+        else {
+          var d = this.W * b / this.H
+          k >= d ? (k = d, stage.x = 0) : stage.x = (k - d) / 2
+        }
+        c.width = this.W
+        c.height = this.H
+        c.style.width = k + 'px'
+        c.style.height = window.innerHeight + 'px'
       },
       // 循环滚动背景
       scrollBackground: function () {
         var that = this
         var createjs = window.create || createjs
-        for (var a = 0; a <= 3; a++) {
-          that.moneyBg1[a] = []
-          for (var b = 0; b < 2; b++) {
-            var e = new createjs.Bitmap(that.qipaStage.queue.getResult("d0"));
-            e.regX = e.getBounds().width / 2;
-            e.regY = e.getBounds().height / 2;
-            e.x = that.genRandom(that.W);
-            e.y = -that.H / 2 + that.genRandom(that.H);
-            e.visible = !1;
-            that.moneyBg1[a].push(e);
-            that.qipaStage.stage.addChild(that.moneyBg1[a][b])
-          } 
+        for (a = 0; a <= qp_e; a++) for (that.moneyBg1[a] = [], b = 0; b < 2; b++) {
+          var e = new createjs.Bitmap(that.qipaStage.queue.getResult("d0"));
+          e.regX = e.getBounds().width / 2;
+          e.regY = e.getBounds().height / 2;
+          e.x = genRandom(that.W);
+          e.y = -that.H / 2 + genRandom(that.H);
+          e.visible = !1;
+          that.moneyBg1[a].push(e);
+          that.qipaStage.stage.addChild(that.moneyBg1[a][b])
         }
-        for (var c = 0; c <= 3; c++) {
-          that.moneyBg2[c] = []
-          for (var d = 0; d < 2; d++) {
-            var e1 = new createjs.Bitmap(that.qipaStage.queue.getResult("d1"));
-            e1.regX = e1.getBounds().width / 2;
-            e1.regY = e1.getBounds().height / 2;
-            e1.x = that.genRandom(that.W);
-            e1.y = -that.H / 2 + that.genRandom(that.H);
-            e1.visible = !1;
-            that.moneyBg2[c].push(e1);
-            that.qipaStage.stage.addChild(that.moneyBg2[c][d])
-          }
+        for (c = 0; c <= qp_e; c++) for (that.moneyBg2[c] = [], d = 0; d < 2; d++) {
+          var e1 = new createjs.Bitmap(that.qipaStage.queue.getResult("d1"));
+          e1.regX = e1.getBounds().width / 2;
+          e1.regY = e1.getBounds().height / 2;
+          e1.x = genRandom(that.W);
+          e1.y = -that.H / 2 + genRandom(that.H);
+          e1.visible = !1;
+          that.moneyBg2[c].push(e1);
+          that.qipaStage.stage.addChild(that.moneyBg2[c][d])
         }
-      },
-      /** 
-      ** qp_D 钞票随手势平滑滑出
-      **/
-      setBackground () {
-        var qp_F = 0;
-        var that = this
-        var createjs = window.create || createjs;
-        for (var a = 0; a < 2; a++) that.moneyBg1[qp_F][a].visible = !0,
-        createjs.Tween.get(that.moneyBg1[qp_F][a]).to({
-          y: that.H + that.moneyBg1[qp_F][a].getBounds().height / 2 + 100,
-          rotation: 720 + that.genRandom(400),
-          x: that.genRandom(that.W)
-        },
-        1E3 + that.genRandom(800)).to({
-          visible: !1
-        },
-        10).to({
-          x: that.genRandom(that.W),
-          y: -that.H / 2 + that.genRandom(that.H / 2),
-          rotation: 0
-        },
-        10);
-        for (var a = 0; a < 2; a++) that.moneyBg2[qp_F][a].visible = !0,
-        createjs.Tween.get(that.moneyBg2[qp_F][a]).to({
-          y: that.H + that.moneyBg2[qp_F][a].getBounds().height / 2 + 100,
-          rotation: 720 + that.genRandom(400),
-          x: that.genRandom(that.W)
-        },
-        1E3 + that.genRandom(800)).to({
-          visible: !1
-        },
-        10).to({
-          x: that.genRandom(that.W),
-          y: -that.H / 2 + that.genRandom(that.H / 2),
-          rotation: 0
-        },
-        10);
-        qp_F < 3 ? qp_F++:qp_F = 0
-      },
-
-      /** 
-      ** Qp_x 背景钞票动画
-      **/
-      qp_p () {
-        var that = this
-        var qp_q = that.qipaApp.score = 0;
-        var qp_n = that.second;
-        that.qp_m = -1;
-        // that.qipaStage.stage.num.txt.text = qp_n + '"';
-        that.countNum = 0;
-        that.gameStatus = 1;
-        // that.qipaApp.onGameStarted()
-        that.qipaStage.showFollowAnim(!1)
       },
       // 更新时间
       updateTime: function () {
@@ -745,7 +616,8 @@
                 that.warningText = 3
                 that.second = 15
                 that.countDown()
-                that.qp_p()
+                that.updateTimer = setInterval(that.update, 1)
+                that.qp_p();
               }, 1000)
             }
           }, 1000)
@@ -791,6 +663,7 @@
             that.gameCounts -= 1
             that.HandList = JSON.parse(res.data.deftHandValues)
             that.number = res.data.number
+            that.qipaStage.init(that.images)
             $('.money-list li img').attr({'scr': '../../../static/images/money-' + that.HandList[0] + '.png'})
           } else {
             console.log(res.data.msg)
@@ -1015,7 +888,7 @@
   }
   .gameCounting {
     background: #fbdc34;
-    padding: 0.5rem 0;
+    /*padding: 0.5rem 0;*/
     overflow: hidden;
     position: fixed;
     width: 100%;
@@ -1064,8 +937,8 @@
     width: 95%;
     height: 7.2rem;
     margin: 0 auto;
-    background: url('../../images/singles-day/money-box.png') no-repeat center 91%;
-    background-size: contain;
+    /*background: url('../../images/singles-day/money-box.png') no-repeat center 91%;
+    background-size: contain;*/
     z-index: 2;
   }
   .countTimes {

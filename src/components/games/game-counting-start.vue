@@ -216,7 +216,7 @@
     width: 95%;
     height: 4.5rem;
     margin: 0 auto;
-    background: url('../../images/singles-day/money-box.png') no-repeat center bottom;
+    background: url('../../../static/images/money-box.png') no-repeat center bottom;
     background-size: contain;
   }
   .record {
