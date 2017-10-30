@@ -124,10 +124,11 @@
 </script>
 <style scoped>
   .audioIcon {
-    padding: .12rem .5rem;
     position: fixed;
-    right: -0.3rem;
-    top: .2rem;
+    right: 0.1rem;
+    top: .28rem;
+    z-index: 44;
+    border-radius: .3rem;
     z-index: 44;
   }
   .gameStart {
@@ -276,5 +277,21 @@
     100% {
       top: -.05rem;
     }
+  }
+  @keyframes audioAnimation {
+    0% {
+      transform: rotate(0deg)
+    }
+    100% {
+      transform: rotate(360deg)
+    }
+  }
+  .audioIcon {
+    background: #fff;
+    animation: audioAnimation 1.5s 0s infinite linear;
+    -moz-animation: audioAnimation 1.5s 0s infinite linear;
+    -webkit-animation: audioAnimation 1.5s 0s infinite linear;
+    -o-animation: audioAnimation 1.5s 0s infinite linear;
+
   }
 </style>
