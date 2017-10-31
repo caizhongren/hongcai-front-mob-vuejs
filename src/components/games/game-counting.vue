@@ -157,7 +157,10 @@
       }
     },
     props: ['token'],
-    created () {
+    watch: {
+      showFirst: function (newVal, oldVal) {
+        newVal ? $('.moneyBox img').addClass('example') : $('.moneyBox img').removeClass('example')
+      }
     },
     directives: {
       'load': {
@@ -166,6 +169,11 @@
       }
     },
     mounted () {
+      if (this.showFirst) {
+        $('.moneyBox img').addClass('example')
+      } else {
+        $('.moneyBox img').removeClass('example')
+      }
       this.gameType = Number(this.$route.params.gameType)
       var createjs = window.create || createjs
       var that = this;
@@ -547,37 +555,27 @@
         audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
         this.$router.replace({name: 'gameStart', query: { act: this.activityType }})
       },
-      startWarning (times) { // 高能预警倒计时
+      startWarning () { // 高能预警倒计时
         var that = this
-        if (!times) { // times 不传是点击再次开始要加音效
-          audioPlayUtil.playOrPaused('../../static/audio/click.mp3', that.isPlay)
-        }
         that.showOrhideBackBtn(0)
         that.rewardMoney = 0
-        if (that.gameType === 1 && that.gameCounts <= 0) {
-          that.$router.push({name: 'gameOver'})
-        } else {
-          that.showReward = false
-          that.showWarning = true
-          var warningTimer = setInterval(function () {
-            that.warningText -= 1
-            if (that.warningText === 0) {
-              that.warningText = (that.warningText.toString() + '开始').slice(-2)
-              clearInterval(warningTimer)
-              // if (that.gameType === 1) {
-              //   that.updateGameCounts()
-              // }
-              setTimeout(function () {
-                that.showWarning = false
-                that.showMask = false
-                that.warningText = 3
-                that.second = 15
-                that.countDown()
-                that.qp_p();
-              }, 1000)
-            }
-          }, 1000)
-        }
+        that.showReward = false
+        that.showWarning = true
+        var warningTimer = setInterval(function () {
+          that.warningText -= 1
+          if (that.warningText === 0) {
+            that.warningText = (that.warningText.toString() + '开始').slice(-2)
+            clearInterval(warningTimer)
+            setTimeout(function () {
+              that.showWarning = false
+              that.showMask = false
+              that.warningText = 3
+              that.second = 15
+              that.countDown()
+              that.qp_p();
+            }, 1000)
+          }
+        }, 1000)
       },
       getGameCounts () {
         var that = this
@@ -596,12 +594,17 @@
             if (res.data && res.data.ret !== -1) {
               that.showFirst = true
               that.gameCounts = res.data.freeCount + res.data.count - res.data.usedCount
-              res.data.usedCount === 0 ? that.showFirst = true : that.showFirst = false
-              res.data.usedCount === 0 ? that.showWarning = false : that.showWarning = true
-              if (that.showWarning) {
-                that.startWarning()
+              if (that.gameType === 1 && that.gameCounts <= 0) {
+                that.$router.replace({name: 'gameOver', query: { act: that.activityType, isPlay: that.isPlay }})
+                clearInterval(that.backgroundTimer)
+              } else {
+                res.data.usedCount === 0 ? that.showFirst = true : that.showFirst = false
+                res.data.usedCount === 0 ? that.showWarning = false : that.showWarning = true
+                if (that.showWarning) {
+                  that.startWarning()
+                }
+                that.getMoneyList(1)
               }
-              that.getMoneyList(1)
             } else {
               console.log(res.data.msg)
             }
@@ -609,7 +612,7 @@
         } else { // 试玩
           that.getMoneyList(2)
           that.showFirst = false
-          that.startWarning(1)
+          that.startWarning()
         }
       },
       getMoneyList (type) {
@@ -631,10 +634,8 @@
       },
       closeFirstAndStart () { // 关闭首次引导并开始
         audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
-        this.showMask = false
         this.showFirst = false
-        // this.showFirst = false
-        this.startWarning(1)
+        this.startWarning()
       },
       showRewardMoney (elem, endVal, startVal, duration, decimal) { // 获得奖励自增动画
         var startTime = 0
@@ -706,6 +707,9 @@
           console.log(err)
         })
       }
+    },
+    destroyed () {
+      clearInterval(this.backgroundTimer)
     }
   }
 </script>
@@ -755,7 +759,7 @@
     top: 69%;
     left: 32.5%;
     font-size: .27rem;
-    z-index: 0;
+    z-index: 99;
   }
   /* 高能预警 */
   .start-mask {
@@ -832,6 +836,21 @@
     margin: 0 auto;
     background: url('../../../static/images/money-box.png') no-repeat center 100%;
     background-size: contain;
+  }
+  /* animation */
+  @keyframes gyrate {
+    0% {
+      transform: translateY(0.55rem);
+    }
+    100% {
+      transform: translateY(-0.55rem);
+    }
+  }
+  .moneyBox img.example {
+    animation: gyrate .8s 0s infinite alternate;
+    -moz-animation: gyrate .8s 0s infinite alternate;
+    -webkit-animation: gyrate .8s 0s infinite alternate;
+    -o-animation: gyrate .8s 0s infinite alternate;
   }
   .countTimes {
     overflow: hidden;

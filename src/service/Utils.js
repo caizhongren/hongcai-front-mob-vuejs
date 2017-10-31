@@ -266,8 +266,14 @@ let audioPlayUtil = {
       audio.setAttribute('preload', 'load')
       audio.setAttribute('src', url)
       if (audio.paused) {
+        var playPromise = audio.play()
         // 暂停中
-        audio.play()
+        if (playPromise) {
+          playPromise.then(function () {
+          }).catch(function (error) {
+            console.log(error)
+          })
+        }
       }
     }
   }
