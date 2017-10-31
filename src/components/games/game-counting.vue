@@ -152,7 +152,7 @@
             path: "../../../static/audio/",
             manifest: [{
               src: "count.mp3",
-              id: "sound"
+              id: "count"
             }]
           }
         },
@@ -188,24 +188,7 @@
       that.qipaStage.stage = null
       that.qipaStage.queue = null
       that.qipaStage.init = function(c) {
-        h = c
-        if (that.IS_ANDROID) {
-          createjs.Sound.play = function(c, b) {
-            var e = that.qipaStage.queue.getResult('sound');
-            console.log(that.qipaStage.queue)
-            console.log(that.qipaStage.queue.getResult('sound'))
-            e.currentTime = this.soundSprite[c];
-            e.play();
-            b != d && !0 == b && (null != l && (clearTimeout(l), l = null), l = setTimeout(function() {
-              createjs.Sound.play('silenttail')
-            },
-            1E3))
-          },
-          createjs.Sound.registMySound = function(a, c) {
-            this.soundSprite || (this.soundSprite = {});
-            this.soundSprite[a] = c
-          }
-        }
+        
         function qp_w() {
           that.IS_ANDROID && (createjs.Sound.registMySound("count", 0), createjs.Sound.registMySound("silenttail", 0.25));
           var a = new createjs.Shape;
@@ -254,10 +237,10 @@
               } else {
                 f = qp_y(a)
                 if (f <= qp_j) {
-                  that.qipaStage.stage.player.playAnimation(that.qipaStage.stage.player.m[qp_f])
-                  createjs.Sound.play("count", !0)
                   that.rewardMoney += that.HandList[that.countNum]
                   that.countNum++
+                  that.qipaStage.stage.player.playAnimation(that.qipaStage.stage.player.m[qp_f])
+                  createjs.Sound.play("count", !0)
                 } else {
                   qp_i.length--
                 }
@@ -308,7 +291,7 @@
         // h = c是图片集合， that.qipaStage.init调用时赋值
         that.images.img && that.qipaStage.queue.loadManifest(that.images.img, !1);
         that.images.audio && (that.IS_ANDROID ? that.qipaStage.queue.loadFile({
-          id: "sound",
+          id: "count",
           src: "../../../static/audio/count.mp3"
         }) : (createjs.Sound.alternateExtensions = ["ogg"], that.qipaStage.queue.installPlugin(createjs.Sound), that.qipaStage.queue.loadManifest(that.images.audio, !1)));
         that.images.noshare || that.qipaStage.queue.loadManifest({
@@ -327,7 +310,24 @@
         }, !1);
         that.qipaStage.queue.load()
         console.log('init')
-        
+        h = c
+        if (that.IS_ANDROID) {
+          createjs.Sound.play = function(c, b) {
+            var e = that.qipaStage.queue.getResult('count');
+            console.log(that.qipaStage.queue)
+            console.log(that.qipaStage.queue.getResult('count'))
+            e.currentTime = this.soundSprite[c];
+            e.play();
+            b != d && !0 == b && (null != l && (clearTimeout(l), l = null), l = setTimeout(function() {
+              createjs.Sound.play('silenttail')
+            },
+            1E3))
+          },
+          createjs.Sound.registMySound = function(a, c) {
+            this.soundSprite || (this.soundSprite = {});
+            this.soundSprite[a] = c
+          }
+        }
       };
       window.onresize = that.setCanvasSize;
       createjs.DisplayObject.prototype.do_cache = function() {
