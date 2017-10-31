@@ -58,7 +58,7 @@ module.exports = {
         exclude: [path.resolve('../../node_modules')]
       },
       {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        test: /\.(png|jpe?g|gif|svg|mp3)(\?.*)?$/,
         loader: 'url-loader',
         query: {
           limit: 10000,
