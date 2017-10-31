@@ -178,7 +178,8 @@
       <div class="successBg" v-if="NoIntegral">
         <div class="NoIntegral">
           <p class="mask-title">啊哦，积分不足哎...</p>
-          <p class="mask-content">您当前积分不足，快去投资赚取积分吧！</p>
+          <p class="mask-content" v-if="activityInfo.activityStatus === 1">您当前积分不足，快去投资赚取积分吧！</p>
+          <p class="mask-content" v-if="activityInfo.activityStatus === 2">您当前积分不足，不能兑换该奖励。</p>
           <div class="mask-btn IKnowBtn" :class="{'fl': activityInfo.activityStatus === 1, 'margin-auto': activityInfo.activityStatus === 2}" @click="closeMask()">我知道了</div>
           <div class="mask-btn toInvest fr" @click="toProjectList" v-if="activityInfo.activityStatus === 1">去投资</div>
         </div>
