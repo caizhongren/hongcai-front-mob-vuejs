@@ -1,5 +1,6 @@
 <template>
     <div class="gameStart" v-auto-height>
+      <audio preload="preload" id="click"><source src="../../static/audio/click.mp3"></audio>
       <div class="overflow-hid" @click="isPlay = !isPlay">
         <img v-if="isPlay" src="../../images/singles-day/audio-play.png" width="8%" class="audioIcon fr">
         <img v-if="!isPlay" src="../../images/singles-day/audio-pause.png" width="8%" class="audioIcon fr">
@@ -92,7 +93,7 @@
         bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function () {}, null)
       },
       goGame (gameType) {
-        audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
+        audioPlayUtil.playOrPaused('click', this.isPlay)
         if (!this.token) {
           this.toLogin()
           return
@@ -104,7 +105,7 @@
         }
       },
       goRecord () {
-        audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
+        audioPlayUtil.playOrPaused('click', this.isPlay)
         if (!this.token) {
           this.toLogin()
           return
@@ -112,12 +113,12 @@
         this.$router.push({name: 'gameRecord', query: { act: this.activityType, isPlay: this.isPlay }})
       },
       closeRules () {
-        audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
+        audioPlayUtil.playOrPaused('click', this.isPlay)
         this.showRulesMask = false
       },
       showRule () {
         this.showRulesMask = !this.showRulesMask
-        audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
+        audioPlayUtil.playOrPaused('click', this.isPlay)
       }
     }
   }

@@ -1,5 +1,6 @@
 <template>
     <div class="gameOver">
+      <audio preload="preload" id="click"><source src="../../static/audio/click.mp3"></audio>
       <div class="record" @click="getRecordList">游戏<br>记录</div>
       <div class="title">
         <img src="../../images/singles-day/emoji-03.png" alt="" width="15%">
@@ -66,7 +67,7 @@
     },
     methods: {
       getRecordList () {
-        audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
+        audioPlayUtil.playOrPaused('click', this.isPlay)
         this.$router.push({name: 'gameRecord', query: { act: this.activityType, isPlay: this.isPlay }})
       },
       oninputHandler () {
@@ -81,7 +82,7 @@
         this.project.term = this.project.term.length >= 3 && this.project.term > 365 ? this.project.term.slice(0, 2) : this.project.term
       },
       toInvestList () {
-        audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
+        audioPlayUtil.playOrPaused('click', this.isPlay)
         bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {}, null)
       },
       last (elem, index) {

@@ -1,5 +1,9 @@
 <template>
   <div class="gameCounting" v-auto-height v-load>
+    <audio preload="preload" id="count"><source src="../../static/audio/count.mp3"></audio>
+    <audio preload="preload" id="get"><source src="../../static/audio/get.mp3"></audio>
+    <audio preload="preload" id="tip"><source src="../../static/audio/tip.mp3"></audio>
+    <audio preload="preload" id="click"><source src="../../static/audio/click.mp3"></audio>
     <div class="rewardTitle" style=" position: absolute;left: 10%;top: .5rem">
       <div class="totalMoney">
         <span>¥</span><span class="money">{{rewardMoney}}</span>
@@ -238,7 +242,7 @@
                   that.countNum++
                   that.qipaStage.stage.player.playAnimation(that.qipaStage.stage.player.m[qp_f])
                   // createjs.Sound.play("count", !0)
-                  audioPlayUtil.playOrPaused('../../static/audio/count.mp3', that.isPlay)
+                  audioPlayUtil.playOrPaused('count', that.isPlay)
                 } else {
                   qp_i.length--
                 }
@@ -543,7 +547,7 @@
         }
       },
       toPriviledge () {
-        audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
+        audioPlayUtil.playOrPaused('click', this.isPlay)
         bridgeUtil.webConnectNative('HCNative_GoPrivilegedCapital', undefined, {}, function (res) {}, null)
       },
       showOrhideBackBtn (status) { // 显示或隐藏返回按钮 0隐藏 1显示
@@ -552,7 +556,7 @@
         }, function (res) {}, null)
       },
       goBack () {
-        audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
+        audioPlayUtil.playOrPaused('click', this.isPlay)
         this.$router.replace({name: 'gameStart', query: { act: this.activityType }})
       },
       startWarning () { // 高能预警倒计时
@@ -633,7 +637,7 @@
         })
       },
       closeFirstAndStart () { // 关闭首次引导并开始
-        audioPlayUtil.playOrPaused('../../static/audio/click.mp3', this.isPlay)
+        audioPlayUtil.playOrPaused('click', this.isPlay)
         this.showFirst = false
         this.startWarning()
       },
@@ -663,7 +667,7 @@
         var that = this
         if (that.second > 0) {
           if (that.second <= 6) {
-            audioPlayUtil.playOrPaused('../../static/audio/tip.mp3', that.isPlay)
+            audioPlayUtil.playOrPaused('tip', that.isPlay)
             that.hourglassAnimate(that.second * 1000 - 100)
           }
           that.second -= 1
@@ -678,7 +682,7 @@
           that.showReward = true
           that.showRewardMoney($('#rewardMoney'), that.rewardMoney, 0, 800, 0)
           if (that.rewardMoney >= 100) {
-            audioPlayUtil.playOrPaused('../../static/audio/get.mp3', that.isPlay)
+            audioPlayUtil.playOrPaused('get', that.isPlay)
             that.gameOverGetPriviledge(that.gameType, that.rewardMoney, that.number, that.countNum)
           }
           that.showOrhideBackBtn(1)
@@ -697,7 +701,7 @@
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
             if (amount >= 100) {
-              audioPlayUtil.playOrPaused('../../static/audio/get.mp3', that.isPlay)
+              audioPlayUtil.playOrPaused('get', that.isPlay)
             }
           } else {
             console.log(res.data.msg)

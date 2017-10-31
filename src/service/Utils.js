@@ -260,20 +260,17 @@ let InputMaskHelper = (function (eleCls) {
  */
 let audioPlayUtil = {
   // isPlay 默认不传是播放，传值是静音
-  playOrPaused: function (url, isPlay) {
+  playOrPaused: function (ele, isPlay) {
     if (isPlay) {
-      let audio = new Audio()
-      audio.setAttribute('preload', 'load')
-      audio.setAttribute('src', url)
-      if (audio.paused) {
-        var playPromise = audio.play()
-        // 暂停中
-        if (playPromise) {
-          playPromise.then(function () {
-          }).catch(function (error) {
-            console.log(error)
-          })
-        }
+      ele = document.getElementById(ele)
+      ele.currentTime = 0
+      var playPromise = ele.play()
+      // 暂停中
+      if (playPromise) {
+        playPromise.then(function () {
+        }).catch(function (error) {
+          console.log(error)
+        })
       }
     }
   }
