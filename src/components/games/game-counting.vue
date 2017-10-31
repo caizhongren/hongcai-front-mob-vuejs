@@ -105,9 +105,7 @@
         H: 1E3,
         IS_TOUCH: null,
         IS_ANDROID: Utils.isAndroid(),
-        SCREEN_SHOW_ALL: true,
         gameStatus: 1,
-        qp_m: 0,
         images: {
           img: {
             path: "../../../static/images/",
@@ -161,8 +159,6 @@
     },
     // props: ['token'],
     created () {
-      // this.getGameCounts()
-      window.vue = this
     },
     directives: {
       'load': {
@@ -171,11 +167,6 @@
       }
     },
     mounted () {
-      if (this.showFirst) {
-        // $('.moneyBox img').addClass('example')
-      } else {
-        // $('.moneyBox img').removeClass('example')
-      }
       this.gameType = Number(this.$route.params.gameType)
       var createjs = window.create || createjs
       var that = this;
@@ -190,7 +181,7 @@
       that.qipaStage.init = function(c) {
         
         function qp_w() {
-          that.IS_ANDROID && (createjs.Sound.registMySound("count", 0), createjs.Sound.registMySound("silenttail", 0.25));
+          // that.IS_ANDROID && (createjs.Sound.registMySound("count", 0), createjs.Sound.registMySound("silenttail", 0.25));
           var a = new createjs.Shape;
           a.graphics.beginFill("#fbdc34").drawRect(0, 0, that.W, that.H);
           that.qipaStage.stage.addChild(a);
@@ -214,7 +205,6 @@
               return
             }
              if (1 == that.gameStatus) {
-                that.qp_m = 0, 
                 that.gameStatus = 2
              }
              if (2 == that.gameStatus) {
@@ -240,7 +230,8 @@
                   that.rewardMoney += that.HandList[that.countNum]
                   that.countNum++
                   that.qipaStage.stage.player.playAnimation(that.qipaStage.stage.player.m[qp_f])
-                  createjs.Sound.play("count", !0)
+                  // createjs.Sound.play("count", !0)
+                  audioPlayUtil.playOrPaused('../../static/audio/count.mp3', that.isPlay)
                 } else {
                   qp_i.length--
                 }
@@ -290,10 +281,10 @@
         that.qipaStage.queue.on("complete", qp_w, null, !0);
         // h = c是图片集合， that.qipaStage.init调用时赋值
         that.images.img && that.qipaStage.queue.loadManifest(that.images.img, !1);
-        that.images.audio && (that.IS_ANDROID ? that.qipaStage.queue.loadFile({
-          id: "count",
-          src: "../../../static/audio/count.mp3"
-        }) : (createjs.Sound.alternateExtensions = ["ogg"], that.qipaStage.queue.installPlugin(createjs.Sound), that.qipaStage.queue.loadManifest(that.images.audio, !1)));
+        // that.images.audio && (that.IS_ANDROID ? that.qipaStage.queue.loadFile({
+        //   id: "count",
+        //   src: "../../../static/audio/count.mp3"
+        // }) : (createjs.Sound.alternateExtensions = ["ogg"], that.qipaStage.queue.installPlugin(createjs.Sound), that.qipaStage.queue.loadManifest(that.images.audio, !1)));    
         that.images.noshare || that.qipaStage.queue.loadManifest({
           path: "../../../static/images/",
           manifest: [{
@@ -311,23 +302,23 @@
         that.qipaStage.queue.load()
         console.log('init')
         h = c
-        if (that.IS_ANDROID) {
-          createjs.Sound.play = function(c, b) {
-            var e = that.qipaStage.queue.getResult('count');
-            console.log(that.qipaStage.queue)
-            console.log(that.qipaStage.queue.getResult('count'))
-            e.currentTime = this.soundSprite[c];
-            e.play();
-            b != d && !0 == b && (null != l && (clearTimeout(l), l = null), l = setTimeout(function() {
-              createjs.Sound.play('silenttail')
-            },
-            1E3))
-          },
-          createjs.Sound.registMySound = function(a, c) {
-            this.soundSprite || (this.soundSprite = {});
-            this.soundSprite[a] = c
-          }
-        }
+        // if (that.IS_ANDROID) {
+        //   createjs.Sound.play = function(c, b) {
+        //     var e = that.qipaStage.queue.getResult('count');
+        //     console.log(that.qipaStage.queue)
+        //     console.log(that.qipaStage.queue.getResult('count'))
+        //     e.currentTime = this.soundSprite[c];
+        //     e.play();
+        //     b != d && !0 == b && (null != l && (clearTimeout(l), l = null), l = setTimeout(function() {
+        //       createjs.Sound.play('silenttail')
+        //     },
+        //     1E3))
+        //   },
+        //   createjs.Sound.registMySound = function(a, c) {
+        //     this.soundSprite || (this.soundSprite = {});
+        //     this.soundSprite[a] = c
+        //   }
+        // }
       };
       window.onresize = that.setCanvasSize;
       createjs.DisplayObject.prototype.do_cache = function() {
@@ -500,7 +491,6 @@
       ** Qp_x 背景钞票动画
       **/
       qp_p () {
-        this.qp_m = -1;
         this.countNum = 0;
         this.gameStatus = 1;
         this.qipaStage.showFollowAnim(!1)
