@@ -153,11 +153,10 @@
               id: "count"
             }]
           }
-        },
-        token: '9c438068699b1c09f02b2ee1abb249e22386bbfab3fb117d'
+        }
       }
     },
-    // props: ['token'],
+    props: ['token'],
     created () {
     },
     directives: {
