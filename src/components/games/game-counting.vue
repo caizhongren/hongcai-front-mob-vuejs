@@ -188,6 +188,24 @@
       that.qipaStage.stage = null
       that.qipaStage.queue = null
       that.qipaStage.init = function(c) {
+        h = c
+        if (that.IS_ANDROID) {
+          createjs.Sound.play = function(c, b) {
+            var e = that.qipaStage.queue.getResult('sound');
+            console.log(that.qipaStage.queue)
+            console.log(that.qipaStage.queue.getResult('sound'))
+            e.currentTime = this.soundSprite[c];
+            e.play();
+            b != d && !0 == b && (null != l && (clearTimeout(l), l = null), l = setTimeout(function() {
+              createjs.Sound.play('silenttail')
+            },
+            1E3))
+          },
+          createjs.Sound.registMySound = function(a, c) {
+            this.soundSprite || (this.soundSprite = {});
+            this.soundSprite[a] = c
+          }
+        }
         function qp_w() {
           that.IS_ANDROID && (createjs.Sound.registMySound("count", 0), createjs.Sound.registMySound("silenttail", 0.25));
           var a = new createjs.Shape;
@@ -309,24 +327,7 @@
         }, !1);
         that.qipaStage.queue.load()
         console.log('init')
-        h = c
-        if (that.IS_ANDROID) {
-          createjs.Sound.play = function(c, b) {
-            var e = that.qipaStage.queue.getResult('sound');
-            console.log(that.qipaStage.queue)
-            console.log(that.qipaStage.queue.getResult('sound'))
-            e.currentTime = this.soundSprite[c];
-            e.play();
-            b != d && !0 == b && (null != l && (clearTimeout(l), l = null), l = setTimeout(function() {
-              createjs.Sound.play('silenttail')
-            },
-            1E3))
-          },
-          createjs.Sound.registMySound = function(a, c) {
-            this.soundSprite || (this.soundSprite = {});
-            this.soundSprite[a] = c
-          }
-        }
+        
       };
       window.onresize = that.setCanvasSize;
       createjs.DisplayObject.prototype.do_cache = function() {
