@@ -5,7 +5,6 @@
     <audio preload="preload" id="tip"><source src="../../static/audio/tip.mp3"></audio>
     <audio preload="preload" id="click"><source src="../../static/audio/click.mp3"></audio>
     <audio preload="preload" id="test2"><source src="../../static/audio/click.mp3"></audio>
-      <audio preload="preload" id="test1" src="../../static/audio/tip.mp3"></audio>
     <div class="rewardTitle" style=" position: absolute;left: 10%;top: .5rem">
       <div class="totalMoney">
         <span>¥</span><span class="money">{{rewardMoney}}</span>
@@ -175,7 +174,6 @@
       }
     },
     mounted () {
-      document.getElementById('test1').play()
       document.getElementById('test2').play()
       if (this.showFirst) {
         $('.moneyBox img').addClass('example')
@@ -194,7 +192,6 @@
       that.qipaStage.stage = null
       that.qipaStage.queue = null
       that.qipaStage.init = function(c) {
-        
         function qp_w() {
           // that.IS_ANDROID && (createjs.Sound.registMySound("count", 0), createjs.Sound.registMySound("silenttail", 0.25));
           var a = new createjs.Shape;
