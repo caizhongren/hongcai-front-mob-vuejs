@@ -55,7 +55,9 @@
           h = c
           if (that.IS_ANDROID) {
             createjs.Sound.play = function(c, b) {
-              var e = that.qipaStage.queue.getResult('sound');
+              var e = that.qipaStage.queue.getResult('count');
+              console.log(that.qipaStage.queue)
+              console.log(that.qipaStage.queue.getResult('count'))
               e.currentTime = this.soundSprite[c];
               e.play();
               b != d && !0 == b && (null != l && (clearTimeout(l), l = null), l = setTimeout(function() {
@@ -68,8 +70,6 @@
               this.soundSprite[a] = c
             }
           }
-        };
-        window.onload = function() {
           that.qipaStage.stage = new createjs.Stage("stage");
           that.qipaStage.queue = new createjs.LoadQueue(!1);
           that.qipaStage.queue.setMaxConnections(30);
@@ -87,7 +87,7 @@
           // h = c是图片集合， that.qipaStage.init调用时赋值
           h.img && that.qipaStage.queue.loadManifest(h.img, !1);
           h.audio && (that.IS_ANDROID ? that.qipaStage.queue.loadFile({
-            id: "sound",
+            id: "count",
             src: "../../../static/audio/count.mp3"
           }) : (createjs.Sound.alternateExtensions = ["ogg"], that.qipaStage.queue.installPlugin(createjs.Sound), that.qipaStage.queue.loadManifest(h.audio, !1)));
           h.noshare || that.qipaStage.queue.loadManifest({
@@ -107,6 +107,9 @@
           },
           !1);
           that.qipaStage.queue.load()
+        };
+        window.onload = function() {
+          
         };
         window.onresize = setCanvasSize;
         createjs.DisplayObject.prototype.do_cache = function() {
