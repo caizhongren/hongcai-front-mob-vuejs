@@ -1,6 +1,6 @@
 <template>
-  <div class="mask-common" v-if="showRulesMask">
-    <div class="rule-wrapper" id="rule-wrapper">
+  <div class="mask-common game-over" v-show="showRulesMask">
+    <div class="rule-wrapper" id="game-over">
       <img src="../../images/singles-day/close.png" class="closeRulesMask" v-if="showAnnualInvest" @click="closeRules">
       <!-- 规则弹窗显示 -->
       <div class="discription" v-if="showRulesAbout">
@@ -72,11 +72,17 @@
       },
       'project.term': function (newVal, oldVal) {
         this.annualInvestment = Math.ceil(this.project.amount * this.project.term / 365)
+      },
+      'showRulesMask': function (newVal, oldVal) {
+        var that = this
+        if (!newVal) {
+          that.project.term = ''
+          that.project.amount = ''
+        } else {
+          var handleEle = document.getElementById('game-over')
+          InputMaskHelper.windowChange(handleEle)
+        }
       }
-    },
-    mounted () {
-      var handleEle = document.getElementById('rule-wrapper')
-      InputMaskHelper.windowChange(handleEle)
     },
     created () {
       this.showRules = this.showRulesMask
