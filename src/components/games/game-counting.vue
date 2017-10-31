@@ -147,10 +147,11 @@
               id: "count"
             }]
           }
-        }
+        },
+        token: '9c438068699b1c09f02b2ee1abb249e22386bbfab3fb117d'
       }
     },
-    props: ['token'],
+    // props: ['token'],
     created () {
       // this.getGameCounts()
       window.vue = this
@@ -304,6 +305,8 @@
         if (that.IS_ANDROID) {
           createjs.Sound.play = function(c, b) {
             var e = that.qipaStage.queue.getResult('sound');
+            console.log(that.qipaStage.queue)
+            console.log(that.qipaStage.queue.getResult('sound'))
             e.currentTime = this.soundSprite[c];
             e.play();
             b != d && !0 == b && (null != l && (clearTimeout(l), l = null), l = setTimeout(function() {
