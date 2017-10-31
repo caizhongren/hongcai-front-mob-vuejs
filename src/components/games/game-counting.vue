@@ -124,12 +124,20 @@
               id: "m10000"
             },
             {
-              src: "money-box.png",
-              id: "box"
+              src: "mb-100.png",
+              id: "mb100"
             },
             {
-              src: "money-100.png",
-              id: "mb0"
+              src: "mb-500.png",
+              id: "mb500"
+            },
+            {
+              src: "mb-10000.png",
+              id: "mb10000"
+            },
+            {
+              src: "money-box.png",
+              id: "box"
             },
             {
               src: "money-bg05.png",
@@ -144,7 +152,7 @@
             path: "../../../static/audio/",
             manifest: [{
               src: "count.mp3",
-              id: "count"
+              id: "sound"
             }]
           }
         },
@@ -403,7 +411,7 @@
         this.addChild(this.mb);
     
         this.m = [];
-        for (var a = 0; 3 >= a; a++) this.m[a] = new createjs.Bitmap(that.qipaStage.queue.getResult("m" + money)),
+        for (var a = 0; 3 >= a; a++) this.m[a] = new createjs.Bitmap(that.qipaStage.queue.getResult("mb" + money)),
         this.m[a].regX = this.m[a].getBounds().width / 2,
         this.m[a].regY = this.m[a].getBounds().height / 2,
         this.m[a].scaleX = .9,
