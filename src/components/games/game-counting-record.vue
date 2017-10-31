@@ -1,6 +1,6 @@
 <template>
     <div class="gameRecord" v-auto-height>
-      <audio preload="preload" id="click"><source src="../../static/audio/click.mp3"></audio>
+      <audio preload="preload" id="click"><source src="../../../static/audio/click.mp3"></audio>
       <ul class="recordTitle">
         <li :class="{active: activeTab == 0}" @click="switchTab(0)">投资记录<span>(活动期间)</span></li>
         <li :class="{active: activeTab == 1}" @click="switchTab(1)">获奖记录</li>

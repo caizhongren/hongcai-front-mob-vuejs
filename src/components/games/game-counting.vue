@@ -1,10 +1,10 @@
 <template>
   <div class="gameCounting" v-auto-height v-load>
-    <audio preload="preload" id="count"><source src="../../static/audio/count.mp3"></audio>
-    <audio preload="preload" id="get"><source src="../../static/audio/get.mp3"></audio>
-    <audio preload="preload" id="tip"><source src="../../static/audio/tip.mp3"></audio>
-    <audio preload="preload" id="click"><source src="../../static/audio/click.mp3"></audio>
-    <audio preload="preload" id="test2"><source src="../../static/audio/click.mp3"></audio>
+    <audio preload="preload" id="count"><source src="../../../static/audio/count.mp3"></audio>
+    <audio preload="preload" id="get"><source src="../../../static/audio/get.mp3"></audio>
+    <audio preload="preload" id="tip"><source src="../../../static/audio/tip.mp3"></audio>
+    <audio preload="preload" id="click"><source src="../../../static/audio/click.mp3"></audio>
+    <audio preload="preload" id="test2"><source src="../../../static/audio/click.mp3"></audio>
     <div class="rewardTitle" style=" position: absolute;left: 10%;top: .5rem">
       <div class="totalMoney">
         <span>¥</span><span class="money">{{rewardMoney}}</span>

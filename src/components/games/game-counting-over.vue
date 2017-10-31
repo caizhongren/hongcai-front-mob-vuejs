@@ -1,6 +1,6 @@
 <template>
     <div class="gameOver">
-      <audio preload="preload" id="click"><source src="../../static/audio/click.mp3"></audio>
+      <audio preload="preload" id="click"><source src="../../../static/audio/click.mp3"></audio>
       <div class="record" @click="getRecordList">游戏<br>记录</div>
       <div class="title">
         <img src="../../images/singles-day/emoji-03.png" alt="" width="15%">
