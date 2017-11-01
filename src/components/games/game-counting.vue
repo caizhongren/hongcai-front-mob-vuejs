@@ -1,10 +1,9 @@
 <template>
   <div class="gameCounting" v-auto-height v-load>
-    <audio preload="preload" id="count"><source src="../../../static/audio/count.mp3"></audio>
-    <audio preload="preload" id="get"><source src="../../../static/audio/get.mp3"></audio>
-    <audio preload="preload" id="tip"><source src="http://m.test321.hongcai.com/styles/un-min/tip.mp3"></audio>
-    <audio preload="preload" id="click"><source src="../../../static/audio/click.mp3"></audio>
-    <audio preload="preload" id="test2"><source src="../../../static/audio/click.mp3"></audio>
+    <audio preload="preload" id="count"><source src="../../assets/count.mp3"></audio>
+    <audio preload="preload" id="get"><source src="../../assets/get.mp3"></audio>
+    <audio preload="preload" id="tip"><source src="../../assets/tip.mp3"></audio>
+    <audio preload="preload" id="click"><source src="../../assets/click.mp3"></audio>
     <div class="rewardTitle" style=" position: absolute;left: 10%;top: .5rem">
       <div class="totalMoney">
         <span>¥</span><span class="money">{{rewardMoney}}</span>
@@ -174,7 +173,6 @@
       }
     },
     mounted () {
-      document.getElementById('test2').play()
       if (this.showFirst) {
         $('.moneyBox img').addClass('example')
       } else {

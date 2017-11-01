@@ -1,6 +1,6 @@
 <template>
     <div class="gameStart" v-auto-height>
-      <audio preload="preload" id="click"><source src="../../../static/audio/click.mp3"></audio>
+      <audio preload="preload" id="click"><source src="../../assets/click.mp3"></audio>
       <div class="overflow-hid" @click="isPlay = !isPlay">
         <img v-if="isPlay" src="../../images/singles-day/audio-play.png" width="8%" class="audioIcon fr">
         <img v-if="!isPlay" src="../../images/singles-day/audio-pause.png" width="8%" class="audioIcon fr">
