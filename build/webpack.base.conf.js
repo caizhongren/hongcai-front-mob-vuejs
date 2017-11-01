@@ -58,11 +58,19 @@ module.exports = {
         exclude: [path.resolve('../../node_modules')]
       },
       {
-        test: /\.(png|jpe?g|gif|svg|mp3)(\?.*)?$/,
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         query: {
           limit: 10000,
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
+        }
+      },
+      {
+        test: /\.mp3(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: utils.assetsPath('assets/[name].[hash:7].[ext]')
         }
       },
       {
