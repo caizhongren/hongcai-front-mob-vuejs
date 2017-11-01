@@ -491,6 +491,7 @@
         }, 20 * b)
       }
       that.token ? that.getGameCounts() : null
+      audioPlayUtil.playOrPaused('click', that.isPlay)
     },
     components: {
     },
@@ -593,7 +594,6 @@
         that.HandList = []
         that.moneyBg1 = []
         that.moneyBg2 = []
-        that.backgroundTimer = null
         clearInterval(that.backgroundTimer)
         if (that.gameType === 1) { // 正式玩
           that.$http({
@@ -684,6 +684,7 @@
           // 关闭定时器
           clearInterval(that.scrTimer)
           clearTimeout(countTimer)
+          clearInterval(that.backgroundTimer)
           that.showMask = true
           that.showReward = true
           that.showRewardMoney($('#rewardMoney'), that.rewardMoney, 0, 800, 0)
