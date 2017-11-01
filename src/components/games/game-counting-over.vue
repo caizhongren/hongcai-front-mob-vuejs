@@ -103,6 +103,9 @@
           }
         }, 10)
       }
+    },
+    destroyed () {
+      audioPlayUtil.playOrPaused('click', this.isPlay)
     }
   }
 </script>

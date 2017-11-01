@@ -93,7 +93,7 @@
         bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function () {}, null)
       },
       goGame (gameType) {
-        audioPlayUtil.playOrPaused('click', this.isPlay)
+        // audioPlayUtil.playOrPaused('click', this.isPlay)
         if (!this.token) {
           this.toLogin()
           return
@@ -105,7 +105,7 @@
         }
       },
       goRecord () {
-        audioPlayUtil.playOrPaused('click', this.isPlay)
+        // audioPlayUtil.playOrPaused('click', this.isPlay)
         if (!this.token) {
           this.toLogin()
           return
@@ -120,6 +120,9 @@
         this.showRulesMask = !this.showRulesMask
         audioPlayUtil.playOrPaused('click', this.isPlay)
       }
+    },
+    destroyed () {
+      audioPlayUtil.playOrPaused('click', this.isPlay)
     }
   }
 </script>
