@@ -57,7 +57,6 @@ const WanduRegister = r => require.ensure([], () => r(require('../components/act
 const WanduSuccess = r => require.ensure([], () => r(require('../components/activity/wandu-success.vue')), 'WanduRegister')
 const QRcode = r => require.ensure([], () => r(require('../components/QRcode.vue')), 'QRcode')
 const Updates = r => require.ensure([], () => r(require('../components/recommendUpdates.vue')), 'Updates')
-const Test = r => require.ensure([], () => r(require('../components/games/test.vue')), 'test')
 Vue.use(Router)
 Vue.use(VueCookie)
 const routes = [
@@ -65,11 +64,6 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
-  },
-  {
-    path: '/test',
-    name: 'Test',
-    component: Test
   },
   {
     path: '/businessSuccess',
