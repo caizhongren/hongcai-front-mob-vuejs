@@ -16,17 +16,6 @@
         <div v-if="gameType === 1" class="gameCounts fr">剩余次数：{{gameCounts}}次</div> 
       </div>
     </div>
-    <!-- <div class="moneyBox">
-      <p class="i-know" @click="closeFirstAndStart">我知道了</p>
-      <ul class="money-list">
-        <li class="nextMoney">
-          <img src="../../../static/images/money-100.png" alt="">
-        </li>
-        <li v-bind:draggable="false" class="slideMoney" @touchstart="startTouchScroll($event)" @touchmove="moveTouchScroll($event)" @touchend="endTouchScroll($event)"  v-bind:style="{ top: moneyTop + 'rem' }">
-          <img v-bind:draggable="false" src="../../../static/images/money-100.png" alt="">
-        </li>
-      </ul>
-    </div> -->
     <canvas id='stage' width='300' height='300'></canvas>
     <div class="mask-common first-mask" v-show="showMask">
       <!-- 首次游戏引导蒙层 -->
@@ -41,7 +30,7 @@
         </div>
         <div class="moneyBox">
           <p class="i-know" @click="closeFirstAndStart">我知道了</p>
-          <img src="../../images/singles-day/money-100.png" width="57%">
+          <img src="../../../static/images/money-100.png" width="57%">
         </div>
       </div>
       <!-- 高能预警 -->
@@ -403,7 +392,7 @@
     methods: {
       playAgin () {
         if (this.gameType === 1 && this.gameCounts <= 0) {
-          this.$router.replace({name: 'gameOver', query: { act: this.activityType, isPlay: this.isPlay }})
+          this.$router.push({name: 'gameOver', query: { act: this.activityType, isPlay: this.isPlay }})
           clearInterval(this.backgroundTimer)
           return
         }
@@ -509,7 +498,7 @@
               that.showFirst = true
               that.gameCounts = res.data.freeCount + res.data.count - res.data.usedCount
               if (that.gameType === 1 && that.gameCounts <= 0) {
-                that.$router.replace({name: 'gameOver', query: { act: that.activityType, isPlay: that.isPlay }})
+                that.$router.push({name: 'gameOver', query: { act: that.activityType, isPlay: that.isPlay }})
                 clearInterval(that.backgroundTimer)
               } else {
                 res.data.usedCount === 0 ? that.showFirst = true : that.showFirst = false

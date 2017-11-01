@@ -19,7 +19,7 @@
       </ul>
       <div class="activityEndBtns" v-if="activityStatus === 2">活动已结束</div>
       <div class="moneyBox">
-        <img src="../../images/singles-day/money-100.png" width="56%">
+        <img src="../../../static/images/money-100.png" width="56%">
       </div>
       <div class="record" @click="goRecord()">游戏<br>记录</div>
       <game-rules :showRulesMask="showRulesMask" :closeRules='closeRules'></game-rules>
@@ -101,7 +101,7 @@
         if (gameType === 1 && this.gameCounts <= 0) {
           this.$router.push({name: 'gameOver', query: { act: this.activityType, isPlay: this.isPlay }})
         } else {
-          this.$router.replace({name: 'gameCounting', params: { gameType: gameType }, query: { act: this.activityType, isPlay: this.isPlay }})
+          this.$router.push({name: 'gameCounting', params: { gameType: gameType }, query: { act: this.activityType, isPlay: this.isPlay }})
         }
       },
       goRecord () {
