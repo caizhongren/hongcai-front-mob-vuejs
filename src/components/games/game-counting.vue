@@ -149,13 +149,6 @@
               src: "money-bg06.png",
               id: "d1"
             }]
-          },
-          audio: {
-            path: "../../../static/audio/",
-            manifest: [{
-              src: "count.mp3",
-              id: "count"
-            }]
           }
         }
       }
@@ -189,7 +182,6 @@
       that.qipaStage.queue = null
       that.qipaStage.init = function(c) {
         function qp_w() {
-          // that.IS_ANDROID && (createjs.Sound.registMySound("count", 0), createjs.Sound.registMySound("silenttail", 0.25));
           var a = new createjs.Shape;
           a.graphics.beginFill("#fbdc34").drawRect(0, 0, that.W, that.H);
           that.qipaStage.stage.addChild(a);
@@ -208,7 +200,6 @@
             that.qipaStage.stage.addChild(that.qipaStage.stage.player)
           });
           a.on("pressmove", function(e) {
-            //  (1 == that.gameStatus && (qp_s(), that.gameStatus = 2), 2 == that.gameStatus && (that.qipaStage.stage.player.m[qp_f].visible = !0, that.qipaStage.stage.player.m[qp_f].y += (a.localY - c) / 1.5))
             if (that.second <= 0) {
               return
             }
@@ -225,7 +216,6 @@
           });
           var f = 0;
           a.on("pressup", function(a) {
-            //  2 != that.gameStatus || (50 < c - a.localY ? (a = (new Date).getTime(), 0 < qp_i.length && qp_i[qp_i.length - 1] + 50 > a ? qp_a("WARNING: Too fast! maybe engine error.") : (f = qp_y(a), f <= qp_j ? (that.qipaStage.stage.player.playAnimation(that.qipaStage.stage.player.m[qp_f]), createjs.Sound.play("count", !0), that.rewardMoney += that.HandList[that.countNum], that.countNum++) : (qp_i.length--, qp_a("WARN: " + f)))) : (qp_z(d), that.qipaStage.stage.player.m[qp_f].visible = !1))
             if (that.second <= 0) {
               return
             }
@@ -234,11 +224,10 @@
               if (0 < qp_i.length && qp_i[qp_i.length - 1] + 50 > a) {
               } else {
                 f = qp_y(a)
-                if (f <= qp_j) {
+                if (f <= 20) {
                   that.rewardMoney += that.HandList[that.countNum]
                   that.countNum++
                   that.qipaStage.stage.player.playAnimation(that.qipaStage.stage.player.m[qp_f])
-                  // createjs.Sound.play("count", !0)
                   audioPlayUtil.playOrPaused('count', that.isPlay)
                 } else {
                   qp_i.length--
@@ -289,100 +278,16 @@
         that.qipaStage.queue.on("complete", qp_w, null, !0);
         // h = c是图片集合， that.qipaStage.init调用时赋值
         that.images.img && that.qipaStage.queue.loadManifest(that.images.img, !1);
-        // that.images.audio && (that.IS_ANDROID ? that.qipaStage.queue.loadFile({
-        //   id: "count",
-        //   src: "../../../static/audio/count.mp3"
-        // }) : (createjs.Sound.alternateExtensions = ["ogg"], that.qipaStage.queue.installPlugin(createjs.Sound), that.qipaStage.queue.loadManifest(that.images.audio, !1)));    
-        that.images.noshare || that.qipaStage.queue.loadManifest({
-          path: "../../../static/images/",
-          manifest: [{
-            src: "share_tip.png",
-            id: "share_tip"
-          }]
-        }, !1);
-        that.images.followed || that.qipaStage.queue.loadManifest({
-          path: "../../../static/images/",
-          manifest: [{
-            src: "follow_anim.png",
-            id: "follow"
-          }]
-        }, !1);
         that.qipaStage.queue.load()
         console.log('init')
         h = c
-        // if (that.IS_ANDROID) {
-        //   createjs.Sound.play = function(c, b) {
-        //     var e = that.qipaStage.queue.getResult('count');
-        //     console.log(that.qipaStage.queue)
-        //     console.log(that.qipaStage.queue.getResult('count'))
-        //     e.currentTime = this.soundSprite[c];
-        //     e.play();
-        //     b != d && !0 == b && (null != l && (clearTimeout(l), l = null), l = setTimeout(function() {
-        //       createjs.Sound.play('silenttail')
-        //     },
-        //     1E3))
-        //   },
-        //   createjs.Sound.registMySound = function(a, c) {
-        //     this.soundSprite || (this.soundSprite = {});
-        //     this.soundSprite[a] = c
-        //   }
-        // }
       };
       window.onresize = that.setCanvasSize;
-      createjs.DisplayObject.prototype.do_cache = function() {
-        var a = this.getBounds();
-        this.cache(a.x, a.y, a.width, a.height)
-      };
-      that.qipaStage.showFollowAnim = function(c) {
-        if (!h.followed) {
-          if (null == g) {
-            var spriteSheet = new createjs.SpriteSheet({
-              framerate: 10,
-              images: [that.qipaStage.queue.getResult("follow")],
-              frames: {
-                width: 170,
-                height: 150
-              },
-              animations: {
-                show: [0, 4, !0]
-              }
-            });
-            g = new createjs.Sprite(spriteSheet);
-            g.y = that.H;
-            g.name = "follow";
-            g.on("click",
-            function(a) {
-              a.stopImmediatePropagation();
-              that.IS_TOUCH && a.nativeEvent instanceof MouseEvent || window.open(APP_FOLLOW_URL)
-            })
-          } else that.qipaStage.stage.removeChild(g);
-          that.qipaStage.stage.addChild(g);
-          spriteSheet = g.getBounds();
-          c ? (g.play(), createjs.Tween.get(g).to({
-            regX: spriteSheet.width,
-            regY: 0,
-            visible: !0
-          }).to({
-            regX: 0,
-            regY: spriteSheet.height
-          },
-          200)) : createjs.Tween.get(g).to({
-            regX: spriteSheet.width,
-            regY: 0
-          },
-          200).to({
-            visible: !1
-          }).call(function() {
-            g.stop()
-          })
-        }
-      };
       that.H = 960; // canvas画布高。
       var qp_e = 3,
       qp_f = qp_e,
       qp_g = 400,
-      qp_i = [],
-      qp_j = 20
+      qp_i = []
       function genRandom(a) {
         return parseInt(Math.random() * a)
       }
@@ -436,7 +341,7 @@
         0 < qp_f ? qp_f--:qp_f = qp_e
       };
       /** 
-      ** qp_D 钞票随手势平滑滑出
+      ** qp_D 背景动画设置
       **/
       var qp_F = 0;
       function setBackground() {
@@ -510,7 +415,6 @@
       qp_p () {
         this.countNum = 0;
         this.gameStatus = 1;
-        this.qipaStage.showFollowAnim(!1)
       },
       setCanvasSize () { // 设置画布宽高
         var c = this.qipaStage.stage.canvas,
