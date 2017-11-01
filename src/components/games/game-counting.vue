@@ -176,7 +176,6 @@
       }
     },
     mounted () {
-      audioPlayUtil.playOrPaused('click', this.isPlay)
       if (this.showFirst) {
         $('.moneyBox img').addClass('example')
       } else {
@@ -497,6 +496,7 @@
         }, 20 * b)
       }
       that.token ? that.getGameCounts() : null
+      audioPlayUtil.playOrPaused('click', that.isPlay)
     },
     components: {
     },
