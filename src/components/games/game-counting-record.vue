@@ -76,7 +76,7 @@
 </template>
 <script>
   import gameRules from './game-rules.vue'
-  import {audioPlayUtil} from '../../service/Utils'
+  import {audioPlayUtil, Utils} from '../../service/Utils'
   export default {
     name: 'gameRecord',
     data () {
@@ -92,7 +92,8 @@
         pageSize: 10,
         investTotalPage: 1,
         rewardTotalPage: 1,
-        isPlay: this.$route.query.isPlay
+        isPlay: this.$route.query.isPlay,
+        IS_ANDROID: Utils.isAndroid()
       }
     },
     watch: {
@@ -104,6 +105,9 @@
       this.getRewardRecords(1, 10)
       this.getCumulativeInvestAmount()
       this.getPrivilegedCapital()
+    },
+    mounted () {
+      this.IS_ANDROID ? document.querySelector('.recordTitle').style.paddingTop = '0.45rem' : null
     },
     components: {
       gameRules
