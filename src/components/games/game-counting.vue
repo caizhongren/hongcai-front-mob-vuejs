@@ -67,13 +67,13 @@
           <ul class="rewardBtns">
             <li v-if="gameType === 1" @click="toPriviledge">查看特权本金</li>
             <li v-if="gameType === 2" @click="goBack">返回</li>
-            <li @click="getGameCounts">再玩一次</li>
+            <li @click="playAgin">再玩一次</li>
           </ul>
         </div>
         <div class="NoReward" v-if="rewardMoney <= 0">
           <img src="../../images/singles-day/emoji-04.png" width="25%">
           100块都没数到...
-          <div class="startAginBtn" @click="getGameCounts">再玩一次</div>
+          <div class="startAginBtn" @click="playAgin">再玩一次</div>
         </div>
       </div>
     </div>
@@ -165,6 +165,9 @@
     watch: {
       showFirst: function (newVal, oldVal) {
         newVal ? $('.moneyBox img').addClass('example') : $('.moneyBox img').removeClass('example')
+      },
+      token (val) {
+        val && val !== '' ? this.getGameCounts() : null
       }
     },
     directives: {
@@ -494,11 +497,14 @@
           y: a
         }, 20 * b)
       }
-      that.getGameCounts()
+      that.token ? that.getGameCounts() : null
     },
     components: {
     },
     methods: {
+      playAgin () {
+        location.reload()
+      },
       /** 
       ** Qp_x 背景钞票动画
       **/
@@ -628,7 +634,6 @@
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
-            that.gameCounts -= 1
             that.HandList = JSON.parse(res.data.deftHandValues)
             that.number = res.data.number
             that.qipaStage.init(that.images)
