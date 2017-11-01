@@ -176,6 +176,7 @@
       }
     },
     mounted () {
+      audioPlayUtil.playOrPaused('click', this.isPlay)
       if (this.showFirst) {
         $('.moneyBox img').addClass('example')
       } else {
@@ -573,7 +574,8 @@
         var warningTimer = setInterval(function () {
           that.warningText -= 1
           if (that.warningText === 0) {
-            that.warningText = (that.warningText.toString() + '开始').slice(-2)
+            // that.warningText = (that.warningText.toString() + '开始').slice(-2)
+            $('.count-down').html('开始')
             clearInterval(warningTimer)
             setTimeout(function () {
               that.showWarning = false
@@ -718,6 +720,7 @@
     },
     destroyed () {
       clearInterval(this.backgroundTimer)
+      audioPlayUtil.playOrPaused('click', this.isPlay)
     }
   }
 </script>

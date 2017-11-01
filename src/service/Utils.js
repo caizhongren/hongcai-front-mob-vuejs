@@ -265,14 +265,6 @@ let audioPlayUtil = {
       ele = document.getElementById(ele)
       ele.currentTime = 0
       ele.play()
-      // var playPromise = ele.play()
-      // 暂停中
-      // if (playPromise) {
-      //   playPromise.then(function () {
-      //   }).catch(function (error) {
-      //     console.log(error)
-      //   })
-      // }
     }
   }
 }

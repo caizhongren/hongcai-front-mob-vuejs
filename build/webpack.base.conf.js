@@ -69,7 +69,7 @@ module.exports = {
         test: /\.mp3(\?.*)?$/,
         loader: 'url-loader',
         options: {
-          limit: 10000,
+          limit: 1000000,
           name: utils.assetsPath('assets/[name].[hash:7].[ext]')
         }
       },

@@ -10,7 +10,8 @@ module.exports = {
     extract: isProduction
   }),
   transformToRequire: {
-    "source": "src"
+    "source": "src",
+    "audio": "src"
   },
   postcss: [
     require('autoprefixer')({
