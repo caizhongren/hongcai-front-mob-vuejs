@@ -176,12 +176,6 @@
       }
     },
     mounted () {
-      audioPlayUtil.playOrPaused('click', this.isPlay)
-      if (this.showFirst) {
-        $('.moneyBox img').addClass('example')
-      } else {
-        $('.moneyBox img').removeClass('example')
-      }
       this.gameType = Number(this.$route.params.gameType)
       var createjs = window.create || createjs
       var that = this;
@@ -502,6 +496,11 @@
     },
     methods: {
       playAgin () {
+        if (this.gameType === 1 && this.gameCounts <= 0) {
+          this.$router.replace({name: 'gameOver', query: { act: this.activityType, isPlay: this.isPlay }})
+          clearInterval(this.backgroundTimer)
+          return
+        }
         location.reload()
       },
       /** 
@@ -611,6 +610,7 @@
               } else {
                 res.data.usedCount === 0 ? that.showFirst = true : that.showFirst = false
                 res.data.usedCount === 0 ? that.showWarning = false : that.showWarning = true
+                that.gameCounts -= 1
                 if (that.showWarning) {
                   that.startWarning()
                 }
