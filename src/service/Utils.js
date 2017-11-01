@@ -264,14 +264,15 @@ let audioPlayUtil = {
     if (isPlay) {
       ele = document.getElementById(ele)
       ele.currentTime = 0
-      var playPromise = ele.play()
+      ele.play()
+      // var playPromise = ele.play()
       // 暂停中
-      if (playPromise) {
-        playPromise.then(function () {
-        }).catch(function (error) {
-          console.log(error)
-        })
-      }
+      // if (playPromise) {
+      //   playPromise.then(function () {
+      //   }).catch(function (error) {
+      //     console.log(error)
+      //   })
+      // }
     }
   }
 }
