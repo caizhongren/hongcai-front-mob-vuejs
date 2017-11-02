@@ -1,11 +1,11 @@
 <template>
-  <div class="breake-egg-record">
-    活动记录页
+  <div class="break-egg-calculator">
+    活动计算器
   </div>
 </template>
 <script>
   export default {
-    name: 'breakeEggRecord',
+    name: 'breakEggCalculator',
     data () {
       return {
       }
@@ -14,3 +14,4 @@
 </script>
 <style scoped>
 </style>
+  

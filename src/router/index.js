@@ -59,8 +59,8 @@ const RecordInformation = r => require.ensure([], () => r(require('../components
 const RiskManagement = r => require.ensure([], () => r(require('../components/disclosure/riskManagement.vue')), 'Disclosure')
 const Organization = r => require.ensure([], () => r(require('../components/disclosure/organization.vue')), 'Disclosure')
 const BusinessInformation = r => require.ensure([], () => r(require('../components/disclosure/businessInformation.vue')), 'Disclosure')
-const BreakeEgg = r => require.ensure([], () => r(require('../components/activity/breakeEgg.vue')), 'BreakeEgg')
-const BreakeEggRecord = r => require.ensure([], () => r(require('../components/activity/breakeEggRecord.vue')), 'BreakeEggRecord')
+const BreakEgg = r => require.ensure([], () => r(require('../components/activity/breakEgg.vue')), 'BreakEgg')
+const BreakEggRecord = r => require.ensure([], () => r(require('../components/activity/breakEggRecord.vue')), 'BreakEggRecord')
 Vue.use(Router)
 Vue.use(VueCookie)
 const routes = [
@@ -286,14 +286,14 @@ const routes = [
   },
   {
     path: '/activity/breake-egg',
-    name: 'BreakeEgg',
-    component: BreakeEgg,
+    name: 'BreakEgg',
+    component: BreakEgg,
     meta: {title: '诞旦有惊喜'}
   },
   {
     path: '/activity/breake-egg-record',
-    name: 'BreakeEggRecord',
-    component: BreakeEggRecord,
+    name: 'BreakEggRecord',
+    component: BreakEggRecord,
     meta: {title: '诞旦有惊喜'}
   },
   {
