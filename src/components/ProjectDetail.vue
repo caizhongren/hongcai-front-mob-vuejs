@@ -277,7 +277,6 @@
         this.activeTab = i
         $('.scroll').css('transform', 'translateY(0px)')
         document.querySelector('.scroll').style.webkitTransform = 'translateY(0px)'
-        this.page = 1
       },
       getProject: function () {
         this.$http({
