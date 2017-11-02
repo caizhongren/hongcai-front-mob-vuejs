@@ -59,7 +59,8 @@ const RecordInformation = r => require.ensure([], () => r(require('../components
 const RiskManagement = r => require.ensure([], () => r(require('../components/disclosure/riskManagement.vue')), 'Disclosure')
 const Organization = r => require.ensure([], () => r(require('../components/disclosure/organization.vue')), 'Disclosure')
 const BusinessInformation = r => require.ensure([], () => r(require('../components/disclosure/businessInformation.vue')), 'Disclosure')
-
+const BreakeEgg = r => require.ensure([], () => r(require('../components/activity/breakeEgg.vue')), 'BreakeEgg')
+const BreakeEggRecord = r => require.ensure([], () => r(require('../components/activity/breakeEggRecord.vue')), 'BreakeEggRecord')
 Vue.use(Router)
 Vue.use(VueCookie)
 const routes = [
@@ -282,6 +283,18 @@ const routes = [
     name: 'GoldenRecord',
     component: GoldenRecord,
     meta: {title: '兑换记录'}
+  },
+  {
+    path: '/activity/breake-egg',
+    name: 'BreakeEgg',
+    component: BreakeEgg,
+    meta: {title: '诞旦有惊喜'}
+  },
+  {
+    path: '/activity/breake-egg-record',
+    name: 'BreakeEggRecord',
+    component: BreakeEggRecord,
+    meta: {title: '诞旦有惊喜'}
   },
   {
     path: '/register-agree',
