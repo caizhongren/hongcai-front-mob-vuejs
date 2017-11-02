@@ -460,6 +460,7 @@
       },
       startWarning () { // 高能预警倒计时
         var that = this
+        that.getMoneyList(that.gameType)
         that.showOrhideBackBtn(0)
         that.rewardMoney = 0
         that.showReward = false
@@ -507,14 +508,12 @@
                 if (that.showWarning) {
                   that.startWarning()
                 }
-                that.getMoneyList(1)
               }
             } else {
               console.log(res.data.msg)
             }
           })
         } else { // 试玩
-          that.getMoneyList(2)
           that.showFirst = false
           that.startWarning()
         }
