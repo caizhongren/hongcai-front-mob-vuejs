@@ -475,8 +475,8 @@
               that.showWarning = false
               that.showMask = false
               that.warningText = 3
-              that.second = 15
               that.countDown()
+              that.second = 15
               that.qp_p();
             }, 1000)
           }
