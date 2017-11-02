@@ -285,13 +285,13 @@ const routes = [
     meta: {title: '兑换记录'}
   },
   {
-    path: '/activity/breake-egg',
+    path: '/activity/break-egg',
     name: 'BreakEgg',
     component: BreakEgg,
     meta: {title: '诞旦有惊喜'}
   },
   {
-    path: '/activity/breake-egg-record',
+    path: '/activity/break-egg-record',
     name: 'BreakEggRecord',
     component: BreakEggRecord,
     meta: {title: '诞旦有惊喜'}
