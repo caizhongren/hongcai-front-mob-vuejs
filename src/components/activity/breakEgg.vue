@@ -6,85 +6,91 @@
         <img src="../../images/break-egg/icon-head.png" width="14%">
         活动时间:2017年xx月xx日至2017年xx月xx日
       </div>
-      <!-- 砸蛋框 -->
-      <div class="eggsBox">
-        
+    </div>
+    <!-- 砸蛋框 -->
+    <div class="eggsBox">
+      
+    </div>
+    <div class="eggsBorder"></div>
+    <!-- 砸蛋按钮 -->
+    <div class="breakBtns">
+      <div v-if="token !== '' && activityStatus === 1">
+        <!-- 可砸蛋按钮 -->
+        <div v-if="breakCounts >0">
+          <img src="../../images/break-egg/btn-yellow-1.png" class="yellowBtn fl">
+          <img src="../../images/break-egg/btn-yellow-10.png" class="yellowBtn fr" v-show="breakCounts >=10">
+          <img src="../../images/break-egg/btn-grey-10.png" class="yellowBtn fr" v-show="breakCounts <10">
+        </div>
+        <!-- 没有砸蛋次数按钮 -->
+        <img v-if="breakCounts <=0" src="../../images/break-egg/btn-invest.png" class="margin-auto" width="48%">
       </div>
-      <div class="eggsBorder"></div>
-      <!-- 砸蛋按钮 -->
-      <div class="breakBtns">
-        <div v-if="token !== '' && activityStatus === 1">
-          <!-- 可砸蛋按钮 -->
-          <div v-if="breakCounts >0">
-            <img src="../../images/break-egg/btn-yellow-1.png" class="yellowBtn fl">
-            <img src="../../images/break-egg/btn-yellow-10.png" class="yellowBtn fr" v-show="breakCounts >=10">
-            <img src="../../images/break-egg/btn-grey-10.png" class="yellowBtn fr" v-show="breakCounts <10">
-          </div>
-          <!-- 没有砸蛋次数按钮 -->
-          <img v-if="breakCounts <=0" src="../../images/break-egg/btn-invest.png" class="margin-auto" width="48%">
-        </div>
-        <!-- 未登录按钮 -->
-        <img v-if="!token" src="../../images/break-egg/btn-login.png" class="margin-auto" width="48%">
-        <img v-if="token !== '' &&  activityStatus === 2" src="../../images/break-egg/btn-activiiyEnd.png" class="margin-auto" width="45%">
+      <!-- 未登录按钮 -->
+      <img v-if="!token" src="../../images/break-egg/btn-login.png" class="margin-auto" width="48%">
+      <img v-if="token !== '' &&  activityStatus === 2" src="../../images/break-egg/btn-activiiyEnd.png" class="margin-auto" width="45%">
+    </div>
+    <!-- 活动介绍 -->
+    <div class="egg-info">
+      <div class="cumulativeInvestAmount">
+        <img src="../../images/break-egg/icon-eggs.png" width="14%">
+        累计年化投资金额：{{cumulativeInvestAmount}}元
       </div>
-      <!-- 活动介绍 -->
-      <div class="egg-info">
-        <div class="cumulativeInvestAmount">
-          <img src="../../images/break-egg/icon-eggs.png" width="14%">
-          累计年化投资金额：{{cumulativeInvestAmount}}元
-        </div>
-        <div class="">
-          <p class="rewardDetail">查看奖励详情>></p>
-          <p class="example">活动期间，新增投资宏财精选、宏财尊贵项目(不含债权转让)，累计年化投资金额每满1000元，即可获得彩蛋一枚，砸蛋有机会获得以下奖励：</p>
-        </div>
-        <ul class="privileged">
-          <li><img src="../../images/break-egg/privileged-1w.png" alt=""></li>
-          <li><img src="../../images/break-egg/privileged-5w.png" alt=""></li>
-          <li><img src="../../images/break-egg/privileged-10w.png" alt=""></li>
-        </ul>
-        <ul class="rate">
-          <li><img src="../../images/break-egg/rate-2.png" alt=""></li>
-          <li><img src="../../images/break-egg/rate-5.png" alt=""></li>
-        </ul>
-        <img src="../../images/break-egg/money.png" class="bottomMoney">
+      <div class="">
+        <p class="rewardDetail">查看奖励详情>></p>
+        <p class="example">活动期间，新增投资宏财精选、宏财尊贵项目(不含债权转让)，累计年化投资金额每满1000元，即可获得彩蛋一枚，砸蛋有机会获得以下奖励：</p>
       </div>
-      <!-- 活动规则 -->
-      <div class="egg-rules">
-        <div class="rules">
-          <img src="../../images/break-egg/icon-eggs.png" width="14%">
-          活动规则
-        </div>
-        <div class="">
-          <p class="rule-num"><span>1</span>活动时间</p>
-          <p class="rule-content">本次活动仅限于2017年xx月xx日至2017年xx月xx日内参与有效，活动期间，可随时砸蛋领取奖励，如活动结束后3个工作日内仍未砸蛋领奖，将视为自动放弃奖励；</p>
-        </div>
-        <div class="">
-          <p class="rule-num"><span>2</span>参与方式</p>
-          <p class="rule-content">活动期间，用户新增年化投资金额每满1000元(本活动仅针对投资宏财精选及宏财尊贵项目，不含债权转让项目)，即可获得一枚奖励彩蛋，砸彩蛋可获得特权本金奖励或无条件加息券奖励；</p>
-        </div>
-        <div class="">
-          <p class="rule-num"><span>3</span>关于无条件加息优惠券</p>
-          <p class="rule-content">无条件加息券可在投资宏财精选及宏财尊贵项目时使用，无起投金额限制，每笔投资仅可使用一张优惠券(优惠券包含加息券及现金券)，使用有效期至2017年xx月xx日，过期作废，如此超稀有奖励可别忘记及时使用哟;</p>
-        </div>
-        <div class="">
-          <p class="rule-num"><span>4</span>关于特权本金奖励</p>
-          <p class="rule-content">特权本金是平台向用户提供的一种虚拟资金，用于回馈奖励等活动。其本身不可提现或用于投资，但享受8%年化收益率。根据不同的活动规则，特权本金具有不同的计息时长，每日计息产生的收益直接发放至用户可用余额，可用于提现或投资；</p>
-        </div>
-        <div class="">
-          <p class="rule-num"><span>5</span>在法律规定范围内，平台保留本活动最终解释权。%年化收益率。根据不同的活动规则，特权本金具有不同的计息时长，每日计息产生的收益直接发放至用户可用余额，可用于提现或投资；</p>
-        </div>
+      <ul class="privileged">
+        <li><img src="../../images/break-egg/privileged-1w.png" alt=""></li>
+        <li><img src="../../images/break-egg/privileged-5w.png" alt=""></li>
+        <li><img src="../../images/break-egg/privileged-10w.png" alt=""></li>
+      </ul>
+      <ul class="rate">
+        <li><img src="../../images/break-egg/rate-2.png" alt=""></li>
+        <li><img src="../../images/break-egg/rate-5.png" alt=""></li>
+      </ul>
+      <img src="../../images/break-egg/money.png" class="bottomMoney">
+    </div>
+    <!-- 活动规则 -->
+    <div class="egg-rules">
+      <div class="rules">
+        <img src="../../images/break-egg/icon-eggs.png" width="14%">
+        活动规则
       </div>
+      <div class="">
+        <p class="rule-num"><span>1</span>活动时间</p>
+        <p class="rule-content">本次活动仅限于2017年xx月xx日至2017年xx月xx日内参与有效，活动期间，可随时砸蛋领取奖励，如活动结束后3个工作日内仍未砸蛋领奖，将视为自动放弃奖励；</p>
+      </div>
+      <div class="">
+        <p class="rule-num"><span>2</span>参与方式</p>
+        <p class="rule-content">活动期间，用户新增年化投资金额每满1000元(本活动仅针对投资宏财精选及宏财尊贵项目，不含债权转让项目)，即可获得一枚奖励彩蛋，砸彩蛋可获得特权本金奖励或无条件加息券奖励；</p>
+      </div>
+      <div class="">
+        <p class="rule-num"><span>3</span>关于无条件加息优惠券</p>
+        <p class="rule-content">无条件加息券可在投资宏财精选及宏财尊贵项目时使用，无起投金额限制，每笔投资仅可使用一张优惠券(优惠券包含加息券及现金券)，使用有效期至2017年xx月xx日，过期作废，如此超稀有奖励可别忘记及时使用哟;</p>
+      </div>
+      <div class="">
+        <p class="rule-num"><span>4</span>关于特权本金奖励</p>
+        <p class="rule-content">特权本金是平台向用户提供的一种虚拟资金，用于回馈奖励等活动。其本身不可提现或用于投资，但享受8%年化收益率。根据不同的活动规则，特权本金具有不同的计息时长，每日计息产生的收益直接发放至用户可用余额，可用于提现或投资；</p>
+      </div>
+      <div class="">
+        <p class="rule-num"><span>5</span>在法律规定范围内，平台保留本活动最终解释权。%年化收益率。根据不同的活动规则，特权本金具有不同的计息时长，每日计息产生的收益直接发放至用户可用余额，可用于提现或投资；</p>
+      </div>
+    </div>
+    <div class="mask-common" v-show="showMask">
+      <break-Egg-Calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator" v-show="showCalculator"></break-Egg-Calculator>
     </div>
   </div>
 </template>
 <script>
+  import breakEggCalculator from './breakEggCalculator.vue'
   export default {
     name: 'breakEgg',
     data () {
       return {
         breakCounts: 2,
         activityStatus: 1, // 1 正常 2 结束
-        cumulativeInvestAmount: 0
+        cumulativeInvestAmount: 0,
+        showCalculator: false,
+        showMask: false
       }
     },
     props: ['token'],
@@ -96,11 +102,15 @@
     created () {
       this.token && this.token !== '' ? this.getActivityStatus() : null
     },
-    // components: {GoldenAddress},
     methods: {
+      closeCalculator () {
+        this.showMask = false
+        this.showCalculator = false
+      },
       getActivityStatus () {
       }
-    }
+    },
+    components: {breakEggCalculator}
   }
 </script>
 <style scoped>
