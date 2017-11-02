@@ -5,7 +5,7 @@
       <!-- 规则弹窗显示 -->
       <div class="discription" v-if="showRulesAbout">
         活动期间，每人均有一次免费游戏机会，新增<img src="../../images/singles-day/icon-02.png" alt="" width="5%">年化投资金额每满<img src="../../images/singles-day/icon-01.png" alt="" width="9%">2000元
-        即可再获得&nbsp;<img src="../../images/singles-day/emoji-02.png" alt="" width="6%" class="position-ab">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1次游戏机会哦！
+        (不含债权转让项目)，即可再获得&nbsp;<img src="../../images/singles-day/emoji-02.png" alt="" width="6%" class="position-ab">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1次游戏机会哦！
       </div>
       <div class="calculator">
         <ul>
@@ -37,7 +37,7 @@
       <p class="calculator-tip" v-if="showRulesAbout">奖励发放30天后，如仍未开通银行存管，奖励将会自动失效哦～</p>
       <p class="close-btn" v-if="showRulesAbout" @click="closeRules">我知道了<img src="../../images/singles-day/emoji-01.png" alt="" width="30%" class="fr"></p>
       <!-- 投资记录弹窗显示 -->
-      <p class="calculator-tip rules-tip" v-if="showAnnualInvest">活动期间，新增年化投资金额每满2000元，即可获得一次游戏机会！</p>
+      <p class="calculator-tip rules-tip" v-if="showAnnualInvest">活动期间，新增年化投资金额每满2000元(不含债权转让项目)，即可获得一次游戏机会！</p>
       <p class="calculator-tip" v-if="showAnnualInvest">
         <img src="../../images/singles-day/emoji-01.png" alt="" width="10%" class="display-inbl">举个栗子：<br>
         宏财宝宝投资160天项目5000元，则该笔投资折合年化投资金额为<br>
