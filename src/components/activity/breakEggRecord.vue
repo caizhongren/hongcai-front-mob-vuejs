@@ -5,7 +5,7 @@
 </template>
 <script>
   export default {
-    name: 'breakEggRecord',
+    name: 'BreakEggRecord',
     data () {
       return {
       }

@@ -22,10 +22,11 @@
           <img src="../../images/break-egg/btn-grey-10.png" class="yellowBtn fr" v-show="breakCounts <10">
         </div>
         <!-- 没有砸蛋次数按钮 -->
-        <img v-if="breakCounts <=0" src="../../images/break-egg/btn-invest.png" class="margin-auto" width="48%">
+        <img v-if="breakCounts <=0" src="../../images/break-egg/btn-invest.png" class="margin-auto" width="48%" @click="toInvest()">
       </div>
       <!-- 未登录按钮 -->
-      <img v-if="!token" src="../../images/break-egg/btn-login.png" class="margin-auto" width="48%">
+      <img v-if="!token" src="../../images/break-egg/btn-login.png" class="margin-auto" width="48%" @click="toLogin">
+      <!-- 活动已结束按钮 -->
       <img v-if="token !== '' &&  activityStatus === 2" src="../../images/break-egg/btn-activiiyEnd.png" class="margin-auto" width="45%">
     </div>
     <!-- 活动介绍 -->
@@ -35,7 +36,7 @@
         累计年化投资金额：{{cumulativeInvestAmount}}元
       </div>
       <div class="">
-        <p class="rewardDetail">查看奖励详情>></p>
+        <p class="rewardDetail" @click="toRecord">查看奖励详情>></p>
         <p class="example">活动期间，新增投资宏财精选、宏财尊贵项目(不含债权转让)，累计年化投资金额每满1000元，即可获得彩蛋一枚，砸蛋有机会获得以下奖励：</p>
       </div>
       <ul class="privileged">
@@ -72,15 +73,18 @@
         <p class="rule-content">特权本金是平台向用户提供的一种虚拟资金，用于回馈奖励等活动。其本身不可提现或用于投资，但享受8%年化收益率。根据不同的活动规则，特权本金具有不同的计息时长，每日计息产生的收益直接发放至用户可用余额，可用于提现或投资；</p>
       </div>
       <div class="">
-        <p class="rule-num"><span>5</span>在法律规定范围内，平台保留本活动最终解释权。%年化收益率。根据不同的活动规则，特权本金具有不同的计息时长，每日计息产生的收益直接发放至用户可用余额，可用于提现或投资；</p>
+        <p class="rule-num"><span>5</span>在法律规定范围内，平台保留本活动最终解释权。</p>
       </div>
     </div>
+    <div v-if="isIos" class="iosTips">该活动与设备生产商Apple Inc.公司无关</div>
+    <button class="invest-fixed-btn" @click="toInvest()" :disabled="busy">立即投资</button>
     <div class="mask-common" v-show="showMask">
       <break-Egg-Calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator" v-show="showCalculator"></break-Egg-Calculator>
     </div>
   </div>
 </template>
 <script>
+  import {bridgeUtil, Utils} from '../../service/Utils'
   import breakEggCalculator from './breakEggCalculator.vue'
   export default {
     name: 'breakEgg',
@@ -90,7 +94,9 @@
         activityStatus: 1, // 1 正常 2 结束
         cumulativeInvestAmount: 0,
         showCalculator: false,
-        showMask: false
+        showMask: false,
+        busy: false,
+        isIos: Utils.isIos()
       }
     },
     props: ['token'],
@@ -108,6 +114,20 @@
         this.showCalculator = false
       },
       getActivityStatus () {
+      },
+      toInvest () {
+        var that = this
+        that.busy = true
+        setTimeout(function () {
+          that.busy = false
+        }, 2000)
+        bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {}, null)
+      },
+      toRecord () {
+        this.$router.push({name: 'BreakEggRecord'})
+      },
+      toLogin () {
+        bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function (response) {}, null)
       }
     },
     components: {breakEggCalculator}
@@ -116,8 +136,7 @@
 <style scoped>
   .break-egg {
     background: #fa6654;
-  }
-  .egg-header {
+    padding-bottom: 1.1rem;
   }
   .egg-header img.header {
     margin-top: -.45rem;
@@ -185,10 +204,10 @@
   }
   .egg-rules {
     height: auto;
-    margin-bottom: 0;
     font-size: .2rem;
     color: #751319;
     text-align: left;
+    margin-bottom: .2rem;
   }
   .bottomMoney {
     width: 84%;
@@ -277,5 +296,41 @@
   }
   .rate li img {
     width: 80%;
+  }
+  .rule-num span {
+    display: inline-block;
+    width: .5rem;
+    height: .5rem;
+    background: url('../../images/break-egg/icon-rule.png') no-repeat center center;
+    background-size: contain;
+    text-align: center;
+    line-height: .5rem;
+    padding-left: .14rem;
+    margin-right: .1rem;
+  }
+  .rule-content {
+    width: 86%;
+    margin-left: 13%;
+    margin-bottom: .3rem;
+  }
+  .iosTips {
+    font-size: .2rem;
+    text-align: center;
+    color: rgba(254, 254, 254, 0.7);
+  }
+  .invest-fixed-btn {
+    width: 100%;
+    height: .9rem;
+    border: none;
+    line-height: .9rem;
+    color: #751319;
+    font-size: .28rem;
+    font-weight: bold;
+    background-color: #feee33;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
   }
 </style>
