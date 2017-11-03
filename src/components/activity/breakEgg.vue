@@ -99,7 +99,7 @@
   </div>
 </template>
 <script>
-  import {bridgeUtil, Utils} from '../../service/Utils'
+  import {bridgeUtil, Utils, ModalHelper} from '../../service/Utils'
   import breakEggCalculator from './breakEggCalculator.vue'
   import $ from 'zepto'
   export default {
@@ -121,6 +121,9 @@
     watch: {
       token (val) {
         val && val !== '' ? this.getActivityStatus() : null
+      },
+      showMask: function (newVal, oldVal) {
+        newVal ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
     created () {
@@ -296,7 +299,7 @@
     line-height: 1.35;
     text-align: justify;
     color: #8b3424;
-    padding: .2rem .25rem;
+    padding: .2rem .25rem 0;
   }
   .privileged {
     overflow: hidden;
