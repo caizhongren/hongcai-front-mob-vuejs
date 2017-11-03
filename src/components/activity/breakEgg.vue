@@ -31,7 +31,7 @@
         <!-- 可砸蛋按钮 -->
         <div v-if="breakNumber >0">
           <img src="../../images/break-egg/btn-yellow-1.png" class="yellowBtn fl" @click="breakEgg(1)">
-          <img src="../../images/break-egg/btn-yellow-10.png" class="yellowBtn fr" v-show="breakNumber >=10" @click="breakEgg(10)">
+          <img src="../../images/break-egg/btn-yellow-10.png" class="yellowBtn fr" v-show="breakNumber >=10" @click="breakEgg(2)">
           <img src="../../images/break-egg/btn-grey-10.png" class="greyBtn fr" v-show="breakNumber <10">
         </div>
         <!-- 没有砸蛋次数按钮 -->
@@ -124,13 +124,10 @@
           <p class="title">恭喜您获得</p>
           <div class="receive">
             <div class="priviledges">
-              <img src="../../images/break-egg/privileged-1w.png" alt="" class="" width="18%"><span>x2</span>
-              <img src="../../images/break-egg/privileged-1w.png" alt="" class="" width="18%"><span>x2</span>
-              <img src="../../images/break-egg/privileged-1w.png" alt="" class="" width="18%"><span>x2</span>
+              <div v-for="reward in rewardList" v-show="reward.type === 1"><img src="../../images/break-egg/privileged-1w.png" width="66%"><span>x{{reward.num}}</span></div>
             </div>
             <div class="rate-coupons">
-              <img src="../../images/break-egg/reward-rate-2.png" alt="" class="" width="26%"><span>x2</span>
-              <img src="../../images/break-egg/reward-rate-2.png" alt="" class="" width="26%"><span>x2</span>
+              <div v-for="reward in rewardList" v-show="reward.type === 2"><img src="../../images/break-egg/reward-rate-2.png" width="70%"><span>x{{reward.num}}</span></div>
             </div>
             <img v-bind:src="brokenEggSrc" alt="" class="display-bl margin-auto" width="55%">
             <img src="../../images/break-egg/reward-egg3.png" alt="" class="position-ab reward-break" width="24%">
@@ -165,7 +162,34 @@
         isIos: Utils.isIos(),
         showMask: false,
         oneTimeMsgs: ['下次能不能轻点敲人家～', '先有鸡先有蛋?你告诉宝宝…', '你挑着蛋～我牵着马～'],
-        tenTimesMsgs: ['噼里啪啦，财气冲天哟～', '蛋无虚发，每个都营养“十”足哟～', '大力出奇迹～土豪再一次～']
+        tenTimesMsgs: ['噼里啪啦，财气冲天哟～', '蛋无虚发，每个都营养“十”足哟～', '大力出奇迹～土豪再一次～'],
+        rewardList: [
+          // {
+          //   type: 1,
+          //   description: 'hhhh',
+          //   num: 1
+          // },
+          // {
+          //   type: 1,
+          //   description: 'hhhh',
+          //   num: 2
+          // },
+          {
+            type: 1,
+            description: 'hhhh',
+            num: 3
+          },
+          {
+            type: 2,
+            description: 'hhhh',
+            num: 4
+          },
+          {
+            type: 2,
+            description: 'hhhh',
+            num: 5
+          }
+        ]
       }
     },
     props: ['token'],
@@ -216,8 +240,18 @@
       },
       breakEgg (breakCounts) {
         // breakCounts // 砸蛋 1次 10次
+        var that = this
+        // this.$http.get('/activity/breakEggs/0/break', {
+        //   token: that.token,
+        //   type: breakCounts
+        // }).then(function (res) {
+        //   if (!res.data || res.data.ret === -1) {
+        //     return
+        //   }
+        //   that.rewardList = res.data
+        // })
         $('.hammer').addClass('hammerRotate')
-        this.beforeEggBreakAnimate(breakCounts)
+        that.beforeEggBreakAnimate(breakCounts)
       },
       beforeEggBreakAnimate (breakCounts) { // 蛋壳打破之前
         var that = this
@@ -601,5 +635,23 @@
   }
   .receive .rate-coupons span {
     top: -.56rem;
+  }
+  .priviledges div {
+    width: 25%;
+    display:inline-block;
+    text-align: left;
+  }
+  .priviledges div span{
+    display:inline-block;
+    width:6%;
+  }
+  .rate-coupons div {
+    width: 35%;
+    display:inline-block;
+    text-align: left;
+  }
+  .rate-coupons div span {
+    display:inline-block;
+    width:24%;
   }
 </style>
