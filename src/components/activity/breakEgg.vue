@@ -9,20 +9,33 @@
     </div>
     <!-- 砸蛋框 -->
     <div class="eggsBox">
-      
+      <div class="tipBox">
+        <p v-show="token !== '' && activityStatus === 1">
+          <span v-show="breakNumber >0">剩余彩蛋{{breakNumber}}枚</span>
+          <span v-show="breakNumber <=0">窝里空空如也...</span>
+        </p>
+        <p v-show="!token">马上登录砸彩蛋</p>
+        <p v-show="token !== '' &&  activityStatus === 2">活动结束了</p>
+      </div>
+      <div v-show="!token || (token!== '' && activityStatus === 1 && breakNumber >0)">
+        <img v-bind:src="eggImgSrc" class="egg" width="50%">
+        <img src="../../images/break-egg/hammer.png" class="hammer">
+        <img src="../../images/break-egg/eggs.png" class="eggs">
+      </div>
+      <img v-show="token !== '' && (activityStatus === 2 || breakNumber <=0)" src="../../images/break-egg/icon-head3.png" class="egg margin-auto" width="56%">
     </div>
     <div class="eggsBorder"></div>
     <!-- 砸蛋按钮 -->
     <div class="breakBtns">
       <div v-if="token !== '' && activityStatus === 1">
         <!-- 可砸蛋按钮 -->
-        <div v-if="breakCounts >0">
-          <img src="../../images/break-egg/btn-yellow-1.png" class="yellowBtn fl">
-          <img src="../../images/break-egg/btn-yellow-10.png" class="yellowBtn fr" v-show="breakCounts >=10">
-          <img src="../../images/break-egg/btn-grey-10.png" class="yellowBtn fr" v-show="breakCounts <10">
+        <div v-if="breakNumber >0">
+          <img src="../../images/break-egg/btn-yellow-1.png" class="yellowBtn fl" @click="breakEgg(1)">
+          <img src="../../images/break-egg/btn-yellow-10.png" class="yellowBtn fr" v-show="breakNumber >=10" @click="breakEgg(10)">
+          <img src="../../images/break-egg/btn-grey-10.png" class="greyBtn fr" v-show="breakNumber <10">
         </div>
         <!-- 没有砸蛋次数按钮 -->
-        <img v-if="breakCounts <=0" src="../../images/break-egg/btn-invest.png" class="margin-auto" width="48%" @click="toInvest()">
+        <img v-if="breakNumber <=0" src="../../images/break-egg/btn-invest.png" class="margin-auto" width="48%" @click="toInvest()">
       </div>
       <!-- 未登录按钮 -->
       <img v-if="!token" src="../../images/break-egg/btn-login.png" class="margin-auto" width="48%" @click="toLogin">
@@ -33,10 +46,11 @@
     <div class="egg-info">
       <div class="cumulativeInvestAmount">
         <img src="../../images/break-egg/icon-eggs.png" width="14%">
-        累计年化投资金额：{{cumulativeInvestAmount}}元
+        <p v-if="!token">马上登录砸彩蛋</p>
+        <p v-if="token !== ''">累计年化投资金额：{{cumulativeInvestAmount}}元</p>
       </div>
       <div class="">
-        <p class="rewardDetail" @click="toRecord">查看奖励详情>></p>
+        <p v-if="token !== ''" class="rewardDetail" @click="toRecord">查看奖励详情>></p>
         <p class="example">活动期间，新增投资宏财精选、宏财尊贵项目(不含债权转让)，累计年化投资金额每满1000元，即可获得彩蛋一枚，砸蛋有机会获得以下奖励：</p>
       </div>
       <ul class="privileged">
@@ -78,47 +92,48 @@
     </div>
     <div v-if="isIos" class="iosTips">该活动与设备生产商Apple Inc.公司无关</div>
     <button class="invest-fixed-btn" @click="toInvest()" :disabled="busy">立即投资</button>
+    <img src="../../images/break-egg/icon-calculator.png" class="icon-calculator" @click="showMask = !showMask;showCalculator = !showCalculator">
     <!-- 弹窗 -->
     <div class="mask-common" v-show="showMask">
       <break-Egg-Calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator" v-show="showCalculator"></break-Egg-Calculator>
       <div class="before-break" v-show="false">
         <div class="one-time-break" v-show="true">
-          <img src="../../../static/images/icon-head2.png" alt="" width="11%" class="position-ab">
+          <img src="../../images/break-egg/icon-head2.png" alt="" width="11%" class="position-ab">
           <p>猜一猜<br>&nbsp;&nbsp;我会孵出什么奖励？</p>
           <img src="../../../static/images/egg2.png" alt="" width="40%" class="egg">
         </div>
         <div class="ten-times-break" v-show="false">
-          <img src="../../../static/images/icon-head2.png" alt="" width="11%" class="position-ab">
+          <img src="../../images/break-egg/icon-head2.png" alt="" width="11%" class="position-ab">
           <p>宝宝肚子鼓鼓的<br>快敲开看看都有啥？</p>
           <img src="../../../static/images/egg2.png" alt="" width="55%" class="egg">
         </div>
       </div>
       <div class="after-break" v-show="true">
         <div class="one-time-break" v-show="true">
-          <img src="../../../static/images/icon-head2.png" alt="" width="11%" class="position-ab">
+          <img src="../../images/break-egg/icon-head2.png" alt="" width="11%" class="position-ab">
           <p class="title">恭喜您获得</p>
           <div class="receive">
-            <img src="../../../static/images/privileged-1w.png" alt="" class="display-bl margin-auto" width="25%">
+            <img src="../../images/break-egg/privileged-1w.png" alt="" class="display-bl margin-auto" width="25%">
             <img src="../../../static/images/brokenEgg2.png" alt="" class="display-bl margin-auto" width="49%">
-            <img src="../../../static/images/reward-egg3.png" alt="" class="position-ab" width="24%">
+            <img src="../../images/break-egg/reward-egg3.png" alt="" class="position-ab" width="24%">
             <p class="receive-msg">{{receiveMsg(oneTimeMsgs)}}</p>
           </div>
         </div>
         <div class="ten-time-break" v-show="false">
-          <img src="../../../static/images/icon-head2.png" alt="" width="11%" class="position-ab">
+          <img src="../../images/break-egg/icon-head2.png" alt="" width="11%" class="position-ab">
           <p class="title">恭喜您获得</p>
           <div class="receive">
             <div class="priviledges">
-              <img src="../../../static/images/privileged-1w.png" alt="" class="" width="18%"><span>x2</span>
-              <img src="../../../static/images/privileged-1w.png" alt="" class="" width="18%"><span>x2</span>
-              <img src="../../../static/images/privileged-1w.png" alt="" class="" width="18%"><span>x2</span>
+              <img src="../../images/break-egg/privileged-1w.png" alt="" class="" width="18%"><span>x2</span>
+              <img src="../../images/break-egg/privileged-1w.png" alt="" class="" width="18%"><span>x2</span>
+              <img src="../../images/break-egg/privileged-1w.png" alt="" class="" width="18%"><span>x2</span>
             </div>
             <div class="rate-coupons">
-              <img src="../../../static/images/reward-rate-2.png" alt="" class="" width="26%"><span>x2</span>
-              <img src="../../../static/images/reward-rate-2.png" alt="" class="" width="26%"><span>x2</span>
+              <img src="../../images/break-egg/reward-rate-2.png" alt="" class="" width="26%"><span>x2</span>
+              <img src="../../images/break-egg/reward-rate-2.png" alt="" class="" width="26%"><span>x2</span>
             </div>
             <img src="../../../static/images/brokenEgg2.png" alt="" class="display-bl margin-auto" width="49%">
-            <img src="../../../static/images/reward-egg3.png" alt="" class="position-ab" width="24%">
+            <img src="../../images/break-egg/reward-egg3.png" alt="" class="position-ab" width="24%">
             <p class="receive-msg">{{receiveMsg(tenTimesMsgs)}}</p>
           </div>
         </div>
@@ -129,17 +144,20 @@
 <script>
   import {bridgeUtil, Utils, ModalHelper} from '../../service/Utils'
   import breakEggCalculator from './breakEggCalculator.vue'
+  import $ from 'zepto'
   export default {
     name: 'breakEgg',
     data () {
       return {
-        breakCounts: 2,
+        eggImgSrc: '',
+        eggImgNumber: Math.floor(Math.random() * 5 + 1),
+        breakNumber: 10,
         activityStatus: 1, // 1 正常 2 结束
         cumulativeInvestAmount: 0,
         showCalculator: false,
         busy: false,
         isIos: Utils.isIos(),
-        showMask: true,
+        showMask: false,
         oneTimeMsgs: ['下次能不能轻点敲人家～', '先有鸡先有蛋?你告诉宝宝…', '你挑着蛋～我牵着马～'],
         tenTimesMsgs: ['噼里啪啦，财气冲天哟～', '蛋无虚发，每个都营养“十”足哟～', '大力出奇迹～土豪再一次～']
       }
@@ -155,6 +173,7 @@
     },
     created () {
       this.token && this.token !== '' ? this.getActivityStatus() : null
+      this.eggImgSrc = '../../../static/images/egg' + this.eggImgNumber + '.png'
     },
     methods: {
       receiveMsg (arr) {
@@ -179,6 +198,11 @@
       },
       toLogin () {
         bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function (response) {}, null)
+      },
+      breakEgg (breakCounts) {
+        // breakCounts // 砸蛋 1次 10次
+        $('.hammer').addClass('hammerRotate')
+        // $('.hammer').removeClass('hammerRotate') // 蒙层出现时移除
       }
     },
     components: {breakEggCalculator}
@@ -235,11 +259,11 @@
   }
   .breakBtns {
     width: 85%;
-    margin: .3rem auto .8rem;
+    margin: .3rem auto .6rem;
     overflow: hidden;
     clear: both;
   }
-  .yellowBtn {
+  .yellowBtn, .geryBtn {
     width: 45%;
   }
   .egg-info, .egg-rules {
@@ -259,6 +283,7 @@
     color: #751319;
     text-align: left;
     margin-bottom: .2rem;
+    padding: .5rem .01rem;
   }
   .bottomMoney {
     width: 84%;
@@ -278,9 +303,10 @@
     top: -.15rem;
     font-size: .24rem;
     color: #751319;
-    text-align: center;
+    text-align: left;
     padding: 0 .1rem;
     font-weight: bold;
+    padding-left: 1.5rem;
   }
   .cumulativeInvestAmount img {
     position: absolute;
@@ -321,7 +347,7 @@
     line-height: 1.35;
     text-align: justify;
     color: #8b3424;
-    padding: .06rem .25rem;
+    padding: .2rem .25rem;
   }
   .privileged {
     overflow: hidden;
@@ -383,6 +409,59 @@
     left: 0;
     right: 0;
     z-index: 99;
+  }
+  .egg {
+    margin-top: .4rem;
+    position: relative;
+    z-index: 2;
+  }
+  .hammer {
+    transform: rotateY(180deg);
+    position: absolute;
+    top: .1rem;
+  }
+  .eggs {
+    position: absolute;
+    width: 96%;
+    bottom: .1rem;
+    left: 0.1rem;
+  }
+  .tipBox {
+    width: 1.5rem;
+    height: 1.1rem;
+    background: url('../../images/break-egg/icon-tipBox.png') no-repeat center center;
+    background-size: contain;
+    padding: .2rem;
+    line-height: 1.2;
+    color: #8b3424;
+    font-size: .24rem;
+    position: absolute;
+    top: 0.15rem;
+    left: .15rem;
+  }
+  .icon-calculator {
+    width: 16%;
+    position: fixed;
+    right: 0;
+    top: 33%;
+  }
+  /* animation */
+  @keyframes hammerRotate {
+    0% {
+      transform: rotateY(180deg) rotate(0deg);
+    }
+    50% {
+      transform: rotateY(180deg) rotate(20deg);
+    }
+    100% {
+      transform: rotateY(180deg) rotate(45deg);
+    }
+  }
+  .hammer.hammerRotate {
+    animation: hammerRotate .2s 0s infinite alternate;
+    -moz-animation: hammerRotate .2s 0s infinite alternate;
+    -webkit-animation: hammerRotate .2s 0s infinite alternate;
+    -o-animation: hammerRotate .2s 0s infinite alternate;
   }
   /* 弹窗 */
   .before-break, .after-break {
