@@ -261,7 +261,7 @@ let InputMaskHelper = (function (eleCls) {
 let audioPlayUtil = {
   // isPlay 默认不传是播放，传值是静音
   playOrPaused: function (ele, isPlay) {
-    if (isPlay) {
+    if (isPlay === 'true') {
       ele = document.getElementById(ele)
       ele.currentTime = 0
       ele.play()

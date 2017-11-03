@@ -45,7 +45,7 @@
         activityStatus: 1,
         showRulesMask: false,
         gameCounts: 0,
-        isPlay: true // 默认播放音效
+        isPlay: 'true' // 默认播放音效
       }
     },
     props: ['token'],
