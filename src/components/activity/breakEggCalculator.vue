@@ -1,6 +1,6 @@
 <template>
-  <div class="calculator-wrapper" id="calcu" v-show="showCalculator">
-    <div class="calculator">
+  <div class="calculator-wrapper" id="calcu">
+    <div class="calculator" v-show="showCalculator">
       <div class="title">
         <img src="../../images/break-egg/hammer.png" alt="" width="8%" class="display-inbl">年化投资计算器
       </div>
@@ -53,7 +53,6 @@
         this.annualInvestment = Math.ceil(this.project.amount * this.project.term / 365)
       },
       'showCalculator': function (newVal, oldVal) {
-        alert(newVal)
         var that = this
         if (!newVal) {
           that.project.term = ''
@@ -159,9 +158,8 @@
     border: solid 1px #4b0d00;
   }
   .calculator-tip {
-    width: 96%;
-    margin-left: 2%;
-    margin-top: 0.3rem;
+    width: 97%;
+    margin-top: .6rem;
     font-size: .2rem;
     color: #5d2c22;
     line-height: 1.6;

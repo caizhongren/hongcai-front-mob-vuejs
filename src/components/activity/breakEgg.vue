@@ -92,9 +92,52 @@
     </div>
     <div v-if="isIos" class="iosTips">该活动与设备生产商Apple Inc.公司无关</div>
     <button class="invest-fixed-btn" @click="toInvest()" :disabled="busy">立即投资</button>
-    <img src="../../images/breake-egg/icon-calculator.png" class="icon-calculator" @click="showMask = !showMask;showCalculator = !showCalculator">
+    <img src="../../images/break-egg/icon-calculator.png" class="icon-calculator" @click="showMask = !showMask;showCalculator = !showCalculator">
+    <!-- 弹窗 -->
     <div class="mask-common" v-show="showMask">
       <break-Egg-Calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator" v-show="showCalculator"></break-Egg-Calculator>
+      <div class="before-break" v-show="false">
+        <div class="one-time-break" v-show="true">
+          <img src="../../images/break-egg/icon-head2.png" alt="" width="11%" class="position-ab">
+          <p>猜一猜<br>&nbsp;&nbsp;我会孵出什么奖励？</p>
+          <img src="../../../static/images/egg2.png" alt="" width="40%" class="egg">
+        </div>
+        <div class="ten-times-break" v-show="false">
+          <img src="../../images/break-egg/icon-head2.png" alt="" width="11%" class="position-ab">
+          <p>宝宝肚子鼓鼓的<br>快敲开看看都有啥？</p>
+          <img src="../../../static/images/egg2.png" alt="" width="55%" class="egg">
+        </div>
+      </div>
+      <div class="after-break" v-show="true">
+        <div class="one-time-break" v-show="true">
+          <img src="../../images/break-egg/icon-head2.png" alt="" width="11%" class="position-ab">
+          <p class="title">恭喜您获得</p>
+          <div class="receive">
+            <img src="../../images/break-egg/privileged-1w.png" alt="" class="display-bl margin-auto" width="25%">
+            <img src="../../../static/images/brokenEgg2.png" alt="" class="display-bl margin-auto" width="49%">
+            <img src="../../images/break-egg/reward-egg3.png" alt="" class="position-ab" width="24%">
+            <p class="receive-msg">{{receiveMsg(oneTimeMsgs)}}</p>
+          </div>
+        </div>
+        <div class="ten-time-break" v-show="false">
+          <img src="../../images/break-egg/icon-head2.png" alt="" width="11%" class="position-ab">
+          <p class="title">恭喜您获得</p>
+          <div class="receive">
+            <div class="priviledges">
+              <img src="../../images/break-egg/privileged-1w.png" alt="" class="" width="18%"><span>x2</span>
+              <img src="../../images/break-egg/privileged-1w.png" alt="" class="" width="18%"><span>x2</span>
+              <img src="../../images/break-egg/privileged-1w.png" alt="" class="" width="18%"><span>x2</span>
+            </div>
+            <div class="rate-coupons">
+              <img src="../../images/break-egg/reward-rate-2.png" alt="" class="" width="26%"><span>x2</span>
+              <img src="../../images/break-egg/reward-rate-2.png" alt="" class="" width="26%"><span>x2</span>
+            </div>
+            <img src="../../../static/images/brokenEgg2.png" alt="" class="display-bl margin-auto" width="49%">
+            <img src="../../images/break-egg/reward-egg3.png" alt="" class="position-ab" width="24%">
+            <p class="receive-msg">{{receiveMsg(tenTimesMsgs)}}</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -112,9 +155,11 @@
         activityStatus: 1, // 1 正常 2 结束
         cumulativeInvestAmount: 0,
         showCalculator: false,
-        showMask: false,
         busy: false,
-        isIos: Utils.isIos()
+        isIos: Utils.isIos(),
+        showMask: false,
+        oneTimeMsgs: ['下次能不能轻点敲人家～', '先有鸡先有蛋?你告诉宝宝…', '你挑着蛋～我牵着马～'],
+        tenTimesMsgs: ['噼里啪啦，财气冲天哟～', '蛋无虚发，每个都营养“十”足哟～', '大力出奇迹～土豪再一次～']
       }
     },
     props: ['token'],
@@ -122,8 +167,8 @@
       token (val) {
         val && val !== '' ? this.getActivityStatus() : null
       },
-      showMask: function (newVal, oldVal) {
-        newVal ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+      showMask (val) {
+        val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
     created () {
@@ -131,6 +176,9 @@
       this.eggImgSrc = '../../../static/images/egg' + this.eggImgNumber + '.png'
     },
     methods: {
+      receiveMsg (arr) {
+        return arr[Math.floor(Math.random() * arr.length)]
+      },
       closeCalculator () {
         this.showMask = false
         this.showCalculator = false
@@ -414,5 +462,72 @@
     -moz-animation: hammerRotate .2s 0s infinite alternate;
     -webkit-animation: hammerRotate .2s 0s infinite alternate;
     -o-animation: hammerRotate .2s 0s infinite alternate;
+  }
+  /* 弹窗 */
+  .before-break, .after-break {
+    margin-top: 2rem;
+    font-size: .5rem;
+    letter-spacing: 1.5px;
+    color: #ffffff;
+    text-align: center;
+    position: relative;
+  }
+  .after-break {
+    margin-top: 0;
+  }
+  .one-time-break {
+    margin-top: 2rem;
+  }
+  .ten-time-break {
+    margin-top: 1rem;
+  }
+  .before-break img, .ten-times-break img, .after-break .one-time-break img.position-ab, .after-break .ten-time-break img.position-ab {
+    left: 25%;
+    top: -.1rem;
+  }
+  .after-break .one-time-break p.title, .after-break .ten-time-break p.title {
+    margin-left: 1rem;
+  }
+  .ten-times-break img {
+    left: 10%;
+  }
+  .before-break p {
+    padding-left: .2rem;
+  }
+  .before-break .ten-times-break img.egg, .before-break .one-time-break img.egg {
+    margin: .8rem 0 0 3%;
+  }
+  .one-time-break .receive, .ten-time-break .receive {
+    width: 100%;
+    margin: 0.5rem 0 1rem;
+    height: 4rem;
+    background: url('../../images/break-egg/reward-guang.png') no-repeat center center;
+    background-size: 150% 115%;
+    position: relative;
+  }
+  .ten-time-break .receive {
+    height: 5rem;
+  }
+  .one-time-break .receive img:first-child, .ten-time-break .receive img:first-child {
+    margin-bottom: .3rem;
+  }
+  .one-time-break .receive img.position-ab, .ten-time-break .receive img.position-ab {
+    top: 105%;
+    left: 8%;
+  }
+  .receive .receive-msg {
+    font-size: .26rem;
+    letter-spacing: 0.8px;
+    margin-top: .8rem;
+  }
+  .receive .priviledges img, .receive .rate-coupons img {
+    margin-bottom: .3rem;
+  }
+  .receive .priviledges span, .receive .rate-coupons span {
+    position: relative;
+    top: -.8rem;
+  }
+  .receive .rate-coupons span {
+    top: -.56rem;
   }
 </style>
