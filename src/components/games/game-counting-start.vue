@@ -71,7 +71,7 @@
           if (res.data && res.data.ret !== -1) {
             that.activityStatus = res.data.status
           } else {
-            alert(res.data.msg)
+            console.log(res.data.msg)
           }
         })
       },
@@ -85,7 +85,7 @@
           if (res.data && res.data.ret !== -1) {
             that.gameCounts = res.data.freeCount + res.data.count - res.data.usedCount
           } else {
-            alert(res.data.msg)
+            console.log(res.data.msg)
           }
         })
       },

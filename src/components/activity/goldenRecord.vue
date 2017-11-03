@@ -96,7 +96,7 @@
           if (res.data && res.data.ret !== -1) {
             that.recordList = res.data.data
           } else {
-            alert(res.data.msg)
+            console.log(res.data.msg)
           }
         })
       },
