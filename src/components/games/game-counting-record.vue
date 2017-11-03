@@ -132,7 +132,7 @@
           if (res.data && res.data.ret !== -1) {
             that.totalInvestAmount = res.data.cumulativeInvestAmount
           } else {
-            alert(res.data.msg)
+            console.log(res.data.msg)
           }
         })
       },
@@ -146,7 +146,7 @@
           if (res.data && res.data.ret !== -1) {
             that.totalPrivilegedCapital = res.data.privilegedCapital
           } else {
-            alert(res.data.msg)
+            console.log(res.data.msg)
           }
         })
       },
@@ -164,7 +164,7 @@
               that.CreditRightVo.push(CreditRightVo[i])
             }
           } else {
-            alert(res.data.msg)
+            console.log(res.data.msg)
           }
         })
       },
@@ -182,7 +182,7 @@
               that.PrivilegedCapitailDetail.push(PrivilegedCapitailDetail[i])
             }
           } else {
-            alert(res.data.msg)
+            console.log(res.data.msg)
           }
         })
       },
