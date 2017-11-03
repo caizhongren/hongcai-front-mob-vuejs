@@ -83,8 +83,8 @@
       return {
         showRulesMask: false,
         activeTab: 0,
-        totalInvestAmount: 20000,
-        totalPrivilegedCapital: 8888,
+        totalInvestAmount: 0,
+        totalPrivilegedCapital: 0,
         CreditRightVo: [],
         PrivilegedCapitailDetail: [],
         investPage: 1,

@@ -81,7 +81,7 @@
         showFirst: false,
         rewardMoney: 0,
         second: 15,
-        gameCounts: 5,
+        gameCounts: 0,
         countNum: 0, // 数了几张
         number: '', // 钞票配置number
         gameType: Number(this.$route.params.gameType), // 2: 试玩
