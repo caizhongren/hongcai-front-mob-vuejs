@@ -96,30 +96,30 @@
     <!-- 弹窗 -->
     <div class="mask-common" v-show="showMask">
       <break-Egg-Calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator" v-show="showCalculator"></break-Egg-Calculator>
-      <div class="before-break" v-show="false">
-        <div class="one-time-break" v-show="true">
+      <div class="before-break" v-show="showBeforeBreak">
+        <div class="one-time-break" v-show="oneTimeBreak">
           <img src="../../images/break-egg/icon-head2.png" alt="" width="11%" class="position-ab">
           <p>猜一猜<br>&nbsp;&nbsp;我会孵出什么奖励？</p>
-          <img src="../../../static/images/egg2.png" alt="" width="40%" class="egg">
+          <img v-bind:src="eggImgSrc" alt="" width="40%" class="egg">
         </div>
-        <div class="ten-times-break" v-show="false">
+        <div class="ten-times-break" v-show="tenTimeBreak">
           <img src="../../images/break-egg/icon-head2.png" alt="" width="11%" class="position-ab">
           <p>宝宝肚子鼓鼓的<br>快敲开看看都有啥？</p>
-          <img src="../../../static/images/egg2.png" alt="" width="55%" class="egg">
+          <img v-bind:src="eggImgSrc" alt="" width="55%" class="egg">
         </div>
       </div>
-      <div class="after-break" v-show="true">
-        <div class="one-time-break" v-show="true">
+      <div class="after-break" v-show="showAfterBreak">
+        <div class="one-time-break" v-show="oneTimeBreak">
           <img src="../../images/break-egg/icon-head2.png" alt="" width="11%" class="position-ab">
           <p class="title">恭喜您获得</p>
           <div class="receive">
             <img src="../../images/break-egg/privileged-1w.png" alt="" class="display-bl margin-auto" width="25%">
-            <img src="../../../static/images/brokenEgg2.png" alt="" class="display-bl margin-auto" width="49%">
-            <img src="../../images/break-egg/reward-egg3.png" alt="" class="position-ab" width="24%">
+            <img v-bind:src="brokenEggSrc" alt="" class="display-bl margin-auto" width="49%">
+            <img src="../../images/break-egg/reward-egg3.png" alt="" class="position-ab reward-break" width="24%">
             <p class="receive-msg">{{receiveMsg(oneTimeMsgs)}}</p>
           </div>
         </div>
-        <div class="ten-time-break" v-show="false">
+        <div class="ten-time-break" v-show="tenTimeBreak">
           <img src="../../images/break-egg/icon-head2.png" alt="" width="11%" class="position-ab">
           <p class="title">恭喜您获得</p>
           <div class="receive">
@@ -132,11 +132,12 @@
               <img src="../../images/break-egg/reward-rate-2.png" alt="" class="" width="26%"><span>x2</span>
               <img src="../../images/break-egg/reward-rate-2.png" alt="" class="" width="26%"><span>x2</span>
             </div>
-            <img src="../../../static/images/brokenEgg2.png" alt="" class="display-bl margin-auto" width="49%">
-            <img src="../../images/break-egg/reward-egg3.png" alt="" class="position-ab" width="24%">
+            <img v-bind:src="brokenEggSrc" alt="" class="display-bl margin-auto" width="55%">
+            <img src="../../images/break-egg/reward-egg3.png" alt="" class="position-ab reward-break" width="24%">
             <p class="receive-msg">{{receiveMsg(tenTimesMsgs)}}</p>
           </div>
         </div>
+        <img src="../../images/break-egg/icon-close.png" alt="" width="10%" class="close-mask" @click="closeMask">
       </div>
     </div>
   </div>
@@ -150,11 +151,16 @@
     data () {
       return {
         eggImgSrc: '',
+        brokenEggSrc: '',
         eggImgNumber: Math.floor(Math.random() * 5 + 1),
         breakNumber: 10,
         activityStatus: 1, // 1 正常 2 结束
         cumulativeInvestAmount: 0,
         showCalculator: false,
+        showAfterBreak: false, // 砸开之后
+        showBeforeBreak: false, // 砸开之前
+        oneTimeBreak: false, // 砸一次
+        tenTimeBreak: false, // 砸十次
         busy: false,
         isIos: Utils.isIos(),
         showMask: false,
@@ -169,11 +175,13 @@
       },
       showMask (val) {
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+        val ? $('.hammer').removeClass('hammerRotate') : null
       }
     },
     created () {
       this.token && this.token !== '' ? this.getActivityStatus() : null
       this.eggImgSrc = '../../../static/images/egg' + this.eggImgNumber + '.png'
+      this.brokenEggSrc = '../../../static/images/brokenEgg' + this.eggImgNumber + '.png'
     },
     methods: {
       receiveMsg (arr) {
@@ -182,6 +190,13 @@
       closeCalculator () {
         this.showMask = false
         this.showCalculator = false
+      },
+      closeMask () {
+        this.showMask = false
+        this.showAfterBreak = false
+        this.showBeforeBreak = false
+        this.oneTimeBreak = false
+        this.tenTimeBreak = false
       },
       getActivityStatus () {
       },
@@ -202,13 +217,37 @@
       breakEgg (breakCounts) {
         // breakCounts // 砸蛋 1次 10次
         $('.hammer').addClass('hammerRotate')
-        // $('.hammer').removeClass('hammerRotate') // 蒙层出现时移除
+        this.beforeEggBreakAnimate(breakCounts)
+      },
+      beforeEggBreakAnimate (breakCounts) { // 蛋壳打破之前
+        var that = this
+        setTimeout(function () {
+          that.showMask = true
+          $('.hammer').addClass('hammerRotate')
+          that.showBeforeBreak = true
+          $('.before-break').find('.egg').addClass('eggRotate')
+          that.afterEggBreakAnimate()
+          breakCounts === 1 ? that.oneTimeBreak = true : that.tenTimeBreak = true
+          breakCounts === 1 ? that.tenTimeBreak = false : that.oneTimeBreak = false
+        }, 1000)
+      },
+      afterEggBreakAnimate () { // 蛋壳打破
+        var that = this
+        setTimeout(function () {
+          $('.before-break').find('.egg').removeClass('eggRotate')
+          that.showBeforeBreak = false
+          $('.reward-break').addClass('breakAnimate')
+          that.showAfterBreak = true
+        }, 1000)
       }
     },
     components: {breakEggCalculator}
   }
 </script>
 <style scoped>
+  .close-mask {
+    margin-top: 1.5rem;
+  }
   .break-egg {
     background: #fa6654;
     padding-bottom: 1.1rem;
@@ -410,7 +449,7 @@
     right: 0;
     z-index: 99;
   }
-  .egg {
+  .eggsBox .egg {
     margin-top: .4rem;
     position: relative;
     z-index: 2;
@@ -420,7 +459,7 @@
     position: absolute;
     top: .1rem;
   }
-  .eggs {
+  .eggsBox .eggs {
     position: absolute;
     width: 96%;
     bottom: .1rem;
@@ -448,24 +487,57 @@
   /* animation */
   @keyframes hammerRotate {
     0% {
-      transform: rotateY(180deg) rotate(0deg);
+      transform: rotateY(180deg) rotate(0deg) translateX(0rem);
     }
     50% {
-      transform: rotateY(180deg) rotate(20deg);
+      transform: rotateY(180deg) rotate(20deg) translateX(0.2rem);
     }
     100% {
-      transform: rotateY(180deg) rotate(45deg);
+      transform: rotateY(180deg) rotate(45deg) translateX(0.5rem);
     }
   }
   .hammer.hammerRotate {
-    animation: hammerRotate .2s 0s infinite alternate;
-    -moz-animation: hammerRotate .2s 0s infinite alternate;
-    -webkit-animation: hammerRotate .2s 0s infinite alternate;
-    -o-animation: hammerRotate .2s 0s infinite alternate;
+    animation: hammerRotate .3s 0s infinite alternate;
+    -moz-animation: hammerRotate .3s 0s infinite alternate;
+    -webkit-animation: hammerRotate .3s 0s infinite alternate;
+    -o-animation: hammerRotate .3s 0s infinite alternate;
+  }
+  @keyframes gyrate {
+    0% {
+      transform: rotate(-20deg);
+    }
+    50% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(20deg);
+    }
+  }
+  .before-break .one-time-break .egg.eggRotate, .before-break .ten-times-break .egg.eggRotate {
+    animation: gyrate .1s 0s infinite alternate;
+    -moz-animation: gyrate .1s 0s infinite alternate;
+    -webkit-animation: gyrate .1s 0s infinite alternate;
+    -o-animation: gyrate .1s 0s infinite alternate;
+  }
+  @keyframes breakAnimate {
+    0% {
+      top: 60%;
+      left: 12%;
+    }
+    100% {
+      top: 105%;
+      left: 8%;
+    }
+  }
+  .after-break .one-time-break .reward-break.breakAnimate, .after-break .ten-time-break .reward-break.breakAnimate {
+    animation: breakAnimate .2s 0s ease-in;
+    -moz-animation: breakAnimate .2s 0s ease-in;
+    -webkit-animation: breakAnimate .2s 0s ease-in;
+    -o-animation: breakAnimate .2s 0s ease-in;
   }
   /* 弹窗 */
   .before-break, .after-break {
-    margin-top: 2rem;
+    margin-top: 1rem;
     font-size: .5rem;
     letter-spacing: 1.5px;
     color: #ffffff;
@@ -476,10 +548,10 @@
     margin-top: 0;
   }
   .one-time-break {
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
   .ten-time-break {
-    margin-top: 1rem;
+    margin-top: .5rem;
   }
   .before-break img, .ten-times-break img, .after-break .one-time-break img.position-ab, .after-break .ten-time-break img.position-ab {
     left: 25%;
@@ -518,7 +590,7 @@
   .receive .receive-msg {
     font-size: .26rem;
     letter-spacing: 0.8px;
-    margin-top: .8rem;
+    margin-top: .5rem;
   }
   .receive .priviledges img, .receive .rate-coupons img {
     margin-bottom: .3rem;
