@@ -96,7 +96,7 @@
             <div class="project-brief">
               <div class="title">
                 <span></span>
-                <p>项目评级</p>
+                <p>还款保障</p>
               </div>
               <div class="content">
                 <p v-html="projectInfo.riskManagementInfo"><span></span></p>   
@@ -277,7 +277,6 @@
         this.activeTab = i
         $('.scroll').css('transform', 'translateY(0px)')
         document.querySelector('.scroll').style.webkitTransform = 'translateY(0px)'
-        this.page = 1
       },
       getProject: function () {
         this.$http({

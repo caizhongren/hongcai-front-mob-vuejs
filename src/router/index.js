@@ -53,6 +53,13 @@ const WanduRegister = r => require.ensure([], () => r(require('../components/act
 const WanduSuccess = r => require.ensure([], () => r(require('../components/activity/wandu-success.vue')), 'WanduRegister')
 const QRcode = r => require.ensure([], () => r(require('../components/QRcode.vue')), 'QRcode')
 const Updates = r => require.ensure([], () => r(require('../components/recommendUpdates.vue')), 'Updates')
+const Disclosure = r => require.ensure([], () => r(require('../components/disclosure/disclosure.vue')), 'Disclosure')
+const BankDisclosure = r => require.ensure([], () => r(require('../components/disclosure/bankDisclosure.vue')), 'Disclosure')
+const RecordInformation = r => require.ensure([], () => r(require('../components/disclosure/recordInformation.vue')), 'Disclosure')
+const RiskManagement = r => require.ensure([], () => r(require('../components/disclosure/riskManagement.vue')), 'Disclosure')
+const Organization = r => require.ensure([], () => r(require('../components/disclosure/organization.vue')), 'Disclosure')
+const BusinessInformation = r => require.ensure([], () => r(require('../components/disclosure/businessInformation.vue')), 'Disclosure')
+
 Vue.use(Router)
 Vue.use(VueCookie)
 const routes = [
@@ -98,6 +105,43 @@ const routes = [
     ]
   },
   {
+    path: '/disclosure',
+    name: 'Disclosure',
+    component: Disclosure,
+    children: [
+      {
+        path: '',
+        name: 'BankDisclosure',
+        component: BankDisclosure,
+        meta: {title: '信息披露'}
+      },
+      {
+        path: 'record-information',
+        name: 'RecordInformation',
+        component: RecordInformation,
+        meta: {title: '信息披露'}
+      },
+      {
+        path: 'risk-management',
+        name: 'RiskManagement',
+        component: RiskManagement,
+        meta: {title: '信息披露'}
+      },
+      {
+        path: 'organization',
+        name: 'Organization',
+        component: Organization,
+        meta: {title: '信息披露'}
+      },
+      {
+        path: 'business-information',
+        name: 'BusinessInformation',
+        component: BusinessInformation,
+        meta: {title: '信息披露'}
+      }
+    ]
+  },
+  {
     path: '/user-center/help-center',
     name: 'HelpCenter',
     component: HelpCenter,
@@ -136,7 +180,7 @@ const routes = [
     path: '/user-center/membership',
     name: 'Membership',
     component: Membership,
-    meta: {title: '提升攻略'}
+    meta: {title: '等级说明'}
   },
   {
     path: '/project/:number',
