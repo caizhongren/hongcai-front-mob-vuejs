@@ -19,7 +19,7 @@
               <table v-if="CreditRightVo.length > 0">
                 <tbody>
                   <tr v-for="item in CreditRightVo">
-                    <td>{{item.createTime | monthDotDay}}</td>
+                    <td>{{item.createTime | dateDot}}</td>
                     <td>{{item.amount}}</td>
                     <td>{{item.projectDays}}天</td>
                     <td>{{item.annualInvestAmount}}</td>
@@ -44,7 +44,7 @@
               <table v-if="rewardList.length > 0">
                 <tbody>
                   <tr v-for="item in rewardList">
-                    <td>{{item.createTime | monthDotDay}}</td>
+                    <td>{{item.createTime | dateDot}}</td>
                     <td>{{item.description}}</td>
                     <td>{{item.num}}</td>
                   </tr>
@@ -224,10 +224,8 @@
     props: ['token'],
     created () {
       this.activityType = this.$route.query.act
-      // this.getInvestRecords(1, 10)
-      // this.getRewardRecords(1, 10)
-      // this.getCumulativeInvestAmount()
-      // this.getPrivilegedCapital()
+      this.getInvestRecords(1, 10)
+      this.getRewardRecords(1, 10)
     },
     mounted () {
       this.IS_ANDROID ? document.querySelector('.recordTitle').style.paddingTop = '0.45rem' : null
@@ -250,7 +248,7 @@
         var that = this
         that.$http({
           method: 'get',
-          url: '/hongcai/rest/activity/countingKings/0/investRecords?token=' + that.token + '&activityType=' + that.activityType + '&page=' + page + '&pageSize=' + pageSize
+          url: '/hongcai/rest/activity/beakEggs/0/investRecords?token=' + that.token + '&activityType=' + that.activityType + '&page=' + page + '&pageSize=' + pageSize
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
@@ -268,7 +266,7 @@
         var that = this
         that.$http({
           method: 'get',
-          url: '/hongcai/rest/activity/countingKings/0/takeRewardRecords?token=' + that.token + '&activityType=' + that.activityType + '&page=' + page + '&pageSize=' + pageSize
+          url: '/hongcai/rest/activity/breakEggs/0/breakEggRecords?token=' + that.token + '&activityType=' + that.activityType + '&page=' + page + '&pageSize=' + pageSize
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
