@@ -150,7 +150,7 @@
         eggImgSrc: '',
         brokenEggSrc: '',
         eggImgNumber: Math.floor(Math.random() * 5 + 1),
-        breakNumber: 10,
+        breakNumber: 12, // 剩余砸蛋次数
         activityStatus: 1, // 1 正常 2 结束
         cumulativeInvestAmount: 0,
         showCalculator: false,
@@ -189,8 +189,7 @@
             description: 'hhhh',
             num: 5
           }
-        ],
-        breakCount: 0 // 剩余砸蛋次数
+        ]
       }
     },
     props: ['token'],
@@ -230,7 +229,7 @@
           console.log(res.data)
         })
       },
-      getUserBreakInfo () { // 用户参与活动信息查询 剩余砸蛋次数 = value - useedCount
+      getUserBreakInfo () { // 用户参与活动信息查询 剩余砸蛋次数 = value - usedCount
         var that = this
         that.$http({
           url: '/hongcai/rest/activity/breakEggs/0/info?token=' + that.token
@@ -254,40 +253,47 @@
       toLogin () {
         bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function (response) {}, null)
       },
-      breakEgg (breakCounts) {
-        // breakCounts // 砸蛋 1次 10次
+      breakEgg (breakType) {
+        // breakType // 砸蛋 1: 1次 2:10次
+        if (breakType > this.breakNumber) {
+          return
+        }
         var that = this
         // this.$http.get('/hongcai/rest/activity/breakEggs/0/break', {
         //   token: that.token,
-        //   type: breakCounts
+        //   type: breakType
         // }).then(function (res) {
         //   if (!res.data || res.data.ret === -1) {
+        //     $('.hammer').addClass('hammerRotate')
+        //     that.beforeEggBreakAnimate(breakType)
+        //     breakType === 1 ? that.breakNumber -= 1 : that.breakNumber -= 10
         //     return
         //   }
         //   that.rewardList = res.data
         // })
         $('.hammer').addClass('hammerRotate')
-        that.beforeEggBreakAnimate(breakCounts)
+        that.beforeEggBreakAnimate(breakType)
       },
-      beforeEggBreakAnimate (breakCounts) { // 蛋壳打破之前
+      beforeEggBreakAnimate (breakType) { // 蛋壳打破之前
         var that = this
         setTimeout(function () {
           that.showMask = true
           $('.hammer').addClass('hammerRotate')
           that.showBeforeBreak = true
           $('.before-break').find('.egg').addClass('eggRotate')
-          that.afterEggBreakAnimate()
-          breakCounts === 1 ? that.oneTimeBreak = true : that.tenTimeBreak = true
-          breakCounts === 1 ? that.tenTimeBreak = false : that.oneTimeBreak = false
+          that.afterEggBreakAnimate(breakType)
+          breakType === 1 ? that.oneTimeBreak = true : that.tenTimeBreak = true
+          breakType === 1 ? that.tenTimeBreak = false : that.oneTimeBreak = false
         }, 1000)
       },
-      afterEggBreakAnimate () { // 蛋壳打破
+      afterEggBreakAnimate (breakType) { // 蛋壳打破
         var that = this
         setTimeout(function () {
           $('.before-break').find('.egg').removeClass('eggRotate')
           that.showBeforeBreak = false
           $('.reward-break').addClass('breakAnimate')
           that.showAfterBreak = true
+          breakType === 1 ? that.breakNumber -= 1 : that.breakNumber -= 10
         }, 1000)
       }
     },
@@ -296,7 +302,7 @@
 </script>
 <style scoped>
   .close-mask {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
   }
   .break-egg {
     background: #fa6654;
@@ -352,7 +358,7 @@
     overflow: hidden;
     clear: both;
   }
-  .yellowBtn, .geryBtn {
+  .yellowBtn, .greyBtn {
     width: 45%;
   }
   .egg-info, .egg-rules {
