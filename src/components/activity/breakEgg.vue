@@ -164,16 +164,16 @@
         oneTimeMsgs: ['下次能不能轻点敲人家～', '先有鸡先有蛋?你告诉宝宝…', '你挑着蛋～我牵着马～'],
         tenTimesMsgs: ['噼里啪啦，财气冲天哟～', '蛋无虚发，每个都营养“十”足哟～', '大力出奇迹～土豪再一次～'],
         rewardList: [
-          // {
-          //   type: 1,
-          //   description: 'hhhh',
-          //   num: 1
-          // },
-          // {
-          //   type: 1,
-          //   description: 'hhhh',
-          //   num: 2
-          // },
+          {
+            type: 1,
+            description: 'hhhh',
+            num: 1
+          },
+          {
+            type: 1,
+            description: 'hhhh',
+            num: 2
+          },
           {
             type: 1,
             description: 'hhhh',
@@ -189,7 +189,8 @@
             description: 'hhhh',
             num: 5
           }
-        ]
+        ],
+        breakCount: 0 // 剩余砸蛋次数
       }
     },
     props: ['token'],
@@ -204,6 +205,7 @@
     },
     created () {
       this.token && this.token !== '' ? this.getActivityStatus() : null
+      this.token && this.token !== '' ? this.getUserBreakInfo() : null
       this.eggImgSrc = '../../../static/images/egg' + this.eggImgNumber + '.png'
       this.brokenEggSrc = '../../../static/images/brokenEgg' + this.eggImgNumber + '.png'
     },
@@ -222,7 +224,21 @@
         this.oneTimeBreak = false
         this.tenTimeBreak = false
       },
-      getActivityStatus () {
+      getActivityStatus () { // 活动信息查询
+        var that = this
+        that.$http('/hongcai/rest/activitys/34').then(function (res) {
+          console.log(res.data)
+        })
+      },
+      getUserBreakInfo () { // 用户参与活动信息查询 剩余砸蛋次数 = value - useedCount
+        var that = this
+        that.$http({
+          url: '/hongcai/rest/activity/breakEggs/0/info?token=' + that.token
+        }).then(function (res) {
+          console.log(res.data)
+        }).catch(function (err) {
+          console.log(err)
+        })
       },
       toInvest () {
         var that = this
@@ -241,7 +257,7 @@
       breakEgg (breakCounts) {
         // breakCounts // 砸蛋 1次 10次
         var that = this
-        // this.$http.get('/activity/breakEggs/0/break', {
+        // this.$http.get('/hongcai/rest/activity/breakEggs/0/break', {
         //   token: that.token,
         //   type: breakCounts
         // }).then(function (res) {
