@@ -55,13 +55,13 @@
         <p class="example">活动期间，新增投资宏财精选、宏财尊贵项目(不含债权转让)，累计年化投资金额每满1000元，即可获得彩蛋一枚，砸蛋有机会获得以下奖励：</p>
       </div>
       <ul class="privileged">
-        <li><img src="../../../static/images/privileged-1w.png" alt=""></li>
-        <li><img src="../../../static/images/privileged-5w.png" alt=""></li>
-        <li><img src="../../../static/images/privileged-10w.png" alt=""></li>
+        <li><img src="../../../static/images/reward-10000.png" alt=""></li>
+        <li><img src="../../../static/images/reward-50000.png" alt=""></li>
+        <li><img src="../../../static/images/reward-100000.png" alt=""></li>
       </ul>
       <ul class="rate">
-        <li><img src="../../../static/images/rate-2.png" alt=""></li>
-        <li><img src="../../../static/images/rate-5.png" alt=""></li>
+        <li><img src="../../../static/images/reward-2.png" alt=""></li>
+        <li><img src="../../../static/images/reward-5.png" alt=""></li>
       </ul>
       <img src="../../images/break-egg/money.png" class="bottomMoney">
     </div>
@@ -216,25 +216,7 @@
       this.eggImgSrc = '../../../static/images/egg' + this.eggImgNumber + '.png'
       this.brokenEggSrc = '../../../static/images/brokenEgg' + this.eggImgNumber + '.png'
       for (let i = 0; i < this.rewardList.length; i++) {
-        let j = ''
-        switch (this.rewardList[i].amount) {
-          case 10000:
-            j = 'privileged-1w'
-            break
-          case 50000:
-            j = 'privileged-5w'
-            break
-          case 100000:
-            j = 'privileged-10w'
-            break
-          case 2:
-            j = 'rate-2'
-            break
-          case 5:
-            j = 'rate-5'
-            break
-        }
-        this.rewardList[i].imgSrc = '../../../static/images/' + j + '.png'
+        this.rewardList[i].imgSrc = '../../../static/images/reward-' + this.rewardList[i].amount + '.png'
       }
     },
     methods: {
@@ -312,25 +294,7 @@
           // that.beforeEggBreakAnimate(breakType)
           that.rewardList = res.data
           for (let i = 0; i < that.rewardList.length; i++) {
-            let j = ''
-            switch (that.rewardList[i].amount) {
-              case 10000:
-                j = 'privileged-1w'
-                break
-              case 50000:
-                j = 'privileged-5w'
-                break
-              case 100000:
-                j = 'privileged-10w'
-                break
-              case 2:
-                j = 'rate-2'
-                break
-              case 5:
-                j = 'rate-5'
-                break
-            }
-            that.rewardList[i].imgSrc = '../../../static/images/' + j + '.png'
+            that.rewardList[i].imgSrc = '../../../static/images/reward-' + that.rewardList[i].amount + '.png'
           }
         }).catch(function (err) {
           console.log(err)
