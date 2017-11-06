@@ -4,7 +4,7 @@
       <img src="../../images/break-egg/hander.png" class="header" width="100%">
       <div class="activityTime">
         <img src="../../images/break-egg/icon-head.png" width="14%">
-        <span v-if="activityStatus === 1">活动时间:2017年xx月xx日至2017年xx月xx日</span>
+        <span v-if="activityStatus === 1">活动时间:{{activityInfo.startYear}}年{{activityInfo.startMonth}}月{{activityInfo.startDate}}日至{{activityInfo.endYear}}年{{activityInfo.endMonth}}月{{activityInfo.endDate}}日</span>
         <span class="actEnd" v-if="activityStatus === 2">活动已结束</span>
       </div>
     </div>
@@ -73,7 +73,7 @@
       </div>
       <div class="">
         <p class="rule-num"><span>1</span>活动时间</p>
-        <p class="rule-content">本次活动仅限于2017年xx月xx日至2017年xx月xx日内参与有效，活动期间，可随时砸蛋领取奖励，如活动结束后3个工作日内仍未砸蛋领奖，将视为自动放弃奖励；</p>
+        <p class="rule-content">本次活动仅限于{{activityInfo.startYear}}年{{activityInfo.startMonth}}月{{activityInfo.startDate}}日至{{activityInfo.endYear}}年{{activityInfo.endMonth}}月{{activityInfo.endDate}}日内参与有效，活动期间，可随时砸蛋领取奖励，如活动结束后3个工作日内仍未砸蛋领奖，将视为自动放弃奖励；</p>
       </div>
       <div class="">
         <p class="rule-num"><span>2</span>参与方式</p>
@@ -81,7 +81,7 @@
       </div>
       <div class="">
         <p class="rule-num"><span>3</span>关于无条件加息优惠券</p>
-        <p class="rule-content">无条件加息券可在投资宏财精选及宏财尊贵项目时使用，无起投金额限制，每笔投资仅可使用一张优惠券(优惠券包含加息券及现金券)，使用有效期至2017年xx月xx日，过期作废，如此超稀有奖励可别忘记及时使用哟;</p>
+        <p class="rule-content">无条件加息券可在投资宏财精选及宏财尊贵项目时使用，无起投金额限制，每笔投资仅可使用一张优惠券(优惠券包含加息券及现金券)，使用有效期至{{activityInfo.validityYear}}年{{activityInfo.validityMonth}}月{{activityInfo.validityDate}}日，过期作废，如此超稀有奖励可别忘记及时使用哟;</p>
       </div>
       <div class="">
         <p class="rule-num"><span>4</span>关于特权本金奖励</p>
@@ -153,6 +153,17 @@
         eggImgNumber: Math.floor(Math.random() * 5 + 1),
         breakNumber: 12, // 剩余砸蛋次数
         activityStatus: 1, // 1 正常 2 结束
+        activityInfo: {
+          startYear: 0,
+          startMonth: 0,
+          startDate: 0,
+          endYear: 0,
+          endMonth: 0,
+          endDate: 0,
+          validityYear: 0,
+          validityMonth: 0,
+          validityDate: 0
+        },
         cumulativeInvestAmount: 0,
         showCalculator: false,
         showAfterBreak: false, // 砸开之后
@@ -196,7 +207,7 @@
     props: ['token'],
     watch: {
       token (val) {
-        val && val !== '' ? this.getActivityStatus() : null
+        val && val !== '' ? this.getUserBreakInfo() : null
       },
       showMask (val) {
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
@@ -204,7 +215,7 @@
       }
     },
     created () {
-      this.token && this.token !== '' ? this.getActivityStatus() : null
+      this.getActivityStatus()
       this.token && this.token !== '' ? this.getUserBreakInfo() : null
       this.eggImgSrc = '../../../static/images/egg' + this.eggImgNumber + '.png'
       this.brokenEggSrc = '../../../static/images/brokenEgg' + this.eggImgNumber + '.png'
@@ -226,8 +237,19 @@
       },
       getActivityStatus () { // 活动信息查询
         var that = this
-        that.$http('/hongcai/rest/activitys/34').then(function (res) {
-          console.log(res.data)
+        that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
+          that.activityStatus = res.data.status
+          that.activityInfo = {
+            startYear: new Date(res.data.startTime).getFullYear(),
+            startMonth: new Date(res.data.startTime).getMonth() + 1,
+            startDate: new Date(res.data.startTime).getDate(),
+            endYear: new Date(res.data.endTime).getFullYear(),
+            endMonth: new Date(res.data.endTime).getMonth() + 1,
+            endDate: new Date(res.data.endTime).getDate(),
+            validityYear: new Date(res.data.endTime + 1000 * 60 * 60 * 24 * 7).getFullYear(),
+            validityMonth: new Date(res.data.endTime + 1000 * 60 * 60 * 24 * 7).getMonth() + 1,
+            validityDate: new Date(res.data.endTime + 1000 * 60 * 60 * 24 * 7).getDate()
+          }
         })
       },
       getUserBreakInfo () { // 用户参与活动信息查询 剩余砸蛋次数 = value - usedCount
