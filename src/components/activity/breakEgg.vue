@@ -4,15 +4,16 @@
       <img src="../../images/break-egg/hander.png" class="header" width="100%">
       <div class="activityTime">
         <img src="../../images/break-egg/icon-head.png" width="14%">
-        活动时间:2017年xx月xx日至2017年xx月xx日
+        <span v-if="activityStatus === 1">活动时间:2017年xx月xx日至2017年xx月xx日</span>
+        <span class="actEnd" v-if="activityStatus === 2">活动已结束</span>
       </div>
     </div>
     <!-- 砸蛋框 -->
     <div class="eggsBox">
-      <div class="tipBox">
+      <div class="tipBox" :class="{'noEgg': token !== '' && activityStatus === 1 && breakNumber <=0}">
         <p v-show="token !== '' && activityStatus === 1">
           <span v-show="breakNumber >0">剩余彩蛋{{breakNumber}}枚</span>
-          <span v-show="breakNumber <=0">窝里空空如也...</span>
+          <span v-show="breakNumber <=0">窝里空空如也...快去投资砸彩蛋吧!</span>
         </p>
         <p v-show="!token">马上登录砸彩蛋</p>
         <p v-show="token !== '' &&  activityStatus === 2">活动结束了</p>
@@ -22,7 +23,7 @@
         <img src="../../images/break-egg/hammer.png" class="hammer">
         <img src="../../images/break-egg/eggs.png" class="eggs">
       </div>
-      <img v-show="token !== '' && (activityStatus === 2 || breakNumber <=0)" src="../../images/break-egg/icon-head3.png" class="egg margin-auto" width="56%">
+      <img v-show="token !== '' && (activityStatus === 2 || breakNumber <=0)" src="../../images/break-egg/icon-head3.png" class="egg margin-auto" :class="{'margin-l-pt8': breakNumber <=0}" width="56%">
     </div>
     <div class="eggsBorder"></div>
     <!-- 砸蛋按钮 -->
@@ -150,7 +151,7 @@
         eggImgSrc: '',
         brokenEggSrc: '',
         eggImgNumber: Math.floor(Math.random() * 5 + 1),
-        breakNumber: 10,
+        breakNumber: 0,
         activityStatus: 1, // 1 正常 2 结束
         cumulativeInvestAmount: 0,
         showCalculator: false,
@@ -325,6 +326,11 @@
     left: -.34rem;
     top: -.3rem;
   }
+  .activityTime .actEnd {
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+  }
   .eggsBox {
     width: 85%;
     height: 4.1rem;
@@ -352,7 +358,7 @@
     overflow: hidden;
     clear: both;
   }
-  .yellowBtn, .geryBtn {
+  .yellowBtn, .greyBtn {
     width: 45%;
   }
   .egg-info, .egg-rules {
@@ -527,6 +533,14 @@
     position: absolute;
     top: 0.15rem;
     left: .15rem;
+  }
+  .tipBox.noEgg {
+    padding: .1rem 0.1rem;
+    width: 1.8rem;
+    height: 1.28rem;
+  }
+  .eggsBox .egg.margin-l-pt8 {
+    margin-left: .8rem;
   }
   .icon-calculator {
     width: 16%;

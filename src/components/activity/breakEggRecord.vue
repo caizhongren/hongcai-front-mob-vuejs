@@ -351,7 +351,6 @@
   }
   ul.recordTitle li:nth-child(1) {
     left: 0;
-    line-height: .5rem;
   }
   ul.recordTitle li:nth-child(2) {
     left: 31%;
