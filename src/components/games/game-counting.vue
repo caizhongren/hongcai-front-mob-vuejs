@@ -184,6 +184,7 @@
               return
             }
             c = a.localY;
+            that.qipaStage.stage.removeChild(that.qipaStage.stage.player)
             d = that.qipaStage.stage.player.m[qp_f].y;
             that.qipaStage.stage.player = new drawMoney(that.HandList[that.countNum])
             that.qipaStage.stage.addChild(that.qipaStage.stage.player)
@@ -612,6 +613,7 @@
       }
     },
     destroyed () {
+      this.qipaStage.stage.removeAllChild()
       clearInterval(this.backgroundTimer)
       audioPlayUtil.playOrPaused('click', this.isPlay)
     }
