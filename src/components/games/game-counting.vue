@@ -456,7 +456,7 @@
       },
       goBack () {
         audioPlayUtil.playOrPaused('click', this.isPlay)
-        this.$router.replace({name: 'gameStart', query: { act: this.activityType }})
+        this.$router.go(-1)
       },
       startWarning () { // 高能预警倒计时
         var that = this
