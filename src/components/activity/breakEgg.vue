@@ -12,7 +12,7 @@
     <div class="eggsBox">
       <div class="tipBox" :class="{'noEgg': token !== '' && activityStatus === 1 && breakNumber <=0}">
         <p v-show="token !== '' && activityStatus === 1">
-          <span v-show="breakNumber >0">剩余彩蛋{{breakNumber}}枚</span>
+          <span v-show="breakNumber >0">剩余彩蛋<br>{{breakNumber}}枚</span>
           <span v-show="breakNumber <=0">窝里空空如也...快去投资砸彩蛋吧!</span>
         </p>
         <p v-show="!token">马上登录砸彩蛋</p>
@@ -55,13 +55,13 @@
         <p class="example">活动期间，新增投资宏财精选、宏财尊贵项目(不含债权转让)，累计年化投资金额每满1000元，即可获得彩蛋一枚，砸蛋有机会获得以下奖励：</p>
       </div>
       <ul class="privileged">
-        <li><img src="../../images/break-egg/privileged-1w.png" alt=""></li>
-        <li><img src="../../images/break-egg/privileged-5w.png" alt=""></li>
-        <li><img src="../../images/break-egg/privileged-10w.png" alt=""></li>
+        <li><img src="../../../static/images/privileged-1w.png" alt=""></li>
+        <li><img src="../../../static/images/privileged-5w.png" alt=""></li>
+        <li><img src="../../../static/images/privileged-10w.png" alt=""></li>
       </ul>
       <ul class="rate">
-        <li><img src="../../images/break-egg/rate-2.png" alt=""></li>
-        <li><img src="../../images/break-egg/rate-5.png" alt=""></li>
+        <li><img src="../../../static/images/rate-2.png" alt=""></li>
+        <li><img src="../../../static/images/rate-5.png" alt=""></li>
       </ul>
       <img src="../../images/break-egg/money.png" class="bottomMoney">
     </div>
@@ -114,7 +114,7 @@
           <img src="../../images/break-egg/icon-head2.png" alt="" width="11%" class="position-ab">
           <p class="title">恭喜您获得</p>
           <div class="receive">
-            <img src="../../images/break-egg/privileged-1w.png" alt="" class="display-bl margin-auto" width="25%">
+            <img v-bind:src="rewardList[0].imgSrc" alt="" class="display-bl margin-auto" width="25%">
             <img v-bind:src="brokenEggSrc" alt="" class="display-bl margin-auto" width="49%">
             <img src="../../images/break-egg/reward-egg3.png" alt="" class="position-ab reward-break" width="24%">
             <p class="receive-msg">{{receiveMsg(oneTimeMsgs)}}</p>
@@ -125,10 +125,10 @@
           <p class="title">恭喜您获得</p>
           <div class="receive">
             <div class="priviledges">
-              <div v-for="reward in rewardList" v-show="reward.type === 1"><img src="../../images/break-egg/privileged-1w.png" width="66%"><span>x{{reward.num}}</span></div>
+              <div v-for="reward in rewardList" v-show="reward.type === 1"><img v-bind:src="reward.imgSrc" width="66%"><span>x{{reward.num}}</span></div>
             </div>
             <div class="rate-coupons">
-              <div v-for="reward in rewardList" v-show="reward.type === 2"><img src="../../images/break-egg/reward-rate-2.png" width="70%"><span>x{{reward.num}}</span></div>
+              <div v-for="reward in rewardList" v-show="reward.type === 2"><img v-bind:src="reward.imgSrc" width="70%"><span>x{{reward.num}}</span></div>
             </div>
             <img v-bind:src="brokenEggSrc" alt="" class="display-bl margin-auto" width="55%">
             <img src="../../images/break-egg/reward-egg3.png" alt="" class="position-ab reward-break" width="24%">
@@ -167,30 +167,37 @@
         rewardList: [
           {
             type: 1,
-            description: 'hhhh',
-            num: 1
+            amount: 10000,
+            num: 1,
+            imgSrc: ''
           },
           {
             type: 1,
-            description: 'hhhh',
-            num: 2
+            amount: 50000,
+            num: 2,
+            imgSrc: ''
           },
           {
             type: 1,
-            description: 'hhhh',
-            num: 3
+            amount: 100000,
+            num: 3,
+            imgSrc: ''
           },
           {
             type: 2,
-            description: 'hhhh',
-            num: 4
+            amount: 2,
+            num: 4,
+            imgSrc: ''
           },
           {
             type: 2,
-            description: 'hhhh',
-            num: 5
+            amount: 5,
+            num: 5,
+            imgSrc: ''
           }
-        ]
+        ],
+        afterTimer: null,
+        beforeTimer: null
       }
     },
     props: ['token'],
@@ -208,6 +215,27 @@
       this.token && this.token !== '' ? this.getUserBreakInfo() : null
       this.eggImgSrc = '../../../static/images/egg' + this.eggImgNumber + '.png'
       this.brokenEggSrc = '../../../static/images/brokenEgg' + this.eggImgNumber + '.png'
+      for (let i = 0; i < this.rewardList.length; i++) {
+        let j = ''
+        switch (this.rewardList[i].amount) {
+          case 10000:
+            j = 'privileged-1w'
+            break
+          case 50000:
+            j = 'privileged-5w'
+            break
+          case 100000:
+            j = 'privileged-10w'
+            break
+          case 2:
+            j = 'rate-2'
+            break
+          case 5:
+            j = 'rate-5'
+            break
+        }
+        this.rewardList[i].imgSrc = '../../../static/images/' + j + '.png'
+      }
     },
     methods: {
       receiveMsg (arr) {
@@ -230,18 +258,24 @@
           console.log(res.data)
         })
       },
-      getUserBreakInfo () { // 用户参与活动信息查询 剩余砸蛋次数 = value - usedCount
+      getUserBreakInfo () { // 用户参与活动信息查询 剩余砸蛋次数 = totalValue - usedCount
         var that = this
         that.$http({
           url: '/hongcai/rest/activity/breakEggs/0/info?token=' + that.token
         }).then(function (res) {
-          console.log(res.data)
+          if (!res.data || res.data.ret === -1) {
+            return
+          }
+          that.breakNumber = res.data.totalValue - res.data.usedCount
         }).catch(function (err) {
           console.log(err)
         })
       },
       toInvest () {
         var that = this
+        if (that.busy) {
+          return
+        }
         that.busy = true
         setTimeout(function () {
           that.busy = false
@@ -256,28 +290,60 @@
       },
       breakEgg (breakType) {
         // breakType // 砸蛋 1: 1次 2:10次
+        if (this.busy) {
+          return
+        }
+        this.busy = true
         if (breakType > this.breakNumber) {
           return
         }
         var that = this
-        // this.$http.get('/hongcai/rest/activity/breakEggs/0/break', {
-        //   token: that.token,
-        //   type: breakType
-        // }).then(function (res) {
-        //   if (!res.data || res.data.ret === -1) {
-        //     $('.hammer').addClass('hammerRotate')
-        //     that.beforeEggBreakAnimate(breakType)
-        //     breakType === 1 ? that.breakNumber -= 1 : that.breakNumber -= 10
-        //     return
-        //   }
-        //   that.rewardList = res.data
-        // })
+        this.$http.get('/hongcai/rest/activity/breakEggs/0/break', {
+          token: that.token,
+          type: breakType
+        }).then(function (res) {
+          setTimeout(function () {
+            that.busy = false
+          }, 1000)
+          if (!res.data || res.data.ret === -1) {
+            return
+          }
+          // $('.hammer').addClass('hammerRotate')
+          // that.beforeEggBreakAnimate(breakType)
+          that.rewardList = res.data
+          for (let i = 0; i < that.rewardList.length; i++) {
+            let j = ''
+            switch (that.rewardList[i].amount) {
+              case 10000:
+                j = 'privileged-1w'
+                break
+              case 50000:
+                j = 'privileged-5w'
+                break
+              case 100000:
+                j = 'privileged-10w'
+                break
+              case 2:
+                j = 'rate-2'
+                break
+              case 5:
+                j = 'rate-5'
+                break
+            }
+            that.rewardList[i].imgSrc = '../../../static/images/' + j + '.png'
+          }
+        }).catch(function (err) {
+          console.log(err)
+          setTimeout(function () {
+            that.busy = false
+          }, 1000)
+        })
         $('.hammer').addClass('hammerRotate')
         that.beforeEggBreakAnimate(breakType)
       },
       beforeEggBreakAnimate (breakType) { // 蛋壳打破之前
         var that = this
-        setTimeout(function () {
+        that.beforeTimer = setTimeout(function () {
           that.showMask = true
           $('.hammer').addClass('hammerRotate')
           that.showBeforeBreak = true
@@ -285,20 +351,24 @@
           that.afterEggBreakAnimate(breakType)
           breakType === 1 ? that.oneTimeBreak = true : that.tenTimeBreak = true
           breakType === 1 ? that.tenTimeBreak = false : that.oneTimeBreak = false
-        }, 1000)
+        }, 1500)
       },
       afterEggBreakAnimate (breakType) { // 蛋壳打破
         var that = this
-        setTimeout(function () {
+        that.afterTimer = setTimeout(function () {
           $('.before-break').find('.egg').removeClass('eggRotate')
           that.showBeforeBreak = false
           $('.reward-break').addClass('breakAnimate')
           that.showAfterBreak = true
           breakType === 1 ? that.breakNumber -= 1 : that.breakNumber -= 10
-        }, 1000)
+        }, 1500)
       }
     },
-    components: {breakEggCalculator}
+    components: {breakEggCalculator},
+    destroyed () {
+      clearTimeout(this.beforeTimer)
+      clearTimeout(this.afterTimer)
+    }
   }
 </script>
 <style scoped>
