@@ -9,6 +9,10 @@ module.exports = {
       : config.dev.cssSourceMap,
     extract: isProduction
   }),
+  transformToRequire: {
+    "source": "src",
+    "audio": "src"
+  },
   postcss: [
     require('autoprefixer')({
       browsers: ['last 2 versions']
