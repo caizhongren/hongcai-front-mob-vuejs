@@ -114,7 +114,7 @@
           <img src="../../images/break-egg/icon-head2.png" alt="" width="11%" class="position-ab">
           <p class="title">恭喜您获得</p>
           <div class="receive">
-            <img v-bind:src="rewardList[0].imgSrc" alt="" class="display-bl margin-auto" width="25%">
+            <img v-bind:src="rewardList[0].imgSrc" alt="" class="display-bl margin-auto" :class="{'margin-t-1p3': rewardList[0].type === 2}" width="25%">
             <img v-bind:src="brokenEggSrc" alt="" class="display-bl margin-auto" width="48%">
             <img src="../../images/break-egg/reward-egg3.png" alt="" class="position-ab reward-break" width="24%">
             <p class="receive-msg">{{receiveMsg(oneTimeMsgs)}}</p>
@@ -123,16 +123,16 @@
         <div class="ten-time-break" v-show="tenTimeBreak">
           <img src="../../images/break-egg/icon-head2.png" alt="" width="11%" class="position-ab">
           <p class="title">恭喜您获得</p>
-          <div class="receive">
+          <div class="receive" :class="{'height-5': priviledgeList.length > 0 && rateList.length > 0}">
             <div class="priviledges">
-              <div v-for="reward in rewardList" v-show="reward.type === 1"><img v-bind:src="reward.imgSrc" width="66%"><span>x{{reward.count}}</span></div>
+              <div v-for="reward in priviledgeList" v-if="priviledgeList.length > 0"><img v-bind:src="reward.imgSrc" width="66%"><span>x{{reward.count}}</span></div>
             </div>
             <div class="rate-coupons">
-              <div v-for="reward in rewardList" v-show="reward.type === 2"><img v-bind:src="reward.imgSrc" width="70%"><span>x{{reward.count}}</span></div>
+              <div v-for="reward in rateList" v-if="rateList.length > 0"><img v-bind:src="reward.imgSrc" width="70%"><span>x{{reward.count}}</span></div>
             </div>
             <img v-bind:src="brokenEggSrc" alt="" class="display-bl margin-auto" width="55%">
             <img src="../../images/break-egg/reward-egg3.png" alt="" class="position-ab reward-break" width="24%">
-            <p class="receive-msg">{{receiveMsg(tenTimesMsgs)}}</p>
+            <p class="receive-msg" :class="{'margin-t-1': priviledgeList.length === 0}">{{receiveMsg(tenTimesMsgs)}}</p>
           </div>
         </div>
         <img src="../../images/break-egg/icon-close.png" alt="" width="10%" class="close-mask" @click="closeMask">
@@ -151,7 +151,7 @@
         eggImgSrc: '',
         brokenEggSrc: '',
         eggImgNumber: Math.floor(Math.random() * 5 + 1),
-        breakNumber: 60, // 剩余砸蛋次数
+        breakNumber: 0, // 剩余砸蛋次数
         activityStatus: 1, // 1 正常 2 结束
         activityEnd: 1, // 1 -活动结束3天内 2 —活动结束3天后
         activityInfo: {
@@ -224,14 +224,6 @@
       this.token && this.token !== '' ? this.getUserBreakInfo() : null
       this.eggImgSrc = '../../../static/images/egg' + this.eggImgNumber + '.png'
       this.brokenEggSrc = '../../../static/images/brokenEgg' + this.eggImgNumber + '.png'
-      for (let i = 0; i < this.rewardList.length; i++) {
-        this.rewardList[i].imgSrc = '../../../static/images/reward-' + this.rewardList[i].amount + '.png'
-        if (this.rewardList[i].type === 1) {
-          this.priviledgeList.push(this.rewardList[i])
-        } else {
-          this.rateList.push(this.rewardList[i])
-        }
-      }
     },
     methods: {
       receiveMsg (arr) {
@@ -315,11 +307,16 @@
           if (!res.data || res.data.ret === -1) {
             return
           }
-          // $('.hammer').addClass('hammerRotate')
-          // that.beforeEggBreakAnimate(breakType)
+          $('.hammer').addClass('hammerRotate')
+          that.beforeEggBreakAnimate(breakType)
           that.rewardList = res.data
           for (let i = 0; i < that.rewardList.length; i++) {
             that.rewardList[i].imgSrc = '../../../static/images/reward-' + that.rewardList[i].amount + '.png'
+            if (that.rewardList[i].type === 1) {
+              that.priviledgeList.push(that.rewardList[i])
+            } else {
+              that.rateList.push(that.rewardList[i])
+            }
           }
         }).catch(function (err) {
           console.log(err)
@@ -327,8 +324,6 @@
             that.busy = false
           }, 1000)
         })
-        $('.hammer').addClass('hammerRotate')
-        that.beforeEggBreakAnimate(breakType)
       },
       beforeEggBreakAnimate (breakType) { // 蛋壳打破之前
         var that = this
@@ -361,8 +356,17 @@
   }
 </script>
 <style scoped>
+  .height-5 {
+    height: 5rem !important;
+  }
+  .margin-t-1 {
+    margin-top: 1.2rem !important;
+  }
+  .margin-t-1p3 {
+    margin-bottom: 1.3rem !important;
+  }
   .close-mask {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
   }
   .break-egg {
     background: #fa6654;
@@ -680,7 +684,8 @@
     margin-top: 1rem;
   }
   .ten-time-break {
-    margin-top: .5rem;
+    /* margin-top: .5rem; */
+    margin-top: 1rem;
   }
   .before-break img, .ten-times-break img, .after-break .one-time-break img.position-ab, .after-break .ten-time-break img.position-ab {
     left: 25%;
@@ -707,7 +712,7 @@
     position: relative;
   }
   .ten-time-break .receive {
-    height: 5rem;
+    /* height: 5rem; */
   }
   .one-time-break .receive img:first-child, .ten-time-break .receive img:first-child {
     margin-bottom: .3rem;
