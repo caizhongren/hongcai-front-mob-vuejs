@@ -171,6 +171,8 @@
       that.qipaStage.queue = null
       that.qipaStage.init = function(c, isOnceAgain) {
         if(isOnceAgain) {
+          that.drawScrollMoney()
+          that.backgroundTimer = setInterval(setBackground, 1E3);
           that.qipaStage.stage.removeChild(that.qipaStage.stage.player)
           that.qipaStage.stage.player = new drawMoney(that.HandList[0])
           that.qipaStage.stage.addChild(that.qipaStage.stage.player)
@@ -235,29 +237,10 @@
               that.qipaStage.stage.player.m[qp_f].visible = !1
             }
           });
-          for (a = 0; a <= qp_e; a++) for (that.moneyBg1[a] = [], b = 0; b < that.moneyBgCount; b++) {
-            var e = new createjs.Bitmap(that.qipaStage.queue.getResult("d0"));
-            e.regX = e.getBounds().width / 2;
-            e.regY = e.getBounds().height / 2;
-            e.x = genRandom(that.W);
-            e.y = -that.H / 2 + genRandom(that.H);
-            e.visible = !1;
-            that.moneyBg1[a].push(e);
-            that.qipaStage.stage.addChild(that.moneyBg1[a][b])
-          }
-          for (c = 0; c <= qp_e; c++) for (that.moneyBg2[c] = [], d = 0; d < that.moneyBgCount; d++) {
-            var e1 = new createjs.Bitmap(that.qipaStage.queue.getResult("d1"));
-            e1.regX = e1.getBounds().width / 2;
-            e1.regY = e1.getBounds().height / 2;
-            e1.x = genRandom(that.W);
-            e1.y = -that.H / 2 + genRandom(that.H);
-            e1.visible = !1;
-            that.moneyBg2[c].push(e1);
-            that.qipaStage.stage.addChild(that.moneyBg2[c][d])
-          }
+          that.drawScrollMoney()
+          that.backgroundTimer = setInterval(setBackground, 1E3);
           that.qipaStage.stage.player = new drawMoney(that.HandList[0])
           that.qipaStage.stage.addChild(that.qipaStage.stage.player)
-          that.backgroundTimer = setInterval(setBackground, 1E3);
         }
         that.qipaStage.stage = new createjs.Stage("stage");
         that.qipaStage.queue = new createjs.LoadQueue(!1);
@@ -429,25 +412,26 @@
         c.style.height = window.innerHeight + 'px'
       },
       // 循环滚动背景
-      scrollBackground: function () {
+      drawScrollMoney: function () {
         var that = this
         var createjs = window.create || createjs
-        for (a = 0; a <= qp_e; a++) for (that.moneyBg1[a] = [], b = 0; b < 2; b++) {
+        var a = 0, b = 0, c = 0, d = 0;
+        for (a = 0; a <= that.qp_e; a++) for (that.moneyBg1[a] = [], b = 0; b < 2; b++) {
           var e = new createjs.Bitmap(that.qipaStage.queue.getResult("d0"));
           e.regX = e.getBounds().width / 2;
           e.regY = e.getBounds().height / 2;
-          e.x = genRandom(that.W);
-          e.y = -that.H / 2 + genRandom(that.H);
+          e.x = parseInt(Math.random() * that.W);
+          e.y = -that.H / 2 + parseInt(Math.random() * that.H);
           e.visible = !1;
           that.moneyBg1[a].push(e);
           that.qipaStage.stage.addChild(that.moneyBg1[a][b])
         }
-        for (c = 0; c <= qp_e; c++) for (that.moneyBg2[c] = [], d = 0; d < 2; d++) {
+        for (c = 0; c <= that.qp_e; c++) for (that.moneyBg2[c] = [], d = 0; d < 2; d++) {
           var e1 = new createjs.Bitmap(that.qipaStage.queue.getResult("d1"));
           e1.regX = e1.getBounds().width / 2;
           e1.regY = e1.getBounds().height / 2;
-          e1.x = genRandom(that.W);
-          e1.y = -that.H / 2 + genRandom(that.H);
+          e1.x = parseInt(Math.random() * that.W);
+          e1.y = -that.H / 2 + parseInt(Math.random() * that.H);
           e1.visible = !1;
           that.moneyBg2[c].push(e1);
           that.qipaStage.stage.addChild(that.moneyBg2[c][d])
@@ -534,7 +518,6 @@
           url: '/hongcai/rest/activity/countingKings/0/handSpeedConfig?token=' + that.token + '&type=' + type
         })
         .then(function (res) {
-          
           if (res.data && res.data.ret !== -1) {
             that.HandList = JSON.parse(res.data.deftHandValues)
             that.number = res.data.number
