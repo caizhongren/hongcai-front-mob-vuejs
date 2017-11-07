@@ -14,6 +14,7 @@
           <div class="ruleIcon" @click="showRule">游戏规则</div>
         </div>
       </div>
+      <p class="activityTime">活动时间: 2017.11.08～2017.12.12</p>
       <ul class="startBtns" v-if="activityStatus === 1">
         <li v-for="item in startList" @click="goGame(item.gameType)">{{item.text}}</li>
       </ul>
@@ -193,7 +194,7 @@
   .startBtns {
     margin: 0 auto;
     text-align: center;
-    padding: .5rem 0 .2rem;
+    padding: .2rem 0 .2rem;
   }
   .startBtns li {
     display: inline-block;
@@ -300,5 +301,10 @@
     -webkit-animation: audioAnimation 1.5s 0s infinite linear;
     -o-animation: audioAnimation 1.5s 0s infinite linear;
 
+  }
+  .activityTime {
+    color: #581f0d;
+    font-size: .26rem;
+    font-weight: bold;
   }
 </style>
