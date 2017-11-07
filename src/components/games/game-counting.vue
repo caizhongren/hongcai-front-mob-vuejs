@@ -606,7 +606,7 @@
       }
     },
     destroyed () {
-      this.qipaStage.stage.removeAllChild()
+      this.qipaStage.stage.removeAllChildren()
       clearInterval(this.backgroundTimer)
       audioPlayUtil.playOrPaused('click', this.isPlay)
     }
