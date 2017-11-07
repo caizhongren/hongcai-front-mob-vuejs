@@ -55,13 +55,13 @@
           <ul class="rewardBtns">
             <li v-if="gameType === 1" @click="toPriviledge">查看特权本金</li>
             <li v-if="gameType === 2" @click="goBack">返回</li>
-            <li @click="playAgin">再玩一次</li>
+            <li @click="getGameCounts">再玩一次</li>
           </ul>
         </div>
         <div class="NoReward" v-if="rewardMoney <= 0">
           <img src="../../images/singles-day/emoji-04.png" width="25%">
           100块都没数到...
-          <div class="startAginBtn" @click="playAgin">再玩一次</div>
+          <div class="startAginBtn" @click="getGameCounts">再玩一次</div>
         </div>
       </div>
     </div>
@@ -185,6 +185,9 @@
             }
             c = a.localY;
             d = that.qipaStage.stage.player.m[qp_f].y;
+            that.qipaStage.stage.removeChild(that.qipaStage.stage.player)
+            that.qipaStage.stage.player = new drawMoney(that.HandList[that.countNum])
+            that.qipaStage.stage.addChild(that.qipaStage.stage.player)
           });
           a.on("pressmove", function(e) {
             if (that.second <= 0) {
@@ -463,11 +466,13 @@
         that.rewardMoney = 0
         that.showReward = false
         that.showWarning = true
+        that.warningText = 3
+        that.second = 15
         var warningTimer = setInterval(function () {
           that.warningText -= 1
           if (that.warningText === 0) {
-            // that.warningText = (that.warningText.toString() + '开始').slice(-2)
-            $('.count-down').html('开始')
+            that.warningText = (that.warningText.toString() + '开始').slice(-2)
+            // $('.count-down').html('开始')
             clearInterval(warningTimer)
             setTimeout(function () {
               that.showWarning = false
