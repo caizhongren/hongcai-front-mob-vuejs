@@ -529,9 +529,12 @@
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
+            if(that.HandList.length == 0) {
+              that.qipaStage.init(that.images)
+            }
             that.HandList = JSON.parse(res.data.deftHandValues)
             that.number = res.data.number
-            that.qipaStage.init(that.images)
+            
           } else {
             console.log(res.data.msg)
           }
