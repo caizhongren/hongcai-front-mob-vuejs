@@ -66,6 +66,14 @@ module.exports = {
         }
       },
       {
+        test: /\.mp3(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 1000000,
+          name: utils.assetsPath('assets/[name].[hash:7].[ext]')
+        }
+      },
+      {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url-loader',
         query: {
