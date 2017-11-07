@@ -73,142 +73,8 @@
       return {
         showRulesMask: false,
         activeTab: 0,
-        CreditRightVo: [
-          {
-            createTime: 1111111,
-            projectDays: 33,
-            amount: 3000,
-            annualInvestAmount: 222
-          },
-          {
-            createTime: 1111111,
-            projectDays: 33,
-            amount: 3000,
-            annualInvestAmount: 222
-          },
-          {
-            createTime: 1111111,
-            projectDays: 33,
-            amount: 3000,
-            annualInvestAmount: 222
-          },
-          {
-            createTime: 1111111,
-            projectDays: 33,
-            amount: 3000,
-            annualInvestAmount: 222
-          },
-          {
-            createTime: 1111111,
-            projectDays: 33,
-            amount: 3000,
-            annualInvestAmount: 222
-          },
-          {
-            createTime: 1111111,
-            projectDays: 33,
-            amount: 3000,
-            annualInvestAmount: 222
-          },
-          {
-            createTime: 1111111,
-            projectDays: 33,
-            amount: 3000,
-            annualInvestAmount: 222
-          },
-          {
-            createTime: 1111111,
-            projectDays: 33,
-            amount: 3000,
-            annualInvestAmount: 222
-          },
-          {
-            createTime: 1111111,
-            projectDays: 33,
-            amount: 3000,
-            annualInvestAmount: 222
-          },
-          {
-            createTime: 1111111,
-            projectDays: 33,
-            amount: 3000,
-            annualInvestAmount: 222
-          },
-          {
-            createTime: 1111111,
-            projectDays: 33,
-            amount: 3000,
-            annualInvestAmount: 222
-          },
-          {
-            createTime: 1111111,
-            projectDays: 33,
-            amount: 3000,
-            annualInvestAmount: 222
-          }
-        ],
-        rewardList: [
-          {
-            createTime: 1111111,
-            description: '100000元特权本金',
-            num: 3
-          },
-          {
-            createTime: 1111111,
-            description: '100000元特权本金',
-            num: 3
-          },
-          {
-            createTime: 1111111,
-            description: '100000元特权本金',
-            num: 3
-          },
-          {
-            createTime: 1111111,
-            description: '100000元特权本金',
-            num: 3
-          },
-          {
-            createTime: 1111111,
-            description: '100000元特权本金',
-            num: 3
-          },
-          {
-            createTime: 1111111,
-            description: '100000元特权本金',
-            num: 3
-          },
-          {
-            createTime: 1111111,
-            description: '100000元特权本金',
-            num: 3
-          },
-          {
-            createTime: 1111111,
-            description: '100000元特权本金',
-            num: 3
-          },
-          {
-            createTime: 1111111,
-            description: '100000元特权本金',
-            num: 3
-          },
-          {
-            createTime: 1111111,
-            description: '100000元特权本金',
-            num: 3
-          },
-          {
-            createTime: 1111111,
-            description: '100000元特权本金',
-            num: 3
-          },
-          {
-            createTime: 1111111,
-            description: '100000元特权本金',
-            num: 3
-          }
-        ],
+        CreditRightVo: [],
+        rewardList: [],
         investPage: 1,
         rewardPage: 1,
         pageSize: 10,
@@ -248,7 +114,7 @@
         var that = this
         that.$http({
           method: 'get',
-          url: '/hongcai/rest/activity/beakEggs/0/investRecords?token=' + that.token + '&activityType=' + that.activityType + '&page=' + page + '&pageSize=' + pageSize
+          url: '/hongcai/rest/activity/breakEggs/0/investRecords?token=' + that.token + '&activityType=' + that.activityType + '&page=' + page + '&pageSize=' + pageSize
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {

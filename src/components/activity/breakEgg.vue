@@ -10,25 +10,25 @@
     </div>
     <!-- 砸蛋框 -->
     <div class="eggsBox">
-      <div class="tipBox" :class="{'noEgg': token !== '' && activityStatus === 1 && breakNumber <=0}">
-        <p v-show="token !== '' && activityStatus === 1">
-          <span v-show="breakNumber >0">剩余彩蛋<br>{{breakNumber}}枚</span>
-          <span v-show="breakNumber <=0">窝里空空如也...快去投资砸彩蛋吧!</span>
+      <div class="tipBox" :class="{'noEgg': (token !== '' && activityEnd === 1 && breakNumber <=0) || (token !== '' &&  activityEnd === 2)}">
+        <p v-show="token !== ''">
+          <span v-show="breakNumber >0 && activityEnd === 1">剩余彩蛋<br>{{breakNumber}}枚</span>
+          <span v-show="breakNumber <=0 && activityStatus === 1">窝里空空如也...快去投资砸彩蛋吧!</span>
         </p>
         <p v-show="!token">马上登录砸彩蛋</p>
-        <p v-show="token !== '' &&  activityStatus === 2">活动结束了</p>
+        <p v-show="token !== '' &&  (activityEnd === 2 || activityStatus === 2 && breakNumber <=0)">奖励已失效！下次记得早点来参与～</p>
       </div>
-      <div v-show="!token || (token!== '' && activityStatus === 1 && breakNumber >0)">
+      <div v-show="!token || (token!== '' && activityEnd === 1 && breakNumber >0)">
         <img v-bind:src="eggImgSrc" class="egg" width="50%">
         <img src="../../images/break-egg/hammer.png" class="hammer">
         <img src="../../images/break-egg/eggs.png" class="eggs">
       </div>
-      <img v-show="token !== '' && (activityStatus === 2 || breakNumber <=0)" src="../../images/break-egg/icon-head3.png" class="egg margin-auto" :class="{'margin-l-pt8': breakNumber <=0}" width="56%">
+      <img v-show="token !== '' && (activityEnd === 2 || breakNumber <=0)" src="../../images/break-egg/icon-head3.png" class="egg margin-auto" :class="{'margin-l-pt8': breakNumber <=0 || activityStatus === 2}" width="56%">
     </div>
     <div class="eggsBorder"></div>
     <!-- 砸蛋按钮 -->
     <div class="breakBtns">
-      <div v-if="token !== '' && activityStatus === 1">
+      <div v-if="token !== '' && activityEnd === 1">
         <!-- 可砸蛋按钮 -->
         <div v-if="breakNumber >0">
           <img src="../../images/break-egg/btn-yellow-1.png" class="yellowBtn fl" @click="breakEgg(1)">
@@ -36,12 +36,12 @@
           <img src="../../images/break-egg/btn-grey-10.png" class="greyBtn fr" v-show="breakNumber <10">
         </div>
         <!-- 没有砸蛋次数按钮 -->
-        <img v-if="breakNumber <=0" src="../../images/break-egg/btn-invest.png" class="margin-auto" width="48%" @click="toInvest()">
+        <img v-if="breakNumber <=0 && activityStatus === 1" src="../../images/break-egg/btn-invest.png" class="margin-auto" width="48%" @click="toInvest()">
       </div>
       <!-- 未登录按钮 -->
       <img v-if="!token" src="../../images/break-egg/btn-login.png" class="margin-auto" width="48%" @click="toLogin">
       <!-- 活动已结束按钮 -->
-      <img v-if="token !== '' &&  activityStatus === 2" src="../../images/break-egg/btn-activiiyEnd.png" class="margin-auto" width="45%">
+      <img v-if="token !== '' &&  (activityEnd === 2 || activityStatus === 2 && breakNumber <=0)" src="../../images/break-egg/btn-activiiyEnd.png" class="margin-auto" width="45%">
     </div>
     <!-- 活动介绍 -->
     <div class="egg-info">
@@ -153,6 +153,7 @@
         eggImgNumber: Math.floor(Math.random() * 5 + 1),
         breakNumber: 0, // 剩余砸蛋次数
         activityStatus: 1, // 1 正常 2 结束
+        activityEnd: 1, // 1 -活动结束3天内 2 —活动结束3天后
         activityInfo: {
           startYear: 0,
           startMonth: 0,
@@ -243,7 +244,7 @@
       getActivityStatus () { // 活动信息查询
         var that = this
         that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
-          that.activityStatus = res.data.status
+          // that.activityStatus = res.data.status
           that.activityInfo = {
             startYear: new Date(res.data.startTime).getFullYear(),
             startMonth: new Date(res.data.startTime).getMonth() + 1,
@@ -265,7 +266,7 @@
           if (!res.data || res.data.ret === -1) {
             return
           }
-          that.breakNumber = res.data.totalValue - res.data.usedCount
+          that.breakNumber = res.data.totalValue - res.data.usedValue
         }).catch(function (err) {
           console.log(err)
         })
@@ -282,7 +283,7 @@
         bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {}, null)
       },
       toRecord () {
-        this.$router.push({name: 'BreakEggRecord'})
+        this.$router.push({name: 'BreakEggRecord', query: {act: this.$route.query.act}})
       },
       toLogin () {
         bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function (response) {}, null)
