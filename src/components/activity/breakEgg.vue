@@ -57,7 +57,7 @@
       <ul class="privileged">
         <li><img src="../../../static/images/reward-10000.png" alt=""></li>
         <li><img src="../../../static/images/reward-50000.png" alt=""></li>
-        <li><img src="../../../static/images/reward-100000.png" alt=""></li>
+        <li><img src="../../../static/images/reward-80000.png" alt=""></li>
       </ul>
       <ul class="rate">
         <li><img src="../../../static/images/reward-2.png" alt=""></li>
@@ -125,10 +125,10 @@
           <p class="title">恭喜您获得</p>
           <div class="receive">
             <div class="priviledges">
-              <div v-for="reward in rewardList" v-show="reward.type === 1"><img v-bind:src="reward.imgSrc" width="66%"><span>x{{reward.num}}</span></div>
+              <div v-for="reward in rewardList" v-show="reward.type === 1"><img v-bind:src="reward.imgSrc" width="66%"><span>x{{reward.count}}</span></div>
             </div>
             <div class="rate-coupons">
-              <div v-for="reward in rewardList" v-show="reward.type === 2"><img v-bind:src="reward.imgSrc" width="70%"><span>x{{reward.num}}</span></div>
+              <div v-for="reward in rewardList" v-show="reward.type === 2"><img v-bind:src="reward.imgSrc" width="70%"><span>x{{reward.count}}</span></div>
             </div>
             <img v-bind:src="brokenEggSrc" alt="" class="display-bl margin-auto" width="55%">
             <img src="../../images/break-egg/reward-egg3.png" alt="" class="position-ab reward-break" width="24%">
@@ -151,7 +151,7 @@
         eggImgSrc: '',
         brokenEggSrc: '',
         eggImgNumber: Math.floor(Math.random() * 5 + 1),
-        breakNumber: 0, // 剩余砸蛋次数
+        breakNumber: 60, // 剩余砸蛋次数
         activityStatus: 1, // 1 正常 2 结束
         activityEnd: 1, // 1 -活动结束3天内 2 —活动结束3天后
         activityInfo: {
@@ -180,29 +180,31 @@
           {
             type: 1,
             amount: 10000,
-            num: 1
+            count: 2
           },
           {
             type: 1,
             amount: 50000,
-            num: 2
+            count: 3
           },
           {
             type: 1,
-            amount: 100000,
-            num: 3
+            amount: 80000,
+            count: 3
           },
           {
             type: 2,
             amount: 2,
-            num: 4
+            count: 2
           },
           {
             type: 2,
             amount: 5,
-            num: 5
+            count: 3
           }
         ],
+        priviledgeList: [],
+        rateList: [],
         afterTimer: null,
         beforeTimer: null
       }
@@ -224,6 +226,11 @@
       this.brokenEggSrc = '../../../static/images/brokenEgg' + this.eggImgNumber + '.png'
       for (let i = 0; i < this.rewardList.length; i++) {
         this.rewardList[i].imgSrc = '../../../static/images/reward-' + this.rewardList[i].amount + '.png'
+        if (this.rewardList[i].type === 1) {
+          this.priviledgeList.push(this.rewardList[i])
+        } else {
+          this.rateList.push(this.rewardList[i])
+        }
       }
     },
     methods: {
