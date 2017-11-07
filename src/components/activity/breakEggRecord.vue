@@ -22,7 +22,7 @@
                     <td>{{item.createTime | dateDot}}</td>
                     <td>{{item.amount}}</td>
                     <td>{{item.projectDays}}天</td>
-                    <td>{{item.annualInvestAmount}}</td>
+                    <td>{{item.annualAmount}}</td>
                   </tr>
                   <tr v-if="investTotalPage > investPage" class="loadMore" @click="loadMore(investPage)"><td colspan="4">查看更多</td></tr>
                 </tbody>
@@ -46,9 +46,9 @@
                   <tr v-for="item in rewardList">
                     <td>{{item.createTime | dateDot}}</td>
                     <td>{{item.description}}</td>
-                    <td>{{item.num}}</td>
+                    <td>{{item.count}}</td>
                   </tr>
-                  <tr v-if="rewardTotalPage > rewardPage" class="loadMore" @click="loadMore(rewardPage)"><td colspan="2">查看更多</td></tr>
+                  <tr v-if="rewardTotalPage > rewardPage" class="loadMore" @click="loadMore(rewardPage)"><td colspan="3">查看更多</td></tr>
                 </tbody>
               </table>
               <div v-if="rewardList.length <= 0" class="noInvestRecord">
@@ -148,7 +148,7 @@
       },
       loadMore (index) {
         var page = (index + 1)
-        if (this.activeTab === 0) {
+        if (this.activeTab === 1) {
           this.getInvestRecords(page, this.pageSize)
           this.investPage = page
         } else {
