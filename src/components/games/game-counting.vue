@@ -55,13 +55,13 @@
           <ul class="rewardBtns">
             <li v-if="gameType === 1" @click="toPriviledge">查看特权本金</li>
             <li v-if="gameType === 2" @click="goBack">返回</li>
-            <li @click="getGameCounts">再玩一次</li>
+            <li @click="getGameCounts(true)">再玩一次</li>
           </ul>
         </div>
         <div class="NoReward" v-if="rewardMoney <= 0">
           <img src="../../images/singles-day/emoji-04.png" width="25%">
           100块都没数到...
-          <div class="startAginBtn" @click="getGameCounts">再玩一次</div>
+          <div class="startAginBtn" @click="getGameCounts(true)">再玩一次</div>
         </div>
       </div>
     </div>
@@ -169,7 +169,14 @@
       h = null;
       that.qipaStage.stage = null
       that.qipaStage.queue = null
-      that.qipaStage.init = function(c) {
+      that.qipaStage.init = function(c, isOnceAgain) {
+        if(isOnceAgain) {
+          that.qipaStage.stage.removeChild(that.qipaStage.stage.player)
+          that.qipaStage.stage.player = new drawMoney(that.HandList[0])
+          that.qipaStage.stage.addChild(that.qipaStage.stage.player)
+          return
+        }
+
         function qp_w() {
           var a = new createjs.Shape;
           a.graphics.beginFill("#fbdc34").drawRect(0, 0, that.W, that.H);
@@ -248,8 +255,8 @@
             that.moneyBg2[c].push(e1);
             that.qipaStage.stage.addChild(that.moneyBg2[c][d])
           }
-          that.qipaStage.stage.player = new drawMoney(that.HandList[0]);
-          that.qipaStage.stage.addChild(that.qipaStage.stage.player);
+          that.qipaStage.stage.player = new drawMoney(that.HandList[0])
+          that.qipaStage.stage.addChild(that.qipaStage.stage.player)
           that.backgroundTimer = setInterval(setBackground, 1E3);
         }
         that.qipaStage.stage = new createjs.Stage("stage");
@@ -459,9 +466,9 @@
         audioPlayUtil.playOrPaused('click', this.isPlay)
         this.$router.go(-1)
       },
-      startWarning () { // 高能预警倒计时
+      startWarning (isOnceAgain) { // 高能预警倒计时
         var that = this
-        that.getMoneyList(that.gameType)
+        that.getMoneyList(that.gameType, isOnceAgain)
         that.showOrhideBackBtn(0)
         that.rewardMoney = 0
         that.showReward = false
@@ -485,10 +492,9 @@
           }
         }, 1000)
       },
-      getGameCounts () {
+      getGameCounts (isOnceAgain) {
         var that = this
         that.countNum = 0
-        that.HandList = []
         that.moneyBg1 = []
         that.moneyBg2 = []
         clearInterval(that.backgroundTimer)
@@ -509,7 +515,7 @@
                 res.data.usedCount === 0 ? that.showWarning = false : that.showWarning = true
                 that.gameCounts -= 1
                 if (that.showWarning) {
-                  that.startWarning()
+                  that.startWarning(isOnceAgain)
                 }
               }
             } else {
@@ -518,22 +524,21 @@
           })
         } else { // 试玩
           that.showFirst = false
-          that.startWarning()
+          that.startWarning(isOnceAgain)
         }
       },
-      getMoneyList (type) {
+      getMoneyList (type, isOnceAgain) {
         var that = this
         that.$http({
           method: 'get',
           url: '/hongcai/rest/activity/countingKings/0/handSpeedConfig?token=' + that.token + '&type=' + type
         })
         .then(function (res) {
+          
           if (res.data && res.data.ret !== -1) {
-            if(that.HandList.length == 0) {
-              that.qipaStage.init(that.images)
-            }
             that.HandList = JSON.parse(res.data.deftHandValues)
             that.number = res.data.number
+            that.qipaStage.init(that.images, isOnceAgain)
             
           } else {
             console.log(res.data.msg)
