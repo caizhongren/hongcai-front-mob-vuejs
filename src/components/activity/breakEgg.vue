@@ -101,7 +101,7 @@
         <div class="one-time-break" v-show="oneTimeBreak">
           <img src="../../images/break-egg/icon-head2.png" alt="" width="11%" class="position-ab">
           <p>猜一猜<br>&nbsp;&nbsp;我会孵出什么奖励？</p>
-          <img v-bind:src="eggImgSrc" alt="" width="40%" class="egg">
+          <img v-bind:src="eggImgSrc" alt="" width="45%" class="egg">
         </div>
         <div class="ten-times-break" v-show="tenTimeBreak">
           <img src="../../images/break-egg/icon-head2.png" alt="" width="11%" class="position-ab">
@@ -115,7 +115,7 @@
           <p class="title">恭喜您获得</p>
           <div class="receive">
             <img v-bind:src="rewardList[0].imgSrc" alt="" class="display-bl margin-auto" width="25%">
-            <img v-bind:src="brokenEggSrc" alt="" class="display-bl margin-auto" width="49%">
+            <img v-bind:src="brokenEggSrc" alt="" class="display-bl margin-auto" width="48%">
             <img src="../../images/break-egg/reward-egg3.png" alt="" class="position-ab reward-break" width="24%">
             <p class="receive-msg">{{receiveMsg(oneTimeMsgs)}}</p>
           </div>
@@ -151,7 +151,7 @@
         eggImgSrc: '',
         brokenEggSrc: '',
         eggImgNumber: Math.floor(Math.random() * 5 + 1),
-        breakNumber: 12, // 剩余砸蛋次数
+        breakNumber: 0, // 剩余砸蛋次数
         activityStatus: 1, // 1 正常 2 结束
         activityInfo: {
           startYear: 0,
@@ -179,32 +179,27 @@
           {
             type: 1,
             amount: 10000,
-            num: 1,
-            imgSrc: ''
+            num: 1
           },
           {
             type: 1,
             amount: 50000,
-            num: 2,
-            imgSrc: ''
+            num: 2
           },
           {
             type: 1,
             amount: 100000,
-            num: 3,
-            imgSrc: ''
+            num: 3
           },
           {
             type: 2,
             amount: 2,
-            num: 4,
-            imgSrc: ''
+            num: 4
           },
           {
             type: 2,
             amount: 5,
-            num: 5,
-            imgSrc: ''
+            num: 5
           }
         ],
         afterTimer: null,
@@ -302,7 +297,7 @@
           return
         }
         var that = this
-        this.$http.get('/hongcai/rest/activity/breakEggs/0/break', {
+        that.$http.post('/hongcai/rest/activity/breakEggs/0/break', {
           token: that.token,
           type: breakType
         }).then(function (res) {
