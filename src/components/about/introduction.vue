@@ -40,11 +40,11 @@
         </li>
       </ul>
     </div>
-    <div class="parting-line"></div>
+    <!-- <div class="parting-line"></div>
     <div class="organizing">
       <img src="../../images/about/organizing.png" alt="" class="organizing-title">
-      <!-- <img src="../../images/disclosure/organization.png" alt="" width="96%"> -->
-    </div>
+      <img src="../../images/disclosure/organization.png" alt="" width="96%">
+    </div> -->
   </div>
 </template>
 <style scoped>
