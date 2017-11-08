@@ -120,7 +120,7 @@
             <p class="receive-msg">{{receiveMsg(oneTimeMsgs)}}</p>
           </div>
         </div>
-        <div class="ten-time-break" v-show="tenTimeBreak">
+        <div class="ten-time-break" v-show="tenTimeBreak" :class="{'padding-t-0p5': priviledgeList.length > 0 && rateList.length > 0}">
           <img src="../../images/break-egg/icon-head2.png" alt="" width="11%" class="position-ab">
           <p class="title">恭喜您获得</p>
           <div class="receive" :class="{'height-5': priviledgeList.length > 0 && rateList.length > 0}">
@@ -128,7 +128,7 @@
               <div v-for="reward in priviledgeList" v-if="priviledgeList.length > 0"><img v-bind:src="reward.imgSrc" width="66%"><span>x{{reward.count}}</span></div>
             </div>
             <div class="rate-coupons">
-              <div v-for="reward in rateList" v-if="rateList.length > 0"><img v-bind:src="reward.imgSrc" width="70%"><span>x{{reward.count}}</span></div>
+              <div v-for="reward in rateList" v-if="rateList.length > 0"><img v-bind:src="reward.imgSrc" width="70%" :class="{'margin-t-0p4': priviledgeList.length === 0}"><span>x{{reward.count}}</span></div>
             </div>
             <img v-bind:src="brokenEggSrc" alt="" class="display-bl margin-auto" width="55%">
             <img src="../../images/break-egg/reward-egg3.png" alt="" class="position-ab reward-break" width="24%">
@@ -224,6 +224,14 @@
       this.token && this.token !== '' ? this.getUserBreakInfo() : null
       this.eggImgSrc = '../../../static/images/egg' + this.eggImgNumber + '.png'
       this.brokenEggSrc = '../../../static/images/brokenEgg' + this.eggImgNumber + '.png'
+      for (let i = 0; i < this.rewardList.length; i++) {
+        this.rewardList[i].imgSrc = '../../../static/images/reward-' + this.rewardList[i].amount + '.png'
+        if (this.rewardList[i].type === 1) {
+          this.priviledgeList.push(this.rewardList[i])
+        } else {
+          this.rateList.push(this.rewardList[i])
+        }
+      }
     },
     methods: {
       receiveMsg (arr) {
@@ -293,7 +301,7 @@
         bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function (response) {}, null)
       },
       breakEgg (breakType) {
-        // breakType // 砸蛋 1: 1次 2:10次
+        // breakType  砸蛋 1: 1次 2:10次
         if (this.busy) {
           return
         }
@@ -306,9 +314,6 @@
           token: that.token,
           type: breakType
         }).then(function (res) {
-          setTimeout(function () {
-            that.busy = false
-          }, 1000)
           if (!res.data || res.data.ret === -1) {
             return
           }
@@ -351,6 +356,7 @@
           that.showBeforeBreak = false
           $('.reward-break').addClass('breakAnimate')
           that.showAfterBreak = true
+          that.busy = false
           breakType === 1 ? that.breakNumber -= 1 : that.breakNumber -= 10
         }, 1500)
       }
@@ -372,8 +378,14 @@
   .margin-t-1p3 {
     margin-bottom: 1.3rem !important;
   }
+  .padding-t-0p5 {
+    margin-top: 0.5rem !important;
+  }
+  .margin-t-0p4 {
+    margin-top: .4rem !important;
+  }
   .close-mask {
-    margin-top: 1.5rem;
+    margin-top: 1.2rem;
   }
   .break-egg {
     background: #fa6654;
@@ -722,7 +734,7 @@
     /* height: 5rem; */
   }
   .one-time-break .receive img:first-child, .ten-time-break .receive img:first-child {
-    margin-bottom: .3rem;
+    margin-bottom: .2rem;
   }
   .one-time-break .receive img.position-ab, .ten-time-break .receive img.position-ab {
     top: 105%;
