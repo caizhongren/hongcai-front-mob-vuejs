@@ -2,7 +2,7 @@
   <div class="break-egg">
     <div class="egg-header">
       <img src="../../images/break-egg/hander.png" class="header" width="100%">
-      <div class="activityTime">
+      <div class="activityTime" :class="{'padding-l-0': activityStatus === 2}">
         <img src="../../images/break-egg/icon-head.png" width="14%">
         <span v-if="activityStatus === 1">活动时间:{{activityInfo.startYear}}年{{activityInfo.startMonth}}月{{activityInfo.startDate}}日至{{activityInfo.endYear}}年{{activityInfo.endMonth}}月{{activityInfo.endDate}}日</span>
         <span class="actEnd" v-if="activityStatus === 2">活动已结束</span>
@@ -446,8 +446,11 @@
     top: 27%;
     font-size: .23rem;
     color: #ff0014;
-    text-align: right;
-    padding: 0 .1rem;
+    text-align: center;
+    padding-left: 0.3rem;
+  }
+  .activityTime.padding-l-0 {
+    padding-left: 0 !important;
   }
   .activityTime img {
     position: absolute;
