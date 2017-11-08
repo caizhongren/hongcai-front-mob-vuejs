@@ -199,7 +199,7 @@
             that.qipaStage.stage.addChild(that.qipaStage.stage.player)
           });
           a.on("pressmove", function(e) {
-            if (that.second <= 0) {
+            if (that.second <= 0 || c - e.localY <= 0) {
               return
             }
              if (1 == that.gameStatus) {
