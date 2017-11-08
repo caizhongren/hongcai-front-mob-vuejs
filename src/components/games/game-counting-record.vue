@@ -119,6 +119,8 @@
           this.activeTab = index
           this.CreditRightVo = []
           this.PrivilegedCapitailDetail = []
+          this.investPage = 1
+          this.rewardPage = 1
           index === 0 ? this.getInvestRecords(1, 10) : this.getRewardRecords(1, 10)
         }
       },
