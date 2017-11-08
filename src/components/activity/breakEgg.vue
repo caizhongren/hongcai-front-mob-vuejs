@@ -206,7 +206,8 @@
         priviledgeList: [],
         rateList: [],
         afterTimer: null,
-        beforeTimer: null
+        beforeTimer: null,
+        hammerTimer: null
       }
     },
     props: ['token'],
@@ -216,7 +217,6 @@
       },
       showMask (val) {
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
-        val ? $('.hammer').removeClass('hammerRotate') : null
       }
     },
     mounted () {
@@ -327,7 +327,17 @@
           if (!res.data || res.data.ret === -1) {
             return
           }
-          $('.hammer').addClass('hammerRotate')
+          var a = 0
+          that.hammerTimer = setInterval(function () {
+            a += 1
+            if (a % 2 === 0) {
+              $('.hammer').css('transform', 'rotateY(180deg) rotate(45deg) translateX(0.5rem)')
+              document.querySelector('.hammer').style.webkitTransform = 'rotateY(180deg) rotate(45deg) translateX(0.5rem)'
+            } else {
+              $('.hammer').css('transform', 'rotateY(180deg) rotate(0deg) translateX(0rem)')
+              document.querySelector('.hammer').style.webkitTransform = 'rotateY(180deg) rotate(0deg) translateX(0rem)'
+            }
+          }, 200)
           that.beforeEggBreakAnimate(breakType)
           that.rewardList = res.data
           that.priviledgeList = []
@@ -351,9 +361,19 @@
         var that = this
         that.beforeTimer = setTimeout(function () {
           that.showMask = true
-          $('.hammer').addClass('hammerRotate')
+          clearInterval(that.hammerTimer)
           that.showBeforeBreak = true
-          $('.before-break').find('.egg').addClass('eggRotate')
+          var a = 0
+          that.hammerTimer = setInterval(function () {
+            a += 1
+            if (a % 2 === 0) {
+              $('.before-break .egg').css('transform', 'rotate(-20deg)')
+              document.querySelector('.before-break .egg').style.webkitTransform = 'rotate(-20deg)'
+            } else {
+              $('.before-break .egg').css('transform', 'rotate(20deg)')
+              document.querySelector('.before-break .egg').style.webkitTransform = 'rotate(20deg)'
+            }
+          }, 150)
           that.afterEggBreakAnimate(breakType)
           breakType === 1 ? that.oneTimeBreak = true : that.tenTimeBreak = true
           breakType === 1 ? that.tenTimeBreak = false : that.oneTimeBreak = false
@@ -362,9 +382,19 @@
       afterEggBreakAnimate (breakType) { // 蛋壳打破
         var that = this
         that.afterTimer = setTimeout(function () {
-          $('.before-break').find('.egg').removeClass('eggRotate')
+          clearInterval(that.hammerTimer)
           that.showBeforeBreak = false
-          $('.reward-break').addClass('breakAnimate')
+          var left = 12
+          var top = 60
+          that.hammerTimer = setInterval(function () {
+            if (left <= 8) {
+              clearInterval(that.hammerTimer)
+              return
+            }
+            left -= 1
+            top += 10
+            $('.reward-break').css({'top': top + '%', 'left': left + '%'})
+          }, 30)
           that.showAfterBreak = true
           that.busy = false
           breakType === 1 ? that.breakNumber -= 1 : that.breakNumber -= 10
@@ -647,56 +677,9 @@
     right: 0;
     top: 33%;
   }
-  /* animation */
-  @keyframes hammerRotate {
-    0% {
-      transform: rotateY(180deg) rotate(0deg) translateX(0rem);
-    }
-    50% {
-      transform: rotateY(180deg) rotate(20deg) translateX(0.2rem);
-    }
-    100% {
-      transform: rotateY(180deg) rotate(45deg) translateX(0.5rem);
-    }
-  }
-  .hammer.hammerRotate {
-    animation: hammerRotate .3s 0s infinite alternate;
-    -moz-animation: hammerRotate .3s 0s infinite alternate;
-    -webkit-animation: hammerRotate .3s 0s infinite alternate;
-    -o-animation: hammerRotate .3s 0s infinite alternate;
-  }
-  @keyframes gyrate {
-    0% {
-      transform: rotate(-20deg);
-    }
-    50% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(20deg);
-    }
-  }
-  .before-break .one-time-break .egg.eggRotate, .before-break .ten-times-break .egg.eggRotate {
-    animation: gyrate .1s 0s infinite alternate;
-    -moz-animation: gyrate .1s 0s infinite alternate;
-    -webkit-animation: gyrate .1s 0s infinite alternate;
-    -o-animation: gyrate .1s 0s infinite alternate;
-  }
-  @keyframes breakAnimate {
-    0% {
-      top: 60%;
-      left: 12%;
-    }
-    100% {
-      top: 105%;
-      left: 8%;
-    }
-  }
-  .after-break .one-time-break .reward-break.breakAnimate, .after-break .ten-time-break .reward-break.breakAnimate {
-    animation: breakAnimate .2s 0s ease-in;
-    -moz-animation: breakAnimate .2s 0s ease-in;
-    -webkit-animation: breakAnimate .2s 0s ease-in;
-    -o-animation: breakAnimate .2s 0s ease-in;
+  .after-break .one-time-break .reward-break, .after-break .ten-time-break .reward-break {
+    top: 60%;
+    left: 12%;
   }
   /* 弹窗 */
   .before-break, .after-break {
@@ -748,8 +731,8 @@
     margin-bottom: .2rem;
   }
   .one-time-break .receive img.position-ab, .ten-time-break .receive img.position-ab {
-    top: 105%;
-    left: 8%;
+    /* top: 105%;
+    left: 8%; */
   }
   .receive .receive-msg {
     font-size: .26rem;
