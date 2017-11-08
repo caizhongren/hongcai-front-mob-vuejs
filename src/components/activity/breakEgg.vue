@@ -219,6 +219,16 @@
         val ? $('.hammer').removeClass('hammerRotate') : null
       }
     },
+    mounted () {
+      window.onscroll = function () {
+        var t = document.documentElement.scrollTop || document.body.scrollTop
+        if (t >= window.innerHeight + 50) {
+          $('.invest-fixed-btn').show().addClass('fixed')
+        } else {
+          $('.invest-fixed-btn').hide().removeClass('fixed')
+        }
+      }
+    },
     created () {
       this.getActivityStatus()
       this.token && this.token !== '' ? this.getUserBreakInfo() : null
@@ -592,6 +602,7 @@
     left: 0;
     right: 0;
     z-index: 99;
+    display: none;
   }
   .eggsBox .egg {
     margin-top: .4rem;
