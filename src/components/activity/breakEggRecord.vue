@@ -90,8 +90,8 @@
     props: ['token'],
     created () {
       this.activityType = this.$route.query.act
-      this.getInvestRecords(1, 10)
-      this.getRewardRecords(1, 10)
+      this.getInvestRecords(this.investPage, this.pageSize)
+      this.getRewardRecords(this.rewardPage, this.pageSize)
     },
     mounted () {
       this.IS_ANDROID ? document.querySelector('.recordTitle').style.paddingTop = '0.45rem' : null

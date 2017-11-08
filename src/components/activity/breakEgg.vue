@@ -16,14 +16,14 @@
           <span v-show="breakNumber <=0 && activityStatus === 1">窝里空空如也...快去投资砸彩蛋吧!</span>
         </p>
         <p v-show="!token">马上登录砸彩蛋</p>
-        <p v-show="token !== '' &&  (activityEnd === 2 || activityStatus === 2 && breakNumber <=0)">奖励已失效！下次记得早点来参与～</p>
+        <p v-show="token !== '' &&  (activityEnd === 2 || activityStatus === 2 && breakNumber <=0)">活动结束了，下次记得早点来参与～</p>
       </div>
       <div v-show="!token || (token!== '' && activityEnd === 1 && breakNumber >0)">
         <img v-bind:src="eggImgSrc" class="egg" width="50%">
         <img src="../../images/break-egg/hammer.png" class="hammer">
         <img src="../../images/break-egg/eggs.png" class="eggs">
       </div>
-      <img v-show="token !== '' && (activityEnd === 2 || breakNumber <=0)" src="../../images/break-egg/icon-head3.png" class="egg margin-auto" :class="{'margin-l-pt8': breakNumber <=0 || activityStatus === 2}" width="56%">
+      <img v-show="token !== '' && (activityEnd === 2 || breakNumber <=0)" src="../../images/break-egg/icon-head3.png" class="egg margin-auto" :class="{'margin-l-pt8': breakNumber <=0 || activityEnd === 2}" width="56%">
     </div>
     <div class="eggsBorder"></div>
     <!-- 砸蛋按钮 -->
@@ -243,7 +243,7 @@
       getActivityStatus () { // 活动信息查询
         var that = this
         that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
-          // that.activityStatus = res.data.status
+          that.activityStatus = res.data.status
           that.activityInfo = {
             startYear: new Date(res.data.startTime).getFullYear(),
             startMonth: new Date(res.data.startTime).getMonth() + 1,
@@ -266,6 +266,7 @@
             return
           }
           that.breakNumber = res.data.totalValue - res.data.usedValue
+          that.activityEnd = res.data.status
         }).catch(function (err) {
           console.log(err)
         })
