@@ -165,7 +165,7 @@
           validityMonth: 0,
           validityDate: 0
         },
-        cumulativeInvestAmount: 0,
+        cumulativeInvestAmount: 0, // 年化总金额
         showCalculator: false,
         showAfterBreak: false, // 砸开之后
         showBeforeBreak: false, // 砸开之前
@@ -244,16 +244,19 @@
         var that = this
         that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
           that.activityStatus = res.data.status
+          var startTime = res.data.startTime
+          var endTime = res.data.endTime
+          var validityTime = 1000 * 60 * 60 * 24 * 7 // 加息券使用期限 活动时间+7天
           that.activityInfo = {
-            startYear: new Date(res.data.startTime).getFullYear(),
-            startMonth: new Date(res.data.startTime).getMonth() + 1,
-            startDate: new Date(res.data.startTime).getDate(),
-            endYear: new Date(res.data.endTime).getFullYear(),
-            endMonth: new Date(res.data.endTime).getMonth() + 1,
-            endDate: new Date(res.data.endTime).getDate(),
-            validityYear: new Date(res.data.endTime + 1000 * 60 * 60 * 24 * 7).getFullYear(),
-            validityMonth: new Date(res.data.endTime + 1000 * 60 * 60 * 24 * 7).getMonth() + 1,
-            validityDate: new Date(res.data.endTime + 1000 * 60 * 60 * 24 * 7).getDate()
+            startYear: new Date(startTime).getFullYear(),
+            startMonth: new Date(startTime).getMonth() + 1,
+            startDate: new Date(startTime).getDate(),
+            endYear: new Date(endTime).getFullYear(),
+            endMonth: new Date(endTime).getMonth() + 1,
+            endDate: new Date(endTime).getDate(),
+            validityYear: new Date(endTime + validityTime).getFullYear(),
+            validityMonth: new Date(endTime + validityTime).getMonth() + 1,
+            validityDate: new Date(endTime + validityTime).getDate()
           }
         })
       },
@@ -267,6 +270,7 @@
           }
           that.breakNumber = res.data.totalValue - res.data.usedValue
           that.activityEnd = res.data.status
+          that.cumulativeInvestAmount = res.data.honorAmount + res.data.selectionAmount
         }).catch(function (err) {
           console.log(err)
         })
