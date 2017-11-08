@@ -1,9 +1,9 @@
 <template>
     <div class="gameStart" v-auto-height>
       <audio preload="preload" id="click"><source src="../../assets/click.mp3"></audio>
-      <div class="overflow-hid" @click="isPlay = !isPlay">
-        <img v-if="isPlay" src="../../images/singles-day/audio-play.png" width="8%" class="audioIcon fr">
-        <img v-if="!isPlay" src="../../images/singles-day/audio-pause.png" width="8%" class="audioIcon fr">
+      <div class="overflow-hid" @click="playOrpause">
+        <img v-if="isPlay === 'true'" src="../../images/singles-day/audio-play.png" width="8%" class="audioIcon fr">
+        <img v-if="isPlay === 'false'" src="../../images/singles-day/audio-pause.png" width="8%" class="audioIcon fr">
       </div>
       <div class="game-title">
         <img src="../../images/singles-day/bg-01.png" alt="" width="100%">
@@ -62,6 +62,9 @@
     },
     components: {gameRules},
     methods: {
+      playOrpause () {
+        this.isPlay === 'true' ? this.isPlay = 'false' : this.isPlay = 'true'
+      },
       getActivityStatus () {
         var that = this
         that.$http({
