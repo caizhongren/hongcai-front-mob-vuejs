@@ -310,6 +310,8 @@
           $('.hammer').addClass('hammerRotate')
           that.beforeEggBreakAnimate(breakType)
           that.rewardList = res.data
+          that.priviledgeList = []
+          that.rateList = []
           for (let i = 0; i < that.rewardList.length; i++) {
             that.rewardList[i].imgSrc = '../../../static/images/reward-' + that.rewardList[i].amount + '.png'
             if (that.rewardList[i].type === 1) {
