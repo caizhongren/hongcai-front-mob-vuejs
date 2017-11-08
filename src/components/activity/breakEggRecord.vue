@@ -59,9 +59,6 @@
           </div>
         </div>
       </div>
-      <div class="mask-common" v-show="showMask">
-        <break-Egg-Calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator" v-show="showCalculator"></break-Egg-Calculator>
-      </div>
     </div>
 </template>
 <script>
@@ -90,8 +87,8 @@
     props: ['token'],
     created () {
       this.activityType = this.$route.query.act
-      this.getInvestRecords(1, 10)
-      this.getRewardRecords(1, 10)
+      this.getInvestRecords(this.investPage, this.pageSize)
+      this.getRewardRecords(this.rewardPage, this.pageSize)
     },
     mounted () {
       this.IS_ANDROID ? document.querySelector('.recordTitle').style.paddingTop = '0.45rem' : null
@@ -101,9 +98,15 @@
       switchTab: function (index) {
         if (this.activeTab !== index) {
           this.activeTab = index
-          // this.CreditRightVo = []
-          // this.rewardList = []
-          index === 0 ? this.getInvestRecords(1, 10) : this.getRewardRecords(1, 10)
+          if (index === 1) {
+            this.CreditRightVo = []
+            this.investPage = 1
+            this.getInvestRecords(this.investPage, this.pageSize)
+          } else {
+            this.rewardList = []
+            this.rewardPage = 1
+            this.getRewardRecords(this.rewardPage, this.pageSize)
+          }
         }
       },
       closeCalculator () {
