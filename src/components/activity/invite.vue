@@ -16,6 +16,8 @@
                 <img src="../../images/invite/invite02-6.png">
                 <img src="../../images/invite/invite02-7.png">
                 <img src="../../images/invite/invite02-8.png">
+                <img src="../../images/invite/invite02-9.png">
+                <img src="../../images/invite/invite02-10.png">
                 <img src="../../images/invite/invite03.png">
                 <img src="../../images/invite/invite04.png">
                 <img src="../../images/invite/invite05.png">
