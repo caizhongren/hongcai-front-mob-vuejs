@@ -443,7 +443,7 @@
     line-height: .55rem;
     position: absolute;
     left: 8.5%;
-    top: 27%;
+    top: 26.6%;
     font-size: .23rem;
     color: #ff0014;
     text-align: center;

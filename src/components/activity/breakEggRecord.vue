@@ -19,7 +19,7 @@
               <table v-if="CreditRightVo.length > 0">
                 <tbody>
                   <tr v-for="item in CreditRightVo">
-                    <td>{{item.createTime | dateDot}}</td>
+                    <td>{{item.createTime | date}}</td>
                     <td>{{item.amount}}</td>
                     <td>{{item.projectDays}}天</td>
                     <td>{{item.annualAmount}}</td>
@@ -44,7 +44,7 @@
               <table v-if="rewardList.length > 0">
                 <tbody>
                   <tr v-for="item in rewardList">
-                    <td>{{item.createTime | dateDot}}</td>
+                    <td>{{item.createTime | date}}</td>
                     <td>{{item.description}}</td>
                     <td>{{item.count}}</td>
                   </tr>
