@@ -20,7 +20,7 @@
       </div>
       <div v-show="!token || (token!== '' && activityEnd === 1 && breakNumber >0)">
         <img v-bind:src="eggImgSrc" class="egg" width="50%">
-        <img src="../../images/break-egg/hammer.png" class="hammer">
+        <img src="../../images/break-egg/hammer-lf.png" class="hammer">
         <img src="../../images/break-egg/eggs.png" class="eggs">
       </div>
       <img v-show="token !== '' && (activityEnd === 2 || breakNumber <=0)" src="../../images/break-egg/icon-head3.png" class="egg margin-auto" :class="{'margin-l-pt8': breakNumber <=0 || activityEnd === 2}" width="56%">
@@ -331,11 +331,11 @@
           that.hammerTimer = setInterval(function () {
             a += 1
             if (a % 2 === 0) {
-              $('.hammer').css('transform', 'rotateY(180deg) rotate(45deg) translateX(0.5rem)')
-              document.querySelector('.hammer').style.webkitTransform = 'rotateY(180deg) rotate(45deg) translateX(0.5rem)'
+              $('.hammer').css('transform', 'rotate(-45deg) translateX(-0.5rem)')
+              document.querySelector('.hammer').style.webkitTransform = 'rotate(-45deg) translateX(-0.5rem)'
             } else {
-              $('.hammer').css('transform', 'rotateY(180deg) rotate(0deg) translateX(0rem)')
-              document.querySelector('.hammer').style.webkitTransform = 'rotateY(180deg) rotate(0deg) translateX(0rem)'
+              $('.hammer').css('transform', 'rotate(0deg) translateX(0rem)')
+              document.querySelector('.hammer').style.webkitTransform = 'rotate(0deg) translateX(0rem)'
             }
           }, 200)
           that.beforeEggBreakAnimate(breakType)
@@ -643,7 +643,7 @@
     z-index: 2;
   }
   .hammer {
-    transform: rotateY(180deg);
+    width: 14%;
     position: absolute;
     top: .1rem;
   }
