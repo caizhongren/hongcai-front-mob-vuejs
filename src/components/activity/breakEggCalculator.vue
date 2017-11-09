@@ -6,14 +6,14 @@
       </div>
       <form action="" autocomplete="off">
         <div class="form-item clearfix">
-          <img src="../../images/break-egg/icon-money.png" alt="" width="10%" class="fl">
+          <img src="../../images/break-egg/icon-money.png" alt="" width="11%" class="fl">
           <div class="fl">
             <input type="tel" placeholder="投资金额" id="amount" v-model="project.amount" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler">
             元
           </div>
         </div>
         <div class="form-item clearfix">
-          <img src="../../images/break-egg/icon-date.png" alt="" width="10%" class="fl">
+          <img src="../../images/break-egg/icon-date.png" alt="" width="11%" class="fl">
           <div class="fl">
             <input type="tel" placeholder="项目期限" id="term" v-model="project.term" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler">
             元
@@ -83,22 +83,22 @@
     width: 100%;
   }
   .calculator-wrapper .line span {
-    margin: -.2rem auto 0;
+    margin: -.37rem auto 0;
     display: block;
     height: .7rem;
     width: 1px;
     background-color: #fff;
   }
   .calculator {
-    width: 80%;
-    height: 6rem;
-    margin: 1rem auto 0;
+    width: 90%;
+    height: 7rem;
+    margin: .6rem auto 0;
     background: url('../../images/break-egg/bg-calculator.png') no-repeat center center;
     background-size: 100%;
   }
   .calculator .title {
     margin: 0 auto;
-    padding-top: 1.6rem;
+    padding-top: 2rem;
     padding-left: .1rem;
     width: 80%;
     font-size: 15px;
@@ -110,7 +110,7 @@
   form {
     width: 78%;
     margin-top: .3rem;
-    margin-left: 14%;
+    margin-left: 13%;
   }
   form .form-item div.fl {
     border-bottom : 1px solid #4b0d00;
@@ -118,18 +118,18 @@
     padding: 0 .1rem;
     width: 78%;
     margin-bottom: .3rem;
-    font-size: .25rem;
+    font-size: .28rem;
 	  color: #4c1003;
   }
   form .form-item div.fl input {
     border: none;
     width: 85%;
+    font-size: .25rem;
     color: #4c1003;
   }
   .result {
     width: 81%;
-    margin-left: 15%;
-    font-size: .2rem;
+    margin-left: 13%;
     color: #4c1003;
     line-height: 1.3;
     margin-top: 0;
@@ -148,19 +148,19 @@
   }
   .result p:last-child {
     margin-top: -.05rem;
-    width: 38%;
+    width: 40%;
     height: .6rem;
-    line-height: .63rem;
+    line-height: .6rem;
     text-align: center;
-    font-size: .24rem;
+    font-size: .25rem;
     border-radius: 7.5px;
     background-color: #fbdc34;
     border: solid 1px #4b0d00;
   }
   .calculator-tip {
     width: 97%;
-    margin-top: .6rem;
-    font-size: .2rem;
+    margin-top: .7rem;
+    font-size: .22rem;
     color: #5d2c22;
     line-height: 1.6;
     transform: scale(.9)

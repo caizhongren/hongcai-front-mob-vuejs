@@ -60,8 +60,8 @@
         <li><img src="../../../static/images/reward-80000.png" alt=""></li>
       </ul>
       <ul class="rate">
-        <li><img src="../../../static/images/reward-2.png" alt=""></li>
-        <li><img src="../../../static/images/reward-5.png" alt=""></li>
+        <li><img src="../../images/break-egg/reward-2.png" alt=""></li>
+        <li><img src="../../images/break-egg/reward-5.png" alt=""></li>
       </ul>
       <img src="../../images/break-egg/money.png" class="bottomMoney">
     </div>
@@ -95,7 +95,7 @@
     <button class="invest-fixed-btn" @click="toInvest()" :disabled="busy">立即投资</button>
     <img src="../../images/break-egg/icon-calculator.png" class="icon-calculator" @click="showMask = !showMask;showCalculator = !showCalculator">
     <!-- 弹窗 -->
-    <div class="mask-common" v-show="showMask">
+    <div class="mask-common egg-mask" v-show="showMask" :class="{'calcu-mask': showCalculator}">
       <break-Egg-Calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator" v-show="showCalculator"></break-Egg-Calculator>
       <div class="before-break" v-show="showBeforeBreak">
         <div class="one-time-break" v-show="oneTimeBreak">
@@ -114,24 +114,24 @@
           <img src="../../images/break-egg/icon-head2.png" alt="" width="11%" class="position-ab">
           <p class="title">恭喜您获得</p>
           <div class="receive">
-            <img v-bind:src="rewardList[0].imgSrc" alt="" class="display-bl margin-auto" :class="{'margin-t-1p3': rewardList[0].type === 2}" width="25%">
-            <img v-bind:src="brokenEggSrc" alt="" class="display-bl margin-auto" width="48%">
-            <img src="../../images/break-egg/reward-egg3.png" alt="" class="position-ab reward-break" width="24%">
-            <p class="receive-msg">{{receiveMsg(oneTimeMsgs)}}</p>
+            <img v-bind:src="rewardList[0].imgSrc" id="reward-one" class="display-bl margin-auto" :class="{'margin-t-1p3': rewardList[0].type === 2}" width="35%">
+            <img v-bind:src="brokenEggSrc" alt="" class="display-bl margin-auto padding-t-0p2" width="50%">
+            <img src="../../images/break-egg/reward-egg3.png" alt="" class="position-ab reward-break" width="22%">
+            <p class="receive-msg" :class="{'padding-t-1p3': rewardList[0].type === 2}">{{receiveMsg(oneTimeMsgs)}}</p>
           </div>
         </div>
         <div class="ten-time-break" v-show="tenTimeBreak" :class="{'padding-t-0p5': priviledgeList.length > 0 && rateList.length > 0}">
           <img src="../../images/break-egg/icon-head2.png" alt="" width="11%" class="position-ab">
           <p class="title">恭喜您获得</p>
           <div class="receive" :class="{'height-5': priviledgeList.length > 0 && rateList.length > 0}">
-            <div class="priviledges">
-              <div v-for="reward in priviledgeList" v-if="priviledgeList.length > 0"><img v-bind:src="reward.imgSrc" width="66%"><span>x{{reward.count}}</span></div>
+            <div class="priviledges" id="priviledges">
+              <div v-for="reward in priviledgeList" v-if="priviledgeList.length > 0"><img v-bind:src="reward.imgSrc" width="78%"><span>x{{reward.count}}</span></div>
             </div>
-            <div class="rate-coupons">
-              <div v-for="reward in rateList" v-if="rateList.length > 0"><img v-bind:src="reward.imgSrc" width="70%" :class="{'margin-t-0p4': priviledgeList.length === 0}"><span>x{{reward.count}}</span></div>
+            <div class="rate-coupons" id="rate-coupons">
+              <div v-for="reward in rateList" v-if="rateList.length > 0"><img v-bind:src="reward.imgSrc" width="76%" :class="{'margin-t-0p4': priviledgeList.length === 0}"><span>x{{reward.count}}</span></div>
             </div>
-            <img v-bind:src="brokenEggSrc" alt="" class="display-bl margin-auto" width="55%">
-            <img src="../../images/break-egg/reward-egg3.png" alt="" class="position-ab reward-break" width="24%">
+            <img v-bind:src="brokenEggSrc" alt="" class="display-bl margin-auto" width="50%">
+            <img src="../../images/break-egg/reward-egg3.png" alt="" class="position-ab reward-break" width="22%">
             <p class="receive-msg" :class="{'margin-t-1': priviledgeList.length === 0}">{{receiveMsg(tenTimesMsgs)}}</p>
           </div>
         </div>
@@ -234,14 +234,14 @@
       this.token && this.token !== '' ? this.getUserBreakInfo() : null
       this.eggImgSrc = '../../../static/images/egg' + this.eggImgNumber + '.png'
       this.brokenEggSrc = '../../../static/images/brokenEgg' + this.eggImgNumber + '.png'
-      for (let i = 0; i < this.rewardList.length; i++) {
-        this.rewardList[i].imgSrc = '../../../static/images/reward-' + this.rewardList[i].amount + '.png'
-        if (this.rewardList[i].type === 1) {
-          this.priviledgeList.push(this.rewardList[i])
-        } else {
-          this.rateList.push(this.rewardList[i])
-        }
-      }
+      // for (let i = 0; i < this.rewardList.length; i++) {
+      //   this.rewardList[i].imgSrc = '../../../static/images/reward-' + this.rewardList[i].amount + '.png'
+      //   if (this.rewardList[i].type === 1) {
+      //     this.priviledgeList.push(this.rewardList[i])
+      //   } else {
+      //     this.rateList.push(this.rewardList[i])
+      //   }
+      // }
     },
     methods: {
       receiveMsg (arr) {
@@ -385,14 +385,27 @@
           clearInterval(that.hammerTimer)
           that.showBeforeBreak = false
           var left = 12
-          var top = 60
+          var top = 80
+          var transY = 2
+          var scale = 0.5
           that.hammerTimer = setInterval(function () {
             if (left <= 8) {
               clearInterval(that.hammerTimer)
               return
             }
-            left -= 1
-            top += 10
+            left -= 0.75
+            breakType === 1 ? top += 6.5 : top += 5
+            breakType === 1 ? transY -= 0.28 : transY -= 0.35
+            breakType === 1 ? scale += 0.045 : scale += 0.08
+            if (breakType === 1) {
+              $('#reward-one').css('transform', 'translateY(' + transY + 'rem) scale(' + scale + ')')
+              document.querySelector('#reward-one').style.webkitTransform = 'translateY(' + transY + 'rem) scale(' + scale + ')'
+            } else {
+              $('#priviledges').css('transform', 'translateY(' + transY + 'rem) scale(' + scale + ')')
+              document.querySelector('#priviledges').style.webkitTransform = 'translateY(' + transY + 'rem) scale(' + scale + ')'
+              $('#rate-coupons').css('transform', 'translateY(' + transY + 'rem) scale(' + scale + ')')
+              document.querySelector('#rate-coupons').style.webkitTransform = 'translateY(' + transY + 'rem) scale(' + scale + ')'
+            }
             $('.reward-break').css({'top': top + '%', 'left': left + '%'})
           }, 30)
           that.showAfterBreak = true
@@ -413,23 +426,33 @@
     height: 5rem !important;
   }
   .margin-t-1 {
-    margin-top: 1.2rem !important;
+    margin-top: .5rem !important;
   }
   .margin-t-1p3 {
-    margin-bottom: 1.3rem !important;
+    margin-bottom: 1rem !important;
+    width: 53%;
   }
   .padding-t-0p5 {
     margin-top: 0.5rem !important;
   }
   .margin-t-0p4 {
-    margin-top: .4rem !important;
+    margin-top: 1rem !important;
+  }
+  .padding-t-0p2 {
+    padding-top: .2rem !important;
   }
   .close-mask {
-    margin-top: 1.2rem;
+    margin-top: 1.3rem;
   }
   .break-egg {
     background: #fa6654;
     padding-bottom: 1.1rem;
+  }
+  .mask-common.egg-mask {
+    background-color: rgba(0,0,0,0.95);
+  }
+  .mask-common.egg-mask.calcu-mask {
+    background-color: rgba(0,0,0,0.9);
   }
   .egg-header img.header {
     margin-top: -.45rem;
@@ -697,7 +720,7 @@
     margin-top: 0;
   }
   .one-time-break {
-    margin-top: 1rem;
+    margin-top: .8rem;
   }
   .ten-time-break {
     /* margin-top: .5rem; */
@@ -727,33 +750,26 @@
     background-size: 150% 115%;
     position: relative;
   }
-  .ten-time-break .receive {
-    /* height: 5rem; */
-  }
-  .one-time-break .receive img:first-child, .ten-time-break .receive img:first-child {
-    margin-bottom: .2rem;
-  }
-  .one-time-break .receive img.position-ab, .ten-time-break .receive img.position-ab {
-    /* top: 105%;
-    left: 8%; */
+  .one-time-break .receive #reward-one {
+    transform: translateY(2rem) scale(.5)
   }
   .receive .receive-msg {
     font-size: .26rem;
     letter-spacing: 0.8px;
-    margin-top: .5rem;
+    margin-top: .3rem;
   }
-  .receive .priviledges img, .receive .rate-coupons img {
-    margin-bottom: .3rem;
+  .receive .priviledges, .receive .rate-coupons {
+    transform: translateY(2rem) scale(.5)
   }
   .receive .priviledges span, .receive .rate-coupons span {
     position: relative;
     top: -.8rem;
   }
   .receive .rate-coupons span {
-    top: -.56rem;
+    top: -.47rem;
   }
   .priviledges div {
-    width: 25%;
+    width: 32%;
     display:inline-block;
     text-align: left;
   }
@@ -762,7 +778,7 @@
     width:6%;
   }
   .rate-coupons div {
-    width: 35%;
+    width: 48%;
     display:inline-block;
     text-align: left;
   }
