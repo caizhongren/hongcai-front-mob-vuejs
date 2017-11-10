@@ -147,7 +147,7 @@
     created () {
       var that = this
       that.$http({
-        url: '/hongcai/rest/activitys/wandu/channel/status?activityType=' + '29' + '&channelCode=' + 'wandu'
+        url: '/hongcai/rest/activitys/wandu/channel/status?activityType=' + that.$route.query.act + '&channelCode=' + that.$route.query.f
       })
       .then(function (res) {
         that.actInfo = res.data
