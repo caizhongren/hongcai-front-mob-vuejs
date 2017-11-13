@@ -78,6 +78,7 @@
               if (response.data.coupon) {
                 that.coupon.type = response.data.coupon.type
                 that.coupon.value = response.data.coupon.value
+                that.coupon.duration = response.data.coupon.duration
                 dataList = {
                   'business': that.b,
                   'amount': that.amount,
