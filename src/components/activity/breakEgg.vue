@@ -93,7 +93,9 @@
     </div>
     <div v-if="isIos" class="iosTips">该活动与设备生产商Apple Inc.公司无关</div>
     <button class="invest-fixed-btn" @click="toInvest()" :disabled="busy">立即投资</button>
-    <img src="../../images/break-egg/icon-calculator.png" class="icon-calculator" @click="showMask = !showMask;showCalculator = !showCalculator">
+    <div class="icon-calculator" @click="showMask = !showMask;showCalculator = !showCalculator">
+      <p>计算器</p>
+    </div>
     <!-- 弹窗 -->
     <div class="mask-common egg-mask" v-show="showMask" :class="{'calcu-mask': showCalculator}">
       <break-Egg-Calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator" v-show="showCalculator"></break-Egg-Calculator>
@@ -727,9 +729,18 @@
   }
   .icon-calculator {
     width: 16%;
+    height: 1.2rem;
     position: fixed;
     right: 0;
     top: 33%;
+    background: url('../../images/break-egg/icon-calculator.png') no-repeat center center;
+    background-size: contain;
+  }
+  .icon-calculator p {
+    color: #624024;
+    z-index: 9;
+    padding-top: .65rem;
+    transform: scale(.85);
   }
   .after-break .one-time-break .reward-break, .after-break .ten-time-break .reward-break {
     top: 60%;
