@@ -16,7 +16,7 @@
           <img src="../../images/break-egg/icon-date.png" alt="" width="11%" class="fl">
           <div class="fl">
             <input type="tel" placeholder="项目期限" id="term" v-model="project.term" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler">
-            元
+            天
           </div>
         </div>
       </form>
