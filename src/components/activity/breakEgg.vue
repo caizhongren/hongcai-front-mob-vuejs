@@ -83,7 +83,7 @@
       </div>
       <div class="">
         <p class="rule-num"><span>3</span>关于无条件加息优惠券</p>
-        <p class="rule-content">无条件加息券可在投资宏财精选及宏财尊贵项目时使用，无起投金额限制，每笔投资仅可使用一张优惠券(优惠券包含加息券及现金券)，使用有效期至{{activityInfo.validityYear}}年{{activityInfo.validityMonth}}月{{activityInfo.validityDate}}日，过期作废，如此超稀有奖励可别忘记及时使用哟;</p>
+        <p class="rule-content">无条件加息券可在投资宏财精选及宏财尊贵项目时使用，无起投金额限制，每笔投资仅可使用一张优惠券(优惠券包含加息券及现金券)，使用有效期至{{activityInfo.validityYear}}年{{activityInfo.validityMonth}}月{{activityInfo.validityDate}}日，过期作废，如此超稀有奖励可别忘记及时使用哟；</p>
       </div>
       <div class="">
         <p class="rule-num"><span>4</span>关于特权本金奖励</p>
@@ -95,7 +95,9 @@
     </div>
     <div v-if="isIos" class="iosTips">该活动与设备生产商Apple Inc.公司无关</div>
     <button class="invest-fixed-btn" @click="toInvest()" :disabled="busy">立即投资</button>
-    <img src="../../images/break-egg/icon-calculator.png" class="icon-calculator" @click="showMask = !showMask;showCalculator = !showCalculator">
+    <div class="icon-calculator" @click="showMask = !showMask;showCalculator = !showCalculator">
+      <p>计算器</p>
+    </div>
     <!-- 弹窗 -->
     <div class="mask-common egg-mask" v-show="showMask" :class="{'calcu-mask': showCalculator}">
       <break-Egg-Calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator" v-show="showCalculator"></break-Egg-Calculator>
@@ -209,7 +211,8 @@
         rateList: [],
         afterTimer: null,
         beforeTimer: null,
-        hammerTimer: null
+        hammerTimer: null,
+        CalculatorTimer: null
       }
     },
     props: ['token'],
@@ -233,6 +236,7 @@
     },
     created () {
       this.getActivityStatus()
+      this.CalculatorAnimt()
       this.token && this.token !== '' ? this.getUserBreakInfo() : null
       this.eggImgSrc = '../../../static/images/egg' + this.eggImgNumber + '.png'
       this.brokenEggSrc = '../../../static/images/brokenEgg' + this.eggImgNumber + '.png'
@@ -259,6 +263,31 @@
         this.showBeforeBreak = false
         this.oneTimeBreak = false
         this.tenTimeBreak = false
+      },
+      CalculatorAnimt () {
+        var that = this
+        var a = -1
+        that.CalculatorTimer = setInterval(function () {
+          if (a === 4) {
+            var CalculatorTimer = null
+            $('.icon-calculator').css('transform', 'rotate(0deg)')
+            document.querySelector('.icon-calculator').style.webkitTransform = 'rotate(0deg)'
+            clearInterval(that.CalculatorTimer)
+            CalculatorTimer = setTimeout(function () {
+              that.CalculatorAnimt()
+              clearTimeout(CalculatorTimer)
+            }, 3000)
+            return
+          }
+          a += 1
+          if (a % 2 === 0) {
+            $('.icon-calculator').css('transform', 'rotate(-30deg)')
+            document.querySelector('.icon-calculator').style.webkitTransform = 'rotate(-30deg)'
+          } else {
+            $('.icon-calculator').css('transform', 'rotate(30deg)')
+            document.querySelector('.icon-calculator').style.webkitTransform = 'rotate(30deg)'
+          }
+        }, 200)
       },
       getActivityStatus () { // 活动信息查询
         var that = this
@@ -421,6 +450,7 @@
     destroyed () {
       clearTimeout(this.beforeTimer)
       clearTimeout(this.afterTimer)
+      clearInterval(this.CalculatorTimer)
     }
   }
 </script>
@@ -702,9 +732,18 @@
   }
   .icon-calculator {
     width: 16%;
+    height: 1.2rem;
     position: fixed;
     right: 0;
     top: 33%;
+    background: url('../../images/break-egg/icon-calculator.png') no-repeat center center;
+    background-size: contain;
+  }
+  .icon-calculator p {
+    color: #624024;
+    z-index: 9;
+    padding-top: .65rem;
+    transform: scale(.85);
   }
   .after-break .one-time-break .reward-break, .after-break .ten-time-break .reward-break {
     top: 60%;
