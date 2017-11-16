@@ -1,5 +1,7 @@
 <template>
   <div class="break-egg">
+    <audio preload="preload" id="one"><source src="../../assets/one.mp3"></audio>
+    <audio preload="preload" id="ten"><source src="../../assets/ten.mp3"></audio>
     <div class="egg-header">
       <img src="../../images/break-egg/hander.png" class="header" width="100%">
       <div class="activityTime" :class="{'padding-l-0': activityStatus === 2}">
@@ -141,7 +143,7 @@
   </div>
 </template>
 <script>
-  import {bridgeUtil, Utils, ModalHelper} from '../../service/Utils'
+  import {bridgeUtil, Utils, ModalHelper, audioPlayUtil} from '../../service/Utils'
   import breakEggCalculator from './breakEggCalculator.vue'
   import $ from 'zepto'
   export default {
@@ -411,6 +413,7 @@
           that.showAfterBreak = true
           that.busy = false
           breakType === 1 ? that.breakNumber -= 1 : that.breakNumber -= 10
+          breakType === 1 ? audioPlayUtil.playOrPaused('one', 'true') : audioPlayUtil.playOrPaused('ten', 'true')
         }, 1500)
       }
     },
