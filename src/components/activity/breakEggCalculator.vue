@@ -16,7 +16,7 @@
           <img src="../../images/break-egg/icon-date.png" alt="" width="11%" class="fl">
           <div class="fl">
             <input type="tel" placeholder="项目期限" id="term" v-model="project.term" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler">
-            元
+            天
           </div>
         </div>
       </form>
@@ -32,7 +32,7 @@
   </div>
 </template>
 <script>
-  import {InputMaskHelper} from '../../service/Utils'
+  import {InputMaskHelper, checkInputUtil} from '../../service/Utils'
   export default {
     name: 'breakEggCalculator',
     data () {
@@ -65,11 +65,10 @@
     },
     methods: {
       oninputHandler () {
-        this.project.amount = this.project.amount.replace(/\D/g, '')
-        this.project.amount = this.project.amount.length > 9 ? this.project.amount.slice(0, 9) : this.project.amount
+        this.project.amount = checkInputUtil.oninputHandler(this.project.amount, 9)
       },
       beforepasteHandler (e) {
-        e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/\D/g, ''))
+        checkInputUtil.beforepasteHandler(e)
       },
       oninputHandler1 () {
         this.project.term = this.project.term.replace(/\D/g, '')
