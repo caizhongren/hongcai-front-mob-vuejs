@@ -3,12 +3,12 @@
     <div class="invite-rebate-wrap">
       <div class="count1">
         <p>{{inviteStat.totalNum || 0}}</p>
-        <p>邀请好友(人)</p>
+        <p>注册成功(人)</p>
       </div>
       <div class="clearfix">
         <div class="count2 fl">
           <p>{{inviteStat.realNameAuthNum < inviteStat.investNum ? inviteStat.investNum : inviteStat.realNameAuthNum || 0}}</p>
-          <p>注册认证(人)</p>
+          <p>认证成功(人)</p>
         </div>
         <div class="count3 fr">
           <p>{{inviteStat.investNum || 0}}</p>

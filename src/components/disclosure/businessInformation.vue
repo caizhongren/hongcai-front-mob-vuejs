@@ -47,7 +47,7 @@
         <img src="../../images/disclosure/business-icon3.png" class="fr" width="22%">
       </li>
     </ul>
-    <div class="creatTime">数据统计期限：平台成立至2017-8-31日24:00</div>
+    <div class="creatTime">数据统计期限：平台成立至{{updateDate}}日24:00</div>
   </div>
 </template>
 <script>
@@ -59,11 +59,15 @@
           amount: 0,
           numOfTransactions: 0,
           userCount: 0
-        }
+        },
+        year: new Date().getFullYear(),
+        month: new Date().getMonth() + 1,
+        updateDate: '2017-11-9'
       }
     },
     created () {
       this.getPlatformData()
+      this.getUpdateDate(this.year, this.month)
     },
     methods: {
       getPlatformData () {
@@ -79,6 +83,17 @@
             alert(res.data.msg)
           }
         })
+      },
+      getUpdateDate (year, month) {
+        var newYear = year // 取当前的年份
+        var newMonth = month - 1 // 取上一个月的第一天，方便计算（最后一天不固定
+        if (month <= 1) {
+          newMonth += 12 // 月份增
+          newYear -= 1 // 年份减
+        }
+        var newDate = new Date(newYear, newMonth, 1) // 取当年当月中的第一天
+        var day = (new Date(newDate.getTime() - 1000 * 60 * 60 * 24)).getDate() // 获取当月最后一天日期
+        this.updateDate = (newYear + '-' + newMonth + '-' + day)
       }
     }
   }
