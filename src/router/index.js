@@ -66,6 +66,8 @@ const BusinessInformation = r => require.ensure([], () => r(require('../componen
 const Rouse = r => require.ensure([], () => r(require('../components/Rouse.vue')), 'Rouse')
 const BreakEgg = r => require.ensure([], () => r(require('../components/activity/breakEgg.vue')), 'BreakEgg')
 const BreakEggRecord = r => require.ensure([], () => r(require('../components/activity/breakEggRecord.vue')), 'BreakEggRecord')
+const Anniversary = r => require.ensure([], () => r(require('../components/activity/anniversary.vue')), 'Anniversary')
+
 Vue.use(Router)
 Vue.use(VueCookie)
 const routes = [
@@ -324,6 +326,12 @@ const routes = [
     name: 'BreakEggRecord',
     component: BreakEggRecord,
     meta: {title: '诞旦有惊喜'}
+  },
+  {
+    path: '/activity/anniversary',
+    name: 'Anniversary',
+    component: Anniversary,
+    meta: {title: '三周年'}
   },
   {
     path: '/register-agree',
