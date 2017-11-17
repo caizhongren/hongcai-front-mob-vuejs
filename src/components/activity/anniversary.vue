@@ -175,6 +175,13 @@
     font-size: .34rem;
     position: relative;
   }
+  .act-rule .title {
+    height: .7rem;
+    width: 60%;
+    margin-left: 20%;
+    background: url('../../images/anniversary/title1.png') no-repeat top center;
+    background-size: 100% 100%;
+  }
   .gift1 .content, .gift2 .content {
     width: 90%;
     margin: -.6rem 0 0 5%;
@@ -201,7 +208,7 @@
     margin-bottom: .1rem;
     padding: .23rem 0 .4rem 0;
     background: url('../../images/anniversary/13.png') no-repeat center center;
-    background-size: 100%;
+    background-size: 100% 100%;
     background-color: #342a42;
     width: 98%;
     border-radius: .15rem;
@@ -274,7 +281,7 @@
     margin-left: 22.5%;
     border-radius: .45rem;
     background-image: linear-gradient(to top, #865834, #faa065);
-    /* box-shadow: 0 25px 55px 0 rgba(255, 190, 122, 0.75); */
+    box-shadow: 0 2px 10px 0 rgba(255, 190, 122, 0.75);
     color: #fff;
   }
   .content-box .login-btn {
@@ -335,7 +342,7 @@
     border-radius: .15rem;
     color: #f3e6bd;
     text-align: justify;
-    margin-top: -.7rem;
+    margin-top: -.35rem;
     padding: .8rem 0 0.2rem .4rem;
   }
   .act-rule .rule-content span {
