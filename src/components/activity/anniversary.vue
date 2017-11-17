@@ -1,7 +1,7 @@
 <template>
   <div class="anniversary">
     <div class="header">
-      <p>活动时间:2017年12月15日～2017年12月17日</p>
+      <p>活动时间:{{activityInfo.startTime | dateCharacter}}～{{activityInfo.endTime | dateCharacter}}</p>
     </div>
     <div class="gift1">
       <div class="guang"></div>
@@ -10,13 +10,15 @@
       </div>
       <div class="content">
         <div class="explain">
-          2017年12月15日宏财网成立3周年当天，所有用户<span class="ft-o">待收本金总金额</span>(不含债权转让部分)都将享受额外3%当日加息奖励！
+          {{activityInfo.startTime | dateCharacter}}宏财网成立3周年当天，所有用户<span class="ft-o">待收本金总金额</span>(不含债权转让部分)都将享受额外3%当日加息奖励！
         </div>
         <div class="content-box position-re">
-          <div class="mask position-ab" v-show="false">
-            <img src="../../images/anniversary/lock.png" alt="" width="25%">
-            <p>敬请期待...</p>
-            <p v-show="false">活动已结束...</p>
+          <div class="mask position-ab" v-show="serverTime < activityInfo.startTime || activityInfo.status === 2">
+            <div v-show="serverTime < activityInfo.startTime">
+              <img src="../../images/anniversary/lock.png" alt="" width="25%">
+              <p>敬请期待...</p>
+            </div>
+            <p v-show="activityInfo.status === 2">活动已结束...</p>
           </div>
           <ul class="clearfix">
             <li></li>
@@ -26,13 +28,13 @@
             <li></li>
           </ul>
           <p class="first-p">（不含债权转让部分）</p>
-          <p class="second-p">30000元</p>
-          <!-- <p class="login-btn" v-if="!token">我要登录</p> -->
+          <p class="second-p" v-if="token">{{totalPrincipal}}元</p>
+          <p class="login-btn" v-if="!token" @click="toLogin()">我要登录</p>
           <p class="third-p">持仓越多,回馈越高,请继续保持哟！</p>
-          <p class="last-p" v-if="token">预计获得<span class="ft-o">20.34</span>元当日加息收益</p>
-          <p class="invest-btn">我要投资</p>
+          <p class="last-p" v-if="token && totalPrincipal > 0">预计获得<span class="ft-o">{{oneDayProfit}}</span>元当日加息收益</p>
+          <p class="invest-btn" v-if="token && totalPrincipal <= 0" @click="toProjectList()">我要投资</p>
         </div>
-        <p class="tip">*实际获得奖励以2017年12月15日24:00时的待收本金总金额为准</p>
+        <p class="tip">*实际获得奖励以{{activityInfo.startTime | dateCharacter}}24:00时的待收本金总金额为准</p>
       </div>
     </div>
     <div class="th3">
@@ -45,13 +47,15 @@
       </div>
       <div class="content">
         <div class="explain">
-          凡在2017年12月15日至2017年12月17日周年庆期间，<span class="ft-o">新增投资</span>的宏财精选、宏财尊贵项目都将享受额外3%连续加息3天的奖励！
+          凡在{{activityInfo.startTime | dateCharacter}}至{{activityInfo.endTime | dateCharacter}}周年庆期间，<span class="ft-o">新增投资</span>的宏财精选、宏财尊贵项目都将享受额外3%连续加息3天的奖励！
         </div>
         <div class="content-box position-re">
-          <div class="mask position-ab">
-            <img src="../../images/anniversary/lock.png" alt="" width="25%" v-show="false">
-            <p v-show="false">敬请期待...</p>
-            <p v-show="true">活动已结束...</p>
+          <div class="mask position-ab" v-show="serverTime < activityInfo.startTime || activityInfo.status === 2">
+            <div v-show="serverTime < activityInfo.startTime">
+              <img src="../../images/anniversary/lock.png" alt="" width="25%">
+              <p>敬请期待...</p>
+            </div>
+            <p v-show="activityInfo.status === 2">活动已结束...</p>
           </div>
           <ul class="clearfix">
             <li></li>
@@ -60,12 +64,12 @@
             <li></li>
             <li></li>
           </ul>
-          <p class="first-p">(2017.12.15至201712.17活动期间)</p>
-          <p class="second-p">30000元</p>
-          <!-- <p class="login-btn" v-if="!token">我要登录</p> -->
+          <p class="first-p">({{activityInfo.startTime | dateCharacter}}至{{activityInfo.endTime | dateCharacter}}活动期间)</p>
+          <p class="second-p" v-if="token">{{AddInvestmentAmount}}元</p>
+          <p class="login-btn" v-if="!token" @click="toLogin()">我要登录</p>
           <p class="third-p">新增投资,加息更多哟！</p>
-          <p class="last-p" v-if="token">预计共获得<span class="ft-o">20.34</span>元当日加息收益</p>
-          <p class="invest-btn">我要投资</p>
+          <p class="last-p" v-if="token && totalPrincipal > 0">预计共获得<span class="ft-o">{{threeDayProfit}}</span>元当日加息收益</p>
+          <p class="invest-btn" v-if="token && totalPrincipal <= 0" @click="toProjectList()">我要投资</p>
         </div>
         <p class="tip">*不含债权转让部分</p>
       </div>
@@ -81,14 +85,14 @@
           <span>1</span>
           <div>
             活动时间</br>
-            本次活动仅限于2017年12月15日0时至2017年12月17日24时内参与有效；
+            本次活动仅限于{{activityInfo.startTime | dateCharacter}}0时至{{activityInfo.endTime | dateCharacter}}24时内参与有效；
           </div>
         </div>
         <div class="first-rule clearfix">
           <span>2</span>
           <div>
             参与方式</br>
-            2017年12月15日三周年当天，用户待收本金(不含债权转让部分)均可享受3%当日加息奖励，待收本金总金额以当日24:00时为准；</br>
+            {{activityInfo.startTime | dateCharacter}}三周年当天，用户待收本金(不含债权转让部分)均可享受3%当日加息奖励，待收本金总金额以当日24:00时为准；</br>
             活动期间，用户新增投资宏财精选及宏财尊贵项目(不含债权转让项目)，新增投资部分均可享受额外3%连续加息3天的奖励；
           </div>
         </div>
@@ -111,17 +115,86 @@
   </div>
 </template>
 <script>
-  import {Utils} from '../../service/Utils.js'
+  import {Utils, bridgeUtil} from '../../service/Utils.js'
   export default {
     data () {
       return {
-        isIos: Utils.isIos()
+        isIos: Utils.isIos(),
+        activityInfo: {
+          startTime: 1513267200000,
+          endTime: 1513440000000,
+          status: 1 // 1 2 正常 结束
+        },
+        serverTime: 0, // serverTime < startTime 未开始
+        totalPrincipal: 0, // 待收本金总金额
+        AddInvestmentAmount: 0, // 新增投资总金额
+        oneDayProfit: 0, // 当日加息总收益
+        threeDayProfit: 0 // 三日加息总收益
       }
     },
     props: ['token'],
+    watch: {
+      token (val) {
+        val && val !== '' ? this.getTotalPrincipal() : null
+        val && val !== '' ? this.getAddInvestment() : null
+      }
+    },
     created () {
+      this.getActivityStatus()
+      this.getServeTime()
+      this.token ? this.getTotalPrincipal() : null
+      this.token ? this.getAddInvestment() : null
     },
     methods: {
+      toLogin () {
+        bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function (response) {}, null)
+      },
+      toProjectList () {
+        bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {}, null)
+      },
+      getServeTime () {
+        var that = this
+        that.$http('/hongcai/rest/systems/serverTime').then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.serverTime = res.data.time
+          }
+        })
+      },
+      getActivityStatus () { // 活动信息查询
+        var that = this
+        that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
+          if (!res.data || res.data.ret === -1) {
+            return
+          }
+          that.activityInfo = {
+            startTime: res.data.startTime,
+            endTime: res.data.endTime,
+            status: res.data.status
+          }
+        })
+      },
+      getTotalPrincipal () {
+        var that = this
+        that.$http({
+          url: '/hongcai/rest/activity/thirdAnniversaries/0/investmentAmount?token=' + that.token
+        }).then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.totalPrincipal = res.data.amount
+            that.oneDayProfit = res.data.profit
+          }
+        })
+      },
+      getAddInvestment () {
+        var that = this
+        that.$http({
+          url: '/hongcai/rest/activity/thirdAnniversaries/0/newInvestmentAmount?token=' + that.token
+        }).then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.AddInvestmentAmount = res.data.amount
+            that.threeDayProfit = res.data.profit
+          }
+        })
+      }
     }
   }
 </script>
@@ -302,7 +375,7 @@
     font-size: .55rem;
     color: #ffffff;
   }
-  .content-box .mask p:last-child {
+  .content-box .mask>p:last-child {
     margin-top: 15%;
   }
   .content .tip {
