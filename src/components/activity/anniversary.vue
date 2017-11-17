@@ -13,7 +13,7 @@
           2017年12月15日宏财网成立3周年当天，所有用户<span class="ft-o">待收本金总金额</span>(不含债权转让部分)都将享受额外3%当日加息奖励！
         </div>
         <div class="content-box position-re">
-          <div class="mask position-ab">
+          <div class="mask position-ab" v-show="false">
             <img src="../../images/anniversary/lock.png" alt="" width="25%">
             <p>敬请期待...</p>
             <p v-show="false">活动已结束...</p>
@@ -45,7 +45,7 @@
       </div>
       <div class="content">
         <div class="explain">
-          凡在2017年12月15日至2017年12月17日周年庆期间，<span class="ft-o"></span>新增投资</span>的宏财精选、宏财尊贵项目都将享受额外3%连续加息3天的奖励！
+          凡在2017年12月15日至2017年12月17日周年庆期间，<span class="ft-o">新增投资</span>的宏财精选、宏财尊贵项目都将享受额外3%连续加息3天的奖励！
         </div>
         <div class="content-box position-re">
           <div class="mask position-ab">
@@ -169,7 +169,7 @@
     margin-left: 13%;
     background: url('../../images/anniversary/title.png') no-repeat top center;
     background-size: 100%;
-    line-height: .7rem;
+    line-height: .75rem;
     color: #230629;
     font-weight: bold;
     font-size: .34rem;
@@ -310,7 +310,7 @@
     height: 2rem;
     background: url('../../images/anniversary/bg2.png') no-repeat bottom center ;
     background-size: 100%;
-    margin-bottom: -1.5rem;
+    margin-bottom: -2rem;
   }
   .th3-1 {
     background: url('../../images/anniversary/bg1.png') no-repeat bottom center;
@@ -330,10 +330,9 @@
   .act-rule .rule-content {
     width: 90%;
     margin-left: 5%;
-    /* background: url('../../images/anniversary/rule-bg.png') no-repeat center center; */
-    background-size: 100%;
+    background: url('../../images/anniversary/rule-bg.png') no-repeat center center;
+    background-size: 100% 100%;
     border-radius: .15rem;
-    background-color: #342a42;
     color: #f3e6bd;
     text-align: justify;
     margin-top: -.7rem;

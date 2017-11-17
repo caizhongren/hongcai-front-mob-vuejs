@@ -331,7 +331,7 @@ const routes = [
     path: '/activity/anniversary',
     name: 'Anniversary',
     component: Anniversary,
-    meta: {title: '三周年'}
+    meta: {title: '三周年狂欢'}
   },
   {
     path: '/register-agree',
