@@ -375,6 +375,11 @@
     font-size: .55rem;
     color: #ffffff;
   }
+  @media (max-height: 505px) {
+    .content-box .mask {
+      padding-top: 8%;
+    }
+  }
   .content-box .mask>p:last-child {
     margin-top: 15%;
   }
@@ -416,7 +421,7 @@
     color: #f3e6bd;
     text-align: justify;
     margin-top: -.35rem;
-    padding: .8rem 0 0.2rem .4rem;
+    padding: .65rem 0 0.3rem .4rem;
   }
   .act-rule .rule-content span {
     float: left;
