@@ -68,8 +68,8 @@
           <p class="second-p" v-if="token">{{AddInvestmentAmount}}元</p>
           <p class="login-btn" v-if="!token" @click="toLogin()">我要登录</p>
           <p class="third-p">新增投资,加息更多哟！</p>
-          <p class="last-p" v-if="token && totalPrincipal > 0">预计共获得<span class="ft-o">{{threeDayProfit}}</span>元当日加息收益</p>
-          <p class="invest-btn" v-if="token && totalPrincipal <= 0" @click="toProjectList()">我要投资</p>
+          <p class="last-p" v-if="token && AddInvestmentAmount > 0">预计共获得<span class="ft-o">{{threeDayProfit}}</span>元当日加息收益</p>
+          <p class="invest-btn" v-if="token && AddInvestmentAmount <= 0" @click="toProjectList()">我要投资</p>
         </div>
         <p class="tip">*不含债权转让部分</p>
       </div>
