@@ -348,7 +348,7 @@
   }
   .content-box .invest-btn, .content-box .login-btn {
     height: .85rem;
-    line-height: .85rem;
+    line-height: .87rem;
     text-align: center;
     font-size: .29rem;
     width: 55%;
