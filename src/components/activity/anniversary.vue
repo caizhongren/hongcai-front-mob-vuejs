@@ -15,7 +15,7 @@
         <div class="content-box position-re">
           <div class="mask position-ab" v-show="serverTime < activityInfo.startTime || activityInfo.status === 2">
             <div v-show="serverTime < activityInfo.startTime && activityInfo.status === 1">
-              <img src="../../images/anniversary/lock.png" alt="" width="25%">
+              <img src="../../images/anniversary/lock.png" alt="" width="20%">
               <p>敬请期待...</p>
             </div>
             <p v-show="activityInfo.status === 2">活动已结束...</p>
@@ -52,7 +52,7 @@
         <div class="content-box position-re">
           <div class="mask position-ab" v-show="serverTime < activityInfo.startTime || activityInfo.status === 2">
             <div v-show="serverTime < activityInfo.startTime && activityInfo.status === 1">
-              <img src="../../images/anniversary/lock.png" alt="" width="25%">
+              <img src="../../images/anniversary/lock.png" alt="" width="20%">
               <p>敬请期待...</p>
             </div>
             <p v-show="activityInfo.status === 2">活动已结束...</p>
