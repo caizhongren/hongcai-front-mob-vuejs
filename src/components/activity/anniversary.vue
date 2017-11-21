@@ -366,8 +366,8 @@
   .content-box .mask {
     top: 0;
     left: 0;
-    width: 101%;
-    height: 101%;
+    width: 100%;
+    height: 100%;
     background-color: rgba(0, 0, 0, .9);
     border-radius: .15rem;
     border: solid 1px #bd974c;
