@@ -32,7 +32,7 @@
           <p class="login-btn" v-if="!token" @click="toLogin()">我要登录</p>
           <p class="third-p">持仓越多,回馈越高,请继续保持哟！</p>
           <p class="last-p" v-if="token && totalPrincipal > 0">预计获得<span class="ft-o">{{oneDayProfit}}</span>元当日加息收益</p>
-          <p class="invest-btn" v-if="token && totalPrincipal <= 0" @click="toProjectList()">我要投资</p>
+          <p class="invest-btn" v-if="token && totalPrincipal <= 0 && serverTime < PrincipalTime" @click="toProjectList()">我要投资</p>
         </div>
         <p class="tip">*实际获得奖励以{{activityInfo.startTime | dateCharacter}}24:00时的待收本金总金额为准</p>
       </div>
@@ -125,7 +125,8 @@
           endTime: 1513440000000,
           status: 1 // 1 2 正常 结束
         },
-        serverTime: 0, // serverTime < startTime 未开始
+        serverTime: 1513353600000, // serverTime < startTime 未开始
+        PrincipalTime: new Date('2017/12/16').setHours(0, 0, 0, 0), // 1513353600000 2017.12.16 00:00:00
         totalPrincipal: 0, // 待收本金总金额
         AddInvestmentAmount: 0, // 新增投资总金额
         oneDayProfit: 0, // 当日加息总收益
