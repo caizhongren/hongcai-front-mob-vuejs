@@ -1,7 +1,8 @@
 <template>
   <div class="anniversary">
     <div class="header">
-      <p>活动时间:{{activityInfo.startTime | dateCharacter}}～{{activityInfo.endTime | dateCharacter}}</p>
+      <p v-if="activityInfo.status !== 2">活动时间:{{activityInfo.startTime | dateCharacter}}～{{activityInfo.endTime | dateCharacter}}</p>
+      <p v-if="activityInfo.status === 2">活动已结束</p>
     </div>
     <div class="gift1">
       <div class="guang"></div>
