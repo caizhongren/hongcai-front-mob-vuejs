@@ -172,6 +172,7 @@
             endTime: res.data.endTime,
             status: res.data.status
           }
+          that.PrincipalTime = new Date(new Date(that.activityInfo.startTime).setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000).setHours(0, 0, 0, 0)
         })
       },
       getTotalPrincipal () {
