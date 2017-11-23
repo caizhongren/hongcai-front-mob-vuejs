@@ -66,27 +66,42 @@
       <div class="draw-box">
         <!-- 抽奖 获得奖励-->
         <div class="receive-draw" v-if="receiveDraw">
-          <img src="../../images/lottery/receive-draw-01.png" alt="恭喜您获得奖励!" width="55%" v-show="prizeList.prizeType !== 6">
-          <div class="getPrize">
-            <p ng-show="prizeList.prizeType !== 6">{{prizeList.prizeValue}}</p>
-            <p  ng-class="{'margin-t-0p8': prizeList.prizeType === 6}">{{prizeList.prizeText}}</p>
+          <img src="../../images/lottery/receive-draw-02.png" alt="头像" class="avator" v-show="prizeList.prizeType !== 6">
+          <img src="../../images/lottery/receive-draw-01.png" alt="恭喜您获得奖励!" width="75%" class="margin-auto display-bl" v-show="prizeList.prizeType !== 6">
+          <img src="../../images/lottery/upper-limit-02.png" alt="头像" class="avator" v-if="prizeList.prizeType === 6">
+          <!-- 获得加息券、现金券奖励 -->
+          <div class="getPrize-coupons" v-bind:class="{'getRates': prizeList.prizeType === 3, 'getCoupon': prizeList.prizeType === 4}" v-show="prizeList.prizeType === 3 || prizeList.prizeType === 4">
+            {{prizeList.prizeValue || 0.2}}
+            <span>{{prizeList.prizeType === 3 ? '%' : '元'}}</span>
           </div>
-          <div class="prize-effect">{{prizeList.prizeCont.split('，')[0]}} <br> {{prizeList.prizeCont.split('，')[1]}}</div>
-          <!--<div class="prize-effect">{{prizeList.prizeCont}} <br> {{prizeList.prizeCont}}</div>-->
+          <!-- 获得1,当日加息; 2, 现金奖励; 5, 特权本金 -->
+          <div class="getPrize-money" v-show="prizeList.prizeType === 1 || prizeList.prizeType === 2 || prizeList.prizeType === 5">
+            <div class="icon" v-bind:class="{'getPrivilege': prizeList.prizeType === 5, 'getCash': prizeList.prizeType === 2, 'getOneRate': prizeList.prizeType === 1}"></div>
+            <div class="prizeCont">
+              <p>{{prizeList.prizeValue || 0.2}}{{prizeList.prizeType === 1 ? '%' : '元'}}</p>
+              <p>{{prizeList.prizeText || '当日加息'}}</p>
+            </div>
+          </div>
+          <!-- 获得谢谢 -->
+          <img src="../../images/lottery/reward-thanks.png" alt="获得谢谢" class="reward-thanks" v-show="prizeList.prizeType === 6">
+          <div class="prize-effect" v-show="prizeList.prizeType !== 6">{{prizeList.prizeCont || '前往【我的】>>【优惠券】中即可查看使用咯～'}}</div>
           <!-- 第一次抽奖 未分享 出现 ；第二次获得奖励 隐藏 -->
-          <img src="../../images/lottery/share-friends.png" alt="分享好友，再抽一次" width="42%" v-show="canShare" @click="LotteryShareTo();">
+          <img src="../../images/lottery/close-drawBox.png" alt="关闭中奖弹窗" class="close" @click="closeDraw(showDrawBox);">
         </div>
         <!-- 抽奖次数达上限，欢迎明日再来！ -->
         <div class="upper-limit" v-if="showUpperLimit">
-          <img src="../../images/lottery/upper-limit-01.png" alt="抽奖次数达上限，欢迎明日再来！" width="65%" @click="LotteryShareTo()">
-          <img src="../../images/lottery/upper-limit-02.png" alt="明日见" width="45%" class="margin-t-4">
+          <img src="../../images/lottery/upper-limit-02.png" alt="头像" class="avator">
+          <img src="../../images/lottery/upper-limit-01.png" alt="抽奖次数达上限，欢迎明日再来！" class="margin-auto display-bl" width="75%" @click="LotteryShareTo()">
+          <img src="../../images/lottery/close-drawBox.png" alt="关闭中奖弹窗" class="close" @click="closeDraw(showDrawBox);">
         </div>
         <!-- 今日次数用完需分享 -->
         <div class="usedAndcanShare" v-if="usedAndcanShare">
-          <img src="../../images/lottery/usedAndcanShare-01.png" alt="今日免费抽奖机会已使用！分享好友可再获一次免费抽奖机会" width="75%">
-          <img src="../../images/lottery/usedAndcanShare-02.png" alt="分享好友，再抽一次" width="38%" class="margin-t-1" @click="LotteryShareTo();">
+          <img src="../../images/lottery/receive-draw-02.png" alt="头像" class="avator">
+          <img src="../../images/lottery/usedAndcanShare-01.png" alt="今日免费抽奖机会已使用！分享好友可再获一次免费抽奖机会" width="90%">
+          <img src="../../images/lottery/close-drawBox.png" alt="关闭中奖弹窗" class="close" @click="closeDraw(showDrawBox);">
         </div>
-        <img src="../../images/lottery/close-drawBox.png" alt="关闭中奖弹窗" width="8%" @click="closeDraw(showDrawBox);">
+        <!-- <img src="../../images/lottery/close-drawBox.png" alt="关闭中奖弹窗" width="8%" @click="closeDraw(showDrawBox);"> -->
+        <div class="share-friends" @click="LotteryShareTo();" v-if="usedAndcanShare || canShare">分享好友，再抽一次</div>
       </div>
     </div>
     <!--活动规则-->
@@ -259,40 +274,40 @@
                 this.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '当日加息',
-                  prizeValue: '+' + receivePrize.value + '%',
-                  prizeCont: '奖励已自动生效，成功为您加息！'
+                  prizeValue: '+' + receivePrize.value,
+                  prizeCont: '奖励自动生效，次日即可前往【资金流水】中查看哟～'
                 }
                 break
               case 2:
                 this.prizeList = {
                   prizeType: receivePrize.prizeType,
-                  prizeText: '返现',
-                  prizeValue: receivePrize.value + '元',
-                  prizeCont: '奖励已发放至您的账户，前往“我的”页面即可查看！'
+                  prizeText: '现金返现',
+                  prizeValue: receivePrize.value,
+                  prizeCont: '奖励已发放至您的可用余额中，可前往【资金流水】中查看哟～'
                 }
                 break
               case 3:
                 this.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '加息券',
-                  prizeValue: '+' + receivePrize.value + '%',
-                  prizeCont: '奖励已发放至您的账户，前往“我的-加息券”即可查看！'
+                  prizeValue: receivePrize.value,
+                  prizeCont: '前往【我的】>>【优惠券】中即可使用咯～'
                 }
                 break
               case 4:
                 this.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '现金券',
-                  prizeValue: Number(receivePrize.value).toFixed(0) + '元',
-                  prizeCont: '奖励已发放至您的账户，前往“我的-现金券”即可查看！'
+                  prizeValue: Number(receivePrize.value).toFixed(0),
+                  prizeCont: '前往【我的】>>【优惠券】中即可查看使用咯～'
                 }
                 break
               case 5:
                 this.prizeList = {
                   prizeType: receivePrize.prizeType,
-                  prizeText: '(有效期1天)',
-                  prizeValue: Number(receivePrize.value).toFixed(0) + '元特权本金',
-                  prizeCont: '奖励已发放至您的账户，前往“我的-特权本金”即可查看！'
+                  prizeText: '特权本金',
+                  prizeValue: Number(receivePrize.value).toFixed(0),
+                  prizeCont: '前往【我的】>>【特权本金】即可查看，无需操作，收益次日到账哟～'
                 }
                 break
               case 6:
@@ -488,35 +503,124 @@
   .draw-box {
     text-align: center;
   }
-  .draw-box .receive-draw {
+  /* .draw-box .receive-draw {
     text-align: center;
     padding: 16% 0 .4rem;
-    /*display: none;*/
+  } */
+  .draw-box .receive-draw .getPrize-coupons {
+    height: 1.6rem;
+    font-size: .65rem;
+    color: #fff;
+    padding: .18rem 20%;
+    text-align: left;
+    font-family: Arial;
   }
-  .draw-box .receive-draw .getPrize {
-    background: url('../../images/lottery/receive-draw-02.png') no-repeat center center;
+  .draw-box .getPrize-coupons span {
+    font-size: .3rem;
+    display: inline-block;
+  }
+  .receive-draw .getRates {
+    background: url('../../images/lottery/reward-rate.png') no-repeat center center;
     background-size: contain;
-    height: 4rem;
-    padding-top: 2.15rem;
-    margin-top: .3rem;
-    font-size: .24rem;
   }
-  .draw-box .receive-draw .getPrize p {
-    color: #fc7371;
-    margin-bottom: 0;
-    line-height: .5rem;
+  .receive-draw .getCoupon {
+    background: url('../../images/lottery/reward-coupon.png') no-repeat center center;
+    background-size: contain;
+  }
+  .getPrize-money {
+    clear: both;
+    overflow: hidden;
+    width: 80%;
+    margin: 0.2rem auto;
+    text-align: center;
+  }
+  .getPrize-money .icon {
+    float: left;
+    width: 1rem;
+    height: 1rem;
+  }
+  .getPrivilege {
+    background: url('../../images/lottery/reward-privilege.png') no-repeat center center;
+    background-size: contain;
+  }
+  .getCash {
+    background: url('../../images/lottery/reward-cash.png') no-repeat center center;
+    background-size: contain;
+  }
+  .getOneRate {
+    background: url('../../images/lottery/reward-one-rate.png') no-repeat center center;
+    background-size: contain;
+  }
+  .reward-thanks {
+    width: 90%;
+    padding: .1rem .2rem;
+  }
+  .getPrize-money .prizeCont {
+    float: right;
+    width: 60%;
+    color: #fa7474;
+    padding-top: .05rem;
+  }
+  .getPrize-money .prizeCont p:nth-child(1) {
+    font-weight: bold;
+    line-height: 0.92;
+    letter-spacing: 1.7px;
+    font-size: .57rem;
+  }
+  .getPrize-money .prizeCont p:nth-child(2) {
+    font-weight: bold;
+    line-height: 1.83;
+    letter-spacing: 0.9px;
+    font-size: .25rem;
   }
   .draw-box .receive-draw .prize-effect {
-    color: #fff;
+    color: #666666;
     font-size: .24rem;
-    margin: 0.1rem 0 0.3rem;
+    text-align: justify;
+    width: 80%;
+    margin: 0 auto;
   }
-  .draw-box .upper-limit {
-    padding: 40% 0 .4rem;
+  .draw-box .upper-limit, .draw-box .usedAndcanShare, .draw-box .receive-draw {
+    width: 70%;
+    height: 2.68rem;
+    border-radius: .23rem;
+    background-color: #ffffff;
+    margin: 0 auto;
+    margin-top: 40%;
+    position: relative;
   } 
-  .draw-box .usedAndcanShare {
-    padding: 40% 0 .7rem;
+  .draw-box .receive-draw {
+    height: auto;
+    padding: .2rem 0;
   }
+  .upper-limit .avator, .usedAndcanShare .avator, .receive-draw .avator {
+    margin: -.9rem auto 0;
+    width: 35%;
+  }
+  .upper-limit .avator {
+    margin-bottom: .35rem;
+  }
+  .upper-limit .close, .usedAndcanShare .close, .receive-draw .close {
+    position: absolute;
+    right: -0.25rem;
+    top: -0.3rem;
+    width: 13%;
+  }
+  .share-friends {
+    background: url('../../images/lottery/share-friends.png') no-repeat center center;
+    background-size: contain;
+    width: 80%;
+    height: .75rem;
+    margin: .8rem auto;
+    font-size: .24rem;
+    line-height: .75rem;
+    letter-spacing: 0.9px;
+    text-align: center;
+    color: #feeeed;
+  }
+  /* .draw-box .usedAndcanShare {
+    padding: 40% 0 .7rem;
+  } */
   /*规则弹窗*/
   .rule-box {
     padding: 20% .2rem .5rem;
@@ -592,9 +696,9 @@
   .about-background, .bank-custody, .risk-safety ul li {
     width: 92%;
   }
-  .draw-box .receive-draw {
+  /* .draw-box .receive-draw {
     padding: 18% 0 .2rem;
-  }
+  } */
   @media(max-height: 480px) {
     .draw-box .receive-draw {
       padding:  0 0 .4rem;
