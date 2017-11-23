@@ -15,7 +15,7 @@
         <div class="content-box position-re">
           <div class="mask position-ab" v-show="serverTime < activityInfo.startTime || activityInfo.status === 2">
             <div v-show="serverTime < activityInfo.startTime && activityInfo.status === 1">
-              <img src="../../images/anniversary/lock.png" alt="" width="25%">
+              <img src="../../images/anniversary/lock.png" alt="" width="20%">
               <p>敬请期待...</p>
             </div>
             <p v-show="activityInfo.status === 2">活动已结束...</p>
@@ -52,7 +52,7 @@
         <div class="content-box position-re">
           <div class="mask position-ab" v-show="serverTime < activityInfo.startTime || activityInfo.status === 2">
             <div v-show="serverTime < activityInfo.startTime && activityInfo.status === 1">
-              <img src="../../images/anniversary/lock.png" alt="" width="25%">
+              <img src="../../images/anniversary/lock.png" alt="" width="20%">
               <p>敬请期待...</p>
             </div>
             <p v-show="activityInfo.status === 2">活动已结束...</p>
@@ -100,7 +100,7 @@
           <span>3</span>
           <div>
             奖励发放</br>
-            加息奖励将在活动结束后统一按日依次发放，您可在【我的】页面>>【资金流水】中查看活动奖励获得的每日加息收益哟；
+            三周年当天待收本金加息奖励将在次日上午7:00时前发放到账，活动期间投资加息奖励将在活动结束次日上午7:00时前，累计加息总收益一次性发放到账，您可前往【我的】页面>>【资金流水】中查看活动奖励获得的收益详情哟；
           </div>
         </div>
         <div class="first-rule clearfix">
