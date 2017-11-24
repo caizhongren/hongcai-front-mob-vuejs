@@ -511,7 +511,7 @@
     height: 1.6rem;
     font-size: .65rem;
     color: #fff;
-    padding: .18rem 20%;
+    padding: .18rem 16%;
     text-align: left;
     font-family: Arial;
   }
@@ -557,7 +557,7 @@
   }
   .getPrize-money .prizeCont {
     float: right;
-    width: 60%;
+    width: 70%;
     color: #fa7474;
     padding-top: .05rem;
   }
