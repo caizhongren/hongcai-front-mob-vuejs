@@ -579,6 +579,7 @@
     text-align: justify;
     width: 80%;
     margin: 0 auto;
+    line-height: 1.4;
   }
   .draw-box .upper-limit, .draw-box .usedAndcanShare, .draw-box .receive-draw {
     width: 70%;
