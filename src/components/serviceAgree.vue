@@ -1,5 +1,6 @@
 <template>
   <!-- 宏财网服务协议-直投、宏财网服务协议-债转、老项目合同区分 contractType：1——直投，2——债转，4——老合同，3——债权转让协议 ，5——降息换物渠道项目合同，6——借款方企业协议，7——借款方个人协议，8——债转方企业协议，9——债转方个人协议 -->
+  <!-- 2, 7, 9 个人签章 -->
   <div>
     <div class="agreement-area row" v-show="contractType === 1 || contractType === 4 || contractType === 6 || contractType === 7">
       <p class="text-title">宏财网服务协议</p>
@@ -202,20 +203,34 @@
         <p><strong class="agree-mg">（本页无正文，为签字页）</strong></p>
         <div v-show="contractType !== 4">
           <p><strong class="agree-mg">各方签章：</strong></p>
-          <p><strong class="agree-mg">甲方：<span v-for="(item, index) in LenderNames">{{item}}{{LenderNames.length === index + 1 ? '' : '、'}}</span></strong></p>
+          <!-- <p><strong class="agree-mg">甲方：<span class="signatureA" v-for="(item, index) in LenderNames">1{{item || 'yy'}}{{LenderNames.length === index + 1 ? '' : '、'}}</span></strong></p> -->
+          <p class="position-re">
+            <strong class="agree-mg">甲方：<span>{{contracts.userRealName}}</span></strong>
+            <b class="signatureA">{{contracts.userRealName}}</b>
+          </p>
           <br>
           <br>
           <br>
           <br>
           <br>
-          <p><strong class="agree-mg">乙方：{{contracts.enterpriseName}}</strong></p>
+          <br>
+          <br>
+          <p class="position-re"><strong class="agree-mg">乙方：{{contracts.enterpriseName}}</strong>
+            <img v-show="contractType !== 7" src="../images/service-agree/anshan.png" class="signatureB">
+            <b v-show="contractType === 7" class="signatureA">{{contracts.enterpriseName}}</b>
+          </p>
           <br>
           <br>
           <br>
           <br>
           <br>
-          <p><strong class="agree-mg">丙方：北京竞财投资服务有限公司</strong></p>
+          <br>
+          <br>
+          <br>
+          <br>
+          <p class="position-re"><strong class="agree-mg">丙方：北京竞财投资服务有限公司</strong><img src="../images/service-agree/hongcai.png" class="signatureC"></p>
         </div>
+        <br>
         <br>
         <br>
         <br>
@@ -252,8 +267,8 @@
       <div class="annex">
         <p class="text-left" v-show="contractType !== 4">附件2</p>
         <br>
-        <p class="text-center" v-if="preRepaymentList.length >0 && isLoan !== 0">还款计划（单位：元、月/日）</p>
-        <table v-if="preRepaymentList.length >0 && isLoan !== 0">
+        <p class="text-center" v-if="preRepaymentList.length >0">还款计划（单位：元、月/日）</p>
+        <table v-if="preRepaymentList.length >0">
           <thead>
             <td>序号</td>
             <td>还款日</td>
@@ -457,19 +472,30 @@
         <br>
         <p><strong class="agree-mg">各方签章：</strong></p>
         <br>
-        <p><strong class="agree-mg">甲方：<span v-for="(item, index) in LenderNames">{{item}}{{LenderNames.length === index + 1 ? '' : '、'}}</span></strong></p>
+        <!-- <p><strong class="agree-mg">甲方：<span v-for="(item, index) in LenderNames">{{item}}{{LenderNames.length === index + 1 ? '' : '、'}}</span></strong></p> -->
+        <p class="position-re">
+          <strong class="agree-mg">甲方：<span>{{contracts.userRealName}}</span></strong>
+          <b class="signatureA">{{contracts.userRealName}}</b>
+        </p>
         <br>
         <br>
         <br>
         <br>
         <br>
-        <p><strong class="agree-mg">乙方：{{contracts.enterpriseName}}</strong></p>
+        <br>
+        <br>
+        <p class="position-re"><strong class="agree-mg">乙方：{{contracts.enterpriseName}}</strong>
+          <img v-show="contractType === 8" src="../images/service-agree/anshan.png" class="signatureB">
+          <b v-show="contractType !== 8" class="signatureA">{{contracts.enterpriseName}}</b>
+        </p>
         <br>
         <br>
         <br>
         <br>
         <br>
-        <p><strong class="agree-mg">丙方：北京竞财投资服务有限公司</strong></p>
+        <br>
+        <br>
+        <p class="position-re"><strong class="agree-mg">丙方：北京竞财投资服务有限公司</strong><img src="../images/service-agree/hongcai.png" class="signatureC"></p>
         <br>
         <br>
         <br>
@@ -508,8 +534,8 @@
       <div class="annex">
         <p class="text-left">附件2</p>
         <br>
-        <p class="text-center" v-if="preRepaymentList.length >0 && isLoan !== 0">还款计划（单位：元、月/日）</p>
-        <table v-if="preRepaymentList.length >0 && isLoan !== 0">
+        <p class="text-center" v-if="preRepaymentList.length >0">还款计划（单位：元、月/日）</p>
+        <table v-if="preRepaymentList.length >0">
           <thead>
             <td>序号</td>
             <td>还款日</td>
@@ -576,13 +602,13 @@
         <p><strong class="agree-mg">各方签章：</strong></p>
         <br>
         <br>
-        <p><strong class="agree-mg">甲方：{{cutContracts.userRealName}}</strong></p>
+        <p class="position-re"><strong class="agree-mg">甲方：{{cutContracts.userRealName}}</strong><b class="signatureA">{{cutContracts.userRealName}}</b></p>
         <br>
         <br>
         <br>
         <br>
         <br>
-        <p><strong class="agree-mg">乙方：北京竞财投资服务有限公司</strong></p>
+        <p class="position-re"><strong class="agree-mg">乙方：北京竞财投资服务有限公司</strong><img src="../images/service-agree/hongcai.png" class="signatureC"></p>
         <br>
         <br>
       </div>
@@ -642,9 +668,9 @@
         }).then((response) => {
           if (response.data && response.data.ret !== -1) {
             var status = response.data.status
+            that.projectId = response.data.id
             if (status === 9 || status === 10) {
               that.isLoan = 1
-              that.projectId = response.data.id
             }
           }
         })
@@ -777,5 +803,24 @@
   }
   .annex1 table td:nth-child(3) {
     width: 20%;
+  }
+  .signatureA {
+    display: inline-block;
+    width: 2rem;
+    height: 1rem;
+    background: url('../images/service-agree/signature.png') no-repeat center center;
+    background-size: contain;
+    padding: .5rem 0 0 .25rem;
+    text-align: left;
+    position: absolute;
+    right: 0;
+    top: -.5rem;
+  }
+  .signatureC, .signatureB {
+    position: absolute;
+    width: 45%;
+    top: -.35rem;
+    left: .8rem;
+    z-index: -1;
   }
 </style>
