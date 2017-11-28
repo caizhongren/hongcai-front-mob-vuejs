@@ -206,7 +206,7 @@
           <!-- <p><strong class="agree-mg">甲方：<span class="signatureA" v-for="(item, index) in LenderNames">1{{item || 'yy'}}{{LenderNames.length === index + 1 ? '' : '、'}}</span></strong></p> -->
           <p class="position-re">
             <strong class="agree-mg">甲方：<span>{{contracts.userRealName}}</span></strong>
-            <b class="signatureA">{{contracts.userRealName}}</b>
+            <b class="signatureA" v-show="!isInvesting">{{contracts.userRealName}}</b>
           </p>
           <br>
           <br>
@@ -475,7 +475,7 @@
         <!-- <p><strong class="agree-mg">甲方：<span v-for="(item, index) in LenderNames">{{item}}{{LenderNames.length === index + 1 ? '' : '、'}}</span></strong></p> -->
         <p class="position-re">
           <strong class="agree-mg">甲方：<span>{{contracts.userRealName}}</span></strong>
-          <b class="signatureA">{{contracts.userRealName}}</b>
+          <b class="signatureA" v-show="!isInvesting">{{contracts.userRealName}}</b>
         </p>
         <br>
         <br>
@@ -602,7 +602,7 @@
         <p><strong class="agree-mg">各方签章：</strong></p>
         <br>
         <br>
-        <p class="position-re"><strong class="agree-mg">甲方：{{cutContracts.userRealName}}</strong><b class="signatureA">{{cutContracts.userRealName}}</b></p>
+        <p class="position-re"><strong class="agree-mg">甲方：{{cutContracts.userRealName}}</strong><b class="signatureA" v-show="!isInvesting">{{cutContracts.userRealName}}</b></p>
         <br>
         <br>
         <br>
@@ -630,7 +630,8 @@
         status: String,
         isLoan: 0,
         cutRateType: Number,
-        cutContracts: {}
+        cutContracts: {},
+        isInvesting: true
       }
     },
     created: function () {
@@ -642,6 +643,7 @@
       this.getProject()
       this.creditNum !== '0' ? this.extraContracts() : null
       this.projectId !== '' && this.token !== '' ? this.getContracts() : null
+      this.creditNum === undefined || this.creditNum === '0' ? this.isInvesting = true : this.isInvesting = false
     },
     watch: {
       'token': function (val) {
