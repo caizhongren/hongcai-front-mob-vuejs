@@ -1,5 +1,6 @@
 <template>
   <!-- 宏财网服务协议-直投、宏财网服务协议-债转、老项目合同区分 contractType：1——直投，2——债转，4——老合同，3——债权转让协议 ，5——降息换物渠道项目合同，6——借款方企业协议，7——借款方个人协议，8——债转方企业协议，9——债转方个人协议 -->
+  <!-- 2, 7, 9 个人签章 -->
   <div>
     <div class="agreement-area row" v-show="contractType === 1 || contractType === 4 || contractType === 6 || contractType === 7">
       <p class="text-title">宏财网服务协议</p>
@@ -202,20 +203,40 @@
         <p><strong class="agree-mg">（本页无正文，为签字页）</strong></p>
         <div v-show="contractType !== 4">
           <p><strong class="agree-mg">各方签章：</strong></p>
-          <p><strong class="agree-mg">甲方：<span v-for="(item, index) in LenderNames">{{item}}{{LenderNames.length === index + 1 ? '' : '、'}}</span></strong></p>
+          <!-- <p><strong class="agree-mg">甲方：<span class="signatureA" v-for="(item, index) in LenderNames">1{{item || 'yy'}}{{LenderNames.length === index + 1 ? '' : '、'}}</span></strong></p> -->
+          <p class="position-re">
+            <strong class="agree-mg">甲方：<span>{{contracts.userRealName}}</span></strong>
+            <b class="signatureA" v-show="!isInvesting">{{contracts.userRealName}}</b>
+          </p>
           <br>
           <br>
           <br>
           <br>
           <br>
-          <p><strong class="agree-mg">乙方：{{contracts.enterpriseName}}</strong></p>
+          <br>
+          <br>
+          <div class="position-re"><strong class="agree-mg">乙方：{{contracts.enterpriseName}}</strong>
+            <div v-show="contractType !== 7" class="signatureB">
+                <p class="economy">{{contracts.enterpriseName}}</p> 
+            </div>  
+            <b v-show="contractType === 7" class="signatureA">{{contracts.enterpriseName}}</b>
+          </div>
           <br>
           <br>
           <br>
           <br>
           <br>
-          <p><strong class="agree-mg">丙方：北京竞财投资服务有限公司</strong></p>
+          <br>
+          <br>
+          <br>
+          <br>
+          <div class="position-re"><strong class="agree-mg">丙方：北京竞财投资服务有限公司</strong>
+            <div class="signatureC">
+              <p class="economy1">北京竞财投资服务有限公司</p> 
+            </div>
+          </div>
         </div>
+        <br>
         <br>
         <br>
         <br>
@@ -252,8 +273,8 @@
       <div class="annex">
         <p class="text-left" v-show="contractType !== 4">附件2</p>
         <br>
-        <p class="text-center" v-if="preRepaymentList.length >0 && isLoan !== 0">还款计划（单位：元、月/日）</p>
-        <table v-if="preRepaymentList.length >0 && isLoan !== 0">
+        <p class="text-center" v-if="preRepaymentList.length >0">还款计划（单位：元、月/日）</p>
+        <table v-if="preRepaymentList.length >0">
           <thead>
             <td>序号</td>
             <td>还款日</td>
@@ -457,19 +478,36 @@
         <br>
         <p><strong class="agree-mg">各方签章：</strong></p>
         <br>
-        <p><strong class="agree-mg">甲方：<span v-for="(item, index) in LenderNames">{{item}}{{LenderNames.length === index + 1 ? '' : '、'}}</span></strong></p>
+        <!-- <p><strong class="agree-mg">甲方：<span v-for="(item, index) in LenderNames">{{item}}{{LenderNames.length === index + 1 ? '' : '、'}}</span></strong></p> -->
+        <p class="position-re">
+          <strong class="agree-mg">甲方：<span>{{contracts.userRealName}}</span></strong>
+          <b class="signatureA" v-show="!isInvesting">{{contracts.userRealName}}</b>
+        </p>
         <br>
         <br>
         <br>
         <br>
         <br>
-        <p><strong class="agree-mg">乙方：{{contracts.enterpriseName}}</strong></p>
+        <br>
+        <br>
+        <div class="position-re"><strong class="agree-mg">乙方：{{contracts.enterpriseName}}</strong>
+          <div v-show="contractType === 8" class="signatureB">
+              <p class="economy">{{contracts.enterpriseName}}</p> 
+          </div>
+          <b v-show="contractType !== 8" class="signatureA">{{contracts.enterpriseName}}</b>
+        </div>
         <br>
         <br>
         <br>
         <br>
         <br>
-        <p><strong class="agree-mg">丙方：北京竞财投资服务有限公司</strong></p>
+        <br>
+        <br>
+        <div class="position-re"><strong class="agree-mg">丙方：北京竞财投资服务有限公司</strong>
+          <div class="signatureC">
+            <p class="economy1">北京竞财投资服务有限公司</p> 
+          </div>
+        </div>
         <br>
         <br>
         <br>
@@ -508,8 +546,8 @@
       <div class="annex">
         <p class="text-left">附件2</p>
         <br>
-        <p class="text-center" v-if="preRepaymentList.length >0 && isLoan !== 0">还款计划（单位：元、月/日）</p>
-        <table v-if="preRepaymentList.length >0 && isLoan !== 0">
+        <p class="text-center" v-if="preRepaymentList.length >0">还款计划（单位：元、月/日）</p>
+        <table v-if="preRepaymentList.length >0">
           <thead>
             <td>序号</td>
             <td>还款日</td>
@@ -532,12 +570,12 @@
       <br>
       <br>
       <p class="text-title">宏财网服务协议补充协议</p>
-      <p class="text-right" v-if="!cutContracts.contractNumber">合同编号：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
-      <p class="text-right" v-if="cutContracts">合同编号：{{cutContracts.projectContractNumber}}</p>
+      <p class="text-right" v-if="!cutContracts.userRealName">合同编号：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
+      <p class="text-right" v-if="cutContracts.userRealName">合同编号：{{cutContracts.projectContractNumber}}</p>
       <div class="row">
         <p><strong class="agree-mg text-justify">为了维护您的权益，请在签署本协议前，仔细阅读、充分理解本协议各条款（特别是加重、免除或限制协议一方责任条款），关注您在协议中的权利、义务。请您审慎阅读并选择接受或不接受本协议。您一经选择接受即视为对本协议全部条款已充分理解并完全接受。</strong></p>
-        <p v-if="!cutContracts.contractNumber"><strong class="agree-mg">本协议由以下双方于【&nbsp&nbsp&nbsp】年【&nbsp&nbsp&nbsp】月【&nbsp&nbsp 】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
-        <p v-if="cutContracts"><strong class="agree-mg">本协议由以下双方于【{{cutContracts.year}}】年【{{cutContracts.month}}】月【{{cutContracts.month}}】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
+        <p v-if="!cutContracts.userRealName"><strong class="agree-mg">本协议由以下双方于【&nbsp&nbsp&nbsp】年【&nbsp&nbsp&nbsp】月【&nbsp&nbsp 】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
+        <p v-if="cutContracts.userRealName"><strong class="agree-mg">本协议由以下双方于【{{cutContracts.year}}】年【{{cutContracts.month}}】月【{{cutContracts.month}}】日在中华人民共和国（以下简称“中国”）北京签订。</strong></p>
         <br>
         <p><strong class="agree-mg">协议双方：</strong></p>
         <p><strong class="agree-mg">甲方（出借人）：</strong>{{cutContracts.userRealName}}</p>
@@ -551,16 +589,16 @@
         <p><strong class="agree-mg">鉴于：</strong></p>
         <p class="agree-tx">1、甲方（出借人）系符合中国法律规定的具有完全民事权利能力和民事行为能力，独立行使和承担本协议项下权利义务的自然人、法人或其他组织。</p>
         <p class="agree-tx">2、乙方是依法成立并运营的网络借贷信息中介机构（域名：www.hongcai.com，以下简称“宏财网”）。甲方通过宏财网向借款人提供借款，乙方为本协议项下借款提供居间服务。</p>
-        <p class="agree-tx" v-if="!cutContracts.contractNumber">3、甲、乙双方已经于【&nbsp&nbsp&nbsp】年【&nbsp&nbsp&nbsp】月【&nbsp&nbsp&nbsp】日签订了协议编号为【&nbsp&nbsp&nbsp】《宏财网服务协议》。</p>
-        <p class="agree-tx" v-if="cutContracts">3、甲、乙双方已经于【{{cutContracts.year}}】年【{{cutContracts.month}}】月【{{cutContracts.month}}】日签订了协议编号为【{{cutContracts.contractNumber}}】《宏财网服务协议》。</p>
+        <p class="agree-tx" v-if="!cutContracts.userRealName">3、甲、乙双方已经于【&nbsp&nbsp&nbsp】年【&nbsp&nbsp&nbsp】月【&nbsp&nbsp&nbsp】日签订了协议编号为【&nbsp&nbsp&nbsp】《宏财网服务协议》。</p>
+        <p class="agree-tx" v-if="cutContracts.userRealName">3、甲、乙双方已经于【{{cutContracts.year}}】年【{{cutContracts.month}}】月【{{cutContracts.month}}】日签订了协议编号为【{{cutContracts.userRealName}}】《宏财网服务协议》。</p>
         <p class="agree-tx">4、甲方自主选择参与宏财网活动，接受活动各项条款。</p>
         <p class="agree-tx">为此，根据国家有关法律法规，甲、乙双方本着平等自愿、诚实守信、互惠互利的原则，立此补充协议，共同遵守。</p>
         <br>
         <p class="text-center"><strong class="agree-mg">协议条款</strong></p>
         <p><strong class="agree-mg">第一条 &nbsp&nbsp双方的权利和义务</strong></p>
         <p class="agree-tx">1.1 甲方签署本协议，即表示其已经知悉并接受所参与活动的各项条款。</p>
-        <p class="agree-tx" v-if="!cutContracts.contractNumber">1.2 甲方明确知悉参与本活动，其在宏财网的协议编号为【&nbsp&nbsp&nbsp】投资，期望年均回报率由【&nbsp&nbsp&nbsp】降为【&nbsp&nbsp&nbsp】，多余部分作为宏财网的服务费，由宏财网在借款人每期还款时自动扣取。</p>
-        <p class="agree-tx" v-if="cutContracts">1.2 甲方明确知悉参与本活动，其在宏财网的协议编号为【{{cutContracts.contractNumber}}】投资，期望年均回报率由【{{cutContracts.oldRate}}%】降为【{{cutContracts.newRate}}%】，多余部分作为宏财网的服务费，由宏财网在借款人每期还款时自动扣取。</p>
+        <p class="agree-tx" v-if="!cutContracts.userRealName">1.2 甲方明确知悉参与本活动，其在宏财网的协议编号为【&nbsp&nbsp&nbsp】投资，期望年均回报率由【&nbsp&nbsp&nbsp】降为【&nbsp&nbsp&nbsp】，多余部分作为宏财网的服务费，由宏财网在借款人每期还款时自动扣取。</p>
+        <p class="agree-tx" v-if="cutContracts.userRealName">1.2 甲方明确知悉参与本活动，其在宏财网的协议编号为【{{cutContracts.contractNumber}}】投资，期望年均回报率由【{{cutContracts.oldRate}}%】降为【{{cutContracts.newRate}}%】，多余部分作为宏财网的服务费，由宏财网在借款人每期还款时自动扣取。</p>
         <p class="agree-tx">1.3 乙方应将活动条款，在其网站或App的相关页面做全面、清晰的展示。</p>
         <p class="agree-tx">1.4 乙方按活动条款及时兑付甲方获得的奖品，具体奖品以乙方最终发放为准。</p>
         <p><strong class="agree-mg">第二条 &nbsp&nbsp其他事项</strong></p>
@@ -576,13 +614,17 @@
         <p><strong class="agree-mg">各方签章：</strong></p>
         <br>
         <br>
-        <p><strong class="agree-mg">甲方：{{cutContracts.userRealName}}</strong></p>
+        <p class="position-re"><strong class="agree-mg">甲方：{{cutContracts.userRealName}}</strong><b class="signatureA" v-show="!isInvesting">{{cutContracts.userRealName}}</b></p>
         <br>
         <br>
         <br>
         <br>
         <br>
-        <p><strong class="agree-mg">乙方：北京竞财投资服务有限公司</strong></p>
+        <div class="position-re"><strong class="agree-mg">乙方：北京竞财投资服务有限公司</strong>
+          <div class="signatureC">
+            <p class="economy2">北京竞财投资服务有限公司</p> 
+          </div>
+        </div>
         <br>
         <br>
       </div>
@@ -590,6 +632,8 @@
   </div>
 </template>
 <script>
+  import $ from 'zepto'
+  import {Arctext1} from '../service/arctext.js'
   export default {
     props: ['token'],
     data () {
@@ -604,7 +648,8 @@
         status: String,
         isLoan: 0,
         cutRateType: Number,
-        cutContracts: {}
+        cutContracts: {},
+        isInvesting: true
       }
     },
     created: function () {
@@ -616,6 +661,7 @@
       this.getProject()
       this.creditNum !== '0' ? this.extraContracts() : null
       this.projectId !== '' && this.token !== '' ? this.getContracts() : null
+      this.creditNum === undefined || this.creditNum === '0' ? this.isInvesting = true : this.isInvesting = false
     },
     watch: {
       'token': function (val) {
@@ -631,6 +677,97 @@
         if (this.token !== '' && val !== '') {
           this.getContracts()
         }
+      },
+      'contracts': function (val) {
+        if (val.enterpriseName) {
+          // alert(val.enterpriseName.length)
+          Arctext1.Arctext({radius: 6, dir: 1}, $('.economy1'), '北京竞财投资服务有限公司')
+          this.creditNum === '0' || this.cutRateType === 5 ? Arctext1.Arctext({radius: 6, dir: 1}, $('.economy2'), '北京竞财投资服务有限公司') : null
+          Arctext1.Arctext({radius: val.enterpriseName.length / 2, dir: 1}, $('.economy'), val.enterpriseName)
+          var cssStyle = {}
+          switch (val.enterpriseName.length) {
+            case 19:
+              cssStyle = {
+                'transform': 'scale(.55)'
+              }
+              break
+            case 18:
+              cssStyle = {
+                'transform': 'scale(.58)'
+              }
+              break
+            case 17:
+              cssStyle = {
+                'transform': 'scale(.62)'
+              }
+              break
+            case 16:
+              cssStyle = {
+                'transform': 'scale(.64)'
+              }
+              break
+            case 15:
+              cssStyle = {
+                'transform': 'scale(.68)'
+              }
+              break
+            case 14:
+              cssStyle = {
+                'transform': 'scale(.73)'
+              }
+              break
+            case 13:
+              cssStyle = {
+                'transform': 'scale(.77)'
+              }
+              break
+            case 12:
+              cssStyle = {
+                'transform': 'scale(.85)'
+              }
+              break
+            case 11:
+              cssStyle = {
+                'transform': 'scale(.94)'
+              }
+              break
+            case 10:
+              cssStyle = {
+                'transform': 'scale(1)',
+                'top': '.08rem'
+              }
+              break
+            case 9:
+              cssStyle = {
+                'transform': 'scale(1.2)',
+                'top': '.12rem'
+              }
+              break
+            case 8:
+              cssStyle = {
+                'transform': 'scale(1.3)',
+                'top': '.12rem'
+              }
+              break
+            case 7:
+              cssStyle = {
+                'transform': 'scale(1.48)',
+                'top': '.125rem'
+              }
+              break
+            case 6:
+              cssStyle = {
+                'transform': 'scale(1.68)',
+                'top': '.15rem'
+              }
+              break
+            default:
+              cssStyle = {
+                'transform': 'scale(.5)'
+              }
+          }
+          $('.economy').css(cssStyle)
+        }
       }
     },
     methods: {
@@ -642,9 +779,9 @@
         }).then((response) => {
           if (response.data && response.data.ret !== -1) {
             var status = response.data.status
+            that.projectId = response.data.id
             if (status === 9 || status === 10) {
               that.isLoan = 1
-              that.projectId = response.data.id
             }
           }
         })
@@ -701,7 +838,8 @@
         }).then(function (response) {
           if (response.data && response.data.ret !== -1) {
             that.cutRateType = response.data.type
-            that.cutRateType === 5 && that.isLoan === 1 ? that.cutRateContracts() : null
+            // that.cutRateType === 5 && that.isLoan === 1 ? that.cutRateContracts() : null
+            that.cutRateType === 5 ? that.cutRateContracts() : null
           } else {
           }
         })
@@ -777,5 +915,56 @@
   }
   .annex1 table td:nth-child(3) {
     width: 20%;
+  }
+  .signatureA {
+    display: inline-block;
+    width: 2rem;
+    height: 1rem;
+    background: url('../images/service-agree/signature.png') no-repeat center center;
+    background-size: contain;
+    padding: .5rem 0 0 .25rem;
+    text-align: left;
+    position: absolute;
+    right: 0;
+    top: -.5rem;
+  }
+  .signatureC {
+    width: 80%;
+    height: 2.6rem;
+    background: url('../images/service-agree/anshan.png') no-repeat center center;
+    background-size: contain;
+    padding-top: .05rem;
+    position: absolute;
+    top: -.38rem;
+    left: -.21rem;
+    z-index: -1;
+    text-align: center;
+  }
+  .signatureB {
+    width: 80%;
+    height: 2.6rem;
+    background: url('../images/service-agree/anshan.png') no-repeat center center;
+    background-size: contain;
+    position: absolute;
+    top: -.38rem;
+    left: -.21rem;
+    z-index: -1;
+    text-align: center;
+  }
+  .economy, .economy1, .economy2 {
+    font-size: .22rem;
+    color: #e71f19;
+    font-weight: bold;
+    font-family: serif;
+    position: relative;
+    height: .5rem;
+    z-index: -1;
+    margin: 0 auto;
+  }
+  .economy {
+    top: .05rem;
+  }
+  .economy1, .economy2 {
+    transform: scale(.85);
   }
 </style>
