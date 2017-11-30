@@ -215,10 +215,12 @@
           <br>
           <br>
           <br>
-          <p class="position-re"><strong class="agree-mg">乙方：{{contracts.enterpriseName}}</strong>
-            <img v-show="contractType !== 7" src="../images/service-agree/anshan.png" class="signatureB">
+          <div class="position-re"><strong class="agree-mg">乙方：{{contracts.enterpriseName}}</strong>
+            <div v-show="contractType !== 7" class="signatureB">
+                <p class="economy">{{contracts.enterpriseName}}</p> 
+            </div>  
             <b v-show="contractType === 7" class="signatureA">{{contracts.enterpriseName}}</b>
-          </p>
+          </div>
           <br>
           <br>
           <br>
@@ -228,7 +230,11 @@
           <br>
           <br>
           <br>
-          <p class="position-re"><strong class="agree-mg">丙方：北京竞财投资服务有限公司</strong><img src="../images/service-agree/hongcai.png" class="signatureC"></p>
+          <div class="position-re"><strong class="agree-mg">丙方：北京竞财投资服务有限公司</strong>
+            <div class="signatureC">
+              <p class="economy1">北京竞财投资服务有限公司</p> 
+            </div>
+          </div>
         </div>
         <br>
         <br>
@@ -484,10 +490,12 @@
         <br>
         <br>
         <br>
-        <p class="position-re"><strong class="agree-mg">乙方：{{contracts.enterpriseName}}</strong>
-          <img v-show="contractType === 8" src="../images/service-agree/anshan.png" class="signatureB">
+        <div class="position-re"><strong class="agree-mg">乙方：{{contracts.enterpriseName}}</strong>
+          <div v-show="contractType === 8" class="signatureB">
+              <p class="economy">{{contracts.enterpriseName}}</p> 
+          </div>
           <b v-show="contractType !== 8" class="signatureA">{{contracts.enterpriseName}}</b>
-        </p>
+        </div>
         <br>
         <br>
         <br>
@@ -495,7 +503,11 @@
         <br>
         <br>
         <br>
-        <p class="position-re"><strong class="agree-mg">丙方：北京竞财投资服务有限公司</strong><img src="../images/service-agree/hongcai.png" class="signatureC"></p>
+        <div class="position-re"><strong class="agree-mg">丙方：北京竞财投资服务有限公司</strong>
+          <div class="signatureC">
+            <p class="economy1">北京竞财投资服务有限公司</p> 
+          </div>
+        </div>
         <br>
         <br>
         <br>
@@ -608,7 +620,11 @@
         <br>
         <br>
         <br>
-        <p class="position-re"><strong class="agree-mg">乙方：北京竞财投资服务有限公司</strong><img src="../images/service-agree/hongcai.png" class="signatureC"></p>
+        <div class="position-re"><strong class="agree-mg">乙方：北京竞财投资服务有限公司</strong>
+          <div class="signatureC">
+            <p class="economy2">北京竞财投资服务有限公司</p> 
+          </div>
+        </div>
         <br>
         <br>
       </div>
@@ -616,6 +632,8 @@
   </div>
 </template>
 <script>
+  import $ from 'zepto'
+  import {Arctext1} from '../service/arctext.js'
   export default {
     props: ['token'],
     data () {
@@ -658,6 +676,107 @@
       'projectId': function (val) {
         if (this.token !== '' && val !== '') {
           this.getContracts()
+        }
+      },
+      'contracts': function (val) {
+        if (val.enterpriseName) {
+          // alert(val.enterpriseName.length)
+          Arctext1.Arctext({radius: 6, dir: 1}, $('.economy1'), '北京竞财投资服务有限公司')
+          this.creditNum === '0' || this.cutRateType === 5 ? Arctext1.Arctext({radius: 6, dir: 1}, $('.economy2'), '北京竞财投资服务有限公司') : null
+          Arctext1.Arctext({radius: val.enterpriseName.length / 2, dir: 1}, $('.economy'), val.enterpriseName)
+          var cssStyle = {}
+          switch (val.enterpriseName.length) {
+            case 19:
+              cssStyle = {
+                'transform': 'scale(.55)',
+                'top': '.1rem'
+              }
+              break
+            case 18:
+              cssStyle = {
+                'transform': 'scale(.58)',
+                'top': '.1rem'
+              }
+              break
+            case 17:
+              cssStyle = {
+                'transform': 'scale(.62)',
+                'top': '.1rem'
+              }
+              break
+            case 16:
+              cssStyle = {
+                'transform': 'scale(.64)',
+                'top': '.11rem'
+              }
+              break
+            case 15:
+              cssStyle = {
+                'transform': 'scale(.68)',
+                'top': '.12rem'
+              }
+              break
+            case 14:
+              cssStyle = {
+                'transform': 'scale(.73)',
+                'top': '.12rem'
+              }
+              break
+            case 13:
+              cssStyle = {
+                'transform': 'scale(.77)',
+                'top': '.15rem'
+              }
+              break
+            case 12:
+              cssStyle = {
+                'transform': 'scale(.85)',
+                'top': '.15rem'
+              }
+              break
+            case 11:
+              cssStyle = {
+                'transform': 'scale(.94)',
+                'top': '.15rem'
+              }
+              break
+            case 10:
+              cssStyle = {
+                'transform': 'scale(1)',
+                'top': '.15rem'
+              }
+              break
+            case 9:
+              cssStyle = {
+                'transform': 'scale(1.1)',
+                'top': '0.2rem'
+              }
+              break
+            case 8:
+              cssStyle = {
+                'transform': 'scale(1.2)',
+                'top': '0.25rem'
+              }
+              break
+            case 7:
+              cssStyle = {
+                'transform': 'scale(1.3)',
+                'top': '0.25rem'
+              }
+              break
+            case 6:
+              cssStyle = {
+                'transform': 'scale(1.5)',
+                'top': '0.25rem'
+              }
+              break
+            default:
+              cssStyle = {
+                'transform': 'scale(.5)',
+                'top': '.12rem'
+              }
+          }
+          $('.economy').css(cssStyle)
         }
       }
     },
@@ -819,11 +938,40 @@
     right: 0;
     top: -.5rem;
   }
-  .signatureC, .signatureB {
+  .signatureC {
+    width: 80%;
+    height: 2.6rem;
+    background: url('../images/service-agree/hongcai2.png') no-repeat center center;
+    background-size: contain;
+    padding-top: .15rem;
     position: absolute;
-    width: 45%;
-    top: -.35rem;
-    left: .8rem;
+    top: -.38rem;
+    left: -.21rem;
     z-index: -1;
+    text-align: center;
+  }
+  .signatureB {
+    width: 80%;
+    height: 2.6rem;
+    background: url('../images/service-agree/anshan.png') no-repeat center center;
+    background-size: contain;
+    position: absolute;
+    top: -.38rem;
+    left: -.21rem;
+    z-index: -1;
+    text-align: center;
+  }
+  .economy, .economy1, .economy2 {
+    font-size: .22rem;
+    color: #e71f19;
+    font-weight: bold;
+    font-family: serif;
+    position: relative;
+    height: .5rem;
+    z-index: -1;
+    margin: 0 auto;
+  }
+  .economy1, .economy2 {
+    transform: scale(.83);
   }
 </style>
