@@ -688,92 +688,82 @@
           switch (val.enterpriseName.length) {
             case 19:
               cssStyle = {
-                'transform': 'scale(.55)',
-                'top': '.1rem'
+                'transform': 'scale(.55)'
               }
               break
             case 18:
               cssStyle = {
-                'transform': 'scale(.58)',
-                'top': '.1rem'
+                'transform': 'scale(.58)'
               }
               break
             case 17:
               cssStyle = {
-                'transform': 'scale(.62)',
-                'top': '.1rem'
+                'transform': 'scale(.62)'
               }
               break
             case 16:
               cssStyle = {
-                'transform': 'scale(.64)',
-                'top': '.11rem'
+                'transform': 'scale(.64)'
               }
               break
             case 15:
               cssStyle = {
-                'transform': 'scale(.68)',
-                'top': '.12rem'
+                'transform': 'scale(.68)'
               }
               break
             case 14:
               cssStyle = {
-                'transform': 'scale(.73)',
-                'top': '.12rem'
+                'transform': 'scale(.73)'
               }
               break
             case 13:
               cssStyle = {
-                'transform': 'scale(.77)',
-                'top': '.15rem'
+                'transform': 'scale(.77)'
               }
               break
             case 12:
               cssStyle = {
-                'transform': 'scale(.85)',
-                'top': '.15rem'
+                'transform': 'scale(.85)'
               }
               break
             case 11:
               cssStyle = {
-                'transform': 'scale(.94)',
-                'top': '.15rem'
+                'transform': 'scale(.94)'
               }
               break
             case 10:
               cssStyle = {
                 'transform': 'scale(1)',
-                'top': '.15rem'
+                'top': '.12rem'
               }
               break
             case 9:
               cssStyle = {
-                'transform': 'scale(1.1)',
-                'top': '0.2rem'
+                'transform': 'scale(1.2)',
+                'top': '.12rem'
               }
               break
             case 8:
               cssStyle = {
-                'transform': 'scale(1.2)',
-                'top': '0.25rem'
+                'transform': 'scale(1.3)',
+                'top': '.12rem'
               }
               break
             case 7:
               cssStyle = {
-                'transform': 'scale(1.3)',
-                'top': '0.25rem'
+                'transform': 'scale(1.4)',
+                'top': '.12rem'
               }
               break
             case 6:
               cssStyle = {
-                'transform': 'scale(1.5)',
-                'top': '0.25rem'
+                'transform': 'scale(1.65)',
+                'top': '.2rem'
               }
               break
             default:
               cssStyle = {
-                'transform': 'scale(.5)',
-                'top': '.12rem'
+                'transform': 'scale(.5)'
               }
           }
           $('.economy').css(cssStyle)
@@ -943,7 +933,7 @@
     height: 2.6rem;
     background: url('../images/service-agree/hongcai2.png') no-repeat center center;
     background-size: contain;
-    padding-top: .15rem;
+    padding-top: .05rem;
     position: absolute;
     top: -.38rem;
     left: -.21rem;
@@ -971,7 +961,10 @@
     z-index: -1;
     margin: 0 auto;
   }
+  .economy {
+    top: .05rem;
+  }
   .economy1, .economy2 {
-    transform: scale(.83);
+    transform: scale(.85);
   }
 </style>
