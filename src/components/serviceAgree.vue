@@ -734,7 +734,7 @@
             case 10:
               cssStyle = {
                 'transform': 'scale(1)',
-                'top': '.12rem'
+                'top': '.08rem'
               }
               break
             case 9:
@@ -751,14 +751,14 @@
               break
             case 7:
               cssStyle = {
-                'transform': 'scale(1.4)',
-                'top': '.12rem'
+                'transform': 'scale(1.48)',
+                'top': '.125rem'
               }
               break
             case 6:
               cssStyle = {
-                'transform': 'scale(1.65)',
-                'top': '.2rem'
+                'transform': 'scale(1.68)',
+                'top': '.15rem'
               }
               break
             default:
