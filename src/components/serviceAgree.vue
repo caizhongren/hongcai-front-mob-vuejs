@@ -931,7 +931,7 @@
   .signatureC {
     width: 80%;
     height: 2.6rem;
-    background: url('../images/service-agree/hongcai2.png') no-repeat center center;
+    background: url('../images/service-agree/anshan.png') no-repeat center center;
     background-size: contain;
     padding-top: .05rem;
     position: absolute;
