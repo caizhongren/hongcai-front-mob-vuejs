@@ -67,6 +67,7 @@ const Rouse = r => require.ensure([], () => r(require('../components/Rouse.vue')
 const BreakEgg = r => require.ensure([], () => r(require('../components/activity/breakEgg.vue')), 'BreakEgg')
 const BreakEggRecord = r => require.ensure([], () => r(require('../components/activity/breakEggRecord.vue')), 'BreakEggRecord')
 const Anniversary = r => require.ensure([], () => r(require('../components/activity/anniversary.vue')), 'Anniversary')
+const HappyBirthday = r => require.ensure([], () => r(require('../components/activity/happyBirthday.vue')), 'HappyBirthday')
 
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -332,6 +333,12 @@ const routes = [
     name: 'Anniversary',
     component: Anniversary,
     meta: {title: '三周年狂欢'}
+  },
+  {
+    path: '/activity/happy-birthday',
+    name: 'HappyBirthday',
+    component: HappyBirthday,
+    meta: {title: 'happy birthday'}
   },
   {
     path: '/register-agree',
