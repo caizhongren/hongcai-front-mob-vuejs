@@ -727,11 +727,12 @@
       }
     },
     created: function () {
+      this.getServeTime()
       this.type = this.$route.params.type.toString()
       this.number = this.$route.query.number
       this.transferAmount = Number(this.$route.query.amount)
       this.transferAnnul = Number(this.$route.query.annualEarnings)
-      this.currentDate = new Date().getTime()
+      // this.currentDate = new Date().getTime()
       document.title = this.titles[Number(this.type - 1)]
       if (this.type === '6') {
         this.getBankLimit()
@@ -799,6 +800,14 @@
         }).then((res) => {
           this.rule = res.data
           this.getCreditDetail()
+        })
+      },
+      getServeTime () {
+        var that = this
+        that.$http('/hongcai/rest/systems/serverTime').then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.currentDate = res.data.time
+          }
         })
       },
       getCreditDetail: function () {
