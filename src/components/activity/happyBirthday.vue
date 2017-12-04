@@ -182,18 +182,19 @@
     float: right;
   }
   .userName {
-    width: .8rem;
+    width: .7rem;
     height: .6rem;
     float: left;
     color: #ff4d00;
     font-size: .3rem;
-    line-height: .86rem;
+    line-height: .9rem;
     float: left;
   }
   .Gender {
-    width: 1rem;
-    height: .8rem;
+    width: 0.56rem;
+    height: .35rem;
     float: left;
+    margin-top: .25rem;
   }
   .lady {
     background: url('../../images/happy-birthday/lady.png') no-repeat center center; 
