@@ -10,16 +10,16 @@
       <img src="../../images/happy-birthday/acer.png" class="acer">
     </div>
     <div class="gift">
-      <div class="priviledges" v-if="hasGift">
-        <p class="money">{{user.priviledge}}元</p>
-        <p class="time">有效期{{user.validityTime}}天</p>
+      <div class="priviledges" v-if="user.amount > 0">
+        <p class="money">{{user.amount}}元</p>
+        <p class="time">有效期{{user.duration}}天</p>
         <p class="type">特权本金</p>
       </div>
-      <div class="blessings" v-bind:class="{'noGift': !hasGift}">
-        <img src="../../images/happy-birthday/lines.png" class="lines" v-bind:class="{'noGift': !hasGift}">
-        <span class="dear"></span><span class="userName">{{user.name}}</span><span class="Gender userName" v-bind:class="{'lady': user.isLady, 'Sir': !user.isLady}"></span>
-        <img src="../../images/happy-birthday/blessings-1.png" class="blessings-1" v-if="hasGift">
-        <img src="../../images/happy-birthday/blessings-2.png" class="blessings-2" v-if="!hasGift">
+      <div class="blessings" v-bind:class="{'noGift': user.amount === 0}">
+        <img src="../../images/happy-birthday/lines.png" class="lines" v-bind:class="{'noGift': user.amount === 0}">
+        <span class="dear"></span><span class="userName">{{user.surname}}</span><span class="Gender userName" v-bind:class="{'lady': user.sex === 'WOMAN', 'Sir': user.sex === 'MAN'}"></span>
+        <img src="../../images/happy-birthday/blessings-1.png" class="blessings-1" v-if="user.amount > 0">
+        <img src="../../images/happy-birthday/blessings-2.png" class="blessings-2" v-if="user.amount === 0">
         <div class="hongcaiwang"></div>
       </div>
     </div>
@@ -33,17 +33,19 @@
       return {
         isPlay: 'true',
         user: {
-          name: '于',
-          priviledge: 8888,
-          validityTime: 3,
-          isLady: true
+          surname: '',
+          amount: 0,
+          duration: 0,
+          sex: 'MAN'
         },
-        hasGift: true
+        hasGift: false
       }
     },
     props: ['token'],
     watch: {
       token (val) {
+        val && val !== '' ? this.getUserInfo() : null
+        // val && val !== '' ? this.getInfo() : null
       },
       isPlay (val) {
         val && val === 'true' ? audioPlayUtil.playOrPaused('music', this.isPlay) : null
@@ -53,7 +55,8 @@
       this.token && this.token !== '' ? audioPlayUtil.playOrPaused('music', this.isPlay) : $('.play-audio').removeClass('audioIcon')
     },
     created () {
-      this.token && this.token !== '' ? this.getUserInfo() : alert('请先登录哦')
+      this.token && this.token !== '' ? this.getUserInfo() : null
+      // this.token && this.token !== '' ? this.getInfo() : null
     },
     methods: {
       playOrpause () {
@@ -64,18 +67,31 @@
           this.isPlay = 'true'
         }
       },
+      getInfo () {
+        this.$http({
+          url: '/hongcai/rest/users/member/userMemberBirthdayIndexShow?token=' + this.token
+        })
+        .then(function (res) {
+          console.log(res)
+          alert(res.data.isShow)
+        })
+      },
       getUserInfo () {
         var that = this
         that.$http({
           method: 'get',
-          url: '/hongcai/rest/activitys/' + that.activityType
+          url: '/hongcai/rest/users/member/userMemberBirthdayAwardInfo' + '?token=' + that.token
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.user = res.data
+            alert(res.data.amount)
           } else {
             console.log(res.data.msg)
           }
+        })
+        .catch(function (err) {
+          console.log(err)
         })
       }
     },
