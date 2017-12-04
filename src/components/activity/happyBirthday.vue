@@ -1,6 +1,6 @@
 <template>
   <div class="birthday" v-auto-height>
-    <audio preload="preload" loop="true" id="music"><source src="../../assets/get.mp3"></audio>
+    <audio preload="preload" loop="true" id="music"><source src="../../assets/happyBirthday.mp3"></audio>
     <div class="header position-re">
       <img src="../../images/happy-birthday/bg-hander.png" class="bg-header">
       <div class="overflow-hid" @click="playOrpause">
@@ -17,7 +17,7 @@
       </div>
       <div class="blessings" v-bind:class="{'noGift': !hasGift}">
         <img src="../../images/happy-birthday/lines.png" class="lines" v-bind:class="{'noGift': !hasGift}">
-        <span class="dear"></span><span class="userName">{{user.name}}</span><span class="Gender userName" v-bind:class="{'lady': isLady, 'Sir': !isLady}"></span>
+        <span class="dear"></span><span class="userName">{{user.name}}</span><span class="Gender userName" v-bind:class="{'lady': user.isLady, 'Sir': !user.isLady}"></span>
         <img src="../../images/happy-birthday/blessings-1.png" class="blessings-1" v-if="hasGift">
         <img src="../../images/happy-birthday/blessings-2.png" class="blessings-2" v-if="!hasGift">
         <div class="hongcaiwang"></div>
@@ -50,15 +50,19 @@
       }
     },
     mounted () {
-      audioPlayUtil.playOrPaused('music', this.isPlay)
+      this.token && this.token !== '' ? audioPlayUtil.playOrPaused('music', this.isPlay) : $('.play-audio').removeClass('audioIcon')
     },
     created () {
       this.token && this.token !== '' ? this.getUserInfo() : alert('请先登录哦')
     },
     methods: {
       playOrpause () {
-        this.isPlay === 'true' ? this.isPlay = 'false' : this.isPlay = 'true'
-        this.isPlay === 'true' ? $('#music')[0].loop = true : $('#music')[0].loop = false
+        if (this.isPlay === 'true') {
+          this.isPlay = 'false'
+          $('#music')[0].pause()
+        } else {
+          this.isPlay = 'true'
+        }
       },
       getUserInfo () {
         var that = this
