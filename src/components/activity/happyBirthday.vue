@@ -31,7 +31,7 @@
   export default {
     data () {
       return {
-        isPlay: 'true',
+        isPlay: 'false',
         user: {
           surname: '',
           amount: 0,
@@ -52,6 +52,7 @@
     },
     created () {
       this.token && this.token !== '' ? this.getUserInfo() : null
+      this.isPlay = 'true'
     },
     methods: {
       playOrpause () {
