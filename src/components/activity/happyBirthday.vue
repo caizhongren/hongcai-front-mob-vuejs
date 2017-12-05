@@ -45,7 +45,6 @@
     watch: {
       token (val) {
         val && val !== '' ? this.getUserInfo() : null
-        // val && val !== '' ? this.getInfo() : null
       },
       isPlay (val) {
         val && val === 'true' ? audioPlayUtil.playOrPaused('music', this.isPlay) : null
@@ -56,7 +55,6 @@
     },
     created () {
       this.token && this.token !== '' ? this.getUserInfo() : null
-      // this.token && this.token !== '' ? this.getInfo() : null
     },
     methods: {
       playOrpause () {
@@ -67,15 +65,6 @@
           this.isPlay = 'true'
         }
       },
-      getInfo () {
-        this.$http({
-          url: '/hongcai/rest/users/member/userMemberBirthdayIndexShow?token=' + this.token
-        })
-        .then(function (res) {
-          console.log(res)
-          alert(res.data.isShow)
-        })
-      },
       getUserInfo () {
         var that = this
         that.$http({
@@ -85,7 +74,6 @@
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.user = res.data
-            alert(res.data.amount)
           } else {
             console.log(res.data.msg)
           }
