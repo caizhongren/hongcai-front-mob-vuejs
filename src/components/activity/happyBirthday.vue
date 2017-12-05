@@ -50,9 +50,6 @@
         val && val === 'true' ? audioPlayUtil.playOrPaused('music', this.isPlay) : null
       }
     },
-    mounted () {
-      this.token && this.token !== '' ? audioPlayUtil.playOrPaused('music', this.isPlay) : $('.play-audio').removeClass('audioIcon')
-    },
     created () {
       this.token && this.token !== '' ? this.getUserInfo() : null
     },
@@ -190,15 +187,15 @@
     height: .6rem;
     float: left;
     color: #ff4d00;
-    font-size: .3rem;
-    line-height: .9rem;
+    font-size: .33rem;
+    line-height: .86rem;
     float: left;
   }
   .Gender {
     width: 0.56rem;
-    height: .35rem;
+    height: .34rem;
     float: left;
-    margin-top: .25rem;
+    margin-top: .26rem;
   }
   .lady {
     background: url('../../images/happy-birthday/lady.png') no-repeat center center; 
