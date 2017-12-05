@@ -1,6 +1,6 @@
 <template>
   <div class="birthday" v-auto-height>
-    <audio preload="preload" loop="true" id="music"><source src="../../assets/happyBirthday.mp3"></audio>
+    <audio preload="preload" loop="true" id="music" autoplay><source src="../../assets/happyBirthday.mp3"></audio>
     <div class="header position-re">
       <img src="../../images/happy-birthday/bg-hander.png" class="bg-header">
       <div class="overflow-hid" @click="playOrpause">
@@ -31,7 +31,7 @@
   export default {
     data () {
       return {
-        isPlay: 'false',
+        isPlay: 'true',
         user: {
           surname: '',
           amount: 0,
@@ -52,7 +52,6 @@
     },
     created () {
       this.token && this.token !== '' ? this.getUserInfo() : null
-      this.isPlay = 'true'
     },
     methods: {
       playOrpause () {
@@ -189,14 +188,14 @@
     float: left;
     color: #ff4d00;
     font-size: .33rem;
-    line-height: .86rem;
+    line-height: .84rem;
     float: left;
   }
   .Gender {
     width: 0.56rem;
     height: .34rem;
     float: left;
-    margin-top: .26rem;
+    margin-top: .22rem;
   }
   .lady {
     background: url('../../images/happy-birthday/lady.png') no-repeat center center; 
