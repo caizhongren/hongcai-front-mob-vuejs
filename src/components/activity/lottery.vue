@@ -91,7 +91,7 @@
         <!-- 抽奖次数达上限，欢迎明日再来！ -->
         <div class="upper-limit" v-if="showUpperLimit">
           <img src="../../images/lottery/upper-limit-02.png" alt="头像" class="avator">
-          <img src="../../images/lottery/upper-limit-01.png" alt="抽奖次数达上限，欢迎明日再来！" class="margin-auto display-bl" width="75%" @click="LotteryShareTo()">
+          <img src="../../images/lottery/upper-limit-01.png" alt="抽奖次数达上限，欢迎明日再来！" class="margin-auto display-bl" width="75%">
           <img src="../../images/lottery/close-drawBox.png" alt="关闭中奖弹窗" class="close" @click="closeDraw(showDrawBox);">
         </div>
         <!-- 今日次数用完需分享 -->
