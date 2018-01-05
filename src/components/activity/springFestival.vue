@@ -88,6 +88,7 @@
         </div>
       </div>
     </div>
+    <spring-calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator" v-show="showCalculator"></spring-calculator>
     <!-- 弹窗 -->
     <div class="mask-common packet-mask" v-show="showMask">
       <div class="guang3 Rotation position"></div>
@@ -99,12 +100,13 @@
     </div>
       <img src="../../images/break-egg/icon-close.png" width="12%" alt="" @click="showMask = false" style="margin-top: 3.6rem;">
     </div>
-    <img src="../../images/spring-festival/jsq.png" alt="" class="jxq">
+    <img src="../../images/spring-festival/jsq.png" alt="" class="jxq" @click="showCalculator = true">
   </div>
 </template>
 <script>
   import {bridgeUtil, ModalHelper} from '../../service/Utils'
   import $ from 'zepto'
+  import SpringCalculator from './SpringCalculator.vue'
   export default {
     props: ['token'],
     data () {
@@ -151,7 +153,8 @@
         rewardSrc: '',
         rewardMoney: 5,
         imgSize: {'5': '28%', '35': '50%', '90': '50%', '120': '65%', '350': '60%', '1288': '65%'},
-        hammerTimer: null
+        hammerTimer: null,
+        showCalculator: false
       }
     },
     created () {
@@ -212,8 +215,12 @@
       toProjectList () {
         bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {
         }, null)
+      },
+      closeCalculator () {
+        this.showCalculator = false
       }
-    }
+    },
+    components: {SpringCalculator}
   }
 </script>
 <style scoped>

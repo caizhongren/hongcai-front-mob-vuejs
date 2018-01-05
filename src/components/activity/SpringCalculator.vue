@@ -34,7 +34,7 @@
     </div>
 </template>
 <script>
-  import {InputMaskHelper} from '../../service/Utils'
+  import {InputMaskHelper, ModalHelper} from '../../service/Utils'
   export default {
     name: 'SpringCalculator',
     data () {
@@ -63,6 +63,7 @@
           var handleEle = document.getElementById('calcu-body')
           InputMaskHelper.windowChange(handleEle)
         }
+        newVal ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
     methods: {
