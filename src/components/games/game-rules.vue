@@ -163,7 +163,8 @@
     height: .25rem;
     text-align: center;
     border-radius: .15rem;
-    color: #ff6875;
+    color: #f20c12;
+    font-family: FZLTZHK-GBK1-0;
     background-color: #ffffff;
     border: solid 1px #4b0d00;
   }
@@ -222,7 +223,7 @@
     width: 53%;
     height: .6rem;
     line-height: .6rem;
-    font-size: .23rem;
+    font-size: .24rem;
     text-align: center;
     border-radius: 7.5px;
     background-color: #fbdc34;

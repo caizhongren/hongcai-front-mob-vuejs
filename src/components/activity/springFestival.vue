@@ -24,7 +24,7 @@
                 <img src="../../images/spring-festival/hongbao-min.png" alt="">
                 <p class="maxPacket">累计最高可领 <br>  <span class="ft-red">1888元</span>现金红包哟！</p>
               </div>
-              <p class="loginTip">登录即可查看<img src="../../images/spring-festival/coins.png" alt=""> 当前累计年化投资金额</p>
+              <p class="loginTip">登录即可查看<img src="../../images/spring-festival/coin.png" alt=""> 当前累计年化投资金额</p>
               <div class="loginBtn" @click="toLogin()">前往登陆</div>
             </div>
           </div>
@@ -164,7 +164,7 @@
         }
       },
       toRecord () {
-        this.$router.push({name: 'GoldenRecord'})
+        this.$router.push({name: 'SpringRecord'})
       },
       toLogin () {
         bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function (response) {
