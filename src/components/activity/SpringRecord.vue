@@ -1,6 +1,5 @@
 <template>
   <div class="Spring_record" v-auto-height>
-    <spring-calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator"></spring-calculator>
     <div class="recordBox">
       <div class="boxHeader">
         <img class="top" src="../../images/spring-festival/detail-head.png" width="100%" alt="">
@@ -44,7 +43,6 @@
 </template>
 
 <script>
-  import SpringCalculator from './SpringCalculator.vue'
   export default {
     name: 'SpringRecord',
     data () {
@@ -66,7 +64,7 @@
         var that = this
         that.$http({
           method: 'get',
-          url: '/hongcai/rest/activity/breakEggs/0/investRecords?token=' + that.token + '&activityType=' + that.activityType + '&page=' + page + '&pageSize=' + pageSize
+          url: '/hongcai/rest/activitys/invest/transition/0/investRecords?token=' + that.token + '&activityType=' + that.activityType + '&page=' + page + '&pageSize=' + pageSize
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
@@ -80,11 +78,14 @@
           }
         })
       },
+      loadMore (page) {
+        this.investPage += 1
+        this.getInvestRecords(this.investPage, this.pageSize)
+      },
       closeCalculator () {
         this.showCalculator = false
       }
-    },
-    components: {SpringCalculator}
+    }
   }
 </script>
 <style scoped>
@@ -189,6 +190,7 @@
   .scrollBox {
     height: 5rem;
     overflow: scroll;
+    -webkit-overflow-scrolling: touch;
   }
   .investTitle {
     overflow: hidden;

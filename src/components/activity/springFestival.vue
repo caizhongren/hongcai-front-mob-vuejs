@@ -18,7 +18,7 @@
           <div v-else>
             <p class="description">活动期间，新增投资宏财精选、宏财尊贵项目(不含债权转让项目)，累计年化投资金额达到指定额度，即可领取相应现金红包奖励喔！</p>
             <div v-if="token" class="isLogin">
-              <p class="investText">我的累计年化投资金额<span class="detail" @click="toRecord()" v-show="investAmount >0">查看详情</span></p>
+              <p class="investText">我的累计年化投资金额<span class="detail" @click="toRecord()" v-show="investAmount > 0">查看详情</span></p>
               <div class="investAmount">{{investAmount}}元</div>
               <div class="investBtn" @click="toNative('HCNative_GoInvestList')" v-show="activityStatus === 1">立即投资</div>
               <div class="tips" v-show="activityStatus === 1 && investAmount < 300000">累计年化投资金额还差<span class="ft-red">{{shortAmount}}元</span>，即可领取<span class="ft-red">{{gettingRedPacket}}元</span>现金红包！</div>
@@ -43,9 +43,38 @@
         </div>
       </div>
       <!-- 红包 -->
+      <div class="calcu-tip clearfix">
+        <img src="../../images/spring-festival/jsq.png" width="10%" class="fl" alt="">
+        <div><p>年化投资金额=投资金额x项目期限/365天</p></div>
+        <!-- <div @click="getPacket(5)">领取红包</div> -->
+      </div>
+      <div class="chat-tip" v-if="token && this.activityStatus === 1 || token && this.activityStatus === 2 && investAmount > 0">左右滑动<br>领取红包</div>
       <div class="part2" v-if="token">
-        红包<br>
         <div @click="getPacket(1)">领取红包</div>
+        <div class="position-re carousel-mask" v-if="this.activityStatus === 1 || this.activityStatus === 2 && investAmount > 0">
+          <div id="wrapper">
+            <ul class="poster-list clearfix clear">
+              <li v-for="(item,index) in levelStatus">
+                <div class="red_bag_bg" :class="{'ed' : item === 1}">
+                  <img src="../../images/spring-festival/wdb.png" width="40%" class="chai display-bl" alt="" v-if="investAmount < packetList[index].limitAmount && item === 0">
+                  <img src="../../images/spring-festival/chai.png" width="40%" class="chai display-bl" alt="" v-if="investAmount >= packetList[index].limitAmount && item === 0" @click="takeReward(index + 1, item, packetList[index].amount)">
+                  <img :src="'../../static/images/' + packetList[index].amount + '.png'" alt="" :width="packetList[index].imgWidth" class="value" v-if="item !== 1">
+                  <img src="../../images/spring-festival/yuan.png" alt="" width="11%" v-if="item !== 1">
+                  <p class="condition" v-if="item !== 1">≥{{packetList[index].limitAmount}}元可拆红包</p>
+                  <div class="chaied" v-if="item === 1">
+                    <span class="circle">元</span>
+                    <img :src="'../../static/images/d' + packetList[index].amount + '.png'" :width="packetList[index].imgedWidth" class="text">
+                    <div class="congratulate">恭喜您获得</div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <!-- <img src="../../images/spring-festival/indexBottom-min.png" width="80%" class="margin-auto" alt=""> -->
+        </div>
+        <div v-if="this.activityStatus === 3 || this.activityStatus === 2 && this.investAmount > 0" class="packet-end">
+          <img src="../../images/spring-festival/text-end-min.png" alt="" width="38%" class="display-bl margin-auto">
+        </div>
       </div>
       <!-- 活动规则 -->
       <div class="part3">
@@ -104,11 +133,11 @@
   </div>
 </template>
 <script>
+  import {Carousel} from '../../service/mCarousel'
   import {bridgeUtil, ModalHelper} from '../../service/Utils'
   import $ from 'zepto'
   import SpringCalculator from './SpringCalculator.vue'
   export default {
-    props: ['token'],
     data () {
       return {
         investAmount: 0, // 累计年化投资金额
@@ -119,38 +148,61 @@
         activityEnd: 1, // 1 -活动结束3个工作日内 2 —活动结束3个工作日后
         expirationDate: 1519747200000, // 活动结束三个工作日期固定 比如 2018-2-27 24:00:00
         // expirationDate: 1515254400000, // 测试使用 2018-1-10 00:00:00 new Date().getTime() + 1000 * 60 * 60 * 24 * 3
+        current: 0, // 当前显示的红包index
+        canGetAmount: 0, // 年化金额达到可领取的红包数量
+        canTakePackets: [], // 达标并且可以领的红包
+        takedPackets: [], // 领过的红包
         packetList: [
           {
+            id: 0,
             status: 0, // 0 未达标 1 可拆 2 已领取
             amount: 5,
-            limitAmount: 1000
+            limitAmount: 1000,
+            imgWidth: '10%',
+            imgedWidth: '15.6%'
           },
           {
+            id: 1,
             status: 0,
             amount: 35,
-            limitAmount: 10000
+            limitAmount: 10000,
+            imgWidth: '20%',
+            imgedWidth: '30%'
           },
           {
+            id: 2,
             status: 0,
             amount: 90,
-            limitAmount: 30000
+            limitAmount: 30000,
+            imgWidth: '20%',
+            imgedWidth: '30%'
           },
           {
+            id: 3,
             status: 0,
             amount: 120,
-            limitAmount: 50000
+            limitAmount: 50000,
+            imgWidth: '24%',
+            imgedWidth: '40%'
           },
           {
+            id: 4,
             status: 0,
             amount: 350,
-            limitAmount: 100000
+            limitAmount: 100000,
+            imgWidth: '26%',
+            imgedWidth: '40%'
           },
           {
+            id: 5,
             status: 0,
             amount: 1288,
-            limitAmount: 300000
+            limitAmount: 300000,
+            imgWidth: '30%',
+            imgedWidth: '55%'
           }
         ],
+        levelStatus: [1, 1, 0, 0, 0, 0],
         showMask: false,
         rewardSrc: '',
         rewardMoney: 5,
@@ -166,59 +218,32 @@
           endYear: 0,
           endMonth: 0,
           endDate: 0
-        }
+        },
+        canTake: true, // 红包切换过程中不可领取
+        busy: false, // 防止多次点击领取
+        serverTime: new Date().getTime()
       }
     },
-    created () {
-      this.getActivityStatus()
-      this.getLevelStatus()
-      this.getAnnualInvestAmount()
-      this.getServeTime()
-    },
+    props: ['token'],
     watch: {
+      token: function (val) {
+        val ? this.getLevelStatus() : null
+        val ? this.getAnnualInvestAmount() : null
+      },
       showMask (val) {
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
         val ? (this.hammerTimer = null, this.hammerTimer2 = null, this.hammerTimer3 = null) : null
       }
     },
+    created () {
+      this.getActivityStatus()
+      this.token ? this.getLevelStatus() : null
+      this.token ? this.getAnnualInvestAmount() : null
+    },
+    mounted () {
+      this.token && this.activityStatus === 1 ? this.setCarousel() : null
+    },
     methods: {
-      getServeTime () { // 获取服务器时间
-        var that = this
-        that.$http('/hongcai/rest/systems/serverTime').then(function (res) {
-          if (res.data && res.data.ret !== -1) {
-            var currentDate = res.data.time
-            currentDate < that.expirationDate ? that.activityEnd = 1 : that.activityEnd = 2
-          }
-        })
-      },
-      getLevelStatus () { // 获取等级领取状态
-        var that = this
-        that.$http('/hongcai/rest/activitys/newYear/levelStatus?token=' + that.token).then(function (res) {
-          var arr = res.data.status
-          for (var i = 0; i < arr.length; i++) {
-            if (arr[i] === 1) { // 已领取
-              that.totalPacket += that.packetList[i].amount
-            }
-          }
-        })
-      },
-      getActivityStatus () { // 活动信息查询
-        var that = this
-        that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
-          that.activityStatus = res.data.status
-          // that.activityStatus = 2
-          var startTime = res.data.startTime
-          var endTime = res.data.endTime
-          that.activityInfo = {
-            startYear: new Date(startTime).getFullYear(),
-            startMonth: new Date(startTime).getMonth() + 1,
-            startDate: new Date(startTime).getDate(),
-            endYear: new Date(endTime).getFullYear(),
-            endMonth: new Date(endTime).getMonth() + 1,
-            endDate: new Date(endTime).getDate()
-          }
-        })
-      },
       getAnnualInvestAmount () { // 获取累计年化投资金额
         var that = this
         that.$http('/hongcai/rest/activitys/invest/transition/0/annualInvestAmount?token=' + that.token + '&activityType=' + that.$route.query.act).then(function (res) {
@@ -228,19 +253,54 @@
           }
         })
       },
-      getPacket (level) { // 拆红包领取奖励
+      getActivityStatus () { // 活动信息查询
         var that = this
-        that.showMask = true
-        that.rewardMoney = that.packetList[level - 1].amount
-        that.rewardSrc = '../../../static/images/spring-' + that.rewardMoney + '.png'
-        that.GuangRotation()
-        that.$http.post('/hongcai/rest/activitys/newYear/takeReward', {
-          level: level,
-          token: that.token
-        }).then(function (res) {
-        }).catch(function () {
-          console.log('接口报错')
+        that.$http({ // 获取服务器时间
+          method: 'get',
+          url: '/hongcai/rest/systems/serverTime'
+        }).then((response) => {
+          that.serverTime = response.data.time
+          var currentDate = response.data.time
+          currentDate < that.expirationDate ? that.activityEnd = 1 : that.activityEnd = 2
+          that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
+            if (that.serverTime - res.data.endTime > 3 * 24 * 60 * 60 * 1000) {
+              that.activityStatus = 3 // 活动结束3天后
+            } else {
+              that.activityStatus = res.data.status
+            }
+            // 获取活动开始、结束时间
+            var startTime = res.data.startTime
+            var endTime = res.data.endTime
+            that.activityInfo = {
+              startYear: new Date(startTime).getFullYear(),
+              startMonth: new Date(startTime).getMonth() + 1,
+              startDate: new Date(startTime).getDate(),
+              endYear: new Date(endTime).getFullYear(),
+              endMonth: new Date(endTime).getMonth() + 1,
+              endDate: new Date(endTime).getDate()
+            }
+          })
         })
+      },
+      setCarousel () { // 红包布局配置
+        var that = this
+        var wrapper = document.getElementById('wrapper')
+        if (that.activityStatus === 1) {
+          Carousel.mCarousel(wrapper, {
+            index: that.current,
+            active: 'active',
+            scale: 0.67,
+            duration: 300,
+            locked: true,
+            diff: 0.45,
+            before: function () { // 动画执行中不可拆红包
+              that.canTake = false
+            },
+            after: function () {
+              that.canTake = true
+            }
+          })
+        }
       },
       GuangRotation () { // 拆红包后动画
         var that = this
@@ -301,11 +361,59 @@
         }
       },
       toRecord () {
-        this.$router.push({name: 'SpringRecord'})
+        this.$router.push({name: 'SpringRecord', query: {act: this.$route.query.act}})
       },
       toNative (HCNative) {
         bridgeUtil.webConnectNative(HCNative, undefined, {}, function (response) {
         }, null)
+      },
+      getLevelStatus () { // 获取各档位红包状态
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest/activitys/newYear/levelStatus?token=' + that.token
+        }).then((response) => {
+          if (!response.data || response.data.ret === -1) {
+            return
+          }
+          that.levelStatus = response.data.status
+          for (let i = 0; i < response.data.status.length; i++) {
+            that.packetList[i].status = response.data.status[i]
+            if (response.data.status[i] === 0 && that.investAmount >= that.packetList[i].limitAmount) {
+              that.canTakePackets[i] = [that.packetList[i]]
+            } else if (response.data.status[i] === 1) {
+              that.takedPackets[i] = that.packetList[i]
+            }
+            if (that.levelStatus[i] === 1) { // 已领取 计算共已领到红包金额
+              that.totalPacket += that.packetList[i].amount
+            }
+          }
+          // 判断是否已领过红包
+          let index = that.takedPackets.length === 0 ? 0 : that.takedPackets.length === 6 ? 5 : that.takedPackets[that.takedPackets.length - 1].id + 1
+          that.current = that.canTakePackets.length > 0 ? that.canTakePackets[that.canTakePackets.length - 1].id : index
+          that.setCarousel()
+        })
+      },
+      takeReward (level, status, rewardMoney) { // 领取红包
+        if (this.busy || !this.canTake || this.current !== (level - 1) || status !== 1) {
+          return
+        }
+        this.busy = true
+        var that = this
+        this.$http.post('/hongcai/rest/activitys/newYear/takeReward', {
+          token: this.token,
+          level: level
+        }).then((response) => {
+          // console.log(response.data === '')
+          this.busy = false
+          if (!response.data || response.data.ret === -1) {
+            return
+          }
+          that.showMask = true
+          that.rewardMoney = rewardMoney
+          that.rewardSrc = '../../../static/images/spring-' + rewardMoney + '.png'
+          that.GuangRotation()
+        })
       },
       closeCalculator () {
         this.showCalculator = false
@@ -441,7 +549,7 @@
   .part1 {
     margin-top: -.73rem;
     position: relative;
-    padding-bottom: .75rem;
+    padding-bottom: .5rem;
   }
   .part1 .top, .part3 .top {
     text-align: left;
@@ -605,6 +713,7 @@
     background-color: #ffeead;
     border: solid 1.5px #830b08;
     padding: .05rem;
+    z-index: 2;
   }
   .rules {
     padding: .3rem .2rem;
@@ -626,5 +735,126 @@
   }
   .part3 {
     padding-bottom: .75rem;
+  }
+  .part2 {
+    margin-top: -0.1rem;
+    margin-bottom: .3rem;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  .chat-tip {
+    padding-top: .155rem;
+    margin-left: 7%;
+    width: 1.35rem;
+    height: 1rem;
+    background: url('../../images/spring-festival/chat-tip.png') no-repeat center center;
+    background-size: contain;
+    color: #ffd93f;
+    font-size: .23rem;
+    line-height: 1.2;
+  }
+  .part2 .packet-end {
+    width: 54%;
+    height: 3.6rem;
+    margin: 0.4rem auto;
+    padding: .56rem 0 0 0;
+    background: url('../../images/spring-festival/chaied.png') no-repeat center center;
+    background-size: 100% 100%;
+  }
+  #wrapper {
+    height: 3.6rem;
+  }
+  .poster-list li {
+    width: 72%;
+    margin: 0 auto;
+    height: 100%;
+  }
+  .carousel-mask {
+    width: 78%;
+    height: 4rem;
+    margin: 0 auto;
+    background: url('../../images/spring-festival/indexBottom-min.png') no-repeat center bottom;
+    background-size: contain;
+  }
+  .poster-list li .red_bag_bg {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    font-size: .24rem;
+    background: url('../../images/spring-festival/hongbao-3-min.png') no-repeat center center;
+    background-size: contain;
+  }
+  .poster-list li .red_bag_bg.ed {
+    background: url('../../images/spring-festival/chaied.png') no-repeat center center;
+    background-size: contain;
+  }
+  .red_bag_bg .chai {
+    padding-top: 13%;
+    margin: 0 auto;    
+  }
+  .red_bag_bg .chaied .text {
+    font-size: 1rem;
+    color: #fbf223;
+    object-fit: contain;
+    font-family: CTCuYuanSF;
+    -webkit-text-stroke: 2px #c82718;
+    padding-top: .6rem;
+  }
+  .red_bag_bg .chaied .circle {
+    display: block;
+    text-align: center;
+    position: absolute;
+    right: 20%;
+    top: 7%;
+    line-height: .35rem;
+    height: .3rem;
+    width: .3rem;
+    border-radius: 50%;
+    color: #c82718;
+    background-color: #fbf123;
+    border: solid 1px #e60027;
+  }
+  .red_bag_bg .chaied .congratulate {
+    margin-top: 34%;
+    font-size: .34rem;
+    line-height: 0.87;
+    text-align: center;
+    color: #fce5bf;
+  }
+  .red_bag_bg .value  {
+    margin: .03rem .1rem 0 0;
+  }
+  .red_bag_bg p {
+    padding: .13rem 0 .07rem .3rem;
+    width: 76%;
+    margin: 0 auto;
+    background: url('../../images/spring-festival/investBox.png') no-repeat center center;
+    background-size: 100% 100%;
+    color: #642a1a;
+  }
+  .calcu-tip {
+    width: 83%;
+    height: .5rem;
+    line-height: .45rem;
+    margin: .4rem auto;
+    background-size: 100% 100%;
+    background-color: #fffb47;
+    border: solid 1px #62422e;
+    border-radius: .1rem;
+    color: #642a1a;
+  }
+  .calcu-tip img {
+    margin-top: -0.04rem;
+    margin-left: -0.022rem;
+  }
+  .calcu-tip div {
+    height: 93%;
+    width: 99.2%;
+    margin: 0.33% auto;
+    border: solid 1px #62422e;
+    border-radius: .1rem;
+    background-color: #ffeead;
   }
 </style>
