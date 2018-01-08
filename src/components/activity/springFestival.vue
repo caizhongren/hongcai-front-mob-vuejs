@@ -13,7 +13,7 @@
           <div v-if="activityEnd !== 2">
             <p class="description">活动期间，新增投资宏财精选、宏财尊贵项目(不含债权转让项目)，累计年化投资金额达到指定额度，即可领取相应现金红包奖励喔！</p>
             <div v-if="token" class="isLogin">
-              <p class="investText">我的累计年化投资金额<span class="detail" @click="toRecord()" v-show="investAmount >0">查看详情</span></p>
+              <p class="investText">我的累计年化投资金额<span class="detail" @click="toRecord()" v-show="investAmount > 0">查看详情</span></p>
               <div class="investAmount">{{investAmount}}元</div>
               <div class="investBtn" @click="toProjectList()" v-show="activityStatus === 1">立即投资</div>
               <div class="tips" v-show="activityStatus === 1 && investAmount < 300000">累计年化投资金额还差<span class="ft-red">{{shortAmount}}元</span>，即可领取<span class="ft-red">{{gettingRedPacket}}元</span>现金红包！</div>
@@ -43,9 +43,14 @@
         </div>
       </div>
       <!-- 红包 -->
-      <div class="chat-tip" v-if="token && this.activityStatus === 1">左右滑动<br>领取红包</div>
+      <div class="calcu-tip clearfix">
+        <img src="../../images/spring-festival/jsq.png" width="10%" class="fl" alt="">
+        <div><p>年化投资金额=投资金额x项目期限/365天</p></div>
+        <!-- <div @click="getPacket(5)">领取红包</div> -->
+      </div>
+      <div class="chat-tip" v-if="token && this.activityStatus === 1 || token && this.activityStatus === 2 && investAmount > 0">左右滑动<br>领取红包</div>
       <div class="part2" v-if="token">
-        <div class="position-re carousel-mask" v-if="this.activityStatus === 1">
+        <div class="position-re carousel-mask" v-if="this.activityStatus === 1 || this.activityStatus === 2 && investAmount > 0">
           <div id="wrapper">
             <ul class="poster-list clearfix clear">
               <li v-for="(item,index) in levelStatus">
@@ -64,15 +69,11 @@
               </li>
             </ul>
           </div>
+          <!-- <img src="../../images/spring-festival/indexBottom-min.png" width="80%" class="margin-auto" alt=""> -->
         </div>
-        <div v-if="this.activityStatus === 2" class="packet-end">
+        <div v-if="this.activityStatus === 3 || this.activityStatus === 2 && this.investAmount > 0" class="packet-end">
           <img src="../../images/spring-festival/text-end-min.png" alt="" width="38%" class="display-bl margin-auto">
         </div>
-      </div>
-      <div class="calcu-tip clearfix" v-if="token && this.activityStatus === 1">
-        <img src="../../images/spring-festival/jsq.png" width="10%" class="fl" alt="">
-        <div><p>年化投资金额=投资金额x项目期限/365天</p></div>
-        <!-- <div @click="getPacket(5)">领取红包</div> -->
       </div>
       <!-- 活动规则 -->
       <div class="part3">
@@ -199,7 +200,6 @@
           }
         ],
         levelStatus: [1, 1, 0, 0, 0, 0],
-        packets: [5, 35, 90, 120, 350, 1288],
         showMask: false,
         rewardSrc: '',
         rewardMoney: 5,
@@ -207,7 +207,8 @@
         hammerTimer: null,
         showCalculator: false,
         canTake: true, // 红包切换过程中不可领取
-        busy: false // 防止多次点击领取
+        busy: false, // 防止多次点击领取
+        serverTime: new Date().getTime()
       }
     },
     props: ['token'],
@@ -230,8 +231,18 @@
     methods: {
       getActivityStatus () { // 活动信息查询
         var that = this
-        that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
-          that.activityStatus = res.data.status
+        that.$http({ // 获取服务器时间
+          method: 'get',
+          url: '/hongcai/rest/systems/serverTime'
+        }).then((response) => {
+          that.serverTime = response.data.time
+          that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
+            if (that.serverTime - res.data.endTime > 3 * 24 * 60 * 60 * 1000) {
+              that.activityStatus = 3 // 活动结束3天后
+            } else {
+              that.activityStatus = res.data.status
+            }
+          })
         })
       },
       setCarousel () { // 红包布局配置
@@ -677,6 +688,7 @@
   }
   .part2 {
     margin-top: -0.1rem;
+    margin-bottom: .3rem;
     width: 100%;
     overflow: hidden;
     position: relative;
@@ -710,7 +722,10 @@
   }
   .carousel-mask {
     width: 78%;
+    height: 4rem;
     margin: 0 auto;
+    background: url('../../images/spring-festival/indexBottom-min.png') no-repeat center bottom;
+    background-size: contain;
   }
   .poster-list li .red_bag_bg {
     position: relative;
@@ -773,7 +788,7 @@
     width: 83%;
     height: .5rem;
     line-height: .45rem;
-    margin: .3rem auto;
+    margin: .4rem auto;
     background-size: 100% 100%;
     background-color: #fffb47;
     border: solid 1px #62422e;
