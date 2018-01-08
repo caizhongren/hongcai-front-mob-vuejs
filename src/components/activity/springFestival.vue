@@ -9,13 +9,18 @@
       <div class="part1">
         <img src="../../images/spring-festival/bg-title-min.png" alt="" width="30%" class="top">
         <div class="box">
+          <!-- 活动结束 -->
+          <div v-if="(activityStatus === 2 && token && investAmount <= 0) || (activityEnd === 2 && !token)" class="activityEnd">
+            <img src="../../images/spring-festival/activityEnd.png" alt="">
+            <img src="../../images/spring-festival/activityEndText.png" alt="" class="activityEndText">
+          </div>
           <!-- 活动未结束 -->
-          <div v-if="activityEnd !== 2">
+          <div v-else>
             <p class="description">活动期间，新增投资宏财精选、宏财尊贵项目(不含债权转让项目)，累计年化投资金额达到指定额度，即可领取相应现金红包奖励喔！</p>
             <div v-if="token" class="isLogin">
               <p class="investText">我的累计年化投资金额<span class="detail" @click="toRecord()" v-show="investAmount >0">查看详情</span></p>
               <div class="investAmount">{{investAmount}}元</div>
-              <div class="investBtn" @click="toProjectList()" v-show="activityStatus === 1">立即投资</div>
+              <div class="investBtn" @click="toNative('HCNative_GoInvestList')" v-show="activityStatus === 1">立即投资</div>
               <div class="tips" v-show="activityStatus === 1 && investAmount < 300000">累计年化投资金额还差<span class="ft-red">{{shortAmount}}元</span>，即可领取<span class="ft-red">{{gettingRedPacket}}元</span>现金红包！</div>
               <div class="totalPacket" v-show="totalPacket >0"><img class="packet" src="../../images/spring-festival/envelope-1-min.png" /> 已领取到红包共计：<span class="ft-red">{{totalPacket}}元</span></div>
             </div>
@@ -25,13 +30,8 @@
                 <p class="maxPacket">累计最高可领 <br>  <span class="ft-red">1888元</span>现金红包哟！</p>
               </div>
               <p class="loginTip">登录即可查看<img src="../../images/spring-festival/coin.png" alt=""> 当前累计年化投资金额</p>
-              <div class="loginBtn" @click="toLogin()">前往登陆</div>
+              <div class="loginBtn" @click="toNative('HCNative_Login')">前往登陆</div>
             </div>
-          </div>
-          <!-- 活动结束 -->
-          <div v-if="activityEnd === 2" class="activityEnd">
-            <img src="../../images/spring-festival/activityEnd.png" alt="">
-            <img src="../../images/spring-festival/activityEndText.png" alt="" class="activityEndText">
           </div>
           <!-- 底部所有定位 -->
           <div class="bottoms">
@@ -45,7 +45,7 @@
       <!-- 红包 -->
       <div class="part2" v-if="token">
         红包<br>
-        <div @click="getPacket(5)">领取红包</div>
+        <div @click="getPacket(1)">领取红包</div>
       </div>
       <!-- 活动规则 -->
       <div class="part3">
@@ -55,7 +55,7 @@
             <img src="../../images/spring-festival/lantern.png" alt="" class="num">
             <div class="content">
               活动时间 <br>
-              本次活动仅限于2017年xx月xx日至2017年xx月xx日内参与有效，活动期间，可随时拆红包领现金，如活动结束后3个工作日内仍未领取奖励，将视为自动放弃奖励；
+              本次活动仅限于{{activityInfo.startYear}}年{{activityInfo.startMonth}}月{{activityInfo.startDate}}日至{{activityInfo.endYear}}年{{activityInfo.endMonth}}月{{activityInfo.endDate}}日内参与有效，活动期间，可随时拆红包领现金，如活动结束后3个工作日内仍未领取奖励，将视为自动放弃奖励；
             </div>
           </div>
           <div class="rule">
@@ -95,9 +95,9 @@
       <div class="guang2 Rotation2 position"></div>
       <div class="guang1 position"></div>
       <div class="packet-ban">
-        <div class="ban"><img v-bind:src="rewardSrc" alt="" v-bind:style="{width:imgSize[rewardMoney]}"><span class="yuan">元</span></div>
+        <div class="ban"><img v-bind:src="rewardSrc" alt="" v-bind:style="{width:rewardImgSize[rewardMoney]}"><span class="yuan">元</span></div>
         <div class="packet-di">恭喜您获得</div>
-    </div>
+      </div>
       <img src="../../images/break-egg/icon-close.png" width="12%" alt="" @click="showMask = false" style="margin-top: 3.6rem;">
     </div>
     <img src="../../images/spring-festival/jsq.png" alt="" class="jxq" @click="showCalculator = true">
@@ -111,12 +111,14 @@
     props: ['token'],
     data () {
       return {
-        investAmount: 300000, // 累计年化投资金额
-        shortAmount: 2000, // 累计年化投资还差多少钱
-        gettingRedPacket: 18, // 即可领取的红包金额
+        investAmount: 0, // 累计年化投资金额
+        shortAmount: 0, // 累计年化投资还差多少钱
+        gettingRedPacket: 0, // 即可领取的红包金额
         totalPacket: 0, // 一共领取的红包金额
         activityStatus: 1, // 1 正常 2 结束
         activityEnd: 1, // 1 -活动结束3个工作日内 2 —活动结束3个工作日后
+        expirationDate: 1519747200000, // 活动结束三个工作日期固定 比如 2018-2-27 24:00:00
+        // expirationDate: 1515254400000, // 测试使用 2018-1-10 00:00:00 new Date().getTime() + 1000 * 60 * 60 * 24 * 3
         packetList: [
           {
             status: 0, // 0 未达标 1 可拆 2 已领取
@@ -152,27 +154,99 @@
         showMask: false,
         rewardSrc: '',
         rewardMoney: 5,
-        imgSize: {'5': '28%', '35': '50%', '90': '50%', '120': '65%', '350': '60%', '1288': '65%'},
+        rewardImgSize: {'5': '28%', '35': '50%', '90': '50%', '120': '65%', '350': '60%', '1288': '65%'},
         hammerTimer: null,
-        showCalculator: false
+        hammerTimer2: null,
+        hammerTimer3: null,
+        showCalculator: false,
+        activityInfo: {
+          startYear: 0,
+          startMonth: 0,
+          startDate: 0,
+          endYear: 0,
+          endMonth: 0,
+          endDate: 0
+        }
       }
     },
     created () {
-      this.calculator()
+      this.getActivityStatus()
+      this.getLevelStatus()
+      this.getAnnualInvestAmount()
+      this.getServeTime()
     },
     watch: {
       showMask (val) {
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+        val ? (this.hammerTimer = null, this.hammerTimer2 = null, this.hammerTimer3 = null) : null
       }
     },
     methods: {
-      getPacket (rewardMoney) {
+      getServeTime () { // 获取服务器时间
+        var that = this
+        that.$http('/hongcai/rest/systems/serverTime').then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            var currentDate = res.data.time
+            currentDate < that.expirationDate ? that.activityEnd = 1 : that.activityEnd = 2
+          }
+        })
+      },
+      getLevelStatus () { // 获取等级领取状态
+        var that = this
+        that.$http('/hongcai/rest/activitys/newYear/levelStatus?token=' + that.token).then(function (res) {
+          var arr = res.data.status
+          for (var i = 0; i < arr.length; i++) {
+            if (arr[i] === 1) { // 已领取
+              that.totalPacket += that.packetList[i].amount
+            }
+          }
+        })
+      },
+      getActivityStatus () { // 活动信息查询
+        var that = this
+        that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
+          that.activityStatus = res.data.status
+          // that.activityStatus = 2
+          var startTime = res.data.startTime
+          var endTime = res.data.endTime
+          that.activityInfo = {
+            startYear: new Date(startTime).getFullYear(),
+            startMonth: new Date(startTime).getMonth() + 1,
+            startDate: new Date(startTime).getDate(),
+            endYear: new Date(endTime).getFullYear(),
+            endMonth: new Date(endTime).getMonth() + 1,
+            endDate: new Date(endTime).getDate()
+          }
+        })
+      },
+      getAnnualInvestAmount () { // 获取累计年化投资金额
+        var that = this
+        that.$http('/hongcai/rest/activitys/invest/transition/0/annualInvestAmount?token=' + that.token + '&activityType=' + that.$route.query.act).then(function (res) {
+          if (res && res.ret !== -1) {
+            that.investAmount = res.data.annualInvest || 0
+            that.calculator()
+          }
+        })
+      },
+      getPacket (level) { // 拆红包领取奖励
         var that = this
         that.showMask = true
-        that.rewardMoney = rewardMoney
-        that.rewardSrc = '../../../static/images/spring-' + rewardMoney + '.png'
+        that.rewardMoney = that.packetList[level - 1].amount
+        that.rewardSrc = '../../../static/images/spring-' + that.rewardMoney + '.png'
+        that.GuangRotation()
+        that.$http.post('/hongcai/rest/activitys/newYear/takeReward', {
+          level: level,
+          token: that.token
+        }).then(function (res) {
+        }).catch(function () {
+          console.log('接口报错')
+        })
+      },
+      GuangRotation () { // 拆红包后动画
+        var that = this
         var transY = 1.8
         var scale = 0.5
+        // 获得奖励的动画
         that.hammerTimer = setInterval(function () {
           if (transY < -0.5) {
             clearInterval(that.hammerTimer)
@@ -183,8 +257,29 @@
           $('.packet-ban .ban').css('transform', 'translateY(' + transY + 'rem) scale(' + scale + ')')
           document.querySelector('.packet-ban .ban').style.webkitTransform = 'translateY(' + transY + 'rem) scale(' + scale + ')'
         }, 40)
+        var rotate = 0
+        // 背景光的动画
+        that.hammerTimer2 = setInterval(function () {
+          if (rotate > 180) {
+            clearInterval(that.hammerTimer2)
+            return
+          }
+          rotate += 5
+          $('.Rotation').css('transform', 'rotate(' + rotate + 'deg')
+          document.querySelector('.Rotation').style.webkitTransform = 'rotate(' + rotate + 'deg'
+        }, 40)
+        var rotate2 = 0
+        that.hammerTimer3 = setInterval(function () {
+          if (rotate2 < -180) {
+            clearInterval(that.hammerTimer3)
+            return
+          }
+          rotate2 -= 5
+          $('.Rotation2').css('transform', 'rotate(' + rotate2 + 'deg')
+          document.querySelector('.Rotation2').style.webkitTransform = 'rotate(' + rotate2 + 'deg'
+        }, 40)
       },
-      calculator () {
+      calculator () { // 计算提示 金额及红包金额
         if (this.investAmount < 1000) {
           this.shortAmount = 1000 - this.investAmount
           this.gettingRedPacket = 5
@@ -208,23 +303,24 @@
       toRecord () {
         this.$router.push({name: 'SpringRecord'})
       },
-      toLogin () {
-        bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function (response) {
-        }, null)
-      },
-      toProjectList () {
-        bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {
+      toNative (HCNative) {
+        bridgeUtil.webConnectNative(HCNative, undefined, {}, function (response) {
         }, null)
       },
       closeCalculator () {
         this.showCalculator = false
       }
     },
-    components: {SpringCalculator}
+    components: {SpringCalculator},
+    destroyed () {
+      clearTimeout(this.hammerTimer)
+      clearTimeout(this.hammerTimer2)
+      clearInterval(this.hammerTimer3)
+    }
   }
 </script>
 <style scoped>
-  @keyframes rotation{
+  @-webkit-keyframes rotation{
     from {-webkit-transform: rotate(0deg);}
     to {-webkit-transform: rotate(180deg);}
   }
@@ -364,13 +460,13 @@
     color: #830b08;
   }
   .isLogin {
-    padding: 0 .2rem .2rem;
+    padding: 0 .2rem .3rem;
   }
   .part1 .description {
     line-height: 1.54;
     text-align: justify;
     font-size: .23rem;
-    padding: .2rem .2rem 0 ;
+    padding: .2rem .3rem 0 ;
   }
   .part1 .investText {
     text-align: center;
@@ -511,7 +607,7 @@
     padding: .05rem;
   }
   .rules {
-    padding: .3rem;
+    padding: .3rem .2rem;
   }
   .rule {
     overflow: hidden;
