@@ -240,9 +240,6 @@
       this.token ? this.getLevelStatus() : null
       this.token ? this.getAnnualInvestAmount() : null
     },
-    mounted () {
-      this.token && this.activityStatus === 1 ? this.setCarousel() : null
-    },
     methods: {
       getAnnualInvestAmount () { // 获取累计年化投资金额
         var that = this
@@ -295,11 +292,9 @@
             diff: 0.45,
             before: function () { // 动画执行中不可拆红包
               that.canTake = false
-              that.current = this.index
             },
             after: function () {
               that.canTake = true
-              that.current = this.index
             }
           })
         }
@@ -385,8 +380,6 @@
               that.canTakePackets[i] = [that.packetList[i]]
             } else if (response.data.status[i] === 1) {
               that.takedPackets[i] = that.packetList[i]
-            }
-            if (that.levelStatus[i] === 1) { // 已领取 计算共已领到红包金额
               that.totalPacket += that.packetList[i].amount
             }
           }
@@ -411,7 +404,7 @@
             return
           }
           let key = level - 1
-          that.packetList[key].status = 1
+          that.packetList[key].status = 1 // 手动修改红包的领取状态为 1
           that.showMask = true
           that.rewardMoney = rewardMoney
           that.rewardSrc = '../../../static/images/spring-' + rewardMoney + '.png'
