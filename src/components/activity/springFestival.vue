@@ -43,21 +43,21 @@
         </div>
       </div>
       <!-- 红包 -->
-      <div class="chat-tip">左右滑动<br>领取红包</div>
+      <div class="chat-tip" v-if="token && this.activityStatus === 1">左右滑动<br>领取红包</div>
       <div class="part2" v-if="token">
-        <div class="position-re carousel-mask">
+        <div class="position-re carousel-mask" v-if="this.activityStatus === 1">
           <div id="wrapper">
             <ul class="poster-list clearfix clear">
               <li v-for="(item,index) in levelStatus">
                 <div class="red_bag_bg" :class="{'ed' : item === 1}">
-                  <img src="../../images/spring-festival/wdb.png" width="40%" class="chai display-bl" alt="" v-if="investAmount < conditions[index] && item === 0" @click="takeReward(index = 1)">
-                  <img src="../../images/spring-festival/chai.png" width="40%" class="chai display-bl" alt="" v-if="investAmount >= conditions[index] && item === 0" @click="takeReward(index + 1)">
-                  <img :src="'../../static/images/' + packets[index] + '.png'" alt="" :width="imgWidths[index]" class="value" v-if="item !== 1">
-                  <img src="../../images/spring-festival/yuan.png" alt="" width="13%" v-if="item !== 1">
-                  <p class="condition" v-if="item !== 1">≥{{conditions[index]}}元可拆红包</p>
+                  <img src="../../images/spring-festival/wdb.png" width="40%" class="chai display-bl" alt="" v-if="investAmount < packetList[index].limitAmount && item === 0" @click="takeReward(index + 1, item, packetList[index].amount)">
+                  <img src="../../images/spring-festival/chai.png" width="40%" class="chai display-bl" alt="" v-if="investAmount >= packetList[index].limitAmount && item === 0" @click="takeReward(index + 1, item, packetList[index].amount)">
+                  <img :src="'../../static/images/' + packetList[index].amount + '.png'" alt="" :width="packetList[index].imgWidth" class="value" v-if="item !== 1">
+                  <img src="../../images/spring-festival/yuan.png" alt="" width="11%" v-if="item !== 1">
+                  <p class="condition" v-if="item !== 1">≥{{packetList[index].limitAmount}}元可拆红包</p>
                   <div class="chaied" v-if="item === 1">
                     <span class="circle">元</span>
-                    <img :src="'../../static/images/d' + packets[index] + '.png'" width="17%" class="text">
+                    <img :src="'../../static/images/d' + packetList[index].amount + '.png'" :width="packetList[index].imgedWidth" class="text">
                     <div class="congratulate">恭喜您获得</div>
                   </div>
                 </div>
@@ -65,12 +65,14 @@
             </ul>
           </div>
         </div>
+        <div v-if="this.activityStatus === 2" class="packet-end">
+          <img src="../../images/spring-festival/text-end-min.png" alt="" width="38%" class="display-bl margin-auto">
+        </div>
       </div>
-      <div class="calcu-tip clearfix">
+      <div class="calcu-tip clearfix" v-if="token && this.activityStatus === 1">
         <!-- <img src="../../images/spring-festival/jsq.png" width="12%" class="fl" alt=""> -->
         <!-- 年化投资金额=投资金额x项目期限/365天 -->
-        红包<br>
-        <div @click="getPacket(5)">领取红包</div>
+        <!-- <div @click="getPacket(5)">领取红包</div> -->
       </div>
       <!-- 活动规则 -->
       <div class="part3">
@@ -134,81 +136,86 @@
   import $ from 'zepto'
   import SpringCalculator from './SpringCalculator.vue'
   export default {
-    props: ['token'],
     data () {
       return {
         investAmount: 555, // 累计年化投资金额
         shortAmount: 2000, // 累计年化投资还差多少钱
         gettingRedPacket: 18, // 即可领取的红包金额
+        current: 0, // 当前显示的红包index
         totalPacket: 0, // 一共领取的红包金额
         activityStatus: 1, // 1 正常 2 结束
         activityEnd: 1, // 1 -活动结束3个工作日内 2 —活动结束3个工作日后
+        canGetAmount: 0, // 年化金额达到可领取的红包数量
+        canTakePackets: [], // 达标并且可以领的红包
+        takedPackets: [], // 领过的红包
         packetList: [
           {
+            id: 0,
             status: 0, // 0 未达标 1 可拆 2 已领取
             amount: 5,
-            limitAmount: 1000
+            limitAmount: 1000,
+            imgWidth: '10%',
+            imgedWidth: '15.6%',
+            canGet: true // 金额是否达到领取条件
           },
           {
+            id: 1,
             status: 0,
             amount: 35,
-            limitAmount: 10000
+            limitAmount: 10000,
+            imgWidth: '20%',
+            imgedWidth: '30%',
+            canGet: true
           },
           {
+            id: 2,
             status: 0,
             amount: 90,
-            limitAmount: 30000
+            limitAmount: 30000,
+            imgWidth: '20%',
+            imgedWidth: '30%',
+            canGet: true
           },
           {
+            id: 3,
             status: 0,
             amount: 120,
-            limitAmount: 50000
+            limitAmount: 50000,
+            imgWidth: '24%',
+            imgedWidth: '40%',
+            canGet: true
           },
           {
+            id: 4,
             status: 0,
             amount: 350,
-            limitAmount: 100000
+            limitAmount: 100000,
+            imgWidth: '26%',
+            imgedWidth: '40%',
+            canGet: true
           },
           {
+            id: 5,
             status: 0,
             amount: 1288,
-            limitAmount: 300000
+            limitAmount: 300000,
+            imgWidth: '30%',
+            imgedWidth: '55%',
+            canGet: true
           }
         ],
         levelStatus: [1, 1, 0, 0, 0, 0],
         packets: [5, 35, 90, 120, 350, 1288],
-        imgWidths: ['10%', '20%', '20%', '24%', '26%', '30%'],
-        conditions: [1000, 10000, 30000, 50000, 100000, 300000],
         showMask: false,
         rewardSrc: '',
         rewardMoney: 5,
         imgSize: {'5': '28%', '35': '50%', '90': '50%', '120': '65%', '350': '60%', '1288': '65%'},
         hammerTimer: null,
-        showCalculator: false
+        showCalculator: false,
+        canTake: true
       }
     },
-    created () {
-      this.calculator()
-      this.getLevalStatus()
-    },
-    mounted () {
-      var that = this
-      var wrapper = document.getElementById('wrapper')
-      Carousel.mCarousel(wrapper, {
-        index: 2,
-        active: 'active',
-        scale: 0.67,
-        duration: 300,
-        locked: true,
-        diff: 0.45,
-        before: function () { // 动画执行中不可拆红包
-          that.canOpen = false
-        },
-        after: function () {
-          that.canOpen = true
-        }
-      })
-    },
+    props: ['token'],
     watch: {
       token: function (val) {
         val ? this.getLevalStatus() : null
@@ -217,7 +224,41 @@
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
+    created () {
+      this.calculator()
+      this.getActivityStatus()
+      this.token ? this.getLevalStatus() : null
+    },
+    // mounted () {
+    //   this.activityStatus === 1 ? this.setCarousel() : null
+    // },
     methods: {
+      getActivityStatus () { // 活动信息查询
+        var that = this
+        that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
+          that.activityStatus = res.data.status
+        })
+      },
+      setCarousel () { // 红包布局配置
+        var that = this
+        var wrapper = document.getElementById('wrapper')
+        if (that.activityStatus === 1) {
+          Carousel.mCarousel(wrapper, {
+            index: that.current,
+            active: 'active',
+            scale: 0.67,
+            duration: 300,
+            locked: true,
+            diff: 0.45,
+            before: function () { // 动画执行中不可拆红包
+              that.canTake = false
+            },
+            after: function () {
+              that.canTake = true
+            }
+          })
+        }
+      },
       getPacket (rewardMoney) {
         var that = this
         that.showMask = true
@@ -268,7 +309,7 @@
         bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {
         }, null)
       },
-      getLevalStatus () {
+      getLevalStatus () { // 获取各档位红包状态
         this.$http({
           method: 'get',
           url: '/hongcai/rest/activitys/newYear/levelStatus?token=' + this.token
@@ -277,17 +318,49 @@
             return
           }
           this.levelStatus = response.data.status
+          for (let i = 0; i < response.data.status.length; i++) {
+            this.packetList[i].status = response.data.status[i]
+            if (response.data.status[i] === 0 && this.investAmount >= this.packetList[i].limitAmount) {
+              this.canTakePackets[i] = [this.packetList[i]]
+            } else if (response.data.status[i] === 1) {
+              this.takedPackets[i] = this.packetList[i]
+            }
+          }
+          // 判断是否已领过红包
+          let index = this.takedPackets.length === 0 ? 0 : this.takedPackets.length === 6 ? 5 : this.takedPackets[this.takedPackets.length - 1].id + 1
+          this.current = this.canTakePackets.length > 0 ? this.canTakePackets[this.canTakePackets.length - 1].id : index
+          // console.log(this.index)
+          this.setCarousel()
         })
       },
-      takeReward (level) {
+      takeReward (level, status, rewardMoney) { // 领取红包
+        if (!this.canTake || this.current !== (level - 1) || status !== 1) {
+          return
+        }
+        var that = this
         this.$http.post('/hongcai/rest/activitys/newYear/takeReward', {
           token: this.token,
           level: level
         }).then((response) => {
-          console.log(response.data === '')
+          // console.log(response.data === '')
           if (!response.data || response.data.ret === -1) {
             return
           }
+          that.showMask = true
+          that.rewardMoney = rewardMoney
+          that.rewardSrc = '../../../static/images/spring-' + rewardMoney + '.png'
+          var transY = 1.8
+          var scale = 0.5
+          that.hammerTimer = setInterval(function () {
+            if (transY < -0.5) {
+              clearInterval(that.hammerTimer)
+              return
+            }
+            transY -= 0.5
+            scale += 0.1
+            $('.packet-ban .ban').css('transform', 'translateY(' + transY + 'rem) scale(' + scale + ')')
+            document.querySelector('.packet-ban .ban').style.webkitTransform = 'translateY(' + transY + 'rem) scale(' + scale + ')'
+          }, 40)
         })
       },
       closeCalculator () {
@@ -621,6 +694,14 @@
     color: #ffd93f;
     font-size: .23rem;
     line-height: 1.2;
+  }
+  .part2 .packet-end {
+    width: 54%;
+    height: 3.6rem;
+    margin: 0.4rem auto;
+    padding: .56rem 0 0 0;
+    background: url('../../images/spring-festival/chaied.png') no-repeat center center;
+    background-size: 100% 100%;
   }
   #wrapper {
     height: 3.6rem;
