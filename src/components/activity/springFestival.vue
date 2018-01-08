@@ -224,7 +224,6 @@
     watch: {
       token: function (val) {
         val ? this.getLevelStatus() : null
-        val ? this.getAnnualInvestAmount() : null
       },
       showMask (val) {
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
@@ -234,7 +233,6 @@
     created () {
       this.getActivityStatus()
       this.token ? this.getLevelStatus() : null
-      this.token ? this.getAnnualInvestAmount() : null
     },
     methods: {
       getAnnualInvestAmount () { // 获取累计年化投资金额
@@ -360,27 +358,42 @@
       },
       getLevelStatus () { // 获取各档位红包状态
         var that = this
-        that.$http({
-          method: 'get',
-          url: '/hongcai/rest/activitys/newYear/levelStatus?token=' + that.token
-        }).then((response) => {
-          if (!response.data || response.data.ret === -1) {
+        that.$http('/hongcai/rest/activitys/invest/transition/0/annualInvestAmount?token=' + that.token + '&activityType=' + that.$route.query.act).then(function (res) {
+          if (!res || res.ret === -1) {
             return
           }
-          that.levelStatus = response.data.status
-          for (let i = 0; i < response.data.status.length; i++) {
-            that.packetList[i].status = response.data.status[i]
-            if (response.data.status[i] === 0 && that.investAmount >= that.packetList[i].limitAmount) {
-              that.canTakePackets[i] = that.packetList[i]
-            } else if (response.data.status[i] === 1) {
-              that.takedPackets[i] = that.packetList[i]
-              that.totalPacket += that.packetList[i].amount
+          that.investAmount = res.data.annualInvest || 0
+          that.calculator()
+          that.$http({
+            method: 'get',
+            url: '/hongcai/rest/activitys/newYear/levelStatus?token=' + that.token
+          }).then((response) => {
+            if (!response.data || response.data.ret === -1) {
+              return
             }
-          }
-          // 判断是否已领过红包
-          let index = that.takedPackets.length === 0 ? 0 : that.takedPackets.length === 6 ? 5 : that.takedPackets[that.takedPackets.length - 1].id + 1
-          let current = that.canTakePackets.length > 0 ? that.canTakePackets[that.canTakePackets.length - 1].id : index
-          that.setCarousel(current)
+            that.levelStatus = response.data.status
+            let canTakePackets = []
+            let takedPackets = []
+            let index = 0
+            let len = 0
+            for (let i = 0; i < response.data.status.length; i++) {
+              that.packetList[i].status = response.data.status[i]
+              if (response.data.status[i] === 0 && that.investAmount >= that.packetList[i].limitAmount) {
+                canTakePackets[i] = that.packetList[i]
+                console.log('can')
+              } else if (response.data.status[i] === 1) {
+                takedPackets[i] = that.packetList[i]
+                that.totalPacket += that.packetList[i].amount
+              }
+            }
+            // 判断是否已领过红包
+            index = takedPackets.length === 0 ? 0 : takedPackets.length === 6 ? 5 : takedPackets[takedPackets.length - 1].id + 1
+            len = canTakePackets.length - 1
+            console.log(canTakePackets.length)
+            console.log(index)
+            let current = canTakePackets.length > 0 ? canTakePackets[len].id : index
+            that.setCarousel(current)
+          })
         })
       },
       takeReward (level, status, rewardMoney) { // 领取红包
