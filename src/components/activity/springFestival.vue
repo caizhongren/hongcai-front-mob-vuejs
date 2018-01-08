@@ -235,7 +235,6 @@
       }
     },
     created () {
-      this.getAnnualInvestAmount()
       this.getActivityStatus()
       this.token ? this.getLevelStatus() : null
       this.token ? this.getAnnualInvestAmount() : null
@@ -407,6 +406,7 @@
           that.packetList[key].status = 1 // 手动修改红包的领取状态为 1
           that.showMask = true
           that.rewardMoney = rewardMoney
+          that.totalPacket += rewardMoney
           that.rewardSrc = '../../../static/images/spring-' + rewardMoney + '.png'
           that.GuangRotation()
         })
