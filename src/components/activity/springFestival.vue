@@ -50,7 +50,7 @@
             <ul class="poster-list clearfix clear">
               <li v-for="(item,index) in levelStatus">
                 <div class="red_bag_bg" :class="{'ed' : item === 1}">
-                  <img src="../../images/spring-festival/wdb.png" width="40%" class="chai display-bl" alt="" v-if="investAmount < packetList[index].limitAmount && item === 0" @click="takeReward(index + 1, item, packetList[index].amount)">
+                  <img src="../../images/spring-festival/wdb.png" width="40%" class="chai display-bl" alt="" v-if="investAmount < packetList[index].limitAmount && item === 0">
                   <img src="../../images/spring-festival/chai.png" width="40%" class="chai display-bl" alt="" v-if="investAmount >= packetList[index].limitAmount && item === 0" @click="takeReward(index + 1, item, packetList[index].amount)">
                   <img :src="'../../static/images/' + packetList[index].amount + '.png'" alt="" :width="packetList[index].imgWidth" class="value" v-if="item !== 1">
                   <img src="../../images/spring-festival/yuan.png" alt="" width="11%" v-if="item !== 1">
@@ -70,8 +70,8 @@
         </div>
       </div>
       <div class="calcu-tip clearfix" v-if="token && this.activityStatus === 1">
-        <!-- <img src="../../images/spring-festival/jsq.png" width="12%" class="fl" alt=""> -->
-        <!-- 年化投资金额=投资金额x项目期限/365天 -->
+        <img src="../../images/spring-festival/jsq.png" width="10%" class="fl" alt="">
+        <div><p>年化投资金额=投资金额x项目期限/365天</p></div>
         <!-- <div @click="getPacket(5)">领取红包</div> -->
       </div>
       <!-- 活动规则 -->
@@ -155,8 +155,7 @@
             amount: 5,
             limitAmount: 1000,
             imgWidth: '10%',
-            imgedWidth: '15.6%',
-            canGet: true // 金额是否达到领取条件
+            imgedWidth: '15.6%'
           },
           {
             id: 1,
@@ -164,8 +163,7 @@
             amount: 35,
             limitAmount: 10000,
             imgWidth: '20%',
-            imgedWidth: '30%',
-            canGet: true
+            imgedWidth: '30%'
           },
           {
             id: 2,
@@ -173,8 +171,7 @@
             amount: 90,
             limitAmount: 30000,
             imgWidth: '20%',
-            imgedWidth: '30%',
-            canGet: true
+            imgedWidth: '30%'
           },
           {
             id: 3,
@@ -182,8 +179,7 @@
             amount: 120,
             limitAmount: 50000,
             imgWidth: '24%',
-            imgedWidth: '40%',
-            canGet: true
+            imgedWidth: '40%'
           },
           {
             id: 4,
@@ -191,8 +187,7 @@
             amount: 350,
             limitAmount: 100000,
             imgWidth: '26%',
-            imgedWidth: '40%',
-            canGet: true
+            imgedWidth: '40%'
           },
           {
             id: 5,
@@ -200,8 +195,7 @@
             amount: 1288,
             limitAmount: 300000,
             imgWidth: '30%',
-            imgedWidth: '55%',
-            canGet: true
+            imgedWidth: '55%'
           }
         ],
         levelStatus: [1, 1, 0, 0, 0, 0],
@@ -212,7 +206,8 @@
         imgSize: {'5': '28%', '35': '50%', '90': '50%', '120': '65%', '350': '60%', '1288': '65%'},
         hammerTimer: null,
         showCalculator: false,
-        canTake: true
+        canTake: true, // 红包切换过程中不可领取
+        busy: false // 防止多次点击领取
       }
     },
     props: ['token'],
@@ -229,9 +224,9 @@
       this.getActivityStatus()
       this.token ? this.getLevalStatus() : null
     },
-    // mounted () {
-    //   this.activityStatus === 1 ? this.setCarousel() : null
-    // },
+    mounted () {
+      this.token && this.activityStatus === 1 ? this.setCarousel() : null
+    },
     methods: {
       getActivityStatus () { // 活动信息查询
         var that = this
@@ -299,7 +294,7 @@
         }
       },
       toRecord () {
-        this.$router.push({name: 'SpringRecord'})
+        this.$router.push({name: 'SpringRecord', query: {act: this.$route.query.act}})
       },
       toLogin () {
         bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function (response) {
@@ -329,20 +324,21 @@
           // 判断是否已领过红包
           let index = this.takedPackets.length === 0 ? 0 : this.takedPackets.length === 6 ? 5 : this.takedPackets[this.takedPackets.length - 1].id + 1
           this.current = this.canTakePackets.length > 0 ? this.canTakePackets[this.canTakePackets.length - 1].id : index
-          // console.log(this.index)
           this.setCarousel()
         })
       },
       takeReward (level, status, rewardMoney) { // 领取红包
-        if (!this.canTake || this.current !== (level - 1) || status !== 1) {
+        if (this.busy || !this.canTake || this.current !== (level - 1) || status !== 1) {
           return
         }
+        this.busy = true
         var that = this
         this.$http.post('/hongcai/rest/activitys/newYear/takeReward', {
           token: this.token,
           level: level
         }).then((response) => {
           // console.log(response.data === '')
+          this.busy = false
           if (!response.data || response.data.ret === -1) {
             return
           }
@@ -656,6 +652,7 @@
     background-color: #ffeead;
     border: solid 1.5px #830b08;
     padding: .05rem;
+    z-index: 2;
   }
   .rules {
     padding: .3rem;
@@ -685,7 +682,7 @@
     position: relative;
   }
   .chat-tip {
-    padding-top: .13rem;
+    padding-top: .155rem;
     margin-left: 7%;
     width: 1.35rem;
     height: 1rem;
@@ -775,9 +772,24 @@
   .calcu-tip {
     width: 83%;
     height: .5rem;
+    line-height: .45rem;
     margin: .3rem auto;
-    /* background: url('../../images/spring-festival/header-tip-min.png') no-repeat 0 0; */
-    background: url('../../images/spring-festival/cal-tip.png') no-repeat 0 0;
     background-size: 100% 100%;
+    background-color: #fffb47;
+    border: solid 1px #62422e;
+    border-radius: .1rem;
+    color: #642a1a;
+  }
+  .calcu-tip img {
+    margin-top: -0.04rem;
+    margin-left: -0.022rem;
+  }
+  .calcu-tip div {
+    height: 93%;
+    width: 99.2%;
+    margin: 0.33% auto;
+    border: solid 1px #62422e;
+    border-radius: .1rem;
+    background-color: #ffeead;
   }
 </style>
