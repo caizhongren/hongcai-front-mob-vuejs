@@ -10,7 +10,7 @@
         <img src="../../images/spring-festival/bg-title-min.png" alt="" width="30%" class="top">
         <div class="box">
           <!-- 活动结束 -->
-          <div v-if="(activityStatus === 2 && token && investAmount <= 0) || (activityEnd === 2 && !token)" class="activityEnd">
+          <div v-if="(activityStatus === 3 && investAmount <= 0) || (activityStatus === 2 && token && investAmount <= 0)" class="activityEnd">
             <img src="../../images/spring-festival/activityEnd.png" alt="">
             <img src="../../images/spring-festival/activityEndText.png" alt="" class="activityEndText">
           </div>
@@ -144,9 +144,6 @@
         gettingRedPacket: 0, // 即可领取的红包金额
         totalPacket: 0, // 一共领取的红包金额
         activityStatus: 1, // 1 正常 2 结束
-        activityEnd: 1, // 1 -活动结束3个工作日内 2 —活动结束3个工作日后
-        expirationDate: 1519747200000, // 活动结束三个工作日期固定 比如 2018-2-27 24:00:00
-        // expirationDate: 1515254400000, // 测试使用 2018-1-10 00:00:00 new Date().getTime() + 1000 * 60 * 60 * 24 * 3
         current: 0, // 当前显示的红包index
         canGetAmount: 0, // 年化金额达到可领取的红包数量
         canTakePackets: [], // 达标并且可以领的红包
@@ -256,8 +253,6 @@
           url: '/hongcai/rest/systems/serverTime'
         }).then((response) => {
           that.serverTime = response.data.time
-          var currentDate = response.data.time
-          currentDate < that.expirationDate ? that.activityEnd = 1 : that.activityEnd = 2
           that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
             if (that.serverTime - res.data.endTime > 3 * 24 * 60 * 60 * 1000) {
               that.activityStatus = 3 // 活动结束3天后
