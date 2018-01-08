@@ -352,7 +352,7 @@ const routes = [
     path: '/activity/Spring-record',
     name: 'SpringRecord',
     component: SpringRecord,
-    meta: {title: '春节红包'}
+    meta: {title: '新春红包'}
   },
   {
     path: '/register-agree',

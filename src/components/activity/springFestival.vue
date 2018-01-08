@@ -43,8 +43,32 @@
         </div>
       </div>
       <!-- 红包 -->
+      <div class="chat-tip">左右滑动<br>领取红包</div>
       <div class="part2" v-if="token">
-        红包
+        <div class="position-re carousel-mask">
+          <div id="wrapper">
+            <ul class="poster-list clearfix clear">
+              <li v-for="(item,index) in levelStatus">
+                <div class="red_bag_bg" :class="{'ed' : item === 1}">
+                  <img src="../../images/spring-festival/wdb.png" width="40%" class="chai display-bl" alt="" v-if="investAmount < conditions[index] && item === 0" @click="takeReward(index = 1)">
+                  <img src="../../images/spring-festival/chai.png" width="40%" class="chai display-bl" alt="" v-if="investAmount >= conditions[index] && item === 0" @click="takeReward(index + 1)">
+                  <img :src="'../../static/images/' + packets[index] + '.png'" alt="" :width="imgWidths[index]" class="value" v-if="item !== 1">
+                  <img src="../../images/spring-festival/yuan.png" alt="" width="13%" v-if="item !== 1">
+                  <p class="condition" v-if="item !== 1">≥{{conditions[index]}}元可拆红包</p>
+                  <div class="chaied" v-if="item === 1">
+                    <span class="circle">元</span>
+                    <img :src="'../../static/images/d' + packets[index] + '.png'" width="17%" class="text">
+                    <div class="congratulate">恭喜您获得</div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="calcu-tip clearfix">
+        <!-- <img src="../../images/spring-festival/jsq.png" width="12%" class="fl" alt=""> -->
+        <!-- 年化投资金额=投资金额x项目期限/365天 -->
       </div>
       <!-- 活动规则 -->
       <div class="part3">
@@ -92,11 +116,12 @@
 </template>
 <script>
   import {bridgeUtil} from '../../service/Utils'
+  import {Carousel} from '../../service/mCarousel'
   export default {
     props: ['token'],
     data () {
       return {
-        investAmount: 300000, // 累计年化投资金额
+        investAmount: 555, // 累计年化投资金额
         shortAmount: 2000, // 累计年化投资还差多少钱
         gettingRedPacket: 18, // 即可领取的红包金额
         totalPacket: 0, // 一共领取的红包金额
@@ -133,13 +158,39 @@
             amount: 1288,
             limitAmount: 300000
           }
-        ]
+        ],
+        levelStatus: [1, 1, 0, 0, 0, 0],
+        packets: [5, 35, 90, 120, 350, 1288],
+        imgWidths: ['10%', '20%', '20%', '24%', '26%', '30%'],
+        conditions: [1000, 10000, 30000, 50000, 100000, 300000]
       }
     },
     created () {
       this.calculator()
+      this.getLevalStatus()
+    },
+    mounted () {
+      var that = this
+      var wrapper = document.getElementById('wrapper')
+      Carousel.mCarousel(wrapper, {
+        index: 2,
+        active: 'active',
+        scale: 0.67,
+        duration: 300,
+        locked: true,
+        diff: 0.45,
+        before: function () { // 动画执行中不可拆红包
+          that.canOpen = false
+        },
+        after: function () {
+          that.canOpen = true
+        }
+      })
     },
     watch: {
+      token: function (val) {
+        val ? this.getLevalStatus() : null
+      }
     },
     methods: {
       calculator () {
@@ -173,6 +224,28 @@
       toProjectList () {
         bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {
         }, null)
+      },
+      getLevalStatus () {
+        this.$http({
+          method: 'get',
+          url: '/hongcai/rest/activitys/newYear/levelStatus?token=' + this.token
+        }).then((response) => {
+          if (!response.data || response.data.ret === -1) {
+            return
+          }
+          this.levelStatus = response.data.status
+        })
+      },
+      takeReward (level) {
+        this.$http.post('/hongcai/rest/activitys/newYear/takeReward', {
+          token: this.token,
+          level: level
+        }).then((response) => {
+          console.log(response.data === '')
+          if (!response.data || response.data.ret === -1) {
+            return
+          }
+        })
       }
     }
   }
@@ -213,7 +286,7 @@
   .part1 {
     margin-top: -.73rem;
     position: relative;
-    padding-bottom: .75rem;
+    padding-bottom: .5rem;
   }
   .part1 .top, .part3 .top {
     text-align: left;
@@ -398,5 +471,99 @@
   }
   .part3 {
     padding-bottom: .75rem;
+  }
+  .part2 {
+    margin-top: -0.1rem;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  .chat-tip {
+    padding-top: .13rem;
+    margin-left: 7%;
+    width: 1.35rem;
+    height: 1rem;
+    background: url('../../images/spring-festival/chat-tip.png') no-repeat center center;
+    background-size: contain;
+    color: #ffd93f;
+    font-size: .23rem;
+    line-height: 1.2;
+  }
+  #wrapper {
+    height: 3.6rem;
+  }
+  .poster-list li {
+    width: 72%;
+    margin: 0 auto;
+    height: 100%;
+  }
+  .carousel-mask {
+    width: 78%;
+    margin: 0 auto;
+  }
+  .poster-list li .red_bag_bg {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    font-size: .24rem;
+    background: url('../../images/spring-festival/hongbao-3-min.png') no-repeat center center;
+    background-size: contain;
+  }
+  .poster-list li .red_bag_bg.ed {
+    background: url('../../images/spring-festival/chaied.png') no-repeat center center;
+    background-size: contain;
+  }
+  .red_bag_bg .chai {
+    padding-top: 13%;
+    margin: 0 auto;    
+  }
+  .red_bag_bg .chaied .text {
+    font-size: 1rem;
+    color: #fbf223;
+    object-fit: contain;
+    font-family: CTCuYuanSF;
+    -webkit-text-stroke: 2px #c82718;
+    padding-top: .6rem;
+  }
+  .red_bag_bg .chaied .circle {
+    display: block;
+    text-align: center;
+    position: absolute;
+    right: 20%;
+    top: 7%;
+    line-height: .35rem;
+    height: .3rem;
+    width: .3rem;
+    border-radius: 50%;
+    color: #c82718;
+    background-color: #fbf123;
+    border: solid 1px #e60027;
+  }
+  .red_bag_bg .chaied .congratulate {
+    margin-top: 34%;
+    font-size: .34rem;
+    line-height: 0.87;
+    text-align: center;
+    color: #fce5bf;
+  }
+  .red_bag_bg .value  {
+    margin: .03rem .1rem 0 0;
+  }
+  .red_bag_bg p {
+    padding: .13rem 0 .07rem .3rem;
+    width: 76%;
+    margin: 0 auto;
+    background: url('../../images/spring-festival/investBox.png') no-repeat center center;
+    background-size: 100% 100%;
+    color: #642a1a;
+  }
+  .calcu-tip {
+    width: 83%;
+    height: .5rem;
+    margin: .3rem auto;
+    /* background: url('../../images/spring-festival/header-tip-min.png') no-repeat 0 0; */
+    background: url('../../images/spring-festival/cal-tip.png') no-repeat 0 0;
+    background-size: 100% 100%;
   }
 </style>
