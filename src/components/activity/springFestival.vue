@@ -69,6 +69,8 @@
       <div class="calcu-tip clearfix">
         <!-- <img src="../../images/spring-festival/jsq.png" width="12%" class="fl" alt=""> -->
         <!-- 年化投资金额=投资金额x项目期限/365天 -->
+        红包<br>
+        <div @click="getPacket(5)">领取红包</div>
       </div>
       <!-- 活动规则 -->
       <div class="part3">
@@ -111,12 +113,26 @@
         </div>
       </div>
     </div>
-    <img src="../../images/spring-festival/jsq.png" alt="" class="jxq">
+    <spring-calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator" v-show="showCalculator"></spring-calculator>
+    <!-- 弹窗 -->
+    <div class="mask-common packet-mask" v-show="showMask">
+      <div class="guang3 Rotation position"></div>
+      <div class="guang2 Rotation2 position"></div>
+      <div class="guang1 position"></div>
+      <div class="packet-ban">
+        <div class="ban"><img v-bind:src="rewardSrc" alt="" v-bind:style="{width:imgSize[rewardMoney]}"><span class="yuan">元</span></div>
+        <div class="packet-di">恭喜您获得</div>
+    </div>
+      <img src="../../images/break-egg/icon-close.png" width="12%" alt="" @click="showMask = false" style="margin-top: 3.6rem;">
+    </div>
+    <img src="../../images/spring-festival/jsq.png" alt="" class="jxq" @click="showCalculator = true">
   </div>
 </template>
 <script>
-  import {bridgeUtil} from '../../service/Utils'
   import {Carousel} from '../../service/mCarousel'
+  import {bridgeUtil, ModalHelper} from '../../service/Utils'
+  import $ from 'zepto'
+  import SpringCalculator from './SpringCalculator.vue'
   export default {
     props: ['token'],
     data () {
@@ -162,7 +178,13 @@
         levelStatus: [1, 1, 0, 0, 0, 0],
         packets: [5, 35, 90, 120, 350, 1288],
         imgWidths: ['10%', '20%', '20%', '24%', '26%', '30%'],
-        conditions: [1000, 10000, 30000, 50000, 100000, 300000]
+        conditions: [1000, 10000, 30000, 50000, 100000, 300000],
+        showMask: false,
+        rewardSrc: '',
+        rewardMoney: 5,
+        imgSize: {'5': '28%', '35': '50%', '90': '50%', '120': '65%', '350': '60%', '1288': '65%'},
+        hammerTimer: null,
+        showCalculator: false
       }
     },
     created () {
@@ -190,9 +212,30 @@
     watch: {
       token: function (val) {
         val ? this.getLevalStatus() : null
+      },
+      showMask (val) {
+        val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
     methods: {
+      getPacket (rewardMoney) {
+        var that = this
+        that.showMask = true
+        that.rewardMoney = rewardMoney
+        that.rewardSrc = '../../../static/images/spring-' + rewardMoney + '.png'
+        var transY = 1.8
+        var scale = 0.5
+        that.hammerTimer = setInterval(function () {
+          if (transY < -0.5) {
+            clearInterval(that.hammerTimer)
+            return
+          }
+          transY -= 0.5
+          scale += 0.1
+          $('.packet-ban .ban').css('transform', 'translateY(' + transY + 'rem) scale(' + scale + ')')
+          document.querySelector('.packet-ban .ban').style.webkitTransform = 'translateY(' + transY + 'rem) scale(' + scale + ')'
+        }, 40)
+      },
       calculator () {
         if (this.investAmount < 1000) {
           this.shortAmount = 1000 - this.investAmount
@@ -246,11 +289,101 @@
             return
           }
         })
+      },
+      closeCalculator () {
+        this.showCalculator = false
       }
-    }
+    },
+    components: {SpringCalculator}
   }
 </script>
 <style scoped>
+  @keyframes rotation{
+    from {-webkit-transform: rotate(0deg);}
+    to {-webkit-transform: rotate(180deg);}
+  }
+
+  .Rotation{
+    animation: rotation 1s linear;
+  }
+  @keyframes rotation2{
+    from {-webkit-transform: rotate(0deg);}
+    to {-webkit-transform: rotate(-180deg);}
+  }
+
+  .Rotation2{
+    animation: rotation2 1s linear;
+  }
+  .packet-mask {
+    background-color: rgba(0,0,0,0.95);
+  }
+  .position {
+    width: 100%;
+    height: 7rem;
+    position: absolute;
+  }
+  .guang3 {
+    background: url('../../images/spring-festival/guang3.png') no-repeat center center;
+    background-size: contain;
+    
+  }
+  .guang2 {
+    background: url('../../images/spring-festival/guang2.png') no-repeat center center;
+    background-size: contain;
+    
+  }
+  .guang1 {
+    background: url('../../images/spring-festival/guang1.png') no-repeat center center;
+    background-size: contain;
+    
+  }
+  .packet-mask .packet-ban {
+    background: url('../../images/spring-festival/packet-ban.png') no-repeat center center;
+    background-size: contain;
+    width: 60%;
+    height: 4rem;
+    margin: 0 auto;
+    position: relative;
+    top: 3rem;
+  }
+  .packet-mask .packet-di {
+    background: url('../../images/spring-festival/packet-di.png') no-repeat center center;
+    background-size: contain;
+    width: 100%;
+    height: 4.5rem;
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+    color: #fce5bf;
+    font-size: .35rem;
+    padding-top: 2.8rem;
+  }
+  .packet-ban .ban {
+    background: url('../../images/spring-festival/ban-min.png') no-repeat center center;
+    background-size: contain;
+    width: 86%;
+    height: 3.4rem;
+    position: absolute;
+    transform: translateY(1.8rem) scale(0);
+    left: 7%;
+    padding-top: .9rem;
+  }
+  .packet-ban img {
+    width: 30%;
+  }
+  .packet-ban .yuan {
+    color: #c82718;
+    background: #fbf123;
+    border: 1px solid #c82718;
+    border-radius: 50%;
+    width: .3rem;
+    height: .3rem;
+    line-height: .35rem;
+    display: inline-block;
+    font-weight: bold;
+    vertical-align: top;
+    position: absolute;
+  }
   .margin-b-1 {
     margin-bottom: .3rem;
   }
