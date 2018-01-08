@@ -46,22 +46,21 @@
       <div class="calcu-tip clearfix">
         <img src="../../images/spring-festival/jsq.png" width="10%" class="fl" alt="">
         <div><p>年化投资金额=投资金额x项目期限/365天</p></div>
-        <!-- <div @click="getPacket(5)">领取红包</div> -->
       </div>
       <div class="chat-tip" v-if="token && this.activityStatus === 1 || token && this.activityStatus === 2 && investAmount > 0">左右滑动<br>领取红包</div>
       <div class="part2" v-if="token">
-        <div @click="getPacket(1)">领取红包</div>
+        <!-- <div @click="getPacket(1)">领取红包</div> -->
         <div class="position-re carousel-mask" v-if="this.activityStatus === 1 || this.activityStatus === 2 && investAmount > 0">
           <div id="wrapper">
             <ul class="poster-list clearfix clear">
-              <li v-for="(item,index) in levelStatus">
-                <div class="red_bag_bg" :class="{'ed' : item === 1}">
-                  <img src="../../images/spring-festival/wdb.png" width="40%" class="chai display-bl" alt="" v-if="investAmount < packetList[index].limitAmount && item === 0">
-                  <img src="../../images/spring-festival/chai.png" width="40%" class="chai display-bl" alt="" v-if="investAmount >= packetList[index].limitAmount && item === 0" @click="takeReward(index + 1, item, packetList[index].amount)">
-                  <img :src="'../../static/images/' + packetList[index].amount + '.png'" alt="" :width="packetList[index].imgWidth" class="value" v-if="item !== 1">
-                  <img src="../../images/spring-festival/yuan.png" alt="" width="11%" v-if="item !== 1">
-                  <p class="condition" v-if="item !== 1">≥{{packetList[index].limitAmount}}元可拆红包</p>
-                  <div class="chaied" v-if="item === 1">
+              <li v-for="(item, index) in packetList">
+                <div class="red_bag_bg" :class="{'ed' : item.status === 1}">
+                  <img src="../../images/spring-festival/wdb.png" width="40%" class="chai display-bl" alt="" v-if="investAmount < item.limitAmount && item.status === 0">
+                  <img src="../../images/spring-festival/chai.png" width="40%" class="chai display-bl" alt="" v-if="investAmount >= item.limitAmount && item.status === 0" @click="takeReward(index + 1, levelStatus[index], item.amount)">
+                  <img :src="'../../static/images/' + item.amount + '.png'" alt="" :width="item.imgWidth" class="value" v-if="item.status !== 1">
+                  <img src="../../images/spring-festival/yuan.png" alt="" width="11%" v-if="item.status !== 1">
+                  <p class="condition" v-if="item.status !== 1">≥{{item.limitAmount}}元可拆红包</p>
+                  <div class="chaied" v-if="item.status === 1">
                     <span class="circle">元</span>
                     <img :src="'../../static/images/d' + packetList[index].amount + '.png'" :width="packetList[index].imgedWidth" class="text">
                     <div class="congratulate">恭喜您获得</div>
@@ -236,6 +235,7 @@
       }
     },
     created () {
+      this.getAnnualInvestAmount()
       this.getActivityStatus()
       this.token ? this.getLevelStatus() : null
       this.token ? this.getAnnualInvestAmount() : null
@@ -295,9 +295,11 @@
             diff: 0.45,
             before: function () { // 动画执行中不可拆红包
               that.canTake = false
+              that.current = this.index
             },
             after: function () {
               that.canTake = true
+              that.current = this.index
             }
           })
         }
@@ -395,20 +397,21 @@
         })
       },
       takeReward (level, status, rewardMoney) { // 领取红包
-        if (this.busy || !this.canTake || this.current !== (level - 1) || status !== 1) {
+        if (this.busy || !this.canTake || Carousel.index !== (level - 1) || status !== 0) {
           return
         }
         this.busy = true
         var that = this
-        this.$http.post('/hongcai/rest/activitys/newYear/takeReward', {
+        that.$http.post('/hongcai/rest/activitys/newYear/takeReward', {
           token: this.token,
           level: level
         }).then((response) => {
-          // console.log(response.data === '')
-          this.busy = false
-          if (!response.data || response.data.ret === -1) {
+          that.busy = false
+          if (response.data !== 'success') {
             return
           }
+          let key = level - 1
+          that.packetList[key].status = 1
           that.showMask = true
           that.rewardMoney = rewardMoney
           that.rewardSrc = '../../../static/images/spring-' + rewardMoney + '.png'
