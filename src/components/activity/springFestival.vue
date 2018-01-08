@@ -279,12 +279,12 @@
           })
         })
       },
-      setCarousel () { // 红包布局配置
+      setCarousel (current) { // 红包布局配置
         var that = this
         var wrapper = document.getElementById('wrapper')
         if (that.activityStatus === 1) {
           Carousel.mCarousel(wrapper, {
-            index: that.current,
+            index: current,
             active: 'active',
             scale: 0.67,
             duration: 300,
@@ -377,7 +377,7 @@
           for (let i = 0; i < response.data.status.length; i++) {
             that.packetList[i].status = response.data.status[i]
             if (response.data.status[i] === 0 && that.investAmount >= that.packetList[i].limitAmount) {
-              that.canTakePackets[i] = [that.packetList[i]]
+              that.canTakePackets[i] = that.packetList[i]
             } else if (response.data.status[i] === 1) {
               that.takedPackets[i] = that.packetList[i]
               that.totalPacket += that.packetList[i].amount
@@ -385,8 +385,8 @@
           }
           // 判断是否已领过红包
           let index = that.takedPackets.length === 0 ? 0 : that.takedPackets.length === 6 ? 5 : that.takedPackets[that.takedPackets.length - 1].id + 1
-          that.current = that.canTakePackets.length > 0 ? that.canTakePackets[that.canTakePackets.length - 1].id : index
-          that.setCarousel()
+          let current = that.canTakePackets.length > 0 ? that.canTakePackets[that.canTakePackets.length - 1].id : index
+          that.setCarousel(current)
         })
       },
       takeReward (level, status, rewardMoney) { // 领取红包
