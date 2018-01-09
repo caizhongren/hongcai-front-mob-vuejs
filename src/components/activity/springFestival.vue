@@ -245,12 +245,11 @@
         }).then((response) => {
           that.serverTime = response.data.time
           that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
-            // if (that.serverTime - res.data.endTime > 3 * 24 * 60 * 60 * 1000) {
-            //   that.activityStatus = 3 // 活动结束3天后
-            // } else {
-            //   that.activityStatus = res.data.status
-            // }
-            that.activityStatus = 3
+            if (that.serverTime - res.data.endTime > 3 * 24 * 60 * 60 * 1000) {
+              that.activityStatus = 3 // 活动结束3天后
+            } else {
+              that.activityStatus = res.data.status
+            }
             // 获取活动开始、结束时间
             var startTime = res.data.startTime
             var endTime = res.data.endTime
