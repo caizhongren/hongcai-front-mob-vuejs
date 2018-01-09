@@ -50,10 +50,10 @@
         <img src="../../images/spring-festival/jsq.png" width="10%" class="fl" alt="">
         <div><p>年化投资金额=投资金额x项目期限/365天</p></div>
       </div>
-      <div class="chat-tip" v-if="token && this.activityStatus === 1 || token && this.activityStatus === 2 && investAmount > 0">左右滑动<br>领取红包</div>
+      <div class="chat-tip" v-if="token && activityStatus === 1 || token && activityStatus === 2 && investAmount > 0">左右滑动<br>领取红包</div>
       <div class="part2" v-if="token">
         <!-- <div @click="getPacket(1)">领取红包</div> -->
-        <div class="position-re carousel-mask" v-if="this.activityStatus === 1 || this.activityStatus === 2 && investAmount > 0">
+        <div class="position-re carousel-mask" v-if="activityStatus === 1 || activityStatus === 2 && investAmount > 0">
           <div id="wrapper">
             <ul class="poster-list clearfix clear">
               <li v-for="(item, index) in packetList">
@@ -72,9 +72,8 @@
               </li>
             </ul>
           </div>
-          <!-- <img src="../../images/spring-festival/indexBottom-min.png" width="80%" class="margin-auto" alt=""> -->
         </div>
-        <div v-if="this.activityStatus === 3 || this.activityStatus === 2 && this.investAmount > 0" class="packet-end">
+        <div v-if="activityStatus === 3 || activityStatus === 2 && investAmount > 0" class="packet-end">
           <img src="../../images/spring-festival/text-end-min.png" alt="" width="38%" class="display-bl margin-auto">
         </div>
       </div>
@@ -238,15 +237,6 @@
       this.token ? this.getLevelStatus() : null
     },
     methods: {
-      getAnnualInvestAmount () { // 获取累计年化投资金额
-        var that = this
-        that.$http('/hongcai/rest/activitys/invest/transition/0/annualInvestAmount?token=' + that.token + '&activityType=' + that.$route.query.act).then(function (res) {
-          if (res && res.ret !== -1) {
-            that.investAmount = res.data.annualInvest || 0
-            that.calculator()
-          }
-        })
-      },
       getActivityStatus () { // 活动信息查询
         var that = this
         that.$http({ // 获取服务器时间
@@ -255,11 +245,12 @@
         }).then((response) => {
           that.serverTime = response.data.time
           that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
-            if (that.serverTime - res.data.endTime > 3 * 24 * 60 * 60 * 1000) {
-              that.activityStatus = 3 // 活动结束3天后
-            } else {
-              that.activityStatus = res.data.status
-            }
+            // if (that.serverTime - res.data.endTime > 3 * 24 * 60 * 60 * 1000) {
+            //   that.activityStatus = 3 // 活动结束3天后
+            // } else {
+            //   that.activityStatus = res.data.status
+            // }
+            that.activityStatus = 3
             // 获取活动开始、结束时间
             var startTime = res.data.startTime
             var endTime = res.data.endTime
@@ -359,15 +350,16 @@
         bridgeUtil.webConnectNative(HCNative, undefined, {}, function (response) {
         }, null)
       },
-      getLevelStatus () { // 获取各档位红包状态
+      getLevelStatus () {
         var that = this
-        that.$http('/hongcai/rest/activitys/invest/transition/0/annualInvestAmount?token=' + that.token + '&activityType=' + that.$route.query.act).then(function (res) {
+        that.$http('/hongcai/rest/activitys/invest/transition/0/annualInvestAmount?token=' + that.token + '&activityType=' + that.$route.query.act)
+        .then(function (res) { // 获取累计年化投资金额
           if (!res || res.ret === -1) {
             return
           }
           that.investAmount = res.data.annualInvest || 0
           that.calculator()
-          that.$http({
+          that.$http({ // 获取各档位红包状态
             method: 'get',
             url: '/hongcai/rest/activitys/newYear/levelStatus?token=' + that.token
           }).then((response) => {
@@ -383,7 +375,6 @@
               that.packetList[i].status = response.data.status[i]
               if (response.data.status[i] === 0 && that.investAmount >= that.packetList[i].limitAmount) {
                 canTakePackets[i] = that.packetList[i]
-                console.log('can')
               } else if (response.data.status[i] === 1) {
                 takedPackets[i] = that.packetList[i]
                 that.totalPacket += that.packetList[i].amount
@@ -392,8 +383,6 @@
             // 判断是否已领过红包
             index = takedPackets.length === 0 ? 0 : takedPackets.length === 6 ? 5 : takedPackets[takedPackets.length - 1].id + 1
             len = canTakePackets.length - 1
-            console.log(canTakePackets.length)
-            console.log(index)
             let current = canTakePackets.length > 0 ? canTakePackets[len].id : index
             that.setCarousel(current)
           })
