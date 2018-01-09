@@ -15,11 +15,11 @@
           </ul>
           <form action="" autocomplete="off">
           <div class="input-item">
-              <input type="tel" name="amount" id="amount" placeholder="投资金额" rows=6 cols=30 v-model="project.amount" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler" v-on:focus="">
+              <input type="tel" name="amount" maxlength=9 placeholder="投资金额" rows=6 cols=30 v-model="project.amount" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler">
               元
           </div>
           <div class="input-item">
-              <input type="tel" name="project.term" id="term" placeholder="项目期限" v-model="project.term" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler">
+              <input type="tel" name="project.term" maxlength=3 placeholder="项目期限" v-model="project.term" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler">
               天
           </div>
           </form>
@@ -69,14 +69,14 @@
     methods: {
       oninputHandler () {
         this.project.amount = this.project.amount.replace(/\D/g, '')
-        this.project.amount = this.project.amount.length > 9 ? this.project.amount.slice(0, 9) : this.project.amount
+        // this.project.amount = this.project.amount.length > 9 ? this.project.amount.slice(0, 9) : this.project.amount
       },
       beforepasteHandler (e) {
         e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/\D/g, ''))
       },
       oninputHandler1 () {
         this.project.term = this.project.term.replace(/\D/g, '')
-        this.project.term = this.project.term.length >= 3 && this.project.term > 365 ? this.project.term.slice(0, 2) : this.project.term
+        this.project.term = this.project.term > 365 ? this.project.term.slice(0, 2) : this.project.term
       }
     }
   }
