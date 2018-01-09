@@ -133,303 +133,6 @@
     <img src="../../images/spring-festival/jsq.png" alt="" class="jxq" @click="showCalculator = true">
   </div>
 </template>
-<script>
-  import {Carousel} from '../../service/mCarousel'
-  import {bridgeUtil, ModalHelper} from '../../service/Utils'
-  import $ from 'zepto'
-  import SpringCalculator from './SpringCalculator.vue'
-  export default {
-    data () {
-      return {
-        investAmount: 0, // 累计年化投资金额
-        shortAmount: 0, // 累计年化投资还差多少钱
-        gettingRedPacket: 0, // 即可领取的红包金额
-        totalPacket: 0, // 一共领取的红包金额
-        activityStatus: 1, // 1 正常 2 结束
-        current: 0, // 当前显示的红包index
-        canGetAmount: 0, // 年化金额达到可领取的红包数量
-        canTakePackets: [], // 达标并且可以领的红包
-        takedPackets: [], // 领过的红包
-        packetList: [
-          {
-            id: 0,
-            status: 0, // 0 未达标 1 可拆 2 已领取
-            amount: 5,
-            limitAmount: 1000,
-            imgWidth: '10%',
-            imgedWidth: '14%'
-          },
-          {
-            id: 1,
-            status: 0,
-            amount: 35,
-            limitAmount: 10000,
-            imgWidth: '20%',
-            imgedWidth: '28.6%'
-          },
-          {
-            id: 2,
-            status: 0,
-            amount: 90,
-            limitAmount: 30000,
-            imgWidth: '20%',
-            imgedWidth: '28.6%'
-          },
-          {
-            id: 3,
-            status: 0,
-            amount: 120,
-            limitAmount: 50000,
-            imgWidth: '24%',
-            imgedWidth: '40%'
-          },
-          {
-            id: 4,
-            status: 0,
-            amount: 350,
-            limitAmount: 100000,
-            imgWidth: '26%',
-            imgedWidth: '40%'
-          },
-          {
-            id: 5,
-            status: 0,
-            amount: 1288,
-            limitAmount: 300000,
-            imgWidth: '30%',
-            imgedWidth: '53%'
-          }
-        ],
-        levelStatus: [],
-        showMask: false,
-        rewardSrc: '',
-        rewardMoney: 5,
-        rewardImgSize: {'5': '28%', '35': '50%', '90': '50%', '120': '65%', '350': '60%', '1288': '65%'},
-        hammerTimer: null,
-        hammerTimer2: null,
-        hammerTimer3: null,
-        showCalculator: false,
-        activityInfo: {
-          startYear: 0,
-          startMonth: 0,
-          startDate: 0,
-          endYear: 0,
-          endMonth: 0,
-          endDate: 0
-        },
-        canTake: true, // 红包切换过程中不可领取
-        busy: false, // 防止多次点击领取
-        serverTime: new Date().getTime()
-      }
-    },
-    props: ['token'],
-    watch: {
-      token: function (val) {
-        val ? this.getLevelStatus() : null
-      },
-      showMask (val) {
-        val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
-        val ? null : (clearInterval(this.hammerTimer), clearInterval(this.hammerTimer2), clearInterval(this.hammerTimer3))
-      }
-    },
-    created () {
-      this.getActivityStatus()
-      this.token ? this.getLevelStatus() : null
-    },
-    methods: {
-      getActivityStatus () { // 活动信息查询
-        var that = this
-        that.$http({ // 获取服务器时间
-          method: 'get',
-          url: '/hongcai/rest/systems/serverTime'
-        }).then((response) => {
-          that.serverTime = response.data.time
-          that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
-            if (that.serverTime - res.data.endTime > 3 * 24 * 60 * 60 * 1000) {
-              that.activityStatus = 3 // 活动结束3天后
-            } else {
-              that.activityStatus = res.data.status
-            }
-            // 获取活动开始、结束时间
-            var startTime = res.data.startTime
-            var endTime = res.data.endTime
-            that.activityInfo = {
-              startYear: new Date(startTime).getFullYear(),
-              startMonth: new Date(startTime).getMonth() + 1,
-              startDate: new Date(startTime).getDate(),
-              endYear: new Date(endTime).getFullYear(),
-              endMonth: new Date(endTime).getMonth() + 1,
-              endDate: new Date(endTime).getDate()
-            }
-          })
-        })
-      },
-      setCarousel (current) { // 红包布局配置
-        var that = this
-        var wrapper = document.getElementById('wrapper')
-        if (that.activityStatus === 1) {
-          Carousel.mCarousel(wrapper, {
-            index: current,
-            active: 'active',
-            scale: 0.67,
-            duration: 300,
-            locked: true,
-            diff: 0.45,
-            before: function () { // 动画执行中不可拆红包
-              that.canTake = false
-            },
-            after: function () {
-              that.canTake = true
-            }
-          })
-        }
-      },
-      GuangRotation () { // 拆红包后动画
-        var that = this
-        var transY = 1.8
-        var scale = 0.5
-        // 获得奖励的动画
-        that.hammerTimer = setInterval(function () {
-          if (transY < -0.5) {
-            clearInterval(that.hammerTimer)
-            return
-          }
-          transY -= 0.5
-          scale += 0.1
-          $('.packet-ban .ban').css('transform', 'translateY(' + transY + 'rem) scale(' + scale + ')')
-          document.querySelector('.packet-ban .ban').style.webkitTransform = 'translateY(' + transY + 'rem) scale(' + scale + ')'
-        }, 40)
-        var rotate = 0
-        // 背景光的动画
-        that.hammerTimer2 = setInterval(function () {
-          // if (rotate > 180000000000) {
-          //   clearInterval(that.hammerTimer2)
-          //   return
-          // }
-          rotate += 5
-          $('.Rotation').css('transform', 'rotate(' + rotate + 'deg')
-          document.querySelector('.Rotation').style.webkitTransform = 'rotate(' + rotate + 'deg'
-        }, 80)
-        var rotate2 = 0
-        that.hammerTimer3 = setInterval(function () {
-          // if (rotate2 < -180000000000) {
-          //   clearInterval(that.hammerTimer3)
-          //   return
-          // }
-          rotate2 -= 5
-          $('.Rotation2').css('transform', 'rotate(' + rotate2 + 'deg')
-          document.querySelector('.Rotation2').style.webkitTransform = 'rotate(' + rotate2 + 'deg'
-        }, 80)
-      },
-      calculator () { // 计算提示 金额及红包金额
-        if (this.investAmount < 1000) {
-          this.shortAmount = 1000 - this.investAmount
-          this.gettingRedPacket = 5
-        } else if (this.investAmount < 10000) {
-          this.shortAmount = 10000 - this.investAmount
-          this.gettingRedPacket = 35
-        } else if (this.investAmount < 30000) {
-          this.shortAmount = 30000 - this.investAmount
-          this.gettingRedPacket = 90
-        } else if (this.investAmount < 50000) {
-          this.shortAmount = 50000 - this.investAmount
-          this.gettingRedPacket = 120
-        } else if (this.investAmount < 100000) {
-          this.shortAmount = 100000 - this.investAmount
-          this.gettingRedPacket = 350
-        } else if (this.investAmount < 300000) {
-          this.shortAmount = 300000 - this.investAmount
-          this.gettingRedPacket = 1288
-        }
-      },
-      toRecord () {
-        this.$router.push({name: 'SpringRecord', query: {act: this.$route.query.act}})
-      },
-      toNative (HCNative) {
-        bridgeUtil.webConnectNative(HCNative, undefined, {}, function (response) {
-        }, null)
-      },
-      getLevelStatus () {
-        var that = this
-        that.$http('/hongcai/rest/activitys/invest/transition/0/annualInvestAmount?token=' + that.token + '&activityType=' + that.$route.query.act)
-        .then(function (res) { // 获取累计年化投资金额
-          if (!res || res.ret === -1) {
-            that.setCarousel(0)
-            return
-          }
-          that.investAmount = res.data.annualInvest || 0
-          that.calculator()
-          that.$http({ // 获取各档位红包状态
-            method: 'get',
-            url: '/hongcai/rest/activitys/newYear/levelStatus?token=' + that.token
-          }).then((response) => {
-            if (!response.data || response.data.ret === -1) {
-              that.setCarousel(0)
-              return
-            }
-            that.levelStatus = response.data.status
-            let canTakePackets = []
-            let takedPackets = []
-            let index = 0
-            let len = 0
-            for (let i = 0; i < response.data.status.length; i++) {
-              that.packetList[i].status = response.data.status[i]
-              if (response.data.status[i] === 0 && that.investAmount >= that.packetList[i].limitAmount) {
-                canTakePackets[i] = that.packetList[i]
-              } else if (response.data.status[i] === 1) {
-                takedPackets[i] = that.packetList[i]
-                that.totalPacket += that.packetList[i].amount
-              }
-            }
-            // 判断是否已领过红包
-            index = takedPackets.length === 0 ? 0 : takedPackets.length === 6 ? 5 : takedPackets[takedPackets.length - 1].id + 1
-            len = canTakePackets.length - 1
-            let current = canTakePackets.length > 0 ? canTakePackets[len].id : index
-            that.setCarousel(current)
-          }).catch((err) => {
-            console.log(err)
-            that.setCarousel(0)
-          })
-        }).catch((err) => {
-          console.log(err)
-          that.setCarousel(0)
-        })
-      },
-      takeReward (level, status, rewardMoney) { // 领取红包
-        if (this.busy || !this.canTake || Carousel.index !== (level - 1) || status !== 0) {
-          return
-        }
-        this.busy = true
-        var that = this
-        that.$http.post('/hongcai/rest/activitys/newYear/takeReward', {
-          token: this.token,
-          level: level
-        }).then((response) => {
-          that.busy = false
-          if (response.data !== 'success') {
-            return
-          }
-          let key = level - 1
-          that.packetList[key].status = 1 // 手动修改红包的领取状态为 1
-          that.showMask = true
-          that.rewardMoney = rewardMoney
-          that.totalPacket += rewardMoney
-          that.rewardSrc = '../../../static/images/spring-' + rewardMoney + '.png'
-          that.GuangRotation()
-        })
-      },
-      closeCalculator () {
-        this.showCalculator = false
-      }
-    },
-    components: {SpringCalculator},
-    destroyed () {
-      clearTimeout(this.hammerTimer)
-      clearTimeout(this.hammerTimer2)
-      clearInterval(this.hammerTimer3)
-    }
-  }
-</script>
 <style scoped>
   .packet-mask {
     background-color: rgba(0,0,0,0.95);
@@ -755,10 +458,11 @@
   }
   #wrapper {
     height: 3.6rem;
+    width: 100%;
   }
   .poster-list li {
     width: 72%;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     height: 100%;
   }
   .carousel-mask {
@@ -849,3 +553,300 @@
     background-color: #ffeead;
   }
 </style>
+<script>
+  import {Carousel} from '../../service/mCarousel'
+  import {bridgeUtil, ModalHelper} from '../../service/Utils'
+  import $ from 'zepto'
+  import SpringCalculator from './SpringCalculator.vue'
+  export default {
+    data () {
+      return {
+        investAmount: 0, // 累计年化投资金额
+        shortAmount: 0, // 累计年化投资还差多少钱
+        gettingRedPacket: 0, // 即可领取的红包金额
+        totalPacket: 0, // 一共领取的红包金额
+        activityStatus: 1, // 1 正常 2 结束
+        current: 0, // 当前显示的红包index
+        canGetAmount: 0, // 年化金额达到可领取的红包数量
+        canTakePackets: [], // 达标并且可以领的红包
+        takedPackets: [], // 领过的红包
+        packetList: [
+          {
+            id: 0,
+            status: 0, // 0 未达标 1 可拆 2 已领取
+            amount: 5,
+            limitAmount: 1000,
+            imgWidth: '10%',
+            imgedWidth: '14%'
+          },
+          {
+            id: 1,
+            status: 0,
+            amount: 35,
+            limitAmount: 10000,
+            imgWidth: '20%',
+            imgedWidth: '28.6%'
+          },
+          {
+            id: 2,
+            status: 0,
+            amount: 90,
+            limitAmount: 30000,
+            imgWidth: '20%',
+            imgedWidth: '28.6%'
+          },
+          {
+            id: 3,
+            status: 0,
+            amount: 120,
+            limitAmount: 50000,
+            imgWidth: '24%',
+            imgedWidth: '40%'
+          },
+          {
+            id: 4,
+            status: 0,
+            amount: 350,
+            limitAmount: 100000,
+            imgWidth: '26%',
+            imgedWidth: '40%'
+          },
+          {
+            id: 5,
+            status: 0,
+            amount: 1288,
+            limitAmount: 300000,
+            imgWidth: '30%',
+            imgedWidth: '53%'
+          }
+        ],
+        levelStatus: [],
+        showMask: false,
+        rewardSrc: '',
+        rewardMoney: 5,
+        rewardImgSize: {'5': '28%', '35': '50%', '90': '50%', '120': '65%', '350': '60%', '1288': '65%'},
+        hammerTimer: null,
+        hammerTimer2: null,
+        hammerTimer3: null,
+        showCalculator: false,
+        activityInfo: {
+          startYear: 0,
+          startMonth: 0,
+          startDate: 0,
+          endYear: 0,
+          endMonth: 0,
+          endDate: 0
+        },
+        canTake: true, // 红包切换过程中不可领取
+        busy: false, // 防止多次点击领取
+        serverTime: new Date().getTime()
+      }
+    },
+    props: ['token'],
+    watch: {
+      token: function (val) {
+        val ? this.getLevelStatus() : null
+      },
+      showMask (val) {
+        val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+        val ? null : (clearInterval(this.hammerTimer), clearInterval(this.hammerTimer2), clearInterval(this.hammerTimer3))
+      }
+    },
+    created () {
+      this.getActivityStatus()
+      this.token ? this.getLevelStatus() : null
+    },
+    methods: {
+      getActivityStatus () { // 活动信息查询
+        var that = this
+        that.$http({ // 获取服务器时间
+          method: 'get',
+          url: '/hongcai/rest/systems/serverTime'
+        }).then((response) => {
+          that.serverTime = response.data.time
+          that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
+            if (that.serverTime - res.data.endTime > 3 * 24 * 60 * 60 * 1000) {
+              that.activityStatus = 3 // 活动结束3天后
+            } else {
+              that.activityStatus = res.data.status
+            }
+            // 获取活动开始、结束时间
+            var startTime = res.data.startTime
+            var endTime = res.data.endTime
+            that.activityInfo = {
+              startYear: new Date(startTime).getFullYear(),
+              startMonth: new Date(startTime).getMonth() + 1,
+              startDate: new Date(startTime).getDate(),
+              endYear: new Date(endTime).getFullYear(),
+              endMonth: new Date(endTime).getMonth() + 1,
+              endDate: new Date(endTime).getDate()
+            }
+          })
+        })
+      },
+      setCarousel (current) { // 红包布局配置
+        var that = this
+        var wrapper = document.getElementById('wrapper')
+        if (that.activityStatus === 1) {
+          Carousel.mCarousel(wrapper, {
+            index: current,
+            active: 'active',
+            scale: 0.67,
+            duration: 300,
+            locked: true,
+            diff: 0.47,
+            before: function () { // 动画执行中不可拆红包
+              that.canTake = false
+            },
+            after: function () {
+              that.canTake = true
+            }
+          })
+        }
+      },
+      GuangRotation () { // 拆红包后动画
+        var that = this
+        var transY = 1.8
+        var scale = 0.5
+        // 获得奖励的动画
+        that.hammerTimer = setInterval(function () {
+          if (transY < -0.5) {
+            clearInterval(that.hammerTimer)
+            return
+          }
+          transY -= 0.5
+          scale += 0.1
+          $('.packet-ban .ban').css('transform', 'translateY(' + transY + 'rem) scale(' + scale + ')')
+          document.querySelector('.packet-ban .ban').style.webkitTransform = 'translateY(' + transY + 'rem) scale(' + scale + ')'
+        }, 40)
+        var rotate = 0
+        // 背景光的动画
+        that.hammerTimer2 = setInterval(function () {
+          // if (rotate > 180000000000) {
+          //   clearInterval(that.hammerTimer2)
+          //   return
+          // }
+          rotate += 5
+          $('.Rotation').css('transform', 'rotate(' + rotate + 'deg')
+          document.querySelector('.Rotation').style.webkitTransform = 'rotate(' + rotate + 'deg'
+        }, 80)
+        var rotate2 = 0
+        that.hammerTimer3 = setInterval(function () {
+          // if (rotate2 < -180000000000) {
+          //   clearInterval(that.hammerTimer3)
+          //   return
+          // }
+          rotate2 -= 5
+          $('.Rotation2').css('transform', 'rotate(' + rotate2 + 'deg')
+          document.querySelector('.Rotation2').style.webkitTransform = 'rotate(' + rotate2 + 'deg'
+        }, 80)
+      },
+      calculator () { // 计算提示 金额及红包金额
+        if (this.investAmount < 1000) {
+          this.shortAmount = 1000 - this.investAmount
+          this.gettingRedPacket = 5
+        } else if (this.investAmount < 10000) {
+          this.shortAmount = 10000 - this.investAmount
+          this.gettingRedPacket = 35
+        } else if (this.investAmount < 30000) {
+          this.shortAmount = 30000 - this.investAmount
+          this.gettingRedPacket = 90
+        } else if (this.investAmount < 50000) {
+          this.shortAmount = 50000 - this.investAmount
+          this.gettingRedPacket = 120
+        } else if (this.investAmount < 100000) {
+          this.shortAmount = 100000 - this.investAmount
+          this.gettingRedPacket = 350
+        } else if (this.investAmount < 300000) {
+          this.shortAmount = 300000 - this.investAmount
+          this.gettingRedPacket = 1288
+        }
+      },
+      toRecord () {
+        this.$router.push({name: 'SpringRecord', query: {act: this.$route.query.act}})
+      },
+      toNative (HCNative) {
+        bridgeUtil.webConnectNative(HCNative, undefined, {}, function (response) {
+        }, null)
+      },
+      getLevelStatus () {
+        var that = this
+        that.$http('/hongcai/rest/activitys/invest/transition/0/annualInvestAmount?token=' + that.token + '&activityType=' + that.$route.query.act)
+        .then(function (res) { // 获取累计年化投资金额
+          if (!res || res.ret === -1) {
+            that.setCarousel(0)
+            return
+          }
+          that.investAmount = res.data.annualInvest || 0
+          that.calculator()
+          that.$http({ // 获取各档位红包状态
+            method: 'get',
+            url: '/hongcai/rest/activitys/newYear/levelStatus?token=' + that.token
+          }).then((response) => {
+            if (!response.data || response.data.ret === -1) {
+              that.setCarousel(0)
+              return
+            }
+            that.levelStatus = response.data.status
+            let canTakePackets = []
+            let takedPackets = []
+            let index = 0
+            let len = 0
+            for (let i = 0; i < response.data.status.length; i++) {
+              that.packetList[i].status = response.data.status[i]
+              if (response.data.status[i] === 0 && that.investAmount >= that.packetList[i].limitAmount) {
+                canTakePackets[i] = that.packetList[i]
+              } else if (response.data.status[i] === 1) {
+                takedPackets[i] = that.packetList[i]
+                that.totalPacket += that.packetList[i].amount
+              }
+            }
+            // 判断是否已领过红包
+            index = takedPackets.length === 0 ? 0 : takedPackets.length === 6 ? 5 : takedPackets[takedPackets.length - 1].id + 1
+            len = canTakePackets.length - 1
+            let current = canTakePackets.length > 0 ? canTakePackets[len].id : index
+            that.setCarousel(current)
+          }).catch((err) => {
+            console.log(err)
+            that.setCarousel(0)
+          })
+        }).catch((err) => {
+          console.log(err)
+          that.setCarousel(0)
+        })
+      },
+      takeReward (level, status, rewardMoney) { // 领取红包
+        if (this.busy || !this.canTake || Carousel.index !== (level - 1) || status !== 0) {
+          return
+        }
+        this.busy = true
+        var that = this
+        that.$http.post('/hongcai/rest/activitys/newYear/takeReward', {
+          token: this.token,
+          level: level
+        }).then((response) => {
+          that.busy = false
+          if (response.data !== 'success') {
+            return
+          }
+          let key = level - 1
+          that.packetList[key].status = 1 // 手动修改红包的领取状态为 1
+          that.showMask = true
+          that.rewardMoney = rewardMoney
+          that.totalPacket += rewardMoney
+          that.rewardSrc = '../../../static/images/spring-' + rewardMoney + '.png'
+          that.GuangRotation()
+        })
+      },
+      closeCalculator () {
+        this.showCalculator = false
+      }
+    },
+    components: {SpringCalculator},
+    destroyed () {
+      clearTimeout(this.hammerTimer)
+      clearTimeout(this.hammerTimer2)
+      clearInterval(this.hammerTimer3)
+    }
+  }
+</script>
