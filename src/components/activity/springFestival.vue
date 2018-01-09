@@ -100,7 +100,7 @@
             <img src="../../images/spring-festival/lantern.png" alt="" class="num">
             <div class="content">
               关于现金红包 <br>
-              领取的现金红包奖励，将直接发放至您的账户>>可用余额中，可用于投资或提现;
+              领取的现金红包奖励，将直接发放至您的账户>>可用余额中，可用于投资或提现；
             </div>
           </div>
           <div class="rule">
@@ -727,6 +727,7 @@
     line-height: 1.15;
     text-align: justify;
     color: #830b08;
+    font-size: .23rem;
   }
   .part3 {
     padding-bottom: .75rem;
