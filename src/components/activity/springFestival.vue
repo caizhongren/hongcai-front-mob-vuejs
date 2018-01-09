@@ -157,7 +157,7 @@
             amount: 5,
             limitAmount: 1000,
             imgWidth: '10%',
-            imgedWidth: '15.6%'
+            imgedWidth: '14%'
           },
           {
             id: 1,
@@ -165,7 +165,7 @@
             amount: 35,
             limitAmount: 10000,
             imgWidth: '20%',
-            imgedWidth: '30%'
+            imgedWidth: '28.6%'
           },
           {
             id: 2,
@@ -173,7 +173,7 @@
             amount: 90,
             limitAmount: 30000,
             imgWidth: '20%',
-            imgedWidth: '30%'
+            imgedWidth: '28.6%'
           },
           {
             id: 3,
@@ -197,10 +197,10 @@
             amount: 1288,
             limitAmount: 300000,
             imgWidth: '30%',
-            imgedWidth: '55%'
+            imgedWidth: '53%'
           }
         ],
-        levelStatus: [1, 1, 0, 0, 0, 0],
+        levelStatus: [],
         showMask: false,
         rewardSrc: '',
         rewardMoney: 5,
@@ -354,6 +354,7 @@
         that.$http('/hongcai/rest/activitys/invest/transition/0/annualInvestAmount?token=' + that.token + '&activityType=' + that.$route.query.act)
         .then(function (res) { // 获取累计年化投资金额
           if (!res || res.ret === -1) {
+            that.setCarousel(0)
             return
           }
           that.investAmount = res.data.annualInvest || 0
@@ -363,6 +364,7 @@
             url: '/hongcai/rest/activitys/newYear/levelStatus?token=' + that.token
           }).then((response) => {
             if (!response.data || response.data.ret === -1) {
+              that.setCarousel(0)
               return
             }
             that.levelStatus = response.data.status
@@ -384,7 +386,13 @@
             len = canTakePackets.length - 1
             let current = canTakePackets.length > 0 ? canTakePackets[len].id : index
             that.setCarousel(current)
+          }).catch((err) => {
+            console.log(err)
+            that.setCarousel(0)
           })
+        }).catch((err) => {
+          console.log(err)
+          that.setCarousel(0)
         })
       },
       takeReward (level, status, rewardMoney) { // 领取红包
@@ -581,7 +589,6 @@
     padding-right: .1rem;
   }
   .part1 .investAmount {
-    line-height: 0.94;
     text-align: center;
     padding-left: .48rem;
     color: #e60027;
@@ -590,14 +597,14 @@
     background-size: contain;
     width: 4rem;
     height: .8rem;
-    line-height: .8rem;
+    line-height: .87rem;
     margin: 0 auto;
     font-family: initial;
   }
   .part1 .investBtn, .loginBtn {
     width: 3rem;
     height: .8rem;
-    line-height: .8rem;
+    line-height: .85rem;
     text-align: center;
     color: #fefefe;
     background: url('../../images/spring-festival/btnBox-min.png') no-repeat center center;
@@ -784,13 +791,13 @@
     object-fit: contain;
     font-family: CTCuYuanSF;
     -webkit-text-stroke: 2px #c82718;
-    padding-top: .6rem;
+    padding-top: .65rem;
   }
   .red_bag_bg .chaied .circle {
     display: block;
     text-align: center;
     position: absolute;
-    right: 20%;
+    right: 22%;
     top: 7%;
     line-height: .35rem;
     height: .3rem;
@@ -801,7 +808,7 @@
     border: solid 1px #e60027;
   }
   .red_bag_bg .chaied .congratulate {
-    margin-top: 34%;
+    margin-top: 35%;
     font-size: .34rem;
     line-height: 0.87;
     text-align: center;

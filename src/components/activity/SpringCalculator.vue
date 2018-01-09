@@ -92,7 +92,7 @@
     height: 3.5rem;
     width: 80%;
     margin-left: 10%;
-    border-radius: 10px;
+    border-radius: .1rem;
     background-color: #ffd4ac;
     border: solid 1.5px #740e0b;
   }
@@ -143,6 +143,7 @@
   form .input-item {
     width: 103%;
     height: .8rem;
+    line-height: .8rem;
     border-radius: 7.5px;
 	  background-color: #ffffff;
     border: 1px solid #4b0d00;
@@ -153,7 +154,7 @@
 	  color: #4c1003;
   }
   form .input-item input {
-    height: .74rem;
+    line-height: 1.3;
     width: 73%;
     border: none;
     font-size: .24rem;
