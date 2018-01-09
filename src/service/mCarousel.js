@@ -412,11 +412,9 @@ Carousel.mCarousel = function(el, opts) {
   this.diff = opts.diff || 2
   if (this.length < 4) this.locked = true;
 
-  this.viewW = this.wrapper.offsetWidth || this.wrapper.clientWidth;
-  alert(this.viewW)
+  this.viewW = this.wrapper.offsetWidth || this.wrapper.clientWidth || window.innerWidth;
   // this.viewH = this.wrapper.offsetHeight;
-  this.singleW = opts.width || this.elements[this.index].offsetWidth || this.wrapper.clientWidth;
-  alert(this.singleW)
+  this.singleW = opts.width || this.elements[this.index].offsetWidth || this.wrapper.clientWidth || window.innerWidth;
   // this.singleH = opts.height || this.elements[this.index].offsetHeight;
   this.centerX = (this.viewW - this.singleW) / 2;
   // this.centerY = (this.viewH - this.singleH) / 2;
