@@ -68,7 +68,7 @@ const BreakEgg = r => require.ensure([], () => r(require('../components/activity
 const BreakEggRecord = r => require.ensure([], () => r(require('../components/activity/breakEggRecord.vue')), 'BreakEggRecord')
 const Anniversary = r => require.ensure([], () => r(require('../components/activity/anniversary.vue')), 'Anniversary')
 const HappyBirthday = r => require.ensure([], () => r(require('../components/activity/happyBirthday.vue')), 'HappyBirthday')
-const SpringFestival = r => require.ensure([], () => r(require('../components/activity/springFestival.vue')), 'HappyBirthday')
+const SpringFestival = r => require.ensure([], () => r(require('../components/activity/springFestival.vue')), 'SpringFestival')
 const SpringRecord = r => require.ensure([], () => r(require('../components/activity/SpringRecord.vue')), 'SpringRecord')
 
 Vue.use(Router)
@@ -352,7 +352,7 @@ const routes = [
     path: '/activity/Spring-record',
     name: 'SpringRecord',
     component: SpringRecord,
-    meta: {title: '新春红包'}
+    meta: {title: '查看详情'}
   },
   {
     path: '/register-agree',

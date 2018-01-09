@@ -1,7 +1,10 @@
 <template>
   <div class="SpringFestival">
     <div class="header">
-      <img src="../../images/spring-festival/header-min.png" alt="" width="100%">
+      <img src="../../images/spring-festival/header-min_01.png" alt="" width="100%">
+      <img src="../../images/spring-festival/header-min_02.png" alt="" width="100%">
+      <img src="../../images/spring-festival/header-min_03.png" alt="" width="100%">
+      <img src="../../images/spring-festival/header-min_04.png" alt="" width="100%">
       <div class="header_tip">累计最高可领<span class="ft-red">1888</span>元现金</div>
     </div>
     <div class="contents">
@@ -227,7 +230,7 @@
       },
       showMask (val) {
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
-        val ? (this.hammerTimer = null, this.hammerTimer2 = null, this.hammerTimer3 = null) : null
+        val ? null : (clearInterval(this.hammerTimer), clearInterval(this.hammerTimer2), clearInterval(this.hammerTimer3))
       }
     },
     created () {
@@ -309,24 +312,24 @@
         var rotate = 0
         // 背景光的动画
         that.hammerTimer2 = setInterval(function () {
-          if (rotate > 180) {
-            clearInterval(that.hammerTimer2)
-            return
-          }
+          // if (rotate > 180000000000) {
+          //   clearInterval(that.hammerTimer2)
+          //   return
+          // }
           rotate += 5
           $('.Rotation').css('transform', 'rotate(' + rotate + 'deg')
           document.querySelector('.Rotation').style.webkitTransform = 'rotate(' + rotate + 'deg'
-        }, 40)
+        }, 80)
         var rotate2 = 0
         that.hammerTimer3 = setInterval(function () {
-          if (rotate2 < -180) {
-            clearInterval(that.hammerTimer3)
-            return
-          }
+          // if (rotate2 < -180000000000) {
+          //   clearInterval(that.hammerTimer3)
+          //   return
+          // }
           rotate2 -= 5
           $('.Rotation2').css('transform', 'rotate(' + rotate2 + 'deg')
           document.querySelector('.Rotation2').style.webkitTransform = 'rotate(' + rotate2 + 'deg'
-        }, 40)
+        }, 80)
       },
       calculator () { // 计算提示 金额及红包金额
         if (this.investAmount < 1000) {
@@ -432,28 +435,14 @@
   }
 </script>
 <style scoped>
-  @-webkit-keyframes rotation{
-    from {-webkit-transform: rotate(0deg);}
-    to {-webkit-transform: rotate(180deg);}
-  }
-
-  .Rotation{
-    animation: rotation 1s linear;
-  }
-  @keyframes rotation2{
-    from {-webkit-transform: rotate(0deg);}
-    to {-webkit-transform: rotate(-180deg);}
-  }
-
-  .Rotation2{
-    animation: rotation2 1s linear;
-  }
   .packet-mask {
     background-color: rgba(0,0,0,0.95);
+    overflow: hidden;
+    padding-top: .5rem;
   }
   .position {
     width: 100%;
-    height: 7rem;
+    height: 6.5rem;
     position: absolute;
   }
   .guang3 {
@@ -517,6 +506,7 @@
     font-weight: bold;
     vertical-align: top;
     position: absolute;
+    margin-top: -.2rem;
   }
   .margin-b-1 {
     margin-bottom: .3rem;
@@ -526,6 +516,7 @@
   }
   .header {
     position: relative;
+    background: #f60b11;
   }
   .header img {
     vertical-align: top;
@@ -711,7 +702,7 @@
   .jxq {
     position: fixed;
     right: 0;
-    top: 12%;
+    top: 15%;
     width: 10%;
     border-radius: 5px;
     background-color: #ffeead;
