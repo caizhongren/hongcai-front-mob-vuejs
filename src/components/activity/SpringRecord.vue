@@ -143,12 +143,14 @@
     color: #4f0709;
     margin-right: 18%;
     margin-top: .05rem;
+    font-weight: bold;
   }
   .recordList .form_head span {
     margin-left: .1rem;
     font-size: .25rem;
     margin-top: .03rem;
     margin-bottom: .3rem;
+    font-weight: normal;
   }
   .investRecord table, .rewardRecord table {
     width: 99%;
@@ -188,7 +190,7 @@
     margin-right: .1rem;
   }
   .scrollBox {
-    height: 5rem;
+    height: 5.6rem;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
   }

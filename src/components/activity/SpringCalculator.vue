@@ -24,9 +24,9 @@
           </div>
           </form>
           <div class="result clearfix">
-          <p>折合年化<br>投资金额</p>
-          <span>≈</span>
-          <p>{{annualInvestment}}元</p>
+          <p class="fl">折合年化<br>投资金额</p>
+          <span class="fl">≈</span>
+          <p class="fr">{{annualInvestment}}元</p>
           </div>
         </div>
       </div>
@@ -89,7 +89,7 @@
   }
   .calculator {
     padding: .5rem .3rem .1rem .3rem;
-    height: 3.5rem;
+    height: 3.8rem;
     width: 80%;
     margin-left: 10%;
     border-radius: .1rem;
@@ -127,13 +127,15 @@
   .calculator ul li {
     margin-bottom: .08rem;
     width: .5rem;
-    height: .25rem;
-    line-height: .3rem;
+    height: .3rem;
+    line-height: .35rem;
     text-align: center;
     border-radius: .1rem;
-    color: #ff6875;
+    color: #f20c12;
     background-color: #ffffff;
     border: solid 1px #4b0d00;
+    font-size: .25rem;
+    font-weight: bold;
   }
   form {
     width: 80%;
@@ -173,13 +175,13 @@
     width: 81%;
     margin-left: 18%;
     font-size: .22rem;
-    color: #4c1003;
+    color: #4e1508;
     line-height: 1.2;
-    margin-top: -.58rem;
+    margin-top: -.8rem;
     float: left;
   }
   .result p, .result span {
-    float: left;
+    font-weight: bold;
   }
   .result span {
     margin: 0rem .15rem;
@@ -188,13 +190,13 @@
   }
   .result p:last-child {
     margin-top: -.05rem;
-    width: 53%;
-    height: .6rem;
-    line-height: .6rem;
+    width: 56%;
+    height: .65rem;
+    line-height: .65rem;
     font-size: .23rem;
     text-align: center;
     border-radius: 7.5px;
-    background-color: #fbdc34;
-    border: solid 1px #4b0d00;
+    background-color: #ffeead;
+    border: solid 1px #4e1508;
   }
 </style>

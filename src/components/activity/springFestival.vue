@@ -39,7 +39,6 @@
           <!-- 底部所有定位 -->
           <div class="bottoms">
             <img src="../../images/spring-festival/border.png" alt="" class="border">
-            <img src="../../images/spring-festival/lantern.png" alt="" class="lantern">
             <img src="../../images/spring-festival/bottom-left-min.png" alt="" class="bottom-left">
             <img src="../../images/spring-festival/bottom-right-min.png" alt="" class="bottom-right">
           </div>
@@ -141,8 +140,9 @@
   }
   .position {
     width: 100%;
-    height: 6.5rem;
+    height: 6rem;
     position: absolute;
+    opacity: .7;
   }
   .guang3 {
     background: url('../../images/spring-festival/guang3.png') no-repeat center center;
@@ -157,7 +157,7 @@
   .guang1 {
     background: url('../../images/spring-festival/guang1.png') no-repeat center center;
     background-size: contain;
-    
+    top: 7%;
   }
   .packet-mask .packet-ban {
     background: url('../../images/spring-festival/packet-ban.png') no-repeat center center;
@@ -238,7 +238,7 @@
     color: #f60b11;
   }
   .contents {
-    background-color: #fffde8;
+    background-color: #faf1d0;
   }
   .part1 {
     margin-top: -.73rem;
@@ -533,7 +533,7 @@
     width: 83%;
     height: .5rem;
     line-height: .45rem;
-    margin: .4rem auto;
+    margin: .0rem auto 0.15rem;
     background-size: 100% 100%;
     background-color: #fffb47;
     border: solid 1px #62422e;
@@ -722,24 +722,10 @@
         var rotate = 0
         // 背景光的动画
         that.hammerTimer2 = setInterval(function () {
-          // if (rotate > 180000000000) {
-          //   clearInterval(that.hammerTimer2)
-          //   return
-          // }
-          rotate += 5
+          rotate += 3
           $('.Rotation').css('transform', 'rotate(' + rotate + 'deg')
           document.querySelector('.Rotation').style.webkitTransform = 'rotate(' + rotate + 'deg'
-        }, 80)
-        var rotate2 = 0
-        that.hammerTimer3 = setInterval(function () {
-          // if (rotate2 < -180000000000) {
-          //   clearInterval(that.hammerTimer3)
-          //   return
-          // }
-          rotate2 -= 5
-          $('.Rotation2').css('transform', 'rotate(' + rotate2 + 'deg')
-          document.querySelector('.Rotation2').style.webkitTransform = 'rotate(' + rotate2 + 'deg'
-        }, 80)
+        }, 100)
       },
       calculator () { // 计算提示 金额及红包金额
         if (this.investAmount < 1000) {
