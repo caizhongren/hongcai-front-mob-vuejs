@@ -73,7 +73,7 @@
             </ul>
           </div>
         </div>
-        <div v-if="activityStatus === 3 || activityStatus === 2 && investAmount > 0" class="packet-end">
+        <div v-if="activityStatus === 3 || activityStatus === 2 && investAmount <= 0" class="packet-end">
           <img src="../../images/spring-festival/text-end-min.png" alt="" width="38%" class="display-bl margin-auto">
         </div>
       </div>
@@ -687,7 +687,7 @@
       setCarousel (current) { // 红包布局配置
         var that = this
         var wrapper = document.getElementById('wrapper')
-        if (that.activityStatus === 1) {
+        if (that.activityStatus !== 3) {
           Carousel.mCarousel(wrapper, {
             index: current,
             active: 'active',

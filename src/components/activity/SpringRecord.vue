@@ -200,6 +200,7 @@
     height: .5rem;
     line-height: .5rem;
     width: 99%;
+    margin: 0 auto;
   }
   .investTitle li {
     float: left;
