@@ -3,7 +3,7 @@
     <div class="recordBox">
       <div class="recordList clearfix">
         <div>
-          <img src="../../images/laba-festival/icon.png" alt="" width="15%" class="display-inb">
+          <img src="../../images/laba-festival/icon.png" alt="" width="15%" class="display-inb" style="margin-left:-.5rem;">
           <div class="display-inb">
             <p class="form_head">年化投资记录</p>
             <p>(活动期间)</p>
@@ -47,8 +47,7 @@
         CreditRightVo: [],
         investPage: 1,
         pageSize: 10,
-        investTotalPage: 1,
-        showCalculator: true
+        investTotalPage: 1
       }
     },
     created () {
@@ -78,9 +77,6 @@
       loadMore (page) {
         this.investPage += 1
         this.getInvestRecords(this.investPage, this.pageSize)
-      },
-      closeCalculator () {
-        this.showCalculator = false
       }
     }
   }
@@ -89,7 +85,7 @@
   .laba_record {
     background: url('../../images/laba-festival/record-bg.png') no-repeat 0 0;
     background-size: 100%;
-    padding-top: 1.3rem;
+    padding-top: 1.2rem;
     width: 100%;
   }
   .recordList {
@@ -158,7 +154,7 @@
     margin-right: .1rem;
   }
   .scrollBox {
-    height: 6rem;
+    height: 5.8rem;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
   }

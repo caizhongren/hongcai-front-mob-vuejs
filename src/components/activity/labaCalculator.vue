@@ -154,10 +154,10 @@
 	  color: #ffdaa3;
   }
   .result p:first-child {
-    margin-top: .16rem;
+    margin-top: .15rem;
   }
   .result span {
-    margin: 0rem .1rem;
+    margin: 0.02rem .1rem;
     font-size: .4rem;
     font-weight: bold;
   }
@@ -166,7 +166,7 @@
     width: 46%;
     height: .65rem;
     line-height: .65rem;
-    font-size: .23rem;
+    font-size: .28rem;
     text-align: center;
     border-radius: 7.5px;
     background-color: #ffeead;
