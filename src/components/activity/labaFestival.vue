@@ -56,7 +56,7 @@
           <div v-if="token">
             <div class="investAmount">{{investAmount}}元</div>
             <div class="investBtn" v-if="investAmount <=0" @click="toHCNative('HCNative_GoInvestList')">我要投资</div>
-            <p class="record" v-if="investAmount >0">查看详情>></p>
+            <p class="record" v-if="investAmount >0" @click="toRecord">查看详情>></p>
             <div class="tips">
               <div v-if="investAmount >=5000">预计获得特权本金<span>{{privilegedCapital}}元</span>(有效期{{validityTime}}天） <br>约合收益 ≈<span>{{profit}}元</span></div> 
               <p>*实际获得奖励以{{activityInfo.endYear}}年{{activityInfo.endMonth}}月{{activityInfo.endDate}}日24:00时累计新增金额及对应达标奖励倍数为准。</p>
