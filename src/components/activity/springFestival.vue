@@ -210,9 +210,6 @@
   .margin-b-1 {
     margin-bottom: .3rem;
   }
-  .SpringFestival {
-    
-  }
   .header {
     position: relative;
     background: #f60b11;
@@ -573,11 +570,11 @@
         packetList: [
           {
             id: 0,
-            status: 0, // 0 未达标 1 可拆 2 已领取
+            status: 0, // 0 未拆 1 已拆
             amount: 5,
             limitAmount: 1000,
-            imgWidth: '10%',
-            imgedWidth: '14%'
+            imgWidth: '10%', // 红包文字图片宽度
+            imgedWidth: '14%' // 拆过的文字图片宽
           },
           {
             id: 1,

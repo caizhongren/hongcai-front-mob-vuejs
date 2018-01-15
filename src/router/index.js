@@ -86,7 +86,6 @@ const routes = [
   },
   {
     path: '/about',
-    name: 'About',
     component: About,
     children: [
       {
@@ -117,7 +116,6 @@ const routes = [
   },
   {
     path: '/disclosure',
-    name: 'Disclosure',
     component: Disclosure,
     children: [
       {
