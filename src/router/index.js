@@ -68,6 +68,8 @@ const BreakEgg = r => require.ensure([], () => r(require('../components/activity
 const BreakEggRecord = r => require.ensure([], () => r(require('../components/activity/breakEggRecord.vue')), 'BreakEggRecord')
 const Anniversary = r => require.ensure([], () => r(require('../components/activity/anniversary.vue')), 'Anniversary')
 const HappyBirthday = r => require.ensure([], () => r(require('../components/activity/happyBirthday.vue')), 'HappyBirthday')
+const LabaFestival = r => require.ensure([], () => r(require('../components/activity/labaFestival.vue')), 'LabaFestival')
+const LabaRecord = r => require.ensure([], () => r(require('../components/activity/labaRecord.vue')), 'LabaRecord')
 
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -327,6 +329,18 @@ const routes = [
     name: 'BreakEggRecord',
     component: BreakEggRecord,
     meta: {title: '诞旦有惊喜'}
+  },
+  {
+    path: '/activity/laba-festival',
+    name: 'LabaFestival',
+    component: LabaFestival,
+    meta: {title: '腊月迎新礼'}
+  },
+  {
+    path: '/activity/laba-record',
+    name: 'LabaRecord',
+    component: LabaRecord,
+    meta: {title: '查看详情'}
   },
   {
     path: '/activity/anniversary',
