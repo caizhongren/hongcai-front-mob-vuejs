@@ -98,9 +98,9 @@
         </div>
       </div>
     </div>
-    <img src="../../images/laba-festival/calcul.png" alt="" class="calcu-icon">
+    <img src="../../images/laba-festival/calcul.png" alt="" class="calcu-icon" @click="showCalculator = !showCalculator">
     <button v-if="activityStatus === 1" class="invest-fixed-btn" @click="toHCNative('HCNative_GoInvestList')">立即投资</button>
-    <break-Egg-Calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator" v-show="showCalculator"></break-Egg-Calculator>
+    <laba-Calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator" v-show="showCalculator"></laba-Calculator>
   </div>
 </template>
 <script>
@@ -295,6 +295,7 @@
     line-height: .65rem;
     font-weight: bold;
     color: #ffdaa3;
+    font-family: 'FZZCHJW-GB1-0';
   }
   .rules .rule {
     overflow: hidden;
@@ -334,6 +335,7 @@
     font-weight: bold;
     color: #ffdaa3;
     padding-top: .63rem;
+    font-family: 'FZZCHJW-GB1-0';
   }
   .investment .time {
     color: #fbeec8;
