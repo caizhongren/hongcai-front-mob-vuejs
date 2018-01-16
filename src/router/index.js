@@ -38,6 +38,7 @@ const Feedback = r => require.ensure([], () => r(require('../components/user-cen
 const InviteRebate = r => require.ensure([], () => r(require('../components/user-center/inviteRebate.vue')), 'InviteRebate')
 const inviteRebateList = r => require.ensure([], () => r(require('../components/user-center/inviteRebateList.vue')), 'InviteRebate')
 const Membership = r => require.ensure([], () => r(require('../components/user-center/Membership.vue')), 'Membership')
+const BeanDetail = r => require.ensure([], () => r(require('../components/user-center/beanDetail.vue')), 'BeanDetail')
 const AssignmentQuestion = r => require.ensure([], () => r(require('../components/assignmentQuestion.vue')), 'Question')
 const RegisterAgree = r => require.ensure([], () => r(require('../components/registerAgree.vue')), 'RegisterAgree')
 const AssignmentAgree = r => require.ensure([], () => r(require('../components/assignmentAgree.vue')), 'AssignmentAgree')
@@ -240,6 +241,12 @@ const routes = [
     name: 'NoticeDetail',
     component: NoticeDetail,
     meta: {title: '公告详情'}
+  },
+  {
+    path: '/user-center/bean-detail',
+    name: 'BeanDetail',
+    component: BeanDetail,
+    meta: {title: '宏豆明细'}
   },
   {
     path: '/activity/novice-landing',

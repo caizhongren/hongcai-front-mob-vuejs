@@ -175,7 +175,7 @@
       },
       getAnnualInvestAmount () {
         var that = this
-        that.$http('/hongcai/rest/activitys/invest/transition/0/annualInvestAmount?token=' + that.token).then(function (res) {
+        that.$http('/hongcai/rest/activitys/invest/transition/0/annualInvestAmount?token=' + that.token + '&activityType=' + that.$route.query.act).then(function (res) {
           if (res && res.ret !== -1) {
             that.investAmount = res.data.annualInvest || 0
           }

@@ -1,3 +1,15 @@
+let dateDotTime = value => {
+  // 时间格式 ‘yyyy-MM-dd HH:mm:ss’
+  if (!value) { return }
+  var now = new Date(value)
+  var month = now.getMonth() < 9 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1
+  return now.getFullYear() + '.' +
+  month + '.' +
+  (now.getDate() < 10 ? '0' + now.getDate() : now.getDate()) + ' ' +
+  (now.getHours() < 10 ? '0' + now.getHours() : now.getHours()) + ':' +
+  (now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes())
+}
+
 let dateTime = value => {
   // 时间格式 ‘yyyy-MM-dd HH:mm:ss’
   if (!value) { return }
@@ -88,3 +100,4 @@ export {dateTime}
 export {monthDay}
 export {monthDotDay}
 export {dateCharacter}
+export {dateDotTime}
