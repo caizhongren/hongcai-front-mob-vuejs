@@ -46,6 +46,7 @@
   </div>
 </template>
 <script>
+  import {bridgeUtil} from '../../service/Utils'
   export default {
     name: 'beanExplain',
     data () {
@@ -98,6 +99,21 @@
           }
         ]
       }
+    },
+    props: ['token'],
+    watch: {
+      token (val) {
+        bridgeUtil.webConnectNative('HCNative_BeanDetail', null, {
+          // 1 需要显示 0 不需要显示
+          isShow: 0
+        }, function (res) {}, null)
+      }
+    },
+    created () {
+      bridgeUtil.webConnectNative('HCNative_BeanDetail', null, {
+        // 1 需要显示 0 不需要显示
+        isShow: 0
+      }, function (res) {}, null)
     }
   }
 </script>
