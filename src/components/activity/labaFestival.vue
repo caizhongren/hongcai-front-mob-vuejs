@@ -8,7 +8,7 @@
       <img src="../../images/laba-festival/laba-header_05.png" alt="">
       <div class="activityTime">活动时间：{{activityInfo.startYear}}年{{activityInfo.startMonth}}月{{activityInfo.startDate}}日-{{activityInfo.endYear}}年{{activityInfo.endMonth}}月{{activityInfo.endDate}}日</div>
     </div>
-    <div v-bind:class="{'padding-b-1':activityStatus === 1}" class="contents">
+    <div v-bind:class="{'padding-b-1':token && activityStatus === 1}" class="contents">
       <div class="describe">活动期间，新增投资<span class="ft-red">宏财精选、宏财尊贵</span>项目(不含债权转让项目)，累计年化投资金额达到指定额度，活动结束后，即可获得<span class="ft-red">累计新增年化投资金额x相应倍数的特权本金奖励</span>(不同阶段特权本金奖励有效期不同哟)。</div>
       <div class="reward">
         <img src="../../images/laba-festival/box-header.png" alt="">
@@ -59,7 +59,7 @@
             <p class="record" v-if="investAmount >0" @click="toRecord">查看详情>></p>
             <div class="tips">
               <div v-if="investAmount >=5000">预计获得特权本金<span>{{privilegedCapital}}元</span>(有效期{{validityTime}}天） <br>约合收益 ≈<span>{{profit}}元</span></div> 
-              <p>*实际获得奖励以{{activityInfo.endYear}}年{{activityInfo.endMonth}}月{{activityInfo.endDate}}日24:00时累计新增金额及对应达标奖励倍数为准。</p>
+              <p>*实际获得奖励以{{activityInfo.getRewardYear}}年{{activityInfo.getRewardMonth}}月{{activityInfo.getRewardDate}}日24:00时累计新增金额及对应达标奖励倍数为准。</p>
             </div>
           </div>
           <div v-if="!token">
@@ -99,7 +99,7 @@
       </div>
     </div>
     <img src="../../images/laba-festival/calcul.png" alt="" class="calcu-icon" @click="showCalculator = !showCalculator">
-    <button v-if="activityStatus === 1" class="invest-fixed-btn" @click="toHCNative('HCNative_GoInvestList')">立即投资</button>
+    <button v-if="token && activityStatus === 1" class="invest-fixed-btn" @click="toHCNative('HCNative_GoInvestList')">立即投资</button>
     <laba-Calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator" v-show="showCalculator"></laba-Calculator>
   </div>
 </template>
@@ -163,13 +163,17 @@
           that.activityStatus = res.data.status
           var startTime = res.data.startTime
           var endTime = res.data.endTime
+          var getRewardTime = 1000 * 60 * 60 * 24 * 1
           that.activityInfo = {
             startYear: new Date(startTime).getFullYear(),
             startMonth: new Date(startTime).getMonth() + 1,
             startDate: new Date(startTime).getDate(),
             endYear: new Date(endTime).getFullYear(),
             endMonth: new Date(endTime).getMonth() + 1,
-            endDate: new Date(endTime).getDate()
+            endDate: new Date(endTime).getDate(),
+            getRewardYear: new Date(endTime - getRewardTime).getFullYear(),
+            getRewardMonth: new Date(endTime - getRewardTime).getMonth() + 1,
+            getRewardDate: new Date(endTime - getRewardTime).getDate()
           }
         })
       },
@@ -209,7 +213,7 @@
   .header .activityTime {
     position: absolute;
     top: 52%;
-    left: 1.15rem;
+    left: 1.22rem;
     font-size: .22rem;
     font-weight: bold;
     line-height: 3.21;
@@ -351,7 +355,7 @@
     width: 85%;
     height: .85rem;
     line-height: .9rem;
-    margin: 0.2rem auto .15rem;
+    margin: 0.15rem auto .15rem;
     color: #feef00;
     font-size: 0.6rem;
   }
@@ -371,7 +375,7 @@
   }
   .tips p {
     color: #ffea98;
-    margin-top: .12rem;
+    margin-top: .08rem;
   }
   .investBtn {
     background: url('../../images/laba-festival/btn-box.png') no-repeat center center;
