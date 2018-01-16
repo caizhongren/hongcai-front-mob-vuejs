@@ -70,6 +70,7 @@ const Anniversary = r => require.ensure([], () => r(require('../components/activ
 const HappyBirthday = r => require.ensure([], () => r(require('../components/activity/happyBirthday.vue')), 'HappyBirthday')
 const LabaFestival = r => require.ensure([], () => r(require('../components/activity/labaFestival.vue')), 'LabaFestival')
 const LabaRecord = r => require.ensure([], () => r(require('../components/activity/labaRecord.vue')), 'LabaRecord')
+const BeanExplain = r => require.ensure([], () => r(require('../components/user-center/beanExplain.vue')), 'Bean')
 
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -463,6 +464,12 @@ const routes = [
     name: 'Updates',
     component: Updates,
     meta: {title: '发现新版本'}
+  },
+  {
+    path: '/user-center/bean-explain',
+    name: 'BeanExplain',
+    component: BeanExplain,
+    meta: {title: '宏豆小百科'}
   },
   {
     path: '/:page',
