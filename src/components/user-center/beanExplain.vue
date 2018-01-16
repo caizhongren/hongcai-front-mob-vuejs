@@ -30,9 +30,8 @@
       </ul>
       <div class="tip">
         <span class="color_orange fl">*</span>
-        <div class="text position-re">还可在平台特定活动中获取
-          <img src="../../images/user-center/bean.png" alt="" width="5%" class="position-ab"><br>
-          提现会对应扣减<img src="../../images/user-center/bean.png" alt="" width="5%" class="position-ab">
+        <div class="text position-re">还可在平台特定活动中获取<img src="../../images/user-center/bean.png" alt="" width="8%" class="position-ab"><br>
+          提现会对应扣减<img src="../../images/user-center/bean.png" alt="" width="8%" class="position-ab">
         </div>
       </div>
     </div>
@@ -109,7 +108,7 @@
   }
   .bean-explain .part_what, .bean-explain .part_how, .bean-explain .part_detail, .bean-explain .part_date {
     background: #fff;
-    padding: .26rem;
+    padding: .2rem .26rem;
     margin-bottom: .3rem;
     letter-spacing: 1.5px;
     line-height: 1.6;
@@ -178,21 +177,18 @@
     color:#ff611d;
   }
   .part_detail .tip .text {
+    margin-top: .2rem;
     line-height: 1.5;
-    font-size: .12rem;
+    font-size: .2rem;
     letter-spacing: 0.3px;
     text-align: left;
     color: #666666;
-    margin-left: -4.1rem;
-    margin-top: .15rem;
   }
   .tip .text img:first-child {
-    top: -18%;
-    right: 24%;
+    top: -12%;
   }
   .tip .text img:last-child {
-    top: 31.3%;
-    right: 35%;
+    top: 37%;
   }
 </style>
 
