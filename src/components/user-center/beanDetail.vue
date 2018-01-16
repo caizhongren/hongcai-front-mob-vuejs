@@ -3,7 +3,7 @@
     <div class="header">
       <img src="../../images/common-bg.png" alt="" class="header-bg">
       <p class="beans">{{userPoints}}</p>
-      <p class="title"><img src="../../images/user-center/beans.png" alt="">当前宏豆</p>
+      <p class="title"><img src="../../images/user-center/bean.png" alt="">当前宏豆</p>
     </div>
     <div class="details">
       <li v-for="item in pointsRecords" v-if="pointsRecords.length > 0">
@@ -11,7 +11,7 @@
           <p>{{item.description}}</p>
           <p>{{item.createTime | dateDotTime}}</p>
         </div>
-        <div class="right"><img src="../../images/user-center/beans.png" alt=""><span>{{item.points >0 ? '+' : ''}}{{item.points}}</span></div>
+        <div class="right"><img src="../../images/user-center/bean.png" alt=""><span>{{item.points >0 ? '+' : ''}}{{item.points}}</span></div>
       </li>
       <div v-if="pointsRecords.length > 0 && totalPage > page" class="loadMore" @click="loadMore(page)">查看更多</div>
       <div v-if="pointsRecords.length <= 0" class="noInvestRecord">
