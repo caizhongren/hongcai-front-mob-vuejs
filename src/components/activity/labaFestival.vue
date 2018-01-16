@@ -56,10 +56,10 @@
           <div v-if="token">
             <div class="investAmount">{{investAmount}}元</div>
             <div class="investBtn" v-if="investAmount <=0" @click="toHCNative('HCNative_GoInvestList')">我要投资</div>
-            <p class="record" v-if="investAmount >0" @click="toRecord">查看详情>></p>
+            <p class="record" v-if="investAmount > 0" @click="toRecord">查看详情>></p>
             <div class="tips">
               <div v-if="investAmount >=5000">预计获得特权本金<span>{{privilegedCapital}}元</span>(有效期{{validityTime}}天） <br>约合收益 ≈<span>{{profit}}元</span></div> 
-              <p>*实际获得奖励以{{activityInfo.endYear}}年{{activityInfo.endMonth}}月{{activityInfo.endDate}}日24:00时累计新增金额及对应达标奖励倍数为准。</p>
+              <p :class="{'single':investAmount > 0 && investAmount < 5000}">*实际获得奖励以{{activityInfo.endYear}}年{{activityInfo.endMonth}}月{{activityInfo.endDate}}日24:00时累计新增金额及对应达标奖励倍数为准。</p>
             </div>
           </div>
           <div v-if="!token">
@@ -325,7 +325,7 @@
   }
   .investment {
     width: 100%;
-    height: 4.8rem;
+    height: 5rem;
     background: url('../../images/laba-festival/invest-box.png') no-repeat center center;
     background-size: contain;
   }
@@ -334,7 +334,7 @@
     line-height: .62rem;
     font-weight: bold;
     color: #ffdaa3;
-    padding-top: .63rem;
+    padding-top: .69rem;
     font-family: 'FZZCHJW-GB1-0';
   }
   .investment .time {
@@ -372,6 +372,9 @@
   .tips p {
     color: #ffea98;
     margin-top: .12rem;
+  }
+  .tips p.single {
+    margin-top: .32rem;
   }
   .investBtn {
     background: url('../../images/laba-festival/btn-box.png') no-repeat center center;
