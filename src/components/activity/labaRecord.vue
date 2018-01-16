@@ -83,6 +83,8 @@
 </script>
 <style scoped>
   .laba_record {
+    position: fixed;
+    width: 100%;
     background: url('../../images/laba-festival/record-bg.png') no-repeat 0 0;
     background-size: 100%;
     padding-top: 1.2rem;
