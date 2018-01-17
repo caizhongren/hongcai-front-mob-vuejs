@@ -368,7 +368,7 @@
     color: #fefefe;
     text-align: justify;
     font-size: .22rem;
-    margin: 0.05rem 6%;
+    margin: 0.15rem 6% 0;
     line-height: 1.3;
   }
   .investment .tips span {
@@ -377,6 +377,8 @@
   .tips p {
     color: #ffea98;
     margin-top: .08rem;
+    transform: scale(.93);
+    margin-left: -.15rem;
   }
   .tips p.single {
     margin-top: .32rem;
