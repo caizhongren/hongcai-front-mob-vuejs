@@ -38,7 +38,6 @@ const Feedback = r => require.ensure([], () => r(require('../components/user-cen
 const InviteRebate = r => require.ensure([], () => r(require('../components/user-center/inviteRebate.vue')), 'InviteRebate')
 const inviteRebateList = r => require.ensure([], () => r(require('../components/user-center/inviteRebateList.vue')), 'InviteRebate')
 const Membership = r => require.ensure([], () => r(require('../components/user-center/Membership.vue')), 'Membership')
-const BeanDetail = r => require.ensure([], () => r(require('../components/user-center/beanDetail.vue')), 'BeanDetail')
 const AssignmentQuestion = r => require.ensure([], () => r(require('../components/assignmentQuestion.vue')), 'Question')
 const RegisterAgree = r => require.ensure([], () => r(require('../components/registerAgree.vue')), 'RegisterAgree')
 const AssignmentAgree = r => require.ensure([], () => r(require('../components/assignmentAgree.vue')), 'AssignmentAgree')
@@ -72,6 +71,9 @@ const HappyBirthday = r => require.ensure([], () => r(require('../components/act
 const LabaFestival = r => require.ensure([], () => r(require('../components/activity/labaFestival.vue')), 'LabaFestival')
 const LabaRecord = r => require.ensure([], () => r(require('../components/activity/labaRecord.vue')), 'LabaRecord')
 const BeanExplain = r => require.ensure([], () => r(require('../components/user-center/beanExplain.vue')), 'Bean')
+const BeanDetail = r => require.ensure([], () => r(require('../components/user-center/beanDetail.vue')), 'BeanDetail')
+const SpringFestival = r => require.ensure([], () => r(require('../components/activity/springFestival.vue')), 'SpringFestival')
+const SpringRecord = r => require.ensure([], () => r(require('../components/activity/SpringRecord.vue')), 'SpringRecord')
 
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -88,7 +90,6 @@ const routes = [
   },
   {
     path: '/about',
-    name: 'About',
     component: About,
     children: [
       {
@@ -119,7 +120,6 @@ const routes = [
   },
   {
     path: '/disclosure',
-    name: 'Disclosure',
     component: Disclosure,
     children: [
       {
@@ -361,6 +361,18 @@ const routes = [
     name: 'HappyBirthday',
     component: HappyBirthday,
     meta: {title: 'happy birthday'}
+  },
+  {
+    path: '/activity/spring-festival',
+    name: 'SpringFestival',
+    component: SpringFestival,
+    meta: {title: '新春红包'}
+  },
+  {
+    path: '/activity/Spring-record',
+    name: 'SpringRecord',
+    component: SpringRecord,
+    meta: {title: '查看详情'}
   },
   {
     path: '/register-agree',
