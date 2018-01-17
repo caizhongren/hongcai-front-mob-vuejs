@@ -38,6 +38,7 @@ const Feedback = r => require.ensure([], () => r(require('../components/user-cen
 const InviteRebate = r => require.ensure([], () => r(require('../components/user-center/inviteRebate.vue')), 'InviteRebate')
 const inviteRebateList = r => require.ensure([], () => r(require('../components/user-center/inviteRebateList.vue')), 'InviteRebate')
 const Membership = r => require.ensure([], () => r(require('../components/user-center/Membership.vue')), 'Membership')
+const BeanDetail = r => require.ensure([], () => r(require('../components/user-center/beanDetail.vue')), 'BeanDetail')
 const AssignmentQuestion = r => require.ensure([], () => r(require('../components/assignmentQuestion.vue')), 'Question')
 const RegisterAgree = r => require.ensure([], () => r(require('../components/registerAgree.vue')), 'RegisterAgree')
 const AssignmentAgree = r => require.ensure([], () => r(require('../components/assignmentAgree.vue')), 'AssignmentAgree')
@@ -68,6 +69,9 @@ const BreakEgg = r => require.ensure([], () => r(require('../components/activity
 const BreakEggRecord = r => require.ensure([], () => r(require('../components/activity/breakEggRecord.vue')), 'BreakEggRecord')
 const Anniversary = r => require.ensure([], () => r(require('../components/activity/anniversary.vue')), 'Anniversary')
 const HappyBirthday = r => require.ensure([], () => r(require('../components/activity/happyBirthday.vue')), 'HappyBirthday')
+const LabaFestival = r => require.ensure([], () => r(require('../components/activity/labaFestival.vue')), 'LabaFestival')
+const LabaRecord = r => require.ensure([], () => r(require('../components/activity/labaRecord.vue')), 'LabaRecord')
+const BeanExplain = r => require.ensure([], () => r(require('../components/user-center/beanExplain.vue')), 'Bean')
 
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -239,6 +243,12 @@ const routes = [
     meta: {title: '公告详情'}
   },
   {
+    path: '/user-center/bean-detail',
+    name: 'BeanDetail',
+    component: BeanDetail,
+    meta: {title: '宏豆明细'}
+  },
+  {
     path: '/activity/novice-landing',
     name: 'Novice',
     component: Novice,
@@ -327,6 +337,18 @@ const routes = [
     name: 'BreakEggRecord',
     component: BreakEggRecord,
     meta: {title: '诞旦有惊喜'}
+  },
+  {
+    path: '/activity/laba-festival',
+    name: 'LabaFestival',
+    component: LabaFestival,
+    meta: {title: '腊月迎新礼'}
+  },
+  {
+    path: '/activity/laba-record',
+    name: 'LabaRecord',
+    component: LabaRecord,
+    meta: {title: '查看详情'}
   },
   {
     path: '/activity/anniversary',
@@ -449,6 +471,12 @@ const routes = [
     name: 'Updates',
     component: Updates,
     meta: {title: '发现新版本'}
+  },
+  {
+    path: '/user-center/bean-explain',
+    name: 'BeanExplain',
+    component: BeanExplain,
+    meta: {title: '宏豆小百科'}
   },
   {
     path: '/:page',
