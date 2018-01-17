@@ -1,8 +1,10 @@
 <template>
   <div class="project" id="project" v-auto-height v-load>
     <div class="fist-frame product-page1 animate" id="product-page1">
+      <div class="upRate" @click="tipsAnm"><img src="../images/project/icon03.png" alt=""> <p>如何提高<br> 会员加息</p></div>
       <div class="project-detail-top bg-white">
         <p class="ft-Arial"><span>{{project.annualEarnings || 0}}</span>%</p>
+        <p class="ft-Arial welfareRate" v-if="welfareRate > 0"><a>+</a><span>{{welfareRate || 0}}</span>%</p>
         <p class="second">期望年均回报率</p>
         <div class="tip-list">
           <span class="tip-item tip-item1"><span class="font-Arial margin-0">100</span>元起投</span>
@@ -198,6 +200,9 @@
     name: 'projectDetail',
     data () {
       return {
+        hammerTimer: null,
+        hammerTimer2: null,
+        isRate: true,
         busy: false,
         project: {
           amount: 0
@@ -229,7 +234,9 @@
         enterpriseThumbnailFileList: [],
         projectOriginalFileList: [],
         projectThumbnailFileList: [],
-        baseFileUrl: process.env.baseFileUrl
+        baseFileUrl: process.env.baseFileUrl,
+        welfareRate: 0,
+        projectType: 0
       }
     },
     watch: {
@@ -251,6 +258,8 @@
       this.getProjectBill()
       this.getOrderList(this.page, this.pageSize)
       window.vue = this
+      this.welfareTypes()
+      this.tipsAnm()
     },
     directives: {
       'load': {
@@ -272,7 +281,61 @@
         }
       }
     },
+    props: ['token'],
     methods: {
+      tipsAnm () {
+        var that = this
+        var a = 1.12
+        if (that.hammerTimer || that.hammerTimer2) {
+          alert(that.hammerTimer)
+          clearInterval(that.hammerTimer)
+          clearInterval(that.hammerTimer2)
+          that.hammerTimer = null
+          that.hammerTimer2 = null
+          return
+        } else {
+          that.hammerTimer = setInterval(function () {
+            if (a < 0.12) {
+              setTimeout(function () {
+                that.tipsAnm2()
+              }, 3000)
+              clearInterval(that.hammerTimer)
+              that.hammerTimer = null
+            } else {
+              a -= 0.1
+              $('.upRate').css('transform', 'translateX(' + a + 'rem)')
+              document.querySelector('.upRate').style.webkitTransform = 'translateX(' + a + 'rem)'
+            }
+          }, 50)
+        }
+      },
+      tipsAnm2 () {
+        var that = this
+        var a = 0.12
+        that.hammerTimer2 = setInterval(function () {
+          if (a > 1.1) {
+            clearInterval(that.hammerTimer2)
+            that.hammerTimer2 = null
+          } else {
+            a += 0.1
+            $('.upRate').css('transform', 'translateX(' + a + 'rem)')
+            document.querySelector('.upRate').style.webkitTransform = 'translateX(' + a + 'rem)'
+          }
+        }, 50)
+      },
+      welfareTypes () {
+        var that = this
+        var url = that.token ? '/hongcai/rest/users/member/welfares?token=' + that.token + '&onlyUserLevel=1' : '/hongcai/rest/users/member/welfareTypes?level=-1&type=1'
+        that.$http({
+          method: 'get',
+          url: url
+        }).then((response) => {
+          var res = response.data.data[0].welfareRules
+          for (let i = 0; i < res.length; i++) {
+            that.projectType === res[i].investProjectType ? that.welfareRate = res[i].amount : null
+          }
+        })
+      },
       toggleTab: function (i) {
         this.activeTab = i
         $('.scroll').css('transform', 'translateY(0px)')
@@ -289,6 +352,7 @@
           this.processWith = parseInt(proWidth) === proWidth ? proWidth : proWidth.toFixed(2)
           this.expectEarning = (10000 * this.project.annualEarnings * this.project.projectDays / 36500).toFixed(2)
           this.projectId = response.data.id
+          this.projectType = response.data.type
           this.getProjectInfo()
         })
       },
@@ -529,6 +593,28 @@
 </script>
 
 <style scoped>
+  .upRate {
+    background: #ff6000;
+    position: absolute;
+    right: 0;
+    top: 2%;
+    height: .65rem;
+    border-top-left-radius: .35rem;
+    border-bottom-left-radius: .35rem;
+    padding: .08rem;
+    color: #fff;
+    line-height: 1.1;
+    width: 1.8rem;
+  }
+  .upRate img {
+    width: .5rem;
+    float: left;
+  }
+  .upRate p {
+    float: left;
+    margin: .01rem 0 0 .08rem;
+    /* transform: translateX(1rem); */
+  }
   .child {
     position: absolute;
     top: 1.3rem;
@@ -680,10 +766,19 @@
     height: .96rem;
     line-height: .96rem;
     margin-bottom: .25rem;
+    display: inline-block;
   }
   .project-detail-top span {
     font-size: 1.2rem;
-    margin-left: 7%;
+  }
+  .project-detail-top p.welfareRate {
+    font-size: .4rem;
+  }
+  .project-detail-top p.welfareRate span {
+    font-size: .7rem;
+  }
+  .project-detail-top p.welfareRate a {
+    font-size: .67rem;
   }
   .project-detail-top p.second {
     height: .2rem;
