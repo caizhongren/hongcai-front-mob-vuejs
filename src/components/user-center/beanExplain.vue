@@ -1,5 +1,5 @@
 <template>
-  <div class="bean-explain" @click="test">
+  <div class="bean-explain">
     <div class="part_what clearfix">
       <span class="num">1</span>
       <div class="content">
@@ -114,11 +114,6 @@
         // 1 需要显示 0 不需要显示
         isShow: 0
       }, function (res) {}, null)
-    },
-    methods: {
-      test () {
-        window.location.href = 'http://10.0.8.41:8080/user-center/bean-detail'
-      }
     }
   }
 </script>
