@@ -144,7 +144,7 @@
     font-size: .22rem;
   }
   li .right {
-    padding-top: .12rem;
+    padding-top: .15rem;
     float: right;
     color: #ff611d;
     font-size: .26rem;
