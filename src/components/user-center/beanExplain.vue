@@ -1,5 +1,5 @@
 <template>
-  <div class="bean-explain">
+  <div class="bean-explain" @click="test">
     <div class="part_what clearfix">
       <span class="num">1</span>
       <div class="content">
@@ -25,13 +25,13 @@
             <p :class="{'single': item.description === ''}">{{item.type}}</p>{{item.description}}
           </div>
           <span class="fr">+{{item.amount}}</span>
-          <img src="../../images/user-center/bean.png" alt="" width="13%" class="fr">
+          <img src="../../images/user-center/bean.png" alt="" width="7.4%" class="fr">
         </li>
       </ul>
       <div class="tip">
         <span class="color_orange fl">*</span>
-        <div class="text position-re">还可在平台特定活动中获取<img src="../../images/user-center/bean.png" alt="" width="8%" class="position-ab"><br>
-          提现会对应扣减<img src="../../images/user-center/bean.png" alt="" width="8%" class="position-ab">
+        <div class="text position-re">还可在平台特定活动中获取<img src="../../images/user-center/bean.png" alt="" width="5%" class="position-ab"><br>
+          提现会对应扣减<img src="../../images/user-center/bean.png" alt="" width="5%" class="position-ab">
         </div>
       </div>
     </div>
@@ -114,6 +114,11 @@
         // 1 需要显示 0 不需要显示
         isShow: 0
       }, function (res) {}, null)
+    },
+    methods: {
+      test () {
+        window.location.href = 'http://10.0.8.41:8080/user-center/bean-detail'
+      }
     }
   }
 </script>
@@ -182,13 +187,14 @@
     padding: .15rem 0;
   }
   ul li img {
-    margin-top: 0.01rem;
+    margin-top: 0.12rem;
+    margin-right: .15rem;
   }
   ul li span {
     padding-top: .11rem;
     margin-left: -.1rem;
     font-family: 'PingFang-SC';
-    font-size: .27rem;
+    font-size: .25rem;
     letter-spacing: 0.3px;
     color:#ff611d;
   }
@@ -201,10 +207,12 @@
     color: #666666;
   }
   .tip .text img:first-child {
-    top: -12%;
+    top: 0%;
+    margin-left: .05rem;
   }
   .tip .text img:last-child {
-    top: 37%;
+    top: 48%;
+    margin-left: .05rem;
   }
 </style>
 

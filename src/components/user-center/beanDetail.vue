@@ -11,7 +11,7 @@
           <p>{{item.description}}</p>
           <p>{{item.createTime | dateDotTime}}</p>
         </div>
-        <div class="right"><img src="../../images/user-center/bean.png" alt=""><span>{{item.points >0 ? '+' : ''}}{{item.points}}</span></div>
+        <div class="right"><img src="../../images/user-center/bean.png" alt="" width="22%"><span>{{item.points > 0 ? ' + ' : ''}}{{item.points}}</span></div>
       </li>
       <div v-if="pointsRecords.length > 0 && totalPage > page" class="loadMore" @click="loadMore(page)">查看更多</div>
       <div v-if="pointsRecords.length <= 0" class="noInvestRecord">
@@ -113,14 +113,16 @@
     font-size: .24rem;
   }
   .header .title img {
-    width: 10%;
+    width: 5%;
     vertical-align: -webkit-baseline-middle;
     margin-top: -.2rem;
+    margin-right: .1rem;
   }
   .details {
     background: #fff;
     height: 7.9rem;
     overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
   }
   .details li {
     overflow: hidden;
@@ -142,16 +144,13 @@
     font-size: .22rem;
   }
   li .right {
+    padding-top: .12rem;
     float: right;
     color: #ff611d;
     font-size: .26rem;
     font-weight: bold;
     text-align: right;
     width: 30%;
-  }
-  li .right img {
-    width: 40%;
-    vertical-align: bottom;
   }
   li .right span {
     position: relative;
