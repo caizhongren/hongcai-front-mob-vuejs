@@ -606,7 +606,7 @@
     height: .54rem;
     border-top-left-radius: .35rem;
     border-bottom-left-radius: .35rem;
-    padding: .055rem 0 0 .06rem;
+    padding: .056rem 0 0 .06rem;
     color: #fff;
     line-height: 1.1;
     width: 1.7rem;
@@ -617,7 +617,7 @@
   }
   .upRate p {
     float: left;
-    margin: .017rem 0 0 .15rem;
+    margin: .015rem 0 0 .15rem;
     font-size: .22rem;
   }
   .child {
