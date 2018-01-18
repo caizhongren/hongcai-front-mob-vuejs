@@ -7,7 +7,7 @@
       <form>
         <input type="tel" name="mobile" class="mobile" placeholder="请输入手机号" v-model="user.mobile" v-bind:value="user.mobile" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler" autocomplete="off">
         <div class="pic">
-          <input type="text" name="picCaptcha" placeholder="请输入图形验证码" v-model="user.picCaptcha" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler(e)" autocomplete="off">
+          <input type="tel" maxlength="4" name="picCaptcha" placeholder="请输入图形验证码" v-model="user.picCaptcha" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler1(e)" autocomplete="off">
           <span @click="refreshCode"><img alt="图形验证码" id="picCaptcha" width="100%" height="100%"></span>
         </div>
         <div class="captcha">
@@ -180,11 +180,10 @@
         e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/\D/g, ''))
       },
       oninputHandler1 () {
-        this.user.picCaptcha = this.user.picCaptcha.length > 4 ? this.user.picCaptcha.slice(0, 4) : this.user.picCaptcha
-        this.user.picCaptcha = this.user.picCaptcha.replace(/[\W]/g, '')
+        this.user.picCaptcha = this.user.picCaptcha.replace(/\D/g, '')
       },
       beforepasteHandler1 (e) {
-        e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/[\W]/g, ''))
+        e.clipboardData.setData('tel', e.clipboardData.getData('tel').replace(/\D/g, ''))
       },
       oninputHandler2 () {
         this.user.captcha = this.user.captcha.length > 6 ? this.user.captcha.slice(0, 6) : this.user.captcha
