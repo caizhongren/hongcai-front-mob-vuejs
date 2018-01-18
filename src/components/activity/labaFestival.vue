@@ -59,7 +59,7 @@
             <p class="record" v-if="investAmount > 0" @click="toRecord">查看详情>></p>
             <div class="tips">
               <div v-if="investAmount >=5000">预计获得特权本金<span>{{privilegedCapital}}元</span>(有效期{{validityTime}}天） <br>约合收益 ≈<span>{{profit}}元</span></div> 
-              <p :class="{'single':investAmount > 0 && investAmount < 5000, 'zero':investAmount <= 0}">*实际获得奖励以{{activityInfo.getRewardYear}}年{{activityInfo.getRewardMonth}}月{{activityInfo.getRewardDate}}日24:00时累计新增金额及对应达标奖励倍数为准。</p>
+              <p :class="{'single':investAmount > 0 && investAmount < 5000, 'zero':investAmount <= 0}">*实际获得奖励以{{activityInfo.endYear}}年{{activityInfo.endMonth}}月{{activityInfo.endDate}}日24:00时累计新增金额及对应达标奖励倍数为准。</p>
             </div>
           </div>
           <div v-if="!token">
@@ -170,10 +170,7 @@
             startDate: new Date(startTime).getDate(),
             endYear: new Date(endTime).getFullYear(),
             endMonth: new Date(endTime).getMonth() + 1,
-            endDate: new Date(endTime).getDate(),
-            getRewardYear: new Date(endTime - getRewardTime).getFullYear(),
-            getRewardMonth: new Date(endTime - getRewardTime).getMonth() + 1,
-            getRewardDate: new Date(endTime - getRewardTime).getDate()
+            endDate: new Date(endTime).getDate()
           }
         })
       },
