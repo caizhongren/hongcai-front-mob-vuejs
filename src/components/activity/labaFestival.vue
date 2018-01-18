@@ -163,7 +163,6 @@
           that.activityStatus = res.data.status
           var startTime = res.data.startTime
           var endTime = res.data.endTime
-          var getRewardTime = 1000 * 60 * 60 * 24 * 1
           that.activityInfo = {
             startYear: new Date(startTime).getFullYear(),
             startMonth: new Date(startTime).getMonth() + 1,
