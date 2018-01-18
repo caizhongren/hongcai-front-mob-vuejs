@@ -200,8 +200,8 @@
     name: 'projectDetail',
     data () {
       return {
-        hammerTimer: null,
-        hammerTimer2: null,
+        tipTimer: 1,
+        tipTimer2: 1,
         isRate: true,
         busy: false,
         project: {
@@ -285,43 +285,45 @@
     methods: {
       tipsAnm () {
         var that = this
-        var a = 1.12
-        if (that.hammerTimer || that.hammerTimer2) {
-          alert(that.hammerTimer)
-          clearInterval(that.hammerTimer)
-          clearInterval(that.hammerTimer2)
-          that.hammerTimer = null
-          that.hammerTimer2 = null
+        var a = 1.02
+        if (that.tipTimer === null) {
+          that.$router.push({name: 'Invite'})
           return
         } else {
-          that.hammerTimer = setInterval(function () {
-            if (a < 0.12) {
+          that.tipTimer = setInterval(function () {
+            if (a < 0.1) {
               setTimeout(function () {
                 that.tipsAnm2()
-              }, 3000)
-              clearInterval(that.hammerTimer)
-              that.hammerTimer = null
+              }, 2000)
+              clearInterval(that.tipTimer)
+              that.tipTimer = null
+              that.tipTimer2 = 1
             } else {
               a -= 0.1
               $('.upRate').css('transform', 'translateX(' + a + 'rem)')
               document.querySelector('.upRate').style.webkitTransform = 'translateX(' + a + 'rem)'
             }
-          }, 50)
+          }, 30)
         }
       },
       tipsAnm2 () {
         var that = this
-        var a = 0.12
-        that.hammerTimer2 = setInterval(function () {
-          if (a > 1.1) {
-            clearInterval(that.hammerTimer2)
-            that.hammerTimer2 = null
-          } else {
-            a += 0.1
-            $('.upRate').css('transform', 'translateX(' + a + 'rem)')
-            document.querySelector('.upRate').style.webkitTransform = 'translateX(' + a + 'rem)'
-          }
-        }, 50)
+        var a = 0.1
+        if (that.tipTimer2 === null) {
+          return
+        } else {
+          that.tipTimer2 = setInterval(function () {
+            if (a > 1) {
+              clearInterval(that.tipTimer2)
+              that.tipTimer2 = null
+              that.tipTimer = 1
+            } else {
+              a += 0.1
+              $('.upRate').css('transform', 'translateX(' + a + 'rem)')
+              document.querySelector('.upRate').style.webkitTransform = 'translateX(' + a + 'rem)'
+            }
+          }, 30)
+        }
       },
       welfareTypes () {
         var that = this
@@ -588,32 +590,35 @@
           }
         }
       }
+    },
+    destroyed () {
+      this.tipTimer = null
+      this.tipTimer2 = null
     }
   }
 </script>
-
 <style scoped>
   .upRate {
     background: #ff6000;
     position: absolute;
     right: 0;
     top: 2%;
-    height: .65rem;
+    height: .54rem;
     border-top-left-radius: .35rem;
     border-bottom-left-radius: .35rem;
-    padding: .08rem;
+    padding: .055rem 0 0 .06rem;
     color: #fff;
     line-height: 1.1;
-    width: 1.8rem;
+    width: 1.7rem;
   }
   .upRate img {
-    width: .5rem;
+    width: .42rem;
     float: left;
   }
   .upRate p {
     float: left;
-    margin: .01rem 0 0 .08rem;
-    /* transform: translateX(1rem); */
+    margin: .017rem 0 0 .15rem;
+    font-size: .22rem;
   }
   .child {
     position: absolute;
