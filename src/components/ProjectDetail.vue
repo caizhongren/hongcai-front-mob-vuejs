@@ -1,10 +1,11 @@
 <template>
   <div class="project" id="project" v-auto-height v-load>
     <div class="fist-frame product-page1 animate" id="product-page1">
-      <div class="upRate" @click="tipsAnm"><img src="../images/project/icon03.png" alt=""> <p>如何提高<br> 会员加息</p></div>
+      <div class="upRate" @click="tipsAnm" v-if="token"><img src="../images/project/icon03.png" alt=""> <p>如何提高<br> 会员加息</p></div>
       <div class="project-detail-top bg-white">
         <p class="ft-Arial"><span>{{project.annualEarnings || 0}}</span>%</p>
-        <p class="ft-Arial welfareRate" v-if="welfareRate > 0"><a>+</a><span>{{welfareRate || 0}}</span>%</p>
+        <p class="ft-Arial welfareRate" v-if="xinshou !== '1' && welfareRate > 0"><a>+</a><span>{{welfareRate || 0}}</span>%</p>
+        <p class="ft-Arial" v-if="xinshou === '1'"><a>+</a><span>6</span>%</p>
         <p class="second">期望年均回报率</p>
         <div class="tip-list">
           <span class="tip-item tip-item1"><span class="font-Arial margin-0">100</span>元起投</span>
@@ -24,7 +25,7 @@
           </div>
         </div>
         <p class="remain-amount">剩余可投<span>{{project.amount | number}}</span>元</p>
-        <p class="actual-amount">投资<span>10,000.00</span>元，预计收益<span>{{expectEarning}}</span>元</p>
+        <p class="actual-amount">{{xinshou === '1' ? '上限' : '投资'}}<span>10,000.00</span>元，预计收益<span>{{expectEarning}}</span>元</p>
       </div>
       <div class="project-detail-bottom bg-white">
         <div class="detail-item">
@@ -236,7 +237,8 @@
         projectThumbnailFileList: [],
         baseFileUrl: process.env.baseFileUrl,
         welfareRate: 0,
-        projectType: 0
+        projectType: 0,
+        xinshou: 0
       }
     },
     watch: {
@@ -248,17 +250,21 @@
         if (oldVal !== newVal) {
           $('.scroll').scrollTop(0)
         }
+      },
+      token: function (val) {
+        val && val !== '' ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
       }
     },
     created: function () {
       this.paramsNum = this.$route.params.number
+      this.xinshou = this.$route.query.xinshou
       this.getProject()
       this.getProjectRisk()
       this.getFiles()
       this.getProjectBill()
       this.getOrderList(this.page, this.pageSize)
       window.vue = this
-      this.welfareTypes()
+      this.token ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
       this.tipsAnm()
     },
     directives: {
@@ -287,7 +293,7 @@
         var that = this
         var a = 1.02
         if (that.tipTimer === null) {
-          that.$router.push({name: 'Invite'})
+          bridgeUtil.webConnectNative('HCNative_GoMemberCouponWelfare', undefined, {}, function (res) {}, null)
           return
         } else {
           that.tipTimer = setInterval(function () {
@@ -325,9 +331,8 @@
           }, 30)
         }
       },
-      welfareTypes () {
+      welfares (url) {
         var that = this
-        var url = that.token ? '/hongcai/rest/users/member/welfares?token=' + that.token + '&onlyUserLevel=1' : '/hongcai/rest/users/member/welfareTypes?level=-1&type=1'
         that.$http({
           method: 'get',
           url: url
