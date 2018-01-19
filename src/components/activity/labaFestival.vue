@@ -88,7 +88,7 @@
             </div>
             <div class="rule">
               <img src="../../images/laba-festival/rule-icon.png" alt="" class="rule-icon">
-              <p>关于特权本金奖励<br> >>特权本金是平台向用户提供的一种虚拟资金，其本身不可提现或用于投资，但享受8%年化收益率。根据活动规则，特权本金享有不同的计息时长，每日自动产生的收益，并直接发放至您的账户>>可用余额中，可用于提现或投资;</p>
+              <p>关于特权本金奖励<br> 特权本金是平台向用户提供的一种虚拟资金，其本身不可提现或用于投资，但享受8%年化收益率。根据活动规则，特权本金享有不同的计息时长，每日自动产生的收益，并直接发放至您的账户>>可用余额中，可用于提现或投资;</p>
             </div>
             <div class="rule">
               <img src="../../images/laba-festival/rule-icon.png" alt="" class="rule-icon">
