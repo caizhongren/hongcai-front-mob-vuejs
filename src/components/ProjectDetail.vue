@@ -4,8 +4,8 @@
       <div class="upRate" @click="tipsAnm" v-if="token"><img src="../images/project/icon03.png" alt=""> <p>如何提高<br> 会员加息</p></div>
       <div class="project-detail-top bg-white">
         <p class="ft-Arial"><span>{{project.annualEarnings || 0}}</span>%</p>
-        <p class="ft-Arial welfareRate" v-if="xinshou !== '1' && welfareRate > 0"><a>+</a><span>{{welfareRate || 0}}</span>%</p>
-        <p class="ft-Arial" v-if="xinshou === '1'"><a>+</a><span>6</span>%</p>
+        <p class="ft-Arial welfareRate" v-if="project.status === 7 && !newbie && welfareRate > 0"><a>+</a><span>{{welfareRate || 0}}</span>%</p>
+        <p class="ft-Arial" v-if="newbie"><a>+</a><span>6</span>%</p>
         <p class="second">期望年均回报率</p>
         <div class="tip-list">
           <span class="tip-item tip-item1"><span class="font-Arial margin-0">100</span>元起投</span>
@@ -25,7 +25,7 @@
           </div>
         </div>
         <p class="remain-amount">剩余可投<span>{{project.amount | number}}</span>元</p>
-        <p class="actual-amount">{{xinshou === '1' ? '上限' : '投资'}}<span>10,000.00</span>元，预计收益<span>{{expectEarning}}</span>元</p>
+        <p class="actual-amount">{{newbie ? '上限' : '投资'}}<span>10,000.00</span>元，预计收益<span>{{expectEarning}}</span>元</p>
       </div>
       <div class="project-detail-bottom bg-white">
         <div class="detail-item">
@@ -238,7 +238,7 @@
         baseFileUrl: process.env.baseFileUrl,
         welfareRate: 0,
         projectType: 0,
-        xinshou: 0
+        newbie: false
       }
     },
     watch: {
@@ -252,12 +252,12 @@
         }
       },
       token: function (val) {
+        val && val !== '' ? this.tipsAnm() : null
         val && val !== '' ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
       }
     },
     created: function () {
       this.paramsNum = this.$route.params.number
-      this.xinshou = this.$route.query.xinshou
       this.getProject()
       this.getProjectRisk()
       this.getFiles()
@@ -265,7 +265,8 @@
       this.getOrderList(this.page, this.pageSize)
       window.vue = this
       this.token ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
-      this.tipsAnm()
+      this.token ? this.tipsAnm() : null
+      this.isNewbie()
     },
     directives: {
       'load': {
@@ -289,6 +290,17 @@
     },
     props: ['token'],
     methods: {
+      isNewbie () {
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest/projects/' + that.paramsNum + '/isNewbie'
+        }).then((response) => {
+          if (response.data && response.data.ret !== -1) {
+            that.newbie = response.data.newbie
+          }
+        })
+      },
       tipsAnm () {
         var that = this
         var a = 1.02
@@ -337,9 +349,11 @@
           method: 'get',
           url: url
         }).then((response) => {
-          var res = response.data.data[0].welfareRules
-          for (let i = 0; i < res.length; i++) {
-            that.projectType === res[i].investProjectType ? that.welfareRate = res[i].amount : null
+          if (response.data && response.data.ret !== -1) {
+            var res = response.data.data[0].welfareRules
+            for (let i = 0; i < res.length; i++) {
+              that.projectType === res[i].investProjectType ? that.welfareRate = res[i].amount : null
+            }
           }
         })
       },
