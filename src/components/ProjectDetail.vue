@@ -4,8 +4,8 @@
       <div class="upRate" @click="tipsAnm" v-if="token"><img src="../images/project/icon03.png" alt=""> <p>如何提高<br> 会员加息</p></div>
       <div class="project-detail-top bg-white">
         <p class="ft-Arial"><span>{{project.annualEarnings || 0}}</span>%</p>
-        <p class="ft-Arial welfareRate" v-if="project.status === 7 && !newbie && welfareRate > 0"><a>+</a><span>{{welfareRate || 0}}</span>%</p>
-        <p class="ft-Arial" v-if="newbie"><a>+</a><span>6</span>%</p>
+        <p class="ft-Arial welfareRate" v-show="project.status === 7 && !newbie && welfareRate > 0"><a>+</a><span>{{welfareRate}}</span>%</p>
+        <p class="ft-Arial" v-show="newbie"><a>+</a><span>6</span>%</p>
         <p class="second">期望年均回报率</p>
         <div class="tip-list">
           <span class="tip-item tip-item1"><span class="font-Arial margin-0">100</span>元起投</span>
@@ -351,9 +351,10 @@
         }).then((response) => {
           if (response.data && response.data.ret !== -1) {
             var res = response.data.data[0].welfareRules
-            for (let i = 0; i < res.length; i++) {
-              that.projectType === res[i].investProjectType ? that.welfareRate = res[i].amount : null
-            }
+            // for (let i = 0; i < res.length; i++) {
+            //   that.projectType === res[i].investProjectType ? that.welfareRate = res[i].amount : null
+            // }
+            that.projectType === 5 ? that.welfareRate = res[0].amount : that.welfareRate = res[1].amount
           }
         })
       },
