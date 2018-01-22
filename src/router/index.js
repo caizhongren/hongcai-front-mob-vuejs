@@ -68,6 +68,12 @@ const BreakEgg = r => require.ensure([], () => r(require('../components/activity
 const BreakEggRecord = r => require.ensure([], () => r(require('../components/activity/breakEggRecord.vue')), 'BreakEggRecord')
 const Anniversary = r => require.ensure([], () => r(require('../components/activity/anniversary.vue')), 'Anniversary')
 const HappyBirthday = r => require.ensure([], () => r(require('../components/activity/happyBirthday.vue')), 'HappyBirthday')
+const LabaFestival = r => require.ensure([], () => r(require('../components/activity/labaFestival.vue')), 'LabaFestival')
+const LabaRecord = r => require.ensure([], () => r(require('../components/activity/labaRecord.vue')), 'LabaRecord')
+const BeanExplain = r => require.ensure([], () => r(require('../components/user-center/beanExplain.vue')), 'Bean')
+const BeanDetail = r => require.ensure([], () => r(require('../components/user-center/beanDetail.vue')), 'BeanDetail')
+const SpringFestival = r => require.ensure([], () => r(require('../components/activity/springFestival.vue')), 'SpringFestival')
+const SpringRecord = r => require.ensure([], () => r(require('../components/activity/SpringRecord.vue')), 'SpringRecord')
 
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -84,7 +90,6 @@ const routes = [
   },
   {
     path: '/about',
-    name: 'About',
     component: About,
     children: [
       {
@@ -115,7 +120,6 @@ const routes = [
   },
   {
     path: '/disclosure',
-    name: 'Disclosure',
     component: Disclosure,
     children: [
       {
@@ -239,6 +243,12 @@ const routes = [
     meta: {title: '公告详情'}
   },
   {
+    path: '/user-center/bean-detail',
+    name: 'BeanDetail',
+    component: BeanDetail,
+    meta: {title: '宏豆明细'}
+  },
+  {
     path: '/activity/novice-landing',
     name: 'Novice',
     component: Novice,
@@ -329,6 +339,18 @@ const routes = [
     meta: {title: '诞旦有惊喜'}
   },
   {
+    path: '/activity/laba-festival',
+    name: 'LabaFestival',
+    component: LabaFestival,
+    meta: {title: '腊月迎新礼'}
+  },
+  {
+    path: '/activity/laba-record',
+    name: 'LabaRecord',
+    component: LabaRecord,
+    meta: {title: '查看详情'}
+  },
+  {
     path: '/activity/anniversary',
     name: 'Anniversary',
     component: Anniversary,
@@ -339,6 +361,18 @@ const routes = [
     name: 'HappyBirthday',
     component: HappyBirthday,
     meta: {title: 'happy birthday'}
+  },
+  {
+    path: '/activity/spring-festival',
+    name: 'SpringFestival',
+    component: SpringFestival,
+    meta: {title: '新春红包'}
+  },
+  {
+    path: '/activity/Spring-record',
+    name: 'SpringRecord',
+    component: SpringRecord,
+    meta: {title: '查看详情'}
   },
   {
     path: '/register-agree',
@@ -449,6 +483,12 @@ const routes = [
     name: 'Updates',
     component: Updates,
     meta: {title: '发现新版本'}
+  },
+  {
+    path: '/user-center/bean-explain',
+    name: 'BeanExplain',
+    component: BeanExplain,
+    meta: {title: '宏豆小百科'}
   },
   {
     path: '/:page',

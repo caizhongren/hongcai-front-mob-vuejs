@@ -563,7 +563,7 @@
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            1）每笔提现由第三方支付公司收取2元手续费(提现金额不限)；<br>
+            1）每笔提现收取2元手续费(提现金额不限)；<br>
             2）单日提现次数不限，提现金额无上限。
           </span>  
         </div>

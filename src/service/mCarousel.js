@@ -118,6 +118,8 @@ var Carousel = {
     }
     this._setActive(this.index);
   },
+  startPos: {},
+  endPos: {},
   _bindEvent: function() {
     utils.on(this.wrapper, 'touchstart', this._start.bind(this));
     utils.on(this.wrapper, 'touchmove', this._move.bind(this));
@@ -126,8 +128,14 @@ var Carousel = {
   _start: function(e) {
     this.startTime = utils.getTime();
     this._reset();
+    let touch = e.targetTouches[0]
+    this.startPos = {x: touch.pageX, y: touch.pageY}
   },
   _move: function(e) {
+    let touch = e.targetTouches[0]
+    this.endPos = {x: touch.pageX - this.startPos.x, y: touch.pageY - this.startPos.y}
+    var isScrolling = Math.abs(this.endPos.x) < Math.abs(this.endPos.y) ? 1 : 0
+    if (isScrolling === 1) {return}
     if (!e.touches) return;
     if (!!this.animated) return;
     e.preventDefault();
@@ -401,15 +409,17 @@ Carousel.mCarousel = function(el, opts) {
   this.before = opts.before || function() {};
   this.after = opts.after || function() {};
   this.locked = opts.locked || false;
+  this.diff = opts.diff || 2
   if (this.length < 4) this.locked = true;
 
-  this.viewW = this.wrapper.offsetWidth;
+  this.viewW = this.wrapper.offsetWidth || window.innerWidth - 80;
   // this.viewH = this.wrapper.offsetHeight;
-  this.singleW = opts.width || this.elements[this.index].offsetWidth;
+  this.singleW = opts.width || this.elements[this.index].offsetWidth || this.viewW - 100;
+  // this.singleW = 230;
   // this.singleH = opts.height || this.elements[this.index].offsetHeight;
   this.centerX = (this.viewW - this.singleW) / 2;
   // this.centerY = (this.viewH - this.singleH) / 2;
-  this.diffX = (this.singleW - this.singleW * this.ratio) / 2; //计算(transformOrigin = 'center center')的偏移
+  this.diffX = (this.singleW - this.singleW * this.ratio) / this.diff; //计算(transformOrigin = 'center center')的偏移
   this.leftX = this._hasTransform2d ? -this.diffX : 0;
   this.rightX = this._hasTransform2d ? this.viewW - this.singleW + this.diffX : this.viewW - this.singleW;
   this.spaceX = this.centerX - this.leftX;

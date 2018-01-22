@@ -75,10 +75,10 @@
             url: '/hongcai/rest/orders/' + that.number + '/orderCoupon?token=' + that.token
           }).then(function (response) {
             if (response && response.data.ret !== -1) {
-              if (response.data.coupon) {
-                that.coupon.type = response.data.coupon.type
-                that.coupon.value = response.data.coupon.value
-                that.coupon.duration = response.data.coupon.duration
+              if (response.data) {
+                that.coupon.type = response.data.type
+                that.coupon.value = response.data.value
+                that.coupon.duration = response.data.duration
                 dataList = {
                   'business': that.b,
                   'amount': that.amount,
