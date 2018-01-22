@@ -350,11 +350,15 @@
           url: url
         }).then((response) => {
           if (response.data && response.data.ret !== -1) {
-            var res = response.data.data[0].welfareRules
-            // for (let i = 0; i < res.length; i++) {
-            //   that.projectType === res[i].investProjectType ? that.welfareRate = res[i].amount : null
-            // }
-            that.projectType === 5 ? that.welfareRate = res[0].amount : that.welfareRate = res[1].amount
+            if (response.data.data.length <= 0) {
+              that.welfareRate = 0
+            } else {
+              var res = response.data.data[0].welfareRules
+              // for (let i = 0; i < res.length; i++) {
+              //   that.projectType === res[i].investProjectType ? that.welfareRate = res[i].amount : null
+              // }
+              that.projectType === 5 ? that.welfareRate = res[0].amount : that.welfareRate = res[1].amount
+            }
           }
         })
       },
