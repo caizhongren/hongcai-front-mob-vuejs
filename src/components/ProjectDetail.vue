@@ -350,7 +350,7 @@
           url: url
         }).then((response) => {
           if (response.data && response.data.ret !== -1) {
-            if (response.data.data.length <= 0) {
+            if (that.token && response.data.data.length <= 0) {
               that.welfareRate = 0
             } else {
               var res = response.data.data[0].welfareRules
