@@ -14,10 +14,6 @@
                 <img src="../../images/invite/invite02-4.png">
                 <img src="../../images/invite/invite02-5.png">
                 <img src="../../images/invite/invite02-6.png">
-                <img src="../../images/invite/invite02-7.png">
-                <img src="../../images/invite/invite02-8.png">
-                <img src="../../images/invite/invite02-9.png">
-                <img src="../../images/invite/invite02-10.png">
                 <img src="../../images/invite/invite03.png">
                 <img src="../../images/invite/invite04.png">
                 <img src="../../images/invite/invite05.png">
@@ -80,7 +76,7 @@
                         <p class="rule-title">3.新用户通过老用户邀请注册后，可以得到什么奖励？</p>
                         <p class="rule-content"><i class="fa fa-circle" aria-hidden="true"></i><span>新用户通过邀请注册后，立享“合伙人特权大礼包”：</span></p>
                         <p class="list-page">
-                            &nbsp;1）10%特权加息券1张 <br/>
+                            &nbsp;1）新手专享项目：预期年化收益率8%+6%，55天期限 <br/>
                             &nbsp;2）精选加息券：0.3%、0.5%、0.8%，各1张 <br/>
                             &nbsp;3）尊贵加息券：0.8%、1.2%、1.6%，各1张 <br/>
                             &nbsp;4）精选现金券：总计184元现金投资券 <br/>
