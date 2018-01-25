@@ -76,7 +76,7 @@
                         <p class="rule-title">3.新用户通过老用户邀请注册后，可以得到什么奖励？</p>
                         <p class="rule-content"><i class="fa fa-circle" aria-hidden="true"></i><span>新用户通过邀请注册后，立享“合伙人特权大礼包”：</span></p>
                         <p class="list-page">
-                            &nbsp;1）新手专享项目：预期年化收益率8%+6%，55天期限 <br/>
+                            <span>&nbsp;1）</span>新手专享项目：预期年化收益率8%+6%，55天期限 <br/>
                             &nbsp;2）精选加息券：0.3%、0.5%、0.8%，各1张 <br/>
                             &nbsp;3）尊贵加息券：0.8%、1.2%、1.6%，各1张 <br/>
                             &nbsp;4）精选现金券：总计184元现金投资券 <br/>
@@ -327,6 +327,11 @@ export default {
         margin-top: .1rem;
         padding-left: 0.4rem;
         overflow: hidden;
+    }
+    .list-page span {
+        float: left;
+        width: 9%;
+        height: .5rem;
     }
     .tips {
         /*position: fixed;*/

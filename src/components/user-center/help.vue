@@ -246,7 +246,7 @@
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
             可进行债权转让的项目应同时满足以下条件：<br><br>
-            1）该项目满标后，持有天数大于10天；<br>
+            1）该项目满标后，持有天数大于30天；<br>
             2）转让当天距离该笔项目到期回款日大于3天；<br>
             3）参与特定渠道奖励活动进行投资的项目不可进行债权转让。<br>
           </span>  
