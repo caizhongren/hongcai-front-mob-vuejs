@@ -118,7 +118,7 @@
         </div>
       </div>
       <div class="submenu">
-        <span class="">该笔债权持有时间 &lt; 30天，手续费 = 转让本金 * 1%，持有时间 &ge; 30天，手续费 = 转让本金 * 0.5%。</span>  
+        <span class="">手续费=转让本金 * 1%，单笔转让的手续费最低为3元。</span>  
       </div>
     </div>
     <div class="content">

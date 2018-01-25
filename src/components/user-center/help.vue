@@ -76,10 +76,8 @@
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
             债权转让手续费是宏财网为您和受让人提供信息匹配和交易撮合所收取的费用，<br><br>
-            该笔债权持有时间 < 30天，手续费 = 转让本金 * 1%，<br>
-            持有时间 ≥ 30天，手续费 = 转让本金 * 0.5%，手续费最低收取3元。<br>
-            <span v-if="currentDate - creditCreateTime < rule.borderDay * 24 * 60 * 60 * 1000">{{transferAmount || 0}} * 1% = {{transferAmount / 100 | number}}元</span>
-            <span v-if="currentDate - creditCreateTime >= rule.borderDay * 24 * 60 * 60 * 1000">{{transferAmount || 0}} * 0.5% = {{transferAmount * 0.5 / 100 | number}}元</span>
+            手续费 = 转让本金 * 1%，手续费最低收取3元。<br>
+            <span>{{transferAmount || 0}} * 1% = {{transferAmount / 100 | number}}元</span>
           </span>  
         </div>
       </div>
@@ -830,12 +828,14 @@
           this.couponVal = response.data.increaseRateCoupon && response.data.increaseRateCoupon.type === 2 ? response.data.increaseRateCoupon.value : 0
           // 现金券奖励扣款
           this.deduction = this.couponVal * (this.transferAmount / this.creditAmount)
-          // 手续费
-          if (dateUtil.intervalDays(this.currentDate, this.creditCreateTime) < this.rule.borderDay) {
-            this.counterFee = this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate > this.rule.minFee ? this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate : this.rule.minFee
-          } else {
-            this.counterFee = this.transferAmount * this.rule.greaterThanBorderDayFee / 100 * this.rule.discountFeeRate > this.rule.minFee ? this.transferAmount * this.rule.greaterThanBorderDayFee / 100 * this.rule.discountFeeRate : this.rule.minFee
-          }
+          // 现规则：手续费 = 转让本金 * 1%，单笔转让的手续费最低为3元。
+          this.counterFee = this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate > this.rule.minFee ? this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate : this.rule.minFee
+          // 手续费 原规则：该笔债权持有时间 < 30天，手续费 = 转让本金 * 1%，持有时间 ≥ 30天，手续费 = 转让本金 * 0.5%，单笔转让的手续费最低为3元。
+          // if (dateUtil.intervalDays(this.currentDate, this.creditCreateTime) < this.rule.borderDay) {
+          //   this.counterFee = this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate > this.rule.minFee ? this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate : this.rule.minFee
+          // } else {
+          //   this.counterFee = this.transferAmount * this.rule.greaterThanBorderDayFee / 100 * this.rule.discountFeeRate > this.rule.minFee ? this.transferAmount * this.rule.greaterThanBorderDayFee / 100 * this.rule.discountFeeRate : this.rule.minFee
+          // }
         })
       }
     }
