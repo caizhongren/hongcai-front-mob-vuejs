@@ -1,7 +1,7 @@
 <template>
   <div class="project" id="project" v-auto-height v-load>
     <div class="fist-frame product-page1 animate" id="product-page1">
-      <div class="upRate" @click="tipsAnm" v-if="token && memberLevel !== 6"><img src="../images/project/icon03.png" alt=""> <p>如何提高<br> 会员加息</p></div>
+      <div class="upRate" @click="anmTips" v-if="token && memberLevel !== 6"><img src="../images/project/icon03.png" alt=""> <p>如何提高<br> 会员加息</p></div>
       <div class="project-detail-top bg-white">
         <p class="ft-Arial"><span>{{project.annualEarnings || 0}}</span>%</p>
         <p class="ft-Arial welfareRate" v-show="project.status === 7 && !newbie && welfareRate > 0"><a>+</a><span>{{welfareRate}}</span>%</p>
@@ -239,7 +239,8 @@
         welfareRate: 0,
         projectType: 0,
         newbie: false,
-        memberLevel: 1
+        memberLevel: 1,
+        anmClick: false
       }
     },
     watch: {
@@ -303,8 +304,18 @@
           }
         })
       },
+      anmTips () {
+        if (this.anmClick) {
+          return
+        }
+        setTimeout(function () {
+          this.anmClick = false
+        }, 2000)
+        this.tipsAnm()
+      },
       tipsAnm () {
         var that = this
+        that.anmClick = true
         var a = 1.02
         if (that.tipTimer === null) {
           bridgeUtil.webConnectNative('HCNative_GoMemberCouponWelfare', undefined, {}, function (res) {}, null)
@@ -318,6 +329,7 @@
               clearInterval(that.tipTimer)
               that.tipTimer = null
               that.tipTimer2 = 1
+              that.anmClick = false
             } else {
               a -= 0.1
               $('.upRate').css('transform', 'translateX(' + a + 'rem)')
@@ -337,6 +349,7 @@
               clearInterval(that.tipTimer2)
               that.tipTimer2 = null
               that.tipTimer = 1
+              that.anmClick = false
             } else {
               a += 0.1
               $('.upRate').css('transform', 'translateX(' + a + 'rem)')
