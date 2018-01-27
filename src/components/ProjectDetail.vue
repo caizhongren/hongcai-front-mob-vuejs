@@ -25,7 +25,7 @@
           </div>
         </div>
         <p class="remain-amount">剩余可投<span>{{project.amount | number}}</span>元</p>
-        <p class="actual-amount">{{newbie ? '上限' : '投资'}}<span>10,000.00</span>元，预计收益<span>{{expectEarning}}</span>元</p>
+        <p class="actual-amount">{{newbie ? '上限' : '投资'}}<span>10,000.00</span>元，预计收益<span>{{expectEarning}}</span><span v-show="newbie || (welfareRate > 0 && project.status === 7)">+{{newbie ? (10000 * 6 * project.projectDays / 36500).toFixed(2) : (10000 * welfareRate * project.projectDays / 36500).toFixed(2)}}</span>元</p>
       </div>
       <div class="project-detail-bottom bg-white">
         <div class="detail-item">
@@ -253,8 +253,10 @@
         }
       },
       token: function (val) {
-        val && val !== '' ? this.tipsAnm() : null
         val && val !== '' ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
+      },
+      memberLevel: function (val) {
+        val && val !== 6 && this.token ? this.tipsAnm() : null
       }
     },
     created: function () {
@@ -266,7 +268,6 @@
       this.getOrderList(this.page, this.pageSize)
       window.vue = this
       this.token ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
-      this.token ? this.tipsAnm() : null
       this.isNewbie()
     },
     directives: {
