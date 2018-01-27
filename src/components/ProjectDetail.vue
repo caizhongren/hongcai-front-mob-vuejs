@@ -1,7 +1,7 @@
 <template>
   <div class="project" id="project" v-auto-height v-load>
     <div class="fist-frame product-page1 animate" id="product-page1">
-      <div class="upRate" @click="tipsAnm" v-if="token"><img src="../images/project/icon03.png" alt=""> <p>如何提高<br> 会员加息</p></div>
+      <div class="upRate" @click="tipsAnm" v-if="token && memberLevel !== 6"><img src="../images/project/icon03.png" alt=""> <p>如何提高<br> 会员加息</p></div>
       <div class="project-detail-top bg-white">
         <p class="ft-Arial"><span>{{project.annualEarnings || 0}}</span>%</p>
         <p class="ft-Arial welfareRate" v-show="project.status === 7 && !newbie && welfareRate > 0"><a>+</a><span>{{welfareRate}}</span>%</p>
@@ -238,7 +238,8 @@
         baseFileUrl: process.env.baseFileUrl,
         welfareRate: 0,
         projectType: 0,
-        newbie: false
+        newbie: false,
+        memberLevel: 1
       }
     },
     watch: {
@@ -358,6 +359,7 @@
               //   that.projectType === res[i].investProjectType ? that.welfareRate = res[i].amount : null
               // }
               that.projectType === 5 ? that.welfareRate = res[0].amount : that.welfareRate = res[1].amount
+              that.token ? that.memberLevel = response.data.data[0].level : null
             }
           }
         })
