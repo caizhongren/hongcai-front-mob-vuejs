@@ -258,9 +258,8 @@
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            1）当前项目持有时间<30天时，手续费=转让本金×1%；<br>
-            2）当前项目持有时间≥30天，手续费=转让本金×0.5%；<br>
-            3）单笔转让手续费最低为3元。
+            1）手续费=转让本金×1%；<br>
+            2）单笔转让手续费最低为3元。
           </span>  
         </div>
       </div>
