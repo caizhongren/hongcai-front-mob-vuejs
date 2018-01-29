@@ -1,8 +1,11 @@
 <template>
   <div class="project" id="project" v-auto-height v-load>
     <div class="fist-frame product-page1 animate" id="product-page1">
+      <div class="upRate" @click="anmTips" v-if="token && memberLevel !== 6"><img src="../images/project/icon03.png" alt=""> <p>如何提高<br> 会员加息</p></div>
       <div class="project-detail-top bg-white">
         <p class="ft-Arial"><span>{{project.annualEarnings || 0}}</span>%</p>
+        <p class="ft-Arial welfareRate" v-show="project.status === 7 && !newbie && welfareRate > 0"><a>+</a><span>{{welfareRate}}</span>%</p>
+        <p class="ft-Arial" v-show="newbie"><a>+</a><span>6</span>%</p>
         <p class="second">期望年均回报率</p>
         <div class="tip-list">
           <span class="tip-item tip-item1"><span class="font-Arial margin-0">100</span>元起投</span>
@@ -22,7 +25,7 @@
           </div>
         </div>
         <p class="remain-amount">剩余可投<span>{{project.amount | number}}</span>元</p>
-        <p class="actual-amount">投资<span>10,000.00</span>元，预计收益<span>{{expectEarning}}</span>元</p>
+        <p class="actual-amount">{{newbie ? '上限' : '投资'}}<span>10,000.00</span>元，预计收益<span>{{expectEarning}}</span><span v-show="newbie || (welfareRate > 0 && project.status === 7)">+{{newbie ? (10000 * 6 * project.projectDays / 36500).toFixed(2) : (10000 * welfareRate * project.projectDays / 36500).toFixed(2)}}</span>元</p>
       </div>
       <div class="project-detail-bottom bg-white">
         <div class="detail-item">
@@ -198,6 +201,9 @@
     name: 'projectDetail',
     data () {
       return {
+        tipTimer: 1,
+        tipTimer2: 1,
+        isRate: true,
         busy: false,
         project: {
           amount: 0
@@ -229,7 +235,12 @@
         enterpriseThumbnailFileList: [],
         projectOriginalFileList: [],
         projectThumbnailFileList: [],
-        baseFileUrl: process.env.baseFileUrl
+        baseFileUrl: process.env.baseFileUrl,
+        welfareRate: 0,
+        projectType: 0,
+        newbie: false,
+        memberLevel: 1,
+        anmClick: false
       }
     },
     watch: {
@@ -241,6 +252,12 @@
         if (oldVal !== newVal) {
           $('.scroll').scrollTop(0)
         }
+      },
+      token: function (val) {
+        val && val !== '' ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
+      },
+      memberLevel: function (val) {
+        val && val !== 6 && this.token ? this.tipsAnm() : null
       }
     },
     created: function () {
@@ -251,6 +268,8 @@
       this.getProjectBill()
       this.getOrderList(this.page, this.pageSize)
       window.vue = this
+      this.token ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
+      this.isNewbie()
     },
     directives: {
       'load': {
@@ -272,7 +291,93 @@
         }
       }
     },
+    props: ['token'],
     methods: {
+      isNewbie () {
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest/projects/' + that.paramsNum + '/isNewbie'
+        }).then((response) => {
+          if (response.data && response.data.ret !== -1) {
+            that.newbie = response.data.newbie
+          }
+        })
+      },
+      anmTips () {
+        if (this.anmClick) {
+          return
+        }
+        setTimeout(function () {
+          this.anmClick = false
+        }, 2000)
+        this.tipsAnm()
+      },
+      tipsAnm () {
+        var that = this
+        that.anmClick = true
+        var a = 1.02
+        if (that.tipTimer === null) {
+          bridgeUtil.webConnectNative('HCNative_GoMemberCouponWelfare', undefined, {}, function (res) {}, null)
+          return
+        } else {
+          that.tipTimer = setInterval(function () {
+            if (a < 0.1) {
+              setTimeout(function () {
+                that.tipsAnm2()
+              }, 2000)
+              clearInterval(that.tipTimer)
+              that.tipTimer = null
+              that.tipTimer2 = 1
+              that.anmClick = false
+            } else {
+              a -= 0.1
+              $('.upRate').css('transform', 'translateX(' + a + 'rem)')
+              document.querySelector('.upRate').style.webkitTransform = 'translateX(' + a + 'rem)'
+            }
+          }, 30)
+        }
+      },
+      tipsAnm2 () {
+        var that = this
+        var a = 0.1
+        if (that.tipTimer2 === null) {
+          return
+        } else {
+          that.tipTimer2 = setInterval(function () {
+            if (a > 1) {
+              clearInterval(that.tipTimer2)
+              that.tipTimer2 = null
+              that.tipTimer = 1
+              that.anmClick = false
+            } else {
+              a += 0.1
+              $('.upRate').css('transform', 'translateX(' + a + 'rem)')
+              document.querySelector('.upRate').style.webkitTransform = 'translateX(' + a + 'rem)'
+            }
+          }, 30)
+        }
+      },
+      welfares (url) {
+        var that = this
+        that.$http({
+          method: 'get',
+          url: url
+        }).then((response) => {
+          if (response.data && response.data.ret !== -1) {
+            if (that.token && response.data.data.length <= 0) {
+              that.welfareRate = 0
+            } else {
+              var res = response.data.data[0].welfareRules
+              // for (let i = 0; i < res.length; i++) {
+              //   that.projectType === res[i].investProjectType ? that.welfareRate = res[i].amount : null
+              // }
+              that.projectType === 5 ? that.welfareRate = res[0].amount : that.welfareRate = res[1].amount
+              that.token ? that.memberLevel = response.data.data[0].level : null
+            }
+          }
+        })
+      },
       toggleTab: function (i) {
         this.activeTab = i
         $('.scroll').css('transform', 'translateY(0px)')
@@ -289,6 +394,7 @@
           this.processWith = parseInt(proWidth) === proWidth ? proWidth : proWidth.toFixed(2)
           this.expectEarning = (10000 * this.project.annualEarnings * this.project.projectDays / 36500).toFixed(2)
           this.projectId = response.data.id
+          this.projectType = response.data.type
           this.getProjectInfo()
         })
       },
@@ -524,11 +630,36 @@
           }
         }
       }
+    },
+    destroyed () {
+      this.tipTimer = null
+      this.tipTimer2 = null
     }
   }
 </script>
-
 <style scoped>
+  .upRate {
+    background: #ff6000;
+    position: absolute;
+    right: 0;
+    top: 2%;
+    height: .54rem;
+    border-top-left-radius: .35rem;
+    border-bottom-left-radius: .35rem;
+    padding: .056rem 0 0 .06rem;
+    color: #fff;
+    line-height: 1.1;
+    width: 1.7rem;
+  }
+  .upRate img {
+    width: .42rem;
+    float: left;
+  }
+  .upRate p {
+    float: left;
+    margin: .015rem 0 0 .15rem;
+    font-size: .22rem;
+  }
   .child {
     position: absolute;
     top: 1.3rem;
@@ -680,10 +811,19 @@
     height: .96rem;
     line-height: .96rem;
     margin-bottom: .25rem;
+    display: inline-block;
   }
   .project-detail-top span {
     font-size: 1.2rem;
-    margin-left: 7%;
+  }
+  .project-detail-top p.welfareRate {
+    font-size: .4rem;
+  }
+  .project-detail-top p.welfareRate span {
+    font-size: .7rem;
+  }
+  .project-detail-top p.welfareRate a {
+    font-size: .67rem;
   }
   .project-detail-top p.second {
     height: .2rem;
