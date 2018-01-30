@@ -76,6 +76,7 @@ const SpringFestival = r => require.ensure([], () => r(require('../components/ac
 const SpringRecord = r => require.ensure([], () => r(require('../components/activity/SpringRecord.vue')), 'SpringRecord')
 const FenTian = r => require.ensure([], () => r(require('../components/activity/FenTian.vue')), 'FenTian')
 const FenPush = r => require.ensure([], () => r(require('../components/activity/FenPush.vue')), 'FenPush')
+const FenPushSuccess = r => require.ensure([], () => r(require('../components/activity/FenPushSuccess.vue')), 'FenPushSuccess')
 
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -290,13 +291,19 @@ const routes = [
     path: '/activity/fen-tian',
     name: 'FenTian',
     component: FenTian,
-    meta: {title: '焚天兑换'}
+    meta: {title: '超值限量礼包免费领'}
   },
   {
     path: '/activity/fen-push',
     name: 'FenPush',
     component: FenPush,
-    meta: {title: '焚天注册'}
+    meta: {title: '超值限量礼包免费领'}
+  },
+  {
+    path: '/activity/fen-push-success',
+    name: 'FenPushSuccess',
+    component: FenPushSuccess,
+    meta: {title: '超值限量礼包免费领'}
   },
   {
     path: '/activity/golden-fall',
