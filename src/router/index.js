@@ -74,6 +74,8 @@ const BeanExplain = r => require.ensure([], () => r(require('../components/user-
 const BeanDetail = r => require.ensure([], () => r(require('../components/user-center/beanDetail.vue')), 'BeanDetail')
 const SpringFestival = r => require.ensure([], () => r(require('../components/activity/springFestival.vue')), 'SpringFestival')
 const SpringRecord = r => require.ensure([], () => r(require('../components/activity/SpringRecord.vue')), 'SpringRecord')
+const FenTian = r => require.ensure([], () => r(require('../components/activity/FenTian.vue')), 'FenTian')
+const FenPush = r => require.ensure([], () => r(require('../components/activity/FenPush.vue')), 'FenPush')
 
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -283,6 +285,18 @@ const routes = [
     name: 'MangoPromotion',
     component: MangoPromotion,
     meta: {title: '0元变身VIP'}
+  },
+  {
+    path: '/activity/fen-tian',
+    name: 'FenTian',
+    component: FenTian,
+    meta: {title: '焚天兑换'}
+  },
+  {
+    path: '/activity/fen-push',
+    name: 'FenPush',
+    component: FenPush,
+    meta: {title: '焚天注册'}
   },
   {
     path: '/activity/golden-fall',
