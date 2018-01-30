@@ -153,7 +153,7 @@
     margin-left: -.5rem;
   }
   .novice {
-    margin-bottom: 1rem;
+    margin-bottom: .8rem;
     background-color: #fccf00;
     width: 100%;
   }
