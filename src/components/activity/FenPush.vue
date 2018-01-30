@@ -13,7 +13,7 @@
           <p class="num">x 1</p>
         </li>
         <li>
-          <img src="../../images/fentian/gift13-24.png" alt="">
+          <img src="../../images/fentian/gift1-2.png" alt="">
           <p class="num">x 1</p>
         </li>
         <li>
