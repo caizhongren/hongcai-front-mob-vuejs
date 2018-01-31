@@ -80,6 +80,8 @@
             <p>国资背景</p>
             <p>2016年获国有企业<br/>1亿元A轮战略融资</p>
           </li>
+          <hr class="hr hr1" width="85%" color="#490745">
+          <hr class="hr" width="85%" color="#490745">
           <li>
             <img src="../../images/fentian/about-3.png" alt="">
             <p>博士团队</p>
@@ -256,6 +258,15 @@
 <style scoped>
   .FenTian {
   }
+  .hr {
+    height: 1px;
+    border: 0px;
+    margin: 0px auto;
+    margin-bottom: .2rem;
+  }
+  .hr1 {
+    transform: rotate(90deg);
+  }
   .hongcai {
     width: 85%;
     height: 5.6rem;
@@ -274,19 +285,7 @@
     float: left;
     width: 50%;
     text-align: center;
-    border-bottom: 1px solid #490745;
-    border-right: 1px solid #490745;
     box-sizing: border-box;
-  }
-  .hongcai .abouts li:nth-child(4) {
-    border-bottom: navajowhite;
-    border-right: navajowhite;
-  }
-  .hongcai .abouts li:nth-child(2) {
-    border-right: navajowhite;
-  }
-  .hongcai .abouts li:nth-child(3) {
-    border-bottom: navajowhite;
   }
   .hongcai .abouts li img {
     width: 40%;
