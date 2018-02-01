@@ -25,7 +25,7 @@
           </div>
         </div>
         <p class="remain-amount">剩余可投<span>{{project.amount | number}}</span>元</p>
-        <p class="actual-amount">{{newbie ? '上限' : '投资'}}<span>10,000.00</span>元，预计收益<span>{{expectEarning}}</span><span v-show="newbie || (welfareRate > 0 && project.status === 7)">+{{newbie && !isExist ? (10000 * 6 * project.projectDays / 36500).toFixed(2) : (10000 * welfareRate * project.projectDays / 36500).toFixed(2)}}</span>元</p>
+        <p class="actual-amount">{{newbie ? '上限' : '投资'}}<span>10,000.00</span>元，预计收益<span>{{expectEarning}}</span><span v-show="(newbie && !isExist) || (welfareRate > 0 && project.status === 7 && (!newbie || isExist))">+{{newbie && !isExist ? (10000 * 6 * project.projectDays / 36500).toFixed(2) : project.status === 7 && welfareRate > 0 && (!newbie || isExist) ? (10000 * welfareRate * project.projectDays / 36500).toFixed(2) : ''}}</span>元</p>
       </div>
       <div class="project-detail-bottom bg-white">
         <div class="detail-item">
