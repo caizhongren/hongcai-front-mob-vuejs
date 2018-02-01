@@ -6,7 +6,7 @@
         <img src="../../images/fentian/logo-fen.png" alt="" width="8.5%">
       </div>
       <img src="../../images/fentian/register-header-text.png" alt="" class="title">
-      <p class="RMB">价值 <span class="ft-yellow">RMB410</span></p>
+      <p class="RMB" @click="test">价值 <span class="ft-yellow">RMB410</span></p>
       <ul class="gifts">
         <li>
           <img src="../../images/fentian/gift1-1.png" alt="">
@@ -249,6 +249,9 @@
           }, 1000)
           console.log(err)
         })
+      },
+      test () {
+        this.$router.push({name: 'FenPushSuccess'})
       }
     },
     destroyed () {
@@ -453,9 +456,8 @@
     line-height: .55rem;
     clear: both;
     color: #ffffff;
-    font-weight: bold;
-    font-size: .28rem;
-    padding-left: .2rem;
+    font-size: .3rem;
+    padding-left: .3rem;
 	  letter-spacing: 0.2px;
   }
   .contents {
@@ -505,8 +507,7 @@
   .header .tip {
     line-height: 1.27;
     font-size: .35rem;
-    font-weight: bold;
-    margin: .15rem;
+    margin: .2rem;
   }
   .register-form input {
     color:#666;
@@ -517,7 +518,7 @@
     font-size: .24rem;
   }
   .register-form {
-    padding-top: 2.4rem;
+    padding-top: 2.5rem;
     margin-top: -.2rem;
   }
   form input, form button {

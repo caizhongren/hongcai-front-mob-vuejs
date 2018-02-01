@@ -31,14 +31,14 @@
       <div class="box">
         <p class="title">更多礼包等你兑换！神装坐骑 碾压全服！</p>
         <div class="imgs">
-          <img src="../../images/fentian/gift2-2.png" alt="">
-          <img src="../../images/fentian/gift2-3.png" alt="">
-          <img src="../../images/fentian/gift2-4.png" alt="">
-          <img src="../../images/fentian/gift2-1.png" alt="">
-          <img src="../../images/fentian/gift1-2.png" alt="">
-          <img src="../../images/fentian/gift3-2.png" alt="">
-          <img src="../../images/fentian/gift3-1.png" alt="">
-          <img src="../../images/fentian/gift3-3.png" alt="">
+          <img src="../../images/fentian/gift2-2.png" width="7%">
+          <img src="../../images/fentian/gift2-3.png" width="8.5%">
+          <img src="../../images/fentian/gift2-4.png" width="8%">
+          <img src="../../images/fentian/gift2-1.png" width="7%">
+          <img src="../../images/fentian/gift1-2.png" width="8%">
+          <img src="../../images/fentian/gift3-2.png" width="7%">
+          <img src="../../images/fentian/gift3-1.png" width="7%">
+          <img src="../../images/fentian/gift3-3.png" width="7%">
         </div>
         <p class="gifts-text">金宠随机包 、随机神能宝箱、坐骑兑换缰绳、典籍经典宝箱、神器印记礼包、 高级天机卷、9级宝石 、金钥匙</p>
       </div>
@@ -77,22 +77,21 @@
     background-color: #4a0346;
     width: 90%;
     margin: 0.3rem auto;
-    padding: .2rem 0;
+    padding: .08rem 0;
   }
   .box .title {
     line-height: 1.96;
     letter-spacing: 0.3px;
     text-align: center;
-    color: #fdbf2c;
-    font-size: .25rem;
+    color: #ffc00d;
+    font-size: .24rem;
     font-weight: bold;
   }
   .imgs {
     background: #65305e;
   }
   .imgs img {
-    width: 8%;
-    margin: .05rem .1rem;
+    margin: .08rem .1rem .06rem;
     vertical-align: middle;
   }
   .gifts-text {
@@ -137,9 +136,8 @@
     line-height: .55rem;
     clear: both;
     color: #ffffff;
-    font-weight: bold;
-    font-size: .28rem;
-    padding-left: .2rem;
+    font-size: .3rem;
+    padding-left: .25rem;
 	  letter-spacing: 0.2px;
   }
   .gifts {
