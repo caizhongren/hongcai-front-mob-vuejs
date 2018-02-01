@@ -44,16 +44,16 @@
                     <p class="gift-name">【9级宝石】&nbsp;&nbsp;【高级天机卷】<br>【金钥匙】&nbsp;&nbsp;&nbsp;&nbsp;【神器印记礼包】</p>
                 </div>
               </div>
-              <p class="text" v-if="index === 0 && levelStatus[index] === 0">您已获得价值<span>RMB{{item.value}}</span>游戏礼包领取资格，通过银行存管认证后，即可获取礼包兑换码，数量有限，兑完即止哟～</p>
-              <p class="text" v-if="index === 1 && levelStatus[index] === 0">首投任意金额(不含债权转让类项目)即可获取价值<span>RMB{{item.value}}</span>游戏礼包</p>
-              <p class="text" v-if="index === 2 && levelStatus[index] === 0">活动期间，累计投资金额满5000元 (不含债权转让类项目)即可获取价值<span>RMB{{item.value}}</span>游戏礼包</p>
-              <div class="gongxi" v-if="levelStatus[index] === 1">
+              <p class="text" v-if="index === 0 && (!userAuth.active || userAuth.authStatus !== 2)">您已获得价值<span>RMB{{item.value}}</span>游戏礼包领取资格，通过银行存管认证后，即可获取礼包兑换码，数量有限，兑完即止哟～</p>
+              <p class="text" v-if="index === 1 && item.status === 0">首投任意金额(不含债权转让类项目)即可获取价值<span>RMB{{item.value}}</span>游戏礼包</p>
+              <p class="text" v-if="index === 2 && item.status === 0">活动期间，累计投资金额满5000元 (不含债权转让类项目)即可获取价值<span>RMB{{item.value}}</span>游戏礼包</p>
+              <div class="gongxi" v-if="item.status === 1 || index === 0 && userAuth.active && userAuth.authStatus === 2">
                 <p>恭喜您获得焚天{{item.giftName}}！</p>
                 <p>奖励兑换码为</p>
                 <p class="cdKey">{{item.cdkey}}</p>
               </div>
-              <p class="take-btn" v-if="levelStatus[index] === 0" @click="toTakeCdkey(index + 1, levelStatus[index])">立即抢领</p>
-              <p class="take-btn" v-if="levelStatus[index] === 1">复制兑换码</p>
+              <p class="take-btn" v-if="item.status === 0" @click="toTakeCdkey(index + 1, item.status)">立即抢领</p>
+              <p class="take-btn" v-if="item.status === 1" @click="copyCdkey(item.cdkey)">复制兑换码</p>
             </li>
           </ul>
         </div>
@@ -89,7 +89,7 @@
           active: Boolean,
           authStatus: Number
         },
-        investAmount: 1000, // 用户活动期间累计投资额
+        investAmount: 5000, // 用户活动期间累计投资额
         activityInfo: {
           startYear: 2018,
           startMonth: 1,
@@ -98,10 +98,10 @@
           endMonth: 1,
           endDate: 1
         },
-        levelStatus: [1, 0, 1],
         gifts: [
           {
             value: 410,
+            status: 1,
             giftName: '初级礼包',
             num1: 1,
             num2: 1,
@@ -111,6 +111,7 @@
           },
           {
             value: 1000,
+            status: 1,
             giftName: '中级礼包',
             num1: 3,
             num2: 1,
@@ -121,6 +122,7 @@
           },
           {
             value: 2500,
+            status: 0,
             giftName: '高级礼包',
             num1: 1,
             num2: 5,
@@ -135,6 +137,7 @@
     },
     props: ['token'],
     created () {
+      this.getUserAuth()
       this.getActivityStatus()
       this.getLevelStatus()
     },
@@ -156,6 +159,14 @@
             endMonth: new Date(endTime).getMonth() + 1,
             endDate: new Date(endTime).getDate()
           }
+        })
+      },
+      getUserAuth: function () {
+        this.$http({
+          methods: 'get',
+          url: '/hongcai/rest/users/0/userAuth?token=' + this.token
+        }).then((response) => {
+          this.userAuth = response.data
         })
       },
       setCarousel () { // 红包布局配置
@@ -187,6 +198,7 @@
           if (response.data !== 'success') {
             return
           }
+          that.gifts[key].cdkey = response.data.cdkey
           let key = level - 1
           that.gifts[key].status = 1 // 手动修改礼包的领取状态为 1
         })
@@ -195,33 +207,27 @@
         if (this.busy || !this.canTake || Carousel.index !== (level - 1) || status !== 0) {
           return
         }
-        this.busy = true
-        this.$http({
-          methods: 'get',
-          url: '/hongcai/rest/users/0/userAuth?token=' + this.token
-        }).then((response) => {
-          this.busy = false
-          this.userAuth = response.data
-          if (this.userAuth.active && this.userAuth.authStatus === 2) {
-            if (level === 1) {
-              this.takeCdkey(level)
+        if (this.userAuth.active && this.userAuth.authStatus === 2) {
+          if (level === 1) {
+            this.takeCdkey(level)
+            return
+          }
+          this.busy = true
+          this.$http('/hongcai/rest/activitys/invest/transition/0/annualInvestAmount?token=' + this.token + '&activityType=' + this.$route.query.act)
+          .then((res) => { // 活动期间累计投资额查询
+            this.busy = false
+            if (!res || res.ret === -1) {
               return
             }
-            this.$http('/hongcai/rest/activitys/invest/transition/0/annualInvestAmount?token=' + this.token + '&activityType=' + this.$route.query.act)
-            .then((res) => { // 活动期间累计投资额查询
-              if (!res || res.ret === -1) {
-                return
-              }
-              if (res.data.annualInvest === 0 || level === 3 && res.data.annualInvest < 5000) {
-                bridgeUtil.webConnectNative('HCNative_GoInvestList', null, {}, function (response) {}, null)
-              } else if (level === 2 && res.data.annualInvest > 0 || level === 3 && res.data.annualInvest >= 5000) {
-                this.takeCdkey(level)
-              }
-            })
-          } else {
-            bridgeUtil.webConnectNative('HCNative_CheckUserAuth', null, {}, function (response) {}, null)
-          }
-        })
+            if (res.data.annualInvest === 0 || level === 3 && res.data.annualInvest < 5000) {
+              bridgeUtil.webConnectNative('HCNative_GoInvestList', null, {}, function (response) {}, null)
+            } else if (level === 2 && res.data.annualInvest > 0 || level === 3 && res.data.annualInvest >= 5000) {
+              this.takeCdkey(level)
+            }
+          })
+        } else {
+          bridgeUtil.webConnectNative('HCNative_CheckUserAuth', null, {}, function (response) {}, null)
+        }
       },
       getLevelStatus () { // 各等级领取状态查询
         var that = this
@@ -230,8 +236,13 @@
           if (!res || res.ret === -1) {
             return
           }
-          that.levelStatus = res.data.status
+          for (let i = 0; i < res.data.status.length; i++) {
+            that.gifts[i].status = res.data.status[i]
+          }
         })
+      },
+      copyCdkey (cdkey) {
+        bridgeUtil.webConnectNative('HCNative_CopyText', null, {text: cdkey}, function (response) {}, null)
       }
     },
     destroyed () {
@@ -428,15 +439,6 @@
     margin-top: .1rem;
 	  border-radius: .1rem;
   }
-  /* .level2 .box-son, .level3 .box-son {
-    margin-left: 0%;
-  }
-  .level2 .box-son div, .level3 .box-son div {
-    width: 23%;
-    height: 1.1rem;
-    margin-left: 0%;
-    padding: 0.3rem 0.15rem 0.15rem;
-  } */
   li:nth-child(2) .box-son, li:last-child .box-son {
     margin-left: 0%;
   }
@@ -459,7 +461,7 @@
     display: block;
     color: #fff;
     transform: rotate(-45deg);
-    line-height: 2.9;
+    line-height: 3.2;
     height: 30%;
     width: 30%;
     text-align: center;
