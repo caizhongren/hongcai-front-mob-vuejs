@@ -1,7 +1,7 @@
 <template>
   <div class="project" id="project" v-auto-height v-load>
     <div class="fist-frame product-page1 animate" id="product-page1">
-      <div class="upRate" @click="anmTips" v-if="token && memberLevel !== 6"><img src="../images/project/icon03.png" alt=""> <p>如何提高<br> 会员加息</p></div>
+      <div class="upRate" @click="anmTips" v-show="token && memberLevel !== 6"><img src="../images/project/icon03.png" alt=""> <p>如何提高<br> 会员加息</p></div>
       <div class="project-detail-top bg-white">
         <p class="ft-Arial"><span>{{project.annualEarnings || 0}}</span>%</p>
         <p class="ft-Arial welfareRate" v-show="project.status === 7 && welfareRate > 0 && (!newbie || isExist)"><a>+</a><span>{{welfareRate}}</span>%</p>
@@ -257,9 +257,6 @@
       token: function (val) {
         val && val !== '' ? this.isUserInvest() : null
         val && val !== '' ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
-      },
-      memberLevel: function (val) {
-        // val && val !== 6 && this.token ? this.tipsAnm() : null
       }
     },
     created: function () {
@@ -273,6 +270,7 @@
       this.token ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
       this.isNewbie()
       this.token ? this.isUserInvest() : null
+      this.tipsAnm()
     },
     directives: {
       'load': {
@@ -387,7 +385,7 @@
               //   that.projectType === res[i].investProjectType ? that.welfareRate = res[i].amount : null
               // }
               that.projectType === 5 ? that.welfareRate = res[0].amount : that.welfareRate = res[1].amount
-              that.token ? (that.memberLevel = response.data.data[0].level, that.memberLevel !== 6 ? that.tipsAnm() : null) : null
+              that.token ? that.memberLevel = response.data.data[0].level : null
             }
           }
         })
