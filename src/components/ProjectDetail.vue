@@ -4,8 +4,8 @@
       <div class="upRate" @click="anmTips" v-if="token && memberLevel !== 6"><img src="../images/project/icon03.png" alt=""> <p>如何提高<br> 会员加息</p></div>
       <div class="project-detail-top bg-white">
         <p class="ft-Arial"><span>{{project.annualEarnings || 0}}</span>%</p>
-        <p class="ft-Arial welfareRate" v-show="project.status === 7 && !newbie && welfareRate > 0"><a>+</a><span>{{welfareRate}}</span>%</p>
-        <p class="ft-Arial" v-show="newbie"><a>+</a><span>6</span>%</p>
+        <p class="ft-Arial welfareRate" v-show="project.status === 7 && welfareRate > 0 && (!newbie || isExist)"><a>+</a><span>{{welfareRate}}</span>%</p>
+        <p class="ft-Arial" v-show="newbie && !isExist"><a>+</a><span>6</span>%</p>
         <p class="second">期望年均回报率</p>
         <div class="tip-list">
           <span class="tip-item tip-item1"><span class="font-Arial margin-0">100</span>元起投</span>
@@ -25,7 +25,7 @@
           </div>
         </div>
         <p class="remain-amount">剩余可投<span>{{project.amount | number}}</span>元</p>
-        <p class="actual-amount">{{newbie ? '上限' : '投资'}}<span>10,000.00</span>元，预计收益<span>{{expectEarning}}</span><span v-show="newbie || (welfareRate > 0 && project.status === 7)">+{{newbie ? (10000 * 6 * project.projectDays / 36500).toFixed(2) : (10000 * welfareRate * project.projectDays / 36500).toFixed(2)}}</span>元</p>
+        <p class="actual-amount">{{newbie ? '上限' : '投资'}}<span>10,000.00</span>元，预计收益<span>{{expectEarning}}</span><span v-show="newbie || (welfareRate > 0 && project.status === 7)">+{{newbie && !isExist ? (10000 * 6 * project.projectDays / 36500).toFixed(2) : (10000 * welfareRate * project.projectDays / 36500).toFixed(2)}}</span>元</p>
       </div>
       <div class="project-detail-bottom bg-white">
         <div class="detail-item">
@@ -240,7 +240,8 @@
         projectType: 0,
         newbie: false,
         memberLevel: 1,
-        anmClick: false
+        anmClick: false,
+        isExist: false
       }
     },
     watch: {
@@ -254,6 +255,7 @@
         }
       },
       token: function (val) {
+        val && val !== '' ? this.isUserInvest() : null
         val && val !== '' ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
       },
       memberLevel: function (val) {
@@ -270,6 +272,7 @@
       window.vue = this
       this.token ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
       this.isNewbie()
+      this.token ? this.isUserInvest() : null
     },
     directives: {
       'load': {
@@ -293,6 +296,17 @@
     },
     props: ['token'],
     methods: {
+      isUserInvest () { // 查询用户是否投资过
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest/users/0/creditRights/isExist?token=' + that.token
+        }).then((response) => {
+          if (response.data && response.data.ret !== -1) {
+            that.isExist = response.data.exist
+          }
+        })
+      },
       isNewbie () {
         var that = this
         that.$http({
