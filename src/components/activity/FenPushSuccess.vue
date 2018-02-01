@@ -9,15 +9,15 @@
       <p class="RMB">价值 <span class="ft-yellow">RMB410</span></p>
       <ul class="gifts">
         <li>
-          <img src="../../images/fentian/gift1-1.png" alt="">
+          <img src="../../../static/images/gift0-1.png" alt="">
           <p class="num">x 1</p>
         </li>
         <li>
-          <img src="../../images/fentian/gift1-2.png" alt="">
+          <img src="../../../static/images/gift0-2.png" alt="">
           <p class="num">x 1</p>
         </li>
         <li>
-          <img src="../../images/fentian/gift1-3.png" alt="">
+          <img src="../../../static/images/gift0-3.png" alt="">
           <p class="num">x 2</p>
         </li>
       </ul>
@@ -31,14 +31,14 @@
       <div class="box">
         <p class="title">更多礼包等你兑换！神装坐骑 碾压全服！</p>
         <div class="imgs">
-          <img src="../../images/fentian/gift2-2.png" width="7%">
-          <img src="../../images/fentian/gift2-3.png" width="8.5%">
-          <img src="../../images/fentian/gift2-4.png" width="8%">
-          <img src="../../images/fentian/gift2-1.png" width="7%">
-          <img src="../../images/fentian/gift1-2.png" width="8%">
-          <img src="../../images/fentian/gift3-2.png" width="7%">
-          <img src="../../images/fentian/gift3-1.png" width="7%">
-          <img src="../../images/fentian/gift3-3.png" width="7%">
+          <img src="../../../static/images/gift1-2.png" width="7%">
+          <img src="../../../static/images/gift1-3.png" width="8.5%">
+          <img src="../../../static/images/gift1-4.png" width="8%">
+          <img src="../../../static/images/gift1-1.png" width="7%">
+          <img src="../../../static/images/gift0-2.png" width="8%">
+          <img src="../../../static/images/gift2-2.png" width="7%">
+          <img src="../../../static/images/gift2-1.png" width="7%">
+          <img src="../../../static/images/gift2-3.png" width="7%">
         </div>
         <p class="gifts-text">金宠随机包 、随机神能宝箱、坐骑兑换缰绳、典籍经典宝箱、神器印记礼包、 高级天机卷、9级宝石 、金钥匙</p>
       </div>
