@@ -259,7 +259,7 @@
         val && val !== '' ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
       },
       memberLevel: function (val) {
-        val && val !== 6 && this.token ? this.tipsAnm() : null
+        // val && val !== 6 && this.token ? this.tipsAnm() : null
       }
     },
     created: function () {
@@ -273,6 +273,7 @@
       this.token ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
       this.isNewbie()
       this.token ? this.isUserInvest() : null
+      this.anmTips()
     },
     directives: {
       'load': {
