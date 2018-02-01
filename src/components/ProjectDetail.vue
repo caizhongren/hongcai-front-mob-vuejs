@@ -273,7 +273,6 @@
       this.token ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
       this.isNewbie()
       this.token ? this.isUserInvest() : null
-      this.anmTips()
     },
     directives: {
       'load': {
@@ -388,7 +387,7 @@
               //   that.projectType === res[i].investProjectType ? that.welfareRate = res[i].amount : null
               // }
               that.projectType === 5 ? that.welfareRate = res[0].amount : that.welfareRate = res[1].amount
-              that.token ? that.memberLevel = response.data.data[0].level : null
+              that.token ? (that.memberLevel = response.data.data[0].level, that.memberLevel !== 6 ? that.tipsAnm() : null) : null
             }
           }
         })
