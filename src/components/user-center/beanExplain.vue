@@ -107,7 +107,8 @@
     name: 'beanExplain',
     data () {
       return {
-        rules: {}
+        rules: {},
+        act: 37
       }
     },
     props: ['token'],
@@ -124,7 +125,7 @@
         // 1 需要显示 0 不需要显示
         isShow: 0
       }, function (res) {}, null)
-      this.$http('/hongcai/rest/activitys/' + this.$route.query.act).then((res) => {
+      this.$http('/hongcai/rest/activitys/' + this.act).then((res) => {
         this.rules = JSON.parse(res.data.rules)
         console.log(this.rules)
       })
