@@ -273,7 +273,7 @@
       <div class="annex">
         <p class="text-left" v-show="contractType !== 4">附件2</p>
         <br>
-        <p class="text-center" v-if="preRepaymentList.length >0">还款计划（单位：元、月/日）</p>
+        <p class="text-center repaymentTitle" v-if="preRepaymentList.length >0">还款计划（单位：元、月/日）</p>
         <table v-if="preRepaymentList.length >0">
           <thead>
             <td>序号</td>
@@ -546,7 +546,7 @@
       <div class="annex">
         <p class="text-left">附件2</p>
         <br>
-        <p class="text-center" v-if="preRepaymentList.length >0">还款计划（单位：元、月/日）</p>
+        <p class="text-center repaymentTitle" v-if="preRepaymentList.length >0">还款计划（单位：元、月/日）</p>
         <table v-if="preRepaymentList.length >0">
           <thead>
             <td>序号</td>
@@ -676,8 +676,8 @@
         <br>
         <br>
         <p class="position-re">
-          <strong class="agree-mg">甲方（签章）：<span>{{contracts.userRealName}}</span></strong>
-          <b class="signatureA" v-show="!isInvesting">{{contracts.userRealName}}</b>
+          <strong class="agree-mg">甲方（签章）：</strong>
+          <b class="loanTypeAignature2" v-show="!isInvesting">{{contracts.userRealName}}</b>
         </p>
         <br>
         <br>
@@ -686,11 +686,11 @@
         <br>
         <br>
         <br>
-        <div class="position-re"><strong class="agree-mg">乙方（签章）：{{contracts.enterpriseName}}</strong>
-          <div class="signatureB" id="loanType1">
+        <div class="position-re"><strong class="agree-mg">乙方（签章）：</strong>
+          <div class="hongcaiC" id="loanType1">
             <p class="economy">{{contracts.enterpriseName}}</p> 
           </div>
-          <b class="signatureA" id="loanType2">{{contracts.enterpriseName}}</b>
+          <b class="loanTypeAignature2" id="loanType2">{{contracts.enterpriseName}}</b>
         </div>
         <br>
         <br>
@@ -702,8 +702,8 @@
         <br>
         <br>
         <br>
-        <div class="position-re"><strong class="agree-mg">丙方（签章）：北京竞财投资服务有限公司</strong>
-          <div class="signatureC">
+        <div class="position-re"><strong class="agree-mg">丙方（签章）：</strong>
+          <div class="hongcaiC">
             <p class="economy1">北京竞财投资服务有限公司</p> 
           </div>
         </div>
@@ -750,7 +750,7 @@
       <div class="annex">
         <p class="text-left">附件2</p>
         <br>
-        <p class="text-center" v-if="preRepaymentList.length >0">还款计划表（单位：元、月/日）</p>
+        <p class="text-center repaymentTitle" v-if="preRepaymentList.length >0">还款计划表（单位：元、月/日）</p>
         <table v-if="preRepaymentList.length >0">
           <thead>
             <td>序号</td>
@@ -1070,6 +1070,10 @@
   }
 </script>
 <style scoped>
+  .repaymentTitle {
+    border-bottom: 1px solid #666;
+    padding-bottom: .1rem;
+  }
   .financingPurpose {
     display: inline-block;
   }
@@ -1130,7 +1134,7 @@
   .annex1 table td:nth-child(3) {
     width: 20%;
   }
-  .signatureA {
+  .signatureA, .loanTypeAignature2 {
     display: inline-block;
     width: 2rem;
     height: 1rem;
@@ -1139,20 +1143,34 @@
     padding: .5rem 0 0 .25rem;
     text-align: left;
     position: absolute;
-    right: 0;
     top: -.5rem;
   }
-  .signatureC {
+  .signatureA {
+    right: 0;
+  }
+  .loanTypeAignature2 {
+    left: 30%;
+  }
+  .loanTypeAignature3 {
+    left: 30%;
+  }
+  .signatureC, .hongcaiC {
     width: 80%;
     height: 2.6rem;
     background: url('../images/service-agree/anshan.png') no-repeat center center;
     background-size: contain;
     padding-top: .05rem;
     position: absolute;
-    top: -.38rem;
-    left: -.21rem;
     z-index: -1;
     text-align: center;
+  }
+  .signatureC {
+    top: -.38rem;
+    left: -.21rem;
+  }
+  .hongcaiC {
+    top: -.8rem;
+    left: 10%;
   }
   .signatureB {
     width: 80%;
