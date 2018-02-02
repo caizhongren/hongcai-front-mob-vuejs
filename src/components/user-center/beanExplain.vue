@@ -20,11 +20,67 @@
         <p>宏豆的具体获得规则是什么？</p>
       </div>
       <ul>
-        <li class="clearfix" v-for="item in rewardList">
+        <li class="clearfix">
           <div class="content_l fl">
-            <p :class="{'single': item.description === ''}">{{item.type}}</p>{{item.description}}
+            <p>成功注册</p>(首次绑定手机号)
           </div>
-          <span class="fr">+{{item.amount}}</span>
+          <span class="fr">+{{rules.registerPoints}}</span>
+          <img src="../../images/user-center/bean.png" alt="" width="7.4%" class="fr">
+        </li>
+        <li class="clearfix">
+          <div class="content_l fl">
+            <p>成功认证</p>(首次绑定银行卡）
+          </div>
+          <span class="fr">+{{rules.realNameAuthPoints}}</span>
+          <img src="../../images/user-center/bean.png" alt="" width="7.4%" class="fr">
+        </li>
+        <li class="clearfix">
+          <div class="content_l fl">
+            <p>首次投资成功</p>(投资精选或者尊贵有效)
+          </div>
+          <span class="fr">+{{rules.firstInvestPoints}}</span>
+          <img src="../../images/user-center/bean.png" alt="" width="7.4%" class="fr">
+        </li>
+        <li class="clearfix">
+          <div class="content_l fl">
+            <p class="single">首次完成投资人风险自测</p>
+          </div>
+          <span class="fr">+{{rules.doQuestionnairePoints}}</span>
+          <img src="../../images/user-center/bean.png" alt="" width="7.4%" class="fr">
+        </li>
+        <li class="clearfix">
+          <div class="content_l fl">
+            <p>每日登录</p>(手机App端)
+          </div>
+          <span class="fr">+{{rules.dailyAppCheckPoints}}</span>
+          <img src="../../images/user-center/bean.png" alt="" width="7.4%" class="fr">
+        </li>
+        <li class="clearfix">
+          <div class="content_l fl">
+            <p>成功邀请好友注册</p>(每日最高奖励{{rules.inviteFriendDailyMax}}次)
+          </div>
+          <span class="fr">+{{rules.inviteFriendPoints}}</span>
+          <img src="../../images/user-center/bean.png" alt="" width="7.4%" class="fr">
+        </li>
+        <li class="clearfix">
+          <div class="content_l fl">
+            <p class="single">被邀请的好友在一周内完成首投</p>
+          </div>
+          <span class="fr">+{{rules.inviteFriendFirstWeekInvestPoints}}</span>
+          <img src="../../images/user-center/bean.png" alt="" width="7.4%" class="fr">
+        </li>
+        <li class="clearfix">
+          <div class="content_l fl">
+            <p>投资精选或者尊贵项目时</p>单笔每满{{rules.investThreshold}}元(不设上限)
+          </div>
+          <span class="fr">+{{rules.investPoints}}</span>
+          <img src="../../images/user-center/bean.png" alt="" width="7.4%" class="fr">
+        </li>
+        <li class="clearfix">
+          <div class="content_l fl">
+            <p class="single">首次开通自动投标</p>
+          </div>
+          <span class="fr">+{{rules.autoTenderPoints}}</span>
           <img src="../../images/user-center/bean.png" alt="" width="7.4%" class="fr">
         </li>
       </ul>
@@ -51,53 +107,7 @@
     name: 'beanExplain',
     data () {
       return {
-        rewardList: [
-          {
-            type: '成功注册', // 奖励类型
-            description: '(首次绑定手机号)', // 描述
-            amount: 10 // 奖励宏豆数量
-          },
-          {
-            type: '成功认证', // 奖励类型
-            description: '(首次绑定银行卡）', // 描述
-            amount: 10 // 奖励宏豆数量
-          },
-          {
-            type: '首次投资成功', // 奖励类型
-            description: '(投资精选或者尊贵有效)', // 描述
-            amount: 10 // 奖励宏豆数量
-          },
-          {
-            type: '首次完成投资人风险自测', // 奖励类型
-            description: '', // 描述
-            amount: 10 // 奖励宏豆数量
-          },
-          {
-            type: '每日登录', // 奖励类型
-            description: '(手机App端)', // 描述
-            amount: 10 // 奖励宏豆数量
-          },
-          {
-            type: '成功邀请好友注册', // 奖励类型
-            description: '(每日最高奖励5次)', // 描述
-            amount: 10 // 奖励宏豆数量
-          },
-          {
-            type: '被邀请的好友在一周内完成首投', // 奖励类型
-            description: '', // 描述
-            amount: 10 // 奖励宏豆数量
-          },
-          {
-            type: '投资精选或者尊贵项目时', // 奖励类型
-            description: '单笔每满1000元(不设上限)', // 描述
-            amount: 10 // 奖励宏豆数量
-          },
-          {
-            type: '首次开通自动投标', // 奖励类型
-            description: '', // 描述
-            amount: 10 // 奖励宏豆数量
-          }
-        ]
+        rules: {}
       }
     },
     props: ['token'],
@@ -114,6 +124,10 @@
         // 1 需要显示 0 不需要显示
         isShow: 0
       }, function (res) {}, null)
+      this.$http('/hongcai/rest/activitys/' + this.$route.query.act).then((res) => {
+        this.rules = JSON.parse(res.data.rules)
+        console.log(this.rules)
+      })
     }
   }
 </script>
