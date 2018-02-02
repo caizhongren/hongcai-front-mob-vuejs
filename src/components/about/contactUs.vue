@@ -43,8 +43,8 @@
       </div>
       <div class="text-r">
         <p class="font-666">地址</p>
-        <p class="font-666">北京市朝阳区天辰东路7号</p>
-        <p class="font-666">国家会议中心北区四层</p>
+        <p class="font-666">北京市海淀区中关村南二条1号</p>
+        <p class="font-666">中科院空间中心九章大厦B栋一层</p>
       </div>
     </div>
     <div class="code">

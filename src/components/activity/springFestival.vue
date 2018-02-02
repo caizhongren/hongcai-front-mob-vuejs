@@ -13,7 +13,7 @@
         <img src="../../images/spring-festival/bg-title-min.png" alt="" width="30%" class="top">
         <div class="box">
           <!-- 活动结束 -->
-          <div v-if="(activityStatus === 3 && investAmount <= 0) || (activityStatus === 2 && token && investAmount <= 0)" class="activityEnd">
+          <div v-if="(activityStatus === 3 && investAmount <= 0) || (activityStatus === 2 && investAmount <= 0)" class="activityEnd">
             <img src="../../images/spring-festival/activityEnd.png" alt="">
             <img src="../../images/spring-festival/activityEndText.png" alt="" class="activityEndText">
           </div>

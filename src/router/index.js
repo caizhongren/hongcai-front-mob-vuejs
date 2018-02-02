@@ -49,6 +49,7 @@ const News = r => require.ensure([], () => r(require('../components/news/news.vu
 const Report1 = r => require.ensure([], () => r(require('../components/news/report1.vue')), 'News')
 const Report2 = r => require.ensure([], () => r(require('../components/news/report2.vue')), 'News')
 const Report3 = r => require.ensure([], () => r(require('../components/news/report3.vue')), 'News')
+const Report4 = r => require.ensure([], () => r(require('../components/news/report4.vue')), 'News')
 const Events = r => require.ensure([], () => r(require('../components/events.vue')), 'Events')
 const RiskEducation = r => require.ensure([], () => r(require('../components/riskEducation.vue')), 'RiskEducation')
 const Register = r => require.ensure([], () => r(require('../components/activity/oldPeople.vue')), 'Register')
@@ -437,6 +438,12 @@ const routes = [
         path: 'report3',
         name: 'Report3',
         component: Report3,
+        meta: {title: '媒体报道'}
+      },
+      {
+        path: 'report4',
+        name: 'Report4',
+        component: Report4,
         meta: {title: '媒体报道'}
       }
     ]
