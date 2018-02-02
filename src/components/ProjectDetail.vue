@@ -876,7 +876,7 @@
     background-size: 18%;
   }
   .tip-list .tip-item2 {
-    background: url('../images/project/icon02.png') no-repeat 0px 1px;
+    background: url('../images/project/icon02.png') no-repeat 0px 4px;
     padding-left: .42rem;
     background-size: 16%;
   }
