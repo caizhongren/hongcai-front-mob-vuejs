@@ -687,11 +687,14 @@
         <br>
         <br>
         <div class="position-re"><strong class="agree-mg">乙方（签章）：{{contracts.enterpriseName}}</strong>
-          <div class="signatureB">
+          <div class="signatureB" id="loanType1">
             <p class="economy">{{contracts.enterpriseName}}</p> 
           </div>
-          <b class="signatureA" id="enterpriseType10">{{contracts.enterpriseName}}</b>
+          <b class="signatureA" id="loanType2">{{contracts.enterpriseName}}</b>
         </div>
+        <br>
+        <br>
+        <br>
         <br>
         <br>
         <br>
@@ -971,8 +974,10 @@
         }
       },
       'contracts.loanType': function (val) {
-        if (val && val === 1 && this.contractType === 10) {
-          $('#enterpriseType10').hide()
+        if (this.contractType === 10 && val && val === 1) {
+          $('#loanType2').hide()
+        } else {
+          $('#loanType1').hide()
         }
       }
     },
