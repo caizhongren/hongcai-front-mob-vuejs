@@ -1,5 +1,5 @@
 <template>
-  <!-- 宏财网服务协议-直投、宏财网服务协议-债转、老项目合同区分 contractType：1——直投，2——债转，4——老合同，3——债权转让协议 ，5——降息换物渠道项目合同，6——借款方企业协议，7——借款方个人协议，8——债转方企业协议，9——债转方个人协议 -->
+  <!-- 宏财网服务协议-直投、宏财网服务协议-债转、老项目合同区分 contractType：1——直投，2——债转，4——老合同，3——债权转让协议 ，5——降息换物渠道项目合同，6——借款方企业协议，7——借款方个人协议，8——债转方企业协议，9——债转方个人协议 ，10 ——新的三方协议（电签）-->
   <!-- 2, 7, 9 个人签章 -->
   <div>
     <div class="agreement-area row" v-show="contractType === 1 || contractType === 4 || contractType === 6 || contractType === 7">
@@ -273,7 +273,7 @@
       <div class="annex">
         <p class="text-left" v-show="contractType !== 4">附件2</p>
         <br>
-        <p class="text-center" v-if="preRepaymentList.length >0">还款计划（单位：元、月/日）</p>
+        <p class="text-center repaymentTitle" v-if="preRepaymentList.length >0">还款计划表（单位：元、月/日）</p>
         <table v-if="preRepaymentList.length >0">
           <thead>
             <td>序号</td>
@@ -546,7 +546,211 @@
       <div class="annex">
         <p class="text-left">附件2</p>
         <br>
-        <p class="text-center" v-if="preRepaymentList.length >0">还款计划（单位：元、月/日）</p>
+        <p class="text-center repaymentTitle" v-if="preRepaymentList.length >0">还款计划表（单位：元、月/日）</p>
+        <table v-if="preRepaymentList.length >0">
+          <thead>
+            <td>序号</td>
+            <td>还款日</td>
+            <td>还款金额</td>
+            <td>还款类型</td>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in preRepaymentList">
+              <td>{{index + 1}}</td>
+              <td>{{item.repaymentTime | date}}</td>
+              <td>{{item.repaymentAmount | number}}</td>
+              <td>{{item.type === 1 ? '利息' : '本息'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="agreement-area row" v-show="contractType === 10">
+      <p class="text-title">借款合同</p>
+      <div class="row">
+        <br>
+        <p><strong class="agree-mg">甲方（出借人）：</strong>{{contracts.total ? '信息详见附件1' : ' '}}</p>
+        <br>
+        <p><strong class="agree-mg">乙方（借款人）：</strong>{{contracts.enterpriseName}}</p>
+        <p>统一社会信用代码/身份证号：{{contracts.entRegistrationNo}}</p>
+        <p>平台会员编号：{{contracts.enterpriseUserId}}</p>
+        <br>
+        <p><strong class="agree-mg">丙方（平台方）：</strong>北京竞财投资服务有限公司</p>
+        <p>统一社会信用代码：91110107330246732H</p>
+        <br>
+        <p><strong class="agree-mg">鉴于：</strong></p>
+        <p class="agree-tx">1、甲方（同一借款标的项下的每一个出借人各自独立出借款项，均称为“甲方”）为平台的注册用户，有资金出借的投资需求。</p>
+        <p class="agree-tx">2、乙方有借款需求。</p>
+        <p class="agree-tx">3、丙方是一家在北京市合法成立并有效存续的有限责任公司，是宏财网（hongcai.com）及对应的移动客户端（统称为“宏财网”或“平台”）的运营主体，为借贷双方提供信息发布、资信评估、信息交互及借贷交易撮合服务。</p>
+        <br>
+        <p class="agree-tx ft-bold">根据《中华人民共和国合同法》等相关法律法规，经各方协商一致，就甲方向乙方出借资金，丙方为甲乙双方的借贷交易提供网络借贷信息中介服务事宜，达成如下协议，以资共同遵守。</p>
+        <br>
+        <p><strong class="agree-mg">一、借款金额、期限、利率、用途</strong></p>
+        <p class="agree-tx">1、甲方向乙方提供的借款金额及甲方相关信息见附件1。甲方依据本合同约定分别独立向乙方提供借款，仅仅因为合同签署的便利，在同一份借款合同中体现各自向乙方出借事宜。</p>
+        <p class="agree-tx" v-if="contracts.total">2、甲乙双方约定的借款期限为<u> {{contracts.projectDays}} </u>日，自借款满标并第三方存管银行（以下简称“存管银行”）将甲方出借资金从甲方存管账户（即甲方通过平台在存管银行开立的银行存管账户，简称“甲方存管账户”）转入乙方存管账户（即乙方通过平台在存管银行开立的银行存管账户，简称“乙方存管账户”）之日起算。</p>
+        <p class="agree-tx" v-if="!contracts.total">2、甲乙双方约定的借款期限为<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>日，自借款满标并第三方存管银行（以下简称“存管银行”）将甲方出借资金从甲方存管账户（即甲方通过平台在存管银行开立的银行存管账户，简称“甲方存管账户”）转入乙方存管账户（即乙方通过平台在存管银行开立的银行存管账户，简称“乙方存管账户”）之日起算。</p>
+        <p class="agree-tx" v-if="contracts.total">3、借款年化利率<u> {{contracts.annualEarnings}} </u>%（月利率=年化利率/12；日利率=年化利率/365），以存管银行将甲方出借资金转入乙方存管账户之日作为利息起算日，不足一月的按日计息。甲方出借资金自充值到甲方存管账户至转入乙方存管账户期间不计算利息。</p>
+        <p class="agree-tx" v-if="!contracts.total">3、借款年化利率<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>%（月利率=年化利率/12；日利率=年化利率/365），以存管银行将甲方出借资金转入乙方存管账户之日作为利息起算日，不足一月的按日计息。甲方出借资金自充值到甲方存管账户至转入乙方存管账户期间不计算利息。</p>
+        <p class="agree-tx" v-if="contracts.total">4、借款用途为：<u class="financingPurpose" v-html="contracts.financingPurpose"></u> 。</p>
+        <p class="agree-tx" v-if="!contracts.total">4、借款用途为：<u> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </u> 。</p>
+        <br>
+        <p><strong class="agree-mg">二、放款及还款</strong></p>
+        <p class="agree-tx">1、根据相关监管规定，为保证交易资金安全，便于交易资金的充值、出借、提现、还款，存管银行分别为甲方和乙方开立银行存管账户，该账户作为甲方将出借资金支付给乙方及乙方将借款本息偿还甲方的唯一中转账户。</p>
+        <p class="agree-tx">2、本合同签署前，甲方应将出借资金转入甲方银行存管账户。甲方授权丙方在本合同生效<u> 当日 </u>向存管银行发出划款指令，存管银行收到丙方的划款指令后<u> 1 </u>个工作日内，将出借资金从甲方银行存管账户划转至乙方银行存管账户，完成甲方资金的出借。乙方可通过丙方平台向存管银行发出划款指令，将款项从其银行存管账户转入其绑定的线下银行账户。</p>
+        <p class="agree-tx">3、经协商一致，乙方在本合同项下的还款方式为：按月付息，到期一次性还本，即乙方每月支付一次利息，借款到期日一次性偿还全部借款本金。乙方首次利息的支付时间为借款发放日后的第30天，后续每月利息的支付时间以此类推。如最后一次利息的支付时间不满30天的，以借款到期日作为最后一次利息的支付日,必要时上一期利息也可在最后一期同时支付。</p>
+        <p class="agree-tx">具体还款日期及还款金额详见《还款计划表》。</p>
+        <p class="agree-tx">4、乙方应按照《还款计划表》的约定及时将应还本金和/或利息转入乙方存管账户。乙方授权丙方向存管银行发出付款指令，将当期乙方应向甲方偿还的金额，按本合同约定时间从乙方存管账户转入甲方存管账户，完成乙方的还款。</p>
+        <p class="agree-tx">5、乙方将当期应还本息转入乙方存管账户的时间应不迟于当期约定还款日中午12:00。</p>
+        <p class="agree-tx">6、乙方确认，如乙方还款金额不足以清偿其到期应付款项，则按照如下顺序进行清偿：债权人实现债权的费用、违约金、利息、本金。</p>
+        <p class="agree-tx">7、乙方还款金额进入甲方存管账户后，甲方可提现或进行平台其他项目的投资。</p>
+        <br>
+        <p><strong class="agree-mg">三、提前还款</strong></p>
+        <p class="agree-tx">1、出借款项转入乙方存管账户之日起不满<u> 30 </u>日（含）的，原则上不允许提前还款，除非乙方同意支付前述期间的全部利息。出借款项转入乙方存管账户起<u> 30 </u>日（不含）后，乙方可申请提前还款，并按照实际借款期间支付利息，具体流程如下：</p>
+        <p class="agree-tx">（1）乙方有意向提前还款的，应提前 3个工作日向丙方提出申请，并明确拟提前还款日期。经丙方审核确认乙方提前还款符合本合同约定的，则通知乙方同意配合其履行提前还款。</p>
+        <p class="agree-tx">（2）乙方应在拟提前还款日中午12:00前，将截止提前还款日的应还本息支付至乙方存管账户，并授权丙方于当日18:00前向存管银行发出划款指令，存管银行收到丙方的划款指令后，于拟还款日24:00前，将乙方还款本息划转至甲方存管账户，完成乙方提前还款。</p>
+        <p class="agree-tx">2、乙方按照本合同约定提前还款的，无需向甲方支付违约金。</p>
+        <p class="agree-tx">3、乙方提前还款的，甲方在乙方提前还款日前已经收取的利息（如有）不予退还，丙方已经收取的平台服务费不予退还。 </p>
+        <br>
+        <p><strong class="agree-mg">四、平台服务费</strong></p>
+        <p class="agree-tx">丙方作为网络借贷信息中介服务平台，为甲乙双方的借贷交易提供信息咨询、撮合服务。丙方暂时不向甲方收取服务费，丙方向乙方收取服务费的标准、时间及收费方式，由乙丙双方另行签署协议明确。</p>
+        <br>
+        <p><strong class="agree-mg">五、各方的陈述、声明和保证</strong></p>
+        <p class="agree-tx">1、甲方的陈述、 声明和保证</p>
+        <p class="agree-tx">（1）甲方保证具有签署本合同的民事权利能力和民事行为能力，能独立承担民事责任。如需授权批准，甲方保证本次向乙方出借款项已经获得了必要的授权批准。如需履行必要的内部审批程序，甲方保证其签署和履行本合同已经履行了必要的内部程序。</p>
+        <p class="agree-tx">（2）甲方已经充分认识到向乙方出借资金可能存在的风险，经独立审慎判断后做出出借决定，自愿签署本合同，由此产生的一切风险均由甲方自行承担。</p>
+        <p class="agree-tx">（3）甲方保证其所有出借资金来源合法，如果任何第三方对甲方所出借资金的权属、合法性等提出异议，甲方应自行解决并承担因此导致的一切责任。</p>
+        <p class="agree-tx">（4）甲方保证不利用丙方平台进行洗钱、信用卡套现及其他任何违法违规行为。</p>
+        <p class="agree-tx">（5）甲方保证其向丙方提交的所有证件、资料、信息等均真实、准确、完整、有效。若上述资料或信息发生变更，甲方保证在变更后2日内通知丙方或登录平台更新相关信息。</p>
+        <p class="agree-tx">（6）甲方已经仔细阅读并完全理解丙方在其平台发布的注册协议、交易规则和本合同相关内容，同意严格遵守平台的注册协议、交易规则，并履行本合同约定的义务。</p>
+        <p class="agree-tx">（7）如乙方未按照本合同约定按时归还借款本息，任何一期逾期达到<u> 15 </u>日的，甲方授权丙方代甲方向乙方宣布本合同提前到期，乙方应立即履行还本付息及其他款项的支付义务。</p>
+        <p class="agree-tx">（8）甲方承诺，甲方因出借资金而应承担的相关税费，由甲方自行向税务机关申报、缴纳，丙方不负责相关事项的处理。如因此导致丙方承担责任或遭受损失，丙方有权向甲方追偿。</p>
+        <p class="agree-tx">（9）甲方确认，甲方通过本合同对丙方的授权不可撤销，丙方依据该等授权所进行的一切行为的法律后果由甲方承担。</p>
+        <p class="agree-tx">（10）甲方知悉并确认，甲方存管账户中的拟出借款项在划转至乙方存管账户之日前被冻结且不计息。甲方存管账户中的拟出借款项被冻结后，甲方不得要求解除冻结或申请用于其他投资。</p>
+        <p class="agree-tx">（11）甲方应妥善保管其在平台的用户名和密码，通过该用户名和密码进行登录的任何操作均被视为甲方的行为，所产生的一切法律后果由甲方承担。</p>
+        <p class="agree-tx">2、乙方的陈述、声明和保证</p>
+        <p class="agree-tx">（1）乙方保证具有签署本合同的民事权利能力和民事行为能力，能独立承担民事责任。如需授权批准，乙方保证本次向甲方借款已经获得了必要的授权批准。如需履行必要的内部审批程序，甲方保证其签署和履行本合同已经履行了必要的内部程序。</p>
+        <p class="agree-tx">（2）乙方保证按照本合同约定用途使用借款，不得将借款用于出借等其他目的，或用于任何违法犯罪活动；乙方承诺按照本合同约定按时足额履行还款义务。</p>
+        <p class="agree-tx">（3）乙方保证其向丙方提交的所有证件、资料、信息等均真实、准确、完整、有效，包括但不限于乙方在所有网络借贷信息中介结构未偿还的借款信息。若上述资料或信息发生变更，乙方保证在变更后2日内通知丙方或登录平台更新相关信息。</p>
+        <p class="agree-tx">（4）乙方保证不会利用丙方平台进行诈骗、非法集资或实施其他违法行为，否则应独立承担相关法律责任。若因乙方违反本合同约定导致丙方承担任何责任或遭受任何损失，丙方有权向乙方追偿。</p>
+        <p class="agree-tx">（5）乙方保证，在其清偿完毕本合同项下的还款义务前，不进行对外投资、实质性增加债务融资等足以影响本合同项下义务履行的行为。如乙方确要进行前述行为，应提前通知丙方，并向甲方提供相应的担保措施或履行提前还款义务。</p>
+        <p class="agree-tx">（6）乙方保证，在本合同履行期间，不为其他第三方提供足以影响乙方履行本合同项下义务的任何担保措施。</p>
+        <p class="agree-tx">（7）乙方保证不存在下列任何行为：</p>
+        <p class="agree-tx">&nbsp; ① 通过故意变换身份、虚构融资项目、夸大融资项目的收益前景等形式的欺诈借款；</p>
+        <p class="agree-tx">&nbsp; ② 同时通过多个网络借贷信息中介机构，或者通过变换项目名称、对项目内容进行非实质性变更等方式，就同一融资项目进行重复融资；</p>
+        <p class="agree-tx">&nbsp; ③ 在网络借贷信息中介机构以外的公开场所发布同一融资项目的信息；</p>
+        <p class="agree-tx">&nbsp; ④ 已发现丙方提供的服务中含有《网络借贷信息中介机构业务活动管理暂行办法》第十条所列内容，仍进行交易；</p>
+        <p class="agree-tx">&nbsp; ⑤ 法律法规或网络借贷有关监管规定禁止从事的其他活动。</p>
+        <p class="agree-tx">（8）乙方发生下列情形之一的，应立即通知丙方。甲方授权丙方在下列任一情形发生时，代甲方向乙方宣布本合同提前到期，乙方应立即向甲方履行还本付息及其他款项的支付义务：</p>
+        <p class="agree-tx">&nbsp; ① 乙方在与其他第三方签署的借款合同等融资合同项下发生严重违约；</p>
+        <p class="agree-tx">&nbsp; ② 乙方转移财产或经营状况严重恶化；</p>
+        <p class="agree-tx">&nbsp; ③ 乙方卷入或即将卷入重大的刑事案件、经济纠纷或其他法律纠纷；</p>
+        <p class="agree-tx">&nbsp; ④ 按照乙方提供的联系方式联系不上乙方；</p>
+        <p class="agree-tx">&nbsp; ⑤ 乙方丧失商业信誉或资信状况严重恶化；</p>
+        <p class="agree-tx">&nbsp; ⑥ 乙方改变合同约定的借款用途的；</p>
+        <p class="agree-tx">&nbsp; ⑦ 乙方违反其在本合同项下的陈述、声明和保证的；</p>
+        <p class="agree-tx">&nbsp; ⑧ 出现其他可能影响乙方在本合同项下的义务履行能力的情形。</p>
+        <p class="agree-tx">3、丙方的陈述、声明和保证</p>
+        <p class="agree-tx">（1）丙方将严格按照本合同约定，尽职尽责地为甲乙双方提供信贷信息发布及交易撮合服务；</p>
+        <p class="agree-tx">（2）丙方作为网络借贷信息中介平台，不以任何方式对乙方在本合同项下义务的履行向甲方提供任何担保；</p>
+        <p class="agree-tx">（3）丙方保留对可疑交易、非法交易、高风险交易的独立判断和认定，并有权依法采取暂停交易、终止交易、向有关部门报告等措施或依据有权部门的指示处理；</p>
+        <p class="agree-tx">（4）丙方妥善履行对甲乙双方借贷交易相关信息资料的保管义务，并对双方的信息履行保密义务，不得删除、篡改、非法买卖、泄露出借人与借款人的基本信息和交易信息。</p>
+        <br>
+        <p><strong class="agree-mg">六、保密义务</strong></p>
+        <p class="agree-tx">各方应对本合同履行过程中获悉的他方的商业秘密予以保密，非为履行本合同所必需或有法律依据，不得泄露，否则应向他方承担违约责任。</p>
+        <br>
+        <p><strong class="agree-mg">七、违约责任</strong></p>
+        <p class="agree-tx">1、除非本合同另有约定或法律、监管规则另有规定，否则，本合同生效后，任何一方均无权解除本合同。任何一方未履行或未完全履行本合同项下的义务，构成违约，应按照法律规定或本合同约定向守约方承担违约责任。</p>
+        <p class="agree-tx">2、乙方未按照本合同约定及时还款的，构成逾期，除应继续履行还款义务外，还应以其应还而未还金额为基数，按照0.03%的日利率向甲方支付违约金，直至支付完毕。</p>
+        <p class="agree-tx">3、乙方同意，若乙方任何一期应付款项逾期超过15日（含），或乙方逾期后出现逃避、拒绝沟通或拒不承认欠款、失去联系等恶意行为，丙方有权依法将乙方的违约失信信息在平台网站进行公告，或以其他适当的方式公开披露。</p>
+        <p class="agree-tx">4、如乙方未能按照本合同约定及时足额还款，乙方不可撤销地授权丙方指令存管银行随时划转乙方存管账户中的余额（如有）用以偿付乙方到期借款本息及其他费用（如有），该等划转无需另行征得乙方同意或通知乙方。</p>
+        <br>
+        <p><strong class="agree-mg">八、法律适用和争议解决</strong></p>
+        <p class="agree-tx">1、本合同适用中华人民共和国法律解释。</p>
+        <p class="agree-tx">2、本合同履行过程中如发生争议，应友好协商解决，协商不成的，任何一方均可向丙方注册在地北京市石景山区有管辖权的人民法院诉讼解决。</p>
+        <br>
+        <p><strong class="agree-mg">九、本合同的成立及生效</strong></p>
+        <p class="agree-tx">1、本合同采用电子文本形式制成，由各方或其授权代理人通过丙方平台的电子合同签署系统签署后生效。</p>
+        <p class="agree-tx">2、本合同由丙方平台妥善保管，甲乙双方均可通过平台下载或查看，各方均认可本合同的法律效力。</p>
+        <br>
+        <p><strong class="agree-mg">（以下无正文) </strong></p>
+        <br>
+        <br>
+        <p class="position-re">
+          <strong class="agree-mg">甲方（签章）：</strong>
+          <b class="loanTypeAignature2" v-show="!isInvesting">{{contracts.userRealName}}</b>
+        </p>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="position-re"><strong class="agree-mg">乙方（签章）：</strong>
+          <div class="hongcaiC" id="loanType1">
+            <p class="economy">{{contracts.enterpriseName}}</p> 
+          </div>
+          <b class="loanTypeAignature2" id="loanType2">{{contracts.enterpriseName}}</b>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="position-re"><strong class="agree-mg">丙方（签章）：</strong>
+          <div class="hongcaiC">
+            <p class="economy1">北京竞财投资服务有限公司</p> 
+          </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <strong class="agree-tx" v-if="contracts.total">签署日期：{{contracts.year}}年{{contracts.month}}月{{contracts.day}}日</strong>
+        <strong class="agree-tx" v-if="!contracts.total">签署日期：<u> &nbsp; &nbsp; &nbsp; </u> 年<u> &nbsp; &nbsp; &nbsp; </u>月<u> &nbsp; &nbsp; &nbsp; </u>日</strong>
+        <br>
+        <br>
+        <br>
+      </div>
+      <div class="annex">
+        <p class="text-left">附件1</p>
+        <br>
+        <table v-if="contracts.total">
+          <thead>
+            <td>甲方姓名</td>
+            <td>身份证号</td>
+            <td>会员编号</td>
+            <td>出借金额(元)</td>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in contracts.orderList">
+              <td>{{item.name}}</td>
+              <td>{{item.idNo}}</td>
+              <td>{{item.number}}</td>
+              <td>{{item.amount}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+        <br>
+        <br>
+        <br>
+      <div class="annex">
+        <p class="text-left">附件2</p>
+        <br>
+        <p class="text-center repaymentTitle" v-if="preRepaymentList.length >0">还款计划表（单位：元、月/日）</p>
         <table v-if="preRepaymentList.length >0">
           <thead>
             <td>序号</td>
@@ -768,6 +972,13 @@
           }
           $('.economy').css(cssStyle)
         }
+      },
+      'contracts.loanType': function (val) {
+        if (this.contractType === 10 && val && val === 1) {
+          $('#loanType2').hide()
+        } else {
+          $('#loanType1').hide()
+        }
       }
     },
     methods: {
@@ -859,6 +1070,13 @@
   }
 </script>
 <style scoped>
+  .repaymentTitle {
+    border-bottom: 1px solid #666;
+    padding-bottom: .1rem;
+  }
+  .financingPurpose {
+    display: inline-block;
+  }
   .agreement-area {
     text-align: left;
     padding: .5rem .3rem;
@@ -916,7 +1134,7 @@
   .annex1 table td:nth-child(3) {
     width: 20%;
   }
-  .signatureA {
+  .signatureA, .loanTypeAignature2 {
     display: inline-block;
     width: 2rem;
     height: 1rem;
@@ -925,20 +1143,34 @@
     padding: .5rem 0 0 .25rem;
     text-align: left;
     position: absolute;
-    right: 0;
     top: -.5rem;
   }
-  .signatureC {
+  .signatureA {
+    right: 0;
+  }
+  .loanTypeAignature2 {
+    left: 30%;
+  }
+  .loanTypeAignature3 {
+    left: 30%;
+  }
+  .signatureC, .hongcaiC {
     width: 80%;
     height: 2.6rem;
     background: url('../images/service-agree/anshan.png') no-repeat center center;
     background-size: contain;
     padding-top: .05rem;
     position: absolute;
-    top: -.38rem;
-    left: -.21rem;
     z-index: -1;
     text-align: center;
+  }
+  .signatureC {
+    top: -.38rem;
+    left: -.21rem;
+  }
+  .hongcaiC {
+    top: -.8rem;
+    left: 10%;
   }
   .signatureB {
     width: 80%;
