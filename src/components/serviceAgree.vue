@@ -273,7 +273,7 @@
       <div class="annex">
         <p class="text-left" v-show="contractType !== 4">附件2</p>
         <br>
-        <p class="text-center repaymentTitle" v-if="preRepaymentList.length >0">还款计划（单位：元、月/日）</p>
+        <p class="text-center repaymentTitle" v-if="preRepaymentList.length >0">还款计划表（单位：元、月/日）</p>
         <table v-if="preRepaymentList.length >0">
           <thead>
             <td>序号</td>
@@ -546,7 +546,7 @@
       <div class="annex">
         <p class="text-left">附件2</p>
         <br>
-        <p class="text-center repaymentTitle" v-if="preRepaymentList.length >0">还款计划（单位：元、月/日）</p>
+        <p class="text-center repaymentTitle" v-if="preRepaymentList.length >0">还款计划表（单位：元、月/日）</p>
         <table v-if="preRepaymentList.length >0">
           <thead>
             <td>序号</td>
