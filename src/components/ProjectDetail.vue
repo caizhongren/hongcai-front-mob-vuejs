@@ -54,7 +54,7 @@
         </div>
       </div>
       <div class="drop-load">
-        向上滑动查看更多详情
+        <hr color="#f6b69c" width="25%"> 向上滑动查看更多详情 <hr color="#f6b69c" width="25%">
       </div>
     </div>
     <!--更多详情页面-->
@@ -669,6 +669,12 @@
      color: #999;
      padding: .35rem 0;
   }
+  .drop-load hr {
+    height: 1px;
+    border: 0px;
+    display: inline-block;
+    margin: 0 .1rem .05rem;
+  }
   .project-detail-top {
     padding-top: 0.8rem;
     padding-bottom: 0.4rem;
@@ -689,7 +695,7 @@
     height: .2rem;
     line-height: .2rem;
     color: #fdb62b;
-    font-size: .2rem;
+    font-size: .22rem;
     margin-bottom: .4rem;
   }
   .fist-frame {
@@ -717,7 +723,7 @@
     background-size: 18%;
   }
   .tip-list .tip-item2 {
-    background: url('../images/project/icon02.png') no-repeat 0px 1px;
+    background: url('../images/project/icon02.png') no-repeat 0px 4px;
     padding-left: .42rem;
     background-size: 16%;
   }
@@ -818,6 +824,9 @@
     height: .26rem;
     line-height: .26rem;
     text-align: left;
+  }
+  .actual-amount {
+    color: #666;
   }
   .remain-amount {
     margin-bottom: .28rem;
