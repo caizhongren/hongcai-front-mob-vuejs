@@ -6,7 +6,7 @@
         <img src="../../images/fentian/logo-fen.png" alt="" width="8.5%">
       </div>
       <img src="../../images/fentian/register-header-text.png" alt="" class="title">
-      <p class="RMB" @click="test">价值 <span class="ft-yellow">RMB410</span></p>
+      <p class="RMB">价值 <span class="ft-yellow">RMB410</span></p>
       <ul class="gifts">
         <li>
           <img src="../../../static/images/gift0-1.png" alt="">
@@ -249,18 +249,11 @@
           }, 1000)
           console.log(err)
         })
-      },
-      test () {
-        this.$router.push({name: 'FenPushSuccess'})
       }
-    },
-    destroyed () {
     }
   }
 </script>
 <style scoped>
-  .FenTian {
-  }
   .hr {
     height: 1px;
     border: 0px;
