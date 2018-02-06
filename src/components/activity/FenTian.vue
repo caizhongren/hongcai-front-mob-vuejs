@@ -32,28 +32,28 @@
                     <img :src="'../../../static/images/gift' + index + '-4.png'" alt="" class="display-bl margin-auto" :width="item.imgWidth">
                   </div>
                 </div>
-                <div class="box-son" v-if="index === 0">
+                <div class="box-son" v-if="index.type === 0">
                   <p class="gift-name">【时装兑换令牌】</p>
                   <p class="gift-name">【神器印记礼包】</p>
                   <p class="gift-name">【魔气结晶】</p>
                 </div>
-                <div class="box-son" v-if="index === 1">
+                <div class="box-son" v-if="item.type === 1">
                   <p class="gift-name">【典籍经典宝箱】&nbsp;&nbsp;【金宠随机包】<br>【随机神能宝箱】&nbsp;&nbsp;【坐骑兑换缰绳】</p>
                 </div>
-                <div class="box-son" v-if="index === 2">
+                <div class="box-son" v-if="item.type === 2">
                     <p class="gift-name">【9级宝石】&nbsp;&nbsp;【高级天机卷】<br>【金钥匙】&nbsp;&nbsp;&nbsp;&nbsp;【神器印记礼包】</p>
                 </div>
               </div>
-              <p class="text" v-if="index === 0 && (!userAuth.active || userAuth.authStatus !== 2)">您已获得价值<span>RMB{{item.value}}</span>游戏礼包领取资格，通过银行存管认证后，即可获取礼包兑换码，数量有限，兑完即止哟～</p>
-              <p class="text" v-if="index === 1 && item.status === 0">首投任意金额(不含债权转让类项目)即可获取价值<span>RMB{{item.value}}</span>游戏礼包</p>
-              <p class="text" v-if="index === 2 && item.status === 0">活动期间，累计投资金额满5000元 (不含债权转让类项目)即可获取价值<span>RMB{{item.value}}</span>游戏礼包</p>
-              <div class="gongxi" v-if="item.status === 1 || index === 0 && userAuth.active && userAuth.authStatus === 2">
+              <p class="text" v-if="item.type === 0 && item.cdkey === null">您已获得价值<span>RMB{{item.value}}</span>游戏礼包领取资格，通过银行存管认证后，即可获取礼包兑换码，数量有限，兑完即止哟～</p>
+              <p class="text" v-if="item.type === 1 && item.cdkey === null">首投任意金额(不含债权转让类项目)即可获取价值<span>RMB{{item.value}}</span>游戏礼包</p>
+              <p class="text" v-if="item.type === 2 && item.cdkey === null">活动期间，累计投资金额满5000元 (不含债权转让类项目)即可获取价值<span>RMB{{item.value}}</span>游戏礼包</p>
+              <div class="gongxi" v-if="item.cdkey !== null">
                 <p>恭喜您获得焚天{{item.giftName}}！</p>
                 <p>奖励兑换码为</p>
                 <p class="cdKey">{{item.cdkey}}</p>
               </div>
-              <p class="take-btn" v-if="item.status === 0" @click="toTakeCdkey(index + 1, item.status)">立即抢领</p>
-              <p class="take-btn" v-if="item.status === 1" @click="copyCdkey(item.cdkey)">复制兑换码</p>
+              <p class="take-btn" v-if="item.cdkey !== null" @click="copyCdkey(item.cdkey)">复制兑换码</p>
+              <p class="take-btn" v-if="item.cdkey === null" @click="toTakeCdkey()">立即抢领</p>
             </li>
           </ul>
         </div>
@@ -89,7 +89,6 @@
           active: Boolean,
           authStatus: Number
         },
-        investAmount: 5000, // 用户活动期间累计投资额
         activityInfo: {
           startYear: 2018,
           startMonth: 1,
@@ -100,46 +99,46 @@
         },
         gifts: [
           {
+            type: 0,
             value: 410,
-            status: 1,
             giftName: '初级礼包',
             num1: 1,
             num2: 1,
             num3: 2,
             imgWidth: '80%',
-            cdkey: 'xfhjlokpamxipamlznd1'
+            cdkey: null
           },
           {
+            type: 1,
             value: 1000,
-            status: 1,
             giftName: '中级礼包',
             num1: 3,
             num2: 1,
             num3: 1,
             num4: 1,
             imgWidth: '86%',
-            cdkey: 'xfhjlokpamxipamlznd2'
+            cdkey: null
           },
           {
+            type: 2,
             value: 2500,
-            status: 0,
             giftName: '高级礼包',
             num1: 1,
             num2: 5,
             num3: 2,
             num4: 2,
             imgWidth: '86%',
-            cdkey: 'xfhjlokpamxipamlznd3'
+            cdkey: null
           }
-        ],
-        canTake: true
+        ]
       }
     },
     props: ['token'],
     created () {
-      this.getUserAuth()
       this.getActivityStatus()
-      this.getLevelStatus()
+      this.getCdkeys(0)
+      this.getCdkeys(1)
+      this.getCdkeys(2)
     },
     mounted () {
       this.setCarousel()
@@ -161,12 +160,12 @@
           }
         })
       },
-      getUserAuth: function () {
-        this.$http({
-          methods: 'get',
-          url: '/hongcai/rest/users/0/userAuth?token=' + this.token
-        }).then((response) => {
-          this.userAuth = response.data
+      getCdkeys (type) { // 各等级领取状态查询
+        var that = this
+        that.$http('/hongcai/rest/activitys/fenTianCdkey?token=' + that.token + '&channelName=fentian' + '&cdKeyType=' + type)
+        .then(function (res) {
+          console.log(that.gifts[type].cdkey === null)
+          res.status !== 200 ? that.gifts[type].cdkey = null : that.gifts[type].cdkey = res.data.cdkey
         })
       },
       setCarousel () { // 红包布局配置
@@ -189,63 +188,16 @@
           })
         }
       },
-      takeCdkey (level) { // 领取
-        var that = this
-        that.$http.post('/hongcai/rest/activitys/newYear/takeReward', {
-          token: that.token,
-          level: level
-        }).then((response) => {
-          if (response.data !== 'success') {
-            return
-          }
-          that.gifts[key].cdkey = response.data.cdkey
-          let key = level - 1
-          that.gifts[key].status = 1 // 手动修改礼包的领取状态为 1
-        })
-      },
-      toTakeCdkey (level, status) { // level: 用户点击领取的等级
-        if (this.busy || !this.canTake || Carousel.index !== (level - 1) || status !== 0) {
-          return
-        }
+      toTakeCdkey () {
         if (this.userAuth.active && this.userAuth.authStatus === 2) {
-          if (level === 1) {
-            this.takeCdkey(level)
-            return
-          }
-          this.busy = true
-          this.$http('/hongcai/rest/activitys/invest/transition/0/annualInvestAmount?token=' + this.token + '&activityType=' + this.$route.query.act)
-          .then((res) => { // 活动期间累计投资额查询
-            this.busy = false
-            if (!res || res.ret === -1) {
-              return
-            }
-            if (res.data.annualInvest === 0 || level === 3 && res.data.annualInvest < 5000) {
-              bridgeUtil.webConnectNative('HCNative_GoInvestList', null, {}, function (response) {}, null)
-            } else if (level === 2 && res.data.annualInvest > 0 || level === 3 && res.data.annualInvest >= 5000) {
-              this.takeCdkey(level)
-            }
-          })
+          bridgeUtil.webConnectNative('HCNative_GoInvestList', null, {}, function (response) {}, null)
         } else {
           bridgeUtil.webConnectNative('HCNative_CheckUserAuth', null, {}, function (response) {}, null)
         }
       },
-      getLevelStatus () { // 各等级领取状态查询
-        var that = this
-        that.$http('/hongcai/rest/activitys/newYear/levelStatus?token=' + that.token)
-        .then(function (res) {
-          if (!res || res.ret === -1) {
-            return
-          }
-          for (let i = 0; i < res.data.status.length; i++) {
-            that.gifts[i].status = res.data.status[i]
-          }
-        })
-      },
       copyCdkey (cdkey) {
         bridgeUtil.webConnectNative('HCNative_CopyText', null, {text: cdkey}, function (response) {}, null)
       }
-    },
-    destroyed () {
     }
   }
 </script>
@@ -333,7 +285,7 @@
     height: 100%;
     color: #fff;
     font-size: .24rem;
-    background: url('../../images/spring-festival/hongbao-3-min.png') no-repeat center center;
+    /* background: url('../../images/spring-festival/hongbao-3-min.png') no-repeat center center; */
     background-size: contain;
   }
   li .gongxi p:first-child {
