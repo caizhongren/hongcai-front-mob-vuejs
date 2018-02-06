@@ -9,51 +9,117 @@
       <div class="position-re carousel-mask">
         <div id="wrapper">
           <ul class="poster-list">
-            <li v-for="(item, index) in gifts" :key="index">
+            <!-- 初级 -->
+            <li>
               <span class="circle"></span>
-              <img :src="'../../../static/images/level' + index + '.png'" alt="" class="display-bl name" width="32%">
-              <div class="flag"><p>价值<span>RMB{{item.value}}</span></p></div>
+              <img src="../../../static/images/level0.png" alt="" class="display-bl name" width="32%">
+              <div class="flag"><p>价值<span>RMB410</span></p></div>
               <div class="box1">
                 <div class="box-son">
                   <div class="position-re">
-                    <p class="position-ab num"><span>x{{item.num1}}</span></p>
-                    <img :src="'../../../static/images/gift' + index + '-1.png'" alt="" class="display-bl margin-auto" :width="item.imgWidth">
+                    <p class="position-ab num"><span>x1</span></p>
+                    <img src="../../../static/images/gift0-1.png" alt="" class="display-bl margin-auto" width="80%">
                   </div>
                   <div class="position-re">
-                    <p class="position-ab num"><span>x{{item.num2}}</span></p>
-                    <img :src="'../../../static/images/gift' + index + '-2.png'" alt="" class="display-bl margin-auto" :width="item.imgWidth">
+                    <p class="position-ab num"><span>x1</span></p>
+                    <img src="../../../static/images/gift0-2.png" alt="" class="display-bl margin-auto" width="80%">
                   </div>
                   <div class="position-re">
-                    <p class="position-ab num"><span>x{{item.num3}}</span></p>
-                    <img :src="'../../../static/images/gift' + index + '-3.png'" alt="" class="display-bl margin-auto" :width="item.imgWidth">
-                  </div>
-                  <div class="position-re" v-if="item.num4">
-                    <p class="position-ab num"><span>x{{item.num4}}</span></p>
-                    <img :src="'../../../static/images/gift' + index + '-4.png'" alt="" class="display-bl margin-auto" :width="item.imgWidth">
+                    <p class="position-ab num"><span>x2</span></p>
+                    <img src="../../../static/images/gift0-3.png" alt="" class="display-bl margin-auto" width="80%">
                   </div>
                 </div>
-                <div class="box-son" v-if="index.type === 0">
+                <div class="box-son">
                   <p class="gift-name">【时装兑换令牌】</p>
                   <p class="gift-name">【神器印记礼包】</p>
                   <p class="gift-name">【魔气结晶】</p>
                 </div>
-                <div class="box-son" v-if="item.type === 1">
+              </div>
+              <p class="text" v-if="!cdkey0">您已获得价值<span>RMB410</span>游戏礼包领取资格，通过银行存管认证后，即可获取礼包兑换码，数量有限，兑完即止哟～</p>
+              <div class="gongxi" v-if="cdkey0">
+                <p>恭喜您获得焚天初级礼包！</p>
+                <p>奖励兑换码为</p>
+                <p id="cdKey">{{cdkey0}}</p>
+              </div>
+              <p class="take-btn" @click="copyCdkey(cdkey0)">复制兑换码</p>
+              <!-- <button type="button" class="take-btn" @click="toTakeCdkey">立即抢领</button> -->
+              <p class="take-btn" v-if="!cdkey0" @click="toTakeCdkey">立即抢领</p>
+            </li>
+            <!-- 中级 -->
+            <li>
+              <span class="circle"></span>
+              <img src="../../../static/images/level1.png" alt="" class="display-bl name" width="32%">
+              <div class="flag"><p>价值<span>RMB1000</span></p></div>
+              <div class="box1">
+                <div class="box-son">
+                  <div class="position-re">
+                    <p class="position-ab num"><span>x3</span></p>
+                    <img src="../../../static/images/gift1-1.png" alt="" class="display-bl margin-auto" width="86%">
+                  </div>
+                  <div class="position-re">
+                    <p class="position-ab num"><span>x1</span></p>
+                    <img src="../../../static/images/gift1-2.png" alt="" class="display-bl margin-auto" width="86%">
+                  </div>
+                  <div class="position-re">
+                    <p class="position-ab num"><span>x1</span></p>
+                    <img src="../../../static/images/gift1-3.png" alt="" class="display-bl margin-auto" width="86%">
+                  </div>
+                  <div class="position-re">
+                    <p class="position-ab num"><span>x1</span></p>
+                    <img src="../../../static/images/gift1-4.png" alt="" class="display-bl margin-auto" width="86%">
+                  </div>
+                </div>
+                <div class="box-son">
                   <p class="gift-name">【典籍经典宝箱】&nbsp;&nbsp;【金宠随机包】<br>【随机神能宝箱】&nbsp;&nbsp;【坐骑兑换缰绳】</p>
                 </div>
-                <div class="box-son" v-if="item.type === 2">
+              </div>
+              <p class="text" v-if="!cdkey1">首投任意金额(不含债权转让类项目)即可获取价值<span>RMB1000</span>游戏礼包</p>
+              <div class="gongxi" v-if="cdkey1">
+                <p>恭喜您获得焚天！</p>
+                <p>奖励兑换码为</p>
+                <p id="cdKey">{{cdkey}}</p>
+              </div>
+              <p class="take-btn" v-if="cdkey1" @click="copyCdkey(cdkey)">复制兑换码</p>
+              <!-- <button type="button" class="take-btn" @click="toTakeCdkey">立即抢领</button> -->
+              <p class="take-btn" v-if="!cdkey1" @click="toTakeCdkey">立即抢领</p>
+            </li>
+            <!-- 高级 -->
+            <li>
+              <span class="circle"></span>
+              <img src="../../../static/images/level2.png" alt="" class="display-bl name" width="32%">
+              <div class="flag"><p>价值<span>RMB5000</span></p></div>
+              <div class="box1">
+                <div class="box-son">
+                  <div class="position-re">
+                    <p class="position-ab num"><span>x1</span></p>
+                    <img src="../../../static/images/gift2-1.png" alt="" class="display-bl margin-auto" width="86%">
+                  </div>
+                  <div class="position-re">
+                    <p class="position-ab num"><span>x5</span></p>
+                    <img src="../../../static/images/gift2-2.png" alt="" class="display-bl margin-auto" width="86%">
+                  </div>
+                  <div class="position-re">
+                    <p class="position-ab num"><span>x2</span></p>
+                    <img src="../../../static/images/gift2-3.png" alt="" class="display-bl margin-auto" width="86%">
+                  </div>
+                  <div class="position-re">
+                    <p class="position-ab num"><span>x2</span></p>
+                    <img src="../../../static/images/gift2-4.png" alt="" class="display-bl margin-auto" width="86%">
+                  </div>
+                </div>
+                <div class="box-son">
                     <p class="gift-name">【9级宝石】&nbsp;&nbsp;【高级天机卷】<br>【金钥匙】&nbsp;&nbsp;&nbsp;&nbsp;【神器印记礼包】</p>
                 </div>
               </div>
-              <p class="text" v-if="item.type === 0 && item.cdkey === null">您已获得价值<span>RMB{{item.value}}</span>游戏礼包领取资格，通过银行存管认证后，即可获取礼包兑换码，数量有限，兑完即止哟～</p>
-              <p class="text" v-if="item.type === 1 && item.cdkey === null">首投任意金额(不含债权转让类项目)即可获取价值<span>RMB{{item.value}}</span>游戏礼包</p>
-              <p class="text" v-if="item.type === 2 && item.cdkey === null">活动期间，累计投资金额满5000元 (不含债权转让类项目)即可获取价值<span>RMB{{item.value}}</span>游戏礼包</p>
-              <div class="gongxi" v-if="item.cdkey !== null">
-                <p>恭喜您获得焚天{{item.giftName}}！</p>
+              <p class="text" v-if="!cdkey2">活动期间，累计投资金额满5000元 (不含债权转让类项目)即可获取价值<span>RMB5000</span>游戏礼包</p>
+              <div class="gongxi" v-if="cdkey2">
+                <p>恭喜您获得焚天！</p>
                 <p>奖励兑换码为</p>
-                <p class="cdKey">{{item.cdkey}}</p>
+                <p id="cdKey"=>{{cdkey}}</p>=
               </div>
-              <p class="take-btn" v-if="item.cdkey !== null" @click="copyCdkey(item.cdkey)">复制兑换码</p>
-              <p class="take-btn" v-if="item.cdkey === null" @click="toTakeCdkey()">立即抢领</p>
+              <p class="take-btn" v-if="cdkey2" @click="copyCdkey(cdkey)">复制兑换码</p>
+              <!-- <button type="button" class="take-btn" @click="toTakeCdkey">立即抢领</button> -->
+              <p class="take-btn" v-if="!cdkey2" @click="toTakeCdkey">立即抢领</p>
             </li>
           </ul>
         </div>
@@ -84,6 +150,9 @@
   export default {
     data () {
       return {
+        cdkey0: 0,
+        cdkey1: 0,
+        cdkey2: 0,
         isIos: Utils.isIos(),
         userAuth: {
           active: Boolean,
@@ -106,7 +175,7 @@
             num2: 1,
             num3: 2,
             imgWidth: '80%',
-            cdkey: null
+            cdkey: undefined
           },
           {
             type: 1,
@@ -117,7 +186,7 @@
             num3: 1,
             num4: 1,
             imgWidth: '86%',
-            cdkey: null
+            cdkey: undefined
           },
           {
             type: 2,
@@ -128,17 +197,27 @@
             num3: 2,
             num4: 2,
             imgWidth: '86%',
-            cdkey: null
+            cdkey: undefined
           }
         ]
       }
     },
     props: ['token'],
+    watch: {
+      token: function (val) {
+        val ? this.getCdkeys(0) : null
+        // val ? this.getCdkeys(1) : null
+        // val ? this.getCdkeys(2) : null
+      }
+    },
     created () {
       this.getActivityStatus()
-      this.getCdkeys(0)
-      this.getCdkeys(1)
-      this.getCdkeys(2)
+      this.token ? this.getCdkeys(0) : null
+      // this.token ? this.getCdkeys(0) : null
+      // this.token ? this.getCdkeys(0) : null
+      // this.getCdkeys(0)
+      // this.getCdkeys(1)
+      // this.getCdkeys(2)
     },
     mounted () {
       this.setCarousel()
@@ -161,11 +240,19 @@
         })
       },
       getCdkeys (type) { // 各等级领取状态查询
+        if (type === 0 && this.cdkey0 || type === 1 && this.cdkey1 || type === 2 && this.cdkey2) {
+          return
+        }
         var that = this
         that.$http('/hongcai/rest/activitys/fenTianCdkey?token=' + that.token + '&channelName=fentian' + '&cdKeyType=' + type)
         .then(function (res) {
-          console.log(that.gifts[type].cdkey === null)
-          res.status !== 200 ? that.gifts[type].cdkey = null : that.gifts[type].cdkey = res.data.cdkey
+          // alert(res.status)
+          type === 0 ? that.cdkey0 = null : type === 1 ? that.cdkey1 = null : that.cdkey2 = null
+          if (res && res.data.ret !== -1) {
+            type === 0 ? that.cdkey0 = res.data.cdkey : null
+            type === 1 ? that.cdkey1 = res.data.cdkey : null
+            type === 2 ? that.cdkey2 = res.data.cdkey : null
+          }
         })
       },
       setCarousel () { // 红包布局配置
@@ -181,6 +268,8 @@
             diff: 0.445,
             before: function () { // 动画执行中不可拆红包
               that.canTake = false
+              let i = this.index === 2 ? 0 : this.index + 1
+              that.getCdkeys(i)
             },
             after: function () {
               that.canTake = true
@@ -189,11 +278,17 @@
         }
       },
       toTakeCdkey () {
-        if (this.userAuth.active && this.userAuth.authStatus === 2) {
-          bridgeUtil.webConnectNative('HCNative_GoInvestList', null, {}, function (response) {}, null)
-        } else {
-          bridgeUtil.webConnectNative('HCNative_CheckUserAuth', null, {}, function (response) {}, null)
-        }
+        this.$http({
+          methods: 'get',
+          url: '/hongcai/rest/users/0/userAuth?token=' + this.token
+        }).then((response) => {
+          this.userAuth = response.data
+          if (this.userAuth.active && this.userAuth.authStatus === 2) {
+            bridgeUtil.webConnectNative('HCNative_GoInvestList', null, {}, function (response) {}, null)
+          } else {
+            bridgeUtil.webConnectNative('HCNative_CheckUserAuth', null, {}, function (response) {}, null)
+          }
+        })
       },
       copyCdkey (cdkey) {
         bridgeUtil.webConnectNative('HCNative_CopyText', null, {text: cdkey}, function (response) {}, null)
@@ -353,6 +448,8 @@
   }
   li .take-btn {
     position: absolute;
+    display: block;
+    border:none;
     bottom: 5%;
     height: 1rem;
     width: 81%;
