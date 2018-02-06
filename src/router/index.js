@@ -58,7 +58,7 @@ const WanduSuccess = r => require.ensure([], () => r(require('../components/acti
 const QRcode = r => require.ensure([], () => r(require('../components/QRcode.vue')), 'QRcode')
 const Updates = r => require.ensure([], () => r(require('../components/recommendUpdates.vue')), 'Updates')
 const Disclosure = r => require.ensure([], () => r(require('../components/disclosure/disclosure.vue')), 'Disclosure')
-const BankDisclosure = r => require.ensure([], () => r(require('../components/disclosure/bankDisclosure.vue')), 'Disclosure')
+const PoliciesRegulations = r => require.ensure([], () => r(require('../components/disclosure/policiesRegulations.vue')), 'Disclosure')
 const RecordInformation = r => require.ensure([], () => r(require('../components/disclosure/recordInformation.vue')), 'Disclosure')
 const RiskManagement = r => require.ensure([], () => r(require('../components/disclosure/riskManagement.vue')), 'Disclosure')
 const Organization = r => require.ensure([], () => r(require('../components/disclosure/organization.vue')), 'Disclosure')
@@ -127,12 +127,6 @@ const routes = [
     children: [
       {
         path: '',
-        name: 'BankDisclosure',
-        component: BankDisclosure,
-        meta: {title: '信息披露'}
-      },
-      {
-        path: 'record-information',
         name: 'RecordInformation',
         component: RecordInformation,
         meta: {title: '信息披露'}
@@ -153,6 +147,12 @@ const routes = [
         path: 'business-information',
         name: 'BusinessInformation',
         component: BusinessInformation,
+        meta: {title: '信息披露'}
+      },
+      {
+        path: 'policies-regulations',
+        name: 'PoliciesRegulations',
+        component: PoliciesRegulations,
         meta: {title: '信息披露'}
       }
     ]
