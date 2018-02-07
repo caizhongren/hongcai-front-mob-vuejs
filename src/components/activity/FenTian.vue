@@ -12,21 +12,21 @@
             <!-- 初级 -->
             <li>
               <span class="circle"></span>
-              <img src="../../../static/images/level0.png" alt="" class="display-bl name" width="32%">
+              <img src="../../images/fentian/level1.png" alt="" class="display-bl name" width="32%">
               <div class="flag"><p>价值<span>RMB410</span></p></div>
               <div class="box1">
                 <div class="box-son">
                   <div class="position-re">
                     <p class="position-ab num"><span>x1</span></p>
-                    <img src="../../../static/images/gift0-1.png" alt="" class="display-bl margin-auto" width="80%">
+                    <img src="../../images/fentian/gift0-1.png" alt="" class="display-bl margin-auto" width="80%">
                   </div>
                   <div class="position-re">
                     <p class="position-ab num"><span>x1</span></p>
-                    <img src="../../../static/images/gift0-2.png" alt="" class="display-bl margin-auto" width="80%">
+                    <img src="../../images/fentian/gift0-2.png" alt="" class="display-bl margin-auto" width="80%">
                   </div>
                   <div class="position-re">
                     <p class="position-ab num"><span>x2</span></p>
-                    <img src="../../../static/images/gift0-3.png" alt="" class="display-bl margin-auto" width="80%">
+                    <img src="../../images/fentian/gift0-3.png" alt="" class="display-bl margin-auto" width="75%">
                   </div>
                 </div>
                 <div class="box-son">
@@ -47,25 +47,25 @@
             <!-- 中级 -->
             <li>
               <span class="circle"></span>
-              <img src="../../../static/images/level1.png" alt="" class="display-bl name" width="32%">
+              <img src="../../images/fentian/level2.png" alt="" class="display-bl name" width="32%">
               <div class="flag"><p>价值<span>RMB1000</span></p></div>
               <div class="box1">
                 <div class="box-son">
                   <div class="position-re">
                     <p class="position-ab num"><span>x3</span></p>
-                    <img src="../../../static/images/gift1-1.png" alt="" class="display-bl margin-auto" width="86%">
+                    <img src="../../images/fentian/gift1-1.png" alt="" class="display-bl margin-auto" width="80%">
                   </div>
                   <div class="position-re">
                     <p class="position-ab num"><span>x1</span></p>
-                    <img src="../../../static/images/gift1-2.png" alt="" class="display-bl margin-auto" width="86%">
+                    <img src="../../images/fentian/gift1-2.png" alt="" class="display-bl margin-auto" width="80%">
                   </div>
                   <div class="position-re">
                     <p class="position-ab num"><span>x1</span></p>
-                    <img src="../../../static/images/gift1-3.png" alt="" class="display-bl margin-auto" width="86%">
+                    <img src="../../images/fentian/gift1-3.png" alt="" class="display-bl margin-auto" width="86%">
                   </div>
                   <div class="position-re">
                     <p class="position-ab num"><span>x1</span></p>
-                    <img src="../../../static/images/gift1-4.png" alt="" class="display-bl margin-auto" width="86%">
+                    <img src="../../images/fentian/gift1-4.png" alt="" class="display-bl margin-auto" width="80%">
                   </div>
                 </div>
                 <div class="box-son">
@@ -84,25 +84,25 @@
             <!-- 高级 -->
             <li>
               <span class="circle"></span>
-              <img src="../../../static/images/level2.png" alt="" class="display-bl name" width="32%">
+              <img src="../../images/fentian/level3.png" alt="" class="display-bl name" width="32%">
               <div class="flag"><p>价值<span>RMB2500</span></p></div>
               <div class="box1">
                 <div class="box-son">
                   <div class="position-re">
                     <p class="position-ab num"><span>x1</span></p>
-                    <img src="../../../static/images/gift2-1.png" alt="" class="display-bl margin-auto" width="86%">
+                    <img src="../../images/fentian/gift2-1.png" alt="" class="display-bl margin-auto" width="86%">
                   </div>
                   <div class="position-re">
                     <p class="position-ab num"><span>x5</span></p>
-                    <img src="../../../static/images/gift2-2.png" alt="" class="display-bl margin-auto" width="86%">
+                    <img src="../../images/fentian/gift2-2.png" alt="" class="display-bl margin-auto" width="75%">
                   </div>
                   <div class="position-re">
                     <p class="position-ab num"><span>x2</span></p>
-                    <img src="../../../static/images/gift2-3.png" alt="" class="display-bl margin-auto" width="86%">
+                    <img src="../../images/fentian/gift2-3.png" alt="" class="display-bl margin-auto" width="80%">
                   </div>
                   <div class="position-re">
                     <p class="position-ab num"><span>x2</span></p>
-                    <img src="../../../static/images/gift2-4.png" alt="" class="display-bl margin-auto" width="86%">
+                    <img src="../../images/fentian/gift0-2.png" alt="" class="display-bl margin-auto" width="86%">
                   </div>
                 </div>
                 <div class="box-son">

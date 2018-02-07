@@ -9,15 +9,15 @@
       <p class="RMB">价值 <span class="ft-yellow">RMB410</span></p>
       <ul class="gifts">
         <li>
-          <img src="../../../static/images/gift0-1.png" alt="">
+          <img src="../../images/fentian/gift0-1.png" alt="">
           <p class="num">x 1</p>
         </li>
         <li>
-          <img src="../../../static/images/gift0-2.png" alt="">
+          <img src="../../images/fentian/gift0-2.png" alt="">
           <p class="num">x 1</p>
         </li>
         <li>
-          <img src="../../../static/images/gift0-3.png" alt="">
+          <img src="../../images/fentian/gift0-3.png" alt="">
           <p class="num">x 2</p>
         </li>
       </ul>
