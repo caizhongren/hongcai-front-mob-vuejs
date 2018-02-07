@@ -77,9 +77,9 @@
               <div class="gongxi" v-if="cdkey1">
                 <p>恭喜您获得焚天！</p>
                 <p>奖励兑换码为</p>
-                <p id="cdKey">{{cdkey}}</p>
+                <p id="cdKey">{{cdkey1}}</p>
               </div>
-              <p class="take-btn" v-if="cdkey1" @click="copyCdkey(cdkey)">复制兑换码</p>
+              <p class="take-btn" v-if="cdkey1" @click="copyCdkey(cdkey1)">复制兑换码</p>
               <!-- <button type="button" class="take-btn" @click="toTakeCdkey">立即抢领</button> -->
               <p class="take-btn" v-if="!cdkey1" @click="toTakeCdkey">立即抢领</p>
             </li>
@@ -115,9 +115,9 @@
               <div class="gongxi" v-if="cdkey2">
                 <p>恭喜您获得焚天！</p>
                 <p>奖励兑换码为</p>
-                <p id="cdKey"=>{{cdkey}}</p>=
+                <p id="cdKey"=>{{cdkey2}}</p>
               </div>
-              <p class="take-btn" v-if="cdkey2" @click="copyCdkey(cdkey)">复制兑换码</p>
+              <p class="take-btn" v-if="cdkey2" @click="copyCdkey(cdkey2)">复制兑换码</p>
               <!-- <button type="button" class="take-btn" @click="toTakeCdkey">立即抢领</button> -->
               <p class="take-btn" v-if="!cdkey2" @click="toTakeCdkey">立即抢领</p>
             </li>
@@ -278,10 +278,7 @@
         }
       },
       toTakeCdkey () {
-        this.$http({
-          methods: 'get',
-          url: '/hongcai/rest/users/0/userAuth?token=' + this.token
-        }).then((response) => {
+        this.$http.get('/hongcai/rest/users/0/userAuth?token=' + this.token).then((response) => {
           this.userAuth = response.data
           if (this.userAuth.active && this.userAuth.authStatus === 2) {
             bridgeUtil.webConnectNative('HCNative_GoInvestList', null, {}, function (response) {}, null)
