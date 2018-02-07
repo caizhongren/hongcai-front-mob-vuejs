@@ -513,7 +513,7 @@ const routes = [
   },
   {
     path: '/:page',
-    name: 'Rouse',
+    name: 'Rouse1',
     component: Rouse,
     meta: {title: '宏财网'}
   },

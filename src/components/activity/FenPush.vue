@@ -32,13 +32,13 @@
       <!-- 注册表单 -->
       <div class="register-form">
         <form>
-          <input type="tel" name="mobile" class="mobile" placeholder="请输入手机号" v-model="user.mobile" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler" autocomplete="off">
+          <input type="tel" name="mobile" maxlength="11" class="mobile" placeholder="请输入手机号" v-model="user.mobile" v-on:input="user.mobile = oninputHandeler(user.mobile, /\D/g)" autocomplete="off">
           <div class="pic">
-            <input type="tel" maxlength="4" name="picCaptcha" placeholder="请输入图形验证码" v-model="user.picCaptcha" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler1(e)" autocomplete="off">
+            <input type="tel" maxlength="4" name="picCaptcha" placeholder="请输入图形验证码" v-model="user.picCaptcha" v-on:input="user.picCaptcha = oninputHandeler(user.picCaptcha, /\D/g)" autocomplete="off">
             <span @click="refreshCode"><img alt="图形验证码" id="picCaptcha" width="100%" height="100%"></span>
           </div>
           <div class="captcha">
-            <input type="tel" name="captcha" placeholder="请输入短信验证码" v-model="user.captcha" v-on:input="oninputHandler2" v-on:beforepaste="beforepasteHandler(e)" autocomplete="off">
+            <input type="tel" name="captcha" maxlength="6" placeholder="请输入短信验证码" v-model="user.captcha" v-on:input="user.captcha = oninputHandeler(user.captcha, /\D/g)" autocomplete="off">
             <span class="send" @click="getCaptcha" id="sent">获取</span>
           </div>
           <button type="button" @click="register(user)">立即注册</button>
@@ -118,14 +118,13 @@
       }
     },
     props: ['showErrMsg'],
-    watch: {
-    },
-    created () {
-    },
     mounted () {
       this.refreshCode()
     },
     methods: {
+      oninputHandeler (val, reg) {
+        return val.replace(reg, '')
+      },
       // 图形验证码
       refreshCode () {
         this.$http.get('/hongcai/rest/captchas', {
@@ -137,23 +136,6 @@
         .catch(function (err) {
           console.log(err)
         })
-      },
-      oninputHandler () {
-        this.user.mobile = this.user.mobile.replace(/\D/g, '')
-        this.user.mobile = this.user.mobile.length > 11 ? this.user.mobile.slice(0, 11) : this.user.mobile
-      },
-      beforepasteHandler (e) {
-        e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/\D/g, ''))
-      },
-      oninputHandler1 () {
-        this.user.picCaptcha = this.user.picCaptcha.replace(/\D/g, '')
-      },
-      beforepasteHandler1 (e) {
-        e.clipboardData.setData('tel', e.clipboardData.getData('tel').replace(/\D/g, ''))
-      },
-      oninputHandler2 () {
-        this.user.captcha = this.user.captcha.length > 6 ? this.user.captcha.slice(0, 6) : this.user.captcha
-        this.user.captcha = this.user.captcha.replace(/\D/g, '')
       },
       getCaptcha () {
         if (!this.canGetCaptch) {
