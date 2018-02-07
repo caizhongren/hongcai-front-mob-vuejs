@@ -32,13 +32,13 @@
       <!-- 注册表单 -->
       <div class="register-form">
         <form>
-          <input type="tel" name="mobile" maxlength="11" class="mobile" placeholder="请输入手机号" v-model="user.mobile" v-on:input="user.mobile = oninputHandeler(user.mobile, /\D/g)" autocomplete="off">
+          <input type="tel" name="mobile" maxlength="11" class="mobile" placeholder="请输入手机号" v-model="user.mobile" v-on:input="user.mobile = user.mobile.replace(/\D/g, '')" autocomplete="off">
           <div class="pic">
-            <input type="tel" maxlength="4" name="picCaptcha" placeholder="请输入图形验证码" v-model="user.picCaptcha" v-on:input="user.picCaptcha = oninputHandeler(user.picCaptcha, /\D/g)" autocomplete="off">
+            <input type="tel" maxlength="4" name="picCaptcha" placeholder="请输入图形验证码" v-model="user.picCaptcha" v-on:input="user.picCaptcha = user.picCaptcha.replace(/\D/g, '')" autocomplete="off">
             <span @click="refreshCode"><img alt="图形验证码" id="picCaptcha" width="100%" height="100%"></span>
           </div>
           <div class="captcha">
-            <input type="tel" name="captcha" maxlength="6" placeholder="请输入短信验证码" v-model="user.captcha" v-on:input="user.captcha = oninputHandeler(user.captcha, /\D/g)" autocomplete="off">
+            <input type="tel" name="captcha" maxlength="6" placeholder="请输入短信验证码" v-model="user.captcha" v-on:input="user.captcha = user.captcha.replace(/\D/g, '')" autocomplete="off">
             <span class="send" @click="getCaptcha" id="sent">获取</span>
           </div>
           <button type="button" @click="register(user)">立即注册</button>
@@ -122,10 +122,6 @@
       this.refreshCode()
     },
     methods: {
-      oninputHandeler (val, reg) {
-        return val.replace(reg, '')
-      },
-      // 图形验证码
       refreshCode () {
         this.$http.get('/hongcai/rest/captchas', {
           code: Math.random()
