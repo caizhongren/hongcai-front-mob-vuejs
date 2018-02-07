@@ -37,13 +37,12 @@
               </div>
               <p class="text" v-if="!cdkey0">您已获得价值<span>RMB410</span>游戏礼包领取资格，通过银行存管认证后，即可获取礼包兑换码，数量有限，兑完即止哟～</p>
               <div class="gongxi" v-if="cdkey0">
-                <p>恭喜您获得焚天初级礼包！</p>
+                <p>恭喜您获得焚天【初级礼包】！</p>
                 <p>奖励兑换码为</p>
                 <p id="cdKey">{{cdkey0}}</p>
               </div>
               <p class="take-btn" @click="copyCdkey(cdkey0)">复制兑换码</p>
-              <!-- <button type="button" class="take-btn" @click="toTakeCdkey">立即抢领</button> -->
-              <p class="take-btn" v-if="!cdkey0" @click="toTakeCdkey">立即抢领</p>
+              <p class="take-btn" v-if="!cdkey0" @click="toTakeCdkey(0)">立即抢领</p>
             </li>
             <!-- 中级 -->
             <li>
@@ -75,19 +74,18 @@
               </div>
               <p class="text" v-if="!cdkey1">首投任意金额(不含债权转让类项目)即可获取价值<span>RMB1000</span>游戏礼包</p>
               <div class="gongxi" v-if="cdkey1">
-                <p>恭喜您获得焚天！</p>
+                <p>恭喜您获得焚天【中级礼包】！</p>
                 <p>奖励兑换码为</p>
                 <p id="cdKey">{{cdkey1}}</p>
               </div>
               <p class="take-btn" v-if="cdkey1" @click="copyCdkey(cdkey1)">复制兑换码</p>
-              <!-- <button type="button" class="take-btn" @click="toTakeCdkey">立即抢领</button> -->
-              <p class="take-btn" v-if="!cdkey1" @click="toTakeCdkey">立即抢领</p>
+              <p class="take-btn" v-if="!cdkey1" @click="toTakeCdkey(1)">立即抢领</p>
             </li>
             <!-- 高级 -->
             <li>
               <span class="circle"></span>
               <img src="../../../static/images/level2.png" alt="" class="display-bl name" width="32%">
-              <div class="flag"><p>价值<span>RMB5000</span></p></div>
+              <div class="flag"><p>价值<span>RMB2500</span></p></div>
               <div class="box1">
                 <div class="box-son">
                   <div class="position-re">
@@ -111,15 +109,14 @@
                     <p class="gift-name">【9级宝石】&nbsp;&nbsp;【高级天机卷】<br>【金钥匙】&nbsp;&nbsp;&nbsp;&nbsp;【神器印记礼包】</p>
                 </div>
               </div>
-              <p class="text" v-if="!cdkey2">活动期间，累计投资金额满5000元 (不含债权转让类项目)即可获取价值<span>RMB5000</span>游戏礼包</p>
+              <p class="text" v-if="!cdkey2">活动期间，累计投资金额满5000元 (不含债权转让类项目)即可获取价值<span>RMB2500</span>游戏礼包</p>
               <div class="gongxi" v-if="cdkey2">
-                <p>恭喜您获得焚天！</p>
+                <p>恭喜您获得焚天【高级礼包】！</p>
                 <p>奖励兑换码为</p>
-                <p id="cdKey"=>{{cdkey2}}</p>
+                <p id="cdKey">{{cdkey2}}</p>
               </div>
               <p class="take-btn" v-if="cdkey2" @click="copyCdkey(cdkey2)">复制兑换码</p>
-              <!-- <button type="button" class="take-btn" @click="toTakeCdkey">立即抢领</button> -->
-              <p class="take-btn" v-if="!cdkey2" @click="toTakeCdkey">立即抢领</p>
+              <p class="take-btn" v-if="!cdkey2" @click="toTakeCdkey(2)">立即抢领</p>
             </li>
           </ul>
         </div>
@@ -146,7 +143,6 @@
 <script>
   import {Carousel} from '../../service/mCarousel'
   import {Utils, bridgeUtil} from '../../service/Utils'
-  // import $ from 'zepto'
   export default {
     data () {
       return {
@@ -154,6 +150,7 @@
         cdkey1: 0,
         cdkey2: 0,
         isIos: Utils.isIos(),
+        index: 0, //
         userAuth: {
           active: Boolean,
           authStatus: Number
@@ -206,18 +203,11 @@
     watch: {
       token: function (val) {
         val ? this.getCdkeys(0) : null
-        // val ? this.getCdkeys(1) : null
-        // val ? this.getCdkeys(2) : null
       }
     },
     created () {
       this.getActivityStatus()
       this.token ? this.getCdkeys(0) : null
-      // this.token ? this.getCdkeys(0) : null
-      // this.token ? this.getCdkeys(0) : null
-      // this.getCdkeys(0)
-      // this.getCdkeys(1)
-      // this.getCdkeys(2)
     },
     mounted () {
       this.setCarousel()
@@ -226,7 +216,6 @@
       getActivityStatus () { // 活动信息查询
         var that = this
         that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
-          that.activityStatus = res.data.status
           var startTime = res.data.startTime
           var endTime = res.data.endTime
           that.activityInfo = {
@@ -239,14 +228,13 @@
           }
         })
       },
-      getCdkeys (type) { // 各等级领取状态查询
+      getCdkeys (type) { // 各等级领取cdkey查询
         if (type === 0 && this.cdkey0 || type === 1 && this.cdkey1 || type === 2 && this.cdkey2) {
           return
         }
         var that = this
         that.$http('/hongcai/rest/activitys/fenTianCdkey?token=' + that.token + '&channelName=fentian' + '&cdKeyType=' + type)
         .then(function (res) {
-          // alert(res.status)
           type === 0 ? that.cdkey0 = null : type === 1 ? that.cdkey1 = null : that.cdkey2 = null
           if (res && res.data.ret !== -1) {
             type === 0 ? that.cdkey0 = res.data.cdkey : null
@@ -255,29 +243,25 @@
           }
         })
       },
-      setCarousel () { // 红包布局配置
+      setCarousel () { // 礼包布局配置
         var that = this
         var wrapper = document.getElementById('wrapper')
-        if (that.activityStatus !== 3) {
-          Carousel.mCarousel(wrapper, {
-            index: 0,
-            active: 'active',
-            scale: 0.67,
-            duration: 300,
-            locked: true,
-            diff: 0.445,
-            before: function () { // 动画执行中不可拆红包
-              that.canTake = false
-              let i = this.index === 2 ? 0 : this.index + 1
-              that.getCdkeys(i)
-            },
-            after: function () {
-              that.canTake = true
-            }
-          })
-        }
+        Carousel.mCarousel(wrapper, {
+          index: 0,
+          active: 'active',
+          scale: 0.67,
+          duration: 300,
+          locked: true,
+          diff: 0.445,
+          before: function () {
+            that.index = this.index === 2 ? 0 : this.index + 1
+            console.log('that.index' + that.index)
+            that.getCdkeys(that.index)
+          }
+        })
       },
-      toTakeCdkey () {
+      toTakeCdkey (type) {
+        if (type !== this.index) { return }
         this.$http.get('/hongcai/rest/users/0/userAuth?token=' + this.token).then((response) => {
           this.userAuth = response.data
           if (this.userAuth.active && this.userAuth.authStatus === 2) {
@@ -383,13 +367,13 @@
   li .gongxi p:first-child {
     color: #531e1d;
     font-size: .23rem;
-    margin: .1rem auto .15rem;
+    margin: .1rem auto .1rem;
   }
   li .gongxi p:first-child + p {
     color: #531e1d;
   }
   li .gongxi p:last-child {
-    margin-top: -.1rem;
+    /* margin-top: -0.1rem; */
     color: #ff0e00;
     font-size: .3rem;
   }
