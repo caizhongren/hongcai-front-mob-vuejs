@@ -24,7 +24,7 @@
     </div>
     <div class="contents">
       <p class="text">
-        <span class="ft-yellow ft-p24">时装兑换令牌x1、神器印记礼包x1、魔气结晶x2</span> <br>
+        <span class="ft-yellow ft-p24">时装兑换令牌x1、圣器印记礼包x1、魔气结晶x2</span> <br>
         下载宏财网App进入活动页面完成认证即可获得奖励兑换码
         还有宏财网<span class="ft-yellow ft-p24">966元现金红包+超值加息券</span>已发放至您的账户中，请及时查收哟～
       </p>

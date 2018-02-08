@@ -31,7 +31,7 @@
                 </div>
                 <div class="box-son">
                   <p class="gift-name">【时装兑换令牌】</p>
-                  <p class="gift-name">【神器印记礼包】</p>
+                  <p class="gift-name">【圣器印记礼包】</p>
                   <p class="gift-name">【魔气结晶】</p>
                 </div>
               </div>
@@ -162,41 +162,7 @@
           endYear: 2018,
           endMonth: 1,
           endDate: 1
-        },
-        gifts: [
-          {
-            type: 0,
-            value: 410,
-            giftName: '初级礼包',
-            num1: 1,
-            num2: 1,
-            num3: 2,
-            imgWidth: '80%',
-            cdkey: undefined
-          },
-          {
-            type: 1,
-            value: 1000,
-            giftName: '中级礼包',
-            num1: 3,
-            num2: 1,
-            num3: 1,
-            num4: 1,
-            imgWidth: '86%',
-            cdkey: undefined
-          },
-          {
-            type: 2,
-            value: 2500,
-            giftName: '高级礼包',
-            num1: 1,
-            num2: 5,
-            num3: 2,
-            num4: 2,
-            imgWidth: '86%',
-            cdkey: undefined
-          }
-        ]
+        }
       }
     },
     props: ['token'],
@@ -272,7 +238,6 @@
       },
       copyCdkey (cdkey, type) {
         if (type !== this.index) { return }
-        console.log(this.index)
         bridgeUtil.webConnectNative('HCNative_CopyText', null, {text: cdkey}, function (response) {}, null)
       }
     }

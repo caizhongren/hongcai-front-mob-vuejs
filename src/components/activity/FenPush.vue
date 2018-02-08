@@ -23,7 +23,7 @@
       </ul>
       <ul class="giftName">
         <li>【时装兑换令牌】</li>
-        <li>【神器印记礼包】</li>
+        <li>【圣器印记礼包】</li>
         <li>【魔气结晶】</li>
       </ul>
       <p class="tip ft-yellow">注册认证即可领取兑换码</p>
