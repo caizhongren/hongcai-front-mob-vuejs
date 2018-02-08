@@ -402,7 +402,8 @@
   }
   .FenTian .header {
     background: url('../../images/fentian/register-header.png') no-repeat left top;
-    background-size: contain;
+    background-color: #3b0f42;
+    background-size: cover;
     width: 100%;
     height: 3.772rem;
   }

@@ -39,7 +39,7 @@
               <div class="gongxi" v-if="cdkey0">
                 <p>恭喜您获得焚天【初级礼包】！</p>
                 <p>奖励兑换码为</p>
-                <p id="cdKey">{{cdkey0}}</p>
+                <p>{{cdkey0}}</p>
               </div>
               <p class="take-btn" @click="copyCdkey(cdkey0)">复制兑换码</p>
               <p class="take-btn" v-if="!cdkey0" @click="toTakeCdkey(0)">立即抢领</p>
@@ -76,7 +76,7 @@
               <div class="gongxi" v-if="cdkey1">
                 <p>恭喜您获得焚天【中级礼包】！</p>
                 <p>奖励兑换码为</p>
-                <p id="cdKey">{{cdkey1}}</p>
+                <p>{{cdkey1}}</p>
               </div>
               <p class="take-btn" v-if="cdkey1" @click="copyCdkey(cdkey1)">复制兑换码</p>
               <p class="take-btn" v-if="!cdkey1" @click="toTakeCdkey(1)">立即抢领</p>
@@ -113,7 +113,7 @@
               <div class="gongxi" v-if="cdkey2">
                 <p>恭喜您获得焚天【高级礼包】！</p>
                 <p>奖励兑换码为</p>
-                <p id="cdKey">{{cdkey2}}</p>
+                <p>{{cdkey2}}</p>
               </div>
               <p class="take-btn" v-if="cdkey2" @click="copyCdkey(cdkey2)">复制兑换码</p>
               <p class="take-btn" v-if="!cdkey2" @click="toTakeCdkey(2)">立即抢领</p>
@@ -255,7 +255,6 @@
           diff: 0.445,
           before: function () {
             that.index = this.index === 2 ? 0 : this.index + 1
-            console.log('that.index' + that.index)
             that.getCdkeys(that.index)
           }
         })
@@ -282,11 +281,6 @@
     overflow-x: hidden;
     background: #2a0d28;
     padding-bottom: .3rem;
-  }
-  #cdKey {
-    -webkit-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
   }
   .act-time {    
     top: 71%;
@@ -361,7 +355,6 @@
     height: 100%;
     color: #fff;
     font-size: .24rem;
-    /* background: url('../../images/spring-festival/hongbao-3-min.png') no-repeat center center; */
     background-size: contain;
   }
   li .gongxi p:first-child {
@@ -373,7 +366,6 @@
     color: #531e1d;
   }
   li .gongxi p:last-child {
-    /* margin-top: -0.1rem; */
     color: #ff0e00;
     font-size: .3rem;
   }
