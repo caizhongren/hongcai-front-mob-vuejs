@@ -169,4 +169,12 @@
     width: 1.06rem;
     font-size: .2rem;
   }
+  @media (min-height: 724px){
+    .fen-success .header {
+      height: 4.3rem;
+    }
+    .box {
+      margin-top: .6rem;
+    }
+  }
 </style>
