@@ -41,7 +41,7 @@
                 <p>奖励兑换码为</p>
                 <p>{{cdkey0}}</p>
               </div>
-              <p class="take-btn" @click="copyCdkey(cdkey0)">复制兑换码</p>
+              <p class="take-btn" @click="copyCdkey(cdkey0, 0)">复制兑换码</p>
               <p class="take-btn" v-if="!cdkey0" @click="toTakeCdkey(0)">立即抢领</p>
             </li>
             <!-- 中级 -->
@@ -78,7 +78,7 @@
                 <p>奖励兑换码为</p>
                 <p>{{cdkey1}}</p>
               </div>
-              <p class="take-btn" v-if="cdkey1" @click="copyCdkey(cdkey1)">复制兑换码</p>
+              <p class="take-btn" v-if="cdkey1" @click="copyCdkey(cdkey1, 1)">复制兑换码</p>
               <p class="take-btn" v-if="!cdkey1" @click="toTakeCdkey(1)">立即抢领</p>
             </li>
             <!-- 高级 -->
@@ -115,7 +115,7 @@
                 <p>奖励兑换码为</p>
                 <p>{{cdkey2}}</p>
               </div>
-              <p class="take-btn" v-if="cdkey2" @click="copyCdkey(cdkey2)">复制兑换码</p>
+              <p class="take-btn" v-if="cdkey2" @click="copyCdkey(cdkey2, 2)">复制兑换码</p>
               <p class="take-btn" v-if="!cdkey2" @click="toTakeCdkey(2)">立即抢领</p>
             </li>
           </ul>
@@ -270,7 +270,9 @@
           }
         })
       },
-      copyCdkey (cdkey) {
+      copyCdkey (cdkey, type) {
+        if (type !== this.index) { return }
+        console.log(this.index)
         bridgeUtil.webConnectNative('HCNative_CopyText', null, {text: cdkey}, function (response) {}, null)
       }
     }
