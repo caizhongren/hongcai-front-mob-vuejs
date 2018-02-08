@@ -490,7 +490,7 @@
     font-size: .24rem;
   }
   .register-form {
-    padding-top: 2.5rem;
+    padding-top: 37.5%;
     margin-top: -.2rem;
   }
   form input, form button {

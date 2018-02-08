@@ -25,8 +25,7 @@
     <div class="contents">
       <p class="text">
         <span class="ft-yellow ft-p24">时装兑换令牌x1、圣器印记礼包x1、魔气结晶x2</span> <br>
-        下载宏财网App进入活动页面完成认证即可获得奖励兑换码
-        还有宏财网<span class="ft-yellow ft-p24">966元现金红包+超值加息券</span>已发放至您的账户中，请及时查收哟～
+        下载宏财网App进入活动页面完成认证即可获得奖励兑换码，还有宏财网<span class="ft-yellow ft-p24">966元现金红包+超值加息券</span>已发放至您的账户中，请及时查收哟～
       </p>
       <div class="box">
         <p class="title">更多礼包等你兑换！神装坐骑 碾压全服！</p>
@@ -49,7 +48,10 @@
 <style scoped>
   .fen-success {
     background-image: linear-gradient(to top, #3b0f42, #130c04);
-    padding-bottom: .5rem;
+  }
+  .contents {
+    padding-bottom: 1rem;    
+    background-image: linear-gradient(to top, #3b0f42, #130c04);
   }
   .download {
     font-size: .33rem;
@@ -61,6 +63,7 @@
     line-height: .9rem;
     position: fixed;
     width: 100%;
+    max-width: 7.2rem;
     bottom: 0;
   }
   p.text {
@@ -76,7 +79,7 @@
     border-radius: 10px;
     background-color: #4a0346;
     width: 90%;
-    margin: 0.3rem auto;
+    margin: 0.3rem auto 0;
     padding: .08rem 0;
   }
   .box .title {
@@ -111,7 +114,7 @@
   }
   .fen-success .header {
     background: url('../../images/fentian/register-header.png') no-repeat left top;
-    background-size: contain;
+    background-size: cover;
     width: 100%;
     height: 3.772rem;
   }
