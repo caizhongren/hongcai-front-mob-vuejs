@@ -1,6 +1,6 @@
 <template>
   <div class="policiesList">
-    <div class="commonBoxShadow" v-for="item in policiesList">
+    <div class="commonBoxShadow" v-for="(item, index) in policiesList" @click="goText(index)">
       <span></span>
       <p class="title">{{item.title}}</p>
       <img src="../../images/disclosure/icon-right.png" alt="">
@@ -40,6 +40,9 @@
       }
     },
     methods: {
+      goText (id) {
+        this.$router.push({name: 'Policies', params: { id: id }})
+      }
     },
     mounted () {
     }

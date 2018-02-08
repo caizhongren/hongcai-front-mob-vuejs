@@ -63,6 +63,7 @@ const RecordInformation = r => require.ensure([], () => r(require('../components
 const RiskManagement = r => require.ensure([], () => r(require('../components/disclosure/riskManagement.vue')), 'Disclosure')
 const Organization = r => require.ensure([], () => r(require('../components/disclosure/organization.vue')), 'Disclosure')
 const BusinessInformation = r => require.ensure([], () => r(require('../components/disclosure/businessInformation.vue')), 'Disclosure')
+const Policies = r => require.ensure([], () => r(require('../components/disclosure/policies.vue')), 'Disclosure')
 const Rouse = r => require.ensure([], () => r(require('../components/Rouse.vue')), 'Rouse')
 const BreakEgg = r => require.ensure([], () => r(require('../components/activity/breakEgg.vue')), 'BreakEgg')
 const BreakEggRecord = r => require.ensure([], () => r(require('../components/activity/breakEggRecord.vue')), 'BreakEggRecord')
@@ -156,6 +157,12 @@ const routes = [
         meta: {title: '信息披露'}
       }
     ]
+  },
+  {
+    path: '/policies/:id',
+    name: 'Policies',
+    component: Policies,
+    meta: {title: '信息披露'}
   },
   {
     path: '/user-center/help-center',
