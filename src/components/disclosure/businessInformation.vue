@@ -8,7 +8,7 @@
     <!-- 累计交易笔数 -->
     <div class="commonBoxShadow">
       <p class="title fl">累计交易笔数</p>
-      <p class="data fr">{{cumulative.numOfTransactions}}次</p>
+      <p class="data fr">{{cumulative.numOfTransactions}}笔</p>
     </div>
     <!-- 借贷余额 -->
     <div class="commonBoxShadow">

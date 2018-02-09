@@ -52,19 +52,19 @@
               <div class="box1">
                 <div class="box-son">
                   <div class="position-re">
-                    <p class="position-ab num"><span>x3</span></p>
+                    <p class="position-ab num" v-bind:class="{'invalid-num': !cdkey1 && Invalid}"><span>x3</span></p>
                     <img src="../../images/fentian/gift1-1.png" alt="" class="display-bl margin-auto" width="80%">
                   </div>
                   <div class="position-re">
-                    <p class="position-ab num"><span>x1</span></p>
+                    <p class="position-ab num" v-bind:class="{'invalid-num': !cdkey1 && Invalid}"><span>x1</span></p>
                     <img src="../../images/fentian/gift1-2.png" alt="" class="display-bl margin-auto" width="80%">
                   </div>
                   <div class="position-re">
-                    <p class="position-ab num"><span>x1</span></p>
+                    <p class="position-ab num" v-bind:class="{'invalid-num': !cdkey1 && Invalid}"><span>x1</span></p>
                     <img src="../../images/fentian/gift1-3.png" alt="" class="display-bl margin-auto" width="86%">
                   </div>
                   <div class="position-re">
-                    <p class="position-ab num"><span>x1</span></p>
+                    <p class="position-ab num" v-bind:class="{'invalid-num': !cdkey1 && Invalid}"><span>x1</span></p>
                     <img src="../../images/fentian/gift1-4.png" alt="" class="display-bl margin-auto" width="80%">
                   </div>
                 </div>
@@ -79,7 +79,8 @@
                 <p>{{cdkey1}}</p>
               </div>
               <p class="take-btn" v-if="cdkey1" @click="copyCdkey(cdkey1, 1)">复制兑换码</p>
-              <p class="take-btn" v-if="!cdkey1" @click="toTakeCdkey(1)">立即抢领</p>
+              <p class="take-btn" v-if="!cdkey1 && !Invalid" @click="toTakeCdkey(1)">立即抢领</p>
+              <p class="invalid-btn" v-if="!cdkey1 && Invalid">礼包已失效</p>
             </li>
             <!-- 高级 -->
             <li>
@@ -146,6 +147,7 @@
   export default {
     data () {
       return {
+        Invalid: true,
         cdkey0: 0,
         cdkey1: 0,
         cdkey2: 0,
@@ -386,7 +388,7 @@
   li .text span {
     color: #fd2007;
   }
-  li .take-btn {
+  li .take-btn, li .invalid-btn {
     position: absolute;
     display: block;
     border:none;
@@ -401,6 +403,11 @@
     font-size: .34rem;
 	  font-weight: bold;
 	  font-family: 'PingFang-SC';
+  }
+  li .invalid-btn {
+    background: url('../../images/fentian/invalid-btn.png') no-repeat center center;
+    background-size: 100%;
+    color: #6f6d6d;
   }
   .box1 {
     margin: 0 auto;
@@ -437,12 +444,16 @@
     margin-left: 0%;
     padding: 0.3rem 0.15rem 0.15rem;
   }
-  .box-son div p.num {
+  .box-son div p.num, .invalid-num {
     left: -2px;
     top: 0;
     width: 100%;
     height: .8rem;
     background: url('../../images/fentian/num.png') no-repeat 0 0;
+    background-size: contain;
+  }
+  .box-son div p.invalid-num {
+    background: url('../../images/fentian/invalid-num.png') no-repeat 0 0;
     background-size: contain;
   }
   .box-son div p.num span {
