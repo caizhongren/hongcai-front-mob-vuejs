@@ -176,11 +176,18 @@
     created () {
       this.getActivityStatus()
       this.token ? this.getCdkeys(0) : null
+      this.token ? this.getFirstInvest() : null
     },
     mounted () {
       this.setCarousel()
     },
     methods: {
+      getFirstInvest () {
+        var that = this
+        that.$http('/hongcai/rest/users/0/creditRights/firstInvest?token=' + that.token).then(function (res) {
+          (res.data && res.data.type === 6) ? that.Invalid = true : that.Invalid = false
+        })
+      },
       getActivityStatus () { // 活动信息查询
         var that = this
         that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
