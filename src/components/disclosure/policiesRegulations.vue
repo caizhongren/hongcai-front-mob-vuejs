@@ -1,7 +1,6 @@
 <template>
   <div class="policiesList">
     <div class="commonBoxShadow" v-for="(item, index) in policiesList" @click="goText(index)">
-      <span v-bind:class="{'border-6': index === 1 || index === 2 || index === 3 || index === 6}"></span>
       <p class="title">{{item.title}}</p>
       <img src="../../images/disclosure/icon-right.png" alt="" v-bind:class="{'margin-6': index === 0 || index === 4 || index === 5}">
     </div>
@@ -59,21 +58,10 @@
     text-align: left;
     overflow: hidden;
     padding-right: .2rem;
-  }
-  .commonBoxShadow span.border-6 {
-    height: 1.2rem;
+    border-left: .13rem solid rgba(252,105,91, 0.53);
   }
   .commonBoxShadow img.margin-6 {
   	margin-top: .22rem;
-  }
-  .commonBoxShadow span {
-    opacity: 0.6;
-    background-image: linear-gradient(to top, #fd695b, #fc695b);
-    box-shadow: 2px -0.4px 8px 0 rgba(252, 105, 91, 0.53);
-    width: .12rem;
-    display: inline-block;
-    height: .8rem;
-    float: left;
   }
   .commonBoxShadow .title {
     width: 90%;
@@ -82,7 +70,7 @@
     font-weight: bold;
     line-height: 1.47;
     color: #333333;
-    padding: .2rem 0 0 .2rem;
+    padding: .2rem 0 0.2rem .2rem;
   }
   .commonBoxShadow img {
     width: 3.5%;
