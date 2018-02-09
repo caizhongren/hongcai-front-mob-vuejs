@@ -70,6 +70,7 @@
           $('.tab').removeClass('fixed')
         }
       }
+      location.pathname === '/disclosure/policies-regulations' ? (this.activeTab = 4, $('.columns').addClass('transition-left')) : null
     }
   }
 </script>

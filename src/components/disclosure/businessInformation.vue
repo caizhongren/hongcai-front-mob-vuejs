@@ -80,7 +80,7 @@
     <!-- 平台向借款人收取服务费的标准 -->
     <div class="commonBoxShadow">
       <p class="title">平台向借款人收取服务费的标准</p>
-      <p class="data ft-2p8">按借款类型、期限、风险等级执行不通费率标准。平台服务费=借款金额*1.5%-4%*借款期限/365。</p>
+      <p class="data ft-2p8">按借款类型、期限、风险等级执行不通费率标准。平台服务费=借款金额*服务费率*借款期限/365。</p>
     </div>
     <!-- 平台重大风险信息 -->
     <div class="commonBoxShadow">
