@@ -49,6 +49,7 @@ const News = r => require.ensure([], () => r(require('../components/news/news.vu
 const Report1 = r => require.ensure([], () => r(require('../components/news/report1.vue')), 'News')
 const Report2 = r => require.ensure([], () => r(require('../components/news/report2.vue')), 'News')
 const Report3 = r => require.ensure([], () => r(require('../components/news/report3.vue')), 'News')
+const Report5 = r => require.ensure([], () => r(require('../components/news/report5.vue')), 'News')
 const Events = r => require.ensure([], () => r(require('../components/events.vue')), 'Events')
 const RiskEducation = r => require.ensure([], () => r(require('../components/riskEducation.vue')), 'RiskEducation')
 const Register = r => require.ensure([], () => r(require('../components/activity/oldPeople.vue')), 'Register')
@@ -466,6 +467,12 @@ const routes = [
         name: 'Report3',
         component: Report3,
         meta: {title: '媒体报道'}
+      },
+      {
+        path: 'report5',
+        name: 'Report5',
+        component: Report5,
+        meta: {title: '互金行业要积极拥抱监管'}
       }
     ]
   },
