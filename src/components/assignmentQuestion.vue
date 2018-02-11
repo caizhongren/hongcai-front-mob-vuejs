@@ -85,7 +85,7 @@
         </div>
       </div>
       <div class="submenu">
-        <span class="">可以。持有转让的债权10天以上，可再次发起转让。</span>  
+        <span class="">可以。持有转让的债权30天以上，可再次发起转让。</span>  
       </div>
     </div>
     <div class="content">
@@ -96,7 +96,7 @@
         </div>
       </div>
       <div class="submenu">
-        <span class="">1）持有该笔债权大于10天；<br>&nbsp;&nbsp; 2）该笔债权距项目完结日大于3天；<br>&nbsp;&nbsp; 3）该笔债权购买时未参与宏财网线下特定奖励活动。</span>  
+        <span class="">1）持有该笔债权大于30天；<br>&nbsp;&nbsp; 2）该笔债权距项目完结日大于3天；<br>&nbsp;&nbsp; 3）该笔债权购买时未参与宏财网线下特定奖励活动。</span>  
       </div>
     </div>
     <div class="content">
@@ -118,7 +118,7 @@
         </div>
       </div>
       <div class="submenu">
-        <span class="">该笔债权持有时间 &lt; 30天，手续费 = 转让本金 * 1%，持有时间 &ge; 30天，手续费 = 转让本金 * 0.5%，2017.01.01号前手续费率为上述定价的五折。单笔转让的手续费最低为3元。</span>  
+        <span class="">手续费=转让本金 * 1%，单笔转让的手续费最低为3元。</span>  
       </div>
     </div>
     <div class="content">

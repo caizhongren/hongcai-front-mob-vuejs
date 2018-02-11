@@ -76,10 +76,8 @@
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
             债权转让手续费是宏财网为您和受让人提供信息匹配和交易撮合所收取的费用，<br><br>
-            该笔债权持有时间 < 30天，手续费 = 转让本金 * 1%，<br>
-            持有时间 ≥ 30天，手续费 = 转让本金 * 0.5%，手续费最低收取3元。<br>
-            <span v-if="currentDate - creditCreateTime < rule.borderDay * 24 * 60 * 60 * 1000">{{transferAmount || 0}} * 1% = {{transferAmount / 100 | number}}元</span>
-            <span v-if="currentDate - creditCreateTime >= rule.borderDay * 24 * 60 * 60 * 1000">{{transferAmount || 0}} * 0.5% = {{transferAmount * 0.5 / 100 | number}}元</span>
+            手续费 = 转让本金 * 1%，手续费最低收取3元。<br>
+            <span>{{transferAmount || 0}} * 1% = {{transferAmount / 100 | number}}元</span>
           </span>  
         </div>
       </div>
@@ -246,7 +244,7 @@
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
             可进行债权转让的项目应同时满足以下条件：<br><br>
-            1）该项目满标后，持有天数大于10天；<br>
+            1）该项目满标后，持有天数大于30天；<br>
             2）转让当天距离该笔项目到期回款日大于3天；<br>
             3）参与特定渠道奖励活动进行投资的项目不可进行债权转让。<br>
           </span>  
@@ -260,9 +258,8 @@
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            1）当前项目持有时间<30天时，手续费=转让本金×1%；<br>
-            2）当前项目持有时间≥30天，手续费=转让本金×0.5%；<br>
-            3）单笔转让手续费最低为3元。
+            1）手续费=转让本金×1%；<br>
+            2）单笔转让手续费最低为3元。
           </span>  
         </div>
       </div>
@@ -830,12 +827,14 @@
           this.couponVal = response.data.increaseRateCoupon && response.data.increaseRateCoupon.type === 2 ? response.data.increaseRateCoupon.value : 0
           // 现金券奖励扣款
           this.deduction = this.couponVal * (this.transferAmount / this.creditAmount)
-          // 手续费
-          if (dateUtil.intervalDays(this.currentDate, this.creditCreateTime) < this.rule.borderDay) {
-            this.counterFee = this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate > this.rule.minFee ? this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate : this.rule.minFee
-          } else {
-            this.counterFee = this.transferAmount * this.rule.greaterThanBorderDayFee / 100 * this.rule.discountFeeRate > this.rule.minFee ? this.transferAmount * this.rule.greaterThanBorderDayFee / 100 * this.rule.discountFeeRate : this.rule.minFee
-          }
+          // 现规则：手续费 = 转让本金 * 1%，单笔转让的手续费最低为3元。
+          this.counterFee = this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate > this.rule.minFee ? this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate : this.rule.minFee
+          // 手续费 原规则：该笔债权持有时间 < 30天，手续费 = 转让本金 * 1%，持有时间 ≥ 30天，手续费 = 转让本金 * 0.5%，单笔转让的手续费最低为3元。
+          // if (dateUtil.intervalDays(this.currentDate, this.creditCreateTime) < this.rule.borderDay) {
+          //   this.counterFee = this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate > this.rule.minFee ? this.transferAmount * this.rule.lessThanOrEqualBorderDayFee / 100 * this.rule.discountFeeRate : this.rule.minFee
+          // } else {
+          //   this.counterFee = this.transferAmount * this.rule.greaterThanBorderDayFee / 100 * this.rule.discountFeeRate > this.rule.minFee ? this.transferAmount * this.rule.greaterThanBorderDayFee / 100 * this.rule.discountFeeRate : this.rule.minFee
+          // }
         })
       }
     }

@@ -5,7 +5,7 @@
     </div>
     <div class="register-form">
       <form>
-        <input type="tel" name="mobile" class="mobile" placeholder="请输入手机号" v-model="user.mobile" v-bind:value="user.mobile" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler" autocomplete="off">
+        <input type="tel" name="mobile" class="mobile" placeholder="请输入手机号" v-model="user.mobile" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler" autocomplete="off">
         <div class="pic">
           <input type="tel" maxlength="4" name="picCaptcha" placeholder="请输入图形验证码" v-model="user.picCaptcha" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler1(e)" autocomplete="off">
           <span @click="refreshCode"><img alt="图形验证码" id="picCaptcha" width="100%" height="100%"></span>
@@ -105,6 +105,9 @@
     </div>
   </div>
 </template>
+<style scoped>
+  @import '../../css/wandu.css';
+</style>
 <script>
   import $ from 'zepto'
   import {Utils, sendMobCaptcha} from '../../service/Utils'
@@ -287,7 +290,4 @@
     }
   }
 </script>
-<style scoped>
-  @import '../../css/wandu.css';
-</style>
 

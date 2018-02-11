@@ -567,8 +567,9 @@
     </div>
     <div class="agreement-area row" v-show="contractType === 10">
       <p class="text-title">借款合同</p>
+      <p class="text-right" v-if="!contracts.total">合同编号：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
+      <p class="text-right" v-if="contracts.total">合同编号：{{contracts.contractNumber}}</p>
       <div class="row">
-        <br>
         <p><strong class="agree-mg">甲方（出借人）：</strong>{{contracts.total ? '信息详见附件1' : ' '}}</p>
         <br>
         <p><strong class="agree-mg">乙方（借款人）：</strong>{{contracts.enterpriseName}}</p>

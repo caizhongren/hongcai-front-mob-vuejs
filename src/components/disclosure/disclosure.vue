@@ -20,10 +20,6 @@
       return {
         tabs: [
           {
-            tab: '银行存管',
-            name: 'BankDisclosure'
-          },
-          {
             tab: '备案信息',
             name: 'RecordInformation'
           },
@@ -38,6 +34,10 @@
           {
             tab: '经营信息',
             name: 'BusinessInformation'
+          },
+          {
+            tab: '政策法规',
+            name: 'PoliciesRegulations'
           }
         ],
         activeTab: 0
@@ -70,6 +70,7 @@
           $('.tab').removeClass('fixed')
         }
       }
+      location.pathname === '/disclosure/policies-regulations' ? (this.activeTab = 4, $('.columns').addClass('transition-left')) : null
     }
   }
 </script>

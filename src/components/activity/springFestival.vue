@@ -51,7 +51,6 @@
       </div>
       <div class="chat-tip" v-if="token && activityStatus === 1 || token && activityStatus === 2 && investAmount > 0">左右滑动<br>领取红包</div>
       <div class="part2" v-if="token">
-        <!-- <div @click="getPacket(1)">领取红包</div> -->
         <div class="position-re carousel-mask" v-if="activityStatus === 1 || activityStatus === 2 && investAmount > 0">
           <div id="wrapper">
             <ul class="poster-list clearfix clear">

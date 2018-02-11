@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view :token="token" :showErrMsg="showErrMsg"></router-view>    
-    <p id="err" v-show="showErr">{{errMsg}}</p>
+    <p id="err" v-show="showErr" v-bind:style="styleObject">{{errMsg}}</p>
     <div class="mask-common mask1" v-show="showLongErr">
       <div class="alert-wrap" v-show="showLongErr">
         <div class="text">
@@ -28,7 +28,8 @@ export default {
       showErr: false,
       showLongErr: false,
       errMsg: '',
-      timer: null
+      timer: null,
+      styleObject: {}
     }
   },
   created: function () {
@@ -55,10 +56,11 @@ export default {
         that.token = Utils.isAndroid() ? JSON.parse(data).token : data.token
       })
     },
-    showErrMsg (msg, isLong) {
+    showErrMsg (msg, isLong, setErrStyle) {
       clearTimeout(this.timer)
       this.showErr = false
       var that = this
+      setErrStyle ? this.styleObject = setErrStyle : null
       if (isLong) {
         that.showLongErr = true
         that.errMsg = msg
