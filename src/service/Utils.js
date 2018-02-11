@@ -268,17 +268,6 @@ let audioPlayUtil = {
     }
   }
 }
-/**
- * TODO 输入框粘贴限制 & 输入类型
- */
-let checkInputUtil = {
-  beforepasteHandler: function (e, reg) {
-    e.clipboardData.setData('text', e.clipboardData.getData('text').replace(reg, ''))
-  },
-  oninputHandler: function (item, reg) {
-    item = item.replace(reg, '')
-  }
-}
 export {Utils}
 export {InviteShareUtils}
 export {bridgeUtil}
@@ -286,5 +275,4 @@ export {ModalHelper}
 export {dateUtil}
 export {sendMobCaptcha}
 export {InputMaskHelper}
-export {checkInputUtil}
 export {audioPlayUtil}

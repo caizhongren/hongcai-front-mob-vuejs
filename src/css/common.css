@@ -21,7 +21,6 @@ div, a, p, img, span, ul, li {
   -webkit-user-select: none;
   -moz-user-select: none;
   -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select:none;
 }

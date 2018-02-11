@@ -301,7 +301,7 @@ var Carousel = {
     $('.management-introduction').hide()
     $(cur).show()
     this._setIndex(index);
-    console.log('当前index值：' + this.index)
+    // console.log('当前index值：' + this.index)
     this._setDisplay(this.nIndex, 'block');
     this._setDisplay(this.oIndex, 'block');
     this._setDisplay(this.index, 'block');

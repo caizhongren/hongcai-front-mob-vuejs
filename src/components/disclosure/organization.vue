@@ -112,6 +112,18 @@
         <img src="../../images/disclosure/channel-04.png" alt="">
       </div>
     </div>
+    <div class="parting-line"></div>
+    <!-- 咨询投诉 -->
+    <div class="complaint-info">
+      <img src="../../images/disclosure/zxts.png" alt="" class="complaint-title">
+      <div class="complaint">
+        <div class="information">
+          <p>咨询投诉：400-990-7626 </p>
+          <p>（工作时间：9:00-18:00）</p>
+        </div>
+        <img src="../../images/disclosure/cons.png" alt="">
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -146,7 +158,7 @@
           },
           {
             name: '公司经营地',
-            content: '北京市朝阳区天辰东路7号国家会议中心北区4层'
+            content: '北京市海淀区中关村南二条1号中科院空间中心九章大厦B栋一层'
           },
           {
             name: '公司成立时间',
@@ -416,5 +428,34 @@
   .channels .information {
     text-align: left;
     padding: 0.285rem 0 0 1.4rem;
+  }
+  .complaint-title {
+    width: 28%;
+    margin: .5rem auto .2rem;
+  }
+  .complaint {
+    border-radius: 12.5px;
+    background-color: #ffffff;
+    box-shadow: 0 1.5px 3.5px 0 rgba(80, 77, 75, 0.2);
+    width: 90%;
+    margin: 0 auto;
+    position: relative;
+    font-size: .28rem;
+    margin-bottom: .5rem;
+    color: #666;
+  }
+  .complaint img {
+    position: absolute;
+    width: 18%;
+    top: -.2rem;
+    left: -3px;
+  }
+  .complaint .information {
+    text-align: left;
+    padding: 0.285rem 0 .2rem 1.2rem;
+  }
+  .complaint .information p:nth-child(2) {
+    font-size: .23rem;
+    margin-left: 1.2rem;
   }
 </style>

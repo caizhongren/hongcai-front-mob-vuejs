@@ -50,6 +50,7 @@ const Report1 = r => require.ensure([], () => r(require('../components/news/repo
 const Report2 = r => require.ensure([], () => r(require('../components/news/report2.vue')), 'News')
 const Report3 = r => require.ensure([], () => r(require('../components/news/report3.vue')), 'News')
 const Report4 = r => require.ensure([], () => r(require('../components/news/report4.vue')), 'News')
+const Report5 = r => require.ensure([], () => r(require('../components/news/report5.vue')), 'News')
 const Events = r => require.ensure([], () => r(require('../components/events.vue')), 'Events')
 const RiskEducation = r => require.ensure([], () => r(require('../components/riskEducation.vue')), 'RiskEducation')
 const Register = r => require.ensure([], () => r(require('../components/activity/oldPeople.vue')), 'Register')
@@ -59,11 +60,12 @@ const WanduSuccess = r => require.ensure([], () => r(require('../components/acti
 const QRcode = r => require.ensure([], () => r(require('../components/QRcode.vue')), 'QRcode')
 const Updates = r => require.ensure([], () => r(require('../components/recommendUpdates.vue')), 'Updates')
 const Disclosure = r => require.ensure([], () => r(require('../components/disclosure/disclosure.vue')), 'Disclosure')
-const BankDisclosure = r => require.ensure([], () => r(require('../components/disclosure/bankDisclosure.vue')), 'Disclosure')
+const PoliciesRegulations = r => require.ensure([], () => r(require('../components/disclosure/policiesRegulations.vue')), 'Disclosure')
 const RecordInformation = r => require.ensure([], () => r(require('../components/disclosure/recordInformation.vue')), 'Disclosure')
 const RiskManagement = r => require.ensure([], () => r(require('../components/disclosure/riskManagement.vue')), 'Disclosure')
 const Organization = r => require.ensure([], () => r(require('../components/disclosure/organization.vue')), 'Disclosure')
 const BusinessInformation = r => require.ensure([], () => r(require('../components/disclosure/businessInformation.vue')), 'Disclosure')
+const Policies = r => require.ensure([], () => r(require('../components/disclosure/policies.vue')), 'Disclosure')
 const Rouse = r => require.ensure([], () => r(require('../components/Rouse.vue')), 'Rouse')
 const BreakEgg = r => require.ensure([], () => r(require('../components/activity/breakEgg.vue')), 'BreakEgg')
 const BreakEggRecord = r => require.ensure([], () => r(require('../components/activity/breakEggRecord.vue')), 'BreakEggRecord')
@@ -75,6 +77,9 @@ const BeanExplain = r => require.ensure([], () => r(require('../components/user-
 const BeanDetail = r => require.ensure([], () => r(require('../components/user-center/beanDetail.vue')), 'BeanDetail')
 const SpringFestival = r => require.ensure([], () => r(require('../components/activity/springFestival.vue')), 'SpringFestival')
 const SpringRecord = r => require.ensure([], () => r(require('../components/activity/SpringRecord.vue')), 'SpringRecord')
+const FenTian = r => require.ensure([], () => r(require('../components/activity/FenTian.vue')), 'FenTian')
+const FenPush = r => require.ensure([], () => r(require('../components/activity/FenPush.vue')), 'FenPush')
+const FenPushSuccess = r => require.ensure([], () => r(require('../components/activity/FenPushSuccess.vue')), 'FenPushSuccess')
 
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -125,12 +130,6 @@ const routes = [
     children: [
       {
         path: '',
-        name: 'BankDisclosure',
-        component: BankDisclosure,
-        meta: {title: '信息披露'}
-      },
-      {
-        path: 'record-information',
         name: 'RecordInformation',
         component: RecordInformation,
         meta: {title: '信息披露'}
@@ -152,8 +151,20 @@ const routes = [
         name: 'BusinessInformation',
         component: BusinessInformation,
         meta: {title: '信息披露'}
+      },
+      {
+        path: 'policies-regulations',
+        name: 'PoliciesRegulations',
+        component: PoliciesRegulations,
+        meta: {title: '信息披露'}
       }
     ]
+  },
+  {
+    path: '/policies/:id',
+    name: 'Policies',
+    component: Policies,
+    meta: {title: '信息披露'}
   },
   {
     path: '/user-center/help-center',
@@ -284,6 +295,24 @@ const routes = [
     name: 'MangoPromotion',
     component: MangoPromotion,
     meta: {title: '0元变身VIP'}
+  },
+  {
+    path: '/activity/fen-tian',
+    name: 'FenTian',
+    component: FenTian,
+    meta: {title: '超值限量礼包免费领'}
+  },
+  {
+    path: '/activity/fen-push',
+    name: 'FenPush',
+    component: FenPush,
+    meta: {title: '超值限量礼包免费领'}
+  },
+  {
+    path: '/activity/fen-push-success',
+    name: 'FenPushSuccess',
+    component: FenPushSuccess,
+    meta: {title: '超值限量礼包免费领'}
   },
   {
     path: '/activity/golden-fall',
@@ -445,6 +474,12 @@ const routes = [
         name: 'Report4',
         component: Report4,
         meta: {title: '媒体报道'}
+      },
+      {
+        path: 'report5',
+        name: 'Report5',
+        component: Report5,
+        meta: {title: '互金行业要积极拥抱监管'}
       }
     ]
   },
@@ -499,7 +534,7 @@ const routes = [
   },
   {
     path: '/:page',
-    name: 'Rouse',
+    name: 'Rouse1',
     component: Rouse,
     meta: {title: '宏财网'}
   },
