@@ -479,7 +479,7 @@ const routes = [
         path: 'report5',
         name: 'Report5',
         component: Report5,
-        meta: {title: '互金行业要积极拥抱监管'}
+        meta: {title: '媒体报道'}
       }
     ]
   },
