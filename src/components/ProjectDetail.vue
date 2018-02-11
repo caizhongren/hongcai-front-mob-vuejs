@@ -237,7 +237,7 @@
         projectThumbnailFileList: [],
         baseFileUrl: process.env.baseFileUrl,
         welfareRate: 0,
-        projectType: 5,
+        projectType: 0,
         newbie: false,
         memberLevel: 1,
         anmClick: false,
@@ -259,7 +259,7 @@
         val && val !== '' ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
       },
       projectType: function (val) {
-        val && val === 5 && this.token ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
+        val && val !== 0 && this.token ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
       }
     },
     created: function () {
