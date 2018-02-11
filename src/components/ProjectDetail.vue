@@ -409,6 +409,7 @@
           this.projectId = response.data.id
           this.projectType = response.data.type
           this.getProjectInfo()
+          this.token ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
         })
       },
       getProjectInfo: function () {
