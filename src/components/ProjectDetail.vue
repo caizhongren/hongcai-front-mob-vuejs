@@ -257,6 +257,9 @@
       token: function (val) {
         val && val !== '' ? this.isUserInvest() : null
         val && val !== '' ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
+      },
+      projectType: function (val) {
+        val && val === 5 && this.token ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
       }
     },
     created: function () {
@@ -409,7 +412,6 @@
           this.projectId = response.data.id
           this.projectType = response.data.type
           this.getProjectInfo()
-          this.token ? this.welfares('/hongcai/rest/users/member/welfares?token=' + this.token + '&onlyUserLevel=1') : this.welfares('/hongcai/rest/users/member/welfareTypes?level=-1&type=1')
         })
       },
       getProjectInfo: function () {
