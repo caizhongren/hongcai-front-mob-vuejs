@@ -237,7 +237,7 @@
         projectThumbnailFileList: [],
         baseFileUrl: process.env.baseFileUrl,
         welfareRate: 0,
-        projectType: 0,
+        projectType: 5,
         newbie: false,
         memberLevel: 1,
         anmClick: false,
