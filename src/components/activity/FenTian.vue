@@ -171,12 +171,16 @@
     watch: {
       token: function (val) {
         val ? this.getCdkeys(0) : null
+        val ? this.getCdkeys(1) : null
+        val ? this.getCdkeys(2) : null
         val ? this.getFirstInvest() : null
       }
     },
     created () {
       this.getActivityStatus()
       this.token ? this.getCdkeys(0) : null
+      this.token ? this.getCdkeys(1) : null
+      this.token ? this.getCdkeys(2) : null
       this.token ? this.getFirstInvest() : null
     },
     mounted () {
@@ -220,7 +224,6 @@
         })
       },
       setCarousel () { // 礼包布局配置
-        var that = this
         var wrapper = document.getElementById('wrapper')
         Carousel.mCarousel(wrapper, {
           index: 0,
@@ -228,15 +231,11 @@
           scale: 0.67,
           duration: 300,
           locked: true,
-          diff: 0.445,
-          before: function () {
-            that.index = this.index === 2 ? 0 : this.index + 1
-            that.getCdkeys(that.index)
-          }
+          diff: 0.445
         })
       },
       toTakeCdkey (type) {
-        if (type !== this.index) { return }
+        if (type !== Carousel.index) { return }
         this.$http.get('/hongcai/rest/users/0/userAuth?token=' + this.token).then((response) => {
           this.userAuth = response.data
           if (this.userAuth.active && this.userAuth.authStatus === 2) {
@@ -247,7 +246,7 @@
         })
       },
       copyCdkey (cdkey, type) {
-        if (type !== this.index) { return }
+        if (type !== Carousel.index) { return }
         bridgeUtil.webConnectNative('HCNative_CopyText', null, {text: cdkey}, function (response) {}, null)
       }
     }
