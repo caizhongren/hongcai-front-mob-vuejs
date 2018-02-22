@@ -205,6 +205,11 @@ let dateUtil = {
 let sendMobCaptcha = {
   second: 60,
   canGetMobileCapcha: true,
+  timmer: null,
+  resetGetMobileCapcha: function () {
+    clearTimeout(sendMobCaptcha.timmer)
+    sendMobCaptcha.canGetMobileCapcha = true
+  },
   countDown: function ($mobilecode) {
     // 如果秒数还是大于0，则表示倒计时还没结束
     if (sendMobCaptcha.second > 0) {
@@ -216,7 +221,7 @@ let sendMobCaptcha = {
       // 时间减一
       sendMobCaptcha.second -= 1
       // 一秒后重复执行
-      setTimeout(function () {
+      sendMobCaptcha.timmer = setTimeout(function () {
         sendMobCaptcha.countDown($mobilecode)
       }, 1000)
       // 否则，按钮重置为初始状态,可点击
