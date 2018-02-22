@@ -39,7 +39,7 @@
           </div>
           <div class="captcha">
             <input type="tel" name="captcha" maxlength="6" placeholder="请输入短信验证码" v-model="user.captcha" v-on:input="user.captcha = user.captcha.replace(/\D/g, '')" autocomplete="off">
-            <span class="send" @click="getCaptcha" id="sent">获取</span>
+            <span class="send" @click="getCaptcha" id="sent">获取{{canGetCaptch}}</span>
           </div>
           <button type="button" @click="register(user)">立即注册</button>
         </form>
@@ -434,6 +434,7 @@
   }
   .contents {
     background-image: linear-gradient(to top, #3b0f42, #130c04);
+    background-color: #130c04;
     padding-bottom: .5rem;
   }
   .gifts {
@@ -458,6 +459,10 @@
     left: -.28rem;
     top: .14rem;
     color: #fff;
+    -moz-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
     transform: rotate(-45deg);
     background: #ff6000;
     height: .23rem;

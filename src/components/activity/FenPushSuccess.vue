@@ -48,10 +48,12 @@
 <style scoped>
   .fen-success {
     background-image: linear-gradient(to top, #3b0f42, #130c04);
+    background: #130c04;
   }
   .contents {
     padding-bottom: 1rem;    
     background-image: linear-gradient(to top, #3b0f42, #130c04);
+    background-color: #130c04;
   }
   .download {
     font-size: .33rem;
