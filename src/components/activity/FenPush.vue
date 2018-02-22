@@ -228,6 +228,9 @@
           console.log(err)
         })
       }
+    },
+    destroyed () {
+      sendMobCaptcha.canGetMobileCapcha = true
     }
   }
 </script>
