@@ -207,8 +207,10 @@ let sendMobCaptcha = {
   canGetMobileCapcha: true,
   timmer: null,
   resetGetMobileCapcha: function () {
-    clearTimeout(sendMobCaptcha.timmer)
-    sendMobCaptcha.canGetMobileCapcha = true
+    clearTimeout(this.timmer)
+    this.canGetMobileCapcha = true
+    this.second = 60
+    this.timmer = null
   },
   countDown: function ($mobilecode) {
     // 如果秒数还是大于0，则表示倒计时还没结束
