@@ -147,7 +147,7 @@
   export default {
     data () {
       return {
-        Invalid: true,
+        Invalid: false,
         cdkey0: 0,
         cdkey1: 0,
         cdkey2: 0,
@@ -171,6 +171,7 @@
     watch: {
       token: function (val) {
         val ? this.getCdkeys(0) : null
+        val ? this.getFirstInvest() : null
       }
     },
     created () {
