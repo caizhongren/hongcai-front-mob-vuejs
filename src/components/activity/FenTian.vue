@@ -139,11 +139,14 @@
       </div>
     </div>
     <p class="statement" v-if="isIos">该活动与设备生产商Apple Inc.公司无关</p>
+    <div class="mask-common fen-mask" v-show="activityStatus === 2">
+      <img src="../../images/fentian/activityEnd.png" alt="" class="red-package" width="60%">
+    </div>
   </div>
 </template>
 <script>
   import {Carousel} from '../../service/mCarousel'
-  import {Utils, bridgeUtil} from '../../service/Utils'
+  import {Utils, bridgeUtil, ModalHelper} from '../../service/Utils'
   export default {
     data () {
       return {
@@ -164,7 +167,8 @@
           endYear: 2018,
           endMonth: 1,
           endDate: 1
-        }
+        },
+        activityStatus: 1 // 1 正常 2 结束
       }
     },
     props: ['token'],
@@ -174,6 +178,9 @@
         val ? this.getCdkeys(1) : null
         val ? this.getCdkeys(2) : null
         val ? this.getFirstInvest() : null
+      },
+      activityStatus: function (val) {
+        val && val === 2 ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
     created () {
@@ -196,6 +203,7 @@
       getActivityStatus () { // 活动信息查询
         var that = this
         that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
+          that.activityStatus = res.data.status
           var startTime = res.data.startTime
           var endTime = res.data.endTime
           that.activityInfo = {
@@ -253,6 +261,10 @@
   }
 </script>
 <style scoped>
+  .fen-mask {
+    background-color: rgba(0,0,0,0.9) !important;
+    padding-top: 2.5rem;
+  }
   .FenTian {
     overflow-x: hidden;
     background: #2a0d28;

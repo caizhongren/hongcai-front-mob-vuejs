@@ -95,11 +95,14 @@
         </ul>
       </div>
     </div>
+    <div class="mask-common fen-mask" v-show="activityStatus === 2">
+      <img src="../../images/fentian/activityEnd.png" alt="" width="60%">
+    </div>
   </div>
 </template>
 <script>
   import $ from 'zepto'
-  import {Utils, sendMobCaptcha} from '../../service/Utils'
+  import {Utils, sendMobCaptcha, ModalHelper} from '../../service/Utils'
   export default {
     data () {
       return {
@@ -114,12 +117,21 @@
         styleObject: {
           color: '#666',
           background: 'white'
-        }
+        },
+        activityStatus: 1 // 1 正常 2 结束
       }
     },
     props: ['showErrMsg'],
+    watch: {
+      activityStatus: function (val) {
+        val && val === 2 ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+      }
+    },
     mounted () {
       this.refreshCode()
+    },
+    created () {
+      this.getActivityStatus()
     },
     methods: {
       refreshCode () {
@@ -227,6 +239,12 @@
           }, 1000)
           console.log(err)
         })
+      },
+      getActivityStatus () { // 活动信息查询
+        var that = this
+        that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
+          that.activityStatus = res.data.status
+        })
       }
     },
     destroyed () {
@@ -235,6 +253,11 @@
   }
 </script>
 <style scoped>
+  /* 活动结束蒙层 */
+  .fen-mask {
+    background-color: rgba(0,0,0,0.9) !important;
+    padding-top: 2.5rem;
+  }
   .hr {
     height: 1px;
     border: 0px;
