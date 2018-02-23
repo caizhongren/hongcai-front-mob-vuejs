@@ -384,7 +384,7 @@
   }
   .product-box {
     background: url('../../images/fentian/bg-box.png') no-repeat center center;
-    background-size: contain;
+    background-size: 100% 100%;
     width: 85%;
     height: 5.5rem;
     margin: 0 auto;
