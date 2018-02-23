@@ -1,5 +1,5 @@
 <template>
-  <div class="FenTian">
+  <div class="FenTian overflow-hid">
     <div class="header">
       <div class="logo">
         <img src="../../images/fentian/logo-hongcai.png" alt="">
@@ -102,7 +102,7 @@
 </template>
 <script>
   import $ from 'zepto'
-  import {Utils, sendMobCaptcha, ModalHelper} from '../../service/Utils'
+  import {Utils, sendMobCaptcha} from '../../service/Utils'
   export default {
     data () {
       return {
@@ -124,7 +124,7 @@
     props: ['showErrMsg'],
     watch: {
       activityStatus: function (val) {
-        val && val === 2 ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+        val && val === 2 ? $('.FenTian').height(window.innerHeight + 'px') : $('.FenTian').height('auto')
       }
     },
     mounted () {

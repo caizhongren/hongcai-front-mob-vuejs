@@ -146,7 +146,7 @@
 </template>
 <script>
   import {Carousel} from '../../service/mCarousel'
-  import {Utils, bridgeUtil, ModalHelper} from '../../service/Utils'
+  import {Utils, bridgeUtil} from '../../service/Utils'
   export default {
     data () {
       return {
@@ -180,7 +180,7 @@
         val ? this.getFirstInvest() : null
       },
       activityStatus: function (val) {
-        val && val === 2 ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+        val && val === 2 ? document.getElementsByClassName('FenTian')[0].style.height = window.innerHeight + 'px' : document.getElementsByClassName('FenTian')[0].style.height = 'auto'
       }
     },
     created () {
@@ -266,7 +266,7 @@
     padding-top: 2.5rem;
   }
   .FenTian {
-    overflow-x: hidden;
+    overflow: hidden;
     background: #2a0d28;
     padding-bottom: .3rem;
   }
