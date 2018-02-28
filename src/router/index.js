@@ -80,6 +80,8 @@ const SpringRecord = r => require.ensure([], () => r(require('../components/acti
 const FenTian = r => require.ensure([], () => r(require('../components/activity/FenTian.vue')), 'FenTian')
 const FenPush = r => require.ensure([], () => r(require('../components/activity/FenPush.vue')), 'FenPush')
 const FenPushSuccess = r => require.ensure([], () => r(require('../components/activity/FenPushSuccess.vue')), 'FenPushSuccess')
+const ArborDays = r => require.ensure([], () => r(require('../components/activity/arborDay.vue')), 'ArborDays')
+const ArborRecord = r => require.ensure([], () => r(require('../components/activity/arborRecord.vue')), 'ArborRecord')
 
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -402,6 +404,18 @@ const routes = [
     path: '/activity/Spring-record',
     name: 'SpringRecord',
     component: SpringRecord,
+    meta: {title: '查看详情'}
+  },
+  {
+    path: '/activity/arbor-days',
+    name: 'ArborDays',
+    component: ArborDays,
+    meta: {title: '植树节'}
+  },
+  {
+    path: '/activity/arbor-record',
+    name: 'ArborRecord',
+    component: ArborRecord,
     meta: {title: '查看详情'}
   },
   {
