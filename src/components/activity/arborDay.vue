@@ -100,13 +100,22 @@
     <img src="../../images/arbor-day/leaf-right.png" alt="" class="leaf-right">
     <button v-if="token && activityStatus === 1 && investAmount < 300000" class="fixed-btn" @click="toHCNative('HCNative_GoInvestList')">立即投资</button>
     <button v-if="!token" class="fixed-btn" @click="toHCNative('HCNative_Login')">立即登录</button>
-    <arbor-calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator" v-show="showCalculator"></arbor-calculator>
+    <!-- 计算器弹窗 -->
+    <Arbor-Calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator" v-show="showCalculator"></Arbor-Calculator>
+    <!-- 领取弹窗和活动结束弹窗 -->
+    <div class="mask-common arbor-mask" v-if="showMask">
+      <div class="take-success" v-if="false">
+        <button @click="closeMask">我知道了</button>
+        <button @click="toPriviledge">立即查看</button>
+      </div>
+      <img src="../../images/arbor-day/activityEnd.png" alt="" width="74%" class="activity-end" v-if="true">
+    </div>
   </div>
 </template>
 <script>
   import $ from 'zepto'
-  import {bridgeUtil, commonAnimation, audioPlayUtil} from '../../service/Utils'
-  import ArborCalculator from './ArborCalculator.vue'
+  import {bridgeUtil, commonAnimation, audioPlayUtil, ModalHelper} from '../../service/Utils'
+  import ArborCalculator from './arborCalculator.vue'
   export default {
     data () {
       return {
@@ -153,13 +162,17 @@
             amount: 300000,
             reward: 5800000
           }
-        ]
+        ],
+        showMask: false
       }
     },
     props: ['token'],
     watch: {
       token: function (val) {
         val && val !== '' ? (this.getUnTakeRewards(), this.arborDayInfo(), this.getAnnualInvestAmount()) : null
+      },
+      showMask: function (newVal, oldVal) {
+        newVal ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
     mounted () {
@@ -258,9 +271,6 @@
       toNative (HCNative) {
         bridgeUtil.webConnectNative(HCNative, undefined, {}, function (response) {
         }, null)
-      },
-      closeCalculator () {
-        this.showCalculator = false
       },
       toRecord () {
         this.$router.push({name: 'ArborRecord', query: {act: this.$route.query.act}})
@@ -364,6 +374,18 @@
             i += 1
           }
         }
+      },
+      toPriviledge () {
+        var that = this
+        bridgeUtil.webConnectNative('HCNative_GoPrivilegedCapital', undefined, {}, function (res) {
+          that.closeMask()
+        }, null)
+      },
+      closeCalculator () {
+        this.showCalculator = false
+      },
+      closeMask () {
+        this.showMask = false
       }
     },
     components: {ArborCalculator},
@@ -452,6 +474,38 @@
   }
   .tree1 + .tree-di {
     bottom: -2%;
+  }
+  .arbor-mask {
+    padding-top: 30%;
+  }
+  .arbor-mask .take-success {
+    height: 5rem;
+    width: 74%;
+    background: url('../../images/arbor-day/take-suceess.png') no-repeat center center;
+    background-size: 100%;
+    margin: 0 auto;
+  }
+  .take-success button {
+    width: 40%;
+    font-size: .26rem;
+    height: .6rem;
+    line-height: .6rem;
+    border-radius: .3rem;
+    margin-top: 84%;
+    border: none;
+	  text-shadow: 0.2px 0.5px 0 rgba(111, 73, 0, 0.28);
+  }
+  .take-success button:first-child {
+    margin-right: 6%;
+    background-color: #2cc075;
+    color: #ffffff;
+  }
+  .take-success button:last-child {
+	  background-color: #fddf68;
+    color: #c6421f;
+  }
+  .activity-end {
+    margin-top: .6rem;
   }
   .animate {
     -webkit-transition:all 1s linear;
