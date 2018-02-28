@@ -32,12 +32,10 @@
         </div>
       </div>
     </div>
-    <Arbor-Calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator" v-show="showCalculator"></Arbor-Calculator>
   </div>
 </template>
 
 <script>
-  import ArborCalculator from './arborCalculator.vue'
   export default {
     name: 'ArborRecord',
     data () {
@@ -50,7 +48,7 @@
       }
     },
     created () {
-      this.activityType = this.$route.query.act || 40
+      this.activityType = this.$route.query.act || 42
       this.getInvestRecords(this.investPage, this.pageSize)
     },
     props: ['token'],
@@ -76,12 +74,8 @@
       loadMore (page) {
         this.investPage += 1
         this.getInvestRecords(this.investPage, this.pageSize)
-      },
-      closeCalculator () {
-        this.showCalculator = false
       }
-    },
-    components: {ArborCalculator}
+    }
   }
 </script>
 <style scoped>

@@ -157,17 +157,16 @@
     border-radius: .3rem;
     margin-top: 84%;
     border: none;
+	  text-shadow: 0.2px 0.5px 0 rgba(111, 73, 0, 0.28);
   }
   .take-success button:first-child {
     margin-right: 6%;
     background-color: #2cc075;
     color: #ffffff;
-	  text-shadow: 0.2px 0.5px 0 rgba(111, 73, 0, 0.28);
   }
   .take-success button:last-child {
 	  background-color: #fddf68;
     color: #c6421f;
-	  text-shadow: 0.2px 0.5px 0 rgba(111, 73, 0, 0.28);
   }
   .activity-end {
     margin-top: .6rem;
