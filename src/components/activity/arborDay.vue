@@ -1,20 +1,39 @@
 <template>
   <div class="arborDays">
     <div class="circle" :id="index" v-for="(item, index) in privilegedCapitals" v-bind:style="{ top: item.top + '%', left: item.left + '%' }">位置{{index}}</div>
+    <!-- 计算器弹窗 -->
+    <Arbor-Calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator" v-show="showCalculator"></Arbor-Calculator>
+    <!-- 领取弹窗和活动结束弹窗 -->
+    <div class="mask-common arbor-mask" v-if="showMask">
+      <div class="take-success" v-if="false">
+        <button @click="closeMask">我知道了</button>
+        <button @click="toPriviledge">立即查看</button>
+      </div>
+      <img src="../../images/arbor-day/activityEnd.png" alt="" width="74%" class="activity-end" v-if="true">
+    </div>
   </div>
 </template>
 <script>
   import $ from 'zepto'
+  import ArborCalculator from './arborCalculator.vue'
+  import {bridgeUtil, ModalHelper} from '../../service/Utils'
   export default {
     data () {
       return {
         privilegedCapitals: [],
         canTakeCount: 4,
-        timer: null
+        timer: null,
+        showCalculator: false,
+        showMask: false
       }
     },
     mounted () {
       this.circleAnimate(this.canTakeCount)
+    },
+    watch: {
+      showMask: function (newVal, oldVal) {
+        newVal ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+      }
     },
     created () {
       this.setProportion()
@@ -99,14 +118,60 @@
             this.privilegedCapitals.push({left: treeX, top: treeY})
           }
         }
+      },
+      toPriviledge () {
+        var that = this
+        bridgeUtil.webConnectNative('HCNative_GoPrivilegedCapital', undefined, {}, function (res) {
+          that.closeMask()
+        }, null)
+      },
+      closeCalculator () {
+        this.showCalculator = false
+      },
+      closeMask () {
+        this.showMask = false
       }
     },
+    components: {ArborCalculator},
     desrtoyed () {
       clearInterval(this.timer)
     }
   }
 </script>
 <style scoped>
+  .arbor-mask {
+    padding-top: 30%;
+  }
+  .arbor-mask .take-success {
+    height: 5rem;
+    width: 74%;
+    background: url('../../images/arbor-day/take-suceess.png') no-repeat center center;
+    background-size: 100%;
+    margin: 0 auto;
+  }
+  .take-success button {
+    width: 40%;
+    font-size: .26rem;
+    height: .6rem;
+    line-height: .6rem;
+    border-radius: .3rem;
+    margin-top: 84%;
+    border: none;
+  }
+  .take-success button:first-child {
+    margin-right: 6%;
+    background-color: #2cc075;
+    color: #ffffff;
+	  text-shadow: 0.2px 0.5px 0 rgba(111, 73, 0, 0.28);
+  }
+  .take-success button:last-child {
+	  background-color: #fddf68;
+    color: #c6421f;
+	  text-shadow: 0.2px 0.5px 0 rgba(111, 73, 0, 0.28);
+  }
+  .activity-end {
+    margin-top: .6rem;
+  }
   .animate {
     -webkit-transition:all 1s linear;
     -moz-transition:all 1s linear;

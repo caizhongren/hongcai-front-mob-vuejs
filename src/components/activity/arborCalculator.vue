@@ -1,6 +1,6 @@
 <template>
     <!-- 计算器 -->
-    <div class="mask-common" v-show="showCalculator">
+    <div class="mask-common clacul-mask" v-show="showCalculator">
       <div id="calcu-body">
         <div class="calculator">
           <form action="" autocomplete="off">
@@ -122,21 +122,23 @@
     line-height: 1.3;
     width: 73%;
     border: none;
-    font-size: .24rem;
+    font-size: .25rem;
     padding-left: .2rem;
     color: #0a3617;
   }
   input::-webkit-input-placeholder {
-    color: rgba(79, 7, 9, 0.5);
+    color: rgba(78, 8, 12, 0.5);
     opacity: 0.5;
+    font-size: .25rem;
   }
   input:-moz-placeholder {
-    color: rgba(79, 7, 9, 0.5);
+    color: rgba(78, 8, 12, 0.5);
     opacity: 0.5;
+    font-size: .25rem;
   }
   .result {
     margin-top: .15rem;
-    width: 93%;
+    width: 96%;
     font-size: .22rem;
     color: #fff;
     line-height: 1.2;
@@ -150,7 +152,7 @@
     font-weight: bold;
   }
   .result p:first-child {
-    margin-left: 3%;
+    margin-left: 4%;
     margin-top: 0.15rem;
   }
   .result p:last-child {
@@ -158,7 +160,7 @@
     width: 50%;
     height: .65rem;
     line-height: .65rem;
-    font-size: .23rem;
+    font-size: .25rem;
     text-align: center;
     border-radius: 7.5px;
     background-color: #d6fced;
