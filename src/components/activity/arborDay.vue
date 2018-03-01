@@ -14,25 +14,27 @@
         <!-- 摇钱树 -->
         <div class="treeBox">
           <img v-if="activityStatus === 1 && investAmount < 300000" src="../../images/arbor-day/invest-icon.png" alt="" class="investBtn" @click="toNative('HCNative_GoInvestList')">
-          <div class="tree tree1"></div>
+          <div class="tree0"></div>
           <img src="../../images/arbor-day/tree-di.png" alt="" class="tree-di">
-          <div class="circle animate" :id="index" v-for="(item, index) in privilegedCapitals" v-bind:style="{ top: item.top + '%', left: item.left + '%' }" @click="takeReward(index, item.level, item.rewardMoney)">
+          <div class="circle animate" :id="index" v-for="(item, index) in privilegedCapitals" v-bind:style="{ width: item.width + '%', height: (item.width + 6) + '%', top: item.top + '%', left: item.left + '%' }" @click="takeReward(index, item.level, item.rewardMoney)">
             {{item.rewardMoney}}元
           </div>
         </div>
         <!-- 进度图按钮 -->
         <div class="info-text">
-          <img v-if="investAmount >= 300000 && privilegedCapitals.length <= 0" src="../../images/arbor-day/text2.png" alt="" width="47%" class="level">
-          <img v-else src="../../images/arbor-day/text1.png" alt="" width="27%" class="level">
+          <img v-show="investAmount >= 300000 && privilegedCapitals.length <= 0" src="../../images/arbor-day/text2.png" alt="" width="47%" class="level">
+          <img v-show="activityStatus === 1 && investAmount < 300000" src="../../images/arbor-day/text1.png" alt="" width="30%" class="level">
           <p class="investText">
             <img src="../../images/arbor-day/coin-icon.png" alt="">
-            <span>累计年化投资金额(元)</span>
+            <span>累计年化投资金额(元)<span v-show="activityStatus === 1 && investAmount >= 300000 || activityStatus === 2">：{{investAmount}}</span></span>
           </p>
-          <div class="progress">
-            <p class="percent"><span class="ft-red">{{investAmount}}</span> / {{nextLevelAmount}}</p>
-            <div class="line" :class="{'percent100': investAmount/nextLevelAmount === 1}" v-bind:style="{width: investAmount/nextLevelAmount*100 >20 ? investAmount/nextLevelAmount*100 - 2 + '%' : investAmount/nextLevelAmount*100 + '%'}"></div>
+          <div v-show="activityStatus === 1 && investAmount < 300000">
+            <div class="progress">
+              <p class="percent"><span class="ft-red">{{investAmount}}</span> / {{nextLevelAmount}}</p>
+              <div class="line" :class="{'percent100': investAmount/nextLevelAmount === 1}" v-bind:style="{width: investAmount/nextLevelAmount*100 >20 ? investAmount/nextLevelAmount*100 - 2 + '%' : investAmount/nextLevelAmount*100 + '%'}"></div>
+            </div>
+            <p class="tips">还差<span class="ft-red">{{nextLevelAmount - investAmount}}元</span>即可将<span class="ft-red">{{gettingRewardMoney}}元</span>特权本金收入囊中咯！</p>
           </div>
-          <p class="tips">还差<span class="ft-red">{{nextLevelAmount - investAmount}}元</span>即可将<span class="ft-red">{{gettingRewardMoney}}元</span>特权本金收入囊中咯！</p>
           <ul class="btns">
             <li  @click="toRecord()">活动期间投资记录</li>
             <li @click="showCalculator = true">年化投资计算器</li>
@@ -41,7 +43,7 @@
       </div>
       <div class="needLogin" v-if="!token">
         <img src="../../images/arbor-day/needLogin.png" alt="" width="100%">
-        <p class="login" @click="toHCNative('HCNative_Login')">快去播撒财富的种子吧！</p>
+        <p class="login" @click="toNative('HCNative_Login')">{{activityStatus === 1 ? '快去播撒财富的种子吧！' : '立即登录'}}</p>
       </div>
       <div class="info-rules">
         <p class="explain">活动期间，用户投资宏财精选、尊贵项目即可为摇钱树浇水，<span class="ft-red">累计年化投资金额</span>达到指定额度，摇钱树成长即可收获相应特权本金奖励！(特权本金有效期1天)</p>
@@ -98,17 +100,19 @@
       </div>
     </div>
     <img src="../../images/arbor-day/leaf-right.png" alt="" class="leaf-right">
-    <button v-if="token && activityStatus === 1 && investAmount < 300000" class="fixed-btn" @click="toHCNative('HCNative_GoInvestList')">立即投资</button>
-    <button v-if="!token" class="fixed-btn" @click="toHCNative('HCNative_Login')">立即登录</button>
+    <button v-if="token && activityStatus === 1 && investAmount < 300000" class="fixed-btn" @click="toNative('HCNative_GoInvestList')">立即投资</button>
+    <button v-if="!token" class="fixed-btn" @click="toNative('HCNative_Login')">立即登录</button>
     <!-- 计算器弹窗 -->
     <Arbor-Calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator" v-show="showCalculator"></Arbor-Calculator>
     <!-- 领取弹窗和活动结束弹窗 -->
     <div class="mask-common arbor-mask" v-if="showMask">
-      <div class="take-success" v-if="false">
-        <button @click="closeMask">我知道了</button>
+      <div class="take-success" v-if="takeRewardMask">
+        <button @click="IKnow">我知道了</button>
         <button @click="toPriviledge">立即查看</button>
       </div>
-      <img src="../../images/arbor-day/activityEnd.png" alt="" width="74%" class="activity-end" v-if="true">
+    </div>
+    <div class="mask-common arbor-mask" v-if="(token && activityStatus === 2 && investAmount <= 0) || activityStatus === 3">
+      <img src="../../images/arbor-day/activityEnd.png" alt="" width="74%" class="activity-end">
     </div>
   </div>
 </template>
@@ -120,7 +124,7 @@
     data () {
       return {
         privilegedCapitals: [],
-        canTakeCount: 1,
+        canTakeCount: 0,
         timer: null,
         takedPrivileged: 0, // 已收特权本金金额
         investAmount: 0,
@@ -136,6 +140,8 @@
           endDate: 0
         },
         activityStatus: 1, // 1 正常 2 结束
+        showMask: false,
+        takeRewardMask: false,
         busy: false, // 防止多次点击领取
         levelList: [
           {
@@ -144,7 +150,7 @@
           },
           {
             amount: 10000,
-            reward: 12000
+            reward: 120000
           },
           {
             amount: 30000,
@@ -163,7 +169,7 @@
             reward: 5800000
           }
         ],
-        showMask: false
+        activityType: this.$route.query.act || 42
       }
     },
     props: ['token'],
@@ -173,6 +179,12 @@
       },
       showMask: function (newVal, oldVal) {
         newVal ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+      },
+      canTakeCount: function (val) {
+        val && val > 0 ? this.circleAnimate(val) : this.privilegedCapitals = []
+      },
+      activityStatus: function (val) {
+        val === 2 && this.token && this.investAmount <= 0 || val === 3 ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
     mounted () {
@@ -184,7 +196,6 @@
           $('.fixed-btn').hide().removeClass('fixed')
         }
       }
-      this.token && this.canTakeCount > 0 ? this.circleAnimate(this.canTakeCount) : null
     },
     created () {
       this.token ? (this.getUnTakeRewards(), this.arborDayInfo(), this.getAnnualInvestAmount()) : null
@@ -226,7 +237,6 @@
             return
           }
           that.investAmount = res.data.annualInvest || 0
-          that.calculator(that.investAmount)
         })
       },
       getUnTakeRewards () { // 未领取的特权本金奖励
@@ -244,68 +254,60 @@
         that.$http('/hongcai/rest/activitys/arborDay/arborDayInfo?token=' + that.token).then(function (res) {
           if (res && res.ret !== -1) {
             that.takedPrivileged = res.data.receiveReward
+            that.nextLevelAmount = res.data.nextReward.amount
+            that.gettingRewardMoney = res.data.nextReward.reward
+            $('.tree').addClass('tree' + (res.data.nextReward.level - 1))
           }
         })
       },
       takeReward (eleId, level, rewardMoney) { // 领取特权本金奖励
-        $('#' + eleId).remove()
+        var that = this
+        if (that.busy) {
+          return
+        }
+        that.busy = true
+        that.$http.post('/hongcai/rest/activitys/arborDay/takeReward', {
+          token: that.token,
+          level: level
+        }).then((response) => {
+          that.busy = false
+          if (response.data !== 'success') {
+            return
+          }
+          clearInterval(that.timer)
+          that.timer = null
+          $('#' + eleId).remove()
+          audioPlayUtil.playOrPaused('reward', 'true')
+          that.showMask = true
+          that.takeRewardMask = true
+          that.TotalRewardMoney = that.takedPrivileged + rewardMoney
+        })
+      },
+      IKnow () {
         this.canTakeCount -= 1
-        this.canTakeCount <= 0 ? clearInterval(this.timer) : this.circleAnimate(this.canTakeCount)
-        commonAnimation.countToNumber($('#takedPrivileged'), rewardMoney, 0, 800, 0)
-        audioPlayUtil.playOrPaused('reward', 'true')
-        // if (this.busy) {
-        //   return
-        // }
-        // this.busy = true
-        // var that = this
-        // that.$http.post('/hongcai/rest/activitys/arborDay/takeReward', {
-        //   token: this.token,
-        //   level: level
-        // }).then((response) => {
-        //   that.busy = false
-        //   if (response.data !== 'success') {
-        //     return
-        //   }
-        // })
+        this.closeMask()
+        commonAnimation.countToNumber($('#takedPrivileged'), this.TotalRewardMoney, 0, 800, 0)
       },
       toNative (HCNative) {
         bridgeUtil.webConnectNative(HCNative, undefined, {}, function (response) {
         }, null)
       },
       toRecord () {
-        this.$router.push({name: 'ArborRecord', query: {act: this.$route.query.act}})
-      },
-      calculator (investAmount) { // 计算提示 下一档金额及特权本金金额
-        if (investAmount < 1000) {
-          this.gettingRewardMoney = 10000
-          this.nextLevelAmount = 1000
-        } else if (investAmount < 10000) {
-          this.gettingRewardMoney = 12000
-          this.nextLevelAmount = 10000
-        } else if (investAmount < 30000) {
-          this.gettingRewardMoney = 390000
-          this.nextLevelAmount = 30000
-        } else if (investAmount < 50000) {
-          this.gettingRewardMoney = 500000
-          this.nextLevelAmount = 50000
-        } else if (investAmount < 100000) {
-          this.gettingRewardMoney = 1180000
-          this.nextLevelAmount = 100000
-        } else if (investAmount < 300000) {
-          this.gettingRewardMoney = 5800000
-          this.nextLevelAmount = 300000
-        }
+        this.$router.push({name: 'ArborRecord', query: {act: this.activityType}})
       },
       circleAnimate (canTakeCount) { // 金币上下跳动动画
+        if (canTakeCount <= 0 || this.canTakeCount <= 0) {
+          return
+        }
         var a = 0
         this.timer = setInterval(function () {
           if (a % 2 === 0) {
-            for (let i = 0; i < canTakeCount; i++) {
-              document.getElementById(i).style.top = parseInt(document.getElementById(i).style.top) + 2 + '%'
+            for (let i = 0; i < 6; i++) {
+              document.getElementById(i) ? document.getElementById(i).style.top = parseInt(document.getElementById(i).style.top) + 2 + '%' : null
             }
           } else {
-            for (let i = 0; i < canTakeCount; i++) {
-              document.getElementById(i).style.top = parseInt(document.getElementById(i).style.top) - 2 + '%'
+            for (let i = 0; i < 6; i++) {
+              document.getElementById(i) ? document.getElementById(i).style.top = parseInt(document.getElementById(i).style.top) - 2 + '%' : null
             }
           }
           a += 1
@@ -314,6 +316,7 @@
       setProportion (canTakeCount, unTakeRewardsList) {
         // 初始化布局数组
         var position = []
+        var treeId = 0
         for (let i = 0; i < 100; i++) {
           position[i] = []
           for (let j = 0; j < 100; j++) {
@@ -322,7 +325,6 @@
         }
         // 随机种植树木
         while (this.privilegedCapitals.length < canTakeCount) {
-          var i = 0
           // 随机选择一个位置来种植一棵树
           let minTreeX = 8
           let minTreeY = 8
@@ -345,7 +347,7 @@
             continue
           }
           // 树木直径随机
-          let treeRadius = 8
+          let treeRadius = 16
           // 初始设定为可以种植
           position[treeX][treeY].isPlanted = 1
           // 计算检测框范围
@@ -370,16 +372,14 @@
           }
           if (position[treeX][treeY].isPlanted === 1) {
             // 显示结果图形
-            this.privilegedCapitals.push({left: treeX, top: treeY, rewardMoney: unTakeRewardsList[i].reward, level: unTakeRewardsList[i].level})
-            i += 1
+            this.privilegedCapitals.push({id: treeId, width: treeRadius, left: treeX, top: treeY, rewardMoney: unTakeRewardsList[treeId].reward, level: unTakeRewardsList[treeId].level})
+            treeId += 1
           }
         }
       },
       toPriviledge () {
-        var that = this
-        bridgeUtil.webConnectNative('HCNative_GoPrivilegedCapital', undefined, {}, function (res) {
-          that.closeMask()
-        }, null)
+        this.closeMask()
+        this.toNative('HCNative_GoPrivilegedCapital')
       },
       closeCalculator () {
         this.showCalculator = false
@@ -400,7 +400,7 @@
   }
   .arborDays {
     background-color: #9ce9ca;
-    padding-bottom: 1rem;
+    padding-bottom: 2rem;
     position: relative;
   }
   .takedPrivileged {
@@ -439,7 +439,7 @@
     bottom: -6%;
     left: 0;
   }
-  .tree {
+  .tree0 {
     width: 40%;
     height: 2.5rem;
     margin: 0 auto;
@@ -472,8 +472,11 @@
     width: 55%;
     height: 3.2rem;
   }
-  .tree1 + .tree-di {
+  .tree1 + .tree-di, .tree0 + .tree-di {
     bottom: -2%;
+  }
+.tree6 + .tree-di ~ .circle {
+    height: 20% !important;
   }
   .arbor-mask {
     padding-top: 30%;
@@ -531,18 +534,20 @@
   }
   .info-text {
     color: #634d25;
+    padding-top: .15rem;
   }
   .investText {
     text-align: left;
     margin-left: 8%;
+    padding-top: .15rem;
   }
   .investText img {
     width: 5%;
     vertical-align: text-bottom;
   }
   .percent100 {
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
+    border-top-right-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
   }
   .progress {
     width: 86%;
@@ -557,7 +562,7 @@
   }
   .progress .line {
     background-color: #facc2e;
-    background-image: linear-gradient(to bottom, #fbdf00 0%, #fac500 50%, #f5a600 100%);
+    background-image: linear-gradient(to bottom, #fbdf00 0%, #fac500 30%, #f5a600 100%);
     width: 0%;
     border-top-left-radius: 1.5rem;
     border-bottom-left-radius: 1.5rem;
@@ -603,7 +608,6 @@
     color: #634d25;
     font-size: .3rem;
     font-weight: bold;
-    padding: .1rem 0;
   }
   .explain {
     color: #634d25;
@@ -704,7 +708,7 @@
   .leaf-right {
     position: absolute;
     right: 0;
-    bottom: 0rem;
+    bottom: .9rem;
     width: 20%;
   }
   .leaf-left {

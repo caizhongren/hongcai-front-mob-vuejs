@@ -164,6 +164,7 @@
     line-height: .5rem;
     width: 99%;
     margin: 0 auto;
+    font-size: .26rem;
   }
   .investTitle li {
     float: left;
