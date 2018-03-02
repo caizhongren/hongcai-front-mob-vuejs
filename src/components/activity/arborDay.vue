@@ -14,7 +14,7 @@
         <!-- 摇钱树 -->
         <div class="treeBox">
           <img v-if="activityStatus === 1 && investAmount < 300000" src="../../images/arbor-day/invest-icon.png" alt="" class="investBtn" @click="toNative('HCNative_GoInvestList')">
-          <div class="tree0"></div>
+          <div class="tree0" :class="{'tree6': investAmount >= 300000 && privilegedCapitals.length <= 0}"></div>
           <img src="../../images/arbor-day/tree-di.png" alt="" class="tree-di">
           <div class="circle animate" :id="index" v-for="(item, index) in privilegedCapitals" v-bind:style="{ width: item.width + '%', height: (item.width + 6) + '%', top: item.top + '%', left: item.left + '%' }" @click="takeReward(index, item.level, item.rewardMoney)">
             {{item.rewardMoney}}元
@@ -446,6 +446,7 @@
     margin: 0 auto;
     background: url('../../images/arbor-day/tree1.png') no-repeat center center;
     background-size: 60% 60%;
+    margin-bottom: .4rem;
   }
   .tree1 {
     background: url('../../images/arbor-day/tree1.png') no-repeat center center;
@@ -467,12 +468,15 @@
     background: url('../../images/arbor-day/tree5.png') no-repeat center center;
     background-size: 85% 95%;
     height: 3rem;
+    margin-bottom: .5rem;
   }
   .tree6 {
     background: url('../../images/arbor-day/tree6.png') no-repeat center center;
     background-size: 100% 100%;
     width: 55%;
     height: 3.5rem;
+    margin-bottom: .35rem;
+    margin-bottom: .6rem;
   }
   .tree0 + .tree-di {
     bottom: -2%;
@@ -545,7 +549,6 @@
   }
   .info-text {
     color: #634d25;
-    padding-top: .15rem;
   }
   .investText {
     text-align: left;
