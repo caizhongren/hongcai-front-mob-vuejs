@@ -7,16 +7,16 @@
   .news {
     padding: .3rem;
   }
-  .news h2 {
+  .news .title {
     margin-bottom: .4rem;
   }
-  .news p {
+  .news .content {
     text-indent: 2em;
     text-align: justify;
     font-size: 0.26rem;
     margin-bottom: .2rem;
   }
-  .news img {
+  .news .img {
     width: 100%;
     display: block;
     margin: .2rem auto;
