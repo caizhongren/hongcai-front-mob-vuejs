@@ -420,8 +420,7 @@ const routes = [
   {
     path: '/service-agree/:number/:status',
     name: 'ServiceAgree',
-    component: ServiceAgree,
-    meta: {title: '宏财网服务协议'}
+    component: ServiceAgree
   },
   {
     path: '/assignment-question',
