@@ -31,7 +31,7 @@
           <div v-show="activityStatus === 1 && investAmount < 300000">
             <div class="progress">
               <p class="percent"><span class="ft-red">{{investAmount}}</span> / {{nextLevelAmount}}</p>
-              <div class="line" :class="{'percent100': investAmount/nextLevelAmount === 1}" v-bind:style="{width: investAmount/nextLevelAmount*100 >20 ? investAmount/nextLevelAmount*100 - 2 + '%' : investAmount/nextLevelAmount*100 + '%'}"></div>
+              <div class="line" :class="{'percent100': investAmount/nextLevelAmount*100 > 96}" v-bind:style="{width: investAmount/nextLevelAmount*100 >20 ? investAmount/nextLevelAmount*100 - 2 + '%' : investAmount/nextLevelAmount*100 + '%'}"></div>
             </div>
             <p class="tips">还差<span class="ft-red">{{nextLevelAmount - investAmount}}元</span>即可将<span class="ft-red">{{gettingRewardMoney}}元</span>特权本金收入囊中咯！</p>
           </div>
@@ -202,6 +202,90 @@
       this.getActivityStatus()
     },
     methods: {
+      circleAnimate (canTakeCount) { // 金币上下跳动动画
+        if (canTakeCount <= 0 || this.canTakeCount <= 0) {
+          return
+        }
+        var a = 0
+        this.timer = setInterval(function () {
+          if (a % 2 === 0) {
+            for (let i = 0; i < 6; i++) {
+              document.getElementById(i) ? document.getElementById(i).style.top = parseInt(document.getElementById(i).style.top) + 2 + '%' : null
+            }
+          } else {
+            for (let i = 0; i < 6; i++) {
+              document.getElementById(i) ? document.getElementById(i).style.top = parseInt(document.getElementById(i).style.top) - 2 + '%' : null
+            }
+          }
+          a += 1
+        }, 1000)
+      },
+      setProportion (canTakeCount, unTakeRewardsList) {
+        this.privilegedCapitals = []
+        // 初始化布局数组
+        var position = []
+        var treeId = 0
+        for (let i = 0; i < 100; i++) {
+          position[i] = []
+          for (let j = 0; j < 100; j++) {
+            position[i][j] = {radius: 0, isPlanted: 0}
+          }
+        }
+        // 随机种植树木
+        while (this.privilegedCapitals.length < canTakeCount) {
+          // 随机选择一个位置来种植一棵树
+          let minTreeX = 8
+          let minTreeY = 8
+          let maxTreeX = 80
+          let maxTreeY = 40
+          let treeX = Math.floor(Math.random() * (maxTreeX - minTreeX)) + minTreeX
+          let treeY = Math.floor(Math.random() * (maxTreeY - minTreeY)) + minTreeY
+          // console.log('(' + treeX + ',' + treeY + ')')
+          // 不种植的区域排除掉 上半截树斜对角坐标 （vacantStartX, vacantStartY）,(vacantEndX, vacantEndY)
+          let vacantStartX = 26
+          let vacantEndX = 65
+          let vacantStartY = 20
+          let vacantEndY = 62
+          if ((treeX >= vacantStartX && treeX <= vacantEndX && treeY >= vacantStartY && treeY <= vacantEndY) || (treeX >= 62 && treeY <= 20)) {
+            // 如果在不种植区则跳过后续操作
+            continue
+          }
+          if (position[treeX][treeY].isPlanted === 1) {
+            // 如果该位置已经植入树木则跳过后续操作
+            continue
+          }
+          // 树木直径随机
+          let treeRadius = 8
+          let maxTreeRadius = 12
+          // 初始设定为可以种植
+          position[treeX][treeY].isPlanted = 1
+          // 计算检测框范围
+          let checkStartX = Math.max(treeX - 2 * maxTreeRadius, minTreeX)
+          let checkStartY = Math.max(treeY - 2 * maxTreeRadius, minTreeY)
+          let checkEndX = Math.min(treeX + 2 * maxTreeRadius, maxTreeX)
+          let checkEndY = Math.min(treeY + 2 * maxTreeRadius, maxTreeX)
+          for (let x = checkStartX; x <= checkEndX; x++) {
+            for (let y = checkStartY; y <= checkEndY; y++) {
+              // 除了当前位置 和框定范围内已经植入的树木比较距离
+              if (!(treeX === x && treeY === y) && (position[x][y].isPlanted === 1)) {
+                // 比较两点间距离和两点半径和的大小 判断是否重叠
+                let treeDistanceSquared = (treeX - x) * (treeX - x) + (treeY - y) * (treeY - y)
+                let radiusSumSquared = (2 * maxTreeRadius) * (2 * maxTreeRadius)
+                if (treeDistanceSquared < radiusSumSquared) {
+                  // 发生碰撞则标记不可种
+                  position[treeX][treeY].radius = 0
+                  position[treeX][treeY].isPlanted = 0
+                }
+              }
+            }
+          }
+          if (position[treeX][treeY].isPlanted === 1) {
+            // 显示结果图形
+            this.privilegedCapitals.push({id: treeId, width: 2 * treeRadius, left: treeX, top: treeY, rewardMoney: unTakeRewardsList[treeId].reward, level: unTakeRewardsList[treeId].level})
+            treeId += 1
+          }
+        }
+      },
       getActivityStatus () { // 活动信息查询
         var that = this
         that.$http({ // 获取服务器时间
@@ -256,7 +340,7 @@
             that.takedPrivileged = res.data.receiveReward
             that.nextLevelAmount = res.data.nextReward.amount
             that.gettingRewardMoney = res.data.nextReward.reward
-            $('.tree').addClass('tree' + (res.data.nextReward.level - 1))
+            $('.tree0').addClass('tree' + (res.data.nextReward.level - 1))
           }
         })
       },
@@ -294,88 +378,6 @@
       },
       toRecord () {
         this.$router.push({name: 'ArborRecord', query: {act: this.activityType}})
-      },
-      circleAnimate (canTakeCount) { // 金币上下跳动动画
-        if (canTakeCount <= 0 || this.canTakeCount <= 0) {
-          return
-        }
-        var a = 0
-        this.timer = setInterval(function () {
-          if (a % 2 === 0) {
-            for (let i = 0; i < 6; i++) {
-              document.getElementById(i) ? document.getElementById(i).style.top = parseInt(document.getElementById(i).style.top) + 2 + '%' : null
-            }
-          } else {
-            for (let i = 0; i < 6; i++) {
-              document.getElementById(i) ? document.getElementById(i).style.top = parseInt(document.getElementById(i).style.top) - 2 + '%' : null
-            }
-          }
-          a += 1
-        }, 1000)
-      },
-      setProportion (canTakeCount, unTakeRewardsList) {
-        // 初始化布局数组
-        var position = []
-        var treeId = 0
-        for (let i = 0; i < 100; i++) {
-          position[i] = []
-          for (let j = 0; j < 100; j++) {
-            position[i][j] = {radius: 0, isPlanted: 0}
-          }
-        }
-        // 随机种植树木
-        while (this.privilegedCapitals.length < canTakeCount) {
-          // 随机选择一个位置来种植一棵树
-          let minTreeX = 8
-          let minTreeY = 8
-          let maxTreeX = 80
-          let maxTreeY = 40
-          let treeX = Math.floor(Math.random() * (maxTreeX - minTreeX)) + minTreeX
-          let treeY = Math.floor(Math.random() * (maxTreeY - minTreeY)) + minTreeY
-          // console.log('(' + treeX + ',' + treeY + ')')
-          // 不种植的区域排除掉 上半截树斜对角坐标 （vacantStartX, vacantStartY）,(vacantEndX, vacantEndY)
-          let vacantStartX = 20
-          let vacantEndX = 76
-          let vacantStartY = 12
-          let vacantEndY = 72
-          if (treeX >= vacantStartX && treeX <= vacantEndX && treeY >= vacantStartY && treeY <= vacantEndY) {
-            // 如果在不种植区则跳过后续操作
-            continue
-          }
-          if (position[treeX][treeY].isPlanted === 1) {
-            // 如果该位置已经植入树木则跳过后续操作
-            continue
-          }
-          // 树木直径随机
-          let treeRadius = 16
-          // 初始设定为可以种植
-          position[treeX][treeY].isPlanted = 1
-          // 计算检测框范围
-          let checkStartX = Math.max(treeX - 2 * treeRadius, minTreeX)
-          let checkStartY = Math.max(treeY - 2 * treeRadius, minTreeY)
-          let checkEndX = Math.min(treeX + 2 * treeRadius, maxTreeX)
-          let checkEndY = Math.min(treeY + 2 * treeRadius, maxTreeX)
-          for (let x = checkStartX; x <= checkEndX; x++) {
-            for (let y = checkStartY; y <= checkEndY; y++) {
-              // 除了当前位置 和框定范围内已经植入的树木比较距离
-              if (!(treeX === x && treeY === y) && (position[x][y].isPlanted === 1)) {
-                // 比较两点间距离和两点半径和的大小 判断是否重叠
-                let treeDistanceSquared = (treeX - x) * (treeX - x) + (treeY - y) * (treeY - y)
-                let radiusSumSquared = (2 * treeRadius) * (2 * treeRadius)
-                if (treeDistanceSquared < radiusSumSquared) {
-                  // 发生碰撞则标记不可种
-                  position[treeX][treeY].radius = 0
-                  position[treeX][treeY].isPlanted = 0
-                }
-              }
-            }
-          }
-          if (position[treeX][treeY].isPlanted === 1) {
-            // 显示结果图形
-            this.privilegedCapitals.push({id: treeId, width: treeRadius, left: treeX, top: treeY, rewardMoney: unTakeRewardsList[treeId].reward, level: unTakeRewardsList[treeId].level})
-            treeId += 1
-          }
-        }
       },
       toPriviledge () {
         this.closeMask()
@@ -436,7 +438,6 @@
   .treeBox .tree-di {
     width: 100%;
     position: absolute;
-    bottom: -6%;
     left: 0;
   }
   .tree0 {
@@ -465,18 +466,28 @@
   .tree5 {
     background: url('../../images/arbor-day/tree5.png') no-repeat center center;
     background-size: 85% 95%;
+    height: 3rem;
   }
   .tree6 {
     background: url('../../images/arbor-day/tree6.png') no-repeat center center;
     background-size: 100% 100%;
     width: 55%;
-    height: 3.2rem;
+    height: 3.5rem;
   }
-  .tree1 + .tree-di, .tree0 + .tree-di {
+  .tree0 + .tree-di {
     bottom: -2%;
   }
-.tree6 + .tree-di ~ .circle {
-    height: 20% !important;
+  .tree2 + .tree-di, .tree3 + .tree-di, .tree4 + .tree-di, .tree5 + .tree-di {
+    bottom: -6.4%;
+  }
+  .tree6 + .tree-di {
+    bottom: -7.4%;
+  }
+  .tree6 + .tree-di ~ .circle {
+    height: 18.5% !important;
+  }
+  .tree5 + .tree-di ~ .circle {
+    height: 20.5% !important;
   }
   .arbor-mask {
     padding-top: 30%;
