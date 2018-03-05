@@ -31,10 +31,8 @@
         that.$http('/hongcai/rest/texts/app/' + that.textId).then(function (res) {
           if (res && res.ret !== -1) {
             that.report = res.data.text
-            // var isShare = res.data.appText.isShare // 1可分享 2不可分享
-            // var shareId = res.data.appText.shareId
-            var isShare = 1
-            var shareId = 1
+            var isShare = res.data.appText.isShare // 1可分享 2不可分享
+            var shareId = res.data.appText.shareId
             isShare === 1 ? that.getShareInfo(shareId) : null
           }
         })
@@ -44,7 +42,7 @@
         that.$http('/hongcai/rest/shares/' + shareId).then(function (res) {
           if (res && res.ret !== -1) {
             var shareInfo = res.data
-            bridgeUtil.webConnectNative('HCNative_NeedShare', 'HCWeb_ShareSuccess', {
+            bridgeUtil.webConnectNative('HCNative_MediaShare', 'HCWeb_ShareSuccess', {
               'HC_shareType': shareInfo.type,
               'title': shareInfo.title,
               'subTitle': shareInfo.subTitle,
