@@ -169,7 +169,8 @@
             reward: 5800000
           }
         ],
-        activityType: this.$route.query.act || 42
+        activityType: this.$route.query.act || 42,
+        unTakeRewardsList: []
       }
     },
     props: ['token'],
@@ -181,7 +182,7 @@
         newVal ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       },
       canTakeCount: function (val) {
-        val && val > 0 ? this.circleAnimate(val) : this.privilegedCapitals = []
+        val && val > 0 ? (this.setProportion(val, this.unTakeRewardsList), this.circleAnimate(val)) : this.privilegedCapitals = []
       },
       activityStatus: function (val) {
         val === 2 && this.token && this.investAmount <= 0 || val === 3 ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
@@ -234,19 +235,19 @@
         // 随机种植树木
         while (this.privilegedCapitals.length < canTakeCount) {
           // 随机选择一个位置来种植一棵树
-          let minTreeX = 8
-          let minTreeY = 8
-          let maxTreeX = 80
-          let maxTreeY = 40
+          let minTreeX = 0
+          let minTreeY = 3
+          let maxTreeX = 84
+          let maxTreeY = 70
           let treeX = Math.floor(Math.random() * (maxTreeX - minTreeX)) + minTreeX
           let treeY = Math.floor(Math.random() * (maxTreeY - minTreeY)) + minTreeY
           // console.log('(' + treeX + ',' + treeY + ')')
           // 不种植的区域排除掉 上半截树斜对角坐标 （vacantStartX, vacantStartY）,(vacantEndX, vacantEndY)
-          let vacantStartX = 26
-          let vacantEndX = 65
+          let vacantStartX = 15
+          let vacantEndX = 75
           let vacantStartY = 20
-          let vacantEndY = 62
-          if ((treeX >= vacantStartX && treeX <= vacantEndX && treeY >= vacantStartY && treeY <= vacantEndY) || (treeX >= 62 && treeY <= 20)) {
+          let vacantEndY = 72
+          if ((treeX >= vacantStartX && treeX <= vacantEndX && treeY >= vacantStartY && treeY <= vacantEndY) || (treeX >= 63 && treeY <= 20)) {
             // 如果在不种植区则跳过后续操作
             continue
           }
@@ -255,8 +256,8 @@
             continue
           }
           // 树木直径随机
-          let treeRadius = 8
-          let maxTreeRadius = 12
+          let treeRadius = 7.8
+          let maxTreeRadius = 10
           // 初始设定为可以种植
           position[treeX][treeY].isPlanted = 1
           // 计算检测框范围
@@ -327,9 +328,8 @@
         var that = this
         that.$http('/hongcai/rest/activitys/arborDay/unTakeRewards?token=' + that.token).then(function (res) {
           if (res && res.ret !== -1) {
-            var unTakeRewardsList = res.data
+            that.unTakeRewardsList = res.data
             that.canTakeCount = res.data.length
-            that.canTakeCount > 0 ? that.setProportion(that.canTakeCount, unTakeRewardsList) : null
           }
         })
       },
@@ -487,11 +487,11 @@
   .tree6 + .tree-di {
     bottom: -7.4%;
   }
-  .tree6 + .tree-di ~ .circle {
-    height: 18.5% !important;
-  }
   .tree5 + .tree-di ~ .circle {
     height: 20.5% !important;
+  }
+  .tree6 + .tree-di ~ .circle {
+    height: 18.5% !important;
   }
   .arbor-mask {
     padding-top: 30%;
