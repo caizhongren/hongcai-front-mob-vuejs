@@ -126,19 +126,22 @@
       <div class="how">
         <img src="../../images/fentian/gift-header.png" alt="" width="90%" class="display-bl margin-auto">
         <div class="how-rule">
-          获得的礼包可全渠道使用，兑换码永久有效；可在焚天游戏登录界面<span class="color-900">点击右上角进入【地图】>>点击左边【福】>>进入福利界面</span>，在兑换CDKEY处输入兑换码即可获得礼包内游戏道具。
+          获得的礼包可全渠道使用，兑换码永久有效；可在焚天游戏登录界面<span class="color-900">点击右上角进入<span class="text-indent">【地图</span><span class="text-indent">】</span>>>点击左边<span class="text-indent">【福】</span>>>进入福利界面</span>，在兑换CDKEY处输入兑换码即可获得礼包内游戏道具。
         </div>
       </div>
       <img src="../../images/fentian/rule-header.png" alt="" width="55%" class="margin-auto">
       <div class="act-rules">
         <p>奖励数量有限，先到先得，兑完即止，赶快来参与吧；</p>
-        <p>达标领取条件后，可返回此活动页面复制奖励兑换码，也可前往【我的】页面点击右上角>>进入【站内信】点击提醒>>查看兑换码及奖励信息；</p>
+        <p>达标领取条件后，可返回此活动页面复制奖励兑换码，也可前往<span class="text-indent">【我的</span><span class="text-indent">】</span>页面点击右上角>>进入<span class="text-indent">【站内信<span class="text-indent">】</span></span>点击提醒>>查看兑换码及奖励信息；</p>
         <p>每个兑换码仅可兑换一次奖励，兑换成功后，奖励道具将自动发放至游戏背包中，因活动机会难得，道具珍贵抢手，每个游戏ID每种类别礼包奖励仅可通过相应兑换码兑换一次哟；</p>
         <p>如活动中发现用户涉及造假、作弊等行为，平台有权取消其获奖资格并冻结账号；</p>
         <p>在法律规定范围内，宏财网保留本活动最终解释权。</p>
       </div>
     </div>
     <p class="statement" v-if="isIos">该活动与设备生产商Apple Inc.公司无关</p>
+    <div class="mask-common fen-mask" v-show="activityStatus === 2">
+      <img src="../../images/fentian/activityEnd.png" alt="" class="red-package" width="60%">
+    </div>
   </div>
 </template>
 <script>
@@ -147,7 +150,7 @@
   export default {
     data () {
       return {
-        Invalid: true,
+        Invalid: false,
         cdkey0: 0,
         cdkey1: 0,
         cdkey2: 0,
@@ -164,18 +167,27 @@
           endYear: 2018,
           endMonth: 1,
           endDate: 1
-        }
+        },
+        activityStatus: 1 // 1 正常 2 结束
       }
     },
     props: ['token'],
     watch: {
       token: function (val) {
         val ? this.getCdkeys(0) : null
+        val ? this.getCdkeys(1) : null
+        val ? this.getCdkeys(2) : null
+        val ? this.getFirstInvest() : null
+      },
+      activityStatus: function (val) {
+        val && val === 2 ? document.getElementsByClassName('FenTian')[0].style.height = window.innerHeight + 'px' : document.getElementsByClassName('FenTian')[0].style.height = 'auto'
       }
     },
     created () {
       this.getActivityStatus()
       this.token ? this.getCdkeys(0) : null
+      this.token ? this.getCdkeys(1) : null
+      this.token ? this.getCdkeys(2) : null
       this.token ? this.getFirstInvest() : null
     },
     mounted () {
@@ -191,6 +203,7 @@
       getActivityStatus () { // 活动信息查询
         var that = this
         that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
+          that.activityStatus = res.data.status
           var startTime = res.data.startTime
           var endTime = res.data.endTime
           that.activityInfo = {
@@ -219,7 +232,6 @@
         })
       },
       setCarousel () { // 礼包布局配置
-        var that = this
         var wrapper = document.getElementById('wrapper')
         Carousel.mCarousel(wrapper, {
           index: 0,
@@ -227,15 +239,11 @@
           scale: 0.67,
           duration: 300,
           locked: true,
-          diff: 0.445,
-          before: function () {
-            that.index = this.index === 2 ? 0 : this.index + 1
-            that.getCdkeys(that.index)
-          }
+          diff: 0.445
         })
       },
       toTakeCdkey (type) {
-        if (type !== this.index) { return }
+        if (type !== Carousel.index) { return }
         this.$http.get('/hongcai/rest/users/0/userAuth?token=' + this.token).then((response) => {
           this.userAuth = response.data
           if (this.userAuth.active && this.userAuth.authStatus === 2) {
@@ -246,17 +254,24 @@
         })
       },
       copyCdkey (cdkey, type) {
-        if (type !== this.index) { return }
+        if (type !== Carousel.index) { return }
         bridgeUtil.webConnectNative('HCNative_CopyText', null, {text: cdkey}, function (response) {}, null)
       }
     }
   }
 </script>
 <style scoped>
+  .fen-mask {
+    background-color: rgba(0,0,0,0.9) !important;
+    padding-top: 2.5rem;
+  }
   .FenTian {
-    overflow-x: hidden;
+    overflow: hidden;
     background: #2a0d28;
     padding-bottom: .3rem;
+  }
+  .text-indent {
+    text-indent: -.5em;
   }
   .act-time {    
     top: 71%;

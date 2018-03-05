@@ -1,5 +1,5 @@
 <template>
-  <div class="FenTian">
+  <div class="FenTian overflow-hid">
     <div class="header">
       <div class="logo">
         <img src="../../images/fentian/logo-hongcai.png" alt="">
@@ -95,6 +95,9 @@
         </ul>
       </div>
     </div>
+    <div class="mask-common fen-mask" v-show="activityStatus === 2">
+      <img src="../../images/fentian/activityEnd.png" alt="" width="60%">
+    </div>
   </div>
 </template>
 <script>
@@ -114,12 +117,21 @@
         styleObject: {
           color: '#666',
           background: 'white'
-        }
+        },
+        activityStatus: 1 // 1 正常 2 结束
       }
     },
     props: ['showErrMsg'],
+    watch: {
+      activityStatus: function (val) {
+        val && val === 2 ? $('.FenTian').height(window.innerHeight + 'px') : $('.FenTian').height('auto')
+      }
+    },
     mounted () {
       this.refreshCode()
+    },
+    created () {
+      this.getActivityStatus()
     },
     methods: {
       refreshCode () {
@@ -227,11 +239,25 @@
           }, 1000)
           console.log(err)
         })
+      },
+      getActivityStatus () { // 活动信息查询
+        var that = this
+        that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
+          that.activityStatus = res.data.status
+        })
       }
+    },
+    destroyed () {
+      sendMobCaptcha.resetGetMobileCapcha()
     }
   }
 </script>
 <style scoped>
+  /* 活动结束蒙层 */
+  .fen-mask {
+    background-color: rgba(0,0,0,0.9) !important;
+    padding-top: 2.5rem;
+  }
   .hr {
     height: 1px;
     border: 0px;
@@ -358,7 +384,7 @@
   }
   .product-box {
     background: url('../../images/fentian/bg-box.png') no-repeat center center;
-    background-size: contain;
+    background-size: 100% 100%;
     width: 85%;
     height: 5.5rem;
     margin: 0 auto;
@@ -434,6 +460,7 @@
   }
   .contents {
     background-image: linear-gradient(to top, #3b0f42, #130c04);
+    background-color: #130c04;
     padding-bottom: .5rem;
   }
   .gifts {
@@ -458,6 +485,10 @@
     left: -.28rem;
     top: .14rem;
     color: #fff;
+    -moz-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
     transform: rotate(-45deg);
     background: #ff6000;
     height: .23rem;

@@ -69,7 +69,7 @@
 </template>
 <script>
   import $ from 'zepto'
-  import {bridgeUtil, audioPlayUtil, Utils} from '../../service/Utils'
+  import {bridgeUtil, audioPlayUtil, Utils, commonAnimation} from '../../service/Utils'
   export default {
     name: 'gameCounting',
     data () {
@@ -533,21 +533,6 @@
         this.showFirst = false
         this.startWarning()
       },
-      showRewardMoney (elem, endVal, startVal, duration, decimal) { // 获得奖励自增动画
-        var startTime = 0
-        var dec = Math.pow(10, decimal)
-        var progress, value
-        function startCount (timestamp) {
-          if (!startTime) startTime = timestamp
-          progress = timestamp - startTime
-          value = startVal + (endVal - startVal) * (progress / duration)
-          value = (value > endVal) ? endVal : value
-          value = Math.floor(value * dec) / dec
-          $('#rewardMoney').html(value.toFixed(decimal))
-          progress < duration && requestAnimationFrame(startCount)
-        }
-        requestAnimationFrame(startCount)
-      },
       hourglassAnimate (duration) { // 倒计时5s动画
         $('#clock').addClass('hourglass')
         var glassTimer = setTimeout(function () {
@@ -573,7 +558,7 @@
           clearInterval(that.backgroundTimer)
           that.showMask = true
           that.showReward = true
-          that.showRewardMoney($('#rewardMoney'), that.rewardMoney, 0, 800, 0)
+          commonAnimation.countToNumber($('#rewardMoney'), that.rewardMoney, 0, 800, 0)
           if (that.rewardMoney >= 100) {
             audioPlayUtil.playOrPaused('get', that.isPlay)
             that.gameOverGetPriviledge(that.gameType, that.rewardMoney, that.number, that.countNum)

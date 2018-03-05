@@ -205,6 +205,13 @@ let dateUtil = {
 let sendMobCaptcha = {
   second: 60,
   canGetMobileCapcha: true,
+  timmer: null,
+  resetGetMobileCapcha: function () {
+    clearTimeout(this.timmer)
+    this.canGetMobileCapcha = true
+    this.second = 60
+    this.timmer = null
+  },
   countDown: function ($mobilecode) {
     // 如果秒数还是大于0，则表示倒计时还没结束
     if (sendMobCaptcha.second > 0) {
@@ -216,7 +223,7 @@ let sendMobCaptcha = {
       // 时间减一
       sendMobCaptcha.second -= 1
       // 一秒后重复执行
-      setTimeout(function () {
+      sendMobCaptcha.timmer = setTimeout(function () {
         sendMobCaptcha.countDown($mobilecode)
       }, 1000)
       // 否则，按钮重置为初始状态,可点击
@@ -268,6 +275,27 @@ let audioPlayUtil = {
     }
   }
 }
+/**
+ * 公共动画特效
+ */
+let commonAnimation = {
+  // 数字动画、递增特效 elem（数字元素）, endVal（截止数字值）, startVal（起始数字值）, duration（动画时长）, decimal（保留小数点位数）
+  countToNumber: function (elem, endVal, startVal, duration, decimal) {
+    var startTime = 0
+    var dec = Math.pow(10, decimal)
+    var progress, value
+    function startCount (timestamp) {
+      if (!startTime) startTime = timestamp
+      progress = timestamp - startTime
+      value = startVal + (endVal - startVal) * (progress / duration)
+      value = (value > endVal) ? endVal : value
+      value = Math.floor(value * dec) / dec
+      elem.html(value.toFixed(decimal))
+      progress < duration && requestAnimationFrame(startCount)
+    }
+    requestAnimationFrame(startCount)
+  }
+}
 export {Utils}
 export {InviteShareUtils}
 export {bridgeUtil}
@@ -276,3 +304,4 @@ export {dateUtil}
 export {sendMobCaptcha}
 export {InputMaskHelper}
 export {audioPlayUtil}
+export {commonAnimation}

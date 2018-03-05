@@ -1006,6 +1006,7 @@
         }).then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.contractType = res.data.type
+            that.contractType === 10 ? document.title = '借款合同' : document.title = '宏财网服务协议'
           } else {
             that.contractType = 4
           }

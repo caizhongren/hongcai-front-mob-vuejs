@@ -51,6 +51,7 @@ const Report2 = r => require.ensure([], () => r(require('../components/news/repo
 const Report3 = r => require.ensure([], () => r(require('../components/news/report3.vue')), 'News')
 const Report4 = r => require.ensure([], () => r(require('../components/news/report4.vue')), 'News')
 const Report5 = r => require.ensure([], () => r(require('../components/news/report5.vue')), 'News')
+const Report = r => require.ensure([], () => r(require('../components/news/report.vue')), 'News')
 const Events = r => require.ensure([], () => r(require('../components/events.vue')), 'Events')
 const RiskEducation = r => require.ensure([], () => r(require('../components/riskEducation.vue')), 'RiskEducation')
 const Register = r => require.ensure([], () => r(require('../components/activity/oldPeople.vue')), 'Register')
@@ -80,6 +81,7 @@ const SpringRecord = r => require.ensure([], () => r(require('../components/acti
 const FenTian = r => require.ensure([], () => r(require('../components/activity/FenTian.vue')), 'FenTian')
 const FenPush = r => require.ensure([], () => r(require('../components/activity/FenPush.vue')), 'FenPush')
 const FenPushSuccess = r => require.ensure([], () => r(require('../components/activity/FenPushSuccess.vue')), 'FenPushSuccess')
+const WomensDay = r => require.ensure([], () => r(require('../components/activity/WomensDay.vue')), 'WomensDay')
 
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -315,6 +317,12 @@ const routes = [
     meta: {title: '超值限量礼包免费领'}
   },
   {
+    path: '/activity/Womens-Day',
+    name: 'WomensDay',
+    component: WomensDay,
+    meta: {title: '女王驾到'}
+  },
+  {
     path: '/activity/golden-fall',
     name: 'GoldenFall',
     component: GoldenFall,
@@ -419,8 +427,7 @@ const routes = [
   {
     path: '/service-agree/:number/:status',
     name: 'ServiceAgree',
-    component: ServiceAgree,
-    meta: {title: '宏财网服务协议'}
+    component: ServiceAgree
   },
   {
     path: '/assignment-question',
@@ -480,6 +487,11 @@ const routes = [
         name: 'Report5',
         component: Report5,
         meta: {title: '媒体报道'}
+      },
+      {
+        path: 'report/:id',
+        name: 'Report',
+        component: Report
       }
     ]
   },
