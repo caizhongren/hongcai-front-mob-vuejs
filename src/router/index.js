@@ -81,6 +81,7 @@ const SpringRecord = r => require.ensure([], () => r(require('../components/acti
 const FenTian = r => require.ensure([], () => r(require('../components/activity/FenTian.vue')), 'FenTian')
 const FenPush = r => require.ensure([], () => r(require('../components/activity/FenPush.vue')), 'FenPush')
 const FenPushSuccess = r => require.ensure([], () => r(require('../components/activity/FenPushSuccess.vue')), 'FenPushSuccess')
+const WomensDay = r => require.ensure([], () => r(require('../components/activity/WomensDay.vue')), 'WomensDay')
 
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -314,6 +315,12 @@ const routes = [
     name: 'FenPushSuccess',
     component: FenPushSuccess,
     meta: {title: '超值限量礼包免费领'}
+  },
+  {
+    path: '/activity/Womens-Day',
+    name: 'WomensDay',
+    component: WomensDay,
+    meta: {title: '女王驾到'}
   },
   {
     path: '/activity/golden-fall',
