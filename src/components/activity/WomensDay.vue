@@ -74,6 +74,11 @@
       background-size: 100% 100%;
     }
   }
+  @media (min-height: 1024px) {
+    .rule {
+      line-height: 1.6;
+    }
+  }
   span.ft-y {
     font-weight: bold;
 	  color: #fff52c;
@@ -86,7 +91,12 @@
     background-size: 100% 100%;
   }
   .item img {
-    margin: .2rem 0rem 0 0.4rem;
+    margin: .22rem 0rem 0 32.5%;
+  }
+  @media (min-height: 1024px) {
+    .item img {
+      margin-left: 36%;
+    }
   }
   .calculate {
     position: relative;
