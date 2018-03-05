@@ -14,7 +14,7 @@
         <!-- 摇钱树 -->
         <div class="treeBox">
           <img v-if="activityStatus === 1 && investAmount < 300000" src="../../images/arbor-day/invest-icon.png" alt="" class="investBtn" @click="toNative('HCNative_GoInvestList')">
-          <div class="tree0" :class="{'tree6': investAmount >= 300000 && privilegedCapitals.length <= 0}"></div>
+          <div class="tree0" :class="{'tree6': investAmount >= 300000}"></div>
           <img src="../../images/arbor-day/tree-di.png" alt="" class="tree-di">
           <div class="circle animate" :id="index" v-for="(item, index) in privilegedCapitals" v-bind:style="{ width: item.width + '%', height: (item.width + 6) + '%', top: item.top + '%', left: item.left + '%' }" @click="takeReward(index, item.level, item.rewardMoney)">
             {{item.rewardMoney}}元
@@ -636,7 +636,7 @@
   }
   .rule-txt {
     width: 97%;
-    height: 11rem;
+    height: 11.3rem;
     background: url('../../images/arbor-day/rule-bg.png') no-repeat center center;
     background-size: 100% 100%;
     float: right;
@@ -756,5 +756,10 @@
     right: 0;
     z-index: 99;
     display: none;
+  }
+  @media (max-width: 320px) {
+    .rule-txt {
+      height: 12.5rem;
+    }
   }
 </style>
