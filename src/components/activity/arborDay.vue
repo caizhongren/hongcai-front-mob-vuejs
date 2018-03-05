@@ -293,7 +293,7 @@
           url: '/hongcai/rest/systems/serverTime'
         }).then((response) => {
           var serverTime = response.data.time
-          that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
+          that.$http('/hongcai/rest/activitys/' + that.activityType).then(function (res) {
             if (serverTime - res.data.endTime > 3 * 24 * 60 * 60 * 1000) {
               that.activityStatus = 3 // 活动结束3天后
             } else {
