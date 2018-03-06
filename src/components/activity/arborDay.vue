@@ -222,7 +222,6 @@
         }, 1000)
       },
       setProportion (canTakeCount, unTakeRewardsList) {
-        this.privilegedCapitals = []
         // 初始化布局数组
         var position = []
         var treeId = 0
