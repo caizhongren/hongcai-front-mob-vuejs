@@ -525,11 +525,11 @@
     margin-top: .6rem;
   }
   .animate {
-    -webkit-transition:all 1s linear;
-    -moz-transition:all 1s linear;
-    -o-transition:all 1s linear;
-    -ms-transition:all 1s linear;    
-    transition:all 1s linear;
+    -webkit-transition:all 3s linear;
+    -moz-transition:all 3s linear;
+    -o-transition:all 3s linear;
+    -ms-transition:all 3s linear;    
+    transition:all 3s linear;
   }
   .circle {
     position: absolute;
