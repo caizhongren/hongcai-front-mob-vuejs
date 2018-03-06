@@ -340,7 +340,7 @@
             that.takedPrivileged = res.data.receiveReward
             that.nextLevelAmount = res.data.nextReward.amount
             that.gettingRewardMoney = res.data.nextReward.reward
-            $('.tree0').addClass('tree' + (res.data.nextReward.level - 1))
+            $('.tree0').addClass('tree' + (res.data.nextReward.level))
           }
         })
       },
