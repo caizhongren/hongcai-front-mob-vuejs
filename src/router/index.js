@@ -505,7 +505,8 @@ const routes = [
       {
         path: 'report/:id',
         name: 'Report',
-        component: Report
+        component: Report,
+        meta: {title: '媒体报道'}
       }
     ]
   },

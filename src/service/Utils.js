@@ -71,10 +71,8 @@ let InviteShareUtils = {
   shareTitle: function () {
     var titleArray = []
     titleArray.push('加入“宏财合伙人计划” ，一起发宏财！')
-    titleArray.push('有一张10%的加息券正向你飞来，快接住！')
     titleArray.push('朋友！收下这份大礼，你就是我的人了！')
     titleArray.push('这四海八荒的财运，我都攒到一起送给你啦！')
-    titleArray.push('10%新人加息券来了，手快有手慢无！')
     titleArray.push('一个好汉三个帮，投资就上宏财网！')
     return titleArray[Math.floor(Math.random() * titleArray.length)]
   },
