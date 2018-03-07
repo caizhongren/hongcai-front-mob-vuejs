@@ -16,7 +16,7 @@
           <img v-if="activityStatus === 1 && investAmount < 300000" src="../../images/arbor-day/invest-icon.png" alt="" class="investBtn" @click="toNative('HCNative_GoInvestList')">
           <div class="tree0" :class="{'tree6': investAmount >= 300000}"></div>
           <img src="../../images/arbor-day/tree-di.png" alt="" class="tree-di">
-          <div class="circle animate" :id="index" v-for="(item, index) in privilegedCapitals" v-bind:style="{ width: item.width + '%', height: (item.width + 6) + '%', top: item.top + '%', left: item.left + '%' }" @click="takeReward(index, item.level, item.rewardMoney)">
+          <div class="circle animate" :id="index" v-for="(item, index) in privilegedCapitals" v-bind:style="{ top: item.top + '%', left: item.left + '%' }" @click="takeReward(index, item.level, item.rewardMoney)">
             {{item.rewardMoney}}元
           </div>
         </div>
@@ -211,11 +211,11 @@
         this.timer = setInterval(function () {
           if (a % 2 === 0) {
             for (let i = 0; i < 6; i++) {
-              document.getElementById(i) ? document.getElementById(i).style.top = parseInt(document.getElementById(i).style.top) + 2 + '%' : null
+              document.getElementById(i) ? document.getElementById(i).style.webkitTransform = 'translateY(0.2rem)' : null
             }
           } else {
             for (let i = 0; i < 6; i++) {
-              document.getElementById(i) ? document.getElementById(i).style.top = parseInt(document.getElementById(i).style.top) - 2 + '%' : null
+              document.getElementById(i) ? document.getElementById(i).style.webkitTransform = 'translateY(0.0rem)' : null
             }
           }
           a += 1
@@ -255,7 +255,7 @@
             continue
           }
           // 树木直径随机
-          let treeRadius = 7.8
+          // let treeRadius = 7.8
           let maxTreeRadius = 10
           // 初始设定为可以种植
           position[treeX][treeY].isPlanted = 1
@@ -281,7 +281,7 @@
           }
           if (position[treeX][treeY].isPlanted === 1) {
             // 显示结果图形
-            this.privilegedCapitals.push({id: treeId, width: 2 * treeRadius, left: treeX, top: treeY, rewardMoney: unTakeRewardsList[treeId].reward, level: unTakeRewardsList[treeId].level})
+            this.privilegedCapitals.push({id: treeId, left: treeX, top: treeY, rewardMoney: unTakeRewardsList[treeId].reward, level: unTakeRewardsList[treeId].level})
             treeId += 1
           }
         }
@@ -486,12 +486,6 @@
   .tree6 + .tree-di {
     bottom: -7.4%;
   }
-  .tree5 + .tree-di ~ .circle {
-    height: 20.5% !important;
-  }
-  .tree6 + .tree-di ~ .circle {
-    height: 18.5% !important;
-  }
   .arbor-mask {
     padding-top: 30%;
   }
@@ -525,18 +519,18 @@
     margin-top: .6rem;
   }
   .animate {
-    -webkit-transition:all 3s linear;
-    -moz-transition:all 3s linear;
-    -o-transition:all 3s linear;
-    -ms-transition:all 3s linear;    
-    transition:all 3s linear;
+    -webkit-transition:all 1s ease-in-out;
+    -moz-transition:all 1s ease-in-out;
+    -o-transition:all 1s ease-in-out;
+    -ms-transition:all 1s ease-in-out;    
+    transition:all 1s ease-in-out;
   }
   .circle {
     position: absolute;
     top: 20%;
     left: 30%;
-    width: 15.5%;
-    height: 22%;
+    width: 15.6%;
+    height: 21.6%;
     background: url('../../images/arbor-day/icon1.png') no-repeat top center;
     background-size: 70% 70%;
     border-radius: 1rem;
@@ -545,6 +539,12 @@
     line-height: 1.7rem;
     letter-spacing: -1px;
     color: #634d25;
+  }
+  .tree5 + .tree-di ~ .circle {
+    height: 20.5% !important;
+  }
+  .tree6 + .tree-di ~ .circle {
+    height: 18.5% !important;
   }
   .info-text {
     color: #634d25;
