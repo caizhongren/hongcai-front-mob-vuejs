@@ -112,7 +112,7 @@
         <button @click="toPriviledge">立即查看</button>
       </div>
     </div>
-    <div class="mask-common arbor-mask" v-if="(token && activityStatus === 2 && investAmount <= 0) || activityStatus === 3">
+    <div class="mask-common arbor-mask" v-if="activityEnd">
       <img src="../../images/arbor-day/activityEnd.png" alt="" width="74%" class="activity-end">
     </div>
   </div>
@@ -171,7 +171,8 @@
           }
         ],
         activityType: this.$route.query.act || 42,
-        unTakeRewardsList: []
+        unTakeRewardsList: [],
+        activityEnd: false
       }
     },
     props: ['token'],
@@ -186,10 +187,10 @@
         val && val > 0 ? (this.setProportion(val, this.unTakeRewardsList), this.circleAnimate(val)) : this.privilegedCapitals = []
       },
       investAmount: function (val) {
-        val && val <= 0 && this.activityStatus === 2 || this.activityStatus === 3 ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+        val && val <= 0 && this.activityStatus === 2 || this.activityStatus === 3 ? (this.activityEnd = true, ModalHelper.afterOpen()) : ModalHelper.beforeClose()
       },
       activityStatus: function (val) {
-        val === 2 && this.token && this.investAmount <= 0 || val === 3 ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+        val === 2 && this.token && this.investAmount <= 0 || val === 3 ? (this.activityEnd = true, ModalHelper.afterOpen()) : ModalHelper.beforeClose()
       }
     },
     mounted () {
