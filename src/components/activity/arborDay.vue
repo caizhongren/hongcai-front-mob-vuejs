@@ -372,6 +372,7 @@
         })
       },
       IKnow () {
+        this.takedPrivileged = this.TotalRewardMoney
         this.canTakeCount -= 1
         this.closeMask()
         commonAnimation.countToNumber($('#takedPrivileged'), this.TotalRewardMoney, 0, 800, 0)
