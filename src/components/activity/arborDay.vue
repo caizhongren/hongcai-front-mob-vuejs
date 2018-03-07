@@ -185,6 +185,9 @@
       canTakeCount: function (val) {
         val && val > 0 ? (this.setProportion(val, this.unTakeRewardsList), this.circleAnimate(val)) : this.privilegedCapitals = []
       },
+      investAmount: function (val) {
+        val && val <= 0 && this.activityStatus === 2 || this.activityStatus === 3 ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+      },
       activityStatus: function (val) {
         val === 2 && this.token && this.investAmount <= 0 || val === 3 ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
