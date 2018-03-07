@@ -102,6 +102,7 @@
     <img src="../../images/arbor-day/leaf-right.png" alt="" class="leaf-right">
     <button v-if="token && activityStatus === 1 && investAmount < 300000" class="fixed-btn" @click="toNative('HCNative_GoInvestList')">立即投资</button>
     <button v-if="!token" class="fixed-btn" @click="toNative('HCNative_Login')">立即登录</button>
+    <button v-if="token && activityStatus !== 1" class="fixed-btn">活动已结束</button>
     <!-- 计算器弹窗 -->
     <Arbor-Calculator :closeCalculator="closeCalculator" :showCalculator="showCalculator" v-show="showCalculator"></Arbor-Calculator>
     <!-- 领取弹窗和活动结束弹窗 -->
