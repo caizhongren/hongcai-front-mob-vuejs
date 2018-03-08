@@ -3,6 +3,7 @@
     <audio preload="preload" id="reward"><source src="../../assets/reward.mp3"></audio>
     <div class="header">
       <img src="../../images/arbor-day/arbor-header.png" alt="" width="100%">
+      <div class="activityTime">活动时间：{{activityInfo.startYear}}年{{activityInfo.startMonth}}月{{activityInfo.startDate}}日-{{activityInfo.endYear}}年{{activityInfo.endMonth}}月{{activityInfo.endDate}}日</div>
     </div>
     <div class="contents">
       <div v-if="token">
@@ -409,6 +410,19 @@
     background-color: #9ce9ca;
     padding-bottom: 2rem;
     position: relative;
+  }
+  .header {
+    position: relative;
+  }
+  .header .activityTime {
+    position: absolute;
+    top: 68%;
+    left: 1.22rem;
+    font-size: .22rem;
+    font-weight: bold;
+    line-height: 3.21;
+    text-align: center;
+    color: #1b865e;
   }
   .takedPrivileged {
     width: 74%;
