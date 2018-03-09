@@ -77,7 +77,7 @@ let InviteShareUtils = {
     return titleArray[Math.floor(Math.random() * titleArray.length)]
   },
   shareSubtitle: function () {
-    var subTitle = '新手立享10%加息特权，再送炫目大礼包！国资背景+银行存管，上宏财，财运来！'
+    var subTitle = '新手立享966元现金红包！'
     return subTitle
   },
   shareLink: function (inviteCode) {
