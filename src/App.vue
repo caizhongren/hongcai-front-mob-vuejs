@@ -93,6 +93,17 @@ Vue.directive('auto-height', function (el, binding) {
     setHeight()
   }))
 })
+Vue.directive('client-height', function (el, binding) {
+  function setHeight () {
+    el.style.height = document.documentElement.clientHeight + 'px'
+  }
+  setHeight()
+  window.addEventListener('load', function () {
+    setHeight()
+  }, window.addEventListener('resize', function () {
+    setHeight()
+  }))
+})
 </script>
 
 <style lang="css">
