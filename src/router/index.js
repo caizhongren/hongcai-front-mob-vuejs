@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Promise from 'es6-promise'
 import VueCookie from 'vue-cookie'
+import wx from 'weixin-js-sdk'
 window.Promise = Promise
 const ProjectDetail = r => require.ensure([], () => r(require('../components/ProjectDetail.vue')), 'ProjectDetail')
 const Invite = r => require.ensure([], () => r(require('../components/activity/invite.vue')), 'Invite')
@@ -84,9 +85,17 @@ const FenPushSuccess = r => require.ensure([], () => r(require('../components/ac
 const WomensDay = r => require.ensure([], () => r(require('../components/activity/WomensDay.vue')), 'WomensDay')
 const ArborDays = r => require.ensure([], () => r(require('../components/activity/arborDay.vue')), 'ArborDays')
 const ArborRecord = r => require.ensure([], () => r(require('../components/activity/arborRecord.vue')), 'ArborRecord')
+const FoolDays = r => require.ensure([], () => r(require('../components/activity/FoolDays.vue')), 'FoolDays')
+const FoolExchange = r => require.ensure([], () => r(require('../components/activity/FoolExchange.vue')), 'FoolExchange')
+const FoolRecord = r => require.ensure([], () => r(require('../components/activity/FoolRecord.vue')), 'FoolRecord')
+const FoolQuestion = r => require.ensure([], () => r(require('../components/activity/FoolQuestion.vue')), 'FoolQuestion')
+const FoolReportCard = r => require.ensure([], () => r(require('../components/activity/FoolReportCard.vue')), 'FoolReportCard')
+const FoolAnswer = r => require.ensure([], () => r(require('../components/activity/FoolAnswer.vue')), 'FoolAnswer')
+const FoolResult = r => require.ensure([], () => r(require('../components/activity/FoolResult.vue')), 'FoolResult')
 
 Vue.use(Router)
 Vue.use(VueCookie)
+Vue.use(wx)
 const routes = [
   {
     path: '/',
@@ -425,6 +434,49 @@ const routes = [
     name: 'ArborRecord',
     component: ArborRecord,
     meta: {title: '查看详情'}
+  },
+  {
+    path: '/activity/fools-day',
+    name: 'FoolDays',
+    component: FoolDays,
+    meta: {title: '愚人节'}
+  },
+  {
+    path: '/activity/fools-question',
+    name: 'FoolQuestion',
+    component: FoolQuestion,
+    meta: {title: '愚人节创建题目'}
+  },
+  {
+    path: '/activity/fools-result',
+    name: 'FoolResult',
+    component: FoolResult,
+    meta: {title: '愚人节查看结果'}
+  },
+  {
+    path: '/activity/fools-reportCard',
+    name: 'FoolReportCard',
+    component: FoolReportCard,
+    meta: {title: '愚人节成绩单'}
+  },
+
+  {
+    path: '/activity/fools-record',
+    name: 'FoolRecord',
+    component: FoolRecord,
+    meta: {title: '愚人节活动排行榜'}
+  },
+  {
+    path: '/activity/fools-exchange',
+    name: 'FoolExchange',
+    component: FoolExchange,
+    meta: {title: '愚人节活动兑换页面'}
+  },
+  {
+    path: '/activity/fools-answer',
+    name: 'FoolAnswer',
+    component: FoolAnswer,
+    meta: {title: '愚人节活动答题页面'}
   },
   {
     path: '/register-agree',
