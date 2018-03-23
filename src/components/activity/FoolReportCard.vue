@@ -12,12 +12,18 @@
           <div class="answerList">
             <ul class="answer">
               <li>相信</li>
-              <li><span v-bind:style="{width:(question.believeNum/(question.believeNum + question.unBelieveNum) * 100) + '%'}"></span></li>
+              <li>
+                <span v-if="question.believeNum !== 0 && question.unBelieveNum !== 0" v-bind:style="{width:(question.believeNum/(question.believeNum + question.unBelieveNum) * 100) + '%'}"></span>
+                <span v-else class="precent0"></span>
+              </li>
               <li>{{question.believeNum}}人</li>
             </ul>
             <ul class="answer">
               <li>不信</li>
-              <li><span v-bind:style="{width:(question.unBelieveNum/(question.believeNum + question.unBelieveNum) * 100) + '%'}"></span></li>
+              <li>
+                <span v-if="question.believeNum !== 0 && question.unBelieveNum !== 0" v-bind:style="{width:(question.unBelieveNum/(question.believeNum + question.unBelieveNum) * 100) + '%'}"></span>
+                <span v-else class="precent0"></span>
+              </li>
               <li>{{question.unBelieveNum}}人</li>
             </ul>
           </div>
@@ -44,8 +50,8 @@
           },
           {
             title: '我其实是一只猪投胎变成了人。',
-            believeNum: 4,
-            unBelieveNum: 6
+            believeNum: 0,
+            unBelieveNum: 0
           },
           {
             title: '我其实是一只猪投胎变成了人。',
@@ -183,5 +189,9 @@
   .answer li:nth-child(3) {
     width: 20%;
     text-align: right;
+  }
+  .answer li:nth-child(2) span.precent0 {
+    background: #dddddd;
+    width: 100%;
   }
 </style>
