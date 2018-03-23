@@ -30,10 +30,12 @@
         </li>
       </ul>
     </div>
-    <img src="../../images/foolsDay/rule-icon.png" alt="活动规则" class="ruleIcon" @click="showRules">
+    <img src="../../images/foolsDay/rule-icon.png" alt="活动规则" class="ruleIcon" @click="showRules = true">
+    <Fool-Rules :closeRules="closeRules" :showRules="showRules" v-show="showRules"></Fool-Rules>
   </div>
 </template>
 <script>
+  import FoolRules from './FoolRules.vue'
   export default {
     data () {
       return {
@@ -76,7 +78,8 @@
             portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
             percent: '60%'
           }
-        ]
+        ],
+        showRules: false
       }
     },
     props: ['token'],
@@ -90,8 +93,8 @@
       toRecord () {
         this.$router.push({name: 'FoolRecord'})
       },
-      showRules () {
-        this.$router.push({name: 'FoolRules'})
+      closeRules () {
+        this.showRules = false
       },
       loadMore () {
         alert('查看更多')
@@ -103,7 +106,7 @@
         alert('分享邀请好友来鉴定')
       }
     },
-    components: {},
+    components: {FoolRules},
     desrtoyed () {}
   }
 </script>

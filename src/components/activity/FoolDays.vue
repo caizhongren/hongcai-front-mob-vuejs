@@ -6,16 +6,18 @@
     <div class="setQuestion" @click="setQuestion">
       <img src="../../images/foolsDay/play-txt.png" alt="立即出招" width="75%">
     </div>
-    <div class="ruleIcon" @click="showRule">
-      <img src="../../images/foolsDay/rule-txt.png" alt="立即出招" width="75%">
+    <div class="ruleIcon" @click="showRules = true">
+      <img src="../../images/foolsDay/rule-txt.png" alt="活动规则" width="75%">
     </div>
+    <Fool-Rules :closeRules="closeRules" :showRules="showRules" v-show="showRules"></Fool-Rules>
   </div>
 </template>
 <script>
+  import FoolRules from './FoolRules.vue'
   export default {
     data () {
       return {
-
+        showRules: false
       }
     },
     props: ['token'],
@@ -26,11 +28,11 @@
       setQuestion () {
         this.$router.replace({name: 'FoolQuestion'})
       },
-      showRule () {
-        this.$router.push({name: 'FoolRules'})
+      closeRules () {
+        this.showRules = false
       }
     },
-    components: {},
+    components: {FoolRules},
     desrtoyed () {}
   }
 </script>

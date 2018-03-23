@@ -1,7 +1,7 @@
 <template>
   <!-- 活动规则页面 -->
-  <div class="fools-rules">
-    <div class="header"></div>
+  <div class="fools-rules mask-common" v-client-height v-if="showRules">
+    <!-- <div class="header"></div> -->
     <div class="contents">
       <div class="ruleHeader">
         <img src="../../images/foolsDay/rule-header.png" alt="活动规则" width="95%">
@@ -21,38 +21,26 @@
         <div class="rule">平台说明 <br>在法律允许范围内，本活动最终解释权归宏财网所有，如活动期间平台发现有用户通过作弊等违规方式参与活动，宏财网有权取消其参与资格，并没收其活动奖励。</div>
       </div>
     </div>
-    <div class="bottom"></div>
+    <img src="../../images/foolsDay/close-icon.png" alt="关闭按钮" width="15%" @click="closeRules">
   </div>
 </template>
 <script>
+  import {ModalHelper} from '../../service/Utils'
   export default {
+    name: 'FoolRules',
     data () {
       return {
       }
     },
-    props: ['token'],
-    watch: {},
+    props: ['showRules', 'closeRules'],
+    watch: {
+      'showRules': function (newVal, oldVal) {
+        newVal ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+      }
+    },
     mounted () {},
     created () {},
     methods: {
-      toReportCard () {
-        this.$router.push({name: 'FoolReportCard'})
-      },
-      toRecord () {
-        this.$router.push({name: 'FoolRecord'})
-      },
-      showRules () {
-        alert('活动规则')
-      },
-      loadMore () {
-        alert('查看更多')
-      },
-      exchange () {
-        alert('拆礼包')
-      },
-      inviteShare () {
-        alert('分享邀请好友来鉴定')
-      }
     },
     components: {},
     desrtoyed () {}
@@ -60,37 +48,17 @@
 </script>
 <style scoped>
   .fools-rules {
-    background: #f89b32;
     width: 100%;
-    position: relative;
     padding-bottom: .5rem;
   }
   .contents {
-    background: rgba(255,255,255,.9);
-    box-shadow: 0 0 55px rgba(255,255,255,1);
+    background: rgba(255,255,255,1);
     position: relative;
     border-radius: .3rem;
     width: 86%;
     height: auto;
-    margin: 0 auto;
-    z-index: 1;
-    top: -1.2rem;
-  }
-  .header {
-    background: url('../../images/foolsDay/comm-header.png') no-repeat 0 0;
-    background-size: 100% 100%;
-    height: 2.5rem;
-    padding-top: .3rem;
-  }
-  .bottom {
-    background: url('../../images/foolsDay/comm-bottom.png') no-repeat 0 0;
-    background-size: 100% 100%;
-    height: 3.5rem;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    left: 0;
-    z-index: 0;
+    margin: 1.2rem auto .3rem;
+    padding: 1.2rem .25rem .5rem;
   }
   .ruleHeader {
     width: 64%;
@@ -106,7 +74,8 @@
     top: -.8rem;
   }
   .ruleContent {
-    padding: 1.2rem .25rem .5rem;
+    overflow: auto;
+    height: 5rem;
   }
   .rule {
     color: #f69b40;

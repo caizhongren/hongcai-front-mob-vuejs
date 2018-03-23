@@ -32,7 +32,7 @@
     <div class="definedTitle" @click="showDefinedBox">
       <img src="../../images/foolsDay/defined-txt.png" alt="自定义题目" width="58%">
     </div>
-    <img src="../../images/foolsDay/rule-icon.png" alt="活动规则" class="ruleIcon" @click="showRules">
+    <img src="../../images/foolsDay/rule-icon.png" alt="活动规则" class="ruleIcon" @click="showRules = true">
     <!-- 温馨提示 -->
     <div class="mask-common alertTips" v-if="alertTips">
       <div class="tipBox">
@@ -60,14 +60,17 @@
         </div>
       </div>
     </div>
+    <Fool-Rules :closeRules="closeRules" :showRules="showRules" v-show="showRules"></Fool-Rules>
   </div>
 </template>
 <script>
   import $ from 'zepto'
   // import {InputMaskHelper} from '../../service/Utils'
+  import FoolRules from './FoolRules.vue'
   export default {
     data () {
       return {
+        showRules: false,
         question: {
           title: '今天在宏财网投资5万元，3年后实现财富自由',
           id: '0'
@@ -106,8 +109,8 @@
         this.alertDefinedTitle = false
         this.question.title = this.defined.title
       },
-      showRules () {
-        this.$router.push({name: 'FoolRules'})
+      closeRules () {
+        this.showRules = false
       },
       choose (type) {
         if (this.num === 5) {
@@ -123,7 +126,7 @@
         this.alertTips = false
       }
     },
-    components: {},
+    components: {FoolRules},
     desrtoyed () {}
   }
 </script>
