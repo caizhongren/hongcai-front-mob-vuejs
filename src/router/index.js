@@ -87,12 +87,12 @@ const ArborDays = r => require.ensure([], () => r(require('../components/activit
 const ArborRecord = r => require.ensure([], () => r(require('../components/activity/arborRecord.vue')), 'ArborRecord')
 const FoolDays = r => require.ensure([], () => r(require('../components/activity/FoolDays.vue')), 'FoolDays')
 const FoolExchange = r => require.ensure([], () => r(require('../components/activity/FoolExchange.vue')), 'FoolExchange')
+const FoolSuccess = r => require.ensure([], () => r(require('../components/activity/FoolSuccess.vue')), 'FoolSuccess')
 const FoolRecord = r => require.ensure([], () => r(require('../components/activity/FoolRecord.vue')), 'FoolRecord')
 const FoolQuestion = r => require.ensure([], () => r(require('../components/activity/FoolQuestion.vue')), 'FoolQuestion')
 const FoolReportCard = r => require.ensure([], () => r(require('../components/activity/FoolReportCard.vue')), 'FoolReportCard')
 const FoolAnswer = r => require.ensure([], () => r(require('../components/activity/FoolAnswer.vue')), 'FoolAnswer')
 const FoolResult = r => require.ensure([], () => r(require('../components/activity/FoolResult.vue')), 'FoolResult')
-const FoolRules = r => require.ensure([], () => r(require('../components/activity/FoolRules.vue')), 'FoolRules')
 
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -474,16 +474,16 @@ const routes = [
     meta: {title: '愚人节活动兑换页面'}
   },
   {
+    path: '/activity/fools-success',
+    name: 'FoolSuccess',
+    component: FoolSuccess,
+    meta: {title: '愚人节活动兑换成功页面'}
+  },
+  {
     path: '/activity/fools-answer',
     name: 'FoolAnswer',
     component: FoolAnswer,
     meta: {title: '愚人节活动答题页面'}
-  },
-  {
-    path: '/activity/fools-rules',
-    name: 'FoolRules',
-    component: FoolRules,
-    meta: {title: '愚人节活动规则页面'}
   },
   {
     path: '/register-agree',
