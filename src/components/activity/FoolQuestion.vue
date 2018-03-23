@@ -107,7 +107,7 @@
         this.question.title = this.defined.title
       },
       showRules () {
-        alert('活动规则')
+        this.$router.push({name: 'FoolRules'})
       },
       choose (type) {
         if (this.num === 5) {

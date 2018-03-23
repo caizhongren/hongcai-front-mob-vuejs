@@ -27,7 +27,7 @@
         this.$router.replace({name: 'FoolQuestion'})
       },
       showRule () {
-        alert('活动规则')
+        this.$router.push({name: 'FoolRules'})
       }
     },
     components: {},

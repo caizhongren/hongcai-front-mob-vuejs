@@ -91,7 +91,7 @@
         this.$router.push({name: 'FoolRecord'})
       },
       showRules () {
-        alert('活动规则')
+        this.$router.push({name: 'FoolRules'})
       },
       loadMore () {
         alert('查看更多')
