@@ -17,16 +17,32 @@
   export default {
     data () {
       return {
-        showRules: false
+        showRules: false,
+        questionStatus: 'NOT_SET'
       }
     },
-    props: ['token'],
+    props: [],
     watch: {},
     mounted () {},
-    created () {},
+    created () {
+      var that = this
+      that.$http({
+        method: 'get',
+        url: '/hongcai/rest/activitys/foolsDay/takeRecordStatus?token=36bc2a96ec3862b88c631157efda766a'
+      }).then((response) => {
+        if (response.data && response.data.ret !== -1) {
+          that.questionStatus = (response.data.status === -1) ? 'NOT_SET' : 'SETTED'
+        }
+      })
+    },
     methods: {
       setQuestion () {
-        this.$router.replace({name: 'FoolQuestion'})
+        var that = this
+        if (that.questionStatus === 'NOT_SET') {
+          this.$router.replace({name: 'FoolQuestion'})
+        } else if (that.questionStatus === 'SETTED') {
+          this.$router.replace({name: 'FoolResult'})
+        }
       },
       closeRules () {
         this.showRules = false

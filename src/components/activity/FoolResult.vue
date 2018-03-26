@@ -22,71 +22,101 @@
       </div>
       <ul class="inviteList">
         <li v-for="item in inviteList">
-          <img v-bind:src="item.portraitUrl" alt=""/>
-          <span>{{item.percent}}</span>
+          <img v-bind:src="item.headImg" alt=""/>
+          <span>{{item.tacit}}</span>
         </li>
-        <li>
+        <li >
           <img src="../../images/foolsDay/result-more.png" alt="" class="loadMore" @click="loadMore">
         </li>
       </ul>
     </div>
     <img src="../../images/foolsDay/rule-icon.png" alt="活动规则" class="ruleIcon" @click="showRules = true">
     <Fool-Rules :closeRules="closeRules" :showRules="showRules" v-show="showRules"></Fool-Rules>
+    <Fool-Share :showShare="showShare" :closeShare="closeShare" v-show="showShare"></Fool-Share>
+    <!-- 未达标弹窗 -->
+    <div class="fools-box mask-common" v-client-height v-if="unReach">
+      <div class="tipBox">
+        <div class="Header">
+          好友参与鉴谎人数达到5人 <br>
+          <span class="ft-p24">即可拆开领奖！</span>
+        </div>
+        <div class="Content">
+          <p>
+            礼包包含：精选1.5％无条件加息券 <br>
+            <span>尊贵2.5％无条件加息券</span> <br>
+            <span>权本金2018元（有效期3天)</span>
+          </p>
+          <div class="iKnow" @click="iKnow()">
+            <img src="../../images/foolsDay/zhidao.png" alt="我知道了" width="60%"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 已领弹窗 -->
+    <div class="fools-box mask-common" v-client-height v-if="hasToken">
+      <div class="hasToken">
+          <span class="ft-p36">您已拆过礼包啦！</span> <br>
+        <span class="ft-p2">前往宏财网应用参与更多活动!</span>
+      </div>
+      <div class="iKnow width-30" @click="iKnow()">
+        <img src="../../images/foolsDay/zhidao.png" alt="我知道了" width="60%"/>
+      </div>
+    </div>
   </div>
 </template>
 <script>
   import FoolRules from './FoolRules.vue'
+  import FoolShare from './FoolShare.vue'
+  import {ModalHelper} from '../../service/Utils'
   export default {
     data () {
       return {
-        answerPeople: 10,
-        inviteList: [
-          {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '20%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '10%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '40%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '60%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '20%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '10%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '40%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '60%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '20%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '10%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '40%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '60%'
-          }
-        ],
-        showRules: false
+        answerPeople: 0,
+        inviteList: [],
+        showRules: false,
+        showShare: false,
+        hasToken: false,
+        unReach: false,
+        skip: 0,
+        pageSize: 9,
+        investPage: 1,
+        token: ''
       }
     },
     props: ['token'],
-    watch: {},
+    watch: {
+      unReach: function (val) {
+        val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+      },
+      hasToken: function (val) {
+        val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+      }
+    },
     mounted () {},
-    created () {},
+    created () {
+      this.token = '66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1'
+      this.answerUsersCount()
+      this.answer()
+    },
     methods: {
+      // 答题人数
+      answerUsersCount () {
+        var that = this
+        that.$http('/hongcai/rest/activitys/foolsDay/answerUsersCount?token=' + that.token).then(function (res) {
+          that.answerPeople = res.data
+        })
+      },
+      // 好有默契度
+      answer () {
+        var that = this
+        that.$http('/hongcai/rest/activitys/foolsDay/answer?token=' + that.token + '&pageSize=' + that.pageSize + '&skip=' + this.skip)
+        .then(function (res) {
+          var List = res.data.data
+          for (var i = 0; i < List.length; i++) {
+            that.inviteList.push(List[i])
+          }
+        })
+      },
       toReportCard () {
         this.$router.push({name: 'FoolReportCard'})
       },
@@ -96,21 +126,59 @@
       closeRules () {
         this.showRules = false
       },
-      loadMore () {
-        alert('查看更多')
+      closeShare () {
+        this.showShare = false
       },
+      // 查看更多
+      loadMore () {
+        this.investPage += 1
+        this.pageSize = 10
+        this.skip = [(this.investPage - 1) * this.pageSize] - 1
+        this.answer()
+      },
+      // 拆礼包
       exchange () {
-        alert('拆礼包')
+        var that = this
+        if (that.answerPeople < 5) {
+          that.unReach = true
+        } else {
+          that.$http('/hongcai/rest/activitys/foolsDay/takeRecordStatus?token=' + that.token).then(function (res) {
+            if (res && res.ret !== -1) {
+              let status = res.data.status
+              // status -1，未出题，0，未达到领取条件，1 可领，2 已领取
+              if (status === 1 && status === 2) {
+                that.$router.push({name: 'FoolExchange'})
+              } else {
+                that.unReach = true
+              }
+            }
+          })
+        }
+      },
+      iKnow () {
+        this.unReach = false
+        this.hasToken = false
+        this.$router.push({name: 'FoolResult'})
       },
       inviteShare () {
-        alert('分享邀请好友来鉴定')
+        this.showShare = true
       }
     },
-    components: {FoolRules},
+    components: {FoolRules, FoolShare},
     desrtoyed () {}
   }
 </script>
 <style scoped>
+  .ft-p2 {
+    font-size: .2rem;
+  }
+  .ft-p24 {
+    font-size: .24rem;
+  }
+  .ft-p36 {
+    font-size: .36rem;
+    font-weight: bold;
+  }
   .fools-result {
     background: #f89b32;
     width: 100%;
@@ -241,5 +309,55 @@
     width: 63%;
     height: 75%;
     margin-top: .1rem;
+  }
+  /* 未达标弹窗 */
+  .tipBox {
+    width: 70%;
+    height: 4.8rem;
+    background: url('../../images/foolsDay/box-bg.png') no-repeat center center;
+    background-size: 100% 100%;
+    margin: 1.5rem auto;
+    padding: .12rem;
+  }
+  .iKnow {
+    width: 57%;
+    height: .9rem;
+    line-height: 1.1rem;
+    background: url('../../images/foolsDay/konw-bg.png') no-repeat center center;
+    background-size: 100% 100%;
+    margin: 0 auto;
+  }
+  .tipBox .Header, .hasToken {
+    width: 82%;
+    height: 1.7rem;
+    background: url('../../images/foolsDay/cloud.png') no-repeat center center;
+    background-size: 100% 100%;
+    margin: 0 auto;
+    padding: .65rem .23rem;
+    font-size: .25rem;
+    color: #fff;
+  }
+  .hasToken {
+    padding-top: .9rem;
+    width: 66%;
+    height: 2.5rem;
+    margin: 2rem auto .5rem;
+  }
+  .tipBox .Content {
+    overflow: auto;
+    height: 5rem;
+  }
+  .tipBox .Content p {
+    color: #51171b;
+    font-size: .24rem;
+    font-weight: bold;
+    text-align: left;
+    margin: .25rem auto;
+  }
+  .tipBox .Content p  span {
+    margin-left: 1.2rem;
+  }
+  .iKnow.width-30 {
+    width: 39%;
   }
 </style>

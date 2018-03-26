@@ -11,7 +11,7 @@
         特权本金2018元（有效期3天)
       </div>
       <form name="mobile" class="mobileBox">
-        <input type="tel" placeholder="请输入手机号" v-model="mobile"  v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler" autocomplete="off"/>
+        <input type="tel" placeholder="请输入手机号" v-model="user.mobile"  v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler" autocomplete="off"/>
         <div class="btns">
           <div class="exchangeBtn" @click="exchange">马上领取</div>
           <img src="../../images/foolsDay/line2.png" alt="曲线" width="26%">
@@ -24,24 +24,60 @@
         3.召集更多好友来测谎，勇攀“愚人榜”，500000元特权本金等着你！(约合收益110元)。
       </div>
     </div>
+    <!-- 新用户注册验证码弹窗 -->
+    <div class="fools-box mask-common" v-client-height v-if="!isRegister">
+      <div class="CaptchaBox">
+        <div class="title">请输入</div>
+        <form name="captcha" class="captcha">
+          <div class="boxBoder">
+            <input type="tel" id="picCaptcha"  v-model="user.picCaptcha"  v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler" autocomplete="off"/>
+            <span>图形验证</span>
+          </div>
+          <div class="boxBoder">
+            <input type="tel"  v-model="user.mobileCaptcha"  v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler" autocomplete="off"/>
+            <span>获取短信</span>
+          </div>
+        </form>
+      </div>
+    </div>
     <Fool-Rules :closeRules="closeRules" :showRules="showRules" v-show="showRules"></Fool-Rules>
   </div>
 </template>
 <script>
+  import $ from 'zepto'
   import FoolRules from './FoolRules.vue'
   export default {
     data () {
       return {
         showRules: false,
-        mobile: ''
+        user: {
+          mobile: '',
+          mobileCaptcha: '',
+          picCaptcha: ''
+        },
+        isRegister: false
       }
     },
     props: ['showErrMsg'],
     watch: {
     },
-    mounted () {},
+    mounted () {
+      this.refreshCode()
+    },
     created () {},
     methods: {
+      // 图形验证码
+      refreshCode () {
+        this.$http.get('/hongcai/rest/captchas', {
+          code: Math.random()
+        })
+        .then(function (res) {
+          $('#picCaptcha').attr({'src': 'data:image/png;base64,' + res.data.data})
+        })
+        .catch(function (err) {
+          console.log(err)
+        })
+      },
       closeRules () {
         this.showRules = false
       },
@@ -115,7 +151,7 @@
     line-height: 1.2rem;
     padding: 0 .6rem;
     color: #51171b;
-    font-size: .25rem;;
+    font-size: .25rem;
   }
   input::-webkit-input-placeholder {
     color: #51171b;
@@ -149,5 +185,55 @@
     width: 28%;
     float: right;
     margin-top: -.1rem;
+  }
+  /* 新用户注册验证码弹窗 */
+  .CaptchaBox {
+    width: 70%;
+    height: 4.8rem;
+    background: url('../../images/foolsDay/box-bg.png') no-repeat center center;
+    background-size: 100% 100%;
+    margin: 1.5rem auto;
+    padding: .12rem;
+  }
+  .CaptchaBox .title {
+    width: 42%;
+    height: 1rem;
+    line-height: 1.05rem;
+    background: url('../../images/foolsDay/cloud.png') no-repeat center center;
+    background-size: 100% 100%;
+    padding: 0rem .23rem;
+    font-size: .28rem;
+    color: #fff;
+    margin: .23rem 0 0 .23rem;
+  }
+  .captcha .boxBoder {
+    background: url('../../images/foolsDay/chacap-box.png') no-repeat center center;
+    background-size: 100% 100%;
+    width: 88%;
+    height: 1rem;
+    line-height: 1.05rem;
+    color: #51171b;
+    font-size: .25rem;
+    margin: 0.23rem auto;
+    padding-left: .5rem;
+  }
+  .boxBoder input {
+    border: none;
+    height: 1rem;
+    line-height: 1.05rem;
+    background: transparent;
+    width: 40%;
+    float: left;
+  }
+  .boxBoder span {
+    float: right;
+    background: url('../../images/foolsDay/chacat.png') no-repeat center center;
+    background-size: 100% 100%;
+    width: 45%;
+    height: .65rem;
+    line-height: .7rem;
+    color: #fff;
+    font-size: .25rem;
+    margin-top: .2rem;
   }
 </style>

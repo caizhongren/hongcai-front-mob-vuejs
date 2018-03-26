@@ -8,23 +8,23 @@
       </div>
       <ul class="reportCardContent">
         <li class="question" v-for="(question, index) in questionList">
-          <div class="title">{{index + 1}}.{{question.title}}</div>
+          <div class="title">{{index + 1}}.{{question.question}}</div>
           <div class="answerList">
             <ul class="answer">
               <li>相信</li>
               <li>
-                <span v-if="question.believeNum !== 0 && question.unBelieveNum !== 0" v-bind:style="{width:(question.believeNum/(question.believeNum + question.unBelieveNum) * 100) + '%'}"></span>
+                <span v-if="question.trustCount !== 0" v-bind:style="{width:(question.trustCount/(question.trustCount + question.untrustCount) * 100) + '%'}"></span>
                 <span v-else class="precent0"></span>
               </li>
-              <li>{{question.believeNum}}人</li>
+              <li>{{question.trustCount}}人</li>
             </ul>
             <ul class="answer">
               <li>不信</li>
               <li>
-                <span v-if="question.believeNum !== 0 && question.unBelieveNum !== 0" v-bind:style="{width:(question.unBelieveNum/(question.believeNum + question.unBelieveNum) * 100) + '%'}"></span>
+                <span v-if="question.untrustCount !== 0" v-bind:style="{width:(question.untrustCount/(question.trustCount + question.untrustCount) * 100) + '%'}"></span>
                 <span v-else class="precent0"></span>
               </li>
-              <li>{{question.unBelieveNum}}人</li>
+              <li>{{question.untrustCount}}人</li>
             </ul>
           </div>
         </li>
@@ -37,57 +37,24 @@
   export default {
     data () {
       return {
-        questionList: [
-          {
-            title: '今天在宏财网投资5万元，3年后实现财富自由',
-            believeNum: 4000,
-            unBelieveNum: 600
-          },
-          {
-            title: '我其实是一只猪投胎变成了人。',
-            believeNum: 5,
-            unBelieveNum: 5
-          },
-          {
-            title: '我其实是一只猪投胎变成了人。',
-            believeNum: 0,
-            unBelieveNum: 0
-          },
-          {
-            title: '我其实是一只猪投胎变成了人。',
-            believeNum: 4,
-            unBelieveNum: 6
-          },
-          {
-            title: '我其实是一只猪投胎变成了人。',
-            believeNum: 4,
-            unBelieveNum: 6
-          }
-        ]
+        questionList: []
       }
     },
     props: ['token'],
     watch: {},
     mounted () {},
-    created () {},
+    created () {
+      this.question()
+    },
     methods: {
-      toReportCard () {
-        this.$router.push({name: 'FoolReportCard'})
-      },
-      toRecord () {
-        this.$router.push({name: 'FoolRecord'})
-      },
-      showRules () {
-        alert('活动规则')
-      },
-      loadMore () {
-        alert('查看更多')
-      },
-      exchange () {
-        alert('拆礼包')
-      },
-      inviteShare () {
-        alert('分享邀请好友来鉴定')
+      question () { // 成绩单
+        var that = this
+        that.$http('/hongcai/rest/activitys/foolsDay/question?token=66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1').then(function (res) {
+          that.questionList = res.data.data
+          if (that.questionList.length === 0) {
+            alert('没有创建题目,怎么办了,跳哪儿去了？')
+          }
+        })
       }
     },
     components: {},

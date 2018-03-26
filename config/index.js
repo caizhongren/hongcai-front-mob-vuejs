@@ -23,14 +23,14 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 8080,
+    port: 8090,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
       '/hongcai': {
-        // target: 'http://192.168.70.63:8100', // 目标域名
-        target: 'http://m.test321.hongcai.com',
+        target: 'http://127.0.0.1:8080', // 目标域名
+        // target: 'http://m.test321.hongcai.com',
         changeOrigin: true,
         pathRewrite: {
           '^/hongcai': '/hongcai' // 规则, 见下面说明

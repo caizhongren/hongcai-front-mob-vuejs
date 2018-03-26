@@ -25,6 +25,9 @@
       <li class="noBelieve" @click="choose(0)"></li>
       <li class="believe" @click="choose(1)"></li>
     </ul>
+    <div class="tipBox">
+      <img src="../../images/foolsDay/answer-tips.png" alt="">
+    </div>
     <img src="../../images/foolsDay/clown2.png" alt="" class="clown2">
     <img src="../../images/foolsDay/rule-icon.png" alt="活动规则" class="ruleIcon" @click="showRules = true">
     <Fool-Rules :closeRules="closeRules" :showRules="showRules" v-show="showRules"></Fool-Rules>
@@ -32,7 +35,6 @@
 </template>
 <script>
   import $ from 'zepto'
-  // import {InputMaskHelper} from '../../service/Utils'
   import FoolRules from './FoolRules.vue'
   export default {
     data () {
@@ -52,10 +54,6 @@
     },
     props: ['showErrMsg'],
     watch: {
-      alertDefinedTitle: function (val) {
-        // var handleEle = document.getElementById('tipBox')
-        // val ? InputMaskHelper.windowChange(handleEle) : null
-      }
     },
     mounted () {},
     created () {
@@ -66,7 +64,7 @@
       },
       choose (type) {
         if (this.num === 5) {
-          this.$router.replace({name: 'FoolResult'})
+          this.$router.replace({name: 'FoolTacit'})
           return
         }
         $($('.nums li')[this.num - 1]).removeClass('selectNumBg')
@@ -232,5 +230,16 @@
     top: .1rem;
     right: .1rem;
     width: 30%;
+  }
+  .tipBox {
+    width: 40%;
+    height: 1.4rem;
+    line-height: 2.1rem;
+    background: url('../../images/foolsDay/answer-tipBox.png') no-repeat center center;
+    background-size: 100% 100%;
+    margin: 1rem 0 0 6%;
+  }
+  .tipBox img {
+    width: 90%;
   }
 </style>
