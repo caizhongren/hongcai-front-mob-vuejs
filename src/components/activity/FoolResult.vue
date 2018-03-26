@@ -32,10 +32,42 @@
     </div>
     <img src="../../images/foolsDay/rule-icon.png" alt="活动规则" class="ruleIcon" @click="showRules = true">
     <Fool-Rules :closeRules="closeRules" :showRules="showRules" v-show="showRules"></Fool-Rules>
+    <Fool-Share :showShare="showShare" :closeShare="closeShare" v-show="showShare"></Fool-Share>
+    <!-- 未达标弹窗 -->
+    <div class="fools-box mask-common" v-client-height v-if="unReach">
+      <div class="tipBox">
+        <div class="Header">
+          好友参与鉴谎人数达到5人 <br>
+          <span class="ft-p24">即可拆开领奖！</span>
+        </div>
+        <div class="Content">
+          <p>
+            礼包包含：精选1.5％无条件加息券 <br>
+            <span>尊贵2.5％无条件加息券</span> <br>
+            <span>权本金2018元（有效期3天)</span>
+          </p>
+          <div class="iKnow" @click="iKnow()">
+            <img src="../../images/foolsDay/zhidao.png" alt="我知道了" width="60%"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 已领弹窗 -->
+    <div class="fools-box mask-common" v-client-height v-if="hasToken">
+      <div class="hasToken">
+          <span class="ft-p36">您已拆过礼包啦！</span> <br>
+        <span class="ft-p2">前往宏财网应用参与更多活动!</span>
+      </div>
+      <div class="iKnow width-30" @click="iKnow()">
+        <img src="../../images/foolsDay/zhidao.png" alt="我知道了" width="60%"/>
+      </div>
+    </div>
   </div>
 </template>
 <script>
   import FoolRules from './FoolRules.vue'
+  import FoolShare from './FoolShare.vue'
+  import {ModalHelper} from '../../service/Utils'
   export default {
     data () {
       return {
@@ -79,11 +111,21 @@
             percent: '60%'
           }
         ],
-        showRules: false
+        showRules: false,
+        showShare: false,
+        hasToken: false,
+        unReach: false
       }
     },
     props: ['token'],
-    watch: {},
+    watch: {
+      unReach: function (val) {
+        val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+      },
+      hasToken: function (val) {
+        val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+      }
+    },
     mounted () {},
     created () {},
     methods: {
@@ -96,21 +138,49 @@
       closeRules () {
         this.showRules = false
       },
+      closeShare () {
+        this.showShare = false
+      },
       loadMore () {
         alert('查看更多')
       },
       exchange () {
-        alert('拆礼包')
+        var that = this
+        if (that.answerPeople < 5) {
+          that.unReach = true
+          return
+        } else {
+          that.$http('/hongcai/rest/activitys/arborDay/arborDayInfo?token=' + that.token).then(function (res) {
+            if (res && res.ret !== -1) {
+              let hasToken = false
+              hasToken ? that.hasToken = true : that.$router.push({name: 'FoolExchange'})
+            }
+          })
+        }
+      },
+      iKnow () {
+        this.unReach = false
+        this.hasToken = false
       },
       inviteShare () {
-        alert('分享邀请好友来鉴定')
+        this.showShare = true
       }
     },
-    components: {FoolRules},
+    components: {FoolRules, FoolShare},
     desrtoyed () {}
   }
 </script>
 <style scoped>
+  .ft-p2 {
+    font-size: .2rem;
+  }
+  .ft-p24 {
+    font-size: .24rem;
+  }
+  .ft-p36 {
+    font-size: .36rem;
+    font-weight: bold;
+  }
   .fools-result {
     background: #f89b32;
     width: 100%;
@@ -241,5 +311,55 @@
     width: 63%;
     height: 75%;
     margin-top: .1rem;
+  }
+  /* 未达标弹窗 */
+  .tipBox {
+    width: 70%;
+    height: 4.8rem;
+    background: url('../../images/foolsDay/box-bg.png') no-repeat center center;
+    background-size: 100% 100%;
+    margin: 1.5rem auto;
+    padding: .12rem;
+  }
+  .iKnow {
+    width: 57%;
+    height: .9rem;
+    line-height: 1.1rem;
+    background: url('../../images/foolsDay/konw-bg.png') no-repeat center center;
+    background-size: 100% 100%;
+    margin: 0 auto;
+  }
+  .tipBox .Header, .hasToken {
+    width: 82%;
+    height: 1.7rem;
+    background: url('../../images/foolsDay/cloud.png') no-repeat center center;
+    background-size: 100% 100%;
+    margin: 0 auto;
+    padding: .65rem .23rem;
+    font-size: .25rem;
+    color: #fff;
+  }
+  .hasToken {
+    padding-top: .9rem;
+    width: 66%;
+    height: 2.5rem;
+    margin: 2rem auto .5rem;
+  }
+  .tipBox .Content {
+    overflow: auto;
+    height: 5rem;
+  }
+  .tipBox .Content p {
+    color: #51171b;
+    font-size: .24rem;
+    font-weight: bold;
+    text-align: left;
+    margin: .25rem auto;
+  }
+  .tipBox .Content p  span {
+    margin-left: 1.2rem;
+  }
+  .iKnow.width-30 {
+    width: 39%;
   }
 </style>
