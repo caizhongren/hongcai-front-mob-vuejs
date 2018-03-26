@@ -94,6 +94,7 @@ const FoolReportCard = r => require.ensure([], () => r(require('../components/ac
 const FoolAnswer = r => require.ensure([], () => r(require('../components/activity/FoolAnswer.vue')), 'FoolAnswer')
 const FoolResult = r => require.ensure([], () => r(require('../components/activity/FoolResult.vue')), 'FoolResult')
 const FoolAnswerPage = r => require.ensure([], () => r(require('../components/activity/FoolAnswerPage.vue')), 'FoolAnswerPage')
+const FoolTacit = r => require.ensure([], () => r(require('../components/activity/FoolTacit.vue')), 'FoolTacit')
 
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -491,6 +492,12 @@ const routes = [
     name: 'FoolAnswerPage',
     component: FoolAnswerPage,
     meta: {title: '愚人节活动答题页面2'}
+  },
+  {
+    path: '/activity/fools-tacit',
+    name: 'FoolTacit',
+    component: FoolTacit,
+    meta: {title: '愚人节活动答题默契度页面'}
   },
   {
     path: '/register-agree',
