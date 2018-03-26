@@ -174,7 +174,7 @@
           token: that.token
         }).then(function (res) {
           if (res.data && res.data.ret !== -1) {
-            that.$router.replace({name: 'FoolSuccess'})
+            that.$router.replace({name: 'FoolSuccess', query: {mobile: user.mobile}})
           } else {
             that.$parent.showErrMsg(res.data.msg)
           }

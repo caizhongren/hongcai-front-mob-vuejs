@@ -83,7 +83,6 @@
         token: ''
       }
     },
-    props: ['token'],
     watch: {
       unReach: function (val) {
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()

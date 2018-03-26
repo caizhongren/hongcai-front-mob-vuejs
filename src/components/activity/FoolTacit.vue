@@ -46,7 +46,7 @@
         </div>
       </div>
     </div>
-    <div class="fools-qrcode mask-common" v-client-height v-if="showQrCode">
+    <div class="fools-qrcode mask-common" v-client-height v-if="showQrCode" @click="showQrCode = false">
       <img src="../../images/foolsDay/qrcode.png" alt="长按识别图中二维码" width="50%">
       <div class="qrcodeBox">
         <img src="../../images/foolsDay/wechat-qrcode.png" alt="">

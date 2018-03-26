@@ -21,7 +21,7 @@
   export default {
     data () {
       return {
-        userMobile: '15210288888'
+        userMobile: this.$route.query.mobile || '暂无用户信息'
       }
     },
     props: ['token'],
