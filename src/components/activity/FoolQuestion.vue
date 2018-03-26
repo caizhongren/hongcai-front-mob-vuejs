@@ -61,16 +61,19 @@
       </div>
     </div>
     <Fool-Rules :closeRules="closeRules" :showRules="showRules" v-show="showRules"></Fool-Rules>
+    <Fool-Share :showShare="showShare" :closeShare="closeShare"  v-show="showShare"></Fool-Share>
   </div>
 </template>
 <script>
   import $ from 'zepto'
   // import {InputMaskHelper} from '../../service/Utils'
   import FoolRules from './FoolRules.vue'
+  import FoolShare from './FoolShare.vue'
   export default {
     data () {
       return {
         showRules: false,
+        showShare: false,
         question: {
           title: '今天在宏财网投资5万元，3年后实现财富自由',
           id: '0'
@@ -112,9 +115,13 @@
       closeRules () {
         this.showRules = false
       },
+      closeShare () {
+        this.showShare = false
+      },
       choose (type) {
         if (this.num === 5) {
-          this.$router.replace({name: 'FoolResult'})
+          this.showShare = true
+          // this.$router.replace({name: 'FoolResult'})
           return
         }
         $($('.nums li')[this.num - 1]).removeClass('selectNumBg')
@@ -126,7 +133,7 @@
         this.alertTips = false
       }
     },
-    components: {FoolRules},
+    components: {FoolRules, FoolShare},
     desrtoyed () {}
   }
 </script>
