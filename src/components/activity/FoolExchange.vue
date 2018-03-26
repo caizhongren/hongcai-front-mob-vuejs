@@ -11,9 +11,9 @@
         特权本金2018元（有效期3天)
       </div>
       <form name="mobile" class="mobileBox">
-        <input type="tel" placeholder="请输入手机号" v-model="user.mobile"  v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler" autocomplete="off"/>
+        <input type="tel" placeholder="请输入手机号" v-model="user.mobile"  v-on:input="oninputHandler('mobile')" v-on:beforepaste="beforepasteHandler" autocomplete="off"/>
         <div class="btns">
-          <div class="exchangeBtn" @click="exchange">马上领取</div>
+          <div class="exchangeBtn" @click="checkMobile(user)">马上领取</div>
           <img src="../../images/foolsDay/line2.png" alt="曲线" width="26%">
         </div>
       </form>
@@ -30,12 +30,15 @@
         <div class="title">请输入</div>
         <form name="captcha" class="captcha">
           <div class="boxBoder">
-            <input type="tel" id="picCaptcha"  v-model="user.picCaptcha"  v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler" autocomplete="off"/>
-            <span>图形验证</span>
+            <input type="tel" v-model="user.picCaptcha"  v-on:input="oninputHandler('picCaptcha')" v-on:beforepaste="beforepasteHandler" autocomplete="off"/>
+            <img alt="图形验证码" id="picCaptcha" width="100%" height="100%" @click="refreshCode"/>
           </div>
           <div class="boxBoder">
-            <input type="tel"  v-model="user.mobileCaptcha"  v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler" autocomplete="off"/>
-            <span>获取短信</span>
+            <input type="tel"  v-model="user.mobileCaptcha"  v-on:input="oninputHandler('mobileCaptcha')" v-on:beforepaste="beforepasteHandler" autocomplete="off"/>
+            <span @click="getCaptcha" id="sent">获取短信</span>
+          </div>
+          <div class="sureCaptchaBtn">
+            <img src="../../images/foolsDay/queren-yellow.png" alt="确认" width="40%" @click="register(user)">
           </div>
         </form>
       </div>
@@ -46,23 +49,27 @@
 <script>
   import $ from 'zepto'
   import FoolRules from './FoolRules.vue'
+  import {Utils, sendMobCaptcha} from '../../service/Utils'
   export default {
     data () {
       return {
+        canGetCaptch: true,
         showRules: false,
         user: {
           mobile: '',
           mobileCaptcha: '',
-          picCaptcha: ''
+          picCaptcha: '',
+          mobileCaptchaType: 1,
+          mobileCaptchaBusiness: 0
         },
-        isRegister: false
+        busy: false,
+        isRegister: true
       }
     },
-    props: ['showErrMsg'],
+    props: ['showErrMsg', 'token'],
     watch: {
     },
     mounted () {
-      this.refreshCode()
     },
     created () {},
     methods: {
@@ -81,20 +88,139 @@
       closeRules () {
         this.showRules = false
       },
-      exchange () {
+      getCaptcha () {
+        if (!this.canGetCaptch) {
+          return
+        }
+        if (!this.user.picCaptcha) {
+          this.showErrMsg('请输入图形验证码！')
+          return
+        }
+        if (!sendMobCaptcha.canGetMobileCapcha) {
+          return
+        }
         var that = this
-        if (that.mobile === '') {
-          return
-        }
-        if (that.mobile.length < 11) {
-          that.showErrMsg('请输入正确的手机号码！')
-          return
-        }
-        alert('马上领取')
+        that.canGetCaptch = false
+        // 短信验证码接口 & 动画
+        that.$http.post('/hongcai/rest/users/mobileCaptcha', {
+          mobile: that.user.mobile,
+          picCaptcha: that.user.picCaptcha,
+          type: that.user.mobileCaptchaType,
+          business: that.user.mobileCaptchaBusiness,
+          device: Utils.deviceCode()
+        })
+        .then(function (res) {
+          setTimeout(function () {
+            that.canGetCaptch = true
+          }, 1000)
+          if (res.data.code || res.data.ret === -1) {
+            if (res.data.code === -1005) {
+              that.showRegister = false
+              that.showErrMsg('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！')
+            } else {
+              that.showErrMsg(res.data.msg)
+            }
+            // return
+          }
+          var $send = document.getElementById('sent')
+          sendMobCaptcha.countDown($send)
+        })
+        .catch(function (err) {
+          setTimeout(function () {
+            that.canGetCaptch = true
+          }, 1000)
+          console.log(err)
+          that.showErrMsg('验证码发送失败')
+        })
       },
-      oninputHandler () {
-        this.mobile = this.mobile.replace(/\D/g, '')
-        this.mobile = this.mobile.length > 11 ? this.mobile.slice(0, 11) : this.mobile
+      register (user) {
+        var that = this
+        that.busy = true
+        that.$http.post('/hongcai/rest/users/register', {
+          picCaptcha: user.picCaptcha,
+          mobile: user.mobile,
+          password: '',
+          captcha: user.mobileCaptcha,
+          channelCode: that.$route.query.f,
+          act: that.$route.query.act,
+          device: Utils.deviceCode()
+        })
+        .then(function (res) {
+          setTimeout(function () {
+            that.busy = false
+          }, 1000)
+          if (res.data.code && res.data.ret === -1) {
+            if (res.data.code === -1003) {
+              that.showErrMsg('请输入正确的手机号！')
+            } else if (res.data.code === -1005) {
+              that.showErrMsg('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！')
+            } else {
+              that.showErrMsg(res.data.msg)
+            }
+            return
+          }
+          // 注册并领取
+          that.exchange(that.user)
+        })
+        .catch(function (err) {
+          setTimeout(function () {
+            that.busy = false
+          }, 1000)
+          console.log(err)
+        })
+      },
+      exchange (user) {
+        var that = this
+        that.$http.post('/hongcai/rest/activitys/foolsDay/takeReward', {
+          token: that.token
+        }).then(function (res) {
+          console.log(res.data)
+          if (res.data && res.data.ret !== -1) {
+            that.$router.replace({name: 'FoolSuccess'})
+          } else {
+            that.showErrMsg(res.data.msg)
+          }
+        })
+      },
+      checkMobile (user) {
+        var that = this
+        if (that.busy) { return }
+        if (!that.user.mobile || !that.isRegister && (!that.user.picCaptcha || !that.user.mobileCaptcha)) {
+          return
+        }
+        if (!this.user.mobile) {
+          this.showErrMsg('请输入手机号！')
+          return
+        }
+        // 校验手机号
+        var mobilePattern = /^((13[0-9])|(15[^4,\D])|(18[0-9])|(17[03678])|(14[0-9]))\d{8}$/
+        if (!mobilePattern.test(this.user.mobile)) {
+          this.showErrMsg('请输入正确的手机号！')
+          return
+        }
+        that.$http.post('/hongcai/rest/users/isUnique', {
+          account: user.mobile
+        }).then(function (res) {
+          if (res.data && res.data.ret === -1) { // 已注册
+            // 调用领取奖励接口
+            that.exchange(user)
+          } else {
+            that.isRegister = false
+            that.refreshCode()
+          }
+        })
+      },
+      oninputHandler (type) {
+        if (type === 'mobile') {
+          this.user.mobile = this.user.mobile.replace(/\D/g, '')
+          this.user.mobile = this.user.mobile.length > 11 ? this.user.mobile.slice(0, 11) : this.user.mobile
+        } else if (type === 'picCaptcha') {
+          this.user.picCaptcha = this.user.picCaptcha.replace(/\D/g, '')
+          this.user.picCaptcha = this.user.picCaptcha.length > 4 ? this.user.picCaptcha.slice(0, 4) : this.user.picCaptcha
+        } else {
+          this.user.mobileCaptcha = this.user.mobileCaptcha.replace(/\D/g, '')
+          this.user.mobileCaptcha = this.user.mobileCaptcha.length > 4 ? this.user.mobileCaptcha.slice(0, 4) : this.user.mobileCaptcha
+        }
       },
       beforepasteHandler (e) {
         e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/\D/g, ''))
@@ -189,7 +315,7 @@
   /* 新用户注册验证码弹窗 */
   .CaptchaBox {
     width: 70%;
-    height: 4.8rem;
+    height: 5.5rem;
     background: url('../../images/foolsDay/box-bg.png') no-repeat center center;
     background-size: 100% 100%;
     margin: 1.5rem auto;
@@ -235,5 +361,22 @@
     color: #fff;
     font-size: .25rem;
     margin-top: .2rem;
+  }
+  #picCaptcha {
+    float: right;
+    width: 45%;
+    height: .65rem;
+    line-height: .7rem;
+    color: #fff;
+    font-size: .25rem;
+    margin-top: .15rem;
+  }
+  .sureCaptchaBtn {
+    background: url('../../images/foolsDay/konw-bg.png') no-repeat center center;
+    background-size: 100% 100%;
+    width: 50%;
+    height: .75rem;
+    line-height: 1rem;
+    margin: 0 auto;
   }
 </style>
