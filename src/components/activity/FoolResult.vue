@@ -22,10 +22,10 @@
       </div>
       <ul class="inviteList">
         <li v-for="item in inviteList">
-          <img v-bind:src="item.portraitUrl" alt=""/>
-          <span>{{item.percent}}</span>
+          <img v-bind:src="item.headImg" alt=""/>
+          <span>{{item.tacit}}</span>
         </li>
-        <li>
+        <li >
           <img src="../../images/foolsDay/result-more.png" alt="" class="loadMore" @click="loadMore">
         </li>
       </ul>
@@ -71,50 +71,15 @@
   export default {
     data () {
       return {
-        answerPeople: 10,
-        inviteList: [
-          {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '20%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '10%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '40%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '60%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '20%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '10%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '40%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '60%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '20%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '10%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '40%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '60%'
-          }
-        ],
+        answerPeople: 0,
+        inviteList: [],
         showRules: false,
         showShare: false,
         hasToken: false,
-        unReach: false
+        unReach: false,
+        skip: 0,
+        pageSize: 9,
+        investPage: 1
       }
     },
     props: ['token'],
@@ -127,8 +92,27 @@
       }
     },
     mounted () {},
-    created () {},
+    created () {
+      this.answerUsersCount()
+      this.answer()
+    },
     methods: {
+      answerUsersCount () {
+        var that = this
+        that.$http('/hongcai/rest/activitys/foolsDay/answerUsersCount?token=66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1').then(function (res) {
+          that.answerPeople = res.data
+        })
+      },
+      answer () {
+        var that = this
+        that.$http('/hongcai/rest/activitys/foolsDay/answer?token=66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1&pageSize=' + that.pageSize + '&skip=' + this.skip)
+        .then(function (res) {
+          var List = res.data.data
+          for (var i = 0; i < List.length; i++) {
+            that.inviteList.push(List[i])
+          }
+        })
+      },
       toReportCard () {
         this.$router.push({name: 'FoolReportCard'})
       },
@@ -142,7 +126,10 @@
         this.showShare = false
       },
       loadMore () {
-        alert('查看更多')
+        this.investPage += 1
+        this.pageSize = 10
+        this.skip = [(this.investPage - 1) * this.pageSize] - 1
+        this.answer()
       },
       exchange () {
         var that = this
