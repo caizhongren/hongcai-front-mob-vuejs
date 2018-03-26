@@ -20,9 +20,9 @@
         </li>
       </ul>
     </div>
-    <div class="question">{{question.title}}</div>
+    <div class="question">{{question.question}}</div>
     <ul class="selectBtns">
-      <li class="noBelieve" @click="choose(0)"></li>
+      <li class="noBelieve" @click="choose(2)"></li>
       <li class="believe" @click="choose(1)"></li>
     </ul>
     <img src="../../images/foolsDay/clown2.png" alt="" class="clown2">
@@ -52,7 +52,7 @@
       <div class="tipBox" id="tipBox">
         <img src="../../images/foolsDay/defined-title.png" alt="温馨提示" class="defined-title">
         <div class="borderBox">
-          <textarea type="text" v-model="defined.title" maxlength="20" autofocus>{{defined.title}}</textarea>
+          <textarea type="text" v-model="defined.question" maxlength="20" autofocus>{{defined.question}}</textarea>
         </div>
         <p class="tip">题目最多不超过20字哦～</p>
         <div class="saveTitle" @click="saveTitle">
@@ -72,15 +72,23 @@
       return {
         showRules: false,
         question: {
-          title: '今天在宏财网投资5万元，3年后实现财富自由',
-          id: '0'
+          question: '今天在宏财网投资5万元，3年后实现财富自由',
+          systemId: 0,
+          answer: 1,
+          sortNo: 1
         },
         defined: {
-          title: ''
+          question: '',
+          systemId: 0,
+          answer: 1,
+          sortNo: 1
         },
         num: 1,
         alertTips: false,
-        alertDefinedTitle: false
+        alertDefinedTitle: false,
+        systemQuestions: [],
+        saveQuestions: [],
+        selectSystemQuestionId: 0
       }
     },
     props: ['showErrMsg'],
@@ -92,38 +100,92 @@
     },
     mounted () {},
     created () {
+      this.getSystemQuestions()
     },
     methods: {
       changeTitle () {
-        alert('更换随机题目')
+        var index = Math.floor(Math.random() * this.systemQuestions.length)
+        this.question = this.systemQuestions[index]
       },
       showDefinedBox () {
         this.alertDefinedTitle = true
-        this.defined.title = this.question.title
+        this.defined.question = this.question.question
       },
       saveTitle () {
-        if (this.defined.title === '') {
+        if (this.defined.question === '') {
           this.showErrMsg('自定义题目不能为空哦！')
           return
         }
         this.alertDefinedTitle = false
-        this.question.title = this.defined.title
+        console.log(this.question.question)
+        if (this.defined.question !== this.question.question) {
+          this.question.question = this.defined.question
+          this.question.systemId = 0
+        }
       },
       closeRules () {
         this.showRules = false
       },
-      choose (type) {
+      choose (answer) {
+        var saveQuestion = {
+          question: this.question.question,
+          systemId: this.question.systemId,
+          answer: answer,
+          sortNo: this.num
+        }
+        this.saveQuestions.push(saveQuestion)
+        if (this.question.systemId > 0) {
+          this.selectSystemQuestionId = this.question.systemId
+          for (let i = 0; i < this.systemQuestions.length; i++) {
+            if (this.systemQuestions[i].systemId === this.selectSystemQuestionId) {
+              this.systemQuestions.splice(i, 1)
+              break
+            }
+          }
+        }
+        console.log(this.saveQuestions)
         if (this.num === 5) {
-          this.$router.replace({name: 'FoolResult'})
+          this.saveUserQuestions()
           return
         }
+        var index = Math.floor(Math.random() * this.systemQuestions.length)
+        this.question = this.systemQuestions[index]
         $($('.nums li')[this.num - 1]).removeClass('selectNumBg')
         $($('.nums li')[this.num]).addClass('selectNumBg')
         this.num += 1
-        // type === 0 ? alert('不信') : alert('相信')
       },
       startQuestion () {
         this.alertTips = false
+      },
+      getSystemQuestions () { // 系统题库查询
+        var that = this
+        that.$http({ // 获取服务器时间
+          method: 'get',
+          url: '/hongcai/rest/activitys/foolsDay/question/system'
+        }).then((response) => {
+          if (response && response.ret !== -1) {
+            if (response.data.total > 0) {
+              for (let i = 0; i < response.data.total; i++) {
+                this.systemQuestions.push({systemId: response.data.data[i].id, question: response.data.data[i].question})
+              }
+              var index = Math.floor(Math.random() * response.data.total)
+              this.question = this.systemQuestions[index]
+            }
+          }
+        })
+      },
+      saveUserQuestions () { // 提交用户设置的问题
+        var that = this
+        that.$http.post('/hongcai/rest/activitys/foolsDay/saveQuestion', {
+          token: '045f7ab119adf469c6068d351097fb22',
+          userQuestions: JSON.stringify(that.saveQuestions)
+        }).then((res) => {
+          if (res.data === 5) {
+            this.$router.replace({name: 'FoolResult'})
+          } else {
+            alert(res.data.msg)
+          }
+        })
       }
     },
     components: {FoolRules},
