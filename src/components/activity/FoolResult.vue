@@ -79,7 +79,8 @@
         unReach: false,
         skip: 0,
         pageSize: 9,
-        investPage: 1
+        investPage: 1,
+        token: ''
       }
     },
     props: ['token'],
@@ -93,19 +94,22 @@
     },
     mounted () {},
     created () {
+      this.token = '66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1'
       this.answerUsersCount()
       this.answer()
     },
     methods: {
+      // 答题人数
       answerUsersCount () {
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/answerUsersCount?token=66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1').then(function (res) {
+        that.$http('/hongcai/rest/activitys/foolsDay/answerUsersCount?token=' + that.token).then(function (res) {
           that.answerPeople = res.data
         })
       },
+      // 好有默契度
       answer () {
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/answer?token=66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1&pageSize=' + that.pageSize + '&skip=' + this.skip)
+        that.$http('/hongcai/rest/activitys/foolsDay/answer?token=' + that.token + '&pageSize=' + that.pageSize + '&skip=' + this.skip)
         .then(function (res) {
           var List = res.data.data
           for (var i = 0; i < List.length; i++) {
@@ -125,22 +129,28 @@
       closeShare () {
         this.showShare = false
       },
+      // 查看更多
       loadMore () {
         this.investPage += 1
         this.pageSize = 10
         this.skip = [(this.investPage - 1) * this.pageSize] - 1
         this.answer()
       },
+      // 拆礼包
       exchange () {
         var that = this
         if (that.answerPeople < 5) {
           that.unReach = true
-          return
         } else {
-          that.$http('/hongcai/rest/activitys/arborDay/arborDayInfo?token=' + that.token).then(function (res) {
+          that.$http('/hongcai/rest/activitys/foolsDay/takeRecordStatus?token=' + that.token).then(function (res) {
             if (res && res.ret !== -1) {
-              let hasToken = false
-              hasToken ? that.hasToken = true : that.$router.push({name: 'FoolExchange'})
+              let status = res.data.status
+              // status -1，未出题，0，未达到领取条件，1 可领，2 已领取
+              if (status === 1 && status === 2) {
+                that.$router.push({name: 'FoolExchange'})
+              } else {
+                that.unReach = true
+              }
             }
           })
         }
@@ -148,6 +158,7 @@
       iKnow () {
         this.unReach = false
         this.hasToken = false
+        this.$router.push({name: 'FoolResult'})
       },
       inviteShare () {
         this.showShare = true
