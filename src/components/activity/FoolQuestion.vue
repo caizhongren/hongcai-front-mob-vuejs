@@ -94,7 +94,6 @@
         selectSystemQuestionId: 0
       }
     },
-    props: ['showErrMsg'],
     watch: {
       alertDefinedTitle: function (val) {
         // var handleEle = document.getElementById('tipBox')
@@ -116,7 +115,7 @@
       },
       saveTitle () {
         if (this.defined.question === '') {
-          this.showErrMsg('自定义题目不能为空哦！')
+          this.$parent.showErrMsg('自定义题目不能为空哦！')
           return
         }
         this.alertDefinedTitle = false

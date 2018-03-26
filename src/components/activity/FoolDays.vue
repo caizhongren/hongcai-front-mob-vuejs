@@ -1,8 +1,6 @@
 <template>
   <!-- 活动主页面 -->
-  <div class="fools-day">
-    <router-view></router-view>
-  </div>
+  <router-view></router-view>
 </template>
 <script>
   import {Utils} from '../../service/Utils.js'
@@ -11,7 +9,7 @@
       return {
       }
     },
-    props: [],
+    props: ['showErrMsg'],
     watch: {},
     mounted () {},
     created: function () {

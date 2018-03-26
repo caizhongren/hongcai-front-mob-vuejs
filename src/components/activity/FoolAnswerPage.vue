@@ -52,7 +52,6 @@
         alertDefinedTitle: false
       }
     },
-    props: ['showErrMsg'],
     watch: {
     },
     mounted () {},

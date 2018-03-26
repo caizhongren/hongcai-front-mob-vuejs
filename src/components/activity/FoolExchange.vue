@@ -66,7 +66,6 @@
         isRegister: true
       }
     },
-    props: ['showErrMsg', 'token'],
     watch: {
     },
     mounted () {
@@ -93,7 +92,7 @@
           return
         }
         if (!this.user.picCaptcha) {
-          this.showErrMsg('请输入图形验证码！')
+          this.$parent.showErrMsg('请输入图形验证码！')
           return
         }
         if (!sendMobCaptcha.canGetMobileCapcha) {
@@ -116,9 +115,9 @@
           if (res.data.code || res.data.ret === -1) {
             if (res.data.code === -1005) {
               that.showRegister = false
-              that.showErrMsg('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！')
+              that.$parent.showErrMsg('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！')
             } else {
-              that.showErrMsg(res.data.msg)
+              that.$parent.showErrMsg(res.data.msg)
             }
             // return
           }
@@ -130,7 +129,7 @@
             that.canGetCaptch = true
           }, 1000)
           console.log(err)
-          that.showErrMsg('验证码发送失败')
+          that.$parent.showErrMsg('验证码发送失败')
         })
       },
       register (user) {
@@ -151,11 +150,11 @@
           }, 1000)
           if (res.data.code && res.data.ret === -1) {
             if (res.data.code === -1003) {
-              that.showErrMsg('请输入正确的手机号！')
+              that.$parent.showErrMsg('请输入正确的手机号！')
             } else if (res.data.code === -1005) {
-              that.showErrMsg('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！')
+              that.$parent.showErrMsg('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！')
             } else {
-              that.showErrMsg(res.data.msg)
+              that.$parent.showErrMsg(res.data.msg)
             }
             return
           }
@@ -174,11 +173,10 @@
         that.$http.post('/hongcai/rest/activitys/foolsDay/takeReward', {
           token: that.token
         }).then(function (res) {
-          console.log(res.data)
           if (res.data && res.data.ret !== -1) {
             that.$router.replace({name: 'FoolSuccess'})
           } else {
-            that.showErrMsg(res.data.msg)
+            that.$parent.showErrMsg(res.data.msg)
           }
         })
       },
@@ -186,16 +184,14 @@
         var that = this
         if (that.busy) { return }
         if (!that.user.mobile || !that.isRegister && (!that.user.picCaptcha || !that.user.mobileCaptcha)) {
-          return
-        }
-        if (!this.user.mobile) {
-          this.showErrMsg('请输入手机号！')
+          console.log(that)
           return
         }
         // 校验手机号
         var mobilePattern = /^((13[0-9])|(15[^4,\D])|(18[0-9])|(17[03678])|(14[0-9]))\d{8}$/
-        if (!mobilePattern.test(this.user.mobile)) {
-          this.showErrMsg('请输入正确的手机号！')
+        if (!mobilePattern.test(that.user.mobile)) {
+          console.log(that)
+          that.$parent.showErrMsg('请输入正确的手机号！')
           return
         }
         that.$http.post('/hongcai/rest/users/isUnique', {
