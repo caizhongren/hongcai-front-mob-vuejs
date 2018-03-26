@@ -20,10 +20,10 @@
         </li>
       </ul>
     </div>
-    <div class="question">{{question.title}}</div>
+    <div class="question">{{title}}</div>
     <ul class="selectBtns">
-      <li class="noBelieve" @click="choose(0)"></li>
-      <li class="believe" @click="choose(1)"></li>
+      <li class="noBelieve" @click="choose(1)"></li>
+      <li class="believe" @click="choose(2)"></li>
     </ul>
     <div class="tipBox">
       <img src="../../images/foolsDay/answer-tips.png" alt="">
@@ -40,36 +40,52 @@
     data () {
       return {
         showRules: false,
-        question: {
-          title: '今天在宏财网投资5万元，3年后实现财富自由',
-          id: '0'
-        },
-        defined: {
-          title: ''
-        },
+        title: '',
+        questionList: [],
         num: 1,
-        alertTips: false,
-        alertDefinedTitle: false
+        answerQuestions: [],
+        token: ''
       }
     },
     watch: {
     },
     mounted () {},
     created () {
+      this.token = '66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1'
+      this.question()
     },
     methods: {
       closeRules () {
         this.showRules = false
       },
       choose (type) {
+        var that = this
+        var question = this.questionList[this.num - 1]
+        this.title = question.question
+        question.commitAnswer = type
+        this.answerQuestions.push(question)
         if (this.num === 5) {
-          this.$router.replace({name: 'FoolTacit'})
-          return
+          that.$http.post('/hongcai/rest/activitys/foolsDay/answerQuestion', {
+            questionUserId: 7,
+            token: that.token,
+            answerQuestions: that.answerQuestions
+          })
+          .then(function (res) {
+            if (res.data && res.data.ret !== -1) {
+              that.$router.push({name: 'FoolTacit'})
+            }
+          })
         }
         $($('.nums li')[this.num - 1]).removeClass('selectNumBg')
         $($('.nums li')[this.num]).addClass('selectNumBg')
         this.num += 1
-        // type === 0 ? alert('不信') : alert('相信')
+      },
+      question () { // 我的问题
+        var that = this
+        that.$http('/hongcai/rest/activitys/foolsDay/question?token=' + that.token).then(function (res) {
+          that.questionList = res.data.data
+          that.title = res.data.data[0].question
+        })
       }
     },
     components: {FoolRules},

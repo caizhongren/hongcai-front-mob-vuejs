@@ -29,8 +29,8 @@
       </div>
       <ul class="inviteList">
         <li v-for="item in inviteList">
-          <img v-bind:src="item.portraitUrl" alt=""/>
-          <span>{{item.percent}}</span>
+          <img v-bind:src="item.headImg" alt=""/>
+          <span>{{item.tacit}}</span>
         </li>
         <li>
           <img src="../../images/foolsDay/result-more.png" alt="" class="loadMore" @click="loadMore">
@@ -69,45 +69,11 @@
         tacitTips: ['看透不说透，大智若愚才是真正的智者！', '我说得这么明显，难道你都看不出来吗？', '点开我的头像，是时候让我们好好聊聊了', '人生的长度，一半真实一半假象，你...及格了...', '差一点儿就被你看穿了，真是百密一疏啊！', '你就像我肚子里的蛔虫，什么都瞒不过你...'],
         answerPortraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
         questionPortraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-        inviteList: [
-          {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '20%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '10%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '40%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '60%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '20%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '10%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '40%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '60%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '20%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '10%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '40%'
-          }, {
-            portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-            percent: '60%'
-          }
-        ]
+        inviteList: [],
+        skip: 0,
+        pageSize: 9,
+        investPage: 1,
+        token: ''
       }
     },
     props: ['token'],
@@ -118,6 +84,8 @@
     },
     mounted () {},
     created () {
+      this.token = '66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1'
+      this.answer()
     },
     methods: {
       closeQuit (type) { // type 1 取消 2 确认
@@ -127,8 +95,22 @@
       join () {
         this.showQrCode = true
       },
+      // 好有默契度
+      answer () {
+        var that = this
+        that.$http('/hongcai/rest/activitys/foolsDay/answer?token=' + that.token + '&pageSize=' + that.pageSize + '&skip=' + this.skip)
+        .then(function (res) {
+          var List = res.data.data
+          for (var i = 0; i < List.length; i++) {
+            that.inviteList.push(List[i])
+          }
+        })
+      },
       loadMore () {
-        alert('查看更多')
+        this.investPage += 1
+        this.pageSize = 10
+        this.skip = [(this.investPage - 1) * this.pageSize] - 1
+        this.answer()
       }
     },
     components: {FoolQuit},
