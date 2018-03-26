@@ -16,6 +16,14 @@ let Utils = {
     var userAgent = navigator.userAgent || navigator.vendor || window.opera
     return /windows phone/i.test(userAgent)
   },
+  /**
+   * 跳转去微信授权
+   */
+  redirectToWechatAuth: function (redirectUrl) {
+    var wechatRedirectUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + process.env.wechatAppid +
+              '&redirect_uri=' + redirectUrl + '&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect'
+    window.location.href = wechatRedirectUrl
+  },
   deviceCode: function () {
     var deviceCode = 0
     if (Utils.isAndroid()) {

@@ -14,7 +14,6 @@
 </template>
 <script>
   import FoolRules from './FoolRules.vue'
-  import {Utils} from '../../service/Utils.js'
   export default {
     data () {
       return {
@@ -25,15 +24,24 @@
     props: [],
     watch: {},
     mounted () {},
-    created: function () {
-      this.checkLogin()
+    created () {
+      var that = this
+      that.$http({
+        method: 'get',
+        url: '/hongcai/rest/activitys/foolsDay/takeRecordStatus?token=36bc2a96ec3862b88c631157efda766a'
+      }).then((response) => {
+        if (response.data && response.data.ret !== -1) {
+          that.questionStatus = (response.data.status === -1) ? 'NOT_SET' : 'SETTED'
+        }
+      })
     },
     methods: {
-      checkLogin () {
-        if (Utils.isWeixin()) {
-          Utils.redirectToWechatAuth(window.location.path)
-        } else {
-          console.log('waha');
+      setQuestion () {
+        var that = this
+        if (that.questionStatus === 'NOT_SET') {
+          this.$router.replace({name: 'FoolQuestion'})
+        } else if (that.questionStatus === 'SETTED') {
+          this.$router.replace({name: 'FoolResult'})
         }
       },
       closeRules () {

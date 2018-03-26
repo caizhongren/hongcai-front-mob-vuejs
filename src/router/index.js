@@ -86,6 +86,7 @@ const WomensDay = r => require.ensure([], () => r(require('../components/activit
 const ArborDays = r => require.ensure([], () => r(require('../components/activity/arborDay.vue')), 'ArborDays')
 const ArborRecord = r => require.ensure([], () => r(require('../components/activity/arborRecord.vue')), 'ArborRecord')
 const FoolDays = r => require.ensure([], () => r(require('../components/activity/FoolDays.vue')), 'FoolDays')
+const FoolDaysIndex = r => require.ensure([], () => r(require('../components/activity/FoolDaysIndex.vue')), 'FoolDaysIndex')
 const FoolExchange = r => require.ensure([], () => r(require('../components/activity/FoolExchange.vue')), 'FoolExchange')
 const FoolSuccess = r => require.ensure([], () => r(require('../components/activity/FoolSuccess.vue')), 'FoolSuccess')
 const FoolRecord = r => require.ensure([], () => r(require('../components/activity/FoolRecord.vue')), 'FoolRecord')
@@ -442,62 +443,68 @@ const routes = [
     path: '/activity/fools-day',
     name: 'FoolDays',
     component: FoolDays,
-    meta: {title: '愚人节'}
-  },
-  {
-    path: '/activity/fools-question',
-    name: 'FoolQuestion',
-    component: FoolQuestion,
-    meta: {title: '愚人节创建题目'}
-  },
-  {
-    path: '/activity/fools-result',
-    name: 'FoolResult',
-    component: FoolResult,
-    meta: {title: '愚人节查看结果'}
-  },
-  {
-    path: '/activity/fools-reportCard',
-    name: 'FoolReportCard',
-    component: FoolReportCard,
-    meta: {title: '愚人节成绩单'}
-  },
+    children: [
+      {
+        path: '',
+        name: 'FoolDaysIndex',
+        component: FoolDaysIndex,
+        meta: {title: '愚人节'}
+      },
+      {
+        path: '/activity/question',
+        name: 'FoolQuestion',
+        component: FoolQuestion,
+        meta: {title: '愚人节创建题目'}
+      },
+      {
+        path: '/activity/result',
+        name: 'FoolResult',
+        component: FoolResult,
+        meta: {title: '愚人节查看结果'}
+      },
+      {
+        path: '/activity/reportCard',
+        name: 'FoolReportCard',
+        component: FoolReportCard,
+        meta: {title: '愚人节成绩单'}
+      },
 
-  {
-    path: '/activity/fools-record',
-    name: 'FoolRecord',
-    component: FoolRecord,
-    meta: {title: '愚人节活动排行榜'}
-  },
-  {
-    path: '/activity/fools-exchange',
-    name: 'FoolExchange',
-    component: FoolExchange,
-    meta: {title: '愚人节活动兑换页面'}
-  },
-  {
-    path: '/activity/fools-success',
-    name: 'FoolSuccess',
-    component: FoolSuccess,
-    meta: {title: '愚人节活动兑换成功页面'}
-  },
-  {
-    path: '/activity/fools-answer',
-    name: 'FoolAnswer',
-    component: FoolAnswer,
-    meta: {title: '愚人节活动答题页面'}
-  },
-  {
-    path: '/activity/fools-answer-page',
-    name: 'FoolAnswerPage',
-    component: FoolAnswerPage,
-    meta: {title: '愚人节活动答题页面2'}
-  },
-  {
-    path: '/activity/fools-tacit',
-    name: 'FoolTacit',
-    component: FoolTacit,
-    meta: {title: '愚人节活动答题默契度页面'}
+      {
+        path: '/activity/record',
+        name: 'FoolRecord',
+        component: FoolRecord,
+        meta: {title: '愚人节活动排行榜'}
+      },
+      {
+        path: '/activity/exchange',
+        name: 'FoolExchange',
+        component: FoolExchange,
+        meta: {title: '愚人节活动兑换页面'}
+      },
+      {
+        path: '/activity/success',
+        name: 'FoolSuccess',
+        component: FoolSuccess,
+        meta: {title: '愚人节活动兑换成功页面'}
+      },
+      {
+        path: '/activity/answer',
+        name: 'FoolAnswer',
+        component: FoolAnswer,
+        meta: {title: '愚人节活动答题页面'}
+      },
+      {
+        path: '/activity/answer-page',
+        name: 'FoolAnswerPage',
+        component: FoolAnswerPage,
+        meta: {title: '愚人节活动答题页面2'}
+      },
+      {
+        path: '/activity/tacit',
+        name: 'FoolTacit',
+        component: FoolTacit,
+        meta: {title: '愚人节活动答题默契度页面'}
+      }]
   },
   {
     path: '/register-agree',
