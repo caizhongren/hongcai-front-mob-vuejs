@@ -1,5 +1,5 @@
 <template>
-  <!-- 答题主页面 -->
+  <!-- 默契度主页面 -->
   <div class="fools-tacit">
     <div class="header"></div>
     <div class="contents">
@@ -46,12 +46,23 @@
         </div>
       </div>
     </div>
+    <div class="fools-qrcode mask-common" v-client-height v-if="showQrCode">
+      <img src="../../images/foolsDay/qrcode.png" alt="长按识别图中二维码" width="50%">
+      <div class="qrcodeBox">
+        <img src="../../images/foolsDay/wechat-qrcode.png" alt="">
+      </div>
+    </div>
+    <Fool-Quit :closeQuit="closeQuit" :showQuit="showQuit" v-show="showQuit"></Fool-Quit>
   </div>
 </template>
 <script>
+  import FoolQuit from '../activity/FoolQuit.vue'
+  import {ModalHelper} from '../../service/Utils'
   export default {
     data () {
       return {
+        showQuit: false,
+        showQrCode: false,
         answerUserName: 'lll==',
         questionUserName: 'yyyyyy',
         tacit: 80,
@@ -100,15 +111,27 @@
       }
     },
     props: ['token'],
-    watch: {},
-    mounted () {},
-    created () {},
-    methods: {
-      join () {
-        alert('我也要玩')
+    watch: {
+      showQrCode: function (val) {
+        val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
-    components: {},
+    mounted () {},
+    created () {
+    },
+    methods: {
+      closeQuit (type) { // type 1 取消 2 确认
+        this.showQuit = false
+        type === 1 ? alert('取消') : alert('确认')
+      },
+      join () {
+        this.showQrCode = true
+      },
+      loadMore () {
+        alert('查看更多')
+      }
+    },
+    components: {FoolQuit},
     desrtoyed () {}
   }
 </script>
@@ -270,5 +293,20 @@
     width: 63%;
     height: 75%;
     margin-top: .1rem;
+  }
+  .fools-qrcode {
+    padding-top: 1.3rem;
+  }
+  .qrcodeBox {
+    width: 65%;
+    margin-top: .5rem;
+    background: rgba(255,0,0,.95);
+    margin: .5rem auto;
+    padding: .25rem .25rem .1rem;
+    border-radius: .2rem;
+  }
+  .qrcodeBox img {
+    width: 100%;
+    border-radius: .2rem;
   }
 </style>
