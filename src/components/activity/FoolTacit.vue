@@ -7,9 +7,9 @@
       <div class="title">
         <div class="portraitBox">
           <div class="portrait">
-            <img v-bind:src="userInfo.headImgUrl" alt="">
+            <img v-bind:src="answerPortraitUrl" alt="">
           </div>
-          <p>{{userInfo.nickName}}</p>
+          <p>{{answerUserName}}</p>
         </div>
         <div class="progress">
           <p>{{tacit}}%</p>
@@ -38,7 +38,7 @@
       </ul>
       <div class="partakeBox">
         <div class="bottomPortrait">
-          <img v-bind:src="userInfo.headImgUrl" alt="">
+          <img v-bind:src="answerPortraitUrl" alt="">
         </div>
         <img src="../../images/foolsDay/invite-txt2.png" alt="头像" class="invite-txt1">
         <div class="join" @click="join">
@@ -61,9 +61,11 @@
       return {
         showQrCode: false,
         questionUserName: '',
+        answerUserName: '',
         tacit: 0,
         tacitTips: ['看透不说透，大智若愚才是真正的智者！', '我说得这么明显，难道你都看不出来吗？', '点开我的头像，是时候让我们好好聊聊了', '人生的长度，一半真实一半假象，你...及格了...', '差一点儿就被你看穿了，真是百密一疏啊！', '你就像我肚子里的蛔虫，什么都瞒不过你...'],
         questionPortraitUrl: '',
+        answerPortraitUrl: '',
         inviteList: [],
         skip: 0,
         pageSize: 9,

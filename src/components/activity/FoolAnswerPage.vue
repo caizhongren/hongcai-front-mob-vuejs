@@ -94,7 +94,6 @@
       choose (type) {
         var that = this
         var question = that.questionList[that.num - 1]
-        that.title = question.question
         question.commitAnswer = type
         that.answerQuestions.push(question)
         sessionStorage.answerQuestions = JSON.stringify(that.answerQuestionss)
@@ -108,9 +107,11 @@
               that.$router.replace({name: 'FoolTacit', params: {number: that.number}})
             }
           })
+          return
         }
         $($('.nums li')[that.num - 1]).removeClass('selectNumBg')
         $($('.nums li')[that.num]).addClass('selectNumBg')
+        that.title = that.questionList[that.num].question
         that.num += 1
       },
       question () { // 我的问题
