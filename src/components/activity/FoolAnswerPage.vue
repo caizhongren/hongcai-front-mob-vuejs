@@ -44,6 +44,7 @@
         questionList: [],
         num: 1,
         answerQuestions: [],
+        number: '',
         token: ''
       }
     },
@@ -51,6 +52,7 @@
     },
     mounted () {},
     created () {
+      this.number = '122'
       this.token = '66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1'
       this.question()
     },
@@ -66,7 +68,7 @@
         this.answerQuestions.push(question)
         if (this.num === 5) {
           that.$http.post('/hongcai/rest/activitys/foolsDay/answerQuestion', {
-            questionUserId: 7,
+            number: that.number,
             token: that.token,
             answerQuestions: that.answerQuestions
           })
@@ -82,7 +84,11 @@
       },
       question () { // 我的问题
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/question?token=' + that.token).then(function (res) {
+        that.$http('/hongcai/rest/activitys/foolsDay/question?number=' + that.number).then(function (res) {
+          if (res.data.code === -1321) {
+            alert('没有创建问题')
+            return
+          }
           that.questionList = res.data.data
           that.title = res.data.data[0].question
         })

@@ -22,7 +22,7 @@
           </div>
           <div class="title">
             {{record.num}}位好友对其进行了测谎 <br>
-            {{record.title}}
+            {{decs[index]}}
           </div>
           <img src="../../images/foolsDay/record-line.png" alt="下边框" class="line">
         </li>
@@ -37,7 +37,8 @@
     data () {
       return {
         ranking: 0,
-        recordList: []
+        recordList: [],
+        decs: ['面不改色心不跳，尤其是在说假话的时候！', '魔镜魔镜，谁是世界上最深不可测的人？', '自幼精通36计，你难道不知道第1计就是瞒天过海吗？', '只要说一次谎，鼻子就会长长一点哟～', '有时候谎言很美丽，她的名字叫“善意的谎言”。', '我何必说谎，你懂我的，我对你从来就不用假装。', '不是每个长鼻子的小孩都爱说谎，他也有可能是只小象。', '女人心海底针，男人心...', '看不清，摸不着，猜不透！', '真相只有一个！']
       }
     },
     props: ['token'],
