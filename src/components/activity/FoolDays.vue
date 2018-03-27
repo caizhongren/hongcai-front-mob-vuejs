@@ -18,7 +18,9 @@
     props: ['showErrMsg'],
     watch: {
     },
-    mounted () {},
+    mounted () {
+      WechatShareUtils.configJsApi()
+    },
     created: function () {
       console.log('sss')
       this.checkLogin()
