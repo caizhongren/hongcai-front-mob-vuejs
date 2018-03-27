@@ -52,16 +52,13 @@
         <img src="../../images/foolsDay/wechat-qrcode.png" alt="">
       </div>
     </div>
-    <Fool-Quit :closeQuit="closeQuit" :showQuit="showQuit" v-show="showQuit"></Fool-Quit>
   </div>
 </template>
 <script>
-  import FoolQuit from '../activity/FoolQuit.vue'
   import {ModalHelper} from '../../service/Utils'
   export default {
     data () {
       return {
-        showQuit: false,
         showQrCode: false,
         answerUserName: '',
         questionUserName: '',
@@ -88,10 +85,6 @@
       this.answerQuestion()
     },
     methods: {
-      closeQuit (type) { // type 1 取消 2 确认
-        this.showQuit = false
-        type === 1 ? alert('取消') : alert('确认')
-      },
       join () {
         this.showQrCode = true
       },
@@ -129,7 +122,7 @@
         this.answer()
       }
     },
-    components: {FoolQuit},
+    components: {},
     desrtoyed () {}
   }
 </script>

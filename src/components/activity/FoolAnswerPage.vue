@@ -30,16 +30,21 @@
     </div>
     <img src="../../images/foolsDay/clown2.png" alt="" class="clown2">
     <img src="../../images/foolsDay/rule-icon.png" alt="活动规则" class="ruleIcon" @click="showRules = true">
+    <Fool-Quit :showQuit="showQuit" :closeQuit="closeQuit" :isAnswer="isAnswer"  v-show="showQuit"></Fool-Quit>
     <Fool-Rules :closeRules="closeRules" :showRules="showRules" v-show="showRules"></Fool-Rules>
   </div>
 </template>
 <script>
   import $ from 'zepto'
   import FoolRules from './FoolRules.vue'
+  import FoolQuit from './FoolQuit.vue'
+  import wx from 'weixin-js-sdk'
   export default {
     data () {
       return {
         showRules: false,
+        showQuit: false,
+        isAnswer: true,
         title: '',
         questionList: [],
         num: 1,
@@ -55,18 +60,32 @@
       this.number = '122'
       this.token = '66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1'
       this.question()
+      sessionStorage.amswerCount = Number(sessionStorage.amswerCount) + 1 || 1
+      if (sessionStorage.amswerCount > 1) {
+        this.showQuit = true
+      }
     },
     methods: {
+      closeQuit (type) { // type 1 取消 2 确认
+        this.showQuit = false
+        type === 1 ? (
+          this.answerQuestions = JSON.parse(sessionStorage.answerQuestions),
+          this.num = Number(this.answerQuestions.length) + 1,
+          $($('.nums li')[0]).removeClass('selectNumBg'),
+          $($('.nums li')[this.num - 1]).addClass('selectNumBg')
+        ) : wx.closeWindow()
+      },
       closeRules () {
         this.showRules = false
       },
       choose (type) {
         var that = this
-        var question = this.questionList[this.num - 1]
-        this.title = question.question
+        var question = that.questionList[that.num - 1]
+        that.title = question.question
         question.commitAnswer = type
-        this.answerQuestions.push(question)
-        if (this.num === 5) {
+        that.answerQuestions.push(question)
+        sessionStorage.answerQuestions = JSON.stringify(that.answerQuestionss)
+        if (that.num === 5) {
           that.$http.post('/hongcai/rest/activitys/foolsDay/answerQuestion', {
             number: that.number,
             token: that.token,
@@ -78,13 +97,13 @@
             }
           })
         }
-        $($('.nums li')[this.num - 1]).removeClass('selectNumBg')
-        $($('.nums li')[this.num]).addClass('selectNumBg')
-        this.num += 1
+        $($('.nums li')[that.num - 1]).removeClass('selectNumBg')
+        $($('.nums li')[that.num]).addClass('selectNumBg')
+        that.num += 1
       },
       question () { // 我的问题
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/question?number=' + that.number).then(function (res) {
+        that.$http('/hongcai/rest/activitys/foolsDay/question?number=' + that.number + '&token=' + that.token).then(function (res) {
           if (res.data.code === -1321) {
             alert('没有创建问题')
             return
@@ -94,8 +113,11 @@
         })
       }
     },
-    components: {FoolRules},
-    desrtoyed () {}
+    components: {FoolRules, FoolQuit},
+    desrtoyed () {
+      sessionStorage.answerCount = null
+      sessionStorage.answerQuestions = null
+    }
   }
 </script>
 <style scoped>
