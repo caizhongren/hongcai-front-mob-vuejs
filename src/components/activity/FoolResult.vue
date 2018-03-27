@@ -102,7 +102,7 @@
         if (res.data && res.data.ret !== -1) {
           that.number = res.data
           wx.ready(function () {
-            var shareLink = process.env.vue_domain + '/activity/fools-answer/number=' + that.number
+            var shareLink = process.env.vue_domain + '/activity/fools-day/answer/' + that.number
             WechatShareUtils.onMenuShareAppMessage('你看得出我在说谎吗？', '认识了那么久，你有把握我说的每句话都是真心话吗？', shareLink, '')
           })
         }
