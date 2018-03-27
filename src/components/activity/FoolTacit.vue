@@ -7,9 +7,9 @@
       <div class="title">
         <div class="portraitBox">
           <div class="portrait">
-            <img v-bind:src="answerPortraitUrl" alt="">
+            <img v-bind:src="userInfo.headImgUrl" alt="">
           </div>
-          <p>{{answerUserName}}</p>
+          <p>{{userInfo.nickName}}</p>
         </div>
         <div class="progress">
           <p>{{tacit}}%</p>
@@ -32,13 +32,13 @@
           <img v-bind:src="item.headImg" alt=""/>
           <span>{{item.tacit}}</span>
         </li>
-        <li>
+        <li v-if="totalPage > investPage">
           <img src="../../images/foolsDay/result-more.png" alt="查看更多" class="loadMore" @click="loadMore">
         </li>
       </ul>
       <div class="partakeBox">
         <div class="bottomPortrait">
-          <img v-bind:src="answerPortraitUrl" alt="">
+          <img v-bind:src="userInfo.headImgUrl" alt="">
         </div>
         <img src="../../images/foolsDay/invite-txt2.png" alt="头像" class="invite-txt1">
         <div class="join" @click="join">
@@ -60,20 +60,20 @@
     data () {
       return {
         showQrCode: false,
-        answerUserName: '',
         questionUserName: '',
         tacit: 0,
         tacitTips: ['看透不说透，大智若愚才是真正的智者！', '我说得这么明显，难道你都看不出来吗？', '点开我的头像，是时候让我们好好聊聊了', '人生的长度，一半真实一半假象，你...及格了...', '差一点儿就被你看穿了，真是百密一疏啊！', '你就像我肚子里的蛔虫，什么都瞒不过你...'],
-        answerPortraitUrl: '',
         questionPortraitUrl: '',
         inviteList: [],
         skip: 0,
         pageSize: 9,
         investPage: 1,
-        token: '',
-        number: ''
+        number: '',
+        totalPage: 0,
+        openid: ''
       }
     },
+    props: ['userInfo'],
     watch: {
       showQrCode: function (val) {
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
@@ -82,18 +82,22 @@
     mounted () {},
     created () {
       this.number = this.$route.params.number
-      this.token = '66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1'
       this.answer()
       this.answerQuestion()
+      this.openid = this.userInfo.openid
     },
     methods: {
       join () {
-        this.showQrCode = true
+        var that = this
+        that.axios('/hongcai/rest/users/isSubscribe?openId=' + that.openid)
+        .then(function (res) {
+          res.data ? that.$router.replace({name: 'FoolDaysIndex'}) : that.showQrCode = true
+        })
       },
       // 答题详情
       answerQuestion () {
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/checkAnswerQuestion?token=' + that.token + '&number=' + that.number)
+        that.axios('/hongcai/rest/activitys/foolsDay/checkAnswerQuestion?number=' + that.number)
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.answerUserName = res.data.nickName
@@ -109,8 +113,9 @@
       // 好有默契度
       answer () {
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/answer?token=' + that.token + '&pageSize=' + that.pageSize + '&skip=' + this.skip)
+        that.$http('/hongcai/rest/activitys/foolsDay/answer?pageSize=' + that.pageSize + '&skip=' + that.skip)
         .then(function (res) {
+          that.totalPage = res.data.totalPage
           var List = res.data.data
           for (var i = 0; i < List.length; i++) {
             that.inviteList.push(List[i])

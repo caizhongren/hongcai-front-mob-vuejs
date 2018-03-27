@@ -9,8 +9,9 @@
       return {
         wechat_code: this.$route.query.code,
         userInfo: {
-          nickName: '',
-          headImgUrl: ''
+          nickName: 'yy',
+          headImgUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
+          openid: 'oBBBjs6uL13Z7E03h5E2hEOnM_l8'
         }
       }
     },
@@ -31,8 +32,7 @@
         }).then((response) => {
           // 已登录，直接返回
           if (response.data && response.data.ret !== -1) {
-            that.userInfo.nickName = response.data.nickName || 'yy'
-            that.userInfo.headImgUrl = response.data.headImgUrl || 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg'
+            that.userInfo = JSON.stringify(response.data)
             return
           }
           // 未登录，则检查路由中是否存在 code，不存在，则跳转到微信授权
@@ -45,8 +45,7 @@
               url: '/hongcai/rest/users/' + that.$route.query.code + '/openid'
             }).then((response) => {
               if (response.data && response.data.ret !== -1) {
-                that.userInfo.nickName = response.data.nickName || 'yy'
-                that.userInfo.headImgUrl = response.data.headImgUrl || 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg'
+                that.userInfo = JSON.stringify(response.data)
               } else {
                 Utils.redirectToWechatAuth(window.location.href)
               }
