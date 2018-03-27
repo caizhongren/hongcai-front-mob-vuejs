@@ -4,6 +4,7 @@
 </template>
 <script>
   import {Utils} from '../../service/Utils.js'
+  import {WechatShareUtils} from '../../service/WechatShareUtils'
   export default {
     data () {
       return {
