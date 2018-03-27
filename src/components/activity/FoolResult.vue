@@ -23,7 +23,7 @@
       <ul class="inviteList">
         <li v-for="item in inviteList">
           <img v-bind:src="item.headImg" alt=""/>
-          <span>{{item.tacit}}</span>
+          <span>{{item.tacit}}%</span>
         </li>
         <li v-if="totalPage > investPage" >
           <img src="../../images/foolsDay/result-more.png" alt="" class="loadMore" @click="loadMore">
