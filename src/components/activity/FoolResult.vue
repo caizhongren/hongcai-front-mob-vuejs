@@ -68,6 +68,8 @@
   import FoolRules from './FoolRules.vue'
   import FoolShare from './FoolShare.vue'
   import {ModalHelper} from '../../service/Utils'
+  import {WechatShareUtils} from '../../service/WechatShareUtils'
+  import wx from 'weixin-js-sdk'
   export default {
     data () {
       return {
@@ -91,8 +93,13 @@
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
-    mounted () {},
+    mounted () {
+      wx.ready(function () {
+        WechatShareUtils.onMenuShareAppMessage('你看得出我在说谎吗？', '认识了那么久，你有把握我说的每句话都是真心话吗？', '', '')
+      })
+    },
     created () {
+      WechatShareUtils.configJsApi()
       this.answerUsersCount()
       this.answer()
       var that = this
