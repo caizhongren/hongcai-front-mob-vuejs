@@ -37,29 +37,23 @@
   export default {
     data () {
       return {
-        questionList: [],
-        token: ''
+        questionList: []
       }
     },
     watch: {},
     mounted () {
-      this.questionList.length <= 0 ? document.getElementById('fools-reportCard').style.height = document.documentElement.clientHeight + 'px' : null
     },
     created () {
-      this.token = '66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1'
       this.question()
     },
     methods: {
       question () { // 成绩单
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/number?token=' + that.token).then(function (res) {
-          if (res.data && res.data.ret !== -1) {
-            that.$http('/hongcai/rest/activitys/foolsDay/question?number=' + res.data).then(function (res) {
-              that.questionList = res.data.data
-              if (that.questionList.length === 0) {
-                alert('没有创建题目,怎么办了,跳哪儿去了？')
-              }
-            })
+        that.$http('/hongcai/rest/activitys/foolsDay/question?number=' + that.$route.params.number).then(function (res) {
+          that.questionList = res.data.data
+          if (that.questionList.length === 0) {
+            that.questionList.length <= 0 ? document.getElementById('fools-reportCard').style.height = document.documentElement.clientHeight + 'px' : null
+            alert('没有创建题目,怎么办了,跳哪儿去了？')
           }
         })
       }

@@ -462,7 +462,7 @@ const routes = [
         meta: {title: '愚你同乐'}
       },
       {
-        path: 'reportCard',
+        path: 'reportCard/:number',
         name: 'FoolReportCard',
         component: FoolReportCard,
         meta: {title: '愚你同乐'}

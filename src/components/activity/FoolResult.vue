@@ -25,7 +25,7 @@
           <img v-bind:src="item.headImg" alt=""/>
           <span>{{item.tacit}}</span>
         </li>
-        <li >
+        <li v-if="totalPage > investPage" >
           <img src="../../images/foolsDay/result-more.png" alt="" class="loadMore" @click="loadMore">
         </li>
       </ul>
@@ -80,7 +80,7 @@
         skip: 0,
         pageSize: 9,
         investPage: 1,
-        token: ''
+        totalPage: 0
       }
     },
     watch: {
@@ -93,31 +93,37 @@
     },
     mounted () {},
     created () {
-      this.token = '66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1'
       this.answerUsersCount()
       this.answer()
+      var that = this
+      that.$http('/hongcai/rest/activitys/foolsDay/number').then(function (res) {
+        if (res.data && res.data.ret !== -1) {
+          that.number = res.data
+        }
+      })
     },
     methods: {
       // 答题人数
       answerUsersCount () {
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/answerUsersCount?token=' + that.token).then(function (res) {
+        that.$http('/hongcai/rest/activitys/foolsDay/answerUsersCount').then(function (res) {
           that.answerPeople = res.data
         })
       },
       // 好有默契度
       answer () {
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/answer?token=' + that.token + '&pageSize=' + that.pageSize + '&skip=' + this.skip)
+        that.$http('/hongcai/rest/activitys/foolsDay/answer?pageSize=' + that.pageSize + '&skip=' + that.skip)
         .then(function (res) {
           var List = res.data.data
+          that.totalPage = res.data.totalPage
           for (var i = 0; i < List.length; i++) {
             that.inviteList.push(List[i])
           }
         })
       },
       toReportCard () {
-        this.$router.push({name: 'FoolReportCard'})
+        this.$router.push({name: 'FoolReportCard', params: {number: this.number}})
       },
       toRecord () {
         this.$router.push({name: 'FoolRecord'})
@@ -141,7 +147,7 @@
         if (that.answerPeople < 5) {
           that.unReach = true
         } else {
-          that.$http('/hongcai/rest/activitys/foolsDay/takeRecordStatus?token=' + that.token).then(function (res) {
+          that.$http('/hongcai/rest/activitys/foolsDay/takeRecordStatus').then(function (res) {
             if (res && res.ret !== -1) {
               let status = res.data.status
               // status -1，未出题，0，未达到领取条件，1 可领，2 已领取

@@ -91,7 +91,7 @@
           sortNo: 1
         },
         num: 1,
-        alertTips: false,
+        alertTips: true,
         alertDefinedTitle: false,
         systemQuestions: [],
         saveQuestions: [],
@@ -216,7 +216,6 @@
       saveUserQuestions () { // 提交用户设置的问题
         var that = this
         that.$http.post('/hongcai/rest/activitys/foolsDay/saveQuestion', {
-          token: '045f7ab119adf469c6068d351097fb22',
           userQuestions: JSON.stringify(that.saveQuestions)
         }).then((res) => {
           if (res.data === 5) {
