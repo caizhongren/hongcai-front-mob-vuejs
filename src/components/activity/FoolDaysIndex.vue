@@ -26,7 +26,7 @@
     mounted () {},
     created () {
       var that = this
-      that.$http({
+      that.axios({
         method: 'get',
         url: '/hongcai/rest/activitys/foolsDay/takeRecordStatus?token=36bc2a96ec3862b88c631157efda766a'
       }).then((response) => {

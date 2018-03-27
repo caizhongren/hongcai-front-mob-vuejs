@@ -23,7 +23,7 @@
     },
     methods: {
       startAnswer () {
-        this.$router.replace({name: 'FoolAnswerPage'})
+        this.$router.replace({name: 'FoolAnswerPage', params: {number: this.$route.params.number}})
       }
     },
     components: {},

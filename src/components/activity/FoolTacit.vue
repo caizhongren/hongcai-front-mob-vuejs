@@ -52,16 +52,13 @@
         <img src="../../images/foolsDay/wechat-qrcode.png" alt="">
       </div>
     </div>
-    <Fool-Quit :closeQuit="closeQuit" :showQuit="showQuit" v-show="showQuit"></Fool-Quit>
   </div>
 </template>
 <script>
-  import FoolQuit from '../activity/FoolQuit.vue'
   import {ModalHelper} from '../../service/Utils'
   export default {
     data () {
       return {
-        showQuit: false,
         showQrCode: false,
         answerUserName: '',
         questionUserName: '',
@@ -73,7 +70,8 @@
         skip: 0,
         pageSize: 9,
         investPage: 1,
-        token: ''
+        token: '',
+        number: ''
       }
     },
     watch: {
@@ -83,22 +81,19 @@
     },
     mounted () {},
     created () {
+      this.number = this.$route.params.number
       this.token = '66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1'
       this.answer()
       this.answerQuestion()
     },
     methods: {
-      closeQuit (type) { // type 1 取消 2 确认
-        this.showQuit = false
-        type === 1 ? alert('取消') : alert('确认')
-      },
       join () {
         this.showQrCode = true
       },
       // 答题详情
       answerQuestion () {
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/checkAnswerQuestion?token=' + that.token + '&number=122')
+        that.$http('/hongcai/rest/activitys/foolsDay/checkAnswerQuestion?token=' + that.token + '&number=' + that.number)
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.answerUserName = res.data.nickName
@@ -129,7 +124,7 @@
         this.answer()
       }
     },
-    components: {FoolQuit},
+    components: {},
     desrtoyed () {}
   }
 </script>

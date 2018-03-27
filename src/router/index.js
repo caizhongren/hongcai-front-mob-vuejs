@@ -487,19 +487,19 @@ const routes = [
         meta: {title: '愚你同乐'}
       },
       {
-        path: 'answer',
+        path: 'answer/:number',
         name: 'FoolAnswer',
         component: FoolAnswer,
         meta: {title: '愚你同乐'}
       },
       {
-        path: 'answer-page',
+        path: 'answer-page/:number',
         name: 'FoolAnswerPage',
         component: FoolAnswerPage,
         meta: {title: '愚你同乐'}
       },
       {
-        path: 'tacit',
+        path: 'tacit/:number',
         name: 'FoolTacit',
         component: FoolTacit,
         meta: {title: '愚你同乐'}
