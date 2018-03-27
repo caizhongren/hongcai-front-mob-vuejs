@@ -52,7 +52,7 @@
     },
     mounted () {},
     created () {
-      this.number = '122'
+      this.number = this.$route.params.number
       this.token = '66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1'
       this.question()
     },
@@ -74,7 +74,7 @@
           })
           .then(function (res) {
             if (res.data && res.data.ret !== -1) {
-              that.$router.push({name: 'FoolTacit'})
+              that.$router.push({name: 'FoolTacit', params: {number: that.number}})
             }
           })
         }
