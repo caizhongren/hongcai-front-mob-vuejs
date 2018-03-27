@@ -93,12 +93,12 @@
       },
       choose (type) {
         var that = this
-        var question = that.questionList[that.num]
+        var question = that.questionList[that.num - 1]
         that.title = question.question
         question.commitAnswer = type
         that.answerQuestions.push(question)
         sessionStorage.answerQuestions = JSON.stringify(that.answerQuestionss)
-        if (that.num === 4) {
+        if (that.num === 5) {
           that.$http.post('/hongcai/rest/activitys/foolsDay/answerQuestion', {
             number: that.number,
             answerQuestions: that.answerQuestions
