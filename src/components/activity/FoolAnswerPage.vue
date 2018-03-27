@@ -49,8 +49,7 @@
         questionList: [],
         num: 1,
         answerQuestions: [],
-        number: '',
-        token: ''
+        number: ''
       }
     },
     watch: {
@@ -61,7 +60,6 @@
       history.pushState({page: 'state1'}, 'state', '')
       history.pushState({page: 'state2'}, 'state', '')
       that.number = that.$route.params.number
-      that.token = '66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1'
       that.question()
       sessionStorage.amswerCount = Number(sessionStorage.amswerCount) + 1 || 1
       if (sessionStorage.amswerCount > 1) {

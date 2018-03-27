@@ -70,7 +70,6 @@
         skip: 0,
         pageSize: 9,
         investPage: 1,
-        token: '',
         number: ''
       }
     },
@@ -82,7 +81,6 @@
     mounted () {},
     created () {
       this.number = this.$route.params.number
-      this.token = '66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1'
       this.answer()
       this.answerQuestion()
     },
@@ -93,7 +91,7 @@
       // 答题详情
       answerQuestion () {
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/checkAnswerQuestion?token=' + that.token + '&number=' + that.number)
+        that.$http('/hongcai/rest/activitys/foolsDay/checkAnswerQuestion?number=' + that.number)
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.answerUserName = res.data.nickName
@@ -109,7 +107,7 @@
       // 好有默契度
       answer () {
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/answer?token=' + that.token + '&pageSize=' + that.pageSize + '&skip=' + this.skip)
+        that.$http('/hongcai/rest/activitys/foolsDay/answer?pageSize=' + that.pageSize + '&skip=' + this.skip)
         .then(function (res) {
           var List = res.data.data
           for (var i = 0; i < List.length; i++) {
