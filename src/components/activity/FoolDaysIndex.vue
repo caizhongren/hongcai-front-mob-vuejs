@@ -28,7 +28,7 @@
       var that = this
       that.axios({
         method: 'get',
-        url: '/hongcai/rest/activitys/foolsDay/takeRecordStatus?token=36bc2a96ec3862b88c631157efda766a'
+        url: '/hongcai/rest/activitys/foolsDay/takeRecordStatus'
       }).then((response) => {
         if (response.data && response.data.ret !== -1) {
           that.questionStatus = (response.data.status === -1) ? 'NOT_SET' : 'SETTED'

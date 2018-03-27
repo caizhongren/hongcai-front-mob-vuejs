@@ -16,26 +16,13 @@
     },
     props: ['showErrMsg'],
     watch: {
-      wechat_code: function (val) {
-        val !== '' ? this.getUserInfo() : null
-      }
     },
     mounted () {},
     created: function () {
       console.log('sss')
       this.checkLogin()
-      this.wechat_code !== '' ? this.getUserInfo() : null
     },
     methods: {
-      getUserInfo () {
-        var that = this
-        that.$http('/hongcai/rest/users/' + that.wechat_code + '/openid').then(function (res) {
-          if (res.data && res.data.ret !== -1) {
-            that.userInfo.headImgUrl = res.data.headImgUrl || 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg'
-            that.userInfo.nickName = res.data.nickName || 'yy'
-          }
-        })
-      },
       checkLogin () {
         var that = this
         that.axios({
@@ -44,6 +31,8 @@
         }).then((response) => {
           // 已登录，直接返回
           if (response.data && response.data.ret !== -1) {
+            that.userInfo.nickName = response.data.nickName || 'yy'
+            that.userInfo.headImgUrl = response.data.headImgUrl || 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg'
             return
           }
           // 未登录，则检查路由中是否存在 code，不存在，则跳转到微信授权
@@ -56,7 +45,8 @@
               url: '/hongcai/rest/users/' + that.$route.query.code + '/openid'
             }).then((response) => {
               if (response.data && response.data.ret !== -1) {
-                console.log('sssaa')
+                that.userInfo.nickName = response.data.nickName || 'yy'
+                that.userInfo.headImgUrl = response.data.headImgUrl || 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg'
               } else {
                 Utils.redirectToWechatAuth(window.location.href)
               }

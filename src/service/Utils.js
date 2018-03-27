@@ -37,8 +37,10 @@ let Utils = {
    * 跳转去微信授权
    */
   redirectToWechatAuth: function (redirectUrl) {
+    redirectUrl = encodeURIComponent(Utils.removeParam('code', redirectUrl))
+    redirectUrl = encodeURIComponent(Utils.removeParam('state', redirectUrl))
     var wechatRedirectUrl = process.env.wechat_redirect_url + '?appid=' + process.env.wechatAppid +
-              '&redirect_uri=' + encodeURIComponent(Utils.removeParam('code', redirectUrl)) + '&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect'
+              '&redirect_uri=' + redirectUrl + '&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect'
     console.log(wechatRedirectUrl)
     window.location.href = wechatRedirectUrl
   },
