@@ -70,7 +70,8 @@
         skip: 0,
         pageSize: 9,
         investPage: 1,
-        token: ''
+        token: '',
+        number: ''
       }
     },
     watch: {
@@ -80,6 +81,7 @@
     },
     mounted () {},
     created () {
+      this.number = this.$route.params.number
       this.token = '66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1'
       this.answer()
       this.answerQuestion()
@@ -91,7 +93,7 @@
       // 答题详情
       answerQuestion () {
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/checkAnswerQuestion?token=' + that.token + '&number=122')
+        that.$http('/hongcai/rest/activitys/foolsDay/checkAnswerQuestion?token=' + that.token + '&number=' + that.number)
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.answerUserName = res.data.nickName
