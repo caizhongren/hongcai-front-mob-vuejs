@@ -93,11 +93,7 @@
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
-    mounted () {
-      wx.ready(function () {
-        WechatShareUtils.onMenuShareAppMessage('你看得出我在说谎吗？', '认识了那么久，你有把握我说的每句话都是真心话吗？', '', '')
-      })
-    },
+    mounted () {},
     created () {
       WechatShareUtils.configJsApi()
       this.answerUsersCount()
@@ -106,6 +102,10 @@
       that.$http('/hongcai/rest/activitys/foolsDay/number').then(function (res) {
         if (res.data && res.data.ret !== -1) {
           that.number = res.data
+          wx.ready(function () {
+            var shareLink = process.env.domain + '/activitys/fools-day?number=' + that.number
+            WechatShareUtils.onMenuShareAppMessage('你看得出我在说谎吗？', '认识了那么久，你有把握我说的每句话都是真心话吗？', shareLink, '')
+          })
         }
       })
     },
