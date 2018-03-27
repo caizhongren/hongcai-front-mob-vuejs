@@ -23,7 +23,7 @@
       var that = this
       that.$http('/hongcai/rest/activitys/foolsDay/number').then(function (res) {
         if (res.data && res.data.ret !== -1) {
-          res.data === Number(that.$route.params.number) ? that.$router.replace({name: 'FoolQuestion'}) : that.hasAnswer()
+          res.data === Number(that.$route.params.number) ? that.$router.replace({name: 'FoolResult'}) : that.hasAnswer()
         }
       })
     },
