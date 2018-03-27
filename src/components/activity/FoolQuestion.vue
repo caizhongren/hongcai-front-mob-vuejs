@@ -69,6 +69,7 @@
   // import {InputMaskHelper} from '../../service/Utils'
   import FoolRules from './FoolRules.vue'
   import FoolShare from './FoolShare.vue'
+  import {CheckWordsUtils} from '../../service/CheckWordsUtils.js'
   export default {
     data () {
       return {
@@ -121,6 +122,7 @@
         this.alertDefinedTitle = false
         console.log(this.question.question)
         if (this.defined.question !== this.question.question) {
+          this.defined.question = CheckWordsUtils.filter(this.defined.question)
           this.question.question = this.defined.question
           this.question.systemId = 0
         }
