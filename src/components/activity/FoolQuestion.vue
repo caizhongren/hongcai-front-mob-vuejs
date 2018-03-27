@@ -106,21 +106,36 @@
     },
     mounted () {},
     created () {
-      this.getSystemQuestions()
+      var that = this
+      history.pushState({page: 'state1'}, 'state', '')
+      history.pushState({page: 'state2'}, 'state', '')
+      that.getSystemQuestions()
       sessionStorage.questionCount = Number(sessionStorage.questionCount) + 1 || 1
       if (sessionStorage.questionCount > 1) {
-        this.showQuit = true
+        that.showQuit = true
+      }
+      window.onpopstate = function (event) {
+        if (event.state.page === 'state1') {
+          that.showQuit = true
+        }
       }
     },
     methods: {
       closeQuit (type) { // type 1 取消 2 确认
         this.showQuit = false
-        type === 1 ? (
-          this.saveQuestions = JSON.parse(sessionStorage.saveQuestion),
-          this.num = Number(this.saveQuestions.length) + 1,
-          $($('.nums li')[0]).removeClass('selectNumBg'),
-          $($('.nums li')[this.num - 1]).addClass('selectNumBg')
-        ) : wx.closeWindow()
+        if (type === 1) {
+          if (sessionStorage.saveQuestion) {
+            this.saveQuestions = JSON.parse(sessionStorage.saveQuestion)
+            this.num = Number(this.saveQuestions.length) + 1
+            $($('.nums li')[0]).removeClass('selectNumBg')
+            $($('.nums li')[this.num - 1]).addClass('selectNumBg')
+          } else {
+            history.pushState({page: 'state1'}, 'state', '')
+            history.pushState({page: 'state2'}, 'state', '')
+          }
+        } else {
+          wx.closeWindow()
+        }
       },
       changeTitle () {
         var index = Math.floor(Math.random() * this.systemQuestions.length)

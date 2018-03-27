@@ -57,23 +57,38 @@
     },
     mounted () {},
     created () {
-      this.number = this.$route.params.number
-      this.token = '66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1'
-      this.question()
+      var that = this
+      history.pushState({page: 'state1'}, 'state', '')
+      history.pushState({page: 'state2'}, 'state', '')
+      that.number = that.$route.params.number
+      that.token = '66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1'
+      that.question()
       sessionStorage.amswerCount = Number(sessionStorage.amswerCount) + 1 || 1
       if (sessionStorage.amswerCount > 1) {
-        this.showQuit = true
+        that.showQuit = true
+      }
+      window.onpopstate = function (event) {
+        if (event.state.page === 'state1') {
+          that.showQuit = true
+        }
       }
     },
     methods: {
       closeQuit (type) { // type 1 取消 2 确认
         this.showQuit = false
-        type === 1 ? (
-          this.answerQuestions = JSON.parse(sessionStorage.answerQuestions),
-          this.num = Number(this.answerQuestions.length) + 1,
-          $($('.nums li')[0]).removeClass('selectNumBg'),
-          $($('.nums li')[this.num - 1]).addClass('selectNumBg')
-        ) : wx.closeWindow()
+        if (type === 1) {
+          if (sessionStorage.answerQuestions) {
+            this.answerQuestions = JSON.parse(sessionStorage.answerQuestions)
+            this.num = Number(this.answerQuestions.length) + 1
+            $($('.nums li')[0]).removeClass('selectNumBg')
+            $($('.nums li')[this.num - 1]).addClass('selectNumBg')
+          } else {
+            history.pushState({page: 'state1'}, 'state', '')
+            history.pushState({page: 'state2'}, 'state', '')
+          }
+        } else {
+          wx.closeWindow()
+        }
       },
       closeRules () {
         this.showRules = false
