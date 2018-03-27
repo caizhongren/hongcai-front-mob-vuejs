@@ -113,7 +113,9 @@
       answerUsersCount () {
         var that = this
         that.$http('/hongcai/rest/activitys/foolsDay/answerUsersCount').then(function (res) {
-          that.answerPeople = res.data
+          if (res.data && res.data.ret !== -1) {
+            that.answerPeople = res.data
+          }
         })
       },
       // 好有默契度
@@ -121,10 +123,12 @@
         var that = this
         that.$http('/hongcai/rest/activitys/foolsDay/answer?pageSize=' + that.pageSize + '&skip=' + that.skip)
         .then(function (res) {
-          var List = res.data.data
-          that.totalPage = res.data.totalPage
-          for (var i = 0; i < List.length; i++) {
-            that.inviteList.push(List[i])
+          if (res.data && res.data.ret !== -1) {
+            var List = res.data.data
+            that.totalPage = res.data.totalPage
+            for (var i = 0; i < List.length; i++) {
+              that.inviteList.push(List[i])
+            }
           }
         })
       },
@@ -154,7 +158,7 @@
           that.unReach = true
         } else {
           that.$http('/hongcai/rest/activitys/foolsDay/takeRecordStatus').then(function (res) {
-            if (res && res.ret !== -1) {
+            if (res.data && res.data.ret !== -1) {
               let status = res.data.status
               // status -1，未出题，0，未达到领取条件，1 可领，2 已领取
               if (status === 1 && status === 2) {
