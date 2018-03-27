@@ -62,18 +62,21 @@
     </div>
     <Fool-Rules :closeRules="closeRules" :showRules="showRules" v-show="showRules"></Fool-Rules>
     <Fool-Share :showShare="showShare" :closeShare="closeShare"  v-show="showShare"></Fool-Share>
+    <Fool-Quit :showQuit="showQuit" :closeQuit="closeQuit"  v-show="showQuit"></Fool-Quit>
   </div>
 </template>
 <script>
   import $ from 'zepto'
-  // import {InputMaskHelper} from '../../service/Utils'
+  import wx from 'weixin-js-sdk'
   import FoolRules from './FoolRules.vue'
   import FoolShare from './FoolShare.vue'
+  import FoolQuit from './FoolQuit.vue'
   export default {
     data () {
       return {
         showRules: false,
         showShare: false,
+        showQuit: false,
         question: {
           question: '今天在宏财网投资5万元，3年后实现财富自由',
           systemId: 0,
@@ -103,8 +106,21 @@
     mounted () {},
     created () {
       this.getSystemQuestions()
+      sessionStorage.questionCount = Number(sessionStorage.questionCount) + 1 || 1
+      if (sessionStorage.questionCount > 1) {
+        this.showQuit = true
+      }
     },
     methods: {
+      closeQuit (type) { // type 1 取消 2 确认
+        this.showQuit = false
+        type === 1 ? (
+          this.saveQuestions = JSON.parse(sessionStorage.saveQuestion),
+          this.num = Number(this.saveQuestions.length) + 1,
+          $($('.nums li')[0]).removeClass('selectNumBg'),
+          $($('.nums li')[this.num - 1]).addClass('selectNumBg')
+        ) : wx.closeWindow()
+      },
       changeTitle () {
         var index = Math.floor(Math.random() * this.systemQuestions.length)
         this.question = this.systemQuestions[index]
@@ -149,6 +165,7 @@
           }
         }
         console.log(this.saveQuestions)
+        sessionStorage.saveQuestion = JSON.stringify(this.saveQuestions)
         if (this.num === 5) {
           this.saveUserQuestions()
           return
@@ -193,8 +210,11 @@
         })
       }
     },
-    components: {FoolRules, FoolShare},
-    desrtoyed () {}
+    components: {FoolRules, FoolShare, FoolQuit},
+    desrtoyed () {
+      sessionStorage.questionCount = null
+      sessionStorage.saveQuestion = null
+    }
   }
 </script>
 <style scoped>
@@ -403,5 +423,18 @@
     top: .1rem;
     right: .1rem;
     width: 30%;
+  }
+  @media (min-height: 724px) and (max-height: 1624px) {
+    .selectBtns {
+      margin-top: 0%;
+    }
+    .clown2 {
+      width: 76%;
+      right: 4%;
+      bottom: -1%;
+    }
+    .question {
+      margin-top: 3%;
+    }
   }
 </style>

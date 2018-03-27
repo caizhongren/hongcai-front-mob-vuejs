@@ -2,7 +2,7 @@
   <!-- 答题主页面 -->
   <div class="fools-answer" v-client-height>
     <div class="portrait">
-      <img v-bind:src="portraitUrl" alt="">
+      <img v-bind:src="userInfo.headImgUrl" alt="">
     </div>
     <img src="../../images/foolsDay/answer-txt.png" alt="文案" width="74%">
     <div class="startAnswer" @click="startAnswer">
@@ -14,16 +14,16 @@
   export default {
     data () {
       return {
-        portraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg'
       }
     },
-    props: ['token'],
+    props: ['userInfo'],
     watch: {},
     mounted () {},
-    created () {},
+    created () {
+    },
     methods: {
       startAnswer () {
-        this.$router.replace({name: 'FoolAnswerPage'})
+        this.$router.replace({name: 'FoolAnswerPage', params: {number: this.$route.params.number}})
       }
     },
     components: {},

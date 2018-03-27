@@ -447,62 +447,62 @@ const routes = [
         path: '',
         name: 'FoolDaysIndex',
         component: FoolDaysIndex,
-        meta: {title: '愚人节'}
+        meta: {title: '愚你同乐'}
       },
       {
         path: 'question',
         name: 'FoolQuestion',
         component: FoolQuestion,
-        meta: {title: '愚人节创建题目'}
+        meta: {title: '愚你同乐'}
       },
       {
         path: 'result',
         name: 'FoolResult',
         component: FoolResult,
-        meta: {title: '愚人节查看结果'}
+        meta: {title: '愚你同乐'}
       },
       {
         path: 'reportCard',
         name: 'FoolReportCard',
         component: FoolReportCard,
-        meta: {title: '愚人节成绩单'}
+        meta: {title: '愚你同乐'}
       },
 
       {
         path: 'record',
         name: 'FoolRecord',
         component: FoolRecord,
-        meta: {title: '愚人节活动排行榜'}
+        meta: {title: '愚你同乐'}
       },
       {
         path: 'exchange',
         name: 'FoolExchange',
         component: FoolExchange,
-        meta: {title: '愚人节活动兑换页面'}
+        meta: {title: '愚你同乐'}
       },
       {
         path: 'success',
         name: 'FoolSuccess',
         component: FoolSuccess,
-        meta: {title: '愚人节活动兑换成功页面'}
+        meta: {title: '愚你同乐'}
       },
       {
-        path: 'answer',
+        path: 'answer/:number',
         name: 'FoolAnswer',
         component: FoolAnswer,
-        meta: {title: '愚人节活动答题页面'}
+        meta: {title: '愚你同乐'}
       },
       {
-        path: 'answer-page',
+        path: 'answer-page/:number',
         name: 'FoolAnswerPage',
         component: FoolAnswerPage,
-        meta: {title: '愚人节活动答题页面2'}
+        meta: {title: '愚你同乐'}
       },
       {
-        path: 'tacit',
+        path: 'tacit/:number',
         name: 'FoolTacit',
         component: FoolTacit,
-        meta: {title: '愚人节活动答题默契度页面'}
+        meta: {title: '愚你同乐'}
       }]
   },
   {

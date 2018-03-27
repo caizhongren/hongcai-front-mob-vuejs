@@ -1,6 +1,6 @@
 <template>
   <!-- 默契度主页面 -->
-  <div class="fools-tacit">
+  <div class="fools-tacit" v-client-height>
     <div class="header"></div>
     <div class="contents">
       <div class="tacitHeader">{{tacitTips[tacit / 20]}}</div>
@@ -33,7 +33,7 @@
           <span>{{item.tacit}}</span>
         </li>
         <li>
-          <img src="../../images/foolsDay/result-more.png" alt="" class="loadMore" @click="loadMore">
+          <img src="../../images/foolsDay/result-more.png" alt="查看更多" class="loadMore" @click="loadMore">
         </li>
       </ul>
       <div class="partakeBox">
@@ -52,31 +52,28 @@
         <img src="../../images/foolsDay/wechat-qrcode.png" alt="">
       </div>
     </div>
-    <Fool-Quit :closeQuit="closeQuit" :showQuit="showQuit" v-show="showQuit"></Fool-Quit>
   </div>
 </template>
 <script>
-  import FoolQuit from '../activity/FoolQuit.vue'
   import {ModalHelper} from '../../service/Utils'
   export default {
     data () {
       return {
-        showQuit: false,
         showQrCode: false,
-        answerUserName: 'lll==',
-        questionUserName: 'yyyyyy',
-        tacit: 80,
+        answerUserName: '',
+        questionUserName: '',
+        tacit: 0,
         tacitTips: ['看透不说透，大智若愚才是真正的智者！', '我说得这么明显，难道你都看不出来吗？', '点开我的头像，是时候让我们好好聊聊了', '人生的长度，一半真实一半假象，你...及格了...', '差一点儿就被你看穿了，真是百密一疏啊！', '你就像我肚子里的蛔虫，什么都瞒不过你...'],
-        answerPortraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-        questionPortraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
+        answerPortraitUrl: '',
+        questionPortraitUrl: '',
         inviteList: [],
         skip: 0,
         pageSize: 9,
         investPage: 1,
-        token: ''
+        token: '',
+        number: ''
       }
     },
-    props: ['token'],
     watch: {
       showQrCode: function (val) {
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
@@ -84,16 +81,30 @@
     },
     mounted () {},
     created () {
+      this.number = this.$route.params.number
       this.token = '66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1'
       this.answer()
+      this.answerQuestion()
     },
     methods: {
-      closeQuit (type) { // type 1 取消 2 确认
-        this.showQuit = false
-        type === 1 ? alert('取消') : alert('确认')
-      },
       join () {
         this.showQrCode = true
+      },
+      // 答题详情
+      answerQuestion () {
+        var that = this
+        that.$http('/hongcai/rest/activitys/foolsDay/checkAnswerQuestion?token=' + that.token + '&number=' + that.number)
+        .then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.answerUserName = res.data.nickName
+            that.answerPortraitUrl = res.data.headImg
+            that.tacit = res.data.tacit
+            that.questionPortraitUrl = res.data.questionHeadImg
+            that.questionUserName = res.data.questionNickName
+          } else {
+            alert('没有答题')
+          }
+        })
       },
       // 好有默契度
       answer () {
@@ -113,7 +124,7 @@
         this.answer()
       }
     },
-    components: {FoolQuit},
+    components: {},
     desrtoyed () {}
   }
 </script>
@@ -123,12 +134,15 @@
     overflow-x: hidden;
     width: 100%;
     background: #f89b32;
-    padding-bottom: 2.5rem;
   }
   .header {
     background: url('../../images/foolsDay/comm-header.png') no-repeat 0 0;
     background-size: 100% 100%;
     height: 2.5rem;
+  }
+  .contents {
+    position: relative;
+    padding-bottom: 2.5rem;
   }
   .tacitHeader {
     width: 60%;

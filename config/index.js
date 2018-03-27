@@ -23,7 +23,7 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 8090,
+    port: 8100,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
@@ -36,7 +36,7 @@ module.exports = {
           '^/hongcai': '/hongcai' // 规则, 见下面说明
         },
         headers: {
-          'Cookie': 'SID=810q3nmoi5mfp8geb9bkm9jql0;SESSION=34e6e7d6-d6f3-41b0-a487-3174bb55d582;' //这里可以设置cookies, 也可以不设置
+          // 'Cookie': 'SID=810q3nmoi5mfp8geb9bkm9jql0;SESSION=34e6e7d6-d6f3-41b0-a487-3174bb55d582;' //这里可以设置cookies, 也可以不设置
         }
       }
     },

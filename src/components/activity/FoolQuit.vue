@@ -1,12 +1,12 @@
 <template>
   <!-- 中途退出弹窗 -->
-  <div class="fools-quit mask-common" v-client-height v-if="showQuit">
+  <div class="fools-quit mask-common" v-client-height v-if="showQuit || true">
     <div class="tipBox">
       <div class="quitHeader">
         <img src="../../images/foolsDay/back.png" alt="半途而废" width="120%">
       </div>
       <div class="quitContent">
-        <p>题目还未出完，<br> 确认退出该页面？</p>
+        <p>题目还未{{isAnswer ? '答' : '出'}}完，<br> 确认退出该页面？</p>
         <ul class="btns">
           <li @click="closeQuit(1)"><img src="../../images/foolsDay/quxiao.png" alt="取消"/></li>
           <li @click="closeQuit(2)"><img src="../../images/foolsDay/sure-red-txt.png" alt="确认"/></li>
@@ -23,7 +23,7 @@
       return {
       }
     },
-    props: ['showQuit', 'closeQuit'],
+    props: ['showQuit', 'closeQuit', 'isAnswer'],
     watch: {
       'showQuit': function (newVal, oldVal) {
         newVal ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
