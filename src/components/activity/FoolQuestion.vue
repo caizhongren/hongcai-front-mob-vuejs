@@ -113,6 +113,7 @@
       sessionStorage.questionCount = Number(sessionStorage.questionCount) + 1 || 1
       if (sessionStorage.questionCount > 1) {
         that.showQuit = true
+        that.alertTips = false
       }
       window.onpopstate = function (event) {
         if (event.state.page === 'state1') {
