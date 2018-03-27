@@ -269,11 +269,11 @@
     background: url('../../images/foolsDay/mobile-box.png') no-repeat center center;
     background-size: 100% 100%;
     width: 77%;
-    height: 1.1rem;
-    line-height: 1.2rem;
-    padding: 0 .6rem;
+    /* height: .5rem;
+    line-height: .5rem; */
+    padding: 0.5rem .6rem;
     color: #51171b;
-    font-size: .25rem;
+    font-size: .26rem;
   }
   input::-webkit-input-placeholder {
     color: #51171b;

@@ -1,6 +1,6 @@
 <template>
   <!-- 愚人节活动成绩单页面 -->
-  <div class="fools-reportCard">
+  <div class="fools-reportCard" id="fools-reportCard">
     <div class="header"></div>
     <div class="contents">
       <div class="reportCardHeader">
@@ -37,12 +37,15 @@
   export default {
     data () {
       return {
-        questionList: []
+        questionList: [
+        ]
       }
     },
     props: ['token'],
     watch: {},
-    mounted () {},
+    mounted () {
+      this.questionList.length <= 0 ? document.getElementById('fools-reportCard').style.height = document.documentElement.clientHeight + 'px' : null
+    },
     created () {
       this.question()
     },

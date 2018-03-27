@@ -1,6 +1,6 @@
 <template>
   <!-- 默契度主页面 -->
-  <div class="fools-tacit">
+  <div class="fools-tacit" v-client-height>
     <div class="header"></div>
     <div class="contents">
       <div class="tacitHeader">{{tacitTips[tacit / 20]}}</div>
@@ -33,7 +33,7 @@
           <span>{{item.tacit}}</span>
         </li>
         <li>
-          <img src="../../images/foolsDay/result-more.png" alt="" class="loadMore" @click="loadMore">
+          <img src="../../images/foolsDay/result-more.png" alt="查看更多" class="loadMore" @click="loadMore">
         </li>
       </ul>
       <div class="partakeBox">
@@ -76,7 +76,6 @@
         token: ''
       }
     },
-    props: ['token'],
     watch: {
       showQrCode: function (val) {
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
@@ -123,12 +122,15 @@
     overflow-x: hidden;
     width: 100%;
     background: #f89b32;
-    padding-bottom: 2.5rem;
   }
   .header {
     background: url('../../images/foolsDay/comm-header.png') no-repeat 0 0;
     background-size: 100% 100%;
     height: 2.5rem;
+  }
+  .contents {
+    position: relative;
+    padding-bottom: 2.5rem;
   }
   .tacitHeader {
     width: 60%;

@@ -404,4 +404,17 @@
     right: .1rem;
     width: 30%;
   }
+  @media (min-height: 724px) and (max-height: 1624px) {
+    .selectBtns {
+      margin-top: 0%;
+    }
+    .clown2 {
+      width: 76%;
+      right: 4%;
+      bottom: -1%;
+    }
+    .question {
+      margin-top: 3%;
+    }
+  }
 </style>

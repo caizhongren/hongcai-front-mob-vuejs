@@ -1,6 +1,6 @@
 <template>
   <!-- 愚人节活动愚人榜页面 -->
-  <div class="fools-record">
+  <div class="fools-record" id="fools-record">
     <div class="header"></div>
     <div class="contents">
       <div class="recordHeader">
@@ -32,7 +32,6 @@
   </div>
 </template>
 <script>
-  import $ from 'zepto'
   export default {
     data () {
       return {
@@ -42,11 +41,10 @@
     },
     props: ['token'],
     watch: {
-      recordList: function (val) {
-        val.length <= 0 ? $('fools-record').height(document.documentElement.clientHeight - 50 + 'px') : null
-      }
     },
-    mounted () {},
+    mounted () {
+      this.recordList.length <= 0 ? document.getElementById('fools-record').style.height = document.documentElement.clientHeight + 'px' : null
+    },
     created () {
       this.getRank()
     },
