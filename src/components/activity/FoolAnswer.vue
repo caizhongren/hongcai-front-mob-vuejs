@@ -20,19 +20,20 @@
     watch: {},
     mounted () {},
     created () {
+      var that = this
+      var number = this.$route.params.number
+      that.$http('/hongcai/rest/activitys/foolsDay/checkAnswerQuestion?number=' + number)
+      .then(function (res) {
+        if (res.data && res.data.ret !== -1) {
+          that.$router.replace({name: 'FoolTacit', params: {number: that.number}})
+        } else {
+          that.$router.replace({name: 'FoolAnswerPage', params: {number: number}})
+        }
+      })
     },
     methods: {
       startAnswer () {
-        var that = this
-        var number = this.$route.params.number
-        that.$http('/hongcai/rest/activitys/foolsDay/checkAnswerQuestion?token=' + that.token + '&number=' + number)
-        .then(function (res) {
-          if (res.data && res.data.ret !== -1) {
-            that.$router.push({name: 'FoolTacit', params: {number: that.number}})
-          } else {
-            that.$router.replace({name: 'FoolAnswerPage', params: {number: number}})
-          }
-        })
+        this.$router.replace({name: 'FoolAnswerPage', params: {number: this.$route.params.number}})
       }
     },
     components: {},

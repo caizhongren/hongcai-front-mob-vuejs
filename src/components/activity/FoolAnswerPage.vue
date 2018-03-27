@@ -95,20 +95,19 @@
       },
       choose (type) {
         var that = this
-        var question = that.questionList[that.num - 1]
+        var question = that.questionList[that.num]
         that.title = question.question
         question.commitAnswer = type
         that.answerQuestions.push(question)
         sessionStorage.answerQuestions = JSON.stringify(that.answerQuestionss)
-        if (that.num === 5) {
+        if (that.num === 4) {
           that.$http.post('/hongcai/rest/activitys/foolsDay/answerQuestion', {
             number: that.number,
-            token: that.token,
             answerQuestions: that.answerQuestions
           })
           .then(function (res) {
             if (res.data && res.data.ret !== -1) {
-              that.$router.push({name: 'FoolTacit', params: {number: that.number}})
+              that.$router.replace({name: 'FoolTacit', params: {number: that.number}})
             }
           })
         }
@@ -118,7 +117,7 @@
       },
       question () { // 我的问题
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/question?number=' + that.number + '&token=' + that.token).then(function (res) {
+        that.$http('/hongcai/rest/activitys/foolsDay/question?number=' + that.number).then(function (res) {
           if (res.data.code === -1321) {
             alert('没有创建问题')
             return
