@@ -63,12 +63,12 @@
       return {
         showQuit: false,
         showQrCode: false,
-        answerUserName: 'lll==',
-        questionUserName: 'yyyyyy',
-        tacit: 80,
+        answerUserName: '',
+        questionUserName: '',
+        tacit: 0,
         tacitTips: ['看透不说透，大智若愚才是真正的智者！', '我说得这么明显，难道你都看不出来吗？', '点开我的头像，是时候让我们好好聊聊了', '人生的长度，一半真实一半假象，你...及格了...', '差一点儿就被你看穿了，真是百密一疏啊！', '你就像我肚子里的蛔虫，什么都瞒不过你...'],
-        answerPortraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
-        questionPortraitUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
+        answerPortraitUrl: '',
+        questionPortraitUrl: '',
         inviteList: [],
         skip: 0,
         pageSize: 9,
@@ -85,6 +85,7 @@
     created () {
       this.token = '66724307eb8d5db37ceb9564f83ba0c2e316ce0b69de76c1'
       this.answer()
+      this.answerQuestion()
     },
     methods: {
       closeQuit (type) { // type 1 取消 2 确认
@@ -93,6 +94,22 @@
       },
       join () {
         this.showQrCode = true
+      },
+      // 答题详情
+      answerQuestion () {
+        var that = this
+        that.$http('/hongcai/rest/activitys/foolsDay/checkAnswerQuestion?token=' + that.token + '&number=122')
+        .then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.answerUserName = res.data.nickName
+            that.answerPortraitUrl = res.data.headImg
+            that.tacit = res.data.tacit
+            that.questionPortraitUrl = res.data.questionHeadImg
+            that.questionUserName = res.data.questionNickName
+          } else {
+            alert('没有答题')
+          }
+        })
       },
       // 好有默契度
       answer () {
