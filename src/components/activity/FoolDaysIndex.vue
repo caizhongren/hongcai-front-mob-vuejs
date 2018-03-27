@@ -17,8 +17,7 @@
   export default {
     data () {
       return {
-        showRules: false,
-        questionStatus: 'NOT_SET'
+        showRules: false
       }
     },
     props: [],
@@ -31,18 +30,16 @@
         url: '/hongcai/rest/activitys/foolsDay/takeRecordStatus'
       }).then((response) => {
         if (response.data && response.data.ret !== -1) {
-          that.questionStatus = (response.data.status === -1) ? 'NOT_SET' : 'SETTED'
+          if (response.data.status === -1) {
+          } else {
+            that.$router.replace({name: 'FoolResult'})
+          }
         }
       })
     },
     methods: {
       setQuestion () {
-        var that = this
-        if (that.questionStatus === 'NOT_SET') {
-          this.$router.replace({name: 'FoolQuestion'})
-        } else if (that.questionStatus === 'SETTED') {
-          this.$router.replace({name: 'FoolResult'})
-        }
+        this.$router.replace({name: 'FoolQuestion'})
       },
       closeRules () {
         this.showRules = false
