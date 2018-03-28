@@ -93,7 +93,7 @@
     methods: {
       join () {
         var that = this
-        that.axios('/hongcai/rest/users/isSubscribe?openId=' + that.userInfo.openid)
+        that.axios('/hongcai/rest/wechat/subscribeStatus')
         .then(function (res) {
           res.data ? that.$router.replace({name: 'FoolDaysIndex'}) : that.showQrCode = true
         })
