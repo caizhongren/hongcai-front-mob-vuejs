@@ -24,6 +24,7 @@
     created: function () {
       console.log('sss')
       this.checkLogin()
+      WechatShareUtils.configJsApi()
     },
     methods: {
       checkLogin () {
