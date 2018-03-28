@@ -7,7 +7,7 @@ let WechatShareUtils = {
     var url = location.href.split('#')[0]
     console.log(Vue)
     console.log(that)
-    that.$http('/hongcai/rest/wechat/jsApiConfig?requestUrl=' + url).then(function (apiConfig) {
+    that.$http('/hongcai/rest/wechat/jsApiConfig?requestUrl=' + encodeURIComponent(url)).then(function (apiConfig) {
       console.log('apiConfig: ' + process.env.wechatAppid)
       wx.config({
         debug: true,
