@@ -27,6 +27,7 @@
     watch: {},
     mounted () {},
     created () {
+      WechatShareUtils.configJsApi()
       var that = this
       that.axios({
         method: 'get',

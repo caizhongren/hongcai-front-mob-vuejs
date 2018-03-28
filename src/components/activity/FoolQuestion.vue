@@ -72,6 +72,7 @@
   import FoolShare from './FoolShare.vue'
   import {CheckWordsUtils} from '../../service/CheckWordsUtils.js'
   import FoolQuit from './FoolQuit.vue'
+  import {WechatShareUtils} from '../../service/WechatShareUtils'
   export default {
     data () {
       return {
@@ -106,6 +107,7 @@
     },
     mounted () {},
     created () {
+      WechatShareUtils.configJsApi()
       var that = this
       history.pushState({page: 'state1'}, 'state', '')
       history.pushState({page: 'state2'}, 'state', '')

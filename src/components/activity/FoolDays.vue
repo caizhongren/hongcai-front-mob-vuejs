@@ -4,7 +4,6 @@
 </template>
 <script>
   import {Utils} from '../../service/Utils.js'
-  import {WechatShareUtils} from '../../service/WechatShareUtils'
   export default {
     data () {
       return {
@@ -17,14 +16,11 @@
       }
     },
     props: ['showErrMsg'],
-    watch: {
-      '$route': WechatShareUtils.configJsApi
-    },
+    watch: {},
     mounted () {},
     created: function () {
       console.log('sss')
       this.checkLogin()
-      WechatShareUtils.configJsApi()
     },
     methods: {
       checkLogin () {
