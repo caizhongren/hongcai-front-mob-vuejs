@@ -68,7 +68,7 @@
           alert('openid未获取到')
           that.checkLogin()
         } else {
-          that.axios('/hongcai/rest/users/isSubscribe?openId=' + that.userInfo.openid)
+          that.axios('/hongcai/rest/wechat/subscribeStatus')
           .then(function (res) {
             if (res.data.ret !== -1) {
               if (res.data && that.takeRecordStatus === -1) {

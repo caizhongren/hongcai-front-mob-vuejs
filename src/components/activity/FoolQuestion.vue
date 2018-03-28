@@ -162,6 +162,7 @@
           } else {
           }
         } else {
+          sessionStorage.clear()
           wx.closeWindow()
         }
       },
@@ -254,8 +255,7 @@
     },
     components: {FoolRules, FoolShare, FoolQuit},
     desrtoyed () {
-      sessionStorage.questionCount = null
-      sessionStorage.saveQuestion = null
+      sessionStorage.clear()
     }
   }
 </script>
@@ -466,7 +466,7 @@
     right: .1rem;
     width: 30%;
   }
-  @media (min-height: 724px) and (max-height: 1624px) {
+  @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
     .selectBtns {
       margin-top: 0%;
     }

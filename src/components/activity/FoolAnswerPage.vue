@@ -85,8 +85,7 @@
           } else {
           }
         } else {
-          sessionStorage.answerCount = null
-          sessionStorage.answerQuestions = null
+          sessionStorage.clear()
           wx.closeWindow()
         }
       },
@@ -130,8 +129,7 @@
     },
     components: {FoolRules, FoolQuit},
     desrtoyed () {
-      sessionStorage.answerCount = null
-      sessionStorage.answerQuestions = null
+      sessionStorage.clear()
     }
   }
 </script>
@@ -300,7 +298,7 @@
   .tipBox img {
     width: 90%;
   }
-  @media (min-height: 724px) and (max-height: 1624px) {
+  @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
     .selectBtns {
       margin-top: 0%;
     }
