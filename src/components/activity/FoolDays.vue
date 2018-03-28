@@ -19,7 +19,7 @@
     watch: {
       '$route': function () {
         if (!Utils.isIos()) {
-          WechatShareUtils.configJsApi();
+          WechatShareUtils.configJsApi()
         }
       }
     },
