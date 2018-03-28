@@ -85,8 +85,7 @@
           } else {
           }
         } else {
-          sessionStorage.answerCount = null
-          sessionStorage.answerQuestions = null
+          sessionStorage.clear()
           wx.closeWindow()
         }
       },
@@ -130,8 +129,7 @@
     },
     components: {FoolRules, FoolQuit},
     desrtoyed () {
-      sessionStorage.answerCount = null
-      sessionStorage.answerQuestions = null
+      sessionStorage.clear()
     }
   }
 </script>

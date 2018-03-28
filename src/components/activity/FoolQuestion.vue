@@ -154,6 +154,7 @@
           } else {
           }
         } else {
+          sessionStorage.clear()
           wx.closeWindow()
         }
       },
@@ -248,8 +249,7 @@
     },
     components: {FoolRules, FoolShare, FoolQuit},
     desrtoyed () {
-      sessionStorage.questionCount = null
-      sessionStorage.saveQuestion = null
+      sessionStorage.clear()
     }
   }
 </script>
