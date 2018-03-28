@@ -93,7 +93,9 @@
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
-    mounted () {},
+    mounted () {
+      WechatShareUtils.configJsApi()
+    },
     created () {
       this.answerUsersCount()
       this.answer()
