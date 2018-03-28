@@ -25,9 +25,14 @@
     },
     props: [],
     watch: {},
-    mounted () {},
-    created () {
+    mounted () {
       WechatShareUtils.configJsApi()
+      wx.ready(function () {
+        var shareLink = process.env.vue_domain + '/activity/fools-day'
+        WechatShareUtils.onMenuShareAppMessage('谁说愚人节一定要说假话', '借着这个机会，又有多少人道出了埋藏心底的秘密...', shareLink, 'https://mmbiz.qpic.cn/mmbiz_png/8MZDOEkib8AnEm8IKUChDJ7X50kEO9u4GxRe5kwWibuAEq0mOHqmyZnsAk27P9lMk2NjCM0VOFBXPf4nByXcFI5g/0?wx_fmt=png')
+      })
+    },
+    created () {
       var that = this
       that.axios({
         method: 'get',
@@ -39,10 +44,6 @@
             that.$router.replace({name: 'FoolResult'})
           }
         }
-      })
-      wx.ready(function () {
-        var shareLink = process.env.vue_domain + '/activity/fools-day'
-        WechatShareUtils.onMenuShareAppMessage('谁说愚人节一定要说假话', '借着这个机会，又有多少人道出了埋藏心底的秘密...', shareLink, 'https://mmbiz.qpic.cn/mmbiz_png/8MZDOEkib8AnEm8IKUChDJ7X50kEO9u4GxRe5kwWibuAEq0mOHqmyZnsAk27P9lMk2NjCM0VOFBXPf4nByXcFI5g/0?wx_fmt=png')
       })
     },
     methods: {
