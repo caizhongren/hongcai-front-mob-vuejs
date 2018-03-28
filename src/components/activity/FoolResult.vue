@@ -98,7 +98,6 @@
       }
     },
     mounted () {
-      WechatShareUtils.configJsApi()
     },
     created () {
       this.userInfo.id > 0 ? (this.answerUsersCount(), this.answer(), this.getFoolsQuestionNumber()) : null

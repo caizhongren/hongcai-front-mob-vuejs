@@ -1,11 +1,14 @@
 import wx from 'weixin-js-sdk'
 import Vue from 'vue'
+import {Utils} from './Utils.js'
 let that = new Vue({})
 let WechatShareUtils = {
-  configJsApi: function () {
-    alert(1111)
-    var url = location.href.split('#')[0]
-    that.$http('/hongcai/rest/wechat/jsApiConfig?requestUrl=' + encodeURIComponent(url)).then(function (apiConfig) {
+  configJsApi: function (url) {
+    var currentUrl = location.href.split('#')[0]
+    if (Utils.isIos()) {
+      currentUrl = url
+    }
+    that.$http('/hongcai/rest/wechat/jsApiConfig?requestUrl=' + encodeURIComponent(currentUrl)).then(function (apiConfig) {
       console.log('apiConfig: ' + process.env.wechatAppid)
       wx.config({
         debug: true,
