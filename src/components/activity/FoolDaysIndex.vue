@@ -1,6 +1,6 @@
 <template>
   <!-- 活动主页面 -->
-  <div class="fools-day" v-client-height>
+  <div class="fools-day" v-client-height v-if="showPage">
     <img src="../../images/foolsDay/clown1.png" alt="小丑" class="clown1">
     <img src="../../images/foolsDay/question-txt.png" alt="文案" class="txt">
     <div class="setQuestion" @click="setQuestion">
@@ -27,7 +27,8 @@
       return {
         showRules: false,
         takeRecordStatus: 0,
-        showQrCode: false
+        showQrCode: false,
+        showPage: false
       }
     },
     props: ['checkLogin', 'userInfo'],
@@ -56,6 +57,8 @@
             that.takeRecordStatus = response.data.status
             if (that.takeRecordStatus !== -1) {
               that.$router.replace({name: 'FoolResult'})
+            } else {
+              that.showPage = true
             }
           }
         })

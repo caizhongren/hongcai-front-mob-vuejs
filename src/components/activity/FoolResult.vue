@@ -169,8 +169,10 @@
             if (res.data && res.data.ret !== -1) {
               let status = res.data.status
               // status -1，未出题，0，未达到领取条件，1 可领，2 已领取
-              if (status === 1 && status === 2) {
+              if (status === 1) {
                 that.$router.push({name: 'FoolExchange'})
+              } else if (status === 2) {
+                that.hasToken = true
               } else {
                 that.unReach = true
               }
