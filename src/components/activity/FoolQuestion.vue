@@ -96,7 +96,8 @@
         alertDefinedTitle: false,
         systemQuestions: [],
         saveQuestions: [],
-        selectSystemQuestionId: 0
+        selectSystemQuestionId: 0,
+        busy: false
       }
     },
     props: ['checkLogin', 'userInfo'],
@@ -127,7 +128,6 @@
       window.onpopstate = function (event) {
         history.pushState({page: 'state1'}, null, '')
         history.pushState({page: 'state2'}, null, location.href)
-        console.log(event.state.page)
         if (event.state.page === 'state1') {
           that.showQuit = true
         }
@@ -145,7 +145,8 @@
           if (response.data && response.data.ret !== -1) {
             that.takeRecordStatus = response.data.status
             if (that.takeRecordStatus !== -1) {
-              that.$router.replace({name: 'FoolResult'})
+              // that.$router.replace({name: 'FoolResult'})
+              window.location.href = process.env.vue_domain + '/activity/fools-day/result'
             }
           }
         })
@@ -192,6 +193,9 @@
         this.showShare = false
       },
       choose (answer) {
+        if (this.num > 5) {
+          return
+        }
         var saveQuestion = {
           question: this.question.question,
           systemId: this.question.systemId,
@@ -245,7 +249,8 @@
           userQuestions: JSON.stringify(that.saveQuestions)
         }).then((res) => {
           if (res.data === 5) {
-            this.$router.replace({name: 'FoolResult'})
+            // this.$router.replace({name: 'FoolResult'})
+            window.location.href = process.env.vue_domain + '/activity/fools-day/result'
           } else {
             alert(res.data.msg)
           }

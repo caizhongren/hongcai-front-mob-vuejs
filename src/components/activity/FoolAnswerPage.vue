@@ -98,6 +98,9 @@
       },
       choose (type) {
         var that = this
+        if (that.num > 5) {
+          return
+        }
         var question = that.questionList[that.num - 1]
         question.commitAnswer = type
         that.answerQuestions.push(question)

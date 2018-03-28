@@ -28,7 +28,8 @@
         showRules: false,
         takeRecordStatus: 0,
         showQrCode: false,
-        showPage: false
+        showPage: false,
+        busy: false
       }
     },
     props: ['checkLogin', 'userInfo'],
@@ -65,12 +66,19 @@
       },
       setQuestion () {
         var that = this
+        if (that.busy) {
+          return
+        }
+        that.busy = true
         if (that.userInfo.openid === '' || that.userInfo.openid === undefined) {
           alert('openid未获取到')
           that.checkLogin()
         } else {
           that.axios('/hongcai/rest/wechat/subscribeStatus')
           .then(function (res) {
+            setTimeout(function () {
+              that.busy = false
+            }, 1000)
             if (res.data.ret !== -1) {
               if (res.data && that.takeRecordStatus === -1) {
                 that.$router.replace({name: 'FoolQuestion'})
