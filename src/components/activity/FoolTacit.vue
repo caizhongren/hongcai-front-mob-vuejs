@@ -14,7 +14,7 @@
         <div class="progress">
           <p>{{tacit}}%</p>
           <div class="box">
-            <span class="bar" v-bind:style="{width: tacit + '%'}"></span>
+            <span class="bar" v-bind:class="{'tacit100': tacit === 100}" v-bind:style="{width: tacit + '%'}"></span>
           </div>
         </div>
         <div class="portraitBox">
@@ -141,6 +141,10 @@
   }
 </script>
 <style scoped>
+  .tacit100 {
+    border-top-right-radius: .15rem;
+    border-bottom-right-radius: .15rem;
+  }
   .fools-tacit {
     position: relative;
     overflow-x: hidden;
