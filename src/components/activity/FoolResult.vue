@@ -98,7 +98,6 @@
       }
     },
     mounted () {
-      WechatShareUtils.configJsApi()
     },
     created () {
       this.answerUsersCount()

@@ -4,21 +4,31 @@
 </template>
 <script>
   import {Utils} from '../../service/Utils.js'
+  import {WechatShareUtils} from '../../service/WechatShareUtils'
   export default {
     data () {
       return {
         wechat_code: this.$route.query.code,
         userInfo: {
           openid: ''
-        }
+        },
+        entryUrl: ''
       }
     },
     props: ['showErrMsg'],
-    watch: {},
+    watch: {
+      '$route': function () {
+        if (!Utils.isIos()) {
+          WechatShareUtils.configJsApi();
+        }
+      }
+    },
     mounted () {},
     created: function () {
       console.log('sss')
       this.checkLogin()
+      this.entryUrl = window.location.href
+      WechatShareUtils.configJsApi(this.entryUrl)
     },
     methods: {
       checkLogin () {
