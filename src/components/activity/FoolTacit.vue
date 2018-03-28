@@ -78,7 +78,7 @@
     watch: {
       userInfo: function (val) {
         val && val.id > 0 ? this.answer() : this.checkLogin()
-      }
+      },
       showQrCode: function (val) {
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }

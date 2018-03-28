@@ -22,7 +22,7 @@
     watch: {
       userInfo: function (val) {
         val && val.id > 0 ? (this.hasAnswer(), this.getQuestionImg(), this.getAnswerNum()) : this.checkLogin()
-      }
+      },
       answerNum: function (val) {
         val && val === Number(this.$route.params.number) ? this.$router.replace({name: 'FoolResult'}) : null
       }
