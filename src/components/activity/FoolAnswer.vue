@@ -44,7 +44,11 @@
         var that = this
         that.axios('/hongcai/rest/activitys/foolsDay/questionHeadImg?number=' + that.$route.params.number).then(function (res) {
           if (res.data && res.data.ret !== -1) {
-            that.answerHeadImgUrl = res.data
+            if (res.data.endsWith('96')) {
+              that.answerHeadImgUrl = res.data.substring(0, res.data.length - 2) + '0'
+            } else {
+              that.answerHeadImgUrl = res.data
+            }
           }
         })
       },
