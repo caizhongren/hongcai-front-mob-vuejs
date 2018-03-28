@@ -33,9 +33,10 @@
   .activityTime {
     position: absolute;
     bottom: 0;
-    left: 25%;
+    left: 22%;
     color: #fff;
-    font-size: .25rem;
+    font-size: .28rem;
+    font-weight: bold;
   }
 </style>
 <script>
