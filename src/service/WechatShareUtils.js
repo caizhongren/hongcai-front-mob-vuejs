@@ -33,12 +33,6 @@ let WechatShareUtils = {
       trigger: function (res) {
       },
       success: function (res) {
-        // 分享成功后隐藏分享引导窗口
-        that.$http.post('/hongcai/rest/users/shareActivity', {
-          openId: 'oBBBjs6uL13Z7E03h5E2hEOnM_l8',
-          act: '22',
-          channelCode: 'officeweb'
-        }).then(function () {})
       },
       cancel: function (res) {
       },
