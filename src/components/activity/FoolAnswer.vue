@@ -1,6 +1,6 @@
 <template>
   <!-- 答题主页面 -->
-  <div class="fools-answer" v-client-height>
+  <div class="fools-answer" v-client-height v-if="showPage">
     <div class="portrait">
       <img v-bind:src="answerHeadImgUrl" alt="">
     </div>
@@ -15,7 +15,8 @@
     data () {
       return {
         answerNum: '',
-        answerHeadImgUrl: ''
+        answerHeadImgUrl: '',
+        showPage: false
       }
     },
     props: ['checkLogin', 'userInfo'],
@@ -58,9 +59,9 @@
         that.axios('/hongcai/rest/activitys/foolsDay/checkAnswerQuestion?number=' + number)
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
-            console.log(res)
             that.$router.replace({name: 'FoolTacit', params: {number: number}})
           } else {
+            that.showPage = true
           }
         })
       },
