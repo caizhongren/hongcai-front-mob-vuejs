@@ -88,7 +88,7 @@
     props: ['checkLogin', 'userInfo'],
     watch: {
       userInfo: function (val) {
-        val && val.id > 0 ? (this.answerUsersCount(), this.answer(), this.getFoolsQuestionNumber()) : this.checkLogin()
+        val && val.id > 0 ? (this.answerUsersCount(), this.getFoolsQuestionNumber()) : this.checkLogin()
       },
       unReach: function (val) {
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
@@ -100,7 +100,7 @@
     mounted () {
     },
     created () {
-      this.userInfo.id > 0 ? (this.answerUsersCount(), this.answer(), this.getFoolsQuestionNumber()) : null
+      this.userInfo.id > 0 ? (this.answerUsersCount(), this.getFoolsQuestionNumber()) : null
     },
     methods: {
       // 获取问题编号
@@ -109,6 +109,7 @@
         that.$http('/hongcai/rest/activitys/foolsDay/number').then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.number = res.data
+            that.number ? that.answer() : null
             wx.ready(function () {
               var shareLink = process.env.vue_domain + '/activity/fools-day/answer/' + that.number
               WechatShareUtils.onMenuShareAppMessage('你看得出我在说谎吗？', '认识了那么久，你有把握我说的每句话都是真心话吗？', shareLink, 'https://mmbiz.qpic.cn/mmbiz_png/8MZDOEkib8AnEm8IKUChDJ7X50kEO9u4GxRe5kwWibuAEq0mOHqmyZnsAk27P9lMk2NjCM0VOFBXPf4nByXcFI5g/0?wx_fmt=png')
