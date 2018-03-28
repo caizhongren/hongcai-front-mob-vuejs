@@ -98,7 +98,7 @@
         var that = this
         that.axios('/hongcai/rest/wechat/subscribeStatus')
         .then(function (res) {
-          res.data ? that.$router.replace({name: 'FoolDaysIndex'}) : that.showQrCode = true
+          res.data ? window.location.href = process.env.vue_domain + '/activity/fools-day' : that.showQrCode = true
         })
       },
       // 答题详情
