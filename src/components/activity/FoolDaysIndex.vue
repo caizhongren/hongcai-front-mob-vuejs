@@ -14,10 +14,13 @@
 </template>
 <script>
   import FoolRules from './FoolRules.vue'
+  import {WechatShareUtils} from '../../service/WechatShareUtils'
+  import wx from 'weixin-js-sdk'
   export default {
     data () {
       return {
-        showRules: false
+        showRules: false,
+        takeRecordStatus: 0
       }
     },
     props: [],
@@ -30,16 +33,22 @@
         url: '/hongcai/rest/activitys/foolsDay/takeRecordStatus'
       }).then((response) => {
         if (response.data && response.data.ret !== -1) {
-          if (response.data.status === -1) {
-          } else {
+          that.takeRecordStatus = response.data.status
+          if (that.takeRecordStatus !== -1) {
             that.$router.replace({name: 'FoolResult'})
           }
         }
       })
+      wx.ready(function () {
+        var shareLink = process.env.vue_domain + '/activity/fools-day'
+        WechatShareUtils.onMenuShareAppMessage('谁说愚人节一定要说假话', '借着这个机会，又有多少人道出了埋藏心底的秘密...', shareLink, 'https://mmbiz.qpic.cn/mmbiz_png/8MZDOEkib8AnEm8IKUChDJ7X50kEO9u4GxRe5kwWibuAEq0mOHqmyZnsAk27P9lMk2NjCM0VOFBXPf4nByXcFI5g/0?wx_fmt=png')
+      })
     },
     methods: {
       setQuestion () {
-        this.$router.replace({name: 'FoolQuestion'})
+        if (this.takeRecordStatus === -1) {
+          this.$router.replace({name: 'FoolQuestion'})
+        }
       },
       closeRules () {
         this.showRules = false
