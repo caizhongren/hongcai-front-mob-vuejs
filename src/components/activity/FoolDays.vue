@@ -1,6 +1,6 @@
 <template>
   <!-- 活动主页面 -->
-  <router-view :userInfo="userInfo"></router-view>
+  <router-view :userInfo="userInfo" :checkLogin="checkLogin"></router-view>
 </template>
 <script>
   import {Utils} from '../../service/Utils.js'
@@ -9,7 +9,7 @@
       return {
         wechat_code: this.$route.query.code,
         userInfo: {
-          openid: 'oBBBjs6uL13Z7E03h5E2hEOnM_l8'
+          openid: ''
         }
       }
     },
@@ -29,7 +29,7 @@
         }).then((response) => {
           // 已登录，直接返回
           if (response.data && response.data.ret !== -1) {
-            that.userInfo = JSON.stringify(response.data)
+            that.userInfo = response.data
             return
           }
           // 未登录，则检查路由中是否存在 code，不存在，则跳转到微信授权
@@ -42,7 +42,7 @@
               url: '/hongcai/rest/users/' + that.$route.query.code + '/openid'
             }).then((response) => {
               if (response.data && response.data.ret !== -1) {
-                that.userInfo = JSON.stringify(response.data)
+                that.userInfo = response.data
               } else {
                 Utils.redirectToWechatAuth(window.location.href)
               }

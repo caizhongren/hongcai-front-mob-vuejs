@@ -10,6 +10,12 @@
       <img src="../../images/foolsDay/rule-txt.png" alt="活动规则" width="75%">
     </div>
     <Fool-Rules :closeRules="closeRules" :showRules="showRules" v-show="showRules"></Fool-Rules>
+    <div class="fools-qrcode mask-common" v-client-height v-if="showQrCode">
+      <img src="../../images/foolsDay/qrcode.png" alt="长按识别图中二维码" width="50%">
+      <div class="qrcodeBox">
+        <img src="../../images/foolsDay/wechat-qrcode.png" alt="">
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -20,10 +26,11 @@
     data () {
       return {
         showRules: false,
-        takeRecordStatus: 0
+        takeRecordStatus: 0,
+        showQrCode: false
       }
     },
-    props: [],
+    props: ['checkLogin', 'userInfo'],
     watch: {},
     mounted () {
       WechatShareUtils.configJsApi()
@@ -48,8 +55,21 @@
     },
     methods: {
       setQuestion () {
-        if (this.takeRecordStatus === -1) {
-          this.$router.replace({name: 'FoolQuestion'})
+        var that = this
+        if (that.userInfo.openid === '' || that.userInfo.openid === undefined) {
+          alert('openid未获取到')
+          that.checkLogin()
+        } else {
+          that.axios('/hongcai/rest/users/isSubscribe?openId=' + that.userInfo.openid)
+          .then(function (res) {
+            if (res.data.ret !== -1) {
+              if (res.data && that.takeRecordStatus === -1) {
+                that.$router.replace({name: 'FoolQuestion'})
+              } else {
+                that.showQrCode = true
+              }
+            }
+          })
         }
       },
       closeRules () {
@@ -61,6 +81,21 @@
   }
 </script>
 <style scoped>
+  .fools-qrcode {
+    padding-top: 1.3rem;
+  }
+  .qrcodeBox {
+    width: 65%;
+    margin-top: .5rem;
+    background: rgba(255,0,0,.95);
+    margin: .5rem auto;
+    padding: .25rem .25rem .1rem;
+    border-radius: .2rem;
+  }
+  .qrcodeBox img {
+    width: 100%;
+    border-radius: .2rem;
+  }
   .fools-day {
     background: url('../../images/foolsDay/bg-1.png') no-repeat 0 0;
     background-size: 100% 100%;
