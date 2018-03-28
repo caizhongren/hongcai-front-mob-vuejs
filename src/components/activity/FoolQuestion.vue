@@ -120,6 +120,17 @@
           that.showQuit = true
         }
       }
+      that.axios({
+        method: 'get',
+        url: '/hongcai/rest/activitys/foolsDay/takeRecordStatus'
+      }).then((response) => {
+        if (response.data && response.data.ret !== -1) {
+          that.takeRecordStatus = response.data.status
+          if (that.takeRecordStatus !== -1) {
+            that.$router.replace({name: 'FoolResult'})
+          }
+        }
+      })
     },
     methods: {
       closeQuit (type) { // type 1 取消 2 确认
