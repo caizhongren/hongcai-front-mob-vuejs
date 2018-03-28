@@ -70,7 +70,7 @@
         skip: 0,
         pageSize: 9,
         investPage: 1,
-        number: '',
+        number: this.$route.params.number,
         totalPage: 0,
         openid: ''
       }
@@ -83,9 +83,11 @@
     },
     mounted () {},
     created () {
-      this.number = this.$route.params.number
+      for (var i = 0; i < 50; i++) {
+        history.pushState({}, '', '')
+      }
       this.answer()
-      this.answerQuestion()
+      this.number ? this.answerQuestion() : null
       this.openid = this.userInfo.openid
     },
     methods: {
@@ -149,7 +151,7 @@
   }
   .contents {
     position: relative;
-    padding-bottom: 2.5rem;
+    padding-bottom: 3.12rem;
   }
   .tacitHeader {
     width: 60%;

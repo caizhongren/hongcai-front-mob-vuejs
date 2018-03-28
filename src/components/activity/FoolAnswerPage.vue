@@ -49,7 +49,7 @@
         questionList: [],
         num: 1,
         answerQuestions: [],
-        number: ''
+        number: this.$route.params.number
       }
     },
     watch: {
@@ -57,12 +57,11 @@
     mounted () {},
     created () {
       var that = this
+      that.question()
       history.pushState({page: 'state1'}, 'state', '')
       history.pushState({page: 'state2'}, 'state', '')
-      that.number = that.$route.params.number
-      that.question()
-      sessionStorage.amswerCount = Number(sessionStorage.amswerCount) + 1 || 1
-      if (sessionStorage.amswerCount > 1) {
+      sessionStorage.answerCount = Number(sessionStorage.answerCount) + 1 || 1
+      if (sessionStorage.answerCount > 1) {
         that.showQuit = true
       }
       window.onpopstate = function (event) {
@@ -78,6 +77,7 @@
           if (sessionStorage.answerQuestions) {
             this.answerQuestions = JSON.parse(sessionStorage.answerQuestions)
             this.num = Number(this.answerQuestions.length) + 1
+            this.title = this.questionList[this.num - 1].question
             $($('.nums li')[0]).removeClass('selectNumBg')
             $($('.nums li')[this.num - 1]).addClass('selectNumBg')
           } else {
@@ -85,6 +85,8 @@
             history.pushState({page: 'state2'}, 'state', '')
           }
         } else {
+          sessionStorage.answerCount = null
+          sessionStorage.answerQuestions = null
           wx.closeWindow()
         }
       },
@@ -96,7 +98,7 @@
         var question = that.questionList[that.num - 1]
         question.commitAnswer = type
         that.answerQuestions.push(question)
-        sessionStorage.answerQuestions = JSON.stringify(that.answerQuestionss)
+        sessionStorage.answerQuestions = JSON.stringify(that.answerQuestions)
         if (that.num === 5) {
           that.$http.post('/hongcai/rest/activitys/foolsDay/answerQuestion', {
             number: that.number,
