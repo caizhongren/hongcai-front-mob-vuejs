@@ -175,7 +175,7 @@
       exchange (user) {
         var that = this
         that.$http.post('/hongcai/rest/activitys/foolsDay/takeReward', {
-          token: that.token
+          mobile: user.mobile
         }).then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.$router.replace({name: 'FoolSuccess', query: {mobile: user.mobile}})
