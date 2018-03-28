@@ -117,6 +117,7 @@
       })
     },
     created () {
+      var that = this
       history.pushState({page: 'state1'}, null, '')
       history.pushState({page: 'state2'}, null, location.href)
       sessionStorage.questionCount = Number(sessionStorage.questionCount) + 1 || 1
@@ -132,7 +133,6 @@
           that.showQuit = true
         }
       }
-      var that = this
       that.getSystemQuestions()
       that.getTakeRecordStatus()
     },
