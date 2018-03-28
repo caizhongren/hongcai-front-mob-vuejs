@@ -153,8 +153,7 @@
     height: 2.5rem;
   }
   .contents {
-    /* position: relative; */
-    padding-bottom: 2.5rem;
+    padding-bottom: 2.2rem;
   }
   .tacitHeader {
     width: 60%;
@@ -188,7 +187,7 @@
     background: rgba(0,0,0,.7);
     height: 1.1rem;
     line-height: 1.22rem;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     padding: 0 .35rem;
   }
