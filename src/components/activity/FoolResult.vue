@@ -18,7 +18,7 @@
       </div>
       <div class="inviteTitle">
         <img src="../../images/foolsDay/moqidu.png" alt="" width="36%">
-        <span>(共{{answerPeople}} 人)</span>
+        <span>(共{{answerPeople}}人)</span>
       </div>
       <ul class="inviteList">
         <li v-for="item in inviteList">
