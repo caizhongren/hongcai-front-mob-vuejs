@@ -112,12 +112,12 @@
               that.$router.replace({name: 'FoolTacit', params: {number: that.number}})
             }
           })
-          return
+        } else {
+          $($('.nums li')[that.num - 1]).removeClass('selectNumBg')
+          $($('.nums li')[that.num]).addClass('selectNumBg')
+          that.title = that.questionList[that.num].question
+          that.num += 1
         }
-        $($('.nums li')[that.num - 1]).removeClass('selectNumBg')
-        $($('.nums li')[that.num]).addClass('selectNumBg')
-        that.title = that.questionList[that.num].question
-        that.num += 1
       },
       question () { // 我的问题
         var that = this
