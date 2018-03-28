@@ -66,11 +66,16 @@
           alert('openid未获取到')
           that.checkLogin()
         } else {
-          if (that.takeRecordStatus === -1) {
-            that.$router.replace({name: 'FoolQuestion'})
-          } else {
-            that.showQrCode = true
-          }
+          that.axios('/hongcai/rest/wechat/subscribeStatus')
+          .then(function (res) {
+            if (res.data.ret !== -1) {
+              if (res.data && that.takeRecordStatus === -1) {
+                that.$router.replace({name: 'FoolQuestion'})
+              } else {
+                that.showQrCode = true
+              }
+            }
+          })
         }
       },
       closeRules () {
