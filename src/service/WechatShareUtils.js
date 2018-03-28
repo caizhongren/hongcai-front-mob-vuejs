@@ -11,7 +11,7 @@ let WechatShareUtils = {
     that.$http('/hongcai/rest/wechat/jsApiConfig?requestUrl=' + encodeURIComponent(currentUrl)).then(function (apiConfig) {
       console.log('apiConfig: ' + process.env.wechatAppid)
       wx.config({
-        debug: true,
+        debug: false,
         appId: process.env.wechatAppid, // 必填，公众号的唯一标识
         timestamp: apiConfig.data.timestamp, // 必填，生成签名的时间戳
         nonceStr: apiConfig.data.nonceStr, // 必填，生成签名的随机串
@@ -31,7 +31,6 @@ let WechatShareUtils = {
       link: shareLink,
       imgUrl: imgUrl,
       trigger: function (res) {
-        alert(1)
       },
       success: function (res) {
         // 分享成功后隐藏分享引导窗口
@@ -44,7 +43,6 @@ let WechatShareUtils = {
       cancel: function (res) {
       },
       fail: function (res) {
-        alert(2)
       }
     })
     wx.onMenuShareTimeline({
