@@ -9,8 +9,6 @@
       return {
         wechat_code: this.$route.query.code,
         userInfo: {
-          nickName: 'yy',
-          headImgUrl: 'http://test321.hongcai.com/uploads/jpeg/original/2018-03-22/image/73177830c21f4bc682c358cdaaba2ef3-original.jpeg',
           openid: 'oBBBjs6uL13Z7E03h5E2hEOnM_l8'
         }
       }

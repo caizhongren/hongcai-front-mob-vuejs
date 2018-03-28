@@ -2,7 +2,7 @@
   <!-- 答题主页面 -->
   <div class="fools-answer" v-client-height>
     <div class="portrait">
-      <img v-bind:src="userInfo.headImgUrl" alt="">
+      <img v-bind:src="answerHeadImgUrl" alt="">
     </div>
     <img src="../../images/foolsDay/answer-txt.png" alt="文案" width="74%">
     <div class="startAnswer" @click="startAnswer">
@@ -14,27 +14,46 @@
   export default {
     data () {
       return {
+        answerNum: '',
+        answerHeadImgUrl: ''
       }
     },
-    props: ['userInfo'],
-    watch: {},
+    watch: {
+      answerNum: function (val) {
+        val && val === Number(this.$route.params.number) ? this.$router.replace({name: 'FoolResult'}) : null
+      }
+    },
     mounted () {},
     created () {
-      var that = this
-      that.$http('/hongcai/rest/activitys/foolsDay/number').then(function (res) {
-        if (res.data && res.data.ret !== -1) {
-          res.data === Number(that.$route.params.number) ? that.$router.replace({name: 'FoolResult'}) : that.hasAnswer()
-        }
-      })
+      this.hasAnswer()
+      this.getQuestionImg()
+      this.getAnswerNum()
     },
     methods: {
+      getAnswerNum () {
+        var that = this
+        that.axios('/hongcai/rest/activitys/foolsDay/number').then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.answerNum = res.data
+          }
+        })
+      },
+      getQuestionImg () {
+        var that = this
+        that.axios('/hongcai/rest/activitys/foolsDay/questionHeadImg?number=' + that.$route.params.number).then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.answerHeadImgUrl = res.data
+          }
+        })
+      },
       hasAnswer () {
         var that = this
         var number = that.$route.params.number
-        that.$http('/hongcai/rest/activitys/foolsDay/checkAnswerQuestion?number=' + number)
+        that.axios('/hongcai/rest/activitys/foolsDay/checkAnswerQuestion?number=' + number)
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
-            that.$router.replace({name: 'FoolTacit', params: {number: that.number}})
+            console.log(res)
+            that.$router.replace({name: 'FoolTacit', params: {number: number}})
           } else {
           }
         })
