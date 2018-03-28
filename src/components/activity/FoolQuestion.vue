@@ -241,7 +241,7 @@
       },
       saveUserQuestions () { // 提交用户设置的问题
         var that = this
-        that.$http.post('/hongcai/rest/activitys/foolsDay/saveQuestion', {
+        that.$http.post('/hongcai/rest/activitys/foolsDay/question', {
           userQuestions: JSON.stringify(that.saveQuestions)
         }).then((res) => {
           if (res.data === 5) {

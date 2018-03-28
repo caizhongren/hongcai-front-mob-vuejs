@@ -104,7 +104,7 @@
       // 答题详情
       answerQuestion () {
         var that = this
-        that.axios('/hongcai/rest/activitys/foolsDay/checkAnswerQuestion?number=' + that.number)
+        that.axios('/hongcai/rest/activitys/foolsDay/' + that.number + '/checkAnswerQuestion')
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.answerUserName = res.data.nickName

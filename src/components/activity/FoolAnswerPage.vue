@@ -103,7 +103,7 @@
         that.answerQuestions.push(question)
         sessionStorage.answerQuestions = JSON.stringify(that.answerQuestions)
         if (that.num === 5) {
-          that.$http.post('/hongcai/rest/activitys/foolsDay/answerQuestion', {
+          that.$http.post('/hongcai/rest/activitys/foolsDay/question/' + that.number + '/answer', {
             number: that.number,
             answerQuestions: that.answerQuestions
           })

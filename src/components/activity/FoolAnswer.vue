@@ -56,7 +56,7 @@
       hasAnswer () {
         var that = this
         var number = that.$route.params.number
-        that.axios('/hongcai/rest/activitys/foolsDay/checkAnswerQuestion?number=' + number)
+        that.axios('/hongcai/rest/activitys/foolsDay/question/' + number + '/checkAnswerQuestion')
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.$router.replace({name: 'FoolTacit', params: {number: number}})
