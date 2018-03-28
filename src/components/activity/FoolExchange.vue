@@ -138,6 +138,7 @@
       },
       register (user) {
         var that = this
+        if (that.busy) { return }
         that.busy = true
         that.$http.post('/hongcai/rest/users/register', {
           picCaptcha: user.picCaptcha,
@@ -198,9 +199,13 @@
           that.$parent.showErrMsg('请输入正确的手机号！')
           return
         }
+        that.busy = true
         that.$http.post('/hongcai/rest/users/isUnique', {
           account: user.mobile
         }).then(function (res) {
+          setTimeout(function () {
+            that.busy = false
+          }, 1000)
           if (res.data && res.data.ret === -1) { // 已注册
             // 调用领取奖励接口
             that.exchange(user)

@@ -1,9 +1,15 @@
 <template>
   <!-- 活动主页面 -->
-  <router-view :userInfo="userInfo" :checkLogin="checkLogin"></router-view>
+  <div>
+    <div class="fools-orient mask-common" v-client-height v-if="showOrient">
+      请勿横屏，影响体验效果哦！
+    </div>
+    <router-view :userInfo="userInfo" :checkLogin="checkLogin"></router-view>
+  </div>
 </template>
 <script>
-  import {Utils} from '../../service/Utils.js'
+  import $ from 'zepto'
+  import {Utils, ModalHelper} from '../../service/Utils.js'
   import {WechatShareUtils} from '../../service/WechatShareUtils'
   export default {
     data () {
@@ -12,7 +18,8 @@
         userInfo: {
           openid: ''
         },
-        entryUrl: ''
+        entryUrl: '',
+        showOrient: false
       }
     },
     props: ['showErrMsg'],
@@ -22,6 +29,9 @@
         if (!Utils.isIos() && (routerName === 'FoolDaysIndex' || routerName === 'FoolQuestion' || routerName === 'FoolResult')) {
           WechatShareUtils.configJsApi()
         }
+      },
+      showOrient: function (val) {
+        val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
     mounted () {},
@@ -29,8 +39,22 @@
       this.checkLogin()
       this.entryUrl = window.location.href
       WechatShareUtils.configJsApi(this.entryUrl)
+      if (window.orientation === 90 || window.orientation === -90) {
+        this.showOrient = true
+      }
+      var that = this
+      $(window).bind('orientationchange', function (e) {
+        that.orient(window.orientation)
+      })
     },
     methods: {
+      orient (val) {
+        if (val === 90 || val === -90) { // 判断手机竖横屏状态
+          this.showOrient = true
+        } else if (val === 180 || val === 0) { // 判断手机竖屏状态
+          this.showOrient = false
+        }
+      },
       checkLogin () {
         var that = this
         that.axios({
@@ -68,3 +92,10 @@
     desrtoyed () {}
   }
 </script>
+<style scoped>
+  .fools-orient {
+    color: #fff;
+    font-size: .26rem;
+    padding: 1rem 0;
+  }
+</style>
