@@ -66,7 +66,11 @@
         isRegister: true
       }
     },
+    props: ['checkLogin', 'userInfo'],
     watch: {
+      userInfo: function (val) {
+        val && val.id > 0 ? null : this.checkLogin()
+      }
     },
     mounted () {
     },

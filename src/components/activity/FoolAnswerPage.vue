@@ -52,7 +52,11 @@
         number: this.$route.params.number
       }
     },
+    props: ['checkLogin', 'userInfo'],
     watch: {
+      userInfo: function (val) {
+        val && val.id > 0 ? null : this.checkLogin()
+      }
     },
     mounted () {},
     created () {
