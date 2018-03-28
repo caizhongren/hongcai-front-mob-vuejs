@@ -5,8 +5,6 @@ let WechatShareUtils = {
   configJsApi: function () {
     alert(1111)
     var url = location.href.split('#')[0]
-    console.log(Vue)
-    console.log(that)
     that.$http('/hongcai/rest/wechat/jsApiConfig?requestUrl=' + encodeURIComponent(url)).then(function (apiConfig) {
       console.log('apiConfig: ' + process.env.wechatAppid)
       wx.config({

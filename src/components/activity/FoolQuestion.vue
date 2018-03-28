@@ -113,9 +113,9 @@
       })
     },
     created () {
+      history.pushState({page: 'state1'}, null, '')
+      history.pushState({page: 'state2'}, null, location.href)
       var that = this
-      history.pushState({page: 'state1'}, 'state', '')
-      history.pushState({page: 'state2'}, 'state', '')
       that.getSystemQuestions()
       sessionStorage.questionCount = Number(sessionStorage.questionCount) + 1 || 1
       if (sessionStorage.questionCount > 1) {
@@ -123,6 +123,9 @@
         that.alertTips = false
       }
       window.onpopstate = function (event) {
+        history.pushState({page: 'state1'}, null, '')
+        history.pushState({page: 'state2'}, null, location.href)
+        console.log(event.state.page)
         if (event.state.page === 'state1') {
           that.showQuit = true
         }
@@ -149,8 +152,6 @@
             $($('.nums li')[0]).removeClass('selectNumBg')
             $($('.nums li')[this.num - 1]).addClass('selectNumBg')
           } else {
-            history.pushState({page: 'state1'}, 'state', '')
-            history.pushState({page: 'state2'}, 'state', '')
           }
         } else {
           wx.closeWindow()

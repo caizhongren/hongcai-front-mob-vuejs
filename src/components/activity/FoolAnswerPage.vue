@@ -58,13 +58,15 @@
     created () {
       var that = this
       that.question()
-      history.pushState({page: 'state1'}, 'state', '')
-      history.pushState({page: 'state2'}, 'state', '')
+      history.pushState({page: 'state1'}, null, '')
+      history.pushState({page: 'state2'}, null, location.href)
       sessionStorage.answerCount = Number(sessionStorage.answerCount) + 1 || 1
       if (sessionStorage.answerCount > 1) {
         that.showQuit = true
       }
       window.onpopstate = function (event) {
+        history.pushState({page: 'state1'}, null, '')
+        history.pushState({page: 'state2'}, null, location.href)
         if (event.state.page === 'state1') {
           that.showQuit = true
         }
@@ -81,8 +83,6 @@
             $($('.nums li')[0]).removeClass('selectNumBg')
             $($('.nums li')[this.num - 1]).addClass('selectNumBg')
           } else {
-            history.pushState({page: 'state1'}, 'state', '')
-            history.pushState({page: 'state2'}, 'state', '')
           }
         } else {
           sessionStorage.answerCount = null
