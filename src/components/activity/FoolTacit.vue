@@ -1,6 +1,6 @@
 <template>
   <!-- 默契度主页面 -->
-  <div class="fools-tacit" v-client-height>
+  <div class="fools-tacit" id="fools-tacit">
     <div class="header"></div>
     <div class="contents">
       <div class="tacitHeader">{{tacitTips[tacit / 20]}}</div>
@@ -32,7 +32,7 @@
           <img v-bind:src="item.headImg" alt=""/>
           <span>{{item.tacit}}%</span>
         </li>
-        <li v-if="totalPage > investPage">
+        <li v-if="investPage < Math.ceil(total/pageSize)">
           <img src="../../images/foolsDay/result-more.png" alt="查看更多" class="loadMore" @click="loadMore">
         </li>
       </ul>
@@ -71,8 +71,7 @@
         pageSize: 9,
         investPage: 1,
         number: this.$route.params.number,
-        totalPage: 0,
-        openid: ''
+        total: 0
       }
     },
     props: ['userInfo'],
@@ -81,19 +80,20 @@
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
-    mounted () {},
+    mounted () {
+      this.inviteList.length <= 0 ? document.getElementById('fools-tacit').style.height = document.documentElement.clientHeight + 'px' : null
+    },
     created () {
       for (var i = 0; i < 50; i++) {
         history.pushState({}, '', '')
       }
       this.answer()
       this.number ? this.answerQuestion() : null
-      this.openid = this.userInfo.openid
     },
     methods: {
       join () {
         var that = this
-        that.axios('/hongcai/rest/users/isSubscribe?openId=' + that.openid)
+        that.axios('/hongcai/rest/users/isSubscribe?openId=' + that.userInfo.openid)
         .then(function (res) {
           res.data ? that.$router.replace({name: 'FoolDaysIndex'}) : that.showQrCode = true
         })
@@ -119,7 +119,7 @@
         var that = this
         that.$http('/hongcai/rest/activitys/foolsDay/answer?pageSize=' + that.pageSize + '&skip=' + that.skip)
         .then(function (res) {
-          that.totalPage = res.data.totalPage
+          that.total = res.data.total
           var List = res.data.data
           for (var i = 0; i < List.length; i++) {
             that.inviteList.push(List[i])
@@ -150,8 +150,8 @@
     height: 2.5rem;
   }
   .contents {
-    position: relative;
-    padding-bottom: 3.12rem;
+    /* position: relative; */
+    padding-bottom: 2.5rem;
   }
   .tacitHeader {
     width: 60%;

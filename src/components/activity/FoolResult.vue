@@ -25,7 +25,7 @@
           <img v-bind:src="item.headImg" alt=""/>
           <span>{{item.tacit}}%</span>
         </li>
-        <li v-if="totalPage > investPage" >
+        <li v-if="investPage < Math.ceil(total/pageSize)" >
           <img src="../../images/foolsDay/result-more.png" alt="" class="loadMore" @click="loadMore">
         </li>
       </ul>
@@ -82,7 +82,7 @@
         skip: 0,
         pageSize: 9,
         investPage: 1,
-        totalPage: 0
+        total: 0
       }
     },
     watch: {
@@ -127,7 +127,7 @@
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
             var List = res.data.data
-            that.totalPage = res.data.totalPage
+            that.total = res.data.total
             for (var i = 0; i < List.length; i++) {
               that.inviteList.push(List[i])
             }
