@@ -22,8 +22,8 @@
     </div>
     <div class="question">{{title}}</div>
     <ul class="selectBtns">
-      <li class="noBelieve" @click="choose(1)"></li>
-      <li class="believe" @click="choose(2)"></li>
+      <li class="noBelieve" @click="choose(2)"></li>
+      <li class="believe" @click="choose(1)"></li>
     </ul>
     <div class="tipBox">
       <img src="../../images/foolsDay/answer-tips.png" alt="">
