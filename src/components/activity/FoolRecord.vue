@@ -50,7 +50,7 @@
       this.recordList.length <= 0 ? document.getElementById('fools-record').style.height = document.documentElement.clientHeight + 'px' : null
     },
     created () {
-      this.getRank()
+      this.userInfo.id > 0 ? this.getRank() : null
     },
     methods: {
       getRank () { // 排行榜

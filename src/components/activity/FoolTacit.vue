@@ -90,7 +90,7 @@
       for (var i = 0; i < 50; i++) {
         history.pushState({}, '', '')
       }
-      this.answer()
+      this.userInfo.id > 0 ? this.answer() : null
       this.number ? this.answerQuestion() : null
     },
     methods: {

@@ -17,7 +17,6 @@
     watch: {},
     mounted () {},
     created: function () {
-      console.log('sss')
       this.checkLogin()
     },
     methods: {

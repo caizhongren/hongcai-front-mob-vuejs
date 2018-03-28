@@ -29,9 +29,7 @@
     },
     mounted () {},
     created () {
-      this.hasAnswer()
-      this.getQuestionImg()
-      this.getAnswerNum()
+      this.userInfo.id > 0 ? (this.hasAnswer(), this.getQuestionImg(), this.getAnswerNum()) : null
     },
     methods: {
       getAnswerNum () {

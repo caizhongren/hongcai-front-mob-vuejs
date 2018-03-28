@@ -134,7 +134,7 @@
         }
       }
       that.getSystemQuestions()
-      that.getTakeRecordStatus()
+      that.userInfo.id > 0 ? that.getTakeRecordStatus() : null
     },
     methods: {
       getTakeRecordStatus () {

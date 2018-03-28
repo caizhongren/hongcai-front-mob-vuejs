@@ -101,9 +101,7 @@
       WechatShareUtils.configJsApi()
     },
     created () {
-      this.answerUsersCount()
-      this.answer()
-      this.getFoolsQuestionNumber()
+      this.userInfo.id > 0 ? (this.answerUsersCount(), this.answer(), this.getFoolsQuestionNumber()) : null
     },
     methods: {
       // 获取问题编号
