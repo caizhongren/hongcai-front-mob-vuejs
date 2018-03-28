@@ -85,7 +85,11 @@
         total: 0
       }
     },
+    props: ['checkLogin', 'userInfo'],
     watch: {
+      userInfo: function (val) {
+        val && val.id > 0 ? (this.answerUsersCount(), this.answer(), this.getFoolsQuestionNumber()) : this.checkLogin()
+      },
       unReach: function (val) {
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       },
@@ -99,18 +103,22 @@
     created () {
       this.answerUsersCount()
       this.answer()
-      var that = this
-      that.$http('/hongcai/rest/activitys/foolsDay/number').then(function (res) {
-        if (res.data && res.data.ret !== -1) {
-          that.number = res.data
-          wx.ready(function () {
-            var shareLink = process.env.vue_domain + '/activity/fools-day/answer/' + that.number
-            WechatShareUtils.onMenuShareAppMessage('你看得出我在说谎吗？', '认识了那么久，你有把握我说的每句话都是真心话吗？', shareLink, 'https://mmbiz.qpic.cn/mmbiz_png/8MZDOEkib8AnEm8IKUChDJ7X50kEO9u4GxRe5kwWibuAEq0mOHqmyZnsAk27P9lMk2NjCM0VOFBXPf4nByXcFI5g/0?wx_fmt=png')
-          })
-        }
-      })
+      this.getFoolsQuestionNumber()
     },
     methods: {
+      // 获取问题编号
+      getFoolsQuestionNumber () {
+        var that = this
+        that.$http('/hongcai/rest/activitys/foolsDay/number').then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.number = res.data
+            wx.ready(function () {
+              var shareLink = process.env.vue_domain + '/activity/fools-day/answer/' + that.number
+              WechatShareUtils.onMenuShareAppMessage('你看得出我在说谎吗？', '认识了那么久，你有把握我说的每句话都是真心话吗？', shareLink, 'https://mmbiz.qpic.cn/mmbiz_png/8MZDOEkib8AnEm8IKUChDJ7X50kEO9u4GxRe5kwWibuAEq0mOHqmyZnsAk27P9lMk2NjCM0VOFBXPf4nByXcFI5g/0?wx_fmt=png')
+            })
+          }
+        })
+      },
       // 答题人数
       answerUsersCount () {
         var that = this

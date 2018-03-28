@@ -99,7 +99,11 @@
         selectSystemQuestionId: 0
       }
     },
+    props: ['checkLogin', 'userInfo'],
     watch: {
+      userInfo: function (val) {
+        val && val.id > 0 ? this.getTakeRecordStatus() : this.checkLogin()
+      },
       alertDefinedTitle: function (val) {
         // var handleEle = document.getElementById('tipBox')
         // val ? InputMaskHelper.windowChange(handleEle) : null
@@ -115,8 +119,6 @@
     created () {
       history.pushState({page: 'state1'}, null, '')
       history.pushState({page: 'state2'}, null, location.href)
-      var that = this
-      that.getSystemQuestions()
       sessionStorage.questionCount = Number(sessionStorage.questionCount) + 1 || 1
       if (sessionStorage.questionCount > 1) {
         that.showQuit = true
@@ -130,19 +132,25 @@
           that.showQuit = true
         }
       }
-      that.axios({
-        method: 'get',
-        url: '/hongcai/rest/activitys/foolsDay/takeRecordStatus'
-      }).then((response) => {
-        if (response.data && response.data.ret !== -1) {
-          that.takeRecordStatus = response.data.status
-          if (that.takeRecordStatus !== -1) {
-            that.$router.replace({name: 'FoolResult'})
-          }
-        }
-      })
+      var that = this
+      that.getSystemQuestions()
+      that.getTakeRecordStatus()
     },
     methods: {
+      getTakeRecordStatus () {
+        var that = this
+        that.axios({
+          method: 'get',
+          url: '/hongcai/rest/activitys/foolsDay/takeRecordStatus'
+        }).then((response) => {
+          if (response.data && response.data.ret !== -1) {
+            that.takeRecordStatus = response.data.status
+            if (that.takeRecordStatus !== -1) {
+              that.$router.replace({name: 'FoolResult'})
+            }
+          }
+        })
+      },
       closeQuit (type) { // type 1 取消 2 确认
         this.showQuit = false
         if (type === 1) {
@@ -171,7 +179,6 @@
           return
         }
         this.alertDefinedTitle = false
-        console.log(this.question.question)
         if (this.defined.question !== this.question.question) {
           this.defined.question = CheckWordsUtils.filter(this.defined.question)
           this.question.question = this.defined.question
@@ -201,7 +208,6 @@
             }
           }
         }
-        console.log(this.saveQuestions)
         sessionStorage.saveQuestion = JSON.stringify(this.saveQuestions)
         if (this.num === 5) {
           this.saveUserQuestions()

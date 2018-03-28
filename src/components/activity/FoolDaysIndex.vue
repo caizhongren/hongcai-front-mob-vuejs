@@ -31,7 +31,11 @@
       }
     },
     props: ['checkLogin', 'userInfo'],
-    watch: {},
+    watch: {
+      userInfo: function (val) {
+        val && val.id > 0 ? this.getTakeRecordStatus() : this.checkLogin()
+      }
+    },
     mounted () {
       WechatShareUtils.configJsApi()
       wx.ready(function () {
@@ -41,19 +45,23 @@
     },
     created () {
       var that = this
-      that.axios({
-        method: 'get',
-        url: '/hongcai/rest/activitys/foolsDay/takeRecordStatus'
-      }).then((response) => {
-        if (response.data && response.data.ret !== -1) {
-          that.takeRecordStatus = response.data.status
-          if (that.takeRecordStatus !== -1) {
-            that.$router.replace({name: 'FoolResult'})
-          }
-        }
-      })
+      that.getTakeRecordStatus()
     },
     methods: {
+      getTakeRecordStatus () {
+        var that = this
+        that.axios({
+          method: 'get',
+          url: '/hongcai/rest/activitys/foolsDay/takeRecordStatus'
+        }).then((response) => {
+          if (response.data && response.data.ret !== -1) {
+            that.takeRecordStatus = response.data.status
+            if (that.takeRecordStatus !== -1) {
+              that.$router.replace({name: 'FoolResult'})
+            }
+          }
+        })
+      },
       setQuestion () {
         var that = this
         if (that.userInfo.openid === '' || that.userInfo.openid === undefined) {
