@@ -72,16 +72,20 @@
         pageSize: 9,
         investPage: 1,
         number: this.$route.params.number,
-        total: 0
+        total: 0,
+        answerNum: ''
       }
     },
     props: ['userInfo', 'checkLogin'],
     watch: {
       userInfo: function (val) {
-        val && val.id > 0 ? this.answer() : this.checkLogin()
+        val && val.id > 0 ? (this.answer(), this.getAnswerNum()) : this.checkLogin()
       },
       showQrCode: function (val) {
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+      },
+      answerNum: function (val) {
+        val && val === Number(this.$route.params.number) ? this.$router.replace({name: 'FoolResult'}) : null
       }
     },
     mounted () {
@@ -90,7 +94,7 @@
       this.inviteList.length <= 0 ? document.getElementById('fools-tacit').style.height = document.documentElement.clientHeight + 'px' : null
     },
     created () {
-      this.userInfo.id > 0 ? this.answer() : null
+      this.userInfo.id > 0 ? (this.answer(), this.getAnswerNum()) : null
       this.number ? this.answerQuestion() : null
       window.onpopstate = function (event) {
         if (event.state.page === 'state1') {
@@ -99,6 +103,14 @@
       }
     },
     methods: {
+      getAnswerNum () {
+        var that = this
+        that.axios('/hongcai/rest/activitys/foolsDay/question/number').then(function (res) {
+          if (res.data && res.data.ret !== -1) {
+            that.answerNum = res.data
+          }
+        })
+      },
       join () {
         var that = this
         that.axios('/hongcai/rest/wechat/subscribeStatus')
