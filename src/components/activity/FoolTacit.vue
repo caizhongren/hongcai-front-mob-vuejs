@@ -120,7 +120,7 @@
       // 好有默契度
       answer () {
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/answer?number=' + that.number + '&pageSize=' + that.pageSize + '&skip=' + that.skip)
+        that.$http('/hongcai/rest/activitys/foolsDay/question/' + that.number + '/answers?pageSize=' + that.pageSize + '&skip=' + that.skip)
         .then(function (res) {
           that.total = res.data.total
           var List = res.data.data

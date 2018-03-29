@@ -106,7 +106,7 @@
         that.answerQuestions.push(question)
         sessionStorage.answerQuestions = JSON.stringify(that.answerQuestions)
         if (that.num === 5) {
-          that.$http.post('/hongcai/rest/activitys/foolsDay/question/' + that.number + '/answer', {
+          that.axios.post('/hongcai/rest/activitys/foolsDay/question/' + that.number + '/answers', {
             number: that.number,
             answerQuestions: that.answerQuestions
           })
@@ -124,7 +124,7 @@
       },
       question () { // 我的问题
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/question?number=' + that.number).then(function (res) {
+        that.axios('/hongcai/rest/activitys/foolsDay/question?number=' + that.number).then(function (res) {
           if (res.data.code === -1321) {
             alert('没有创建问题')
             return

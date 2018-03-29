@@ -228,7 +228,7 @@
       },
       getSystemQuestions () { // 系统题库查询
         var that = this
-        that.$http({ // 获取服务器时间
+        that.axios({ // 获取服务器时间
           method: 'get',
           url: '/hongcai/rest/activitys/foolsDay/question/system'
         }).then((response) => {
@@ -245,7 +245,7 @@
       },
       saveUserQuestions () { // 提交用户设置的问题
         var that = this
-        that.$http.post('/hongcai/rest/activitys/foolsDay/question', {
+        that.axios.post('/hongcai/rest/activitys/foolsDay/question', {
           userQuestions: JSON.stringify(that.saveQuestions)
         }).then((res) => {
           if (res.data === 5) {

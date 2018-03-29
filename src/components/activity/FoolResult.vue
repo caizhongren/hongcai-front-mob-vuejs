@@ -106,7 +106,7 @@
       // 获取问题编号
       getFoolsQuestionNumber () {
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/number').then(function (res) {
+        that.axios('/hongcai/rest/activitys/foolsDay/question/number').then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.number = res.data
             that.number ? that.answer() : null
@@ -120,7 +120,7 @@
       // 答题人数
       answerUsersCount () {
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/answerUsersCount').then(function (res) {
+        that.axios('/hongcai/rest/activitys/foolsDay/answerUsersCount').then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.answerPeople = res.data
           }
@@ -129,7 +129,7 @@
       // 好有默契度
       answer () {
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/answer?number=' + that.number + '&pageSize=' + that.pageSize + '&skip=' + that.skip)
+        that.axios('/hongcai/rest/activitys/foolsDay/question/' + that.number + '/answers?pageSize=' + that.pageSize + '&skip=' + that.skip)
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
             var List = res.data.data
@@ -165,7 +165,7 @@
         if (that.answerPeople < 5) {
           that.unReach = true
         } else {
-          that.$http('/hongcai/rest/activitys/foolsDay/takeRecordStatus').then(function (res) {
+          that.axios('/hongcai/rest/activitys/foolsDay/takeRecordStatus').then(function (res) {
             if (res.data && res.data.ret !== -1) {
               let status = res.data.status
               // status -1，未出题，0，未达到领取条件，1 可领，2 已领取

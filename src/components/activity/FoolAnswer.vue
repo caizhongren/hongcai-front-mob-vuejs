@@ -35,7 +35,7 @@
     methods: {
       getAnswerNum () {
         var that = this
-        that.axios('/hongcai/rest/activitys/foolsDay/number').then(function (res) {
+        that.axios('/hongcai/rest/activitys/foolsDay/question/number').then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.answerNum = res.data
           }
@@ -43,7 +43,7 @@
       },
       getQuestionImg () {
         var that = this
-        that.axios('/hongcai/rest/activitys/foolsDay/questionHeadImg?number=' + that.$route.params.number).then(function (res) {
+        that.axios('/hongcai/rest/activitys/foolsDay/question/' + that.$route.params.number + '/questionHeadImg').then(function (res) {
           if (res.data && res.data.ret !== -1) {
             if (res.data.endsWith('96')) {
               that.answerHeadImgUrl = res.data.substring(0, res.data.length - 2) + '0'

@@ -78,7 +78,7 @@
     methods: {
       // 图形验证码
       refreshCode () {
-        this.$http.get('/hongcai/rest/captchas', {
+        this.axios.get('/hongcai/rest/captchas', {
           code: Math.random()
         })
         .then(function (res) {
@@ -105,7 +105,7 @@
         var that = this
         that.canGetCaptch = false
         // 短信验证码接口 & 动画
-        that.$http.post('/hongcai/rest/users/mobileCaptcha', {
+        that.axios.post('/hongcai/rest/users/mobileCaptcha', {
           mobile: that.user.mobile,
           picCaptcha: that.user.picCaptcha,
           type: that.user.mobileCaptchaType,
@@ -140,7 +140,7 @@
         var that = this
         if (that.busy) { return }
         that.busy = true
-        that.$http.post('/hongcai/rest/users/register', {
+        that.axios.post('/hongcai/rest/users/register', {
           picCaptcha: user.picCaptcha,
           mobile: user.mobile,
           password: '',
@@ -175,7 +175,7 @@
       },
       exchange (user) {
         var that = this
-        that.$http.post('/hongcai/rest/activitys/foolsDay/rewardRecord', {
+        that.axios.post('/hongcai/rest/activitys/foolsDay/rewardRecord', {
           mobile: user.mobile
         }).then(function (res) {
           if (res.data && res.data.ret !== -1) {
@@ -200,7 +200,7 @@
           return
         }
         that.busy = true
-        that.$http.post('/hongcai/rest/users/isUnique', {
+        that.axios.post('/hongcai/rest/users/isUnique', {
           account: user.mobile
         }).then(function (res) {
           setTimeout(function () {

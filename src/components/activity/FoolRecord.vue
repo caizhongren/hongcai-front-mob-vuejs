@@ -55,7 +55,7 @@
     methods: {
       getRank () { // 排行榜
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/rank').then(function (res) {
+        that.axios('/hongcai/rest/activitys/foolsDay/rank').then(function (res) {
           that.recordList = res.data.foolRanks
           that.recordList.length <= 0 ? document.getElementById('fools-record').style.height = document.documentElement.clientHeight + 'px' : document.getElementById('fools-record').style.height = 'auto'
           that.ranking = res.data.rank

@@ -54,7 +54,7 @@
     methods: {
       question () { // 成绩单
         var that = this
-        that.$http('/hongcai/rest/activitys/foolsDay/question?number=' + that.$route.params.number).then(function (res) {
+        that.axios('/hongcai/rest/activitys/foolsDay/question?number=' + that.$route.params.number).then(function (res) {
           that.questionList = res.data.data
           if (that.questionList.length === 0) {
             that.questionList.length <= 0 ? document.getElementById('fools-reportCard').style.height = document.documentElement.clientHeight + 'px' : null
