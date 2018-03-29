@@ -1,8 +1,9 @@
 <template>
   <!-- 活动主页面 -->
   <div>
-    <div class="fools-orient mask-common" v-client-height v-if="showOrient">
-      请勿横屏，影响体验效果哦！
+    <div class="fools-orient mask-common" v-client-height v-if="showOrient || activityStatus === 2">
+      <p v-show="showOrient">请勿横屏，影响体验效果哦！</p> 
+      <img v-show="activityStatus === 2" src="../../images/foolsDay/activityEnd.png" alt="活动结束" class="activityEnd" width="60%">
     </div>
     <router-view :userInfo="userInfo" :checkLogin="checkLogin"></router-view>
   </div>
@@ -19,13 +20,15 @@
           openid: ''
         },
         entryUrl: '',
-        showOrient: false
+        showOrient: false,
+        activityStatus: 1
       }
     },
     props: ['showErrMsg'],
     watch: {
       '$route': function () {
         var routerName = this.$route.name
+        this.getActivityStatus()
         if (!Utils.isIos() && (routerName === 'FoolDaysIndex' || routerName === 'FoolQuestion' || routerName === 'FoolResult')) {
           WechatShareUtils.configJsApi()
         }
@@ -37,6 +40,7 @@
     mounted () {},
     created: function () {
       this.checkLogin()
+      this.getActivityStatus()
       this.entryUrl = window.location.href
       WechatShareUtils.configJsApi(this.entryUrl)
       if (window.orientation === 90 || window.orientation === -90) {
@@ -48,6 +52,12 @@
       })
     },
     methods: {
+      getActivityStatus () { // 活动信息查询
+        var that = this
+        that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
+          that.activityStatus = res.data.status
+        })
+      },
       orient (val) {
         if (val === 90 || val === -90) { // 判断手机竖横屏状态
           this.showOrient = true
@@ -97,5 +107,9 @@
     color: #fff;
     font-size: .26rem;
     padding: 1rem 0;
+    z-index: 9999999999;
+  }
+  .activityEnd {
+    margin-top: 3rem;
   }
 </style>

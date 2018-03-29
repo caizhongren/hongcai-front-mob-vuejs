@@ -242,6 +242,8 @@
     overflow: hidden;
     width: 94%;
     margin: -8% auto 0;
+    position: relative;
+    z-index: 2;
   }
   .selectBtns li {
     float: left;
@@ -304,6 +306,13 @@
   }
   .tipBox img {
     width: 90%;
+  }
+  @media (height: 532px) {
+    .clown2 {
+      width: 45%;
+      right: 20%;
+      bottom: 0%;
+    }
   }
   @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
     .selectBtns {

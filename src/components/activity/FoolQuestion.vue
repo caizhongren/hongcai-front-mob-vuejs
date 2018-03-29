@@ -117,6 +117,7 @@
       })
     },
     created () {
+      alert(window.innerHeight)
       var that = this
       history.pushState({page: 'state1'}, null, '')
       history.pushState({page: 'state2'}, null, location.href)
@@ -418,6 +419,8 @@
     overflow: hidden;
     width: 94%;
     margin: -8% auto 0;
+    position: relative;
+    z-index: 2;
   }
   .selectBtns li {
     float: left;
@@ -469,6 +472,13 @@
     top: .1rem;
     right: .1rem;
     width: 30%;
+  }
+  @media (height: 532px) {
+    .clown2 {
+      width: 45%;
+      right: 20%;
+      bottom: 0%;
+    }
   }
   @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
     .selectBtns {
