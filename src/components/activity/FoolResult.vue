@@ -376,7 +376,7 @@
   }
   .tipBox .Content p {
     color: #51171b;
-    font-size: .24rem;
+    font-size: .23rem;
     font-weight: bold;
     text-align: left;
     margin: .25rem auto;
