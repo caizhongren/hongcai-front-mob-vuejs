@@ -146,8 +146,8 @@
           mobile: user.mobile,
           password: '',
           captcha: user.mobileCaptcha,
-          channelCode: that.$route.query.f,
-          act: that.$route.query.act,
+          channelCode: that.$route.query.f || 'foolsDay',
+          act: that.$route.query.act || '43',
           device: Utils.deviceCode()
         })
         .then(function (res) {
