@@ -76,7 +76,7 @@
         answerPeople: 0,
         inviteList: [],
         showRules: false,
-        showShare: false,
+        showShare: false || this.$route.query.isShare === '1',
         hasToken: false,
         unReach: false,
         skip: 0,

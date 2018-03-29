@@ -250,7 +250,7 @@
         }).then((res) => {
           if (res.data === 5) {
             // this.$router.replace({name: 'FoolResult'})
-            window.location.href = process.env.vue_domain + '/activity/fools-day/result'
+            window.location.href = process.env.vue_domain + '/activity/fools-day/result?isShare=1'
           } else {
             alert(res.data.msg)
           }
