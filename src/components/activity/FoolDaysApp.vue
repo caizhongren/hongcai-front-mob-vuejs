@@ -55,7 +55,8 @@
           startDate: 1,
           endYear: 2018,
           endMonth: 4,
-          endDate: 5
+          endDate: 5,
+          act: this.$route.query.act || 43
         }
       }
     },
@@ -65,7 +66,7 @@
     methods: {
       getActivityStatus () { // 活动信息查询
         var that = this
-        that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
+        that.$http('/hongcai/rest/activitys/' + that.act).then(function (res) {
           that.activityStatus = res.data.status
           var startTime = res.data.startTime
           var endTime = res.data.endTime
