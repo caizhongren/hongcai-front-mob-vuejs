@@ -122,11 +122,12 @@
               that.$parent.showErrMsg('该活动只针对新用户哦，您已经注册过了，前往登录app参与其他活动吧！')
             } else {
               that.$parent.showErrMsg(res.data.msg)
+              return
             }
-            // return
+          } else {
+            var $send = document.getElementById('sent')
+            sendMobCaptcha.countDown($send)
           }
-          var $send = document.getElementById('sent')
-          sendMobCaptcha.countDown($send)
         })
         .catch(function (err) {
           setTimeout(function () {
@@ -350,8 +351,8 @@
   }
   .boxBoder input {
     border: none;
-    height: 1rem;
-    line-height: 1.05rem;
+    height: .5rem;
+    padding: .25rem 0 .2rem 0;
     background: transparent;
     width: 40%;
     float: left;
