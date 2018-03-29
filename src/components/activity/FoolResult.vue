@@ -44,7 +44,7 @@
           <p>
             礼包包含：精选1.5％无条件加息券 <br>
             <span>尊贵2.5％无条件加息券</span> <br>
-            <span>特权本金2018元（有效期3天)</span>
+            <span>特权本金2018元(有效期3天)</span>
           </p>
           <div class="iKnow" @click="iKnow()">
             <img src="../../images/foolsDay/zhidao.png" alt="我知道了" width="60%"/>

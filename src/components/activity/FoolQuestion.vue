@@ -52,7 +52,7 @@
       <div class="tipBox" id="tipBox">
         <img src="../../images/foolsDay/defined-title.png" alt="温馨提示" class="defined-title">
         <div class="borderBox">
-          <textarea type="text" v-model="defined.question" maxlength="20" autofocus>{{defined.question}}</textarea>
+          <textarea type="text" v-model="defined.question" maxChars="20" maxlength="20" autofocus>{{defined.question}}</textarea>
         </div>
         <p class="tip">题目最多不超过20字哦～</p>
         <div class="saveTitle" @click="saveTitle">
