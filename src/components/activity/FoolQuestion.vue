@@ -117,7 +117,6 @@
       })
     },
     created () {
-      alert(window.innerHeight)
       var that = this
       history.pushState({page: 'state1'}, null, '')
       history.pushState({page: 'state2'}, null, location.href)
