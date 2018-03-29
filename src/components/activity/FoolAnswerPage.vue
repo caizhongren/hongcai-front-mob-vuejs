@@ -50,7 +50,8 @@
         questionList: [],
         num: 1,
         answerQuestions: [],
-        number: this.$route.params.number
+        number: this.$route.params.number,
+        busy: false
       }
     },
     props: ['checkLogin', 'userInfo'],
@@ -105,9 +106,13 @@
       },
       choose (type) {
         var that = this
-        if (that.num > 5) {
+        if (that.num > 5 || that.busy) {
           return
         }
+        that.busy = true
+        setTimeout(function () {
+          that.busy = false
+        }, 1000)
         var question = that.questionList[that.num - 1]
         question.commitAnswer = type
         that.answerQuestions.push(question)
@@ -127,6 +132,7 @@
           $($('.nums li')[that.num]).addClass('selectNumBg')
           that.title = that.questionList[that.num].question
           that.num += 1
+          that.busy = false
         }
       },
       question () { // 我的问题
