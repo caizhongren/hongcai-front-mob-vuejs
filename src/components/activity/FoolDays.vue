@@ -21,7 +21,8 @@
         },
         entryUrl: '',
         showOrient: false,
-        activityStatus: 1
+        activityStatus: 1,
+        act: this.$route.query.act || 43
       }
     },
     props: ['showErrMsg'],
@@ -54,7 +55,7 @@
     methods: {
       getActivityStatus () { // 活动信息查询
         var that = this
-        that.$http('/hongcai/rest/activitys/' + that.$route.query.act).then(function (res) {
+        that.$http('/hongcai/rest/activitys/' + that.act).then(function (res) {
           that.activityStatus = res.data.status
         })
       },

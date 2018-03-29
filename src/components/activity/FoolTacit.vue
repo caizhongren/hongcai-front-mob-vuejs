@@ -56,6 +56,7 @@
 </template>
 <script>
   import {ModalHelper} from '../../service/Utils'
+  import wx from 'weixin-js-sdk'
   export default {
     data () {
       return {
@@ -84,14 +85,18 @@
       }
     },
     mounted () {
+      history.pushState({page: 'state1'}, null, location.href)
+      history.pushState({page: 'state2'}, null, location.href)
       this.inviteList.length <= 0 ? document.getElementById('fools-tacit').style.height = document.documentElement.clientHeight + 'px' : null
     },
     created () {
-      for (var i = 0; i < 50; i++) {
-        history.pushState({}, '', '')
-      }
       this.userInfo.id > 0 ? this.answer() : null
       this.number ? this.answerQuestion() : null
+      window.onpopstate = function (event) {
+        if (event.state.page === 'state1') {
+          wx.closeWindow()
+        }
+      }
     },
     methods: {
       join () {

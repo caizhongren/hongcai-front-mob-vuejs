@@ -112,7 +112,7 @@
           })
           .then(function (res) {
             if (res.data && res.data.ret !== -1) {
-              that.$router.replace({name: 'FoolTacit', params: {number: that.number}})
+              that.$router.push({name: 'FoolTacit', params: {number: that.number}})
             }
           })
         } else {
@@ -124,7 +124,7 @@
       },
       question () { // 我的问题
         var that = this
-        that.axios('/hongcai/rest/activitys/foolsDay/question?number=' + that.number).then(function (res) {
+        that.axios('/hongcai/rest/activitys/foolsDay/question/' + that.number).then(function (res) {
           if (res.data.code === -1321) {
             alert('没有创建问题')
             return
