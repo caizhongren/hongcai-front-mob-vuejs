@@ -39,6 +39,7 @@
   import FoolRules from './FoolRules.vue'
   import FoolQuit from './FoolQuit.vue'
   import wx from 'weixin-js-sdk'
+  import {WechatShareUtils} from '../../service/WechatShareUtils'
   export default {
     data () {
       return {
@@ -58,7 +59,12 @@
         val && val.id > 0 ? null : this.checkLogin()
       }
     },
-    mounted () {},
+    mounted () {
+      wx.ready(function () {
+        var shareLink = process.env.vue_domain + '/activity/fools-day/answer/' + this.$route.params.number
+        WechatShareUtils.onMenuShareAppMessage('你看得出我在说谎吗？', '认识了那么久，你有把握我说的每句话都是真心话吗？', shareLink, 'https://mmbiz.qpic.cn/mmbiz_png/8MZDOEkib8AnEm8IKUChDJ7X50kEO9u4GxRe5kwWibuAEq0mOHqmyZnsAk27P9lMk2NjCM0VOFBXPf4nByXcFI5g/0?wx_fmt=png')
+      })
+    },
     created () {
       var that = this
       that.question()

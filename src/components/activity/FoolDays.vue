@@ -28,9 +28,8 @@
     props: ['showErrMsg'],
     watch: {
       '$route': function () {
-        var routerName = this.$route.name
         this.getActivityStatus()
-        if (!Utils.isIos() && (routerName === 'FoolDaysIndex' || routerName === 'FoolQuestion' || routerName === 'FoolResult')) {
+        if (!Utils.isIos()) {
           WechatShareUtils.configJsApi()
         }
       },
