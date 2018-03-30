@@ -223,4 +223,3 @@ div.input-focus, p.input-focus {
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px white inset;
 }
-img { pointer-events: none; }
