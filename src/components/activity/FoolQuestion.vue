@@ -198,9 +198,13 @@
         this.showShare = false
       },
       choose (answer) {
-        if (this.num > 5) {
+        if (this.num > 5 || this.busy) {
           return
         }
+        this.busy = true
+        setTimeout(function () {
+          this.busy = false
+        }, 1000)
         var saveQuestion = {
           question: this.question.question,
           systemId: this.question.systemId,
@@ -221,17 +225,19 @@
         if (this.num === 5) {
           this.saveUserQuestions()
           return
+        } else {
+          var index = Math.floor(Math.random() * this.systemQuestions.length)
+          this.question = {
+            question: this.systemQuestions[index].question,
+            systemId: this.systemQuestions[index].systemId,
+            answer: this.systemQuestions[index].answer,
+            sortNo: this.systemQuestions[index].sortNo
+          }
+          $($('.nums li')[this.num - 1]).removeClass('selectNumBg')
+          $($('.nums li')[this.num]).addClass('selectNumBg')
+          this.num += 1
+          this.busy = false
         }
-        var index = Math.floor(Math.random() * this.systemQuestions.length)
-        this.question = {
-          question: this.systemQuestions[index].question,
-          systemId: this.systemQuestions[index].systemId,
-          answer: this.systemQuestions[index].answer,
-          sortNo: this.systemQuestions[index].sortNo
-        }
-        $($('.nums li')[this.num - 1]).removeClass('selectNumBg')
-        $($('.nums li')[this.num]).addClass('selectNumBg')
-        this.num += 1
       },
       startQuestion () {
         this.alertTips = false
@@ -260,12 +266,19 @@
       },
       saveUserQuestions () { // 提交用户设置的问题
         var that = this
+        if (that.busy) {
+          return
+        }
+        that.busy = true
         that.axios.post('/hongcai/rest/activitys/foolsDay/question', {
           userQuestions: JSON.stringify(that.saveQuestions)
         }).then((res) => {
           if (res.data === 5) {
+            setTimeout(function () {
+              that.busy = false
+            }, 1000)
             // this.$router.replace({name: 'FoolResult'})
-            window.location.href = process.env.vue_domain + '/activity/fools-day/result'
+            window.location.href = process.env.vue_domain + '/activity/fools-day/result?isShare=1'
           } else {
             alert(res.data.msg)
           }

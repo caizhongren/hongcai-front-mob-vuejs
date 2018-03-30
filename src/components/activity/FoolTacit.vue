@@ -254,6 +254,7 @@
     bottom: 5%;
     left: 9.6%;
     border-radius: 50%;
+    height: 61%;
   }
   .progress {
     width: 37%;

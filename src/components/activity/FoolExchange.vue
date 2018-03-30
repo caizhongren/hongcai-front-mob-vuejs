@@ -42,6 +42,7 @@
           </div>
         </form>
       </div>
+      <img src="../../images/foolsDay/close-icon.png" alt="关闭按钮" width="15%" @click="closeRegister">
     </div>
     <Fool-Rules :closeRules="closeRules" :showRules="showRules" v-show="showRules"></Fool-Rules>
   </div>
@@ -76,6 +77,14 @@
     },
     created () {},
     methods: {
+      closeRegister () {
+        this.isRegister = true
+        this.user = {
+          mobile: '',
+          mobileCaptcha: '',
+          picCaptcha: ''
+        }
+      },
       // 图形验证码
       refreshCode () {
         this.axios.get('/hongcai/rest/captchas', {
@@ -140,14 +149,22 @@
       register (user) {
         var that = this
         if (that.busy) { return }
+        if (!user.picCaptcha) {
+          this.$parent.showErrMsg('请输入图形验证码！')
+          return
+        }
+        if (!user.mobileCaptcha) {
+          this.$parent.showErrMsg('请输入短信验证码！')
+          return
+        }
         that.busy = true
         that.axios.post('/hongcai/rest/users/register', {
           picCaptcha: user.picCaptcha,
           mobile: user.mobile,
           password: '',
           captcha: user.mobileCaptcha,
-          channelCode: that.$route.query.f,
-          act: that.$route.query.act,
+          channelCode: that.$route.query.f || 'foolsDay',
+          act: that.$route.query.act || '43',
           device: Utils.deviceCode()
         })
         .then(function (res) {
@@ -225,7 +242,7 @@
           this.user.picCaptcha = this.user.picCaptcha.length > 4 ? this.user.picCaptcha.slice(0, 4) : this.user.picCaptcha
         } else {
           this.user.mobileCaptcha = this.user.mobileCaptcha.replace(/\D/g, '')
-          this.user.mobileCaptcha = this.user.mobileCaptcha.length > 4 ? this.user.mobileCaptcha.slice(0, 4) : this.user.mobileCaptcha
+          this.user.mobileCaptcha = this.user.mobileCaptcha.length > 6 ? this.user.mobileCaptcha.slice(0, 6) : this.user.mobileCaptcha
         }
       },
       beforepasteHandler (e) {
@@ -324,7 +341,7 @@
     height: 5.5rem;
     background: url('../../images/foolsDay/box-bg.png') no-repeat center center;
     background-size: 100% 100%;
-    margin: 1.5rem auto;
+    margin: 1.5rem auto 0.5rem;
     padding: .12rem;
   }
   .CaptchaBox .title {
