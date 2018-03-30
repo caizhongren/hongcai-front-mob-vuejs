@@ -66,6 +66,10 @@
         }
       },
       checkLogin () {
+        if (!Utils.isWeixin()) {
+          Utils.redirectToWechatAuth(window.location.href)
+          return;
+        }
         var that = this
         that.axios({
           method: 'get',
@@ -93,9 +97,6 @@
             })
           }
         })
-        if (!Utils.isWeixin()) {
-          // Utils.redirectToWechatAuth(window.location.href)
-        }
       }
     },
     components: {},
