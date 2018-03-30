@@ -52,7 +52,7 @@
       <div class="tipBox" id="tipBox">
         <img src="../../images/foolsDay/defined-title.png" alt="温馨提示" class="defined-title">
         <div class="borderBox">
-          <textarea type="text" v-model="defined.question" maxChars="20" maxlength="20" autofocus>{{defined.question}}</textarea>
+          <textarea type="text" v-model="defined.question" autofocus>{{defined.question}}</textarea>
         </div>
         <p class="tip">题目最多不超过20字哦～</p>
         <div class="saveTitle" @click="saveTitle">
@@ -97,7 +97,8 @@
         systemQuestions: [],
         saveQuestions: [],
         selectSystemQuestionId: 0,
-        busy: false
+        busy: false,
+        maxLength: 0
       }
     },
     props: ['checkLogin', 'userInfo'],
@@ -108,6 +109,12 @@
       alertDefinedTitle: function (val) {
         // var handleEle = document.getElementById('tipBox')
         // val ? InputMaskHelper.windowChange(handleEle) : null
+      },
+      'defined.question': function (val) {
+        this.computedByteLen === 40 ? this.maxLength = this.computedCharLen : null
+        if (this.computedByteLen > 40) {
+          this.defined.question = this.defined.question.slice(0, this.maxLength)
+        }
       }
     },
     mounted () {
@@ -115,6 +122,16 @@
         var shareLink = process.env.vue_domain + '/activity/fools-day'
         WechatShareUtils.onMenuShareAppMessage('谁说愚人节一定要说假话', '借着这个机会，又有多少人道出了埋藏心底的秘密...', shareLink, 'https://mmbiz.qpic.cn/mmbiz_png/8MZDOEkib8AnEm8IKUChDJ7X50kEO9u4GxRe5kwWibuAEq0mOHqmyZnsAk27P9lMk2NjCM0VOFBXPf4nByXcFI5g/0?wx_fmt=png')
       })
+    },
+    computed: {
+      // 获取字符的个数
+      computedCharLen () {
+        return this.defined.question.length
+      },
+      // 获取字节的个数
+      computedByteLen () {
+        return this.defined.question.replace(/[^\x00-\xff]/g, '01').length
+      }
     },
     created () {
       var that = this
