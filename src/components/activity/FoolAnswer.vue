@@ -114,5 +114,6 @@
     left: 9.6%;
     border-radius: 50%;
     height: 61%;
+    pointer-events: none;
   }
 </style>

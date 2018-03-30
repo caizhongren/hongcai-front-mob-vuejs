@@ -22,7 +22,7 @@
       </div>
       <ul class="inviteList">
         <li v-for="item in inviteList">
-          <img v-bind:src="item.headImg" alt=""/>
+          <img v-bind:src="item.headImg" alt="" class="headImg"/>
           <span>{{item.tacit}}%</span>
         </li>
         <li v-if="investPage < Math.ceil(total/pageSize)" >
@@ -387,4 +387,5 @@
   .iKnow.width-30 {
     width: 39%;
   }
+  .headImg {pointer-events: none;}
 </style>

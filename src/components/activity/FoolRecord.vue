@@ -177,6 +177,7 @@
     right: 9%;
     bottom: 10%;
     height: 73.5%;
+    pointer-events: none;
   }
   .record .portrait1 img {
     right: 9%;
