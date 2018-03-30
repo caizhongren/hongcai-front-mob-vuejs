@@ -68,7 +68,7 @@
       checkLogin () {
         if (!Utils.isWeixin()) {
           Utils.redirectToWechatAuth(window.location.href)
-          return;
+          return
         }
         var that = this
         that.axios({

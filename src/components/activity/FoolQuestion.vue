@@ -251,10 +251,17 @@
       },
       saveUserQuestions () { // 提交用户设置的问题
         var that = this
+        if (that.busy) {
+          return
+        }
+        that.busy = true
         that.axios.post('/hongcai/rest/activitys/foolsDay/question', {
           userQuestions: JSON.stringify(that.saveQuestions)
         }).then((res) => {
           if (res.data === 5) {
+            setTimeout(function () {
+              that.busy = false
+            }, 1000)
             // this.$router.replace({name: 'FoolResult'})
             window.location.href = process.env.vue_domain + '/activity/fools-day/result?isShare=1'
           } else {
