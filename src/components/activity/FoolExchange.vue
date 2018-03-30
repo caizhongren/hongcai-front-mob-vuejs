@@ -42,6 +42,7 @@
           </div>
         </form>
       </div>
+      <img src="../../images/foolsDay/close-icon.png" alt="关闭按钮" width="15%" @click="isRegister = true">
     </div>
     <Fool-Rules :closeRules="closeRules" :showRules="showRules" v-show="showRules"></Fool-Rules>
   </div>
@@ -332,7 +333,7 @@
     height: 5.5rem;
     background: url('../../images/foolsDay/box-bg.png') no-repeat center center;
     background-size: 100% 100%;
-    margin: 1.5rem auto;
+    margin: 1.5rem auto 0.5rem;
     padding: .12rem;
   }
   .CaptchaBox .title {
