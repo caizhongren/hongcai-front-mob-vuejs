@@ -379,10 +379,10 @@
     font-size: .23rem;
     font-weight: bold;
     text-align: left;
-    margin: .25rem auto;
+    margin: .25rem 0 .25rem .1rem;
   }
   .tipBox .Content p  span {
-    margin-left: 1.2rem;
+    margin-left: 1.1rem;
   }
   .iKnow.width-30 {
     width: 39%;
