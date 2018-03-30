@@ -168,7 +168,12 @@
       },
       changeTitle () {
         var index = Math.floor(Math.random() * this.systemQuestions.length)
-        this.question = this.systemQuestions[index]
+        this.question = {
+          question: this.systemQuestions[index].question,
+          systemId: this.systemQuestions[index].systemId,
+          answer: this.systemQuestions[index].answer,
+          sortNo: this.systemQuestions[index].sortNo
+        }
       },
       showDefinedBox () {
         this.alertDefinedTitle = true
@@ -218,7 +223,12 @@
           return
         }
         var index = Math.floor(Math.random() * this.systemQuestions.length)
-        this.question = this.systemQuestions[index]
+        this.question = {
+          question: this.systemQuestions[index].question,
+          systemId: this.systemQuestions[index].systemId,
+          answer: this.systemQuestions[index].answer,
+          sortNo: this.systemQuestions[index].sortNo
+        }
         $($('.nums li')[this.num - 1]).removeClass('selectNumBg')
         $($('.nums li')[this.num]).addClass('selectNumBg')
         this.num += 1
@@ -238,7 +248,12 @@
                 this.systemQuestions.push({systemId: response.data.data[i].id, question: response.data.data[i].question})
               }
               var index = Math.floor(Math.random() * response.data.total)
-              this.question = this.systemQuestions[index]
+              this.question = {
+                question: this.systemQuestions[index].question,
+                systemId: this.systemQuestions[index].systemId,
+                answer: this.systemQuestions[index].answer,
+                sortNo: this.systemQuestions[index].sortNo
+              }
             }
           }
         })
