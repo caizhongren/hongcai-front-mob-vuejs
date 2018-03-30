@@ -56,11 +56,12 @@
           endYear: 2018,
           endMonth: 4,
           endDate: 5,
-          act: this.$route.query.act || 43
+          act: this.$route.query.act || '43'
         }
       }
     },
     created () {
+      this.act = this.$route.query.act || '43'
       this.getActivityStatus()
     },
     methods: {
