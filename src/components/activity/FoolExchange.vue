@@ -140,6 +140,14 @@
       register (user) {
         var that = this
         if (that.busy) { return }
+        if (!user.picCaptcha) {
+          this.$parent.showErrMsg('请输入图形验证码！')
+          return
+        }
+        if (!user.mobileCaptcha) {
+          this.$parent.showErrMsg('请输入短信验证码！')
+          return
+        }
         that.busy = true
         that.axios.post('/hongcai/rest/users/register', {
           picCaptcha: user.picCaptcha,
@@ -225,7 +233,7 @@
           this.user.picCaptcha = this.user.picCaptcha.length > 4 ? this.user.picCaptcha.slice(0, 4) : this.user.picCaptcha
         } else {
           this.user.mobileCaptcha = this.user.mobileCaptcha.replace(/\D/g, '')
-          this.user.mobileCaptcha = this.user.mobileCaptcha.length > 4 ? this.user.mobileCaptcha.slice(0, 4) : this.user.mobileCaptcha
+          this.user.mobileCaptcha = this.user.mobileCaptcha.length > 6 ? this.user.mobileCaptcha.slice(0, 6) : this.user.mobileCaptcha
         }
       },
       beforepasteHandler (e) {
