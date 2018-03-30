@@ -3,7 +3,10 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-Vue.use(VueAxios, axios)
+import wx from 'weixin-js-sdk'
+axios.defaults.withCredentials = true
+Vue.use(VueAxios, axios, wx)
+Vue.prototype.$axios = axios
 
 /* eslint-disable */
 new Vue({

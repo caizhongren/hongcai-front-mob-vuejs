@@ -152,7 +152,8 @@
         timer: null,
         isiOS: Utils.isIos(),
         isAndroid: Utils.isAndroid(),
-        domain: process.env.domain
+        domain: process.env.domain,
+        inviteCode: ''
       }
     },
     props: ['token'],
@@ -160,6 +161,7 @@
       token: function (value) {
         if (value !== '') {
           this.getDrawCount(this.token)
+          this.getInviteCode()
         }
       },
       showDrawBox: function (val) {
@@ -167,12 +169,13 @@
       }
     },
     created: function () {
-      this.getLuckyUsers()
-      if (this.token) {
-        this.getDrawCount(this.token)
-      }
       var that = this
-      this.shareRegisterCallback = function (data) {
+      that.getLuckyUsers()
+      if (that.token) {
+        that.getDrawCount(that.token)
+        that.getInviteCode()
+      }
+      that.shareRegisterCallback = function (data) {
         data = Utils.isAndroid() ? JSON.parse(data) : data
         if (data.isShareSuccess === 1) {
           that.$http.post('/hongcai/rest/lotteries/share', {
@@ -189,15 +192,24 @@
           })
         }
       }
-      bridgeUtil.webConnectNative('HCNative_NeedShare', 'HCWeb_ShareSuccess', {
-        'HC_shareType': 2,
-        'title': '今日运势，一试便知',
-        'subTitle': '100%有礼！随机奖金、特权本金、返现加息券样样都有！好运从这里开始！',
-        'url': that.domain + '/lottery',
-        'imageUrl': 'https://mmbiz.qlogo.cn/mmbiz_jpg/8MZDOEkib8AlvibTmbDkqwbDiasl9BphCGgYnicBzl9VfX4Sm9cpvFiarGsV73IRYurUF9LPibzL0JLR5SGmd1TeO3ug/0?wx_fmt=jpeg'
-      }, function (response) {}, that.shareRegisterCallback)
     },
     methods: {
+      getInviteCode: function () {
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest/users/0/voucher?token=' + that.token
+        }).then(function (response) {
+          that.inviteCode = response.data.inviteCode
+          bridgeUtil.webConnectNative('HCNative_NeedShare', 'HCWeb_ShareSuccess', {
+            'HC_shareType': 2,
+            'title': '今日运势，一试便知',
+            'subTitle': '100%有礼！随机奖金、特权本金、返现加息券样样都有！好运从这里开始！',
+            'url': that.domain + '/lottery/?inviteCode=' + that.inviteCode,
+            'imageUrl': 'https://mmbiz.qlogo.cn/mmbiz_jpg/8MZDOEkib8AlvibTmbDkqwbDiasl9BphCGgYnicBzl9VfX4Sm9cpvFiarGsV73IRYurUF9LPibzL0JLR5SGmd1TeO3ug/0?wx_fmt=jpeg'
+          }, function (response) {}, that.shareRegisterCallback)
+        })
+      },
       draw: function (prizeId) {
         var prizeList = {}
         var that = this

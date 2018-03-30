@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Promise from 'es6-promise'
 import VueCookie from 'vue-cookie'
+import wx from 'weixin-js-sdk'
 window.Promise = Promise
 const ProjectDetail = r => require.ensure([], () => r(require('../components/ProjectDetail.vue')), 'ProjectDetail')
 const Invite = r => require.ensure([], () => r(require('../components/activity/invite.vue')), 'Invite')
@@ -84,9 +85,22 @@ const FenPushSuccess = r => require.ensure([], () => r(require('../components/ac
 const WomensDay = r => require.ensure([], () => r(require('../components/activity/WomensDay.vue')), 'WomensDay')
 const ArborDays = r => require.ensure([], () => r(require('../components/activity/arborDay.vue')), 'ArborDays')
 const ArborRecord = r => require.ensure([], () => r(require('../components/activity/arborRecord.vue')), 'ArborRecord')
+const FoolDays = r => require.ensure([], () => r(require('../components/activity/FoolDays.vue')), 'FoolDays')
+const FoolDaysApp = r => require.ensure([], () => r(require('../components/activity/FoolDaysApp.vue')), 'FoolDaysApp')
+const FoolDaysIndex = r => require.ensure([], () => r(require('../components/activity/FoolDaysIndex.vue')), 'FoolDaysIndex')
+const FoolExchange = r => require.ensure([], () => r(require('../components/activity/FoolExchange.vue')), 'FoolExchange')
+const FoolSuccess = r => require.ensure([], () => r(require('../components/activity/FoolSuccess.vue')), 'FoolSuccess')
+const FoolRecord = r => require.ensure([], () => r(require('../components/activity/FoolRecord.vue')), 'FoolRecord')
+const FoolQuestion = r => require.ensure([], () => r(require('../components/activity/FoolQuestion.vue')), 'FoolQuestion')
+const FoolReportCard = r => require.ensure([], () => r(require('../components/activity/FoolReportCard.vue')), 'FoolReportCard')
+const FoolAnswer = r => require.ensure([], () => r(require('../components/activity/FoolAnswer.vue')), 'FoolAnswer')
+const FoolResult = r => require.ensure([], () => r(require('../components/activity/FoolResult.vue')), 'FoolResult')
+const FoolAnswerPage = r => require.ensure([], () => r(require('../components/activity/FoolAnswerPage.vue')), 'FoolAnswerPage')
+const FoolTacit = r => require.ensure([], () => r(require('../components/activity/FoolTacit.vue')), 'FoolTacit')
 
 Vue.use(Router)
 Vue.use(VueCookie)
+Vue.use(wx)
 const routes = [
   {
     path: '/',
@@ -425,6 +439,78 @@ const routes = [
     name: 'ArborRecord',
     component: ArborRecord,
     meta: {title: '查看详情'}
+  },
+  {
+    path: '/activity/fools-day-app',
+    name: 'FoolDaysApp',
+    component: FoolDaysApp,
+    meta: {title: '愚你同乐'}
+  },
+  {
+    path: '/activity/fools-day',
+    component: FoolDays,
+    children: [
+      {
+        path: '',
+        name: 'FoolDaysIndex',
+        component: FoolDaysIndex,
+        meta: {title: '愚你同乐'}
+      },
+      {
+        path: 'question',
+        name: 'FoolQuestion',
+        component: FoolQuestion,
+        meta: {title: '愚你同乐'}
+      },
+      {
+        path: 'result',
+        name: 'FoolResult',
+        component: FoolResult,
+        meta: {title: '愚你同乐'}
+      },
+      {
+        path: 'reportCard/:number',
+        name: 'FoolReportCard',
+        component: FoolReportCard,
+        meta: {title: '愚你同乐'}
+      },
+
+      {
+        path: 'record',
+        name: 'FoolRecord',
+        component: FoolRecord,
+        meta: {title: '愚你同乐'}
+      },
+      {
+        path: 'exchange',
+        name: 'FoolExchange',
+        component: FoolExchange,
+        meta: {title: '愚你同乐'}
+      },
+      {
+        path: 'success',
+        name: 'FoolSuccess',
+        component: FoolSuccess,
+        meta: {title: '愚你同乐'}
+      },
+      {
+        path: 'answer/:number',
+        name: 'FoolAnswer',
+        component: FoolAnswer,
+        meta: {title: '愚你同乐'}
+      },
+      {
+        path: 'answer-page/:number',
+        name: 'FoolAnswerPage',
+        component: FoolAnswerPage,
+        meta: {title: '愚你同乐'}
+      },
+      {
+        path: 'tacit/:number',
+        name: 'FoolTacit',
+        component: FoolTacit,
+        meta: {title: '愚你同乐'}
+      }]
   },
   {
     path: '/register-agree',

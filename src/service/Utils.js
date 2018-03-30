@@ -2,7 +2,7 @@ import $ from 'zepto'
 let Utils = {
   isWeixin: function () {
     var ua = navigator.userAgent.toLowerCase()
-    return ua.match(/MicroMessenger/i) === 'micromessenger'
+    return /MicroMessenger/i.test(ua)
   },
   isAndroid: function () {
     let userAgent = navigator.userAgent || navigator.vendor || window.opera
@@ -15,6 +15,34 @@ let Utils = {
   isWinPhone: function () {
     var userAgent = navigator.userAgent || navigator.vendor || window.opera
     return /windows phone/i.test(userAgent)
+  },
+  removeParam: function (key, sourceURL) {
+    var rtn = sourceURL.split('?')[0]
+    var param
+    var paramsArr = []
+    var queryString = (sourceURL.indexOf('?') !== -1) ? sourceURL.split('?')[1] : ''
+    if (queryString !== '') {
+      paramsArr = queryString.split('&')
+      for (var i = paramsArr.length - 1; i >= 0; i -= 1) {
+        param = paramsArr[i].split('=')[0]
+        if (param === key) {
+          paramsArr.splice(i, 1)
+        }
+      }
+      rtn = rtn + '?' + paramsArr.join('&')
+    }
+    return rtn
+  },
+  /**
+   * 跳转去微信授权
+   */
+  redirectToWechatAuth: function (redirectUrl) {
+    redirectUrl = Utils.removeParam('code', redirectUrl)
+    redirectUrl = encodeURIComponent(Utils.removeParam('state', redirectUrl))
+    var wechatRedirectUrl = process.env.wechat_redirect_url + '?appid=' + process.env.wechatAppid +
+              '&redirect_uri=' + redirectUrl + '&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect'
+    console.log(wechatRedirectUrl)
+    window.location.href = wechatRedirectUrl
   },
   deviceCode: function () {
     var deviceCode = 0
