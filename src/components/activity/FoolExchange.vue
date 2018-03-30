@@ -42,7 +42,7 @@
           </div>
         </form>
       </div>
-      <img src="../../images/foolsDay/close-icon.png" alt="关闭按钮" width="15%" @click="isRegister = true">
+      <img src="../../images/foolsDay/close-icon.png" alt="关闭按钮" width="15%" @click="closeRegister">
     </div>
     <Fool-Rules :closeRules="closeRules" :showRules="showRules" v-show="showRules"></Fool-Rules>
   </div>
@@ -77,6 +77,14 @@
     },
     created () {},
     methods: {
+      closeRegister () {
+        this.isRegister = true
+        this.user = {
+          mobile: '',
+          mobileCaptcha: '',
+          picCaptcha: ''
+        }
+      },
       // 图形验证码
       refreshCode () {
         this.axios.get('/hongcai/rest/captchas', {
