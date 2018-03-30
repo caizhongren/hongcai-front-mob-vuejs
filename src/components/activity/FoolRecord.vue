@@ -15,7 +15,7 @@
           我的当前排名：{{ranking > 0 ? ranking : '暂无排'}}名
           <img src="../../images/foolsDay/maozi.png" alt="帽子">
         </div>
-        <li class="record" v-for="(record, index) in recordList" v-if="recordList.length > 0">
+        <li class="record" v-for="(record, index) in recordList" v-if="recordList.length > 0" v-bind:class="{'record-padding': index === 0}">
           <div class="portrait" v-bind:class="{'portrait1': index === 0, 'portrait2': index === 1, 'portrait3': index === 2}">
             <img v-bind:src="record.headImg" alt="头像" />
             <span v-if="index >= 3" class="num" v-bind:class="'num' + (index + 1)"></span>
@@ -176,16 +176,19 @@
     position: absolute;
     right: 9%;
     bottom: 10%;
+    height: 73.5%;
   }
   .record .portrait1 img {
     right: 9%;
     bottom: 11%;
     width: 63%;
+    height: 65%;
   }
   .record .portrait2 img {
     right: 9%;
     bottom: 9%;
     width: 63%;
+    height: 74%;
   }
   .record .portrait3 img {
     right: 9%;
@@ -251,6 +254,9 @@
   }
   .record:nth-child(5) .portrait,.record:nth-child(6) .portrait, .record:nth-child(7) .portrait, .record:nth-child(9) .portrait, .record:nth-child(10) .portrait, .record:nth-child(11) .portrait {
     top: .05rem;
+  }
+  .record-padding {
+    padding-top: .1rem;
   }
   .noRecord {
     position: relative;

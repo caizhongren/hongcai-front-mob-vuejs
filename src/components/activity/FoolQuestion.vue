@@ -266,6 +266,7 @@
       },
       saveUserQuestions () { // 提交用户设置的问题
         var that = this
+        that.busy = false
         if (that.busy) {
           return
         }
