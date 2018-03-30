@@ -193,9 +193,13 @@
         this.showShare = false
       },
       choose (answer) {
-        if (this.num > 5) {
+        if (this.num > 5 || this.busy) {
           return
         }
+        this.busy = true
+        setTimeout(function () {
+          this.busy = false
+        }, 1000)
         var saveQuestion = {
           question: this.question.question,
           systemId: this.question.systemId,
@@ -216,12 +220,14 @@
         if (this.num === 5) {
           this.saveUserQuestions()
           return
+        } else {
+          var index = Math.floor(Math.random() * this.systemQuestions.length)
+          this.question = this.systemQuestions[index]
+          $($('.nums li')[this.num - 1]).removeClass('selectNumBg')
+          $($('.nums li')[this.num]).addClass('selectNumBg')
+          this.num += 1
+          this.busy = false
         }
-        var index = Math.floor(Math.random() * this.systemQuestions.length)
-        this.question = this.systemQuestions[index]
-        $($('.nums li')[this.num - 1]).removeClass('selectNumBg')
-        $($('.nums li')[this.num]).addClass('selectNumBg')
-        this.num += 1
       },
       startQuestion () {
         this.alertTips = false
