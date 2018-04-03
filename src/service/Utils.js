@@ -4,6 +4,10 @@ let Utils = {
     var ua = navigator.userAgent.toLowerCase()
     return /MicroMessenger/i.test(ua)
   },
+  isWindowsWechat: function () {
+    var ua = navigator.userAgent.toLowerCase()
+    return /WindowsWechat/i.test(ua)
+  },
   isAndroid: function () {
     let userAgent = navigator.userAgent || navigator.vendor || window.opera
     return /android/i.test(userAgent) && !/windows phone/i.test(userAgent)
