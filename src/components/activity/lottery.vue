@@ -355,7 +355,7 @@
           'HC_shareType': 2,
           'title': '今日运势，一试便知',
           'subTitle': '100%有礼！随机奖金、特权本金、返现加息券样样都有！好运从这里开始！',
-          'url': that.domain + '/lottery',
+          'url': that.domain + '/lottery/?inviteCode=' + that.inviteCode,
           'imageUrl': 'https://mmbiz.qlogo.cn/mmbiz_jpg/8MZDOEkib8AlvibTmbDkqwbDiasl9BphCGgYnicBzl9VfX4Sm9cpvFiarGsV73IRYurUF9LPibzL0JLR5SGmd1TeO3ug/0?wx_fmt=jpeg'
         }, function () {}, that.shareRegisterCallback)
         that.showDrawBox = false
