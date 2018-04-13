@@ -70,6 +70,10 @@
           Utils.redirectToWechatAuth(window.location.href)
           return
         }
+        if (Utils.isWindowsWechat()) {
+          alert('请在微信客户端打开链接')
+          return
+        }
         var that = this
         that.axios({
           method: 'get',
