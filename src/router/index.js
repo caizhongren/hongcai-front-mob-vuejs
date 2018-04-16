@@ -42,6 +42,7 @@ const Membership = r => require.ensure([], () => r(require('../components/user-c
 const AssignmentQuestion = r => require.ensure([], () => r(require('../components/assignmentQuestion.vue')), 'Question')
 const RegisterAgree = r => require.ensure([], () => r(require('../components/registerAgree.vue')), 'RegisterAgree')
 const AssignmentAgree = r => require.ensure([], () => r(require('../components/assignmentAgree.vue')), 'AssignmentAgree')
+const InvestmentAgree = r => require.ensure([], () => r(require('../components/investmentAgree.vue')), 'InvestmentAgree')
 const ServiceAgree = r => require.ensure([], () => r(require('../components/serviceAgree.vue')), 'ServiceAgree')
 const BusinessSuccess = r => require.ensure([], () => r(require('../components/businessSuccess.vue')), 'BusinessSuccess')
 const BankCustody = r => require.ensure([], () => r(require('../components/bankCustody.vue')), 'BankCustody')
@@ -523,6 +524,12 @@ const routes = [
     name: 'AssignmentAgree',
     component: AssignmentAgree,
     meta: {title: '债权转让协议'}
+  },
+  {
+    path: '/investment-agree',
+    name: 'InvestmentAgree',
+    component: InvestmentAgree,
+    meta: {title: '出借风险提示和禁止性行为告知书'}
   },
   {
     path: '/service-agree/:number/:status',
