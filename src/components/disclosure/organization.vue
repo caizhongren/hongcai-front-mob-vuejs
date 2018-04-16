@@ -6,7 +6,7 @@
       <table class="info">
         <div>
           <tr v-for="(info, index) in businessInfo" v-bind:class="{'border-none': index === businessInfo.length-1}">
-            <td>{{info.name}}</td> 
+            <td v-bind:class="{'line-h': index === 9}">{{info.name}}</td> 
             <td>{{info.content}}</td>
           </tr>
         </div>
@@ -48,15 +48,15 @@
           <ul class="agesList">
             <li>
               <span>25岁-35岁</span>
-              <span>10人</span>
+              <span>13人</span>
             </li>
             <li>
               <span>25岁以下</span>
-              <span>7人</span>
+              <span>6人</span>
             </li>
             <li>
               <span>35岁以上</span>
-              <span>6人</span>
+              <span>4人</span>
             </li>
           </ul>
         </div>
@@ -65,23 +65,29 @@
           <ul class="education">
             <li>
               <span>本科</span>
-              <span>13人</span>
+              <span>16人</span>
             </li>
             <li>
               <span>大专</span>
-              <span>4人</span>
+              <span>3人</span>
             </li>
             <li>
               <span>硕士</span>
-              <span>3人</span>
+              <span>2人</span>
             </li>
             <li>
               <span>博士及以上</span>
-              <span>3人</span>
+              <span>2人</span>
             </li>
           </ul>
         </div>
       </div>
+    </div>
+    <div class="parting-line"></div>
+    <!-- 分支机构信息 -->
+    <div class="complaint-info">
+      <img src="../../images/disclosure/zxts.png" alt="" class="complaint-title">
+      <div class="complaint">未开设分支机构</div>
     </div>
     <div class="parting-line"></div>
     <!-- 渠道信息 -->
@@ -112,18 +118,6 @@
         <img src="../../images/disclosure/channel-04.png" alt="">
       </div>
     </div>
-    <div class="parting-line"></div>
-    <!-- 咨询投诉 -->
-    <div class="complaint-info">
-      <img src="../../images/disclosure/zxts.png" alt="" class="complaint-title">
-      <div class="complaint">
-        <div class="information">
-          <p>咨询投诉：400-990-7626 </p>
-          <p>（工作时间：9:00-18:00）</p>
-        </div>
-        <img src="../../images/disclosure/cons.png" alt="">
-      </div>
-    </div>
   </div>
 </template>
 <script>
@@ -132,6 +126,10 @@
     data () {
       return {
         businessInfo: [
+          {
+            name: '平台名称',
+            content: '宏财网'
+          },
           {
             name: '公司名称',
             content: '北京竞财投资服务有限公司'
@@ -158,15 +156,23 @@
           },
           {
             name: '公司经营地',
-            content: '北京市海淀区中关村南二条1号中科院空间中心九章大厦B栋一层'
+            content: '北京市海淀区中关村南二条一号中科院国家空间中心九章大厦B'
           },
           {
             name: '公司成立时间',
-            content: '2015年01月23日'
+            content: '2015-1-23'
+          },
+          {
+            name: '官网网站正式上线运营时间',
+            content: '2015-2-2'
+          },
+          {
+            name: 'APP上线运营时间',
+            content: '2017-3-13'
           },
           {
             name: '公司经营期限',
-            content: '至2035年01月22日'
+            content: '2015-1-23至2035-1-22'
           },
           {
             name: '公司经营状态',
@@ -174,6 +180,22 @@
           },
           {
             name: '公司法定代表人',
+            content: '刘刚'
+          },
+          {
+            name: '实际控制人',
+            content: '刘刚'
+          },
+          {
+            name: '董事',
+            content: '刘刚；李青；邓铁军'
+          },
+          {
+            name: '监事',
+            content: '王静波'
+          },
+          {
+            name: '经理',
             content: '刘刚'
           },
           {
@@ -202,6 +224,10 @@
   }
 </script>
 <style scoped>
+  .line-h {
+    line-height: 1.5 !important;
+    padding: .12rem 0;
+  }
   .organization {
     color: #666;    
     padding-bottom: 1rem;
@@ -430,7 +456,7 @@
     padding: 0.285rem 0 0 1.4rem;
   }
   .complaint-title {
-    width: 28%;
+    width: 27%;
     margin: .5rem auto .2rem;
   }
   .complaint {
@@ -443,6 +469,8 @@
     font-size: .28rem;
     margin-bottom: .5rem;
     color: #666;
+    height: 1rem;
+    line-height: 1rem;
   }
   .complaint img {
     position: absolute;
