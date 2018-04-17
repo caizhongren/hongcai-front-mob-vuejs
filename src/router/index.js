@@ -63,6 +63,7 @@ const WanduSuccess = r => require.ensure([], () => r(require('../components/acti
 const QRcode = r => require.ensure([], () => r(require('../components/QRcode.vue')), 'QRcode')
 const Updates = r => require.ensure([], () => r(require('../components/recommendUpdates.vue')), 'Updates')
 const Disclosure = r => require.ensure([], () => r(require('../components/disclosure/disclosure.vue')), 'Disclosure')
+const CommitmentLetter = r => require.ensure([], () => r(require('../components/disclosure/commitmentLetter.vue')), 'Disclosure')
 const PoliciesRegulations = r => require.ensure([], () => r(require('../components/disclosure/policiesRegulations.vue')), 'Disclosure')
 const RecordInformation = r => require.ensure([], () => r(require('../components/disclosure/recordInformation.vue')), 'Disclosure')
 const RiskManagement = r => require.ensure([], () => r(require('../components/disclosure/riskManagement.vue')), 'Disclosure')
@@ -98,6 +99,7 @@ const FoolAnswer = r => require.ensure([], () => r(require('../components/activi
 const FoolResult = r => require.ensure([], () => r(require('../components/activity/FoolResult.vue')), 'FoolResult')
 const FoolAnswerPage = r => require.ensure([], () => r(require('../components/activity/FoolAnswerPage.vue')), 'FoolAnswerPage')
 const FoolTacit = r => require.ensure([], () => r(require('../components/activity/FoolTacit.vue')), 'FoolTacit')
+const LoanManagement = r => require.ensure([], () => r(require('../components/LoanManagement.vue')), 'LoanManagement')
 
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -149,6 +151,12 @@ const routes = [
     children: [
       {
         path: '',
+        name: 'CommitmentLetter',
+        component: CommitmentLetter,
+        meta: {title: '信息披露'}
+      },
+      {
+        path: 'record-information',
         name: 'RecordInformation',
         component: RecordInformation,
         meta: {title: '信息披露'}
@@ -634,6 +642,12 @@ const routes = [
     path: '/wandu-success',
     name: 'WanduSuccess',
     component: WanduSuccess
+  },
+  {
+    path: '/loan-management-info',
+    name: 'LoanManagement',
+    component: LoanManagement,
+    meta: {title: '贷后管理信息'}
   },
   {
     path: '/qrcode',

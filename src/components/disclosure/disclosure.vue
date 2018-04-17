@@ -20,6 +20,10 @@
       return {
         tabs: [
           {
+            tab: '承诺函',
+            name: 'CommitmentLetter'
+          },
+          {
             tab: '备案信息',
             name: 'RecordInformation'
           },
@@ -101,7 +105,7 @@
     height: 1rem;
   }
   .discolsure .discolsure-tab1 {
-    width: 125%;
+    width: 175%;
     height: 1rem;
     /* overflow-x: auto; */
     overflow: hidden;
@@ -114,13 +118,13 @@
     transition:all .4s ease-in-out;
   }
   .discolsure .discolsure-tab1.transition-left {
-    transform: translateX(-20%);
+    transform: translateX(-40%);
   }
   .discolsure .discolsure-tab1.transition-right {
     transform: translateX(0%);
   }
   .discolsure .discolsure-tab1 li {
-    width: 16%;
+    width: 12%;
     margin-left: 2%;
     margin-right: 2%;
     font-size: .28rem;
