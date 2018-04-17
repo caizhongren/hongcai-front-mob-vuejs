@@ -31,8 +31,10 @@
         <div class="detail-item">
           <span>起息日期：</span>投资成功，当日计息
         </div>
-        <div class="detail-item">
+        <div class="detail-item position-re">
           <span>还款方式：</span>按月付息，到期还本
+          <img src="../images/project/tip.png" alt="还款方式" width="4%" @click="showTip = !showTip" class="showTip">
+          <span class="pro_des_dot_tip" v-if="showTip">还款计算方式说明：假设借款金额为X，年利率为Y，借款期限为Z天，每月实际计息天数为N天，则：每月应还款利息计算公示：X*Y*N/365；应还总利息计算公式为：X*Y*Z/365；应还本金X。</span>
         </div>
         <div class="detail-item">
           <span>到期日期：</span>{{project.status === 10 ? '' : '预计'}}{{project.repaymentDate | date}}
@@ -226,7 +228,8 @@
         newbie: false,
         memberLevel: 1,
         anmClick: false,
-        isExist: false
+        isExist: false,
+        showTip: false
       }
     },
     watch: {
@@ -496,6 +499,7 @@
         bridgeUtil.webConnectNative('HCNative_ImgSrc', null, {'imgSrc': that.baseFileUrl + tar[i].uploadFile.url}, function (response) {}, function (data) {})
       },
       scrollDetail: function (page) {
+        var that = this
         var Height = window.innerHeight
         window.offsetY = 0
         window.touchStartY = 0
@@ -511,6 +515,7 @@
         var startPos = {}
         var endPos = {}
         function startTouchScroll (event) {
+          that.showTip ? that.showTip = false : null
           // event.preventDefault()
           var touch = event.targetTouches[0]
           startPos = {x: touch.pageX, y: touch.pageY}
@@ -639,6 +644,51 @@
   }
 </script>
 <style scoped>
+  .showTip {
+    position: relative;
+    top: .04rem;
+  }
+  .pro_des_dot_tip {
+    display: block;
+    position: absolute;
+    left: 0.34rem;
+    top: .7rem;
+    border: 1px solid #ddd;
+    width: 68%;
+    text-align: justify;
+    line-height: 1.5;
+    font-size: 12px;
+    z-index: 9999999;
+    padding: 10px;
+    background-color: #fff;
+    pointer-events: none;
+  }
+  .pro_des_dot_tip:before{
+    pointer-events: none;
+    content:"";
+    display:block;
+    border-width:15px;
+    position:absolute;
+    top:-30px;
+    right:42px;
+    border-style:solid dashed dashed;
+    border-color:transparent transparent #ddd;
+    font-size:0;
+    line-height:0;
+    }
+  .pro_des_dot_tip:after{
+    pointer-events: none;
+    content:"";
+    display:block;
+    border-width:15px;
+    position:absolute;
+    top: -28px;
+    right: 42px;
+    border-style:solid dashed dashed;
+    border-color:transparent transparent #fff;
+    font-size:0;
+    line-height:0;
+  }
   .upRate {
     background: #ff6000;
     position: absolute;
