@@ -54,15 +54,15 @@
           this.$router.replace({name: this.tabs[index].name})
           window.scrollTo(0, 0)
         }
-        if (this.activeTab === 3) {
-          $('.columns').addClass('transition-left')
-        }
-        if (this.activeTab === 1) {
-          $('.columns').removeClass('transition-left')
-        }
-        if (this.activeTab === 2) {
-          $('.columns').hasClass('transition-left') ? $('.columns').removeClass('transition-left') : $('.columns').addClass('transition-left')
-        }
+        // if (this.activeTab === 3) {
+        //   $('.columns').addClass('transition-left')
+        // }
+        // if (this.activeTab === 1) {
+        //   $('.columns').removeClass('transition-left')
+        // }
+        // if (this.activeTab === 2) {
+        //   $('.columns').hasClass('transition-left') ? $('.columns').removeClass('transition-left') : $('.columns').addClass('transition-left')
+        // }
       }
     },
     mounted () {
@@ -74,7 +74,7 @@
           $('.tab').removeClass('fixed')
         }
       }
-      location.pathname === '/disclosure/policies-regulations' ? (this.activeTab = 4, $('.columns').addClass('transition-left')) : null
+      // location.pathname === '/disclosure/policies-regulations' ? (this.activeTab = 4, $('.columns').addClass('transition-left')) : null
     }
   }
 </script>
@@ -103,11 +103,12 @@
     box-shadow: 0.8px 1.3px 3.5px 0 rgba(80, 77, 75, 0.2);
     width: 90%;
     height: 1rem;
+    overflow-x: scroll;
   }
   .discolsure .discolsure-tab1 {
-    width: 175%;
+    width: 164%;
     height: 1rem;
-    /* overflow-x: auto; */
+    overflow-x: scroll;
     overflow: hidden;
     -webkit-overflow-scrolling: touch;
     transform: translateX(0);

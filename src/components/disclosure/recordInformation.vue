@@ -209,7 +209,7 @@
     background-size: 100%;
   }
   .part4 .collection5 {
-    background: url('../../images/disclosure/record-icon-05.png') no-repeat -29px 0px, linear-gradient(to top, #44d4f4, #43cfec);
+    background: url('../../images/disclosure/record-icon-05.png') no-repeat -.52rem 0px, linear-gradient(to top, #44d4f4, #43cfec);
     background-size: 165%;
   }
   .part4 ul {
