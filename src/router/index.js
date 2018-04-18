@@ -66,7 +66,7 @@ const Disclosure = r => require.ensure([], () => r(require('../components/disclo
 const CommitmentLetter = r => require.ensure([], () => r(require('../components/disclosure/commitmentLetter.vue')), 'Disclosure')
 const PoliciesRegulations = r => require.ensure([], () => r(require('../components/disclosure/policiesRegulations.vue')), 'Disclosure')
 const RecordInformation = r => require.ensure([], () => r(require('../components/disclosure/recordInformation.vue')), 'Disclosure')
-const RiskManagement = r => require.ensure([], () => r(require('../components/disclosure/riskManagement.vue')), 'Disclosure')
+const AuditInformation = r => require.ensure([], () => r(require('../components/disclosure/auditInformation.vue')), 'Disclosure')
 const Organization = r => require.ensure([], () => r(require('../components/disclosure/organization.vue')), 'Disclosure')
 const BusinessInformation = r => require.ensure([], () => r(require('../components/disclosure/businessInformation.vue')), 'Disclosure')
 const Policies = r => require.ensure([], () => r(require('../components/disclosure/policies.vue')), 'Disclosure')
@@ -162,9 +162,9 @@ const routes = [
         meta: {title: '信息披露'}
       },
       {
-        path: 'risk-management',
-        name: 'RiskManagement',
-        component: RiskManagement,
+        path: 'audit-information',
+        name: 'AuditInformation',
+        component: AuditInformation,
         meta: {title: '信息披露'}
       },
       {

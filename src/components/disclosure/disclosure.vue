@@ -28,19 +28,19 @@
             name: 'RecordInformation'
           },
           {
-            tab: '风险管理',
-            name: 'RiskManagement'
-          },
-          {
             tab: '组织信息',
             name: 'Organization'
+          },
+          {
+            tab: '审核信息',
+            name: 'AuditInformation'
           },
           {
             tab: '经营信息',
             name: 'BusinessInformation'
           },
           {
-            tab: '政策法规',
+            tab: '其他信息',
             name: 'PoliciesRegulations'
           }
         ],

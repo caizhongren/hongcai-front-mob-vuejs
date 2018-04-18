@@ -205,11 +205,11 @@
     background-size: 100%;
   }
   .part4 .collection4 {
-    background: url('../../images/disclosure/record-icon-04.png') no-repeat 4px 7px, linear-gradient(to top, #44d4f4, #43cfec);
+    background: url('../../images/disclosure/record-icon-04.png') no-repeat 3px 6px, linear-gradient(to top, #44d4f4, #43cfec);
     background-size: 100%;
   }
   .part4 .collection5 {
-    background: url('../../images/disclosure/record-icon-05.png') no-repeat -34px 0px, linear-gradient(to top, #44d4f4, #43cfec);
+    background: url('../../images/disclosure/record-icon-05.png') no-repeat -29px 0px, linear-gradient(to top, #44d4f4, #43cfec);
     background-size: 165%;
   }
   .part4 ul {
@@ -463,6 +463,7 @@
   }
   .slide li:first-child{
     margin-right: 3%;
+    margin-left: 1px;
   }
   .slide li img{
     width: 100%;
