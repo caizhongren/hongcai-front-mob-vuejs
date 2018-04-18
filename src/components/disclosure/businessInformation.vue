@@ -1,92 +1,151 @@
 <template>
   <div class="business">
-    <!-- 累计交易总额 -->
-    <div class="commonBoxShadow">
-      <p class="title">累计交易总额</p>
-      <p class="data">{{cumulative.amount}}元</p>
+    <div class="sumolume">
+      <div class="sumTitle">累计交易总额(元)</div>
+      <span>96007800元</span>
+      <p>累计交易14685 笔</p>
+
     </div>
-    <!-- 累计交易笔数 -->
-    <div class="commonBoxShadow">
-      <p class="title fl">累计交易笔数</p>
-      <p class="data fr">{{cumulative.numOfTransactions}}笔</p>
-    </div>
-    <!-- 借贷余额 -->
-    <div class="commonBoxShadow">
-      <p class="title fl">借贷余额</p>
-      <p class="data fr">{{cumulative.investingTotalLoanAmount}}元</p>
-    </div>
-    <!-- 待还借款笔数 -->
-    <div class="commonBoxShadow">
-      <p class="title fl">待还借款笔数</p>
-      <p class="data fr">{{cumulative.investingNumOfTransactions}}笔</p>
-    </div>
-      <!-- 累计注册会员数 -->
-    <div class="commonBoxShadow">
-      <p class="title fl">累计注册会员数</p>
-      <p class="data fr">{{cumulative.userCount}}人</p>
-    </div>
-    <!-- 累计借款人数 -->
-    <div class="commonBoxShadow">
-      <p class="title fl">累计借款人数</p>
-      <p class="data fr">{{cumulative.numOfBorrows}}人</p>
-    </div>
-    <!-- 累计出借人数 -->
-    <div class="commonBoxShadow">
-      <p class="title fl">累计出借人数</p>
-      <p class="data fr">{{cumulative.numOfLends}}人</p>
-    </div>
-    <!-- 当前借款人数 -->
-    <div class="commonBoxShadow">
-      <p class="title fl">当前借款人数</p>
-      <p class="data fr">{{cumulative.currentNumOfBorrows}}人</p>
-    </div>
-    <!-- 当前出借人数 -->
-    <div class="commonBoxShadow">
-      <p class="title fl">当前出借人数</p>
-      <p class="data fr">{{cumulative.currentNumOfLends}}人</p>
-    </div>
-    <ul class="otherList">
-      <li class="commonBoxShadow">
-        <p class="title">逾期金额及笔数</p><br>
-        <span class="data fl">0元,0笔</span>
-        <img src="../../images/disclosure/business-icon2.png" class="fr" width="20%">
-      </li>
-      <li class="commonBoxShadow">
-        <p class="title">逾期90天以上的金额及笔数</p>
-        <span class="data fl">0元,0笔</span>
-        <img src="../../images/disclosure/business-icon2.png" class="fr" width="20%">
-      </li>
-      <li class="commonBoxShadow">
-        <p class="title">待偿金额及笔数</p><br>
-        <span class="data fl">0元,0笔</span>
-        <img src="../../images/disclosure/business-icon1.png" class="fr" width="22%">
-      </li>
-      <li class="commonBoxShadow">
-        <p class="title width-105">上月前十大借款人待还金额占比</p>
-        <span class="data fl">{{cumulative.sumTenTopLoanBalance/cumulative.lastMonthTotalLoanAmount*100 | number}}%</span>
-        <img src="../../images/disclosure/business-icon4.png" class="fr" width="20%">
-      </li>
-      <li class="commonBoxShadow">
-        <p class="title width-105">上月最大单一借款人待还金额占比</p>
-        <span class="data fl">{{cumulative.topLoanBalance/cumulative.lastMonthTotalLoanAmount*100 | number}}%</span>
-        <img src="../../images/disclosure/business-icon4.png" class="fr" width="20%">
-      </li>
-      <li class="commonBoxShadow">
-        <p class="title width-105">关联关系借款余额</p><br>
-        <span class="data fl">0元</span>
-        <img src="../../images/disclosure/business-icon3.png" class="fr" width="22%">
-      </li>
-    </ul>
-    <!-- 平台向借款人收取服务费的标准 -->
-    <div class="commonBoxShadow">
-      <p class="title">平台向借款人收取服务费的标准</p>
-      <p class="data ft-2p8">按借款类型、期限、风险等级执行不通费率标准。平台服务费=借款金额*服务费率*借款期限/365。</p>
-    </div>
-    <!-- 平台重大风险信息 -->
-    <div class="commonBoxShadow">
-      <p class="title fl">平台重大风险信息</p>
-      <p class="data fr">无</p>
-    </div>
+    <table class="info">
+        <div>
+        <tr>
+            <td>借贷余额</td> 
+            <td>{{cumulative.investingTotalLoanAmount}}元</td>
+          </tr>
+        <tr>
+            <td>借贷余额笔数</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td>利息余额</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td>累计借款人数</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td>累计出借人数</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td>当前借款人数</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td>当前出借人数</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td>累计出借人数</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td>累计出借人数</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td class="line-h">前十大借款人<br>待还金额占比</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td class="line-h">最大单一借款人<br>待还金额占比</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td>关联关系借款余额</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td>关联关系借款笔数</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td>逾期金额</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td>逾期笔数</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td>逾期90天以上的金额</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td>逾期90天以上的笔数</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td>代偿金额</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td>代偿笔数</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td>逾期金额</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td>逾期笔数</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td>项目逾期率</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td class="line-h">项目分级逾期率<br>(逾期90天内)</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td class="line-h">项目分级逾期率<br>(逾期90天以上至180天)</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td class="line-h">项目分级逾期率<br>(逾期180天以上）</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td>金额逾期率</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td class="line-h">金额分级逾期率<br>(逾期90天内)</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td class="line-h">金额分级逾期率<br>(逾期90天以上至180天)</td> 
+            <td></td>
+          </tr>
+          <tr>
+            <td class="line-h">金额分级逾期率<br>(逾期180天以上)</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>人均累计借款金额</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>人均累计出借金额</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>最大单户出借余额占比</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>最大十户出借余额占比</td>
+            <td></td>
+          </tr>
+          <tr class="border-none">
+            <td class="line-h" style="padding:.6rem 0;">平台向借款人收取<br>服务费的标准</td>
+            <td style="text-align:left;">平台服务费=借款金额*年化服务费率*借款期限/365 （年化服务费率在1.8%-5.2%）。</td>
+          </tr>
+        </div>
+      </table>
     <div class="creatTime">数据统计：截至{{updateDate}}</div>
   </div>
 </template>
@@ -213,5 +272,94 @@
   .ft-2p8 {
     font-size: .28rem !important;
     text-align: justify;
+  }
+
+  table.info {
+    background: #fff;
+    border-radius: .2rem;
+    width: 90%;
+    margin: 0 auto;
+    font-size: .2rem;
+    box-shadow: 0 1.5px 3.5px 0 rgba(80, 77, 75, 0.2);
+  }
+  table.info div {
+    padding: .1rem .15rem;
+  }
+  table.info tr {
+    height: .6rem;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+  }
+  table.info td:nth-child(1){
+    width: 48%;
+    text-align: left;
+    border-right: 1px solid #eee;
+    line-height: .7rem;
+    padding-left: .1rem;
+    vertical-align: middle;
+  }
+  table.info td:nth-child(2) {
+    width: 57%;
+    text-align: right;
+    line-height: 1.6;
+    padding-left: .2rem;
+  }
+  .line-h {
+    line-height: 1.5 !important;
+    padding: .12rem 0;
+  }
+  .organization {
+    color: #666;    
+    padding-bottom: 1rem;
+    background: #f9f4f3;
+  }
+  .parting-line {
+    width: 100%;
+    height: .1rem;
+    background: url('../../images/about/parting-line.png') no-repeat center center;
+    background-size: contain;
+    margin-top: .6rem;
+  }
+  .bsuiness-title {
+    margin: .35rem 0 .5rem 0;
+    width: 27%;
+  }
+  .sumolume{
+    width: 90%;
+    margin: 0.4rem auto;
+    position: relative;
+    height: 2.26rem;
+    background: url(../../images/disclosure/header.png) no-repeat;
+    background-size: cover;
+  }
+
+  .sumolume .sumTitle{
+    color: #fff;
+    text-align: center;
+    padding-top: .3rem;
+  }
+  .sumolume span{
+    width: 80%;
+    font-size: .5rem;
+    color: #fff;
+    text-align: center;
+    margin: .1rem 0;
+    border-bottom: 1px solid #FFF;
+    margin: 0 auto;
+    display: block;
+    font-family: PingFang-SC;
+    font-weight: bold;
+  }
+  .sumolume p{
+    color: #fff;
+    font-size: .3rem;
+    text-align: center;
+    margin-top: .1rem;
+  }
+  .border-none {
+    border: none !important;
+  }
+  .creatTime{
+    margin-top: .35rem;
   }
 </style>
