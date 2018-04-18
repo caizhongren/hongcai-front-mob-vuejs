@@ -195,8 +195,8 @@
             content: '王静波'
           },
           {
-            name: '经理',
-            content: '刘刚'
+            name: 'CEO',
+            content: '王斌'
           },
           {
             name: '公司经营范围',
