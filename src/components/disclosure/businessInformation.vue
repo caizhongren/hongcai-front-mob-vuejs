@@ -37,14 +37,6 @@
             <td></td>
           </tr>
           <tr>
-            <td>累计出借人数</td> 
-            <td></td>
-          </tr>
-          <tr>
-            <td>累计出借人数</td> 
-            <td></td>
-          </tr>
-          <tr>
             <td class="line-h">前十大借款人<br>待还金额占比</td> 
             <td></td>
           </tr>
@@ -82,14 +74,6 @@
           </tr>
           <tr>
             <td>代偿笔数</td> 
-            <td></td>
-          </tr>
-          <tr>
-            <td>逾期金额</td> 
-            <td></td>
-          </tr>
-          <tr>
-            <td>逾期笔数</td> 
             <td></td>
           </tr>
           <tr>
