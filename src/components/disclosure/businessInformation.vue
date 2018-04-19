@@ -2,131 +2,131 @@
   <div class="business">
     <div class="sumolume">
       <div class="sumTitle">累计交易总额(元)</div>
-      <span>96007800元</span>
-      <p>累计交易14685 笔</p>
+      <span>{{cumulative.totalTransactionAmount}}元</span>
+      <p>累计交易{{cumulative.totalTransactionCount}} 笔</p>
 
     </div>
     <table class="info">
         <div>
         <tr>
             <td>借贷余额</td> 
-            <td>{{cumulative.investingTotalLoanAmount}}元</td>
+            <td>{{cumulative.loanBalance}}元</td>
           </tr>
         <tr>
             <td>借贷余额笔数</td> 
-            <td></td>
+            <td>{{cumulative.loanBalanceCreditRightCount}}笔</td>
           </tr>
           <tr>
             <td>利息余额</td> 
-            <td></td>
+            <td>{{cumulative.loanBalanceCreditRightCount}}元</td>
           </tr>
           <tr>
             <td>累计注册会员数</td>
-            <td></td>
+            <td>{{cumulative.userCount}}人</td>
           </tr>
           <tr>
             <td>累计借款人数</td> 
-            <td></td>
+            <td>{{cumulative.numOfBorrows}}人</td>
           </tr>
           <tr>
             <td>累计出借人数</td> 
-            <td></td>
+            <td>{{cumulative.numOfLends}}人</td>
           </tr>
           <tr>
             <td>当前借款人数</td> 
-            <td></td>
+            <td>{{cumulative.currentNumOfBorrows}}人</td>
           </tr>
           <tr>
             <td>当前出借人数</td> 
-            <td></td>
+            <td>{{cumulative.currentNumOfLends}}人</td>
           </tr>
           <tr>
             <td class="line-h">前十大借款人<br>待还金额占比</td> 
-            <td></td>
+            <td>{{cumulative.topTenBorrowerRemainPrincipalPercent}}%</td>
           </tr>
           <tr>
             <td class="line-h">最大单一借款人<br>待还金额占比</td> 
-            <td></td>
+            <td>{{cumulative.topOneBorrowerRemainPrincipalPercent}}%</td>
           </tr>
           <tr>
             <td>关联关系借款余额</td> 
-            <td></td>
+            <td>{{cumulative.relationshipLoanBalance}}元</td>
           </tr>
           <tr>
             <td>关联关系借款笔数</td> 
-            <td></td>
+            <td>{{cumulative.relationshipLoanCount}}笔</td>
           </tr>
           <tr>
             <td>逾期金额</td> 
-            <td></td>
+            <td>{{cumulative.overdueAmount}}元</td>
           </tr>
           <tr>
             <td>逾期笔数</td> 
-            <td></td>
+            <td>{{cumulative.overdueCount}}笔</td>
           </tr>
           <tr>
             <td>逾期90天以上的金额</td> 
-            <td></td>
+            <td>{{cumulative.overdue90Amount}}元</td>
           </tr>
           <tr>
             <td>逾期90天以上的笔数</td> 
-            <td></td>
+            <td>{{cumulative.overdue90Count}}笔</td>
           </tr>
           <tr>
             <td>代偿金额</td> 
-            <td></td>
+            <td>{{cumulative.compensatoryAmount}}元</td>
           </tr>
           <tr>
             <td>代偿笔数</td> 
-            <td></td>
+            <td>{{cumulative.compensatoryCount}}笔</td>
           </tr>
           <tr>
             <td>项目逾期率</td> 
-            <td></td>
+            <td>{{cumulative.projectOverduePercent}}%</td>
           </tr>
           <tr>
             <td class="line-h">项目分级逾期率<br>(逾期90天内)</td> 
-            <td></td>
+            <td>{{cumulative.projectOverdueIn90Percent}}%</td>
           </tr>
           <tr>
             <td class="line-h">项目分级逾期率<br>(逾期90天以上至180天)</td> 
-            <td></td>
+            <td>{{cumulative.projectOverdueIn180Percent}}%</td>
           </tr>
           <tr>
             <td class="line-h">项目分级逾期率<br>(逾期180天以上）</td> 
-            <td></td>
+            <td>{{cumulative.projectOverdue180Percent}}%</td>
           </tr>
           <tr>
             <td>金额逾期率</td> 
-            <td></td>
+            <td>{{cumulative.overdueAmountPercent}}%</td>
           </tr>
           <tr>
             <td class="line-h">金额分级逾期率<br>(逾期90天内)</td> 
-            <td></td>
+            <td>{{cumulative.overdueIn90AmountPercent}}%</td>
           </tr>
           <tr>
             <td class="line-h">金额分级逾期率<br>(逾期90天以上至180天)</td> 
-            <td></td>
+            <td>{{cumulative.overdueIn180AmountPercent}}%</td>
           </tr>
           <tr>
             <td class="line-h">金额分级逾期率<br>(逾期180天以上)</td>
-            <td></td>
+            <td>{{cumulative.overdue180AmountPercent}}%</td>
           </tr>
           <tr>
             <td>人均累计借款金额</td>
-            <td></td>
+            <td>{{cumulative.borrowerTotalAmountPerCapital}}元</td>
           </tr>
           <tr>
             <td>人均累计出借金额</td>
-            <td></td>
+            <td>{{cumulative.lenderTotalAmountPerCapital}}元</td>
           </tr>
           <tr>
             <td>最大单户出借余额占比</td>
-            <td></td>
+            <td>{{cumulative.topOneLendAmountPercent}}%</td>
           </tr>
           <tr>
             <td>最大十户出借余额占比</td>
-            <td></td>
+            <td>{{cumulative.topTenLendAmountPercent}}%</td>
           </tr>
           <tr class="border-none">
             <td class="line-h" style="padding:.6rem 0;">平台向借款人收取<br>服务费的标准</td>
@@ -143,18 +143,39 @@
     data () {
       return {
         cumulative: {
-          amount: 0, // 累计交易总额
-          numOfTransactions: 0, // 累计交易笔数
+          totalTransactionAmount: 0, // 累计交易总额
+          totalTransactionCount: 0, // 累计交易笔数
           userCount: 0, // 累计注册会员数
-          investingTotalLoanAmount: 0, // 借贷余额
-          investingNumOfTransactions: 0, // 待还借款笔数
+          loanBalance: 0, // 借贷余额
+          loanBalanceCreditRightCount: 0, // 借贷余额笔数
           numOfLends: 0, // 累计出借人数
           numOfBorrows: 0, // 累计借款人数
           currentNumOfLends: 0, // 当前出借人数
           currentNumOfBorrows: 0, // 当前借款人数
-          lastMonthTotalLoanAmount: 0, // 上个月借贷余额
-          sumTenTopLoanBalance: 0, // 上个月前十大借款人待还金额
-          topLoanBalance: 0 // 上月最大单一借款人待还金额
+          topTenBorrowerRemainPrincipalPercent: 0, // 前十大借款人待还金额占比
+          topOneBorrowerRemainPrincipalPercent: 0, // 最大单一借款人待还金额占比
+          relationshipLoanBalance: 0, // 关联关系借款余额
+          relationshipLoanCount: 0, // 关联关系借款笔数
+          overdueAmount: 0, // 逾期金额
+          overdueCount: 0, // 逾期笔数
+          overdue90Amount: 0, // 逾期90天以上的金额
+          overdue90Count: 0, // 逾期90天以上的笔数
+          compensatoryAmount: 0, // 代偿金额
+          compensatoryCount: 0, // 代偿笔数
+          projectOverduePercent: 0, // 项目逾期率
+          projectOverdueIn90Percent: 0, // 项目分级逾期率（逾期90天内）
+          projectOverdueIn180Percent: 0, // 项目分级逾期率（逾期90天以上至180天）
+          projectOverdue180Percent: 0, // 项目分级逾期率（逾期180天以上
+          overdueAmountPercent: 0, // 金额逾期率
+          overdueIn90AmountPercent: 0, // 金额分级逾期率（逾期90天内）
+          overdueIn180AmountPercent: 0, // 金额分级逾期率（逾期90天以上至180天）
+          overdue180AmountPercent: 0, // 金额分级逾期率（逾期180天以上）
+          borrowerTotalAmountPerCapital: 0, // 人均累计借款金额
+          lenderTotalAmountPerCapital: 0, // 人均累计出借金额
+          topOneLendAmountPercent: 0, // 最大单户出借余额占比
+          topOneLendAmount: 0, // 最大单户出借余额
+          topTenLendAmountPercent: 0, // 最大十户出借余额占比
+          topTenLendAmount: 0 // 最大十户出借余额
         },
         year: new Date().getFullYear(),
         month: new Date().getMonth() + 1,
@@ -171,11 +192,11 @@
         var that = this
         that.$http({
           method: 'get',
-          url: '/hongcai/rest/systems/dataStat'
+          url: '/hongcai/rest/disclosureInfo/newest'
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
-            that.cumulative = res.data
+            that.cumulative = res.data.detail
           } else {
             alert(res.data.msg)
           }
