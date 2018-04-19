@@ -8,7 +8,7 @@
         </tr>
       </div>
 	</table>
-	<div data-v-49b8d080="" class="creatTime">最近披露时间：{{disclosureTime}}</div>
+	<div data-v-49b8d080="" class="creatTime">最近披露时间：{{disclosureTime | date}}</div>
   </div>
 </template>
 <script>
@@ -16,42 +16,60 @@
     name: 'postLoanManagementInfo',
     data () {
       return {
-        postLoanMsg: [
-          {
-            name: '借款资金使用情况',
-            content: '正常'
-          },
-          {
-            name: '经营情况',
-            content: '良好'
-          },
-          {
-            name: '财务情况',
-            content: '良好'
-          },
-          {
-            name: '还款能力变化情况',
-            content: '正常'
-          },
-          {
-            name: '逾期情况',
-            content: '无'
-          },
-          {
-            name: '涉诉情况',
-            content: '无'
-          },
-          {
-            name: '受行政处罚情况',
-            content: '无'
-          },
-          {
-            name: '其他可能影响借款人还款的重大事件',
-            content: '无'
-          }
-        ],
-        disclosureTime: '2018-04-03'
+        postLoanMsg: {
+        },
+        disclosureTime: ''
       }
+    },
+    methods: {
+      getAssignmentOrder: function (limit) {
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest/disclosureInfo/loanInfo/' + that.$route.params.projectId
+        }).then(function (res) {
+          console.log(res)
+          var dataMsg = res.data.objContent
+          that.disclosureTime = res.data.createTime
+          that.postLoanMsg = [
+            {
+              name: '借款资金使用情况',
+              content: dataMsg.loanUsedInfo
+            },
+            {
+              name: '经营情况',
+              content: dataMsg.manageInfo
+            },
+            {
+              name: '财务情况',
+              content: dataMsg.financeInfo
+            },
+            {
+              name: '还款能力变化情况',
+              content: dataMsg.repaymentInfo
+            },
+            {
+              name: '逾期情况',
+              content: dataMsg.overdueInfo
+            },
+            {
+              name: '涉诉情况',
+              content: dataMsg.lawsuitInfo
+            },
+            {
+              name: '受行政处罚情况',
+              content: dataMsg.penaltyInfo
+            },
+            {
+              name: '其他可能影响借款人还款的重大事件',
+              content: dataMsg.eventInfo
+            }
+          ]
+        })
+      }
+    },
+    created () {
+      this.getAssignmentOrder()
     }
   }
 </script>
