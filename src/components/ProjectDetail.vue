@@ -92,10 +92,19 @@
                 <p v-html="projectInfo.riskManagementInfo"><span></span></p>   
               </div>
             </div>
-            <div class="project-brief" v-show="projectInfo.riskControl && projectInfo.riskControl.length>0">
+            <div class="project-brief" v-show="projectInfo.riskAssessment != null">
               <div class="title">
                 <span></span>
                 <p>风险评估</p>
+              </div>
+              <div class="content">
+                <p v-html="projectInfo.riskAssessment"><span></span></p>
+              </div>
+            </div>
+            <div class="project-brief" v-show="projectInfo.riskControl && projectInfo.riskControl.length>0">
+              <div class="title">
+                <span></span>
+                <p>风控审核</p>
               </div>
               <div class="content">
                 <p v-html="projectInfo.riskControl"><span></span></p>
