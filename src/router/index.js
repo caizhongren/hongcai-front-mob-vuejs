@@ -39,6 +39,7 @@ const Feedback = r => require.ensure([], () => r(require('../components/user-cen
 const InviteRebate = r => require.ensure([], () => r(require('../components/user-center/inviteRebate.vue')), 'InviteRebate')
 const inviteRebateList = r => require.ensure([], () => r(require('../components/user-center/inviteRebateList.vue')), 'InviteRebate')
 const Membership = r => require.ensure([], () => r(require('../components/user-center/Membership.vue')), 'Membership')
+const postLoanManagementInfo = r => require.ensure([], () => r(require('../components/user-center/postLoanManagementInfo.vue')), 'postLoanManagementInfo')
 const AssignmentQuestion = r => require.ensure([], () => r(require('../components/assignmentQuestion.vue')), 'Question')
 const RegisterAgree = r => require.ensure([], () => r(require('../components/registerAgree.vue')), 'RegisterAgree')
 const AssignmentAgree = r => require.ensure([], () => r(require('../components/assignmentAgree.vue')), 'AssignmentAgree')
@@ -278,6 +279,12 @@ const routes = [
     name: 'BeanDetail',
     component: BeanDetail,
     meta: {title: '宏豆明细'}
+  },
+  {
+    path: '/user-center/postLoanManagementInfo',
+    name: 'postLoanManagementInfo',
+    component: postLoanManagementInfo,
+    meta: {title: '贷后管理信息'}
   },
   {
     path: '/activity/novice-landing',
