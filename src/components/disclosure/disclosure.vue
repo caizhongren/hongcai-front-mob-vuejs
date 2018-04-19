@@ -3,7 +3,7 @@
     <div class="class1">
       <img src="../../images/disclosure/comm-header.png" class="display-bl margin-auto" width="100%"> 
       <img src="../../images/disclosure/discolsure.png" width="35%" class="discolsure-title">
-      <div class="tab">
+      <div class="tab" id="discolsure-tab1">
         <ul class="discolsure-tab1 columns discolsureorange">
           <li class="column text-center ft-1p4" :class="{active: activeTab == index}" v-for="(tab, index) in tabs" @click="switchTab(index)">{{tab.tab}}</li>
         </ul>
@@ -74,7 +74,7 @@
           $('.tab').removeClass('fixed')
         }
       }
-      // location.pathname === '/disclosure/policies-regulations' ? (this.activeTab = 4, $('.columns').addClass('transition-left')) : null
+      location.pathname === '/disclosure/policies-regulations' ? (this.activeTab = 5, document.getElementById('discolsure-tab1').scrollLeft = 200) : null
     }
   }
 </script>
@@ -125,7 +125,7 @@
     transform: translateX(0%);
   }
   .discolsure .discolsure-tab1 li {
-    width: 12%;
+    width: 12.4%;
     margin-left: 2%;
     margin-right: 2%;
     font-size: .28rem;

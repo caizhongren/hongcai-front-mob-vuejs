@@ -15,7 +15,7 @@
     <div class="policies">
       <img src="../../images/disclosure/other-icon-02.png" alt="政策法规" class="policies-title" width="42%">
       <div class="commonBoxShadow" v-for="(item, index) in policiesList" @click="goText(index)">
-        <p class="title" v-bind:class="{'margin-t': index === 2 || index === 3}">{{item.title}}</p>
+        <p class="title" v-bind:class="{'margin-t': index === 3 || index === 4}">{{item.title}}</p>
         <img src="../../images/disclosure/icon-right.png" alt="">
       </div>
     </div>
@@ -83,6 +83,9 @@
           },
           {
             title: '中华人民共和国网络安全法'
+          },
+          {
+            title: '中华人民共和国反洗钱法'
           },
           {
             title: '最高人民法院关于审理民间借贷案件适用法律若干问题的规定 '
