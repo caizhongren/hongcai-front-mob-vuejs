@@ -100,6 +100,7 @@ const FoolResult = r => require.ensure([], () => r(require('../components/activi
 const FoolAnswerPage = r => require.ensure([], () => r(require('../components/activity/FoolAnswerPage.vue')), 'FoolAnswerPage')
 const FoolTacit = r => require.ensure([], () => r(require('../components/activity/FoolTacit.vue')), 'FoolTacit')
 const LoanManagement = r => require.ensure([], () => r(require('../components/LoanManagement.vue')), 'LoanManagement')
+const operatingReport = r => require.ensure([], () => r(require('../components/disclosure/operatingReport.vue')), 'operatingReport')
 
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -648,6 +649,12 @@ const routes = [
     name: 'LoanManagement',
     component: LoanManagement,
     meta: {title: '贷后管理信息'}
+  },
+  {
+    path: '/operating-report',
+    name: 'operatingReport',
+    component: operatingReport,
+    meta: {title: '运营年报'}
   },
   {
     path: '/qrcode',
