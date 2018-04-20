@@ -1,14 +1,20 @@
 <template>
-  <div class="postLoanManagementInfo">
-  	<table class="info">
-      <div>
-        <tr v-for="(info, index) in postLoanMsg" v-bind:class="{'border-none': index === postLoanMsg.length-1}">
-          <td v-bind:class="{'line-h': index===postLoanMsg.length-1}">{{info.name}}</td> 
-          <td>{{info.content}}</td>
-        </tr>
-      </div>
-	</table>
-	<div data-v-49b8d080="" class="creatTime">最近披露时间：{{disclosureTime | date}}</div>
+  <div class="postLoanManagementInfo" v-if="loadPage">
+    <div v-if="msg == ''">
+      <table class="info">
+        <div>
+          <tr v-for="(info, index) in postLoanMsg" v-bind:class="{'border-none': index === postLoanMsg.length-1}">
+            <td v-bind:class="{'line-h': index===postLoanMsg.length-1}">{{info.name}}</td> 
+            <td>{{info.content}}</td>
+          </tr>
+        </div>
+      </table>
+      <div class="creatTime">最近披露时间：{{disclosureTime | date}}</div>
+    </div>
+  	<div v-else class="msg">
+      <img src="../../images//project//no-record.png" alt="" width="60%"> <br>
+      <p class="text-justify">{{msg}}</p>
+    </div>
   </div>
 </template>
 <script>
@@ -16,64 +22,89 @@
     name: 'postLoanManagementInfo',
     data () {
       return {
-        postLoanMsg: {
-        },
-        disclosureTime: ''
-      }
-    },
-    methods: {
-      getAssignmentOrder: function (limit) {
-        var that = this
-        that.$http({
-          method: 'get',
-          url: '/hongcai/rest/disclosureInfo/loanInfo/' + that.$route.params.projectId
-        }).then(function (res) {
-          console.log(res)
-          var dataMsg = res.data.objContent
-          that.disclosureTime = res.data.createTime
-          that.postLoanMsg = [
-            {
-              name: '借款资金使用情况',
-              content: dataMsg.loanUsedInfo
-            },
-            {
-              name: '经营情况',
-              content: dataMsg.manageInfo
-            },
-            {
-              name: '财务情况',
-              content: dataMsg.financeInfo
-            },
-            {
-              name: '还款能力变化情况',
-              content: dataMsg.repaymentInfo
-            },
-            {
-              name: '逾期情况',
-              content: dataMsg.overdueInfo
-            },
-            {
-              name: '涉诉情况',
-              content: dataMsg.lawsuitInfo
-            },
-            {
-              name: '受行政处罚情况',
-              content: dataMsg.penaltyInfo
-            },
-            {
-              name: '其他可能影响借款人还款的重大事件',
-              content: dataMsg.eventInfo
-            }
-          ]
-        })
+        postLoanMsg: [],
+        disclosureTime: '',
+        projectDays: 0,
+        msg: '',
+        loadPage: false
       }
     },
     created () {
-      this.getAssignmentOrder()
+      this.getProject()
+    },
+    methods: {
+      getProject: function () {
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest/projects/' + that.$route.params.projectNum
+        }).then((response) => {
+          that.projectDays = response.data.projectDays
+          var projectId = response.data.id
+          that.$http({
+            method: 'get',
+            url: '/hongcai/rest/disclosureInfo/loanInfo/' + projectId
+          }).then(function (res) {
+            that.loadPage = true
+            if (res.status === 200) {
+              var dataMsg = res.data.objContent
+              that.disclosureTime = res.data.createTime
+              that.postLoanMsg = [
+                {
+                  name: '借款资金使用情况',
+                  content: dataMsg.loanUsedInfo
+                },
+                {
+                  name: '经营情况',
+                  content: dataMsg.manageInfo
+                },
+                {
+                  name: '财务情况',
+                  content: dataMsg.financeInfo
+                },
+                {
+                  name: '还款能力变化情况',
+                  content: dataMsg.repaymentInfo
+                },
+                {
+                  name: '逾期情况',
+                  content: dataMsg.overdueInfo
+                },
+                {
+                  name: '涉诉情况',
+                  content: dataMsg.lawsuitInfo
+                },
+                {
+                  name: '受行政处罚情况',
+                  content: dataMsg.penaltyInfo
+                },
+                {
+                  name: '其他可能影响借款人还款的重大事件',
+                  content: dataMsg.eventInfo
+                }
+              ]
+            } else if (res.status === 204) {
+              that.projectDays <= 180 ? that.msg = '该借款项目将于每月前5个工作日向您披露相关贷后管理信息。' : that.msg = '该借款项目将于每季度前5个工作日向您披露相关贷后管理信息。'
+            } else {
+              alert('接口报错！')
+            }
+          })
+        })
+      }
     }
   }
 </script>
 <style scoped>
+  .postLoanManagementInfo {
+    padding: .8rem .12rem;
+  	color: #666;
+  }
+  .msg {
+    margin: 1rem;
+  }
+  .msg p {
+    margin-top: .2rem;
+  }
   table.info {
     background: #fff;
     border-radius: .2rem;
@@ -110,8 +141,7 @@
     padding: .12rem 0;
   }
   .creatTime{
-	margin-top: .35rem;
-  	color: #666;
+	  margin-top: .35rem;
     font-size: .2rem;
     text-align: center;
   }

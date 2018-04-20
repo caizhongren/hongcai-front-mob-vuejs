@@ -281,7 +281,7 @@ const routes = [
     meta: {title: '宏豆明细'}
   },
   {
-    path: '/user-center/postLoanManagementInfo/:projectId',
+    path: '/user-center/postLoanManagementInfo/:projectNum',
     name: 'postLoanManagementInfo',
     component: postLoanManagementInfo,
     meta: {title: '贷后管理信息'}
