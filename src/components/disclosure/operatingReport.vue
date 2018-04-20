@@ -134,22 +134,127 @@
           <li class="reportList position-re text-center">
             <div class="report-content">
               <div class="contentNum">04</div>
-            </div>
-          </li>
-          <li class="reportList position-re text-center">
-            <div class="report-content">
-              <div class="contentNum">05</div>
+              <div class="report-title">借款人数据</div>
+              <div class="report-title report3_1_title">借款人主体性质分布</div>
+              <div class="clear"></div>
+              <img src="../../images/disclosure/report4-01.png" alt="" width="95%" style="margin-top:.2rem">
+              <div class="summary">2017年企业借款总额高达85.73％</div>
             </div>
           </li>
           <li class="reportList position-re text-center">
             <div class="report-content">
               <div class="contentNum">04</div>
+              <div class="report-title">借款人数据</div>
+              <div class="report3_1_title report-title">借款期限分布</div>
+              <img src="../../images/disclosure/report4-02.png" alt="" width="100%">
+              <div class="clear"></div>
+              <div class="summary" style="padding-left:.9rem;text-align:left;">平台项目中，短期借款占比较高主要分布在0-3个月，借款金额占比超过60％</div>
+              <div class="report3_1_title report-title">借款金额分布</div>
+              <img src="../../images/disclosure/report4-03.png" alt="" width="100%" style="margin-top: -.18rem;">
+              <div class="summary">20万-40万借款项目占比较高，达64.85％</div>
             </div>
           </li>
           <li class="reportList position-re text-center">
             <div class="report-content">
               <div class="contentNum">05</div>
+              <div class="report-title">年度最宏粉</div>
+              <div class="clear"></div>
+              <div class="content5Box">
+                <div class="c5item">
+                  <div class="c5itemL">
+                    <img src="../../images/disclosure/report5-01.png" alt="">
+                    <p>13,682,400 元</p>
+                    <p>年度出借总额最高</p>
+                  </div>
+                  <div class="c5itemR">
+                    <img src="../../images/disclosure/report5-02.png" alt="">
+                    <p>950,000 元</p>
+                    <p>单笔出借金额最高</p>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+                <div class="c5item">
+                  <div class="c5itemL">
+                    <img src="../../images/disclosure/report5-03.png" alt="">
+                    <p>280 笔</p>
+                    <p>年度出借总额最高</p>
+                  </div>
+                  <div class="c5itemR">
+                    <img src="../../images/disclosure/report5-04.png" alt="">
+                    <p>271,827.87 元</p>
+                    <p>赚取收益最多</p>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+                <div class="c5item">
+                  <div class="c5itemL">
+                    <img src="../../images/disclosure/report5-05.png" alt="">
+                    <p>114 人</p>
+                    <p>邀请好友人数最多</p>
+                  </div>
+                  <div class="c5itemR">
+                    <img src="../../images/disclosure/report5-06.png" alt="">
+                    <p>15,014.28 元</p>
+                    <p>获得邀请奖励最多</p>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+              </div>
             </div>
+          </li>
+          <li class="reportList position-re text-center">
+            <div class="report-content">
+              <div class="solid"></div>
+              <div class="contentNum">06</div>
+              <div class="report-title">宏财大事件</div>
+              <div class="clear"></div>
+              <div class="eventBox">
+                <div class="events left" style="left:0;top:.7rem;">
+                  <div class="node">
+                    <span>2017.</span><span class="fontBig">6</span>
+                    <div class="triangle"></div>
+                    <div class="circle"></div>
+                  </div>
+                  <p>宏财网成功对接海口联合农商银行资金存管系统，标志着宏财网用户资金安全体系进一步完善</p>
+                </div>
+                <div class="events right" style="left:48%;top:0;">
+                  <div class="node">
+                    <span>2017.</span><span class="fontBig">3</span>
+                    <div class="triangle"></div>
+                    <div class="circle"></div>
+                  </div>
+                  <p>宏财网荣获3.15互联网诚信企业重点单位</p>
+                </div>
+                <div class="events left" style="left:0;top:3rem;">
+                  <div class="node">
+                    <span>2017.</span><span class="fontBig">9</span>
+                    <div class="triangle"></div>
+                    <div class="circle"></div>
+                  </div>
+                  <p>宏财网与知名电子合同在线签署服务平台 - 法大大建立合作，成功上线电子签章服务</p>
+                  <p>宏财网获得由中国电子商务协会信用管理委员会颁发的理事单位证书，正式成为中国电子商务协会信用管理委员会第一届理事会理事单位</p>
+                </div>
+                <div class="events right" style="left:48%;top:2rem;">
+                  <div class="node">
+                    <span>2017.</span><span class="fontBig">7</span>
+                    <div class="triangle"></div>
+                    <div class="circle"></div>
+                  </div>
+                  <p>宏财网全程赞助2017年中国国际金融科技博览会</p>
+                </div>
+                <div class="events right" style="left:48%;top:4.2rem;">
+                  <div class="node">
+                    <span>2017.</span><span class="fontBig">12</span>
+                    <div class="triangle"></div>
+                    <div class="circle"></div>
+                  </div>
+                  <p>宏财网荣获2017年度中国互金行业诚信示范企业称号</p>
+                  <p>宏财网获得中关村“金种子企业”认证，荣登第七批中关村“金种子企业”名单</p>
+                </div>
+              </div>
+              <div class="report6Bottom"></div>
+            </div>
+
           </li>
         </ul>
         <div class="dot">
@@ -338,6 +443,9 @@
   .slide li:first-child{
     /* z-index: 1; */
   }
+  /*.slide li img{
+    width: 100%;
+  }*/
   .slide .dot{
     position: absolute;
     right: -1%;
@@ -348,14 +456,14 @@
   }
   .slide .dot span{
     display: block;
-    width: .2rem;
-    height: .21rem;
+    width: .18rem;
+    height: .19rem;
     background-color: #fff;
     border-radius: 50%;
     margin: .4rem auto;
   }
   .slide .dot .cur{
-    background-color: #ef6494;
+    background-color: #ef548c;
   }
   .reportList{
   	background: url(../../images/disclosure/report.png) no-repeat;
@@ -369,6 +477,7 @@
   	border-radius:10px;
   	margin: 0 auto;
   	padding: .4rem .35rem;
+    position: relative;
   }
   .contentNum{
   	width: 1rem;
@@ -548,5 +657,156 @@
   }
   .report3_3-content .geographical ul li:nth-child(2) {
     background: #fedada;
+  }
+  .fontBold{
+    font-size: .36rem;
+    color: #ef548c;
+    font-family: SourceHanSansCN-Bold;
+    font-weight: bold;
+    line-height: 1rem;
+  }
+  .fontBold.titleF{
+    float: left;
+    margin-left: .36rem;
+  }
+  .clear{
+    clear: both;
+  }
+  .fontBold.titleO{
+    text-align: left !important;
+  }
+  .summary{
+    color: #999999;
+    font-size: .2rem;
+    font-family: PingFang-SC;
+    margin-top: .1rem;
+  }
+  /*05页面*/
+  .content5Box{
+    padding-top: .3rem;
+
+  }
+  .content5Box .c5item>div p:nth-child(2){
+    color: #ef548c;
+    font-family: PingFang-SC;
+    font-size: .3rem;
+    font-weight: 500;
+  }
+  .content5Box .c5item div p:nth-child(3){
+    font-family: SourceHanSansCN;
+    font-weight: 500;
+    text-align: center;
+    color: #e2bac2;
+  }
+  .c5item{
+    border-bottom: dashed 1px #f2c7b0;
+    padding-bottom: .1rem;
+  }
+  .c5item img{
+    display: block;
+    padding: .2rem .4rem;
+    width: .9rem !important;
+    height: .8rem;
+  }
+  .c5itemL{
+    float: left;
+  }
+  .c5itemR{
+    float: right;
+    margin-right: .2rem;
+  }
+  /*06页面*/
+  .events.left .node{
+     margin-left: 0.93rem;
+  }
+  .events{
+    max-width: 48%;
+    float: left;
+    position: absolute;
+  }
+  .events.right{
+    margin-left: 4.1%;
+  }
+  .events .node{
+    padding: 0rem .1rem;
+    font-size: .24rem;
+    background-image: linear-gradient(to left, #ee5a8d, #ffd2e0);
+    width: 1.3rem;
+    color: #FFFFFF;
+    border-radius: 5px;
+    margin-bottom: .1rem;
+    position: relative;
+  }
+  .node .triangle{
+    width: .1rem;
+    height: .1rem;
+    position: absolute;
+    background-color: #ef6393;
+    right: -.05rem;
+    top: .2rem;
+    transform: rotate(45deg);
+  }
+  .node .circle{
+    position: absolute;
+    width: .2rem;
+    height: .2rem;
+    border: solid 2px #ef548c;
+    right: -.26rem;
+    border-radius: 50%;
+    top: .16rem;
+  }
+  .events.right .node .triangle{
+    background: #ffd0de;
+    width: .1rem;
+    height: .1rem;
+    position: absolute;
+    background-color: #ffd2e0;
+    left: -.05rem;
+    top: .2rem;
+    transform: rotate(45deg);
+  }
+  .events.right .node{
+    margin-left: -.08rem;
+  }
+  .events.right .node .circle{
+    position: absolute;
+    width: .2rem;
+    height: .2rem;
+    border: solid 2px #ef548c;
+    left: -.26rem;
+    border-radius: 50%;
+    top: .16rem;
+  }
+  .events p{
+    text-align: left !important;
+    line-height: .3rem;
+    margin-bottom: .2rem;
+    font-size: .23rem;
+  }
+  .fontBig{
+    font-size: .3rem;
+    font-weight: 400;
+  }
+  .solid{
+    position: absolute;
+    left: 51%;
+    top: 1.47rem;
+    width: 1px;
+    height: 6.8rem;
+    background-color: #ef548c;
+  }
+  .eventBox{
+    position: relative;
+    top:-.25rem;
+    left: .2rem;
+  }
+  .report6Bottom{
+    width: 18%;
+    height: 6.5px;
+    border-radius: 3.3px;
+    background-color: #f974b3;
+    position: absolute;
+    bottom: -.4rem;
+    left: 42%;
   }
 </style>
