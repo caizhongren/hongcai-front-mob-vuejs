@@ -4,7 +4,7 @@
     <div class="fund-info">
       <img src="../../images/disclosure/sjbg.png" alt="审计报告" class="fund-title" width="40%">
       <div class="wrapper" @click="preview('https://www.hongcai.com/uploads/png/original/2017-10-19/image/9bcbea8d83f04b289b6b9c2cf8c3af9a-original.png')">
-        <!-- <img src="../../images/disclosure/contract1.png"/> -->
+        <img src="../../images/disclosure/audit.png" width="100%"/>
       </div>
     </div>
     <ul class="audit-info">
@@ -49,11 +49,14 @@
   }
   .wrapper {
     margin: 0.35rem auto;
-    height: 4rem;
+    height: auto;
     box-shadow: 0 0 2px 0 rgba(255, 77, 0, 0.69);
     border-radius: 12.5px;
     width: 90%;
     overflow: hidden;
+  }
+  .wrapper img {
+    display: block;
   }
   .audit-info {
     overflow: hidden;

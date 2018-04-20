@@ -448,7 +448,7 @@
   }
   .slide-banner {
     margin: 0.1rem auto;
-    height: 4rem;
+    height: auto;
     box-shadow: 0 0 2px 0 rgba(255, 77, 0, 0.69);
     border-radius: 12.5px;
     width: 48%;
@@ -468,5 +468,6 @@
   .slide li img{
     width: 100%;
     height: 100%;
+    display: block;
   }
 </style>
