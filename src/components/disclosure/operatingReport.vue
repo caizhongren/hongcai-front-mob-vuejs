@@ -1,30 +1,26 @@
 <template>
   <div class="operatingReport">
-    <div class="slide-banner position-re overflow-hid">
+    <div class="slide-banner position-re overflow-hid" v-auto-height>
       <div id="slideBanner" class="slide position-re">
         <ul>
-          <li class="position-re text-center">
-            <div class="reportList">
-		      <div class="report-content">
-		      	<div class="contentNum">04</div>
-		      </div>
-		    </div>
+          <li class="reportList position-re text-center">
+            <div class="report-content">
+              <div class="contentNum">04</div>
+            </div>
           </li>
-          <li class="position-re text-center">
-           	<div class="reportList">
-		      <div class="report-content">
-		      	<div class="contentNum">04</div>
-		      </div>
-		    </div>
+          <li class="reportList position-re text-center">
+            <div class="report-content">
+              <div class="contentNum">05</div>
+            </div>
           </li>
-      </ul>
-      <div class="dot">
-      	<span></span>
-      	<span></span>
-      </div>
+        </ul>
+        <div class="dot">
+          <span></span>
+          <span></span>
+        </div>
+        <div style="position:  absolute;bottom:  0;left:  47%;">>></div>
       </div>
     </div>
-    
   </div>
 </template>
 <script>
@@ -36,7 +32,6 @@
       swiper.init({
         autoSwipe: false,
         axisX: false,
-        continuousScroll: true,
         speed: 2000,
         transitionType: 'cubic-bezier(0.22, 0.69, 0.72, 0.88)',
         firstCallback: function (i, sum) {
@@ -51,47 +46,11 @@
 </script>
 <style scoped>
   ::-webkit-scrollbar {display:none}
-  .about {
-    background-color: #f9f4f3;
-  }
-  p {
-    color: #666666;
-    font-size: .26rem;
-    padding: .5rem 0 .6rem;
-  }
-  .wrapper {
-    margin: 0.35rem auto;
-    height: 5.9rem;
-    box-shadow: 0 0 2px 0 rgba(255, 77, 0, 0.69);
-    border-radius: 12.5px;
-    width: 90%;
-    overflow-x: hidden;
-    -webkit-transform: rotate(0deg);
-  }
-  .wrapper div {
-    overflow-y: hidden;
-    overflow-x: auto;
-    height: 100%;
-    -webkit-overflow-scrolling: touch;
-  }
-  .wrapper img {
-    border-radius: 12.5px;
-  }
-  .bd{
-    z-index:0;
-  }
-  .bd li a img {
-    vertical-align:top;
-    width:100%;
-  }
   .slide-banner {
-    margin: .35rem auto 0;
-    height: 4rem;
-    box-shadow: 0 0 2px 0 rgba(255, 77, 0, 0.69);
-    border-radius: 12.5px;
-    width: 90%;
+    margin: 0 auto;
+    width: 100%;
     overflow: hidden;
-    -webkit-transform:rotate(0deg)
+    -webkit-transform:rotate(0deg);
   }
   .slide{
     height: 100%;
@@ -122,7 +81,7 @@
   }
   /* 解决js阻塞页面显示首屏 */
   .slide li:first-child{
-    z-index: 1;
+    /* z-index: 1; */
   }
   .slide li img{
     position: absolute;
@@ -134,22 +93,22 @@
   }
   .slide .dot{
     position: absolute;
-    right: 0;
-    bottom: 10px;
+    right: -1%;
+    top: 26%;
     z-index: 5;
-    width: 100%;
+    width: 7%;
     font-size: 0;
   }
   .slide .dot span{
-    display: inline-block;
+    display: block;
     width: .2rem;
     height: .2rem;
-    margin-left: .18rem;
-    background-color: #ddd;
+    background-color: #fff;
     border-radius: 50%;
+    margin: .5rem auto;
   }
   .slide .dot .cur{
-    background-color: #ff611d;
+    background-color: #ef6494;
   }
   .reportList{
   	background: url(../../images/disclosure/report.png) no-repeat;
