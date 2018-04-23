@@ -137,7 +137,7 @@
               <div class="report-title">借款人数据</div>
               <div class="report-title report3_1_title">借款人主体性质分布</div>
               <div class="clear"></div>
-              <img src="../../images/disclosure/report4-01.png" alt="" width="95%" style="margin-top:.2rem">
+              <img src="../../images/disclosure/report4-01.png" alt="" width="90%" style="margin-top:.2rem">
               <div class="summary">2017年企业借款总额高达85.73％</div>
             </div>
           </li>
@@ -334,8 +334,8 @@
           {
             count1: '3,170人',
             count2: '331人',
-            type1: '年度借款人数',
-            type2: '年度出借人数'
+            type1: '年度出借人数',
+            type2: '年度借款人数'
           }
         ],
         geographicaData: [
@@ -448,16 +448,16 @@
   }*/
   .slide .dot{
     position: absolute;
-    right: -1%;
+    right: 0;
     top: 21%;
     z-index: 5;
-    width: 7%;
+    width: 5%;
     font-size: 0;
   }
   .slide .dot span{
     display: block;
     width: .18rem;
-    height: .19rem;
+    height: .18rem;
     background-color: #fff;
     border-radius: 50%;
     margin: .4rem auto;
@@ -528,7 +528,7 @@
     font-size: .32rem;
   }
   .report1-content .content li p:nth-child(2) {
-    font-size: .25rem;
+    font-size: .24rem;
   }
   .report1-content .content li:nth-child(1) {
     height: .9rem;
@@ -539,7 +539,7 @@
     color: #ef548c;
   }
   .report1-content .content li:nth-child(1) p:nth-child(2) {
-    font-size: .25rem;
+    font-size: .24rem;
     color: #e2bac2;
     margin-top: -.11rem;
   }
@@ -552,12 +552,6 @@
   /* 2017年度经营规模 */
   .report2-content img {
     margin: .12rem auto 0;
-  }
-  .report2-content .tip {
-    font-size: .2rem;
-    color: #999;
-    width: 115%;
-    margin: .1rem 0 0 -7%;
   }
   .report2-content .content {
     border-top: 1px dashed #f2c7b0;
@@ -574,11 +568,15 @@
   .report3_1_title {
     margin: -.1rem 0 -.1rem -.15rem;
   }
-  .report1-content .tip, .report3_1-content .tip, .report3_2-content .tip, .report3_3-content .tip {
+  .report1-content .tip, .report2-content .tip, .report3_1-content .tip, .report3_2-content .tip, .report3_3-content .tip {
     color: #999;
     font-size: .2rem;
     clear: both;
     margin-top: .15rem;
+  }
+  .report2-content .tip {
+    width: 115%;
+    margin: .1rem 0 0 -7%;
   }
   .report3_2-content .tip {
     margin-top: .05rem;
