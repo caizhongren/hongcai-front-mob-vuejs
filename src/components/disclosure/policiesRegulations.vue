@@ -25,10 +25,10 @@
       <img src="../../images/disclosure/other-icon-03.png" alt="运营报告" class="report-title" width="32%">
       <ul class="slide position-re">
         <li class="slide-banner text-center" @click="goToOperating('2017')">
-          <img src="../../images/disclosure/contract1.png"/>
+          <img src="../../images/disclosure/operating-2017.png"/>
         </li>
         <li class="slide-banner text-center" @click="goToOperating('2016')">
-          <img src="../../images/disclosure/contract2.png"/>
+          <img src="../../images/disclosure/operating-2016.png"/>
         </li>
       </ul>
       <ul class="operation-title">
@@ -240,7 +240,7 @@
   }
   .slide-banner {
     margin: 1px auto 0.25rem;
-    height: 4rem;
+    height: auto;
     box-shadow: 0 0 2px 0 rgba(255, 77, 0, 0.69);
     border-radius: 12.5px;
     width: 48%;
@@ -267,6 +267,7 @@
   .slide li img{
     width: 100%;
     height: 100%;
+    display: block;
   }
   .parting-line {
     width: 100%;

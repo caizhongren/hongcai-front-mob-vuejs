@@ -198,7 +198,7 @@
           if (res.data && res.data.ret !== -1) {
             that.cumulative = res.data.detail
           } else {
-            alert(res.data.msg)
+            console.log(res.data.msg)
           }
         })
       },

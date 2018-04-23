@@ -3,6 +3,75 @@
     <div class="slide-banner position-re overflow-hid" v-auto-height>
       <div id="slideBanner" class="slide position-re">
         <ul>
+          <!-- 平台数据总览 -->
+          <li class="reportList position-re text-center">
+            <div class="report1-content">
+              <ul class="header overflow-hid">
+                <li class="contentNum">01</li>
+                <li class="report-title">平台数据总览</li>
+              </ul>
+              <ul class="content">
+                <li v-for="(data, index) in platformData" v-bind:class="{'border-none': index === platformData.length - 1}">
+                  <span v-bind:class="data.iconClass"></span>
+                  <div>
+                    <p>{{data.amount}}</p>
+                    <p>{{data.title}}</p>
+                  </div>
+                </li>
+              </ul>
+              <div class="tip">*数据统计截至2016年12月31日</div>
+            </div>
+          </li>
+          <!-- 2016年度经营规模 -->
+          <li class="reportList position-re text-center">
+            <div class="report2-content">
+              <ul class="header overflow-hid">
+                <li class="contentNum">02</li>
+                <li class="report-title">2016年度经营规模</li>
+              </ul>
+              <p class="table-title">2016年季度成交金额（万元）</p>
+              <img src="../../images/disclosure/operating16-02.png" alt="" width="100%"/>
+              <ul class="content">
+                <li v-for="data in report2Datas">
+                  <p class="ft-666 overflow-hid">
+                    <span class="fl">{{data.count1}}</span>
+                    <span class="fr">{{data.count2}}</span>
+                  </p>
+                  <p class="ft-999 overflow-hid">
+                    <span class="fl">{{data.type1}}</span>
+                    <span class="fr">{{data.type2}}</span>
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <!-- 出借人数据 -->
+          <li class="reportList position-re text-center">
+            <div class="report3_1-content">
+              <ul class="header overflow-hid">
+                <li class="contentNum">03</li>
+                <li class="report-title">出借人数据</li>
+              </ul>
+              <div class="report-title report3_1_title">性别分布</div>
+            <img src="../../images//disclosure//operating16-03_1.png" alt="" width="95%">
+            <div class="proportion overflow-hid">
+              <ul class="fl text-right">
+                <li>人数比例</li>
+                <li class="ft-666">
+                  女 <span class="ft-red0">42.74%</span>
+                </li>
+                <li class="ft-666">
+                  男 <span class="ft-red0">57.26%</span>
+                </li>
+              </ul>
+              <ul class="fr">
+                <li>人均出借金额</li>
+                <li class="ft-red0">58,300.74 元</li>
+                <li class="ft-red0">27,103.68 元</li>
+              </ul>
+            </div>
+            </div>
+          </li>
           <!-- 出借人数据 -->
           <li class="reportList position-re text-center">
             <div class="report3_1-content">
@@ -12,12 +81,12 @@
               </ul>
               <div class="report-title report3_1_title lightY">年龄分布</div>
               <div class="ageScatter clearfix">
-                <ul style="margin-top:-.2rem;">
+                <ul>
                   <li>
                     <span class="fl">年龄段</span>
                     <span class="fr">人数占比</span>
                   </li>
-                  <li v-for="item in platformData.ageScatter">
+                  <li v-for="item in ageScatter">
                     <span class="fl">{{item.msg1}}</span>
                     <span class="fr">{{item.msg2}}</span>
                   </li>
@@ -25,6 +94,52 @@
               </div>
               <img src="../../images/disclosure/report16-3.png" alt="" width="95%">
               <div class="bottomTip">出借金额占比</div>
+            </div>
+          </li>
+          <!-- 出借人数据 -->
+          <li class="reportList position-re text-center">
+            <div class="report3_3-content">
+              <div class="contentNum">03</div>
+              <div class="report-title">借款人数据</div>
+              <div class="report-title report3_1_title">地域分布</div>
+              <img src="../../images/disclosure/operating16-03_3.png" alt="" width="100%">
+              <div class="geographical">
+                <ul v-for="item in geographicaData">
+                  <li>{{item.province}}</li>
+                  <li>{{item.percent}}</li>
+                </ul>
+              </div>
+              <p class="table-title">人数占比</p>
+            </div>
+          </li>
+          <!-- 借款人数据 -->
+          <li class="reportList position-re text-center">
+            <div class="report-content">
+              <div class="contentNum">04</div>
+              <div class="report-title">借款人数据</div>
+              <div class="report3_1_title report-title">借款期限分布</div>
+              <ul class="termOfLoan">
+                <li v-for="item in termOfLoan">
+                  <p class="padding-r-1">{{item.time}}</p>
+                  <div class="percent">
+                    <div v-bind:style="{width: item.percent, height: '100%', float: 'left'}"></div>
+                    <p class="text-left position-ab" v-bind:style="{left: (parseInt(item.percent) + 2.5) + '%'}">{{item.percent}}</p>
+                  </div>
+                  <p>{{item.amount}}</p>
+                </li>
+              </ul>
+              <div class="clear"></div>
+              <div class="report3_1_title report-title">借款金额分布</div>
+              <ul class="termOfLoan">
+                <li v-for="item in loanAmount">
+                  <p>{{item.money}}</p>
+                  <div class="percent">
+                    <div v-bind:style="{width: item.percent, height: '100%', float: 'left'}"></div>
+                    <p class="text-left position-ab" v-bind:style="{left: (parseInt(item.percent) + 2.5) + '%'}">{{item.percent}}</p>
+                  </div>
+                  <p>{{item.amount}}</p>
+                </li>
+              </ul>
             </div>
           </li>
           <!-- 年度最宏粉 -->
@@ -127,30 +242,188 @@
     name: 'operatingReport',
     data () {
       return {
-        platformData: {
-          ageScatter: [
-            {
-              msg1: '90后',
-              msg2: '24.84%'
-            },
-            {
-              msg1: '80后',
-              msg2: '36.63%'
-            },
-            {
-              msg1: '70后',
-              msg2: '16.84%'
-            },
-            {
-              msg1: '60后',
-              msg2: '11.58%'
-            },
-            {
-              msg1: '60前',
-              msg2: '10.11%'
-            }
-          ]
-        }
+        ageScatter: [
+          {
+            msg1: '90后',
+            msg2: '24.84%'
+          },
+          {
+            msg1: '80后',
+            msg2: '36.63%'
+          },
+          {
+            msg1: '70后',
+            msg2: '16.84%'
+          },
+          {
+            msg1: '60后',
+            msg2: '11.58%'
+          },
+          {
+            msg1: '60前',
+            msg2: '10.11%'
+          }
+        ],
+        loanAmount: [
+          {
+            money: '0-20万',
+            percent: '1.82%',
+            amount: '700,000 元'
+          },
+          {
+            money: '20万-40万',
+            percent: '66.55%',
+            amount: '25,564,500元'
+          },
+          {
+            money: '40万-60万',
+            percent: '25.64%',
+            amount: '9,850,000元'
+          },
+          {
+            money: '40万-60万',
+            percent: '25.64%',
+            amount: '9,850,000元'
+          },
+          {
+            money: '80万-100万',
+            percent: '5.99%',
+            amount: '2,300,000元'
+          }
+        ],
+        termOfLoan: [
+          {
+            time: '0- 3月',
+            percent: '71.31%',
+            amount: '27,394,500元'
+          },
+          {
+            time: '4- 6月',
+            percent: '28.69%',
+            amount: '11,020,000元'
+          },
+          {
+            time: '7-9月',
+            percent: '0.00%',
+            amount: '0元'
+          },
+          {
+            time: '10- 12月',
+            percent: '0.00%',
+            amount: '0元'
+          }
+        ],
+        platformData: [
+          {
+            iconClass: 'collection1',
+            amount: '53,414,500 元',
+            title: '累计成交金额'
+          },
+          {
+            iconClass: 'collection2',
+            amount: '2,838 笔',
+            title: '累计交易笔数'
+          },
+          {
+            iconClass: 'collection3',
+            amount: '1,096,903.72 元',
+            title: '累计为用户赚取'
+          },
+          {
+            iconClass: 'collection4',
+            amount: '175 个',
+            title: '累计成交项目数'
+          },
+          {
+            iconClass: 'collection5',
+            amount: '50,822.55 元',
+            title: '累计人均出借金额'
+          },
+          {
+            iconClass: 'collection6',
+            amount: '144,373 人',
+            title: '累计注册会员人数'
+          },
+          {
+            iconClass: 'collection7',
+            amount: '1,051 人',
+            title: '累计出借人数'
+          }
+        ],
+        report2Datas: [
+          {
+            count1: '2,514笔',
+            count2: '572,508.35元',
+            type1: '年度交易笔数',
+            type2: '年度为用户赚取'
+          },
+          {
+            count1: '139个',
+            count2: '40,436.32元',
+            type1: '年度成交项目数',
+            type2: '年度人均出借金额'
+          },
+          {
+            count1: '950人',
+            count2: '71,432人',
+            type1: '年度出借人数',
+            type2: '年度注册会员人数'
+          }
+        ],
+        geographicaData: [
+          {
+            province: '山东省',
+            percent: '10.00%'
+          },
+          {
+            province: '安徽省',
+            percent: '9.37%'
+          },
+          {
+            province: '江苏省',
+            percent: '9.05%'
+          },
+          {
+            province: '河南省',
+            percent: '7.37%'
+          },
+          {
+            province: '广东省',
+            percent: '7.16%'
+          }
+        ],
+        c5itemList: [
+          {
+            imgUrl: '../../../static/images/report5-01.png',
+            content1: '13,682,400 元',
+            content2: '年度出借总额最高'
+          },
+          {
+            imgUrl: '../../../static/images/report5-02.png',
+            content1: '950,000 元',
+            content2: '单笔出借金额最高'
+          },
+          {
+            imgUrl: '../../../static/images/report5-03.png',
+            content1: '280 笔',
+            content2: '出借笔数最多'
+          },
+          {
+            imgUrl: '../../../static/images/report5-04.png',
+            content1: '271,827.87 元',
+            content2: '赚取收益最多'
+          },
+          {
+            imgUrl: '../../../static/images/report5-05.png',
+            content1: '114 人',
+            content2: '邀请好友人数最多'
+          },
+          {
+            imgUrl: '../../../static/images/report5-06.png',
+            content1: '15,014.28 元',
+            content2: '获得邀请奖励最多'
+          }
+        ]
       }
     },
     mounted () {
@@ -163,7 +436,7 @@
           $('#slideBanner').find('.dot').children().first().addClass('cur')
         },
         callback: function (i, sum) {
-          i === 8 ? $('.arrow').hide() : $('.arrow').show()
+          i === 7 ? $('.arrow').hide() : $('.arrow').show()
           $('#slideBanner').find('.dot').children().eq(i).addClass('cur').siblings().removeClass('cur')
         }
       })
@@ -171,6 +444,80 @@
   }
 </script>
 <style scoped>
+  .termOfLoan {
+    width: 112%;
+    overflow: hidden;
+    clear: both;
+    margin-left: -6%;
+    font-size: .23rem;
+  }
+  .termOfLoan li {
+    overflow: hidden;
+    clear: both;
+    height: .45rem;
+    line-height: .45rem;
+    margin-bottom: .2rem;
+    width: 100%;
+  }
+  .termOfLoan li p:nth-child(1) {
+    float: left;
+    color: #999;
+    width: 19%;
+    text-align: right;
+    letter-spacing: -1px;
+  }
+  .padding-r-1 {
+    padding-right: .15rem;
+  }
+  .termOfLoan .percent {
+    float: left;
+    width: 53%;
+    height: .45rem;
+    line-height: .48rem;
+    background: #eee;
+    margin-left: 1%;
+    position: relative;
+  }
+  .termOfLoan .percent div {
+    background: #f44c38;
+  }
+  .termOfLoan li p:nth-child(3) {
+    float: right;
+    width: 27%;
+    text-align: right;
+    color: #f44c38;
+  }
+  .termOfLoan .padding-l-1 {
+    padding-left: .2rem;
+  }
+  .report1-content .collection1 {
+    background: url('../../images/disclosure/operating16-01-icon-01.png') no-repeat left .18rem;
+    background-size: 85%;
+  }
+  .report1-content .collection2 {
+    background: url('../../images/disclosure/operating16-01-icon-02.png') no-repeat left .15rem;
+    background-size: 85%;
+  }
+  .report1-content .collection3 {
+    background: url('../../images/disclosure/operating16-01-icon-03.png') no-repeat left .15rem;
+    background-size: 88%;
+  }
+  .report1-content .collection4 {
+    background: url('../../images/disclosure/operating16-01-icon-04.png') no-repeat left .18rem;
+    background-size: 90%;
+  }
+  .report1-content .collection5 {
+    background: url('../../images/disclosure/operating16-01-icon-05.png') no-repeat left .1rem;
+    background-size: 85%;
+  }
+  .report1-content .collection6 {
+    background: url('../../images/disclosure/operating16-01-icon-06.png') no-repeat left .18rem;
+    background-size: 90%;
+  }
+  .report1-content .collection7 {
+    background: url('../../images/disclosure/operating16-01-icon-07.png') no-repeat left .18rem;
+    background-size: 85%;
+  }
   .arrow {
     position: absolute;
     left: 50%;
@@ -178,7 +525,7 @@
     width: 1rem;
     height: .8rem;
     margin-left: -16px;
-    background: url('../../images/disclosure/arrow.png') no-repeat;
+    background: url('../../images/disclosure/arrow-2016.png') no-repeat;
     background-size: 33px auto;
     -webkit-animation: swipeMoveTop 1.5s 0s ease infinite;
   }
@@ -257,8 +604,7 @@
     background-color: #e80103;
   }
   .reportList{
-  	background-color: #ffd4b8;
-  	background-size: cover;
+    background-color: #ffd4b8;
   	padding: 1rem 0 .5rem 0;
   }
   .report-content, .report1-content, .report2-content, .report3_1-content, .report3_2-content, .report3_3-content{
@@ -271,13 +617,13 @@
     position: relative;
   }
   .contentNum{
-  	width: 1rem;
-  	height: 1rem;
+  	width: .8rem;
+  	height: .8rem;
   	font-family: SourceHanSansCN;
-    font-size: .4rem;
+    font-size: .35rem;
     font-weight: bold;
   	border-radius: 50%;
-  	line-height: 1rem;
+  	line-height: .8rem;
   	color: #FFFFFF;
     background-color: #eb0507;
     float: left;
@@ -286,8 +632,8 @@
     color: #eb0507;
     font-size: .32rem;
     font-weight: bold;
-    height: 1rem;
-    line-height: 1rem;
+    height: .8rem;
+    line-height: .85rem;
     width: 75%;
     float: left;
     text-align: left;
@@ -296,104 +642,107 @@
   .report-title.lightY{
     color: #f44c38;
   }
-  .ft-pink0 {
-    color: #ef548c;
-  }
-  .ft-pink1 {
-    color: #e2bac2;
+  .ft-red0 {
+    color: #f44c38;
   }
   /* 平台数据总览 */
+  .report1-content .content li span {
+    width: 15%;
+    height: .8rem;
+    float: left;
+  }
   .report1-content .content {
     padding: 0 .12rem;
-    margin-bottom: .4rem;
   }
   .report1-content .content li {
     border-bottom: 1px dashed #f2c7b0;
     text-align: left;
     height: .85rem;
-    padding: .15rem 0;
+    padding: .02rem .2rem;
+  }
+  .report1-content .content li div {
+    float: left;
+    width: 85%;
+    padding-left: 8%;
   }
   .report1-content .content li p {
     overflow: hidden;
     clear: both;
     width: 100%;
   }
+  .report1-content .content li:nth-child(1) {
+    height: .9rem;
+    padding-bottom: .12rem;
+  }
   .report1-content .content li p:nth-child(1) {
-    font-size: .32rem;
+    font-size: .35rem;
+    color: #c92e2d;
   }
   .report1-content .content li p:nth-child(2) {
     font-size: .24rem;
-  }
-  .report1-content .content li:nth-child(1) {
-    height: .9rem;
-    padding-bottom: .2rem;
+    color: #999999;
+    margin-top: -.11rem;
   }
   .report1-content .content li:nth-child(1) p:nth-child(1) {
     font-size: .45rem;
-    color: #ef548c;
   }
-  .report1-content .content li:nth-child(1) p:nth-child(2) {
-    font-size: .24rem;
-    color: #e2bac2;
-    margin-top: -.11rem;
+  /* 2017年度经营规模 */
+  .report2-content img {
+    margin: .12rem auto 0;
   }
-  .report1-content .time {
-    text-align: center;
-    color: #a99899;
-    font-size: .22rem;
-    margin-top: .35rem;
+  .report2-content .table-title {
+    color: #999;
+    text-align: left;
+    margin: .15rem auto;
+    font-size: .254rem;
+  }
+  .report2-content .content {
+    border-top: 1px dashed #f2c7b0;
+    padding-top: .12rem;
+  }
+  .report2-content .content li {
+    margin: .25rem auto;
+    font-size: .25rem;
+  }
+  .report2-content .content li p:nth-child(2) {
+    margin-top: -.05rem;
+    font-size: .23rem;
   }
   /* 出借人数据 */
   .report3_1_title {
     margin: -.1rem 0 -.1rem -.15rem;
   }
   .report1-content .tip, .report2-content .tip, .report3_1-content .tip, .report3_2-content .tip, .report3_3-content .tip {
-    color: #999;
+    color: #a99899;
     font-size: .2rem;
     clear: both;
     margin-top: .15rem;
   }
-  .report2-content .tip {
-    width: 115%;
-    margin: .1rem 0 0 -7%;
+  .report3_1-content .proportion {
+    border: 1px solid #f44c38;
+    margin-top: .3rem;
   }
-  .report3_2-content .tip {
-    margin-top: .05rem;
-  }
-  .report3_1-content .proportion ul {
+  .report3_1-content .proportion ul:nth-child(1) {
     width: 45%;
-    color: #fff;
+  }
+  .report3_1-content .proportion ul:nth-child(2) {
+    width: 55%;
   }
   .report3_1-content .proportion ul li {
     padding: 0 .2rem;
-    height: .6rem;
-    line-height: .65rem;
+    height: .7rem;
+    line-height: .75rem;
   }
-  .report3_1-content .proportion ul li p:nth-child(1) {
-    float: left;
+  .report3_1-content .proportion ul li span {
+    margin-left: .6rem;
   }
-  .report3_1-content .proportion ul li p:nth-child(2) {
-    float: right;
+  .report3_1-content .proportion ul li:nth-child(1) {
+    background: #f44c38;
+    color: #fff;
   }
   .report3_1-content .proportion ul li:nth-child(2) {
     overflow: hidden;
-    background: #ef6494;
-  }
-  .report3_1-content .proportion ul li:nth-child(3) {
-    overflow: hidden;
-    background: #4f96ff;
-  }
-  .report3_1-content .proportion ul:nth-child(1) li:nth-child(3) {
-    border-bottom-left-radius: .2rem;
-  }
-  .report3_1-content .proportion ul:nth-child(1) li:nth-child(2) {
-    border-top-left-radius: .2rem;
-  }
-  .report3_1-content .proportion ul:nth-child(2) li:nth-child(3) {
-    border-bottom-right-radius: .2rem;
-  }
-  .report3_1-content .proportion ul:nth-child(2) li:nth-child(2) {
-    border-top-right-radius: .2rem;
+    border-bottom: 1px solid #f44c38;
   }
   .report3_2-content .icon, .report3_2-content .icon1 {
     display: inline-block;
@@ -418,9 +767,8 @@
   .report3_3-content .geographical {
     overflow: hidden;
     width: 100%;
-    border: 1px solid #fedada;
-    border-radius: .2rem;
-    margin: .2rem auto;
+    border: 1px solid #f44c38;
+    margin: .3rem auto .2rem;
   }
   .report3_3-content .geographical ul {
     float: left;
@@ -433,7 +781,12 @@
     font-size: .23rem;
   }
   .report3_3-content .geographical ul li:nth-child(2) {
-    background: #fedada;
+    background: #f44c38;
+    color: #fff;
+  }
+  .report3_3-content .table-title {
+    color: #666;
+    font-size: .25rem;
   }
   .fontBold{
     font-size: .36rem;
