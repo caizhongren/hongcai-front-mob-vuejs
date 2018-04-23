@@ -3,7 +3,7 @@
     <!-- 审计报告 -->
     <div class="fund-info">
       <img src="../../images/disclosure/sjbg.png" alt="审计报告" class="fund-title" width="40%">
-      <div class="wrapper" @click="preview('https://www.hongcai.com/uploads/png/original/2017-10-19/image/9bcbea8d83f04b289b6b9c2cf8c3af9a-original.png')">
+      <div class="wrapper" @click="openPDF">
         <img src="../../images/disclosure/audit.png" width="100%"/>
       </div>
     </div>
@@ -20,7 +20,6 @@
   </div>
 </template>
 <script>
-  import {bridgeUtil} from '../../service/Utils'
   export default {
     name: 'AuditInformation',
     data () {
@@ -29,10 +28,8 @@
       }
     },
     methods: {
-      preview (url) {
-        bridgeUtil.webConnectNative('HCNative_ImgSrc', null, {'imgSrc': url}, function (response) {
-        }, function (data) {
-        })
+      openPDF () {
+        this.$router.push({name: 'AuditPDF'})
       }
     }
   }
