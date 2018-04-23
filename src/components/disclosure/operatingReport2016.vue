@@ -11,45 +11,38 @@
                 <li class="report-title">平台数据总览</li>
               </ul>
               <ul class="content">
-                <li>
-                  <p>{{platformData.totalAmount.amount}}</p>
-                  <p>{{platformData.totalAmount.title}}</p>
-                </li>
-                <li v-for="data in platformData.listDatas">
-                  <p class="ft-pink0">
-                    <span class="fl">{{data.count1}}</span>
-                    <span class="fr">{{data.count2}}</span>
-                  </p>
-                  <p class="ft-pink1">
-                    <span class="fl">{{data.type1}}</span>
-                    <span class="fr">{{data.type2}}</span>
-                  </p>
+                <li v-for="(data, index) in platformData" v-bind:class="{'border-none': index === platformData.length - 1}">
+                  <span v-bind:class="data.iconClass"></span>
+                  <div>
+                    <p>{{data.amount}}</p>
+                    <p>{{data.title}}</p>
+                  </div>
                 </li>
               </ul>
-              <div class="tip">*数据统计截至2017年12月31日</div>
+              <div class="tip">*数据统计截至2016年12月31日</div>
             </div>
           </li>
-          <!-- 2017年度经营规模 -->
+          <!-- 2016年度经营规模 -->
           <li class="reportList position-re text-center">
             <div class="report2-content">
               <ul class="header overflow-hid">
                 <li class="contentNum">02</li>
-                <li class="report-title">2017年度经营规模</li>
+                <li class="report-title">2016年度经营规模</li>
               </ul>
-              <img src="../../images/disclosure/operating-report2.png" alt="" width="100%"/>
+              <p class="table-title">2016年季度成交金额（万元）</p>
+              <img src="../../images/disclosure/operating16-02.png" alt="" width="100%"/>
               <ul class="content">
                 <li v-for="data in report2Datas">
-                  <p class="ft-pink0 overflow-hid">
+                  <p class="ft-666 overflow-hid">
                     <span class="fl">{{data.count1}}</span>
                     <span class="fr">{{data.count2}}</span>
                   </p>
-                  <p class="ft-pink1 overflow-hid">
+                  <p class="ft-999 overflow-hid">
                     <span class="fl">{{data.type1}}</span>
                     <span class="fr">{{data.type2}}</span>
                   </p>
                 </li>
               </ul>
-              <div class="tip">2017年成交额同比增长357.27%，成交笔数同比增长253.54%</div>
             </div>
           </li>
           <!-- 出借人数据 -->
@@ -60,32 +53,23 @@
                 <li class="report-title">出借人数据</li>
               </ul>
               <div class="report-title report3_1_title">性别分布</div>
-              <img src="../../images//disclosure//operating-report3_1.png" alt="" width="95%">
+              <img src="../../images//disclosure//operating16-03_1.png" alt="" width="95%">
               <div class="proportion overflow-hid">
-                <ul class="fl">
-                  <li class="ft-pink1">人数比例</li>
-                  <li>
-                    <p>女</p>
-                    <p>46.56%</p>
+                <ul class="fl text-right">
+                  <li>人数比例</li>
+                  <li class="ft-666">
+                    女 <span class="ft-red0">42.74%</span>
                   </li>
-                  <li>
-                    <p>男</p>
-                    <p>53.44%</p>
+                  <li class="ft-666">
+                    男 <span class="ft-red0">57.26%</span>
                   </li>
                 </ul>
                 <ul class="fr">
-                  <li class="ft-pink1">人均出借金额</li>
-                  <li>
-                    <p>女</p>
-                    <p>86,197.22元</p>
-                  </li>
-                  <li>
-                    <p>男</p>
-                    <p>28,589.43元</p>
-                  </li>
+                  <li>人均出借金额</li>
+                  <li class="ft-red0">58,300.74 元</li>
+                  <li class="ft-red0">27,103.68 元</li>
                 </ul>
               </div>
-              <p class="tip">男性的人数占优，女性的人均出借金额更高一筹</p>
             </div>
           </li>
           <!-- 出借人数据 -->
@@ -121,24 +105,14 @@
                 <li class="report-title">出借人数据</li>
               </ul>
               <div class="report-title report3_1_title">地域分布</div>
-              <img src="../../images/disclosure/operating-report3_3.png" alt="" width="100%">
+              <img src="../../images/disclosure/operating16-03_3.png" alt="" width="100%">
               <div class="geographical">
                 <ul v-for="item in geographicaData">
                   <li>{{item.province}}</li>
                   <li>{{item.percent}}</li>
                 </ul>
               </div>
-              <p class="tip">2017年安徽、江苏、广东地区的出借人数位列前三</p>
-            </div>
-          </li>
-          <li class="reportList position-re text-center">
-            <div class="report-content">
-              <div class="contentNum">04</div>
-              <div class="report-title">借款人数据</div>
-              <div class="report-title report3_1_title">借款人主体性质分布</div>
-              <div class="clear"></div>
-              <img src="../../images/disclosure/report4-01.png" alt="" width="90%" style="margin-top:.2rem">
-              <div class="summary">2017年企业借款总额高达85.73％</div>
+              <p class="table-title">人数占比</p>
             </div>
           </li>
           <li class="reportList position-re text-center">
@@ -146,12 +120,28 @@
               <div class="contentNum">04</div>
               <div class="report-title">借款人数据</div>
               <div class="report3_1_title report-title">借款期限分布</div>
-              <img src="../../images/disclosure/report4-02.png" alt="" width="100%">
+              <ul class="termOfLoan">
+                <li v-for="item in termOfLoan">
+                  <p class="padding-r-1">{{item.time}}</p>
+                  <div class="percent">
+                    <div v-bind:style="{width: item.percent, height: '100%', float: 'left'}"></div>
+                    <p class="text-left position-ab" v-bind:style="{left: (parseInt(item.percent) + 2.5) + '%'}">{{item.percent}}</p>
+                  </div>
+                  <p>{{item.amount}}</p>
+                </li>
+              </ul>
               <div class="clear"></div>
-              <div class="summary" style="padding-left:.9rem;text-align:left;">平台项目中，短期借款占比较高主要分布在0-3个月，借款金额占比超过60％</div>
               <div class="report3_1_title report-title">借款金额分布</div>
-              <img src="../../images/disclosure/report4-03.png" alt="" width="100%" style="margin-top: -.18rem;">
-              <div class="summary">20万-40万借款项目占比较高，达64.85％</div>
+              <ul class="termOfLoan">
+                <li v-for="item in loanAmount">
+                  <p>{{item.money}}</p>
+                  <div class="percent">
+                    <div v-bind:style="{width: item.percent, height: '100%', float: 'left'}"></div>
+                    <p class="text-left position-ab" v-bind:style="{left: (parseInt(item.percent) + 2.5) + '%'}">{{item.percent}}</p>
+                  </div>
+                  <p>{{item.amount}}</p>
+                </li>
+              </ul>
             </div>
           </li>
           <li class="reportList position-re text-center">
@@ -248,84 +238,132 @@
     name: 'operatingReport',
     data () {
       return {
-        platformData: {
-          totalAmount: {
-            amount: '229,072,110元',
+        loanAmount: [
+          {
+            money: '0-20万',
+            percent: '1.82%',
+            amount: '700,000 元'
+          },
+          {
+            money: '20万-40万',
+            percent: '66.55%',
+            amount: '25,564,500元'
+          },
+          {
+            money: '40万-60万',
+            percent: '25.64%',
+            amount: '9,850,000元'
+          },
+          {
+            money: '40万-60万',
+            percent: '25.64%',
+            amount: '9,850,000元'
+          },
+          {
+            money: '80万-100万',
+            percent: '5.99%',
+            amount: '2,300,000元'
+          }
+        ],
+        termOfLoan: [
+          {
+            time: '0- 3月',
+            percent: '71.31%',
+            amount: '27,394,500元'
+          },
+          {
+            time: '4- 6月',
+            percent: '28.69%',
+            amount: '11,020,000元'
+          },
+          {
+            time: '7-9月',
+            percent: '0.00%',
+            amount: '0元'
+          },
+          {
+            time: '10- 12月',
+            percent: '0.00%',
+            amount: '0元'
+          }
+        ],
+        platformData: [
+          {
+            iconClass: 'collection1',
+            amount: '53,414,500 元',
             title: '累计成交金额'
           },
-          listDatas: [
-            {
-              count1: '11,726笔',
-              count2: '5,227,725.03元',
-              type1: '累计交易笔数',
-              type2: '累计为用户赚取'
-            },
-            {
-              count1: '815个',
-              count2: '55,966.80元',
-              type1: '累计成交项目数',
-              type2: '累计人均出借金额'
-            },
-            {
-              count1: '650,773.01元',
-              count2: '165,351人',
-              type1: '累计人均借款金额',
-              type2: '累计注册会员人数'
-            },
-            {
-              count1: '352人',
-              count2: '4,093人',
-              type1: '累计借款人数',
-              type2: '累计出借人数'
-            }
-          ]
-        },
+          {
+            iconClass: 'collection2',
+            amount: '2,838 笔',
+            title: '累计交易笔数'
+          },
+          {
+            iconClass: 'collection3',
+            amount: '1,096,903.72 元',
+            title: '累计为用户赚取'
+          },
+          {
+            iconClass: 'collection4',
+            amount: '175 个',
+            title: '累计成交项目数'
+          },
+          {
+            iconClass: 'collection5',
+            amount: '50,822.55 元',
+            title: '累计人均出借金额'
+          },
+          {
+            iconClass: 'collection6',
+            amount: '144,373 人',
+            title: '累计注册会员人数'
+          },
+          {
+            iconClass: 'collection7',
+            amount: '1,051 人',
+            title: '累计出借人数'
+          }
+        ],
         report2Datas: [
           {
-            count1: '8,888笔',
-            count2: '4,130,821.31元',
+            count1: '2,514笔',
+            count2: '572,508.35元',
             type1: '年度交易笔数',
             type2: '年度为用户赚取'
           },
           {
-            count1: '640个',
-            count2: '55,412.49元',
+            count1: '139个',
+            count2: '40,436.32元',
             type1: '年度成交项目数',
             type2: '年度人均出借金额'
           },
           {
-            count1: '530,687.61元',
-            count2: '20,978人',
-            type1: '年度人均借款金额',
-            type2: '年度注册会员人数'
-          },
-          {
-            count1: '3,170人',
-            count2: '331人',
+            count1: '950人',
+            count2: '71,432人',
             type1: '年度出借人数',
-            type2: '年度借款人数'
+            type2: '年度注册会员人数'
           }
         ],
         geographicaData: [
           {
+            province: '山东省',
+            percent: '10.00%'
+          },
+          {
             province: '安徽省',
-            percent: '8.96%'
+            percent: '9.37%'
           },
           {
             province: '江苏省',
-            percent: '8.83%'
+            percent: '9.05%'
+          },
+          {
+            province: '河南省',
+            percent: '7.37%'
           },
           {
             province: '广东省',
-            percent: '7.60%'
-          },
-          {
-            province: '山东省',
-            percent: '7.03%'
-          },
-          {
-            province: '湖北省',
-            percent: '6.25%'
+            percent: '7.16%'
           }
         ],
         c5itemList: [
@@ -380,6 +418,80 @@
   }
 </script>
 <style scoped>
+  .termOfLoan {
+    width: 112%;
+    overflow: hidden;
+    clear: both;
+    margin-left: -6%;
+    font-size: .23rem;
+  }
+  .termOfLoan li {
+    overflow: hidden;
+    clear: both;
+    height: .45rem;
+    line-height: .45rem;
+    margin-bottom: .2rem;
+    width: 100%;
+  }
+  .termOfLoan li p:nth-child(1) {
+    float: left;
+    color: #999;
+    width: 19%;
+    text-align: right;
+    letter-spacing: -1px;
+  }
+  .padding-r-1 {
+    padding-right: .15rem;
+  }
+  .termOfLoan .percent {
+    float: left;
+    width: 53%;
+    height: .45rem;
+    line-height: .48rem;
+    background: #eee;
+    margin-left: 1%;
+    position: relative;
+  }
+  .termOfLoan .percent div {
+    background: #f44c38;
+  }
+  .termOfLoan li p:nth-child(3) {
+    float: right;
+    width: 27%;
+    text-align: right;
+    color: #f44c38;
+  }
+  .termOfLoan .padding-l-1 {
+    padding-left: .2rem;
+  }
+  .report1-content .collection1 {
+    background: url('../../images/disclosure/operating16-01-icon-01.png') no-repeat left .18rem;
+    background-size: 85%;
+  }
+  .report1-content .collection2 {
+    background: url('../../images/disclosure/operating16-01-icon-02.png') no-repeat left .15rem;
+    background-size: 85%;
+  }
+  .report1-content .collection3 {
+    background: url('../../images/disclosure/operating16-01-icon-03.png') no-repeat left .15rem;
+    background-size: 88%;
+  }
+  .report1-content .collection4 {
+    background: url('../../images/disclosure/operating16-01-icon-04.png') no-repeat left .18rem;
+    background-size: 90%;
+  }
+  .report1-content .collection5 {
+    background: url('../../images/disclosure/operating16-01-icon-05.png') no-repeat left .1rem;
+    background-size: 85%;
+  }
+  .report1-content .collection6 {
+    background: url('../../images/disclosure/operating16-01-icon-06.png') no-repeat left .18rem;
+    background-size: 90%;
+  }
+  .report1-content .collection7 {
+    background: url('../../images/disclosure/operating16-01-icon-07.png') no-repeat left .18rem;
+    background-size: 85%;
+  }
   .arrow {
     position: absolute;
     left: 50%;
@@ -387,7 +499,7 @@
     width: 1rem;
     height: .8rem;
     margin-left: -16px;
-    background: url('../../images/disclosure/arrow.png') no-repeat;
+    background: url('../../images/disclosure/arrow-2016.png') no-repeat;
     background-size: 33px auto;
     -webkit-animation: swipeMoveTop 1.5s 0s ease infinite;
   }
@@ -463,11 +575,10 @@
     margin: .4rem auto;
   }
   .slide .dot .cur{
-    background-color: #ef548c;
+    background-color: #e70000;
   }
   .reportList{
-  	background: url(../../images/disclosure/report.png) no-repeat;
-  	background-size: cover;
+  	background: #ffd4b8;
   	padding: 1rem 0 .5rem 0;
   }
   .report-content, .report1-content, .report2-content, .report3_1-content, .report3_2-content, .report3_3-content{
@@ -480,141 +591,132 @@
     position: relative;
   }
   .contentNum{
-  	width: 1rem;
-  	height: 1rem;
+  	width: .8rem;
+  	height: .8rem;
   	font-family: SourceHanSansCN;
-    font-size: .4rem;
+    font-size: .35rem;
     font-weight: bold;
   	border-radius: 50%;
-  	line-height: 1rem;
+  	line-height: .8rem;
   	color: #FFFFFF;
-    background-image: linear-gradient(45deg, #c08bdf, #f877b1);
+    background: #eb0507;
     float: left;
   }
   .report-title {
-    color: #ef548c;
+    color: #eb0507;
     font-size: .32rem;
     font-weight: bold;
-    height: 1rem;
-    line-height: 1rem;
+    height: .8rem;
+    line-height: .85rem;
     width: 75%;
     float: left;
     text-align: left;
     padding-left: .25rem;
   }
-  .ft-pink0 {
-    color: #ef548c;
+  .ft-red0 {
+    color: #f44c38;
   }
   .ft-pink1 {
     color: #e2bac2;
   }
   /* 平台数据总览 */
+  .report1-content .content li span {
+    width: 15%;
+    height: .8rem;
+    float: left;
+  }
   .report1-content .content {
     padding: 0 .12rem;
-    margin-bottom: .4rem;
   }
   .report1-content .content li {
     border-bottom: 1px dashed #f2c7b0;
     text-align: left;
     height: .85rem;
-    padding: .15rem 0;
+    padding: .02rem .2rem;
+  }
+  .report1-content .content li div {
+    float: left;
+    width: 85%;
+    padding-left: 8%;
   }
   .report1-content .content li p {
     overflow: hidden;
     clear: both;
     width: 100%;
   }
+  .report1-content .content li:nth-child(1) {
+    height: .9rem;
+    padding-bottom: .12rem;
+  }
   .report1-content .content li p:nth-child(1) {
-    font-size: .32rem;
+    font-size: .35rem;
+    color: #c92e2d;
   }
   .report1-content .content li p:nth-child(2) {
     font-size: .24rem;
-  }
-  .report1-content .content li:nth-child(1) {
-    height: .9rem;
-    padding-bottom: .2rem;
+    color: #999999;
+    margin-top: -.11rem;
   }
   .report1-content .content li:nth-child(1) p:nth-child(1) {
     font-size: .45rem;
-    color: #ef548c;
-  }
-  .report1-content .content li:nth-child(1) p:nth-child(2) {
-    font-size: .24rem;
-    color: #e2bac2;
-    margin-top: -.11rem;
-  }
-  .report1-content .time {
-    text-align: center;
-    color: #a99899;
-    font-size: .22rem;
-    margin-top: .35rem;
   }
   /* 2017年度经营规模 */
   .report2-content img {
     margin: .12rem auto 0;
   }
+  .report2-content .table-title {
+    color: #999;
+    text-align: left;
+    margin: .15rem auto;
+    font-size: .254rem;
+  }
   .report2-content .content {
     border-top: 1px dashed #f2c7b0;
     padding-top: .12rem;
-    font-size: .22rem;
   }
   .report2-content .content li {
-    margin-bottom: .1rem;
+    margin: .25rem auto;
+    font-size: .25rem;
   }
   .report2-content .content li p:nth-child(2) {
     margin-top: -.05rem;
+    font-size: .23rem;
   }
   /* 出借人数据 */
   .report3_1_title {
     margin: -.1rem 0 -.1rem -.15rem;
   }
   .report1-content .tip, .report2-content .tip, .report3_1-content .tip, .report3_2-content .tip, .report3_3-content .tip {
-    color: #999;
+    color: #a99899;
     font-size: .2rem;
     clear: both;
     margin-top: .15rem;
   }
-  .report2-content .tip {
-    width: 115%;
-    margin: .1rem 0 0 -7%;
+  .report3_1-content .proportion {
+    border: 1px solid #f44c38;
+    margin-top: .3rem;
   }
-  .report3_2-content .tip {
-    margin-top: .05rem;
-  }
-  .report3_1-content .proportion ul {
+  .report3_1-content .proportion ul:nth-child(1) {
     width: 45%;
-    color: #fff;
+  }
+  .report3_1-content .proportion ul:nth-child(2) {
+    width: 55%;
   }
   .report3_1-content .proportion ul li {
     padding: 0 .2rem;
-    height: .6rem;
-    line-height: .65rem;
+    height: .7rem;
+    line-height: .75rem;
   }
-  .report3_1-content .proportion ul li p:nth-child(1) {
-    float: left;
+  .report3_1-content .proportion ul li span {
+    margin-left: .6rem;
   }
-  .report3_1-content .proportion ul li p:nth-child(2) {
-    float: right;
+  .report3_1-content .proportion ul li:nth-child(1) {
+    background: #f44c38;
+    color: #fff;
   }
   .report3_1-content .proportion ul li:nth-child(2) {
     overflow: hidden;
-    background: #ef6494;
-  }
-  .report3_1-content .proportion ul li:nth-child(3) {
-    overflow: hidden;
-    background: #4f96ff;
-  }
-  .report3_1-content .proportion ul:nth-child(1) li:nth-child(3) {
-    border-bottom-left-radius: .2rem;
-  }
-  .report3_1-content .proportion ul:nth-child(1) li:nth-child(2) {
-    border-top-left-radius: .2rem;
-  }
-  .report3_1-content .proportion ul:nth-child(2) li:nth-child(3) {
-    border-bottom-right-radius: .2rem;
-  }
-  .report3_1-content .proportion ul:nth-child(2) li:nth-child(2) {
-    border-top-right-radius: .2rem;
+    border-bottom: 1px solid #f44c38;
   }
   .report3_2-content .icon, .report3_2-content .icon1 {
     display: inline-block;
@@ -639,9 +741,8 @@
   .report3_3-content .geographical {
     overflow: hidden;
     width: 100%;
-    border: 1px solid #fedada;
-    border-radius: .2rem;
-    margin: .2rem auto;
+    border: 1px solid #f44c38;
+    margin: .3rem auto .2rem;
   }
   .report3_3-content .geographical ul {
     float: left;
@@ -654,7 +755,12 @@
     font-size: .23rem;
   }
   .report3_3-content .geographical ul li:nth-child(2) {
-    background: #fedada;
+    background: #f44c38;
+    color: #fff;
+  }
+  .report3_3-content .table-title {
+    color: #666;
+    font-size: .25rem;
   }
   .fontBold{
     font-size: .36rem;
