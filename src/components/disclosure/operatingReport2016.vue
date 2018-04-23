@@ -3,55 +3,6 @@
     <div class="slide-banner position-re overflow-hid" v-auto-height>
       <div id="slideBanner" class="slide position-re">
         <ul>
-          <!-- 平台数据总览 -->
-          <li class="reportList position-re text-center">
-            <div class="report1-content">
-              <ul class="header overflow-hid">
-                <li class="contentNum">01</li>
-                <li class="report-title">平台数据总览</li>
-              </ul>
-              <ul class="content">
-                <li>
-                  <p>{{platformData.totalAmount.amount}}</p>
-                  <p>{{platformData.totalAmount.title}}</p>
-                </li>
-                <li v-for="data in platformData.listDatas">
-                  <p class="ft-pink0">
-                    <span class="fl">{{data.count1}}</span>
-                    <span class="fr">{{data.count2}}</span>
-                  </p>
-                  <p class="ft-pink1">
-                    <span class="fl">{{data.type1}}</span>
-                    <span class="fr">{{data.type2}}</span>
-                  </p>
-                </li>
-              </ul>
-              <div class="tip">*数据统计截至2017年12月31日</div>
-            </div>
-          </li>
-          <!-- 2017年度经营规模 -->
-          <li class="reportList position-re text-center">
-            <div class="report2-content">
-              <ul class="header overflow-hid">
-                <li class="contentNum">02</li>
-                <li class="report-title">2017年度经营规模</li>
-              </ul>
-              <img src="../../images/disclosure/operating-report2.png" alt="" width="100%"/>
-              <ul class="content">
-                <li v-for="data in report2Datas">
-                  <p class="ft-pink0 overflow-hid">
-                    <span class="fl">{{data.count1}}</span>
-                    <span class="fr">{{data.count2}}</span>
-                  </p>
-                  <p class="ft-pink1 overflow-hid">
-                    <span class="fl">{{data.type1}}</span>
-                    <span class="fr">{{data.type2}}</span>
-                  </p>
-                </li>
-              </ul>
-              <div class="tip">2017年成交额同比增长357.27%，成交笔数同比增长253.54%</div>
-            </div>
-          </li>
           <!-- 出借人数据 -->
           <li class="reportList position-re text-center">
             <div class="report3_1-content">
@@ -59,170 +10,98 @@
                 <li class="contentNum">03</li>
                 <li class="report-title">出借人数据</li>
               </ul>
-              <div class="report-title report3_1_title">性别分布</div>
-              <img src="../../images//disclosure//operating-report3_1.png" alt="" width="95%">
-              <div class="proportion overflow-hid">
-                <ul class="fl">
-                  <li class="ft-pink1">人数比例</li>
+              <div class="report-title report3_1_title lightY">年龄分布</div>
+              <div class="ageScatter clearfix">
+                <ul style="margin-top:-.2rem;">
                   <li>
-                    <p>女</p>
-                    <p>46.56%</p>
+                    <span class="fl">年龄段</span>
+                    <span class="fr">人数占比</span>
                   </li>
-                  <li>
-                    <p>男</p>
-                    <p>53.44%</p>
-                  </li>
-                </ul>
-                <ul class="fr">
-                  <li class="ft-pink1">人均出借金额</li>
-                  <li>
-                    <p>女</p>
-                    <p>86,197.22元</p>
-                  </li>
-                  <li>
-                    <p>男</p>
-                    <p>28,589.43元</p>
+                  <li v-for="item in platformData.ageScatter">
+                    <span class="fl">{{item.msg1}}</span>
+                    <span class="fr">{{item.msg2}}</span>
                   </li>
                 </ul>
               </div>
-              <p class="tip">男性的人数占优，女性的人均出借金额更高一筹</p>
+              <img src="../../images/disclosure/report16-3.png" alt="" width="95%">
+              <div class="bottomTip">出借金额占比</div>
             </div>
           </li>
-          <!-- 出借人数据 -->
+          <!-- 年度最宏粉 -->
           <li class="reportList position-re text-center">
             <div class="report3_2-content">
               <ul class="header overflow-hid">
-                <li class="contentNum">03</li>
-                <li class="report-title">出借人数据</li>
+                <li class="contentNum">05</li>
+                <li class="report-title">年度最宏粉</li>
               </ul>
-              <div class="report-title report3_1_title">年龄分布</div>
-              <div class="report3_2_title">
-                <p class="ft-pink1 fl">2017年季度成交金额（万元）</p>
-                <div class="fr">
-                  <p class="text-left">
-                    <span class="icon"></span>
-                    <span class="statistics">人数占比</span>
-                  </p>
-                  <p class="text-left">
-                    <span class="icon icon1"></span>
-                    <span class="statistics">出借金额占比</span>
-                  </p>
-                </div>
-              </div>
-              <img src="../../images/disclosure/operating-report3_2.png" alt="" width="100%">
-              <p class="tip text-justify">平台出借人数的主力军为80后和90后，占比高达62.18％;出借金额最多的为80后和70后，占比高达70.22％</p>
-            </div>
-          </li>
-          <!-- 出借人数据 -->
-          <li class="reportList position-re text-center">
-            <div class="report3_3-content">
-              <ul class="header overflow-hid">
-                <li class="contentNum">03</li>
-                <li class="report-title">出借人数据</li>
-              </ul>
-              <div class="report-title report3_1_title">地域分布</div>
-              <img src="../../images/disclosure/operating-report3_3.png" alt="" width="100%">
-              <div class="geographical">
-                <ul v-for="item in geographicaData">
-                  <li>{{item.province}}</li>
-                  <li>{{item.percent}}</li>
+              <div class="report5-content_2">
+                <ul class="overflow-hid">
+                  <li>
+                    <div class="report5ImgItem margin-auto">
+                    </div>
+                    <p>3,730,300 元</p>
+                    <p>年度出借总额最高</p>
+                  </li>
+                  <li class="fl">
+                    <div class="report5ImgItem margin-auto"></div>
+                    <p>422,000 元</p>
+                    <p>单笔出借金额最高</p>
+                  </li>
+                  <li class="fr">
+                    <div class="report5ImgItem margin-auto"></div>
+                    <p>91笔</p>
+                    <p>出借笔数最多</p>
+                  </li>
+                  <li class="fl">
+                    <div class="report5ImgItem margin-auto"></div>
+                    <p>63,500.46 元</p>
+                    <p>赚取收益最多</p>
+                  </li>
+                  <li class="fr">
+                    <div class="report5ImgItem margin-auto"></div>
+                    <p>169 人</p>
+                    <p>邀请好友人数最多</p>
+                  </li>
                 </ul>
               </div>
-              <p class="tip">2017年安徽、江苏、广东地区的出借人数位列前三</p>
             </div>
           </li>
+          <!-- 宏财大事件 -->
           <li class="reportList position-re text-center">
-            <div class="report-content">
-              <div class="contentNum">04</div>
-              <div class="report-title">借款人数据</div>
-              <div class="report-title report3_1_title">借款人主体性质分布</div>
-              <div class="clear"></div>
-              <img src="../../images/disclosure/report4-01.png" alt="" width="90%" style="margin-top:.2rem">
-              <div class="summary">2017年企业借款总额高达85.73％</div>
-            </div>
-          </li>
-          <li class="reportList position-re text-center">
-            <div class="report-content">
-              <div class="contentNum">04</div>
-              <div class="report-title">借款人数据</div>
-              <div class="report3_1_title report-title">借款期限分布</div>
-              <img src="../../images/disclosure/report4-02.png" alt="" width="100%">
-              <div class="clear"></div>
-              <div class="summary" style="padding-left:.9rem;text-align:left;">平台项目中，短期借款占比较高主要分布在0-3个月，借款金额占比超过60％</div>
-              <div class="report3_1_title report-title">借款金额分布</div>
-              <img src="../../images/disclosure/report4-03.png" alt="" width="100%" style="margin-top: -.18rem;">
-              <div class="summary">20万-40万借款项目占比较高，达64.85％</div>
-            </div>
-          </li>
-          <li class="reportList position-re text-center">
-            <div class="report-content">
-              <div class="contentNum">05</div>
-              <div class="report-title">年度最宏粉</div>
-              <div class="clear"></div>
-              <div class="content5Box">
-                <div class="c5item">
-                  <div v-for="(item, index) in c5itemList" v-bind:class="index % 2 !== 1 ? 'c5itemL' : 'c5itemR'">
-                    <img v-bind:src="item.imgUrl" alt="">
-                    <p>{{item.content1}}</p>
-                    <p>{{item.content2}}</p>
-                  </div>
+            <div class="report3_2-content">
+              <ul class="header overflow-hid">
+                <li class="contentNum">06</li>
+                <li class="report-title">宏财大事件</li>
+              </ul>
+              <div class="report6_16">
+                <ul class="fr">
+                  <li>
+                    <div class="padding-t05-l2"><span>2016.</span><span>7</span></div>
+                    <div class="padding-t2-l2">
+                      <p>宏财网正式成为北京市网贷行业协会（现北京市互联网金融行业协会）观察员</p>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="padding-t05-l2"><span>2016.</span><span>10</span></div>
+                    <div class="padding-t2-l2">
+                      <p>接入北京网贷风险监控及资金存管系统，用户资金由中信银行资金存管专用账户保管</p>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="padding-t05-l2"><span>2016.</span><span>7</span></div>
+                    <div class="padding-t2-l2">
+                      <p style="margin-bottom: .2rem;">宏财网荣获2016年度中国互联网金融行业优秀示范企业</p>
+                      <p>宏财网荣获2016年度中国互联网金融行业优秀示范企业放心网站</p>
+                    </div>
+                  </li>
+                </ul>
+                <div class="frame fl">
+                  <span class="display-bl"></span>
+                  <span class="display-bl"></span>
+                  <span class="display-bl"></span>
                 </div>
               </div>
             </div>
-          </li>
-          <li class="reportList position-re text-center">
-            <div class="report-content">
-              <div class="solid"></div>
-              <div class="contentNum">06</div>
-              <div class="report-title">宏财大事件</div>
-              <div class="clear"></div>
-              <div class="eventBox">
-                <div class="events left" style="left:0;top:.7rem;">
-                  <div class="node">
-                    <span>2017.</span><span class="fontBig">6</span>
-                    <div class="triangle"></div>
-                    <div class="circle"></div>
-                  </div>
-                  <p>宏财网成功对接海口联合农商银行资金存管系统，标志着宏财网用户资金安全体系进一步完善</p>
-                </div>
-                <div class="events right" style="left:48%;top:0;">
-                  <div class="node">
-                    <span>2017.</span><span class="fontBig">3</span>
-                    <div class="triangle"></div>
-                    <div class="circle"></div>
-                  </div>
-                  <p>宏财网荣获3.15互联网诚信企业重点单位</p>
-                </div>
-                <div class="events left" style="left:0;top:3rem;">
-                  <div class="node">
-                    <span>2017.</span><span class="fontBig">9</span>
-                    <div class="triangle"></div>
-                    <div class="circle"></div>
-                  </div>
-                  <p>宏财网与知名电子合同在线签署服务平台 - 法大大建立合作，成功上线电子签章服务</p>
-                  <p>宏财网获得由中国电子商务协会信用管理委员会颁发的理事单位证书，正式成为中国电子商务协会信用管理委员会第一届理事会理事单位</p>
-                </div>
-                <div class="events right" style="left:48%;top:2rem;">
-                  <div class="node">
-                    <span>2017.</span><span class="fontBig">7</span>
-                    <div class="triangle"></div>
-                    <div class="circle"></div>
-                  </div>
-                  <p>宏财网全程赞助2017年中国国际金融科技博览会</p>
-                </div>
-                <div class="events right" style="left:48%;top:4.2rem;">
-                  <div class="node">
-                    <span>2017.</span><span class="fontBig">12</span>
-                    <div class="triangle"></div>
-                    <div class="circle"></div>
-                  </div>
-                  <p>宏财网荣获2017年度中国互金行业诚信示范企业称号</p>
-                  <p>宏财网获得中关村“金种子企业”认证，荣登第七批中关村“金种子企业”名单</p>
-                </div>
-              </div>
-              <div class="report6Bottom"></div>
-            </div>
-
           </li>
         </ul>
         <div class="dot">
@@ -249,117 +128,29 @@
     data () {
       return {
         platformData: {
-          totalAmount: {
-            amount: '229,072,110元',
-            title: '累计成交金额'
-          },
-          listDatas: [
+          ageScatter: [
             {
-              count1: '11,726笔',
-              count2: '5,227,725.03元',
-              type1: '累计交易笔数',
-              type2: '累计为用户赚取'
+              msg1: '90后',
+              msg2: '24.84%'
             },
             {
-              count1: '815个',
-              count2: '55,966.80元',
-              type1: '累计成交项目数',
-              type2: '累计人均出借金额'
+              msg1: '80后',
+              msg2: '36.63%'
             },
             {
-              count1: '650,773.01元',
-              count2: '165,351人',
-              type1: '累计人均借款金额',
-              type2: '累计注册会员人数'
+              msg1: '70后',
+              msg2: '16.84%'
             },
             {
-              count1: '352人',
-              count2: '4,093人',
-              type1: '累计借款人数',
-              type2: '累计出借人数'
+              msg1: '60后',
+              msg2: '11.58%'
+            },
+            {
+              msg1: '60前',
+              msg2: '10.11%'
             }
           ]
-        },
-        report2Datas: [
-          {
-            count1: '8,888笔',
-            count2: '4,130,821.31元',
-            type1: '年度交易笔数',
-            type2: '年度为用户赚取'
-          },
-          {
-            count1: '640个',
-            count2: '55,412.49元',
-            type1: '年度成交项目数',
-            type2: '年度人均出借金额'
-          },
-          {
-            count1: '530,687.61元',
-            count2: '20,978人',
-            type1: '年度人均借款金额',
-            type2: '年度注册会员人数'
-          },
-          {
-            count1: '3,170人',
-            count2: '331人',
-            type1: '年度出借人数',
-            type2: '年度借款人数'
-          }
-        ],
-        geographicaData: [
-          {
-            province: '安徽省',
-            percent: '8.96%'
-          },
-          {
-            province: '江苏省',
-            percent: '8.83%'
-          },
-          {
-            province: '广东省',
-            percent: '7.60%'
-          },
-          {
-            province: '山东省',
-            percent: '7.03%'
-          },
-          {
-            province: '湖北省',
-            percent: '6.25%'
-          }
-        ],
-        c5itemList: [
-          {
-            imgUrl: '../../../static/images/report5-01.png',
-            content1: '13,682,400 元',
-            content2: '年度出借总额最高'
-          },
-          {
-            imgUrl: '../../../static/images/report5-02.png',
-            content1: '950,000 元',
-            content2: '单笔出借金额最高'
-          },
-          {
-            imgUrl: '../../../static/images/report5-03.png',
-            content1: '280 笔',
-            content2: '出借笔数最多'
-          },
-          {
-            imgUrl: '../../../static/images/report5-04.png',
-            content1: '271,827.87 元',
-            content2: '赚取收益最多'
-          },
-          {
-            imgUrl: '../../../static/images/report5-05.png',
-            content1: '114 人',
-            content2: '邀请好友人数最多'
-          },
-          {
-            imgUrl: '../../../static/images/report5-06.png',
-            content1: '15,014.28 元',
-            content2: '获得邀请奖励最多'
-          }
-        ]
+        }
       }
     },
     mounted () {
@@ -463,10 +254,10 @@
     margin: .4rem auto;
   }
   .slide .dot .cur{
-    background-color: #ef548c;
+    background-color: #e80103;
   }
   .reportList{
-  	background: url(../../images/disclosure/report.png) no-repeat;
+  	background-color: #ffd4b8;
   	background-size: cover;
   	padding: 1rem 0 .5rem 0;
   }
@@ -488,11 +279,11 @@
   	border-radius: 50%;
   	line-height: 1rem;
   	color: #FFFFFF;
-    background-image: linear-gradient(45deg, #c08bdf, #f877b1);
+    background-color: #eb0507;
     float: left;
   }
   .report-title {
-    color: #ef548c;
+    color: #eb0507;
     font-size: .32rem;
     font-weight: bold;
     height: 1rem;
@@ -501,6 +292,9 @@
     float: left;
     text-align: left;
     padding-left: .25rem;
+  }
+  .report-title.lightY{
+    color: #f44c38;
   }
   .ft-pink0 {
     color: #ef548c;
@@ -548,21 +342,6 @@
     color: #a99899;
     font-size: .22rem;
     margin-top: .35rem;
-  }
-  /* 2017年度经营规模 */
-  .report2-content img {
-    margin: .12rem auto 0;
-  }
-  .report2-content .content {
-    border-top: 1px dashed #f2c7b0;
-    padding-top: .12rem;
-    font-size: .22rem;
-  }
-  .report2-content .content li {
-    margin-bottom: .1rem;
-  }
-  .report2-content .content li p:nth-child(2) {
-    margin-top: -.05rem;
   }
   /* 出借人数据 */
   .report3_1_title {
@@ -679,133 +458,127 @@
     font-family: PingFang-SC;
     margin-top: .1rem;
   }
-  /*05页面*/
-  .content5Box{
-    padding-top: .3rem;
-    overflow: hidden;
+  .ageScatter{
+    width: 85%;
+    color: #666666;
+    line-height: .4rem;
+    margin: 0 auto;
+    margin-bottom: .2rem;
   }
-  .content5Box .c5item>div p:nth-child(2){
-    color: #ef548c;
-    font-family: PingFang-SC;
+  .ageScatter ul li{
+    padding: 0 .3rem;
+    overflow: hidden;
+    border:1px solid #f44c38;
+    border-top: none;
+  }
+  .ageScatter ul li:nth-child(1){
+    background: #f44c38;
+    color: #FFFFFF;
+    font-weight: bold;
+    line-height: .6rem;
+  }
+  .bottomTip{
+    color: #666666;
+  }
+  /*年度最宏粉*/
+  .report5-content_2 li{
+    border-bottom: 1px dashed #f2c7b0;
+    padding: .3rem 0;
+    width: 50%;
+  }
+  .report5-content_2 img{
+    max-height: 1rem;
+  }
+  .report5-content_2 li p:nth-child(2){
+    color: #f44c38;
+    font-weight: 500;
+    line-height: .6rem;
     font-size: .3rem;
-    font-weight: 500;
   }
-  .content5Box .c5item div p:nth-child(3){
-    font-family: SourceHanSansCN;
-    font-weight: 500;
-    text-align: center;
-    color: #e2bac2;
+  .report5-content_2 li p:nth-child(3){
+    color: #999999;
+    line-height: .3rem;
+    font-size: .24rem;
   }
-  .c5item{
-    border-bottom: dashed 1px #f2c7b0;
-    padding-bottom: .1rem;
-    overflow: hidden;
+  .report5-content_2 li:nth-child(1){
+    width: 100%;
   }
-  .c5item img{
-    display: block;
-    padding: .2rem .4rem;
-    width: .9rem !important;
+  .report5ImgItem {
+    width: .8rem;
     height: .8rem;
   }
-  .c5itemL{
-    float: left;
+  .report5-content_2 ul li:nth-child(1) .report5ImgItem {
+    background:url(../../images/disclosure/mostPowder1.png) no-repeat center bottom;
+    background-size: 100%;
   }
-  .c5itemR{
-    float: right;
-    margin-right: .2rem;
+  .report5-content_2 ul li:nth-child(2) .report5ImgItem {
+    background:url(../../images/disclosure/mostPowder2.png) no-repeat center bottom;
+    background-size: 80%;
   }
-  /*06页面*/
-  .events.left .node{
-     margin-left: 0.93rem;
+  .report5-content_2 ul li:nth-child(3) .report5ImgItem {
+    background:url(../../images/disclosure/mostPowder3.png) no-repeat center bottom;
+    background-size: 80%;
   }
-  .events{
-    max-width: 48%;
-    float: left;
-    position: absolute;
+  .report5-content_2 ul li:nth-child(4) .report5ImgItem {
+    background:url(../../images/disclosure/mostPowder4.png) no-repeat center bottom;
+    background-size: 80%;
   }
-  .events.right{
-    margin-left: 4.1%;
+  .report5-content_2 ul li:nth-child(5) .report5ImgItem {
+    background:url(../../images/disclosure/mostPowder5.png) no-repeat center bottom;
+    background-size: 80%;
   }
-  .events .node{
-    padding: 0rem .1rem;
-    font-size: .24rem;
-    background-image: linear-gradient(to left, #ee5a8d, #ffd2e0);
-    width: 1.3rem;
+  /*宏财大事件*/
+  .padding-t05-l2{
+    padding: .05rem .2rem;
+    background: #f44c38;
+    width: 1.6rem;
+    text-align: center;
     color: #FFFFFF;
-    border-radius: 5px;
-    margin-bottom: .1rem;
-    position: relative;
+    font-weight: 500;
+    font-size: .24rem;
   }
-  .node .triangle{
-    width: .1rem;
-    height: .1rem;
-    position: absolute;
-    background-color: #ef6393;
-    right: -.05rem;
-    top: .2rem;
-    transform: rotate(45deg);
+  .padding-t05-l2 span:nth-child(2){
+    font-size: .34rem;
   }
-  .node .circle{
-    position: absolute;
-    width: .2rem;
-    height: .2rem;
-    border: solid 2px #ef548c;
-    right: -.26rem;
-    border-radius: 50%;
-    top: .16rem;
+  .padding-t2-l2{
+    padding: .2rem .2rem;
+    background: #fcddd9;
   }
-  .events.right .node .triangle{
-    background: #ffd0de;
-    width: .1rem;
-    height: .1rem;
-    position: absolute;
-    background-color: #ffd2e0;
-    left: -.05rem;
-    top: .2rem;
-    transform: rotate(45deg);
+  .padding-t2-l2 p{
+    text-align: left;
   }
-  .events.right .node{
-    margin-left: -.08rem;
+  .report6_16 li{
+    padding: .1rem 0;
   }
-  .events.right .node .circle{
-    position: absolute;
-    width: .2rem;
-    height: .2rem;
-    border: solid 2px #ef548c;
-    left: -.26rem;
-    border-radius: 50%;
-    top: .16rem;
+  .report6_16 ul{
+    width: 100%;
+    margin-right: -.2rem;
   }
-  .events p{
-    text-align: left !important;
-    line-height: .3rem;
-    margin-bottom: .2rem;
-    font-size: .23rem;
-  }
-  .fontBig{
-    font-size: .3rem;
-    font-weight: 400;
-  }
-  .solid{
-    position: absolute;
-    left: 51%;
-    top: 1.47rem;
+  .frame{
     width: 1px;
-    height: 6.8rem;
-    background-color: #ef548c;
-  }
-  .eventBox{
+    background-color: #f44c38;
+    height: 4rem;
+    margin: .36rem .1rem;
+    margin-left: -.1rem;
     position: relative;
-    top:-.25rem;
-    left: .2rem;
   }
-  .report6Bottom{
-    width: 18%;
-    height: 6.5px;
-    border-radius: 3.3px;
-    background-color: #f974b3;
+  .frame.fl span{
+    width: .2rem;
+    height: .2rem;
+    background: #f44c38;
+    transform: rotate(45deg);
     position: absolute;
-    bottom: -.4rem;
-    left: 42%;
+  }
+  .frame.fl span:nth-child(1){
+    left: -.09rem;
+    top: 2rem;
+  }
+  .frame.fl span:nth-child(2){
+    left: -.09rem;
+    top: 0rem;
+  }
+  .frame.fl span:nth-child(3){
+    left: -.09rem;
+    top: 4rem;
   }
 </style>
