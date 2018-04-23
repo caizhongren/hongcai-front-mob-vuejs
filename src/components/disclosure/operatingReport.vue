@@ -161,43 +161,11 @@
               <div class="clear"></div>
               <div class="content5Box">
                 <div class="c5item">
-                  <div class="c5itemL">
-                    <img src="../../images/disclosure/report5-01.png" alt="">
-                    <p>13,682,400 元</p>
-                    <p>年度出借总额最高</p>
+                  <div v-for="(item, index) in c5itemList" v-bind:class="index % 2 !== 1 ? 'c5itemL' : 'c5itemR'">
+                    <img v-bind:src="item.imgUrl" alt="">
+                    <p>{{item.content1}}</p>
+                    <p>{{item.content2}}</p>
                   </div>
-                  <div class="c5itemR">
-                    <img src="../../images/disclosure/report5-02.png" alt="">
-                    <p>950,000 元</p>
-                    <p>单笔出借金额最高</p>
-                  </div>
-                  <div class="clear"></div>
-                </div>
-                <div class="c5item">
-                  <div class="c5itemL">
-                    <img src="../../images/disclosure/report5-03.png" alt="">
-                    <p>280 笔</p>
-                    <p>年度出借总额最高</p>
-                  </div>
-                  <div class="c5itemR">
-                    <img src="../../images/disclosure/report5-04.png" alt="">
-                    <p>271,827.87 元</p>
-                    <p>赚取收益最多</p>
-                  </div>
-                  <div class="clear"></div>
-                </div>
-                <div class="c5item">
-                  <div class="c5itemL">
-                    <img src="../../images/disclosure/report5-05.png" alt="">
-                    <p>114 人</p>
-                    <p>邀请好友人数最多</p>
-                  </div>
-                  <div class="c5itemR">
-                    <img src="../../images/disclosure/report5-06.png" alt="">
-                    <p>15,014.28 元</p>
-                    <p>获得邀请奖励最多</p>
-                  </div>
-                  <div class="clear"></div>
                 </div>
               </div>
             </div>
@@ -359,6 +327,38 @@
             province: '湖北省',
             percent: '6.25%'
           }
+        ],
+        c5itemList: [
+          {
+            imgUrl: '../../../static/images/report5-01.png',
+            content1: '13,682,400 元',
+            content2: '年度出借总额最高'
+          },
+          {
+            imgUrl: '../../../static/images/report5-02.png',
+            content1: '950,000 元',
+            content2: '单笔出借金额最高'
+          },
+          {
+            imgUrl: '../../../static/images/report5-03.png',
+            content1: '280 笔',
+            content2: '出借笔数最多'
+          },
+          {
+            imgUrl: '../../../static/images/report5-04.png',
+            content1: '271,827.87 元',
+            content2: '赚取收益最多'
+          },
+          {
+            imgUrl: '../../../static/images/report5-05.png',
+            content1: '114 人',
+            content2: '邀请好友人数最多'
+          },
+          {
+            imgUrl: '../../../static/images/report5-06.png',
+            content1: '15,014.28 元',
+            content2: '获得邀请奖励最多'
+          }
         ]
       }
     },
@@ -457,7 +457,7 @@
   .slide .dot span{
     display: block;
     width: .18rem;
-    height: .19rem;
+    height: .185rem;
     background-color: #fff;
     border-radius: 50%;
     margin: .4rem auto;
@@ -684,7 +684,7 @@
   /*05页面*/
   .content5Box{
     padding-top: .3rem;
-
+    overflow: hidden;
   }
   .content5Box .c5item>div p:nth-child(2){
     color: #ef548c;
@@ -701,6 +701,7 @@
   .c5item{
     border-bottom: dashed 1px #f2c7b0;
     padding-bottom: .1rem;
+    overflow: hidden;
   }
   .c5item img{
     display: block;
