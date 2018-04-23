@@ -47,6 +47,7 @@
   .wrapper {
     margin: 0.35rem auto;
     height: auto;
+    min-height: 3rem;
     box-shadow: 0 0 2px 0 rgba(255, 77, 0, 0.69);
     border-radius: 12.5px;
     width: 90%;

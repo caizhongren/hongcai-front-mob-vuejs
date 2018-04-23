@@ -177,7 +177,7 @@
                   <div class="c5itemL">
                     <img src="../../images/disclosure/report5-03.png" alt="">
                     <p>280 笔</p>
-                    <p>年度出借总额最高</p>
+                    <p>出借笔数最多</p>
                   </div>
                   <div class="c5itemR">
                     <img src="../../images/disclosure/report5-04.png" alt="">
@@ -480,13 +480,13 @@
     position: relative;
   }
   .contentNum{
-  	width: 1rem;
-  	height: 1rem;
+  	width: .8rem;
+  	height: .8rem;
   	font-family: SourceHanSansCN;
     font-size: .4rem;
     font-weight: bold;
   	border-radius: 50%;
-  	line-height: 1rem;
+  	line-height: .82rem;
   	color: #FFFFFF;
     background-image: linear-gradient(45deg, #c08bdf, #f877b1);
     float: left;
