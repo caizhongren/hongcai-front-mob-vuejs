@@ -100,7 +100,9 @@ const FoolResult = r => require.ensure([], () => r(require('../components/activi
 const FoolAnswerPage = r => require.ensure([], () => r(require('../components/activity/FoolAnswerPage.vue')), 'FoolAnswerPage')
 const FoolTacit = r => require.ensure([], () => r(require('../components/activity/FoolTacit.vue')), 'FoolTacit')
 const LoanManagement = r => require.ensure([], () => r(require('../components/LoanManagement.vue')), 'LoanManagement')
-const operatingReport = r => require.ensure([], () => r(require('../components/disclosure/operatingReport.vue')), 'operatingReport')
+const operatingReport2017 = r => require.ensure([], () => r(require('../components/disclosure/operatingReport2017.vue')), 'operatingReport2017')
+const operatingReport2016 = r => require.ensure([], () => r(require('../components/disclosure/operatingReport2016.vue')), 'operatingReport2016')
+const AuditPDF = r => require.ensure([], () => r(require('../components/disclosure/AuditPDF.vue')), 'AuditPDF')
 
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -651,10 +653,22 @@ const routes = [
     meta: {title: '贷后管理信息'}
   },
   {
-    path: '/operating-report',
-    name: 'operatingReport',
-    component: operatingReport,
-    meta: {title: '运营年报'}
+    path: '/operating-report-2017',
+    name: 'operatingReport2017',
+    component: operatingReport2017,
+    meta: {title: '2017年运营年报'}
+  },
+  {
+    path: '/operating-report-2016',
+    name: 'operatingReport2016',
+    component: operatingReport2016,
+    meta: {title: '2016年运营年报'}
+  },
+  {
+    path: '/auditPDF',
+    name: 'AuditPDF',
+    component: AuditPDF,
+    meta: {title: '2017年度财务审计报告'}
   },
   {
     path: '/qrcode',

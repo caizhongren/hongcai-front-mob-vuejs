@@ -24,10 +24,10 @@
     <div class="operation-report">
       <img src="../../images/disclosure/other-icon-03.png" alt="运营报告" class="report-title" width="32%">
       <ul class="slide position-re">
-        <li class="slide-banner text-center" @click="preview('https://www.hongcai.com/uploads/png/original/2017-10-19/image/9bcbea8d83f04b289b6b9c2cf8c3af9a-original.png')">
+        <li class="slide-banner text-center" @click="goToOperating('2017')">
           <img src="../../images/disclosure/contract1.png"/>
         </li>
-        <li class="slide-banner text-center" @click="preview('https://www.hongcai.com/uploads/png/original/2017-10-19/image/e8b1d7c10f354901a532a91c4fd7439a-original.png')">
+        <li class="slide-banner text-center" @click="goToOperating('2016')">
           <img src="../../images/disclosure/contract2.png"/>
         </li>
       </ul>
@@ -174,6 +174,9 @@
     methods: {
       goText (id) {
         this.$router.push({name: 'Policies', params: { id: id }})
+      },
+      goToOperating (year) {
+        year === '2017' ? this.$router.push({name: 'operatingReport2017'}) : this.$router.push({name: 'operatingReport2016'})
       }
     },
     mounted () {
