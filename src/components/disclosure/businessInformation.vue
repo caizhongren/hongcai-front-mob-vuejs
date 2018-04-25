@@ -130,7 +130,7 @@
           </tr>
           <tr class="border-none">
             <td class="line-h">平台向借款人收取<br>服务费的标准</td>
-            <td style="text-align:left;">平台服务费=借款金额*年化服务费率*借款期限/365 （年化服务费率在1.8%-5.2%）。</td>
+            <td style="text-align:left;">{{cumulative.oanServiceFeeStandard}}</td>
           </tr>
         </div>
       </table>
@@ -176,7 +176,8 @@
           topOneLendAmountPercent: 0, // 最大单户出借余额占比
           topOneLendAmount: 0, // 最大单户出借余额
           topTenLendAmountPercent: 0, // 最大十户出借余额占比
-          topTenLendAmount: 0 // 最大十户出借余额
+          topTenLendAmount: 0, // 最大十户出借余额
+          oanServiceFeeStandard: ''
         },
         updateDate: '1522511999999'
       }
