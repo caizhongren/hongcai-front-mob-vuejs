@@ -50,7 +50,7 @@
       <img src="../../images/disclosure/xxaqcprzxx-05.png" alt="信息安全测评认证信息" class="security-title" width="40%">
       <div class="wrapper">
         <div>
-          <img src="../../images/disclosure/dengbao.png" alt="" height="100%" @click="preview('https://www.hongcai.com/uploads/png/original/2017-10-19/image/262d332a885e48849a59e9a4b73a9984-original.png')">
+          <img src="../../images/disclosure/dengbao.png" alt="" height="100%" @click="preview('https://www.hongcai.com/uploads/png/original/2018-04-24/dengbao.png')">
         </div>
       </div>
       <p>信息系统安全等级保护备案证明</p>

@@ -2,7 +2,7 @@
   <div class="about">
     <div class="wrapper">
       <div>
-        <img src="../../images/disclosure/commitment-01.png" alt="" width="100%" @click="preview('https://www.hongcai.com/uploads/png/original/2017-10-19/image/262d332a885e48849a59e9a4b73a9984-original.png')">
+        <img src="../../images/disclosure/commitment-01.png" alt="" width="100%" @click="preview('https://www.hongcai.com/uploads/png/original/2018-04-24/chengnuo.png')">
       </div>
     </div>
   </div>

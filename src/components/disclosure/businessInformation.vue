@@ -18,7 +18,7 @@
           </tr>
           <tr>
             <td>利息余额</td> 
-            <td>{{cumulative.loanBalanceCreditRightCount}}元</td>
+            <td>{{cumulative.loanInterestBalance}}元</td>
           </tr>
           <tr>
             <td>累计注册会员数</td>
@@ -148,6 +148,7 @@
           userCount: 0, // 累计注册会员数
           loanBalance: 0, // 借贷余额
           loanBalanceCreditRightCount: 0, // 借贷余额笔数
+          loanInterestBalance: 0,
           numOfLends: 0, // 累计出借人数
           numOfBorrows: 0, // 累计借款人数
           currentNumOfLends: 0, // 当前出借人数

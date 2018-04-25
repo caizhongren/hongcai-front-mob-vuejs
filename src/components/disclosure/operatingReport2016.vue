@@ -228,7 +228,6 @@
           <span></span>
           <span></span>
           <span></span>
-          <span></span>
         </div>
         <div class="arrow"></div>
       </div>
@@ -587,7 +586,7 @@
   .slide .dot{
     position: absolute;
     right: 0;
-    top: 21%;
+    top: 25%;
     z-index: 5;
     width: 5%;
     font-size: 0;
