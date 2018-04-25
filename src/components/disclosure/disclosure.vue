@@ -54,15 +54,15 @@
           this.$router.replace({name: this.tabs[index].name})
           window.scrollTo(0, 0)
         }
-        if (this.activeTab === 3) {
-          $('.columns').addClass('transition-left')
-        }
-        if (this.activeTab === 1) {
-          $('.columns').removeClass('transition-left')
-        }
-        if (this.activeTab === 2) {
-          $('.columns').hasClass('transition-left') ? $('.columns').removeClass('transition-left') : $('.columns').addClass('transition-left')
-        }
+        // if (this.activeTab === 3) {
+        //   $('.columns').addClass('transition-left')
+        // }
+        // if (this.activeTab === 1) {
+        //   $('.columns').removeClass('transition-left')
+        // }
+        // if (this.activeTab === 2) {
+        //   $('.columns').hasClass('transition-left') ? $('.columns').removeClass('transition-left') : $('.columns').addClass('transition-left')
+        // }
       }
     },
     mounted () {
