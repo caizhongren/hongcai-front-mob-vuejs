@@ -12,7 +12,7 @@
       <div class="creatTime">最近披露时间：{{disclosureTime | date}}</div>
     </div>
   	<div v-else class="msg">
-      <img src="../../images//project//no-record.png" alt="" width="60%"> <br>
+      <img src="../../images/project/no-record.png" alt="" width="60%"> <br>
       <p class="text-justify">{{msg}}</p>
     </div>
   </div>
