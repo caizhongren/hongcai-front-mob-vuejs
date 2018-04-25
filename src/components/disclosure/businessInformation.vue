@@ -134,7 +134,7 @@
           </tr>
         </div>
       </table>
-    <div class="creatTime">数据统计：截至{{updateDate}}</div>
+    <div class="creatTime">数据统计：截至{{updateDate | date}}</div>
   </div>
 </template>
 <script>
@@ -148,7 +148,7 @@
           userCount: 0, // 累计注册会员数
           loanBalance: 0, // 借贷余额
           loanBalanceCreditRightCount: 0, // 借贷余额笔数
-          loanInterestBalance: 0,
+          loanInterestBalance: 0, // 利息余额
           numOfLends: 0, // 累计出借人数
           numOfBorrows: 0, // 累计借款人数
           currentNumOfLends: 0, // 当前出借人数
@@ -178,14 +178,11 @@
           topTenLendAmountPercent: 0, // 最大十户出借余额占比
           topTenLendAmount: 0 // 最大十户出借余额
         },
-        year: new Date().getFullYear(),
-        month: new Date().getMonth() + 1,
-        updateDate: '2017-11-9'
+        updateDate: '1522511999999'
       }
     },
     created () {
       this.getPlatformData()
-      this.getUpdateDate(this.year, this.month)
     },
     methods: {
       // 占比保留两位小数
@@ -197,22 +194,12 @@
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
-            that.cumulative = res.data.detail
+            that.cumulative = res.data.disclosureInformationDetail
+            that.updateDate = res.data.systemDataTime
           } else {
             console.log(res.data.msg)
           }
         })
-      },
-      getUpdateDate (year, month) {
-        var newYear = year // 取当前的年份
-        var newMonth = month - 1 // 取上一个月的第一天，方便计算（最后一天不固定
-        if (month <= 1) {
-          newMonth += 12 // 月份增
-          newYear -= 1 // 年份减
-        }
-        var newDate = new Date(newYear, newMonth, 1) // 取当年当月中的第一天
-        var day = (new Date(newDate.getTime() - 1000 * 60 * 60 * 24)).getDate() // 获取当月最后一天日期
-        this.updateDate = (newYear + '-' + (newMonth < 10 ? '0' + newMonth : newMonth) + '-' + day)
       }
     }
   }
