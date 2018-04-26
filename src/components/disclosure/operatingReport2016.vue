@@ -100,7 +100,7 @@
           <li class="reportList position-re text-center">
             <div class="report3_3-content">
               <div class="contentNum">03</div>
-              <div class="report-title">借款人数据</div>
+              <div class="report-title">出借人数据</div>
               <div class="report-title report3_1_title">地域分布</div>
               <img src="../../images/disclosure/operating16-03_3.png" alt="" width="100%">
               <div class="geographical">
@@ -116,7 +116,7 @@
           <li class="reportList position-re text-center">
             <div class="report-content">
               <div class="contentNum">04</div>
-              <div class="report-title">借款人数据</div>
+              <div class="report-title">借款数据</div>
               <div class="report3_1_title report-title">借款期限分布</div>
               <ul class="termOfLoan">
                 <li v-for="item in termOfLoan">
@@ -280,9 +280,9 @@
             amount: '9,850,000元'
           },
           {
-            money: '40万-60万',
-            percent: '25.64%',
-            amount: '9,850,000元'
+            money: '60-80万',
+            percent: '0.00%',
+            amount: '0元'
           },
           {
             money: '80万-100万',
@@ -618,7 +618,6 @@
   .contentNum{
   	width: .8rem;
   	height: .8rem;
-  	font-family: SourceHanSansCN;
     font-size: .35rem;
     font-weight: bold;
   	border-radius: 50%;

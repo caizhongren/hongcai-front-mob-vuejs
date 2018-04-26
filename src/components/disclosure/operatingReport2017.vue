@@ -209,7 +209,7 @@
               <div class="report-title">宏财大事件</div>
               <div class="clear"></div>
               <div class="eventBox">
-                <div class="events left" style="left:0;top:.7rem;">
+                <div class="events left" style="left:-.2rem;;top:.7rem;">
                   <div class="node">
                     <span>2017.</span><span class="fontBig">6</span>
                     <div class="triangle"></div>
@@ -225,7 +225,7 @@
                   </div>
                   <p>宏财网荣获3.15互联网诚信企业重点单位</p>
                 </div>
-                <div class="events left" style="left:0;top:3rem;">
+                <div class="events left" style="left:-.2rem;top:2.6rem;">
                   <div class="node">
                     <span>2017.</span><span class="fontBig">9</span>
                     <div class="triangle"></div>
@@ -482,7 +482,6 @@
   .contentNum{
   	width: .8rem;
   	height: .8rem;
-  	font-family: SourceHanSansCN;
     font-size: .4rem;
     font-weight: bold;
   	border-radius: 50%;
@@ -703,8 +702,8 @@
   .c5item img{
     display: block;
     padding: .2rem .4rem;
-    width: .9rem !important;
-    height: .8rem;
+    height: .8rem !important;
+    margin: 0 auto;
   }
   .c5itemL{
     float: left;
@@ -715,7 +714,7 @@
   }
   /*06页面*/
   .events.left .node{
-     margin-left: 0.93rem;
+     margin-left: 1.13rem;
   }
   .events{
     max-width: 48%;
@@ -727,7 +726,7 @@
   }
   .events .node{
     padding: 0rem .1rem;
-    font-size: .24rem;
+    font-weight: 500;
     background-image: linear-gradient(to left, #ee5a8d, #ffd2e0);
     width: 1.3rem;
     color: #FFFFFF;
@@ -779,18 +778,18 @@
     text-align: left !important;
     line-height: .3rem;
     margin-bottom: .2rem;
-    font-size: .23rem;
+    font-size: .21rem;
+    color: #666666;
   }
   .fontBig{
-    font-size: .3rem;
-    font-weight: 400;
+    font-size: .34rem;
   }
   .solid{
     position: absolute;
     left: 51%;
     top: 1.47rem;
     width: 1px;
-    height: 6.8rem;
+    height: 6.5rem;
     background-color: #ef548c;
   }
   .eventBox{
