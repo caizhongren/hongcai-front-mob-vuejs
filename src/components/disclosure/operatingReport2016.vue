@@ -11,7 +11,7 @@
                 <li class="report-title">平台数据总览</li>
               </ul>
               <ul class="content">
-                <li v-for="(data, index) in platformData" v-bind:class="{'border-none': index === platformData.length - 1}">
+                <li v-for="(data, index) in platformData">
                   <span v-bind:class="data.iconClass"></span>
                   <div>
                     <p>{{data.amount}}</p>
@@ -92,7 +92,7 @@
                   </li>
                 </ul>
               </div>
-              <img src="../../images/disclosure/report16-3.png" alt="" width="95%">
+              <img src="../../images/disclosure/report16-3.png" class="margin-2" width="95%">
               <div class="bottomTip">出借金额占比</div>
             </div>
           </li>
@@ -129,7 +129,7 @@
                 </li>
               </ul>
               <div class="clear"></div>
-              <div class="report3_1_title report-title">借款金额分布</div>
+              <div class="report3_1_title report-title margin-t-1">借款金额分布</div>
               <ul class="termOfLoan">
                 <li v-for="item in loanAmount">
                   <p>{{item.money}}</p>
@@ -455,7 +455,7 @@
     clear: both;
     height: .45rem;
     line-height: .45rem;
-    margin-bottom: .2rem;
+    margin-bottom: .12rem;
     width: 100%;
   }
   .termOfLoan li p:nth-child(1) {
@@ -471,8 +471,8 @@
   .termOfLoan .percent {
     float: left;
     width: 53%;
-    height: .45rem;
-    line-height: .48rem;
+    height: .35rem;
+    line-height: .4rem;
     background: #eee;
     margin-left: 1%;
     position: relative;
@@ -630,7 +630,7 @@
     color: #eb0507;
     font-size: .32rem;
     font-weight: bold;
-    height: .8rem;
+    height: .85rem;
     line-height: .85rem;
     width: 75%;
     float: left;
@@ -670,7 +670,7 @@
   }
   .report1-content .content li:nth-child(1) {
     height: .9rem;
-    padding-bottom: .12rem;
+    /* padding-bottom: .12rem; */
   }
   .report1-content .content li p:nth-child(1) {
     font-size: .35rem;
@@ -680,9 +680,6 @@
     font-size: .24rem;
     color: #999999;
     margin-top: -.11rem;
-  }
-  .report1-content .content li:nth-child(1) p:nth-child(1) {
-    font-size: .45rem;
   }
   /* 2017年度经营规模 */
   .report2-content img {
@@ -696,7 +693,6 @@
   }
   .report2-content .content {
     border-top: 1px dashed #f2c7b0;
-    padding-top: .12rem;
   }
   .report2-content .content li {
     margin: .25rem auto;
@@ -706,9 +702,13 @@
     margin-top: -.05rem;
     font-size: .23rem;
   }
+  .report2-content .content li p:nth-child(1) span {
+    font-size: .3rem;
+  }
   /* 出借人数据 */
   .report3_1_title {
     margin: -.1rem 0 -.1rem -.15rem;
+    font-size: .3rem;
   }
   .report1-content .tip, .report2-content .tip, .report3_1-content .tip, .report3_2-content .tip, .report3_3-content .tip {
     color: #a99899;
@@ -741,6 +741,12 @@
   .report3_1-content .proportion ul li:nth-child(2) {
     overflow: hidden;
     border-bottom: 1px solid #f44c38;
+  }
+  .report3_1-content .margin-2 {
+    margin: .2rem auto .1rem;
+  }
+  .margin-t-1 {
+    margin-top: .2rem;
   }
   .report3_2-content .icon, .report3_2-content .icon1 {
     display: inline-block;
@@ -864,15 +870,15 @@
   }
   .report5-content_2 ul li:nth-child(2) .report5ImgItem {
     background:url(../../images/disclosure/mostPowder2.png) no-repeat center bottom;
-    background-size: 80%;
+    background-size: 88%;
   }
   .report5-content_2 ul li:nth-child(3) .report5ImgItem {
     background:url(../../images/disclosure/mostPowder3.png) no-repeat center bottom;
-    background-size: 80%;
+    background-size: 70%;
   }
   .report5-content_2 ul li:nth-child(4) .report5ImgItem {
     background:url(../../images/disclosure/mostPowder4.png) no-repeat center bottom;
-    background-size: 80%;
+    background-size: 69%;
   }
   .report5-content_2 ul li:nth-child(5) .report5ImgItem {
     background:url(../../images/disclosure/mostPowder5.png) no-repeat center bottom;
@@ -899,7 +905,7 @@
     text-align: left;
   }
   .report6_16 li{
-    padding: .1rem 0;
+    padding: .1rem 0 .03rem;
   }
   .report6_16 ul{
     width: 100%;
@@ -931,5 +937,61 @@
   .frame.fl span:nth-child(3){
     left: -.09rem;
     top: 4rem;
+  }
+  @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+    .report-content, .report1-content, .report2-content, .report3_1-content, .report3_2-content, .report3_3-content{
+      height: 10rem;
+    }
+    .report1-content .content li {
+      height: .9rem;
+      padding: .05rem 0 .1rem;
+    }
+    .report1-content .content li div {
+      margin-top: 2%;
+    }
+    .report1-content .content {
+      margin-bottom: .2rem;
+    }
+    .report2-content .content {
+      margin-top: .25rem;
+      padding-top: .2rem;
+    }
+    .report2-content img {
+      margin: .2rem auto 0;
+    }
+    .report3_1-content img {
+      margin: .3rem auto .2rem;
+    }
+    .report3_1-content .margin-2 {
+      margin: .4rem auto;
+    }
+    .report3_1_title {
+      margin: .12rem auto;
+    }
+    .report3_3-content .geographical {
+      margin-top: .7rem;
+    }
+    .margin-t-1 {
+      margin-top: .5rem;
+    }
+    .report5-content_2 li:nth-child(1) {
+      margin-top: .6rem;
+    }
+    .report6_16 ul {
+      margin-top: .35rem;
+    }
+    .frame {
+      margin-top: .65rem;
+      height: 4.6rem;
+    }
+    .frame.fl span:nth-child(1) {
+      top: 2.2rem;
+    }
+    .frame.fl span:nth-child(3) {
+      top: 4.4rem;
+    }
+    .report6_16 li {
+      margin-bottom: .2rem;
+    }
   }
 </style>

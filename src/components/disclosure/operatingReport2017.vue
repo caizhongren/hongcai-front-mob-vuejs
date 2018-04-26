@@ -36,7 +36,7 @@
                 <li class="contentNum">02</li>
                 <li class="report-title">2017年度经营规模</li>
               </ul>
-              <img src="../../images/disclosure/operating-report2.png" alt="" width="100%"/>
+              <img src="../../images/disclosure/operating-report2.png" alt="" width="90%"/>
               <ul class="content">
                 <li v-for="data in report2Datas">
                   <p class="ft-pink0 overflow-hid">
@@ -137,20 +137,20 @@
               <div class="report-title">借款人数据</div>
               <div class="report-title report3_1_title">借款人主体性质分布</div>
               <div class="clear"></div>
-              <img src="../../images/disclosure/report4-01.png" alt="" width="90%" style="margin-top:.2rem">
+              <img src="../../images/disclosure/report4-01.png" class="report4-content" width="90%">
               <div class="summary">2017年企业借款总额高达85.73％</div>
             </div>
           </li>
           <li class="reportList position-re text-center">
-            <div class="report-content">
+            <div class="report-content report4_1-content">
               <div class="contentNum">04</div>
               <div class="report-title">借款人数据</div>
               <div class="report3_1_title report-title">借款期限分布</div>
               <img src="../../images/disclosure/report4-02.png" alt="" width="100%">
               <div class="clear"></div>
-              <div class="summary" style="padding-left:.9rem;text-align:left;">平台项目中，短期借款占比较高主要分布在0-3个月，借款金额占比超过60％</div>
+              <div class="summary text-left">平台项目中，短期借款占比较高主要分布在0-3个月，借款金额占比超过60％</div> <br>
               <div class="report3_1_title report-title">借款金额分布</div>
-              <img src="../../images/disclosure/report4-03.png" alt="" width="100%" style="margin-top: -.18rem;">
+              <img src="../../images/disclosure/report4-03.png" alt="" width="100%">
               <div class="summary">20万-40万借款项目占比较高，达64.85％</div>
             </div>
           </li>
@@ -209,7 +209,7 @@
               <div class="report-title">宏财大事件</div>
               <div class="clear"></div>
               <div class="eventBox">
-                <div class="events left" style="left:-.2rem;;top:.7rem;">
+                <div class="events left" style="left:-.2rem;;top:1rem;">
                   <div class="node">
                     <span>2017.</span><span class="fontBig">6</span>
                     <div class="triangle"></div>
@@ -225,7 +225,7 @@
                   </div>
                   <p>宏财网荣获3.15互联网诚信企业重点单位</p>
                 </div>
-                <div class="events left" style="left:-.2rem;top:2.6rem;">
+                <div class="events left" style="left:-.2rem;top:3.2rem;">
                   <div class="node">
                     <span>2017.</span><span class="fontBig">9</span>
                     <div class="triangle"></div>
@@ -242,7 +242,7 @@
                   </div>
                   <p>宏财网全程赞助2017年中国国际金融科技博览会</p>
                 </div>
-                <div class="events right" style="left:48%;top:4.2rem;">
+                <div class="events right" style="left:48%;top:4.7rem;">
                   <div class="node">
                     <span>2017.</span><span class="fontBig">12</span>
                     <div class="triangle"></div>
@@ -476,7 +476,7 @@
   	height: 8.5rem;
   	border-radius:10px;
   	margin: 0 auto;
-  	padding: .4rem .35rem;
+  	padding: .3rem .35rem;
     position: relative;
   }
   .contentNum{
@@ -494,8 +494,8 @@
     color: #ef548c;
     font-size: .32rem;
     font-weight: bold;
-    height: 1rem;
-    line-height: 1rem;
+    height: .85rem;
+    line-height: .85rem;
     width: 75%;
     float: left;
     text-align: left;
@@ -554,18 +554,22 @@
   }
   .report2-content .content {
     border-top: 1px dashed #f2c7b0;
-    padding-top: .12rem;
-    font-size: .22rem;
+    padding-top: .15rem;
   }
   .report2-content .content li {
     margin-bottom: .1rem;
   }
   .report2-content .content li p:nth-child(2) {
     margin-top: -.05rem;
+    font-size: .22rem;
+  }
+  .report2-content .content li p:nth-child(1) span {
+    font-size: .28rem;
   }
   /* 出借人数据 */
   .report3_1_title {
     margin: -.1rem 0 -.1rem -.15rem;
+    font-size: .3rem;
   }
   .report1-content .tip, .report2-content .tip, .report3_1-content .tip, .report3_2-content .tip, .report3_3-content .tip {
     color: #999;
@@ -655,6 +659,9 @@
   .report3_3-content .geographical ul li:nth-child(2) {
     background: #fedada;
   }
+  .report4-content {
+    margin: .2rem auto;
+  }
   .fontBold{
     font-size: .36rem;
     color: #ef548c;
@@ -676,7 +683,6 @@
     color: #999999;
     font-size: .2rem;
     font-family: PingFang-SC;
-    margin-top: .1rem;
   }
   /*05页面*/
   .content5Box{
@@ -707,6 +713,7 @@
   }
   .c5itemL{
     float: left;
+    width: 40%;
   }
   .c5itemR{
     float: right;
@@ -745,10 +752,10 @@
   }
   .node .circle{
     position: absolute;
-    width: .2rem;
-    height: .2rem;
+    width: .18rem;
+    height: .18rem;
     border: solid 2px #ef548c;
-    right: -.26rem;
+    right: -.25rem;
     border-radius: 50%;
     top: .16rem;
   }
@@ -767,8 +774,8 @@
   }
   .events.right .node .circle{
     position: absolute;
-    width: .2rem;
-    height: .2rem;
+    width: .18rem;
+    height: .18rem;
     border: solid 2px #ef548c;
     left: -.26rem;
     border-radius: 50%;
@@ -787,7 +794,7 @@
   .solid{
     position: absolute;
     left: 51%;
-    top: 1.47rem;
+    top: 1.24rem;
     width: 1px;
     height: 6.5rem;
     background-color: #ef548c;
@@ -805,5 +812,67 @@
     position: absolute;
     bottom: -.4rem;
     left: 42%;
+  }
+  @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+    .report-content, .report1-content, .report2-content, .report3_1-content, .report3_2-content, .report3_3-content{
+      height: 10rem;
+    }
+    .report1-content .content li {
+      height: 1.1rem;
+      padding: .25rem 0 .05rem;
+    }
+    .report1-content .content li div {
+      margin-top: 2%;
+    }
+    .report1-content .content {
+      margin-bottom: .4rem auto .3rem;
+    }
+    .report2-content .content {
+      margin: .4rem auto .3rem;
+      padding-top: .4rem;
+    }
+    .report2-content img {
+      margin: .2rem auto 0;
+    }
+    .report3_1-content img {
+      margin: .3rem auto .2rem;
+    }
+    .report3_1-content .proportion {
+      margin: .1rem auto .35rem;
+    }
+    .report3_1-content .margin-2 {
+      margin: .4rem auto;
+    }
+    .report3_1_title {
+      margin: .12rem auto;
+    }
+    .report3_2-content img {
+      margin: .4rem auto;
+    }
+    .report3_3-content .geographical {
+      margin: .75rem auto .4rem;
+    }
+    .margin-t-1 {
+      margin-top: .5rem;
+    }
+    .report4-content {
+      margin: .3rem auto .4rem;
+    }
+    .report4_1-content .summary {
+      margin: .3rem auto 0;
+    }
+    .content5Box {
+      padding-top: .3rem;
+    }
+    .c5item {
+      padding: .2rem 0 .25rem;
+    }
+    .eventBox {
+      top: .25rem;
+    }
+    .solid {
+      top: 1.71rem;
+      height: 7.5rem;
+    }
   }
 </style>

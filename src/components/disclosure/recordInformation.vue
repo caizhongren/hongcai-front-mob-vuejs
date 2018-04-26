@@ -2,7 +2,7 @@
   <div class="about">
     <!-- 备案登记信息 -->
     <div class="bsuiness-info">
-      <img src="../../images/disclosure/badjxx-01.png" alt="备案登记信息" class="bsuiness-title" width="43%">
+      <img src="../../images/disclosure/badjxx-01.png" alt="备案登记信息" class="bsuiness-title" width="42%">
       <div class="info">
         <ul v-for="(info, index) in businessInfo" v-bind:class="{'border-none': index === businessInfo.length-1}">
           <li v-bind:class="{'line-h': index === 9}">{{info.name}}</li> 
@@ -22,7 +22,7 @@
     <div class="parting-line"></div>
     <!-- 资金存管信息 -->
     <div class="fund-info">
-      <img src="../../images/disclosure/zjcgxx-03.png" alt="资金存管信息" class="fund-title" width="40%">
+      <img src="../../images/disclosure/zjcgxx-03.png" alt="资金存管信息" class="fund-title" width="39%">
       <ul class="slide position-re">
         <li class="slide-banner text-center" @click="preview('https://www.hongcai.com/uploads/png/original/2017-10-19/image/9bcbea8d83f04b289b6b9c2cf8c3af9a-original.png')">
           <img src="../../images/disclosure/contract1.png"/>
@@ -36,7 +36,7 @@
     <div class="parting-line"></div>
     <!-- 网站备案图标及编号 -->
     <div class="fund-info">
-      <img src="../../images/disclosure/wzbatbjbh-04.png" alt="网站备案图标及编号" class="fund-title" width="40%">
+      <img src="../../images/disclosure/wzbatbjbh-04.png" alt="网站备案图标及编号" class="fund-title" width="38%">
       <div class="wrapper">
         <div>
           <img src="../../images/disclosure/record.png" alt="" height="100%" @click="preview('https://www.hongcai.com/uploads/png/original/2017-10-19/image/262d332a885e48849a59e9a4b73a9984-original.png')">
@@ -47,7 +47,7 @@
     <div class="parting-line"></div>
     <!-- 信息安全测评认证信息 -->
     <div class="security-info">
-      <img src="../../images/disclosure/xxaqcprzxx-05.png" alt="信息安全测评认证信息" class="security-title" width="40%">
+      <img src="../../images/disclosure/xxaqcprzxx-05.png" alt="信息安全测评认证信息" class="security-title" width="38%">
       <div class="wrapper">
         <div>
           <img src="../../images/disclosure/dengbao.png" alt="" height="100%" @click="preview('https://www.hongcai.com/uploads/png/original/2018-04-24/dengbao.png')">
@@ -58,7 +58,7 @@
     <div class="parting-line"></div>
     <!-- 风险管理信息 -->
     <div class="risk-info">
-      <img src="../../images/disclosure/fxglxx-06.png" alt="风险管理信息" class="risk-title" width="40%">
+      <img src="../../images/disclosure/fxglxx-06.png" alt="风险管理信息" class="risk-title" width="39%">
       <div class="part1">
         <p class="top-border"></p>
         <p class="title">风险管理架构</p>
@@ -357,11 +357,10 @@
   .risk-info .title {
     letter-spacing: 0.6px;
     color: #666666;
-    font-size: .28rem;
-    font-weight: bold;
+    font-size: .25rem;
   }
   .fund-info p, .security-info p {
-    font-size: .24rem;
+    font-size: .22rem;
     color: #666;
     margin: .35rem auto;
   }

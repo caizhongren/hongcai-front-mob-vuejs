@@ -241,7 +241,7 @@
     margin-top: .6rem;
   }
   .bsuiness-title {
-    margin: .35rem 0 .5rem 0;
+    margin: .5rem 0 .35rem 0;
     width: 27%;
   }
   table.info {
@@ -249,7 +249,7 @@
     border-radius: .2rem;
     width: 90%;
     margin: 0 auto;
-    font-size: .2rem;
+    font-size: .24rem;
     box-shadow: 0 1.5px 3.5px 0 rgba(80, 77, 75, 0.2);
   }
   table.info div {
@@ -272,6 +272,9 @@
     text-align: left;
     line-height: 1.6;
     padding-left: .2rem;
+  }
+  table.info tr:last-child  td:last-child{
+    padding: .2rem 0 .2rem .2rem;
   }
   table.info li p {
     font-size: .22rem;
@@ -441,7 +444,7 @@
     height: 1rem;
     margin: 0 auto;
     position: relative;
-    font-size: .28rem;
+    font-size: .26rem;
     margin-bottom: .5rem;
     color: #666;
   }
@@ -466,7 +469,7 @@
     width: 90%;
     margin: 0 auto;
     position: relative;
-    font-size: .28rem;
+    font-size: .24rem;
     margin-bottom: .5rem;
     color: #666;
     height: 1rem;

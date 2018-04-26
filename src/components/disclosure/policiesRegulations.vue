@@ -2,7 +2,7 @@
   <div class="policiesList">
     <!-- 重大事件 -->
     <div class="events">
-      <img src="../../images/disclosure/other-icon-01.png" alt="重大事件" class="events-title" width="27%">
+      <img src="../../images/disclosure/other-icon-01.png" alt="重大事件" class="events-title" width="20%">
       <div class="info">
         <ul v-for="(item, index) in events" v-bind:class="{'border-none': index === events.length-1}">
           <li>{{item.event}}</li>
@@ -13,7 +13,7 @@
     <div class="parting-line"></div>
     <!-- 政策法规 -->
     <div class="policies">
-      <img src="../../images/disclosure/other-icon-02.png" alt="政策法规" class="policies-title" width="42%">
+      <img src="../../images/disclosure/other-icon-02.png" alt="政策法规" class="policies-title" width="34%">
       <div class="commonBoxShadow" v-for="(item, index) in policiesList" @click="goText(index)">
         <p class="title" v-bind:class="{'margin-t': index === 3 || index === 4}">{{item.title}}</p>
         <img src="../../images/disclosure/icon-right.png" alt="">
@@ -22,7 +22,7 @@
     <div class="parting-line"></div>
     <!-- 运营报告 -->
     <div class="operation-report">
-      <img src="../../images/disclosure/other-icon-03.png" alt="运营报告" class="report-title" width="32%">
+      <img src="../../images/disclosure/other-icon-03.png" alt="运营报告" class="report-title" width="25.5%">
       <ul class="slide position-re">
         <li class="slide-banner text-center" @click="goToOperating('2017')">
           <img src="../../images/disclosure/operating-2017.png"/>
@@ -39,7 +39,7 @@
     <div class="parting-line"></div>
     <!-- 收费标准 -->
     <div class="charge-standard">
-      <img src="../../images/disclosure/other-icon-04.png" alt="收费标准" class="charge-title" width="40%">
+      <img src="../../images/disclosure/other-icon-04.png" alt="收费标准" class="charge-title" width="32%">
       <div class="info">
         <ul v-for="(item, index) in charge" v-bind:class="{'border-none': index === charge.length-1}">
           <li v-bind:class="{'line-h': index === 4, 'ft-333': index === 0}">{{item.type}}</li>
@@ -50,7 +50,7 @@
     <div class="parting-line"></div>
     <!-- 咨询投诉 -->
     <div class="consult-complaint">
-      <img src="../../images/disclosure/other-icon-05.png" alt="咨询投诉" class="consult-title" width="36%">
+      <img src="../../images/disclosure/other-icon-05.png" alt="咨询投诉" class="consult-title" width="30%">
       <div class="consult">
         <div class="information">
           <p>电话：400-990-7626 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（工作时间：9:00-18:00）</p>
@@ -195,7 +195,7 @@
     min-height: 1rem;
     margin: 0 auto;
     position: relative;
-    font-size: .28rem;
+    font-size: .26rem;
     margin-bottom: .5rem;
     color: #666;
     padding-bottom: .2rem;
@@ -211,7 +211,7 @@
     padding: 0.285rem 0 0 1rem;
   }
   .charge-standard .line-h {
-    line-height: .8rem;
+    line-height: .63rem;
   }
   .charge-standard .info ul li:nth-child(1) {
     width: 33%;
@@ -232,6 +232,7 @@
     overflow: hidden;
     clear: both;
     width: 100%;
+    font-size: .22rem;
   }
   .operation-title li {
     width: 50%;
@@ -277,7 +278,7 @@
     margin-top: .6rem;
   }
   .events-title, .policies-title, .report-title, .charge-title, .consult-title {
-    margin: .3rem auto;
+    margin: .5rem auto .35rem;
   }
   .info {
     background: #fff;
@@ -321,7 +322,6 @@
     width: 14%;
     float: left;
     text-align: right;
-    font-size: .24rem;
     color: #333;
   }
   .policiesList {
@@ -346,7 +346,7 @@
   .commonBoxShadow .title {
     width: 90%;
     float: left;
-    font-size: .25rem;
+    font-size: .24rem;
     color: #666;
   }
   .commonBoxShadow .title.margin-t {

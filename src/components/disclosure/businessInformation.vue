@@ -275,7 +275,7 @@
     border-radius: .2rem;
     width: 90%;
     margin: 0 auto;
-    font-size: .2rem;
+    font-size: .24rem;
     box-shadow: 0 1.5px 3.5px 0 rgba(80, 77, 75, 0.2);
   }
   table.info div {

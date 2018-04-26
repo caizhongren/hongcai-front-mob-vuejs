@@ -42,7 +42,6 @@
   .AuditInformation {
     background-color: #f9f4f3;
     padding-bottom: .5rem;
-    margin-top: .3rem;
   }
   .wrapper {
     margin: 0.35rem auto;
@@ -65,6 +64,9 @@
   }
   .audit-info li:nth-child(even) {
     background: #fff;
+  }
+  .fund-info>img {
+    margin-top: .5rem;
   }
   .audit-info li {
     width: 100%;

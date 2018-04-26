@@ -75,6 +75,7 @@
         }
       }
       location.pathname === '/disclosure/policies-regulations' ? (this.activeTab = 5, document.getElementById('discolsure-tab1').scrollLeft = 200) : null
+      location.pathname === '/disclosure/audit-information' ? (this.activeTab = 3, document.getElementById('discolsure-tab1').scrollLeft = 200) : null
     }
   }
 </script>
