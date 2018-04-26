@@ -203,7 +203,7 @@
                     </div>
                   </li>
                   <li>
-                    <div class="padding-t05-l2"><span>2016.</span><span>7</span></div>
+                    <div class="padding-t05-l2"><span>2016.</span><span>12</span></div>
                     <div class="padding-t2-l2">
                       <p style="margin-bottom: .2rem;">宏财网荣获2016年度中国互联网金融行业优秀示范企业</p>
                       <p>宏财网荣获2016年度中国互联网金融行业优秀示范企业放心网站</p>

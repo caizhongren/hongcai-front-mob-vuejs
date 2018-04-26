@@ -130,7 +130,7 @@
           </tr>
           <tr class="border-none">
             <td class="line-h">平台向借款人收取<br>服务费的标准</td>
-            <td style="text-align:left;">{{cumulative.oanServiceFeeStandard}}</td>
+            <td style="text-align:left;">{{cumulative.loanServiceFeeStandard}}</td>
           </tr>
         </div>
       </table>
@@ -174,10 +174,8 @@
           borrowerTotalAmountPerCapital: 0, // 人均累计借款金额
           lenderTotalAmountPerCapital: 0, // 人均累计出借金额
           topOneLendAmountPercent: 0, // 最大单户出借余额占比
-          topOneLendAmount: 0, // 最大单户出借余额
           topTenLendAmountPercent: 0, // 最大十户出借余额占比
-          topTenLendAmount: 0, // 最大十户出借余额
-          oanServiceFeeStandard: ''
+          loanServiceFeeStandard: ''
         },
         updateDate: '1522511999999'
       }
