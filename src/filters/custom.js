@@ -64,27 +64,47 @@ let monthDotDay = value => {
 let number = number => {
   // 金额格式 并保留 2位小数
   if (number === undefined) { return }
-  let outputdollars = number => {
-    if (number.length <= 3) {
-      return (output = number === '' || number === '0' ? '0' : number)
-    } else {
-      var mod = number.length % 3
-      var output = (mod === 0 ? '' : (number.substring(0, mod)))
-      for (let i = 0; i < Math.floor(number.length / 3); i++) {
-        if ((mod === 0) && (i === 0)) {
-          output += number.substring(mod + 3 * i, mod + 3 * i + 3)
-        } else {
-          output += ',' + number.substring(mod + 3 * i, mod + 3 * i + 3)
-        }
-      }
-      return (output)
-    }
-  }
   let outputcents = amount => {
     amount = Math.round(((amount) - Math.floor(amount)) * 100)
     return (amount < 10 ? '.0' + amount : '.' + amount)
   }
   // number = number.replace(g, '')
+  if (isNaN(number) || number === '') { return '' }
+  number = Math.round(number * 100) / 100
+  if (number < 0) {
+    return '-' + outputdollars(Math.floor(Math.abs(number) - 0) + '') + outputcents(Math.abs(number) - 0)
+  } else {
+    return outputdollars(Math.floor(number - 0) + '') + outputcents(number - 0)
+  }
+}
+
+let outputdollars = number => {
+  if (number.length <= 3) {
+    return (output = number === '' || number === '0' ? '0' : number)
+  } else {
+    var mod = number.length % 3
+    var output = (mod === 0 ? '' : (number.substring(0, mod)))
+    for (let i = 0; i < Math.floor(number.length / 3); i++) {
+      if ((mod === 0) && (i === 0)) {
+        output += number.substring(mod + 3 * i, mod + 3 * i + 3)
+      } else {
+        output += ',' + number.substring(mod + 3 * i, mod + 3 * i + 3)
+      }
+    }
+    return (output)
+  }
+}
+let amount = number => {
+  // 金额格式 并小数位数不变
+  if (number === undefined) { return }
+  let outputcents = amount => {
+    amount = Math.round(((amount) - Math.floor(amount)) * 100)
+    if (amount <= 0) {
+      return ''
+    } else {
+      return (amount % 10 === 0 ? '.' + amount / 10 : '.' + amount)
+    }
+  }
   if (isNaN(number) || number === '') { return '' }
   number = Math.round(number * 100) / 100
   if (number < 0) {
@@ -101,3 +121,4 @@ export {monthDay}
 export {monthDotDay}
 export {dateCharacter}
 export {dateDotTime}
+export {amount}
