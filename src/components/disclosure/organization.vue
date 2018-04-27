@@ -64,12 +64,12 @@
           <img src="../../images/disclosure/education.png" alt="" width="90%">
           <ul class="education">
             <li>
-              <span>本科</span>
-              <span>16人</span>
-            </li>
-            <li>
               <span>大专</span>
               <span>3人</span>
+            </li>
+            <li>
+              <span>本科</span>
+              <span>16人</span>
             </li>
             <li>
               <span>硕士</span>
