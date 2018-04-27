@@ -102,7 +102,7 @@ let amount = number => {
     if (amount <= 0) {
       return ''
     } else {
-      return (amount % 10 === 0 ? '.' + amount / 10 : '.' + amount)
+      return (amount < 10 ? '.0' + amount : amount % 10 === 0 ? '.' + amount / 10 : '.' + amount)
     }
   }
   if (isNaN(number) || number === '') { return '' }
