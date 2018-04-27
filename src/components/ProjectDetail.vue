@@ -24,36 +24,23 @@
             <div class="end-circle-center"></div>
           </div>
         </div>
-        <p class="remain-amount">剩余可投<span>{{project.amount | number}}</span>元</p>
-        <p class="actual-amount">{{newbie ? '上限' : '投资'}}<span>10,000.00</span>元，预计收益<span>{{expectEarning}}</span><span v-show="newbie || (welfareRate > 0 && project.status === 7)">+{{newbie ? (10000 * 6 * project.projectDays / 36500).toFixed(2) : project.status === 7 && welfareRate > 0 && !newbie ? (10000 * welfareRate * project.projectDays / 36500).toFixed(2) : ''}}</span>元</p>
+        <p class="remain-amount">项目总额：{{project.total | number}}元，剩余可投<span>{{project.amount | number}}</span>元</p>
+        <!-- <p class="actual-amount">{{newbie ? '上限' : '投资'}}<span>10,000.00</span>元，预计收益<span>{{expectEarning}}</span><span v-show="newbie || (welfareRate > 0 && project.status === 7)">+{{newbie ? (10000 * 6 * project.projectDays / 36500).toFixed(2) : project.status === 7 && welfareRate > 0 && !newbie ? (10000 * welfareRate * project.projectDays / 36500).toFixed(2) : ''}}</span>元</p> -->
       </div>
       <div class="project-detail-bottom bg-white">
         <div class="detail-item">
-          <span>计息日期：</span>投资成功，当日计息
+          <span>起息日期：</span>投资成功，当日计息
         </div>
-        <div class="detail-item">
+        <div class="detail-item position-re">
           <span>还款方式：</span>按月付息，到期还本
+          <img src="../images/project/tip.png" alt="还款方式" width="4%" @click="showTip = !showTip" class="showTip">
+          <span class="pro_des_dot_tip" v-if="showTip">还款计算方式说明：假设借款金额为X，年利率为Y，借款期限为Z天，每月实际计息天数为N天，则：每月应还款利息计算公示：X*Y*N/365；应还总利息计算公式为：X*Y*Z/365；应还本金X。</span>
         </div>
         <div class="detail-item">
           <span>到期日期：</span>{{project.status === 10 ? '' : '预计'}}{{project.repaymentDate | date}}
         </div>
-        <div class="detail-item" v-if="project.status === 7">
-          <span>项目状态：</span>融资中
-        </div>
-        <div class="detail-item" v-if="project.status === 6">
-          <span>项目状态：</span>预发布
-        </div>
-        <div class="detail-item" v-if="project.status === 9">
-          <span>项目状态：</span>还款中
-        </div>
-        <div class="detail-item" v-if="project.status === 8">
-          <span>项目状态：</span>融资成功
-        </div>
-        <div class="detail-item" v-if="project.status === 10">
-          <span>项目状态：</span>还款完成
-        </div>
-        <div class="detail-item" v-if="project.status === 11">
-          <span>项目状态：</span>预约中
+        <div class="detail-item">
+          <span>出借手续费：</span>免费
         </div>
       </div>
       <div class="drop-load">
@@ -85,7 +72,7 @@
             <div class="project-brief">
               <div class="title">
                 <span></span>
-                <p>资金用途</p>
+                <p>借款用途</p>
               </div>
               <div class="content" v-html="projectInfo.financingPurpose"></div>
             </div>
@@ -97,12 +84,21 @@
               <div class="content" v-html="projectInfo.repaymentSource"></div>
             </div>
             <div class="project-brief">
-              <div class="title">
+              <div class="title width-2">
                 <span></span>
-                <p>还款保障</p>
+                <p>还款保障措施</p>
               </div>
               <div class="content">
                 <p v-html="projectInfo.riskManagementInfo"><span></span></p>   
+              </div>
+            </div>
+            <div class="project-brief" v-show="projectInfo.riskAssessment != null">
+              <div class="title">
+                <span></span>
+                <p>风险评估</p>
+              </div>
+              <div class="content">
+                <p v-html="projectInfo.riskAssessment"><span></span></p>
               </div>
             </div>
             <div class="project-brief" v-show="projectInfo.riskControl && projectInfo.riskControl.length>0">
@@ -241,7 +237,8 @@
         newbie: false,
         memberLevel: 1,
         anmClick: false,
-        isExist: false
+        isExist: false,
+        showTip: false
       }
     },
     watch: {
@@ -511,6 +508,7 @@
         bridgeUtil.webConnectNative('HCNative_ImgSrc', null, {'imgSrc': that.baseFileUrl + tar[i].uploadFile.url}, function (response) {}, function (data) {})
       },
       scrollDetail: function (page) {
+        var that = this
         var Height = window.innerHeight
         window.offsetY = 0
         window.touchStartY = 0
@@ -526,6 +524,7 @@
         var startPos = {}
         var endPos = {}
         function startTouchScroll (event) {
+          that.showTip ? that.showTip = false : null
           // event.preventDefault()
           var touch = event.targetTouches[0]
           startPos = {x: touch.pageX, y: touch.pageY}
@@ -654,6 +653,51 @@
   }
 </script>
 <style scoped>
+  .showTip {
+    position: relative;
+    top: .04rem;
+  }
+  .pro_des_dot_tip {
+    display: block;
+    position: absolute;
+    left: 0.34rem;
+    top: .7rem;
+    border: 1px solid #ddd;
+    width: 68%;
+    text-align: justify;
+    line-height: 1.5;
+    font-size: 12px;
+    z-index: 9999999;
+    padding: 10px;
+    background-color: #fff;
+    pointer-events: none;
+  }
+  .pro_des_dot_tip:before{
+    pointer-events: none;
+    content:"";
+    display:block;
+    border-width:15px;
+    position:absolute;
+    top:-30px;
+    right:42px;
+    border-style:solid dashed dashed;
+    border-color:transparent transparent #ddd;
+    font-size:0;
+    line-height:0;
+    }
+  .pro_des_dot_tip:after{
+    pointer-events: none;
+    content:"";
+    display:block;
+    border-width:15px;
+    position:absolute;
+    top: -28px;
+    right: 42px;
+    border-style:solid dashed dashed;
+    border-color:transparent transparent #fff;
+    font-size:0;
+    line-height:0;
+  }
   .upRate {
     background: #ff6000;
     position: absolute;
@@ -759,6 +803,9 @@
     height: .36rem;
     width: 1.5rem;
     border-bottom: 1px solid #ff611d;
+  }
+  .project-details .project-brief .title.width-2 {
+    width: 2rem;
   }
   .project-details .project-brief .title span {
     display: inline-block;
@@ -985,7 +1032,7 @@
     color: #666;
   }
   .remain-amount {
-    margin-bottom: .28rem;
+    /* margin-bottom: .28rem; */
   }
   .remain-amount span, .actual-amount span {
     color: #ff611d;

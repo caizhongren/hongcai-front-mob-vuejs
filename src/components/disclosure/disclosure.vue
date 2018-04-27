@@ -3,7 +3,7 @@
     <div class="class1">
       <img src="../../images/disclosure/comm-header.png" class="display-bl margin-auto" width="100%"> 
       <img src="../../images/disclosure/discolsure.png" width="35%" class="discolsure-title">
-      <div class="tab">
+      <div class="tab" id="discolsure-tab1">
         <ul class="discolsure-tab1 columns discolsureorange">
           <li class="column text-center ft-1p4" :class="{active: activeTab == index}" v-for="(tab, index) in tabs" @click="switchTab(index)">{{tab.tab}}</li>
         </ul>
@@ -20,23 +20,27 @@
       return {
         tabs: [
           {
-            tab: '备案信息',
-            name: 'RecordInformation'
+            tab: '承诺函',
+            name: 'CommitmentLetter'
           },
           {
-            tab: '风险管理',
-            name: 'RiskManagement'
+            tab: '备案信息',
+            name: 'RecordInformation'
           },
           {
             tab: '组织信息',
             name: 'Organization'
           },
           {
+            tab: '审核信息',
+            name: 'AuditInformation'
+          },
+          {
             tab: '经营信息',
             name: 'BusinessInformation'
           },
           {
-            tab: '政策法规',
+            tab: '其他信息',
             name: 'PoliciesRegulations'
           }
         ],
@@ -50,15 +54,15 @@
           this.$router.replace({name: this.tabs[index].name})
           window.scrollTo(0, 0)
         }
-        if (this.activeTab === 3) {
-          $('.columns').addClass('transition-left')
-        }
-        if (this.activeTab === 1) {
-          $('.columns').removeClass('transition-left')
-        }
-        if (this.activeTab === 2) {
-          $('.columns').hasClass('transition-left') ? $('.columns').removeClass('transition-left') : $('.columns').addClass('transition-left')
-        }
+        // if (this.activeTab === 3) {
+        //   $('.columns').addClass('transition-left')
+        // }
+        // if (this.activeTab === 1) {
+        //   $('.columns').removeClass('transition-left')
+        // }
+        // if (this.activeTab === 2) {
+        //   $('.columns').hasClass('transition-left') ? $('.columns').removeClass('transition-left') : $('.columns').addClass('transition-left')
+        // }
       }
     },
     mounted () {
@@ -70,7 +74,8 @@
           $('.tab').removeClass('fixed')
         }
       }
-      location.pathname === '/disclosure/policies-regulations' ? (this.activeTab = 4, $('.columns').addClass('transition-left')) : null
+      location.pathname === '/disclosure/policies-regulations' ? (this.activeTab = 5, document.getElementById('discolsure-tab1').scrollLeft = 200) : null
+      location.pathname === '/disclosure/audit-information' ? (this.activeTab = 3, document.getElementById('discolsure-tab1').scrollLeft = 200) : null
     }
   }
 </script>
@@ -99,11 +104,12 @@
     box-shadow: 0.8px 1.3px 3.5px 0 rgba(80, 77, 75, 0.2);
     width: 90%;
     height: 1rem;
+    overflow-x: scroll;
   }
   .discolsure .discolsure-tab1 {
-    width: 125%;
+    width: 164%;
     height: 1rem;
-    /* overflow-x: auto; */
+    overflow-x: scroll;
     overflow: hidden;
     -webkit-overflow-scrolling: touch;
     transform: translateX(0);
@@ -114,13 +120,13 @@
     transition:all .4s ease-in-out;
   }
   .discolsure .discolsure-tab1.transition-left {
-    transform: translateX(-20%);
+    transform: translateX(-40%);
   }
   .discolsure .discolsure-tab1.transition-right {
     transform: translateX(0%);
   }
   .discolsure .discolsure-tab1 li {
-    width: 16%;
+    width: 12.4%;
     margin-left: 2%;
     margin-right: 2%;
     font-size: .28rem;
