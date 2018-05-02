@@ -76,67 +76,80 @@
               <p>18888元特权本金 <br> (合伙人专属)</p>
             </li>
             <li class="fr"><p>966元新手现金券</p></li>
-          </ul>
-        </div>
+					</ul>
+				</div>
 			</div>
 			<!-- 活动规则 -->
 			<div class="invite-rule" @click="showRuleBox"></div>
     </div>
     <div class="fixBtn" v-if="token">立即邀请</div>
 		<!-- 活动规则 -->
-		<div class="invite-Rulebox mask-common" v-if="showRules">
-				<div class="ruleBox width-100 height-100 position-re bg-grey0p5" >
-						<div class="box">
-								<div class="rec-act-rule bg-white border-ra-0p5">
-								<div class="rule1">
-										<p class="rule-title">1.如何获得邀请资格？</p>
-										<p class="rule-content">本活动结束之前注册的宏财网用户均可获得邀请好友的资格。</p>
-								</div>
-						</div>
-						<div class="rec-act-rule bg-white border-ra-0p5">
-								<div class="rule2">
-										<p class="rule-title">2.老用户成功邀请好友投资后，能获得什么福利？</p>
-										<p class="rule-content"><i class="fa fa-circle" aria-hidden="true"></i><span>活动有效期间，老用户A每邀请一位新用户B注册成为宏财网用户，且B自注册之日起30天内完成首次投资（含宏财精选、宏财尊贵两种类别），A即可获得B该笔及未来60天内每笔投资额度50%的特权本金，特权本金按8%年均回报率计息，收益进入A的账户余额。</span><br/>
-										<i class="fa fa-circle" aria-hidden="true"></i><span>老用户通过邀请单个新用户获得的平台奖励特权本金上限为10万元。</span><br/>
-										<i class="fa fa-circle" aria-hidden="true"></i><span>老用户获得的特权本金随着其所邀请新用户的在投本金的增减而相应增减。</span><br/>
-										<i class="fa fa-circle" aria-hidden="true"></i><span>老用户邀请新用户的数量无上限。</span><br>
-												<i class="fa fa-circle" aria-hidden="true"></i><span>特权本金计息时长截至B首投之后的第60天，第61天起所有特权本金失效，不再计息。</span>
+		<div class="invite-Rulebox mask-common" v-show="showRules">
+			<div class="ruleBox width-100 height-100 position-re bg-grey0p5" >
+					<div class="ruleTitle">
+							<img src="../../images/invite/activity-rule.png" alt="" width="50%">
+					</div>
+					<div class="box">
+							<div class="slide position-re slide-banner" id="slideBanner">
+								<ul class="">
+									<li>
+										<p>
+											<span>【老用户邀请奖励】</span>
+											1.活动期间，邀请注册好友人数每满3人，老用户即可获得：<br>
+											精选项目1.2%无条件加息券 x 1张<br>
+											尊贵项目2.4%无条件加息券 x 1张<br>
+											(优惠券奖励可叠加获得，有效期自发放日起30天内)<br>
+											2.如邀请的新用户于注册日起30天内进行投资，老用户可获得其首投日起未来90天内，该好友每笔投资折合年化投资金额x2%的佣金返现，可从单个好友处获得佣金上限为1000元，可邀请好友人数无上限。
 										</p>
-								</div>
-						</div>
-						<div class="rec-act-rule bg-white border-ra-0p5">
-								<div class="rule2">
-										<p class="rule-title">3.新用户通过老用户邀请注册后，可以得到什么奖励？</p>
-										<p class="rule-content"><i class="fa fa-circle" aria-hidden="true"></i><span>新用户通过邀请注册后，立享“合伙人特权大礼包”：</span></p>
-										<p class="list-page">
-												<span>&nbsp;1）</span>新手专享项目：预期年化收益率8%+6%，55天期限 <br/>
-												&nbsp;2）精选加息券：0.3%、0.5%、0.8%，各1张 <br/>
-												&nbsp;3）尊贵加息券：0.8%、1.2%、1.6%，各1张 <br/>
-												&nbsp;4）精选现金券：总计184元现金投资券 <br/>
-												&nbsp;5）尊贵现金券：总计782元现金投资券
+									</li>
+									<li>
+										<p>
+											<span>【老用户邀请奖励】</span>
+											1.活动期间，邀请注册好友人数每满3人，老用户即可获得：<br>
+											精选项目1.2%无条件加息券 x 1张<br>
+											尊贵项目2.4%无条件加息券 x 1张<br>
+											(优惠券奖励可叠加获得，有效期自发放日起30天内)<br>
+											2.如邀请的新用户于注册日起30天内进行投资，老用户可获得其首投日起未来90天内，该好友每笔投资折合年化投资金额x2%的佣金返现，可从单个好友处获得佣金上限为1000元，可邀请好友人数无上限。
 										</p>
-										<p class="rule-content"><i class="fa fa-circle" aria-hidden="true"></i><span>新用户须在注册之日起30天内进行首次投资宏财精选或宏财尊贵产品，老用户才可获得相应特权本金。</span></p>
-								</div>
-						</div>
-						<div class="rec-act-rule bg-white border-ra-0p5">
-								<div class="rule1">
-										<p class="rule-title">4.什么是特权本金？</p>
-										<p class="rule-content">特权本金是平台奖励给用户的虚拟本金，不可提现或用于投资；其产生的收益按8%年均回报率每日计息、次日显示昨日收益；特权本金产生的收益进入用户账户余额，可用于投资或提现。</p>
-								</div>
-						</div>
-						<div class="rec-act-rule bg-white border-ra-0p5">
-								<div class="rule1">
-										<p class="rule-title">5.新用户可否重复领奖？</p>
-										<p class="rule-content">同一手机号、身份证号的新用户，只享受一次合伙人礼包，不可重复获得。</p>
-								</div>
-						</div>
-						<div class="tips">
-								<p>本活动解释权归宏财网所有</p>
-								<p>活动咨询请致电客服400-990-7626（工作日：9:00-18:00）</p>
-						</div>
-						</div>
-						<div class="close-rule" @click="showRuleBox"></div>
-				</div>
+									</li>
+									<li>
+										<p>
+											<span>【老用户邀请奖励】</span>
+											1.活动期间，邀请注册好友人数每满3人，老用户即可获得：<br>
+											精选项目1.2%无条件加息券 x 1张<br>
+											尊贵项目2.4%无条件加息券 x 1张<br>
+											(优惠券奖励可叠加获得，有效期自发放日起30天内)<br>
+											2.如邀请的新用户于注册日起30天内进行投资，老用户可获得其首投日起未来90天内，该好友每笔投资折合年化投资金额x2%的佣金返现，可从单个好友处获得佣金上限为1000元，可邀请好友人数无上限。
+										</p>
+									</li>
+									<li>
+										<p>
+											<span>【老用户邀请奖励】</span>
+											1.活动期间，邀请注册好友人数每满3人，老用户即可获得：<br>
+											精选项目1.2%无条件加息券 x 1张<br>
+											尊贵项目2.4%无条件加息券 x 1张<br>
+											(优惠券奖励可叠加获得，有效期自发放日起30天内)<br>
+											2.如邀请的新用户于注册日起30天内进行投资，老用户可获得其首投日起未来90天内，该好友每笔投资折合年化投资金额x2%的佣金返现，可从单个好友处获得佣金上限为1000元，可邀请好友人数无上限。
+										</p>
+									</li>
+									<li>
+										<p>
+											<span>【老用户邀请奖励】</span>
+											1.活动期间，邀请注册好友人数每满3人，老用户即可获得：<br>
+											精选项目1.2%无条件加息券 x 1张<br>
+											尊贵项目2.4%无条件加息券 x 1张<br>
+											(优惠券奖励可叠加获得，有效期自发放日起30天内)<br>
+											2.如邀请的新用户于注册日起30天内进行投资，老用户可获得其首投日起未来90天内，该好友每笔投资折合年化投资金额x2%的佣金返现，可从单个好友处获得佣金上限为1000元，可邀请好友人数无上限。
+										</p>
+									</li>
+								</ul>
+							</div>
+					</div>
+			</div>
+			<div class="dot">
+					<span @click="toggle(item - 1)" v-for="item in number">{{item}}</span>
+			</div>
+			<div class="close-rule" @click="showRuleBox"></div>
 		</div>
 	</div>
 </template>
@@ -144,18 +157,21 @@
 <script>
 import $ from 'zepto'
 import {Utils, InviteShareUtils, bridgeUtil, ModalHelper, ScrollHalfPage} from '../../service/Utils'
+import {swiper} from '../../service/swipeSlide'
 export default {
   name: 'Invite',
   data () {
     return {
-      showRules: false,
+      showRules: true,
       isLogged: false,
       isInvitedFriends: true,
       isActivityEnd: false,
       voucher: '',
       shareItem: {},
       nativeNeedDatas: {},
-      inviteNum: 2
+      inviteNum: 2,
+      slideTab: {},
+      number: [1, 2, 3, 4, 5]
     }
   },
   created: function () {
@@ -180,8 +196,25 @@ export default {
   },
   mounted () {
     ScrollHalfPage($('.fixBtn'))
+    this.showRules = false
+    swiper.init({
+      autoSwipe: false,
+      axisX: true,
+      continuousScroll: true,
+      speed: 1000,
+      transitionType: 'cubic-bezier(0.22, 0.69, 0.72, 0.88)',
+      firstCallback: function (i, sum) {
+        $('.dot').children().first().addClass('cur')
+      },
+      callback: function (i, sum) {
+        $('.dot').children().eq(i).addClass('cur').siblings().removeClass('cur')
+      }
+    })
   },
   methods: {
+    toggle (index) {
+      swiper.goTo(index)
+    },
     showRuleBox: function () {
     //   var $invite = document.querySelector('#invite')
     //   ruleBox.showRuleBox($invite, this, this.showRules)
@@ -264,15 +297,12 @@ export default {
     padding-bottom: 1.7rem !important;
   }
 	.imgs {
-			margin-bottom: 1rem;
+		margin-bottom: 1rem;
 	}
 	.imgs img {
-			width: 100%;
-			vertical-align: top;
-			display: inline-block;
-	}
-	.contents {
-
+		width: 100%;
+		vertical-align: top;
+		display: inline-block;
 	}
 	.contents .box-top {
 		width: 70%;
@@ -558,79 +588,165 @@ export default {
 			top: 2rem;
 			height: 6.1rem;
 	}
-	.rec-act-rule {
-			border-radius: 0.1rem;
-			padding: .1rem;
-			background-color: #fdf6d9;
-			margin: 0 0.3rem;
-			margin-bottom: .2rem;
+	.invite-rule {
+			background: url('../../images/invite/invite-rule.png') no-repeat center center;
+			background-size: contain;
+			width: 1rem;
+			height: 1rem;
+			position: fixed;
+			top: 3.5rem;
+			right: 0rem;
 	}
-	.rec-act-rule .rule1, .rec-act-rule .rule2 {
-			background-image: linear-gradient(to bottom, #e6c590 0%, #c79653 100%);
-			border-radius: .1rem;
-			padding: .1rem 0;
-			text-align: left;
-			overflow: hidden;
-	}
-	.rule-title {
-			font-size: 0.22rem;
-			color: #f83b15;
-			padding: .1rem 0 0rem .1rem;
-	}
-	.rule-content {
-		font-size: .2rem;
-		color: #7c4618;
-		line-height: .35rem;
-		text-align: justify;
-		padding: 0 .3rem;
-		margin-top: .1rem;
-		overflow: hidden;
-	}
-	.rule-content i {
-			display: block;
-			width: .12rem;
-			height: .13rem;
-			background: #f83b15;
-			border-radius: 50%;
-			margin-right: .04rem;
-			float: left;
-			margin-top: .08rem;
-	}
-	.rule-content span {
-			float: left;
-			width: 96%;
-	}
-	.list-page {
-			font-size: .2rem;
-			color: #7c4618;
-			line-height: .35rem;
-			text-align: justify;
+	.invite-Rulebox {
 			padding: 0 .3rem;
-			margin-top: .1rem;
-			padding-left: 0.4rem;
+			background: rgba(0,0,0,.5);
+	}
+	.ruleBox {
+			background: url('../../images/invite/invite-rule-bg.png') no-repeat center bottom;
+			background-size: 100%;
+			height: 8.6rem;
 			overflow: hidden;
+			position: relative;
+			z-index: 10;
 	}
-	.list-page span {
-			float: left;
-			width: 9%;
-			height: .5rem;
-	}
-	.tips {
-			/*position: fixed;*/
-			bottom: 2.62rem;
-			left: 0.53rem;
-	}
-	.tips p {
-			margin-bottom: 0;
-			text-align: center;
-			font-size: 0.2rem;
-			color: #e4a150;
+	.box {
+			position: relative;
+			overflow: hidden;
+			top: 2.4rem;
+			height: 6.1rem;
 	}
 	.close-rule {
-			width: 10%;
-			height: 5.6%;
+			width: .8rem;
+			height: .8rem;
 			position: absolute;
-			bottom: 11.3%;
-			left: 45%;
+			bottom: 9%;
+			left: 44%;
+			background: url(../../images/invite/close-rule.png) no-repeat;
+			background-size: cover;
 	}
+	/*活动规则*/
+	::-webkit-scrollbar {display:none}
+  .about {
+    background-color: #f9f4f3;
+  }
+  .wrapper {
+    margin: 0.35rem auto;
+    height: 5.9rem;
+    box-shadow: 0 0 2px 0 rgba(255, 77, 0, 0.69);
+    border-radius: 12.5px;
+    width: 90%;
+    overflow-x: hidden;
+    -webkit-transform: rotate(0deg);
+  }
+  .wrapper div {
+    overflow-y: hidden;
+    overflow-x: auto;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+  .wrapper img {
+    border-radius: 12.5px;
+  }
+  .bd{
+    z-index:0;
+  }
+  .bd li a img {
+    vertical-align:top;
+    width:100%;
+  }
+  .slide-banner {
+    margin: .35rem auto 0;
+    height: 4rem;
+    border-radius: 12.5px;
+    width: 90%;
+    overflow: hidden;
+    -webkit-transform:rotate(0deg)
+  }
+  .slide{
+    height: 100%;
+    position: relative;
+    margin: 0 auto;
+    margin-top: -.4rem;
+    text-align: left;
+  }
+  .slide:after{
+    content: '';
+    display: block;
+    width: 100%;
+    padding-top: 50%;
+  }
+  .slide ul{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .slide li{
+    overflow: hidden;
+    list-style: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+  /* 解决js阻塞页面显示首屏 */
+  .slide li:first-child{
+    z-index: 1;
+  }
+  .slide li p{
+    padding-left: .4rem;
+    padding-right: .4rem;
+    color: #fefefe;
+    font-size: .24rem;
+    line-height: 1.8;
+  }
+  .slide li p span{
+    font-size: .26rem;
+    display: block;
+  }
+  .dot{
+    right: 0;
+    bottom: 2.1rem;
+    z-index: 0;
+    width: 100%;
+    font-size: 0;
+    position: absolute;
+    padding: 0 .3rem;
+  }
+  .dot span{
+    display: inline-block;
+    width: 19.5%;
+    height: 1rem;
+    background-color: #160d6d;
+    border-left: 1px solid #4362d7;
+    border-bottom: 1px solid #4362d7;
+    color: #6787ff;
+    font-size: .4rem;
+    line-height: 1.2rem;
+    font-family: CTCuYuanSF;
+    text-align: center;
+    font-weight: 500;
+  }
+  .dot span:last-child{
+    border-right: 1px solid #4362d7;
+  }
+  .dot .cur{
+    background-color: #4464e0;
+    color: #ffffff;
+  }
+  .ruleTitle img{
+    position: fixed;
+    top: 0.8rem;
+    left: 2.04rem;
+  }
+  @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+    .dot{
+        bottom: 4.5rem;
+    }
+    .close-rule{
+        bottom: 3.4rem;
+    }
+  }
 </style>

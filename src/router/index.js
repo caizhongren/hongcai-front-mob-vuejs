@@ -104,6 +104,7 @@ const LoanManagement = r => require.ensure([], () => r(require('../components/Lo
 const operatingReport2017 = r => require.ensure([], () => r(require('../components/disclosure/operatingReport2017.vue')), 'operatingReport2017')
 const operatingReport2016 = r => require.ensure([], () => r(require('../components/disclosure/operatingReport2016.vue')), 'operatingReport2016')
 const AuditPDF = r => require.ensure([], () => r(require('../components/disclosure/AuditPDF.vue')), 'AuditPDF')
+const ActivityInviteSharing = r => require.ensure([], () => r(require('../components/user-center/inviteSharing.vue')), 'ActivityInviteSharing')
 
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -254,6 +255,12 @@ const routes = [
     name: 'ActivityReward',
     component: ActivityReward,
     meta: {title: '我的奖励'}
+  },
+  {
+    path: '/activity/invite-sharing',
+    name: 'ActivityInviteSharing',
+    component: ActivityInviteSharing,
+    meta: {title: '宏财新手大礼包，抢！'}
   },
   {
     path: '/activity/lottery',
