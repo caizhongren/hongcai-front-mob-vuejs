@@ -105,6 +105,7 @@ const operatingReport2017 = r => require.ensure([], () => r(require('../componen
 const operatingReport2016 = r => require.ensure([], () => r(require('../components/disclosure/operatingReport2016.vue')), 'operatingReport2016')
 const AuditPDF = r => require.ensure([], () => r(require('../components/disclosure/AuditPDF.vue')), 'AuditPDF')
 const ActivityInviteSharing = r => require.ensure([], () => r(require('../components/user-center/inviteSharing.vue')), 'ActivityInviteSharing')
+const ActivitySucceed = r => require.ensure([], () => r(require('../components/user-center/activitySucceed.vue')), 'ActivitySucceed')
 
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -257,10 +258,16 @@ const routes = [
     meta: {title: '我的奖励'}
   },
   {
-    path: '/activity/invite-sharing',
+    path: '/activity/invite-sharing/:inviteCode',
     name: 'ActivityInviteSharing',
     component: ActivityInviteSharing,
     meta: {title: '宏财新手大礼包，抢！'}
+  },
+  {
+    path: '/activity/invite-succeed',
+    name: 'ActivitySucceed',
+    component: ActivitySucceed,
+    meta: {title: '邀请好友'}
   },
   {
     path: '/activity/lottery',
@@ -656,7 +663,7 @@ const routes = [
     component: WanduRegister
   },
   {
-    path: '/wandu-success',
+    path: '/wandu-success/inviteCode',
     name: 'WanduSuccess',
     component: WanduSuccess
   },
