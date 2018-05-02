@@ -257,7 +257,7 @@ const routes = [
     meta: {title: '我的奖励'}
   },
   {
-    path: '/activity/invite-sharing',
+    path: '/activity/invite-sharing/:inviteCode',
     name: 'ActivityInviteSharing',
     component: ActivityInviteSharing,
     meta: {title: '宏财新手大礼包，抢！'}
