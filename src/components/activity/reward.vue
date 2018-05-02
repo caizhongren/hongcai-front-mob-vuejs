@@ -1,59 +1,66 @@
 <template>
   <div class="invite-reward overflow-hid" v-auto-height>
-    <div class="head">
-      <p class="text-center">您已成功邀请<span class="ft-3 display-inbl margin-l-1 margin-r-1">{{inviteCount || 0}}</span>位好友了！</p>
-    </div>
-    <p class="friend-ship">好友共为您带来</p>
-    <div class="part2">
-      <div>
-        <p class="text-center">{{privilegedCapital.amount | number}}</p>
-        <p class="text-center">累计特权本金(元)</p>
-      </div>
-      <div>
-        <p class="text-center">{{privilegedCapital.profit | number }}</p>
-        <p class="text-center">累计收益(元)</p>
-      </div>
-    </div>
-    <div class="invite-list">
-      <div class="table-wrap-wrap">
-        <div class="table-wrap">
-          <table>
-            <thead class="text-center">
-              <tr>
-                <td class="bd-right bd-bottom">成功邀请好友</td>
-                <td class="bd-right bd-bottom">累计特权本金(元)</td>
-                <td class="bd-bottom">剩余获得天数(天)</td>
-              </tr>
-            </thead>
-            <tbody class="" v-for="detail in details" v-if="details.length > 0">
-              <tr v-if="detail.firstInvestTime > 0">
-                <td v-bind:class="{'color_grey' : getintervalDays(detail.firstInvestTime) <= 0}" class="bd-right bd-bottom">{{detail.mobile}}</td>
-                <td v-bind:class="{'color_grey' : getintervalDays(detail.firstInvestTime) <= 0}" class="bd-right bd-bottom">{{detail.amount | number}}</td>
-                <td v-bind:class="{'color_grey' : getintervalDays(detail.firstInvestTime) <= 0}" class="bd-bottom">{{getintervalDays(detail.firstInvestTime)}}</td>
-              </tr>
-              <tr v-if="detail.firstInvestTime <= 0">
-                <td v-bind:class="{'color_grey' : getintervalDays(detail.firstInvestTime) <= 0}" class="bd-right bd-bottom">{{detail.mobile}}<img src="../../images/invite/award-off.png" v-show="getintervalDays(detail.registTime) <= 0"></td>
-                <td class="bd-right bd-bottom color_grey" v-if="getintervalDays(detail.registTime) <= 0">——</td>
-                <td class="bd-right bd-bottom" v-if="getintervalDays(detail.registTime) > 0">暂无</td>
-                <td class="bd-bottom color_grey" v-if="getintervalDays(detail.registTime) <= 0">——</td>
-                <td class="bd-bottom" v-if="getintervalDays(detail.registTime) > 0">未投资</td>
-              </tr>
-            </tbody>
-            <tbody v-if="totalPage > page">
-              <tr>
-                <td></td>
-                <td><p class="padding-t-3 text-center ft-white" @click="loadMore();"><i class="fa fa-list-ul ft-orange"></i>&nbsp;查看更多</p></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
+    <ul class="recordTitle">
+      <li :class="{active: activeTab == 0}" @click="switchTab(0)">加成佣金</li>
+      <li :class="{active: activeTab == 1}" @click="switchTab(1)">受邀好友</li>
+    </ul>
+    <div class="recordBox">
+      <div class="recordList">
+        <!-- 受邀好友 -->
+        <div class="investRecord" v-if="activeTab === 1">
+          <div v-if="CreditRightVo.length > 0">
+            <div class="total">成功受邀注册人数：{{inviteAmount}}人</div>
+            <ul class="investTitle">
+              <li>注册时间</li>
+              <li>受邀好友</li>
+              <li>注册/投资</li>
+            </ul>
+            <div class="scrollBox">
+              <table>
+                <tbody>
+                  <tr v-for="item in CreditRightVo">
+                    <td>{{item.createTime | date('.')}}</td>
+                    <td>{{item.mobile}}</td>
+                    <td>{{item.status == 0 ? '已注册' : '已投资'}}</td>
+                  </tr>
+                  <tr v-if="investTotalPage > investPage" class="loadMore" @click="loadMore(investPage)"><td colspan="4">查看更多</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div v-if="CreditRightVo.length <= 0" class="noInvestRecord">
+            <p>暂无数据</p>
+          </div>
+        </div>
+        <!-- 加成佣金 -->
+        <div class="rewardRecord" v-if="activeTab === 0">
+          <div v-if="rewardList.length > 0">
+            <div class="total">累计获得佣金返现：{{totalMoney}}元</div>
+            <ul class="rewardTitle">
+              <li>日期</li>
+              <li>受邀好友</li>
+              <li>获得佣金</li>
+            </ul>
+            <div class="scrollBox">
+              <table>
+                <tbody>
+                  <tr v-for="item in rewardList">
+                    <td>{{item.createTime | date('.')}}</td>
+                    <td>{{item.mobile}}</td>
+                    <td>{{item.money}}元</td>
+                  </tr>
+                  <tr v-if="rewardTotalPage > rewardPage" class="loadMore" @click="loadMore(rewardPage)"><td colspan="3">查看更多</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div v-if="rewardList.length <= 0" class="noInvestRecord">
+            <p>暂无数据</p>
+          </div>
         </div>
       </div>
     </div>
-    <div class="con-invite-btn">
-      <img src="../../images/invite/award-btn-on.png" class="display-bl margin-auto margin-t-1"  @click="toshare" width="94%">
-      <p class="text-center" v-show="isiOS">该活动与设备生产商Apple Inc.公司无关 </p>
-    </div>
+    <div class="fixBtn" @click="toShare">继续邀请好友</div>
   </div>
 </template>
 
@@ -63,16 +70,99 @@
     name: 'ActivityReward',
     data () {
       return {
-        isiOS: false,
-        inviteCount: 0,
-        privilegedCapital: {
-          amount: 0,
-          profit: 0
-        },
-        details: [],
+        totalMoney: 0,
+        inviteAmount: 0,
+        activeTab: 0,
+        rewardList: [
+          {
+            createTime: 134444444,
+            mobile: '13844512341',
+            money: 1000
+          },
+          {
+            createTime: 134444444,
+            mobile: '13844512341',
+            money: 1000
+          },
+          {
+            createTime: 134444444,
+            mobile: '13844512341',
+            money: 1000
+          },
+          {
+            createTime: 134444444,
+            mobile: '13844512341',
+            money: 1000
+          },
+          {
+            createTime: 134444444,
+            mobile: '13844512341',
+            money: 1000
+          },
+          {
+            createTime: 134444444,
+            mobile: '13844512341',
+            money: 1000
+          },
+          {
+            createTime: 134444444,
+            mobile: '13844512341',
+            money: 1000
+          },
+          {
+            createTime: 134444444,
+            mobile: '13844512341',
+            money: 1000
+          }
+        ],
+        CreditRightVo: [
+          {
+            createTime: 134444444,
+            mobile: '13844512341',
+            status: 0
+          },
+          {
+            createTime: 134444444,
+            mobile: '13844512341',
+            status: 1
+          },
+          {
+            createTime: 134444444,
+            mobile: '13844512341',
+            status: 1
+          },
+          {
+            createTime: 134444444,
+            mobile: '13844512341',
+            status: 1
+          },
+          {
+            createTime: 134444444,
+            mobile: '13844512341',
+            status: 1
+          },
+          {
+            createTime: 134444444,
+            mobile: '13844512341',
+            status: 0
+          },
+          {
+            createTime: 134444444,
+            mobile: '13844512341',
+            status: 1
+          },
+          {
+            createTime: 134444444,
+            mobile: '13844512341',
+            status: 0
+          }
+        ],
         pageSize: 10,
-        page: 1,
-        totalPage: 1
+        investPage: 1,
+        investTotalPage: 2,
+        rewardPage: 1,
+        rewardTotalPage: 2,
+        isActivityEnd: false
       }
     },
     created: function () {
@@ -96,6 +186,43 @@
       }
     },
     methods: {
+      toShare: function () {
+        var shareItem = InviteShareUtils.share(this.voucher)
+        //   var linkUrl = location.href.split('#')[0]
+        console.log(shareItem)
+        //   console.log(linkUrl)
+        var nativeNeedDatas = {
+          'HC_shareType': 1,
+          'title': shareItem.title,
+          'subTitle': shareItem.subTitle,
+          'url': shareItem.linkUrl,
+          'imageUrl': shareItem.imageUrl
+        }
+        if (!this.token || this.token === '') {
+          this.toLogin()
+          return
+        }
+        if (this.isActivityEnd) {
+          alert('活动结束')
+          return
+        }
+        bridgeUtil.webConnectNative('HCNative_InviteShare', null, nativeNeedDatas, function (response) {
+        }, null)
+      },
+      switchTab: function (index) {
+        if (this.activeTab !== index) {
+          this.activeTab = index
+          if (index === 1) {
+            // this.CreditRightVo = []
+            // this.investPage = 1
+            // this.getInvestRecords(this.investPage, this.pageSize)
+          } else {
+            // this.rewardList = []
+            // this.rewardPage = 1
+            // this.getRewardRecords(this.rewardPage, this.pageSize)
+          }
+        }
+      },
       getintervalDays: function (firstInvestTime) {
         var currentDate = new Date()
         currentDate.setHours(0, 0, 0, 0)
@@ -153,166 +280,154 @@
             that.voucher = response.data.inviteCode
           }
         })
-      },
-      toshare: function () {
-        var shareItem = InviteShareUtils.share(this.voucher)
-        //   var linkUrl = location.href.split('#')[0]
-        console.log(shareItem)
-        //   console.log(linkUrl)
-        var nativeNeedDatas = {
-          'HC_shareType': 1,
-          'title': shareItem.title,
-          'subTitle': shareItem.subTitle,
-          'url': shareItem.linkUrl,
-          'imageUrl': shareItem.imageUrl
-        }
-        bridgeUtil.webConnectNative('HCNative_Share', null, nativeNeedDatas, function (response) {
-          alert('分享成功')
-        }, null)
       }
     }
   }
 </script>
 
 <style>
-.invite-reward {
-  background: url('../../images/invite/award-bg.jpg') repeat-y center 0;
-  background-size: cover;
-  background-color: #f8902f;
-  padding-bottom: 1.6rem;
-}
-.friend-ship {
+.fixBtn {
+  width: 100%;
+  height: .9rem;
+  line-height: .95rem;
   color: #fff;
-  font-size: .34rem;
-  font-weight: 800;
-  margin: .2rem 0;
-}
-.invite-reward .head {
-  padding-top: .6rem;
-}
-.invite-reward .head p {
-  font-style: italic;
-  -webkit-text-fill-color: #fff;/*文字的填充色*/
-  -webkit-text-stroke: .3px #c52609;
-  font-size: .26rem;
-  font-weight: 600;
-}
-.invite-reward .head p span {
-  -webkit-text-fill-color: #fcaf01;/*文字的填充色*/
-  -webkit-text-stroke: 1px #c52609;
-  font-size: 1rem;
-  font-style: italic;
-}
-.con-invite-btn {
+  font-size: .28rem;
+  background: #2923ab;
   position: fixed;
-  margin: 0rem auto;
-  width: 100%;
-  max-width: 640px;
-  z-index: 10;
   bottom: 0;
-  background: #fa8535;
+  left: 0;
+  right: 0;
 }
-.con-invite-btn p {
-  -webkit-transform: scale(0.8);
-  transform: scale(0.8);
-  font-size: .1rem;
-  color: #fff;
-}
-.con-invite-btn img {
-  margin: 0.1rem auto;
-}
-.invite-list {
-  padding: 0 0.3rem;
-  margin-bottom: .4rem;
-  font-size: .23rem;
-}
-.table-wrap-wrap {
-  border-radius: 5px; 
+.invite-reward {
+  background: #060547;
+  padding: 0.7rem .25rem .5rem;
   overflow: hidden;
-}
-.table-wrap {
-  position: relative;
-  border: 8px solid #cc4160;
-  border-image: linear-gradient(#ca445d , #c95941) 30 30;
-  background-clip: padding-box;
-  background-image: linear-gradient(#ea4555,#e85d36);
-  overflow-y: scroll;
-  overflow-x: hidden;
-  height: 4rem; 
-} 
-.table-wrap table {
+  position: fixed;
   width: 100%;
-  margin: .1rem 0;
 }
-.table-wrap table tbody:last-child tr:last-child td {
-  border-bottom: none !important;
-}
-.table-wrap table td {
-  padding: 10px 0;
-  text-align: center;
-  width: 33%;
-  color: #fff;
+ul.recordTitle {
+  overflow: hidden;
+  clear: both;
+  width: 100%;
+  font-size: .28rem;
   position: relative;
-  transform: scale(0.9);
+  height: 1rem;
 }
-.table-wrap table td img {
+ul.recordTitle li span {
+  font-size: .2rem;
+  display: block;
+  font-weight: normal;
+  margin-top: -.15rem;
+}
+ul.recordTitle li {
+  width: 28%;
+  height: .6rem;
+  line-height: .65rem;
+  background-color: #160d6d;
+  border: solid 1px #4464e0;
+  color: #fefefe;
   position: absolute;
-  width: 67%;
-  top: 0;
-  left: 34%;
+  bottom: 0;
 }
-.table-wrap table td.bd-right {
-  border-right: 1px solid #bf1619;
+ul.recordTitle li.active {
+  background-color: #4464e0;
+  height: .8rem;
+  line-height: .85rem;
 }
-.table-wrap table td.bd-bottom {
-  border-bottom: 1px solid #bf1619; 
+ul.recordTitle li:nth-child(1) {
+  left: 0;
+  border-top-left-radius: .2rem;
 }
-.table-wrap table td.color_grey {
-  color: #cdcbce;
+ul.recordTitle li:nth-child(2) {
+  left: 28.5%;
+  border-top-right-radius: .2rem;
 }
-.table-wrap::after{
-  position: absolute;
-  top: -4px; bottom: -4px;
-  left: -4px; right: -4px;
-  background: linear-gradient(#ea4555,#e85f35);
-  content: '';
-  z-index: -1;
-  border-radius: 10px;
-}
-.part2 {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 3%;  
-}
-.part2 div {
-  display: inline-block;
-  width: 48.5%;
-  text-align: center;
-  border-radius: .2rem;
-  margin-bottom: .3rem;
-  background-size: cover;
-  padding-bottom: .2rem;
-  font-weight: 500;
-}
-.part2 div p {
-  line-height: .2rem;
-  color: #fff;
-}
-.part2 div p:first-child {
-  margin: .2rem 0 .1rem;
+.recordBox .total {
   font-size: .3rem;
+  color: #fff3f3;
+  margin: .4rem auto .3rem;
 }
-.part2 div p:last-child {
+.recordList {
+  border-radius: .2rem;
+  border-top-left-radius: 0rem;
+  background-color: #160d6d;
+  border: solid 1px #4464e0;
+  margin-top: -1px;
+  height: 7.1rem;
+}
+.investRecord table, .rewardRecord table {
+  width: 100%;
+  margin: 0 auto;
   font-size: .24rem;
 }
-.part2 div:first-child {
-  background-color: #9d3bc4;
-  background: url('../../images/invite/award-bg2.png') no-repeat 0 0;
-  background-size: 100% 100%;
+.investRecord table tbody, .rewardRecord table tbody {
+  font-family: ArialMT;
+  color: #fff;
+  height: .8rem;
+  line-height: .8rem;
 }
-.part2 div:last-child {
-  background-color: #feae01;
-  background: url('../../images/invite/award-bg1.png') no-repeat 0 0;
+.investRecord table tbody tr:nth-child(even), .rewardRecord table tbody tr:nth-child(even) {
+  background-color: #232a9c;
+}
+.rewardRecord table tbody tr td {
+  width: 33.333%;
+}
+.rewardRecord table tbody tr td:nth-child(2) {
+  width: 35%;
+}
+.investRecord table tbody tr td {
+  width: 33.33%;
+}
+.loadMore {
+  text-align: center;
+  margin:  0 auto;
+}
+.noInvestRecord {
+  width: 48%;
+  height: 2.3rem;
+  background: url('../../images/invite/activityEnd.png') no-repeat center center;
   background-size: 100% 100%;
+  font-size: .25rem;
+  color: #4f0709;
+  margin: 0 auto;
+}
+.noInvestRecord p {
+  padding: .35rem .48rem;
+  text-align: right;
+  color: #060547;
+  font-size: .28rem;
+  margin-top: 2.5rem;
+}
+.scrollBox {
+  height: 5.2rem;
+  overflow: scroll;
+}
+.investTitle, .rewardTitle {
+  overflow: hidden;
+  clear: both;
+  background-color: #232a9c;
+  color: #fff;
+  height: .55rem;
+  line-height: .55rem;
+  width: 100%;
+}
+.rewardTitle li, .investTitle li {
+  float: left;
+  width: 33.333%;
+  font-size: .25rem;
+}
+.rewardTitle li:nth-child(2) {
+  width: 35%;
+}
+.rewardTitle li:nth-child(3) {
+  width: 31.3%;
+}
+@media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+  .recordList {
+    height: 10rem;
+  }
+  .scrollBox {
+    height: 8rem;
+  }
 }
 </style>

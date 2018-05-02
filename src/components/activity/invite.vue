@@ -82,7 +82,7 @@
 			<!-- 活动规则 -->
 			<div class="invite-rule" @click="showRuleBox"></div>
     </div>
-    <div class="fixBtn" v-if="token">立即邀请</div>
+    <div class="fixBtn" v-if="token" @click="toShare">立即邀请</div>
 		<!-- 活动规则 -->
 		<div class="invite-Rulebox mask-common" v-show="showRules">
 			<div class="ruleBox width-100 height-100 position-re bg-grey0p5" >
@@ -272,7 +272,6 @@ export default {
       })
     },
     toShare: function () {
-      // var that = this
       if (!this.token || this.token === '') {
         this.toLogin()
         return
@@ -563,38 +562,12 @@ export default {
     display: none;
   }
 	.invite-rule {
-			background: url('../../images/invite/rule-icon.png') no-repeat center center;
-			background-size: 100%;
-			width: 1.5rem;
-			height: 1rem;
-			position: fixed;
-			z-index: 9;
-			top: 2.8rem;
-			right: 0rem;
-	}
-	.invite-Rulebox {
-			padding: 0 .3rem;
-			background: rgba(0,0,0,.5);
-	}
-	.ruleBox {
-			background: url('../../images/invite/invite-rule-bg.png') no-repeat center center;
-			background-size: contain;
-			height: 10rem;
-			overflow: auto;
-	}
-	.box {
-			position: relative;
-			overflow: auto;
-			top: 2rem;
-			height: 6.1rem;
-	}
-	.invite-rule {
 			background: url('../../images/invite/invite-rule.png') no-repeat center center;
 			background-size: contain;
-			width: 1rem;
+			width: 1.4rem;
 			height: 1rem;
 			position: fixed;
-			top: 3.5rem;
+			top: 2.8rem;
 			right: 0rem;
 	}
 	.invite-Rulebox {
@@ -604,56 +577,25 @@ export default {
 	.ruleBox {
 			background: url('../../images/invite/invite-rule-bg.png') no-repeat center bottom;
 			background-size: 100%;
-			height: 8.6rem;
+			height: 7.8rem;
 			overflow: hidden;
 			position: relative;
 			z-index: 10;
 	}
 	.box {
-			position: relative;
 			overflow: hidden;
-			top: 2.4rem;
+			margin-top: -.4rem;
 			height: 6.1rem;
 	}
 	.close-rule {
 			width: .8rem;
 			height: .8rem;
-			position: absolute;
-			bottom: 9%;
-			left: 44%;
+			margin: 0.3rem auto;
 			background: url(../../images/invite/close-rule.png) no-repeat;
 			background-size: cover;
 	}
 	/*活动规则*/
 	::-webkit-scrollbar {display:none}
-  .about {
-    background-color: #f9f4f3;
-  }
-  .wrapper {
-    margin: 0.35rem auto;
-    height: 5.9rem;
-    box-shadow: 0 0 2px 0 rgba(255, 77, 0, 0.69);
-    border-radius: 12.5px;
-    width: 90%;
-    overflow-x: hidden;
-    -webkit-transform: rotate(0deg);
-  }
-  .wrapper div {
-    overflow-y: hidden;
-    overflow-x: auto;
-    height: 100%;
-    -webkit-overflow-scrolling: touch;
-  }
-  .wrapper img {
-    border-radius: 12.5px;
-  }
-  .bd{
-    z-index:0;
-  }
-  .bd li a img {
-    vertical-align:top;
-    width:100%;
-  }
   .slide-banner {
     margin: .35rem auto 0;
     height: 4rem;
@@ -707,13 +649,9 @@ export default {
     display: block;
   }
   .dot{
-    right: 0;
-    bottom: 2.1rem;
-    z-index: 0;
+    z-index: 1;
     width: 100%;
-    font-size: 0;
-    position: absolute;
-    padding: 0 .3rem;
+		margin-top: -.2rem;
   }
   .dot span{
     display: inline-block;
@@ -723,11 +661,11 @@ export default {
     border-left: 1px solid #4362d7;
     border-bottom: 1px solid #4362d7;
     color: #6787ff;
-    font-size: .4rem;
+    font-size: .65rem;
     line-height: 1.2rem;
     font-family: CTCuYuanSF;
     text-align: center;
-    font-weight: 500;
+    font-weight: bold;
   }
   .dot span:last-child{
     border-right: 1px solid #4362d7;
@@ -737,9 +675,8 @@ export default {
     color: #ffffff;
   }
   .ruleTitle img{
-    position: fixed;
-    top: 0.8rem;
-    left: 2.04rem;
+		margin: .5rem auto 0;
+    width: 54%;
   }
   @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
     .dot{
