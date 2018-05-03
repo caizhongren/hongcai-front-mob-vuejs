@@ -204,7 +204,7 @@ export default {
         alert('活动结束')
         return
       }
-      bridgeUtil.webConnectNative('HCNative_InviteShare', null, this.nativeNeedDatas, function (response) {
+      bridgeUtil.webConnectNative('HCNative_Share', null, this.nativeNeedDatas, function (response) {
       }, null)
     }
   }
