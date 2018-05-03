@@ -169,10 +169,12 @@ export default {
       nativeNeedDatas: {},
       inviteNum: 1,
       slideTab: {},
-      number: [1, 2, 3, 4, 5]
+      number: [1, 2, 3, 4, 5],
+      version: 310
     }
   },
   created: function () {
+    this.token ? this.getVersion() : ''
     this.token ? this.getInvitedFriends() : ''
     this.token ? this.getInviteNum() : ''
     this.token ? this.getInviteCode() : ''
@@ -188,6 +190,7 @@ export default {
         this.getInvitedFriends()
         this.getInviteCode()
         this.getInviteNum()
+        this.getVersion()
       }
     }
   },
@@ -209,6 +212,16 @@ export default {
     })
   },
   methods: {
+    getVersion () {
+      var that = this
+      that.$http({
+        method: 'get',
+        url: '/hongcai/rest/users/0/version?token=' + that.token
+      }).then(function (response) {
+        alert(response.data.replace(/\./g, ''))
+        that.version = response.data.replace(/\./g, '')
+      })
+    },
     toggle (index) {
       swiper.goTo(index)
     },
@@ -276,8 +289,8 @@ export default {
         alert('活动结束')
         return
       }
-      bridgeUtil.webConnectNative('HCNative_InviteShare', null, this.nativeNeedDatas, function (response) {
-      }, null)
+      alert(this.version)
+      this.version >= 310 ? bridgeUtil.webConnectNative('HCNative_InviteShare', null, this.nativeNeedDatas, function (response) {}, null) : bridgeUtil.webConnectNative('HCNative_Share', null, this.nativeNeedDatas, function (response) {}, null)
     }
   }
 }
