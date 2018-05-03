@@ -45,9 +45,9 @@
               <table>
                 <tbody>
                   <tr v-for="item in investList">
-                    <td>{{item.user.createTime | date('.')}}</td>
-                    <td>{{item.user.mobile}}</td>
-                    <td>{{item.userVoucher.investAmount <= 0 ? '已注册' : '已投资'}}</td>
+                    <td>{{item.createTime | date('.')}}</td>
+                    <td>{{item.mobile}}</td>
+                    <td>{{item.investAmount <= 0 ? '已注册' : '已投资'}}</td>
                   </tr>
                   <tr v-if="investTotalPage > investPage" class="loadMore" @click="loadMore(investPage)"><td colspan="4">查看更多</td></tr>
                 </tbody>
