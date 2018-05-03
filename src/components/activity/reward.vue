@@ -6,36 +6,10 @@
     </ul>
     <div class="recordBox">
       <div class="recordList">
-        <!-- 受邀好友 -->
-        <div class="investRecord" v-if="activeTab === 1">
-          <div v-if="CreditRightVo.length > 0">
-            <div class="total">成功受邀注册人数：{{inviteAmount}}人</div>
-            <ul class="investTitle">
-              <li>注册时间</li>
-              <li>受邀好友</li>
-              <li>注册/投资</li>
-            </ul>
-            <div class="scrollBox">
-              <table>
-                <tbody>
-                  <tr v-for="item in CreditRightVo">
-                    <td>{{item.createTime | date('.')}}</td>
-                    <td>{{item.mobile}}</td>
-                    <td>{{item.status == 0 ? '已注册' : '已投资'}}</td>
-                  </tr>
-                  <tr v-if="investTotalPage > investPage" class="loadMore" @click="loadMore(investPage)"><td colspan="4">查看更多</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div v-if="CreditRightVo.length <= 0" class="noInvestRecord">
-            <p>暂无数据</p>
-          </div>
-        </div>
         <!-- 加成佣金 -->
         <div class="rewardRecord" v-if="activeTab === 0">
-          <div v-if="rewardList.length > 0">
-            <div class="total">累计获得佣金返现：{{totalMoney}}元</div>
+          <div v-if="loading && rewardList.length > 0">
+            <div class="total">累计获得佣金返现：{{totalCommission}}元</div>
             <ul class="rewardTitle">
               <li>日期</li>
               <li>受邀好友</li>
@@ -45,16 +19,42 @@
               <table>
                 <tbody>
                   <tr v-for="item in rewardList">
-                    <td>{{item.createTime | date('.')}}</td>
+                    <td>{{item.commissionSendTime | date('.')}}</td>
                     <td>{{item.mobile}}</td>
-                    <td>{{item.money}}元</td>
+                    <td>{{item.commission}}元</td>
                   </tr>
                   <tr v-if="rewardTotalPage > rewardPage" class="loadMore" @click="loadMore(rewardPage)"><td colspan="3">查看更多</td></tr>
                 </tbody>
               </table>
             </div>
           </div>
-          <div v-if="rewardList.length <= 0" class="noInvestRecord">
+          <div v-if="loading && rewardList.length <= 0" class="noInvestRecord">
+            <p>暂无数据</p>
+          </div>
+        </div>
+        <!-- 受邀好友 -->
+        <div class="investRecord" v-if="activeTab === 1">
+          <div v-if="loading && investList.length > 0">
+            <div class="total">成功受邀注册人数：{{inviteNum}}人</div>
+            <ul class="investTitle">
+              <li>注册时间</li>
+              <li>受邀好友</li>
+              <li>注册/投资</li>
+            </ul>
+            <div class="scrollBox">
+              <table>
+                <tbody>
+                  <tr v-for="item in investList">
+                    <td>{{item.createTime | date('.')}}</td>
+                    <td>{{item.mobile}}</td>
+                    <td>{{item.investAmount <= 0 ? '已注册' : '已投资'}}</td>
+                  </tr>
+                  <tr v-if="investTotalPage > investPage" class="loadMore" @click="loadMore(investPage)"><td colspan="4">查看更多</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div v-if="loading && investList.length <= 0" class="noInvestRecord">
             <p>暂无数据</p>
           </div>
         </div>
@@ -65,112 +65,28 @@
 </template>
 
 <script>
-  import {Utils, InviteShareUtils, bridgeUtil} from '../../service/Utils'
+  import {InviteShareUtils, bridgeUtil} from '../../service/Utils'
   export default {
     name: 'ActivityReward',
     data () {
       return {
-        totalMoney: 0,
-        inviteAmount: 0,
+        totalCommission: 0,
+        inviteNum: 0,
         activeTab: 0,
-        rewardList: [
-          {
-            createTime: 134444444,
-            mobile: '13844512341',
-            money: 1000
-          },
-          {
-            createTime: 134444444,
-            mobile: '13844512341',
-            money: 1000
-          },
-          {
-            createTime: 134444444,
-            mobile: '13844512341',
-            money: 1000
-          },
-          {
-            createTime: 134444444,
-            mobile: '13844512341',
-            money: 1000
-          },
-          {
-            createTime: 134444444,
-            mobile: '13844512341',
-            money: 1000
-          },
-          {
-            createTime: 134444444,
-            mobile: '13844512341',
-            money: 1000
-          },
-          {
-            createTime: 134444444,
-            mobile: '13844512341',
-            money: 1000
-          },
-          {
-            createTime: 134444444,
-            mobile: '13844512341',
-            money: 1000
-          }
-        ],
-        CreditRightVo: [
-          {
-            createTime: 134444444,
-            mobile: '13844512341',
-            status: 0
-          },
-          {
-            createTime: 134444444,
-            mobile: '13844512341',
-            status: 1
-          },
-          {
-            createTime: 134444444,
-            mobile: '13844512341',
-            status: 1
-          },
-          {
-            createTime: 134444444,
-            mobile: '13844512341',
-            status: 1
-          },
-          {
-            createTime: 134444444,
-            mobile: '13844512341',
-            status: 1
-          },
-          {
-            createTime: 134444444,
-            mobile: '13844512341',
-            status: 0
-          },
-          {
-            createTime: 134444444,
-            mobile: '13844512341',
-            status: 1
-          },
-          {
-            createTime: 134444444,
-            mobile: '13844512341',
-            status: 0
-          }
-        ],
+        rewardList: [],
+        investList: [],
         pageSize: 10,
         investPage: 1,
         investTotalPage: 2,
         rewardPage: 1,
         rewardTotalPage: 2,
-        isActivityEnd: false
+        loading: false
       }
     },
     created: function () {
-      this.isiOS = Utils.isIos()
       if (this.token) {
-        this.InvitePrivilegedUsers()
-        this.invitePrivilegedRewardStat()
-        this.getInvitePrivilegedRewards(this.page, this.pageSize)
+        this.activeTab === 1 ? this.getInviteNum() : this.getTotalCommission()
+        this.activeTab === 1 ? this.getInvestRecords(this.investPage, this.pageSize) : this.getCommissionRecords(this.rewardPage, this.pageSize)
         this.getVoucher()
       }
     },
@@ -178,19 +94,19 @@
     watch: {
       token: function (val) {
         if (val && val !== '') {
-          this.InvitePrivilegedUsers()
-          this.invitePrivilegedRewardStat()
-          this.getInvitePrivilegedRewards(this.page, this.pageSize)
+          this.activeTab === 1 ? this.getInviteNum() : this.getTotalCommission()
+          this.activeTab === 1 ? this.getInvestRecords(this.investPage, this.pageSize) : this.getCommissionRecords(this.rewardPage, this.pageSize)
           this.getVoucher()
         }
       }
     },
     methods: {
       toShare: function () {
+        if (!this.token || this.token === '') {
+          this.toLogin()
+          return
+        }
         var shareItem = InviteShareUtils.share(this.voucher)
-        //   var linkUrl = location.href.split('#')[0]
-        console.log(shareItem)
-        //   console.log(linkUrl)
         var nativeNeedDatas = {
           'HC_shareType': 1,
           'title': shareItem.title,
@@ -198,77 +114,84 @@
           'url': shareItem.linkUrl,
           'imageUrl': shareItem.imageUrl
         }
-        if (!this.token || this.token === '') {
-          this.toLogin()
-          return
-        }
-        if (this.isActivityEnd) {
-          alert('活动结束')
-          return
-        }
-        bridgeUtil.webConnectNative('HCNative_InviteShare', null, nativeNeedDatas, function (response) {
+        bridgeUtil.webConnectNative('HCNative_Share', null, nativeNeedDatas, function (response) {
         }, null)
       },
       switchTab: function (index) {
         if (this.activeTab !== index) {
           this.activeTab = index
+          this.loading = false
           if (index === 1) {
-            // this.CreditRightVo = []
-            // this.investPage = 1
-            // this.getInvestRecords(this.investPage, this.pageSize)
+            this.investList = []
+            this.investPage = 1
+            this.getInviteNum()
+            this.getInvestRecords(this.investPage, this.pageSize)
           } else {
-            // this.rewardList = []
-            // this.rewardPage = 1
-            // this.getRewardRecords(this.rewardPage, this.pageSize)
+            this.rewardList = []
+            this.rewardPage = 1
+            this.getTotalCommission()
+            this.getCommissionRecords(this.rewardPage, this.pageSize)
           }
         }
       },
-      getintervalDays: function (firstInvestTime) {
-        var currentDate = new Date()
-        currentDate.setHours(0, 0, 0, 0)
-        var firstInvestDate = new Date(firstInvestTime)
-        firstInvestDate.setHours(0, 0, 0, 0)
-        var oneDay = 24 * 60 * 60 * 1000
-        var intervalDays = 60 - parseInt((currentDate.getTime() - firstInvestDate.getTime()) / oneDay)
-        return intervalDays > 0 ? intervalDays : 0
-      },
-      InvitePrivilegedUsers: function () {
-        this.$http({
+      getTotalCommission: function () {
+        var that = this
+        that.$http({
           method: 'get',
-          url: '/hongcai/rest/activitys/invitePrivilegedUsers?token=' + this.token
+          url: '/hongcai/rest/activitys/invite/totalCommission?token=' + that.token
         }).then((response) => {
-          if (response.data && response.data.ret !== -1) {
-            this.inviteCount = response.data
-          }
+          that.totalCommission = response.data
         })
       },
-      invitePrivilegedRewardStat: function () {
-        this.$http({
+      getInviteNum () {
+        var that = this
+        that.$http({
           method: 'get',
-          url: '/hongcai/rest/activitys/invitePrivilegedRewardStat?token=' + this.token
-        }).then((response) => {
-          if (response.data && response.data.ret !== -1) {
-            this.privilegedCapital = response.data
-          }
+          url: '/hongcai/rest/activitys/invite/friends/num?token=' + that.token
+        }).then(function (response) {
+          that.inviteNum = response.data
         })
       },
-      getInvitePrivilegedRewards: function (page, pageSize) {
+      getInvestRecords (page, pageSize) {
         this.$http({
           method: 'get',
-          url: '/hongcai/rest/activitys/invitePrivilegedRewards?page=' + page + '&pageSize=' + pageSize + '&token=' + this.token
+          url: '/hongcai/rest/activitys/invite/friends?token=' + this.token + '&page=' + page + '&pageSize=' + pageSize
         }).then((response) => {
           if (response.data && response.data.ret !== -1) {
-            var details = response.data.data
-            this.totalPage = response.data.totalPage
-            for (var i = 0; i < details.length; i++) {
-              this.details.push(details[i])
+            this.loading = true
+            var investList = response.data.data
+            this.investTotalPage = Math.ceil(response.data.total / this.pageSize)
+            console.log(this.investTotalPage)
+            for (var i = 0; i < investList.length; i++) {
+              this.investList.push(investList[i])
             }
           }
         })
       },
-      loadMore: function () {
-        this.page = this.page + 1
-        this.getInvitePrivilegedRewards(this.page, this.pageSize)
+      getCommissionRecords: function (page, pageSize) {
+        this.$http({
+          method: 'get',
+          url: '/hongcai/rest/activitys/invite/commissionRecords?token=' + this.token + '&page=' + page + '&pageSize=' + pageSize
+        }).then((response) => {
+          if (response.data && response.data.ret !== -1) {
+            this.loading = true
+            var rewardList = response.data.data
+            this.rewardTotalPage = Math.ceil(response.data.total / this.pageSize)
+            for (var i = 0; i < rewardList.length; i++) {
+              this.rewardList.push(rewardList[i])
+            }
+          }
+        })
+      },
+      loadMore (indexPage) {
+        var page = (indexPage + 1)
+        if (this.activeTab === 1) {
+          this.getInvestRecords(page, this.pageSize)
+          this.investPage = page
+        } else {
+          this.getCommissionRecords(page, this.pageSize)
+          this.rewardPage = page
+        }
       },
       getVoucher: function () {
         var that = this
@@ -302,7 +225,6 @@
   background: #060547;
   padding: 0.7rem .25rem .5rem;
   overflow: hidden;
-  position: fixed;
   width: 100%;
 }
 ul.recordTitle {
