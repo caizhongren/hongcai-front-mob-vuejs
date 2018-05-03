@@ -38,10 +38,10 @@
 					</ul>
 					<p class="tip1">*奖励可叠加获得哟</p>
 					<div class="progress">
-						<p class="pro_des_dot_tip">{{inviteNum}}位</p>
-						<div></div>
+						<p class="pro_des_dot_tip" v-bind:style="{left: ((inviteNum % 3) / 3 * 100 - 7) + '%'}">{{inviteNum % 3}}位</p>
+						<div v-bind:style="{width: ((inviteNum % 3) / 3 * 100) + '%'}"></div>
 					</div>
-					<p class="tip2">再邀请2位好友即可获得加息券～</p>
+					<p class="tip2">再邀请{{3 - inviteNum % 3}}位好友即可获得加息券～</p>
         </div>
         <div class="part2">
           <div class="title">
@@ -156,29 +156,26 @@
 
 <script>
 import $ from 'zepto'
-import {Utils, InviteShareUtils, bridgeUtil, ModalHelper, ScrollHalfPage} from '../../service/Utils'
+import {InviteShareUtils, bridgeUtil, ModalHelper, ScrollHalfPage} from '../../service/Utils'
 import {swiper} from '../../service/swipeSlide'
 export default {
   name: 'Invite',
   data () {
     return {
       showRules: true,
-      isLogged: false,
-      isInvitedFriends: true,
       isActivityEnd: false,
       voucher: '',
       shareItem: {},
       nativeNeedDatas: {},
-      inviteNum: 2,
+      inviteNum: 1,
       slideTab: {},
       number: [1, 2, 3, 4, 5]
     }
   },
   created: function () {
     this.token ? this.getInvitedFriends() : ''
+    this.token ? this.getInviteNum() : ''
     this.token ? this.getInviteCode() : ''
-    this.isiOS = Utils.isIos()
-    this.token ? this.isLogged = true : this.isLogged = false
     bridgeUtil.webConnectNative('HCNative_NeedInviteList', null, {
       // 1 需要显示 0 不需要显示
       isShow: 0
@@ -190,8 +187,8 @@ export default {
       if (value && value !== '') {
         this.getInvitedFriends()
         this.getInviteCode()
+        this.getInviteNum()
       }
-      this.token ? this.isLogged = true : this.isLogged = false
     }
   },
   mounted () {
@@ -216,8 +213,6 @@ export default {
       swiper.goTo(index)
     },
     showRuleBox: function () {
-    //   var $invite = document.querySelector('#invite')
-    //   ruleBox.showRuleBox($invite, this, this.showRules)
       this.showRules = !this.showRules
       this.showRules ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
     },
@@ -234,25 +229,26 @@ export default {
         url: '/hongcai/rest/users/0/isInvitedFriends?token=' + this.token
       }).then((response) => {
         if (response.data && response.data.ret !== -1) {
-          this.isInvitedFriends = response.data.flag
         } else if (response.data.code && response.data.code === -1041) {
           this.isActivityEnd = true
         } else if (response.data.code && response.data.code === -1000) {
-          this.isInvitedFriends = false
           this.isActivityEnd = false
         } else {
-          this.isInvitedFriends = true
           this.isActivityEnd = false
         }
       })
     },
     toLogin: function () {
-    //   var regesterHandCallback = function (data) {
-    //     data = Utils.isIos() === true ? data : JSON.parse(data)
-    //     window.location.replace(window.location.pathname)
-    //     this.getInvitedFriends()
-    //   }
       bridgeUtil.webConnectNative('HCNative_Login', '', {}, function (response) {}, null)
+    },
+    getInviteNum () {
+      var that = this
+      that.$http({
+        method: 'get',
+        url: '/hongcai/rest/activitys/invite/friends/num?token=' + that.token
+      }).then(function (response) {
+        that.inviteNum = response.data
+      })
     },
     getInviteCode: function () {
       var that = this
@@ -567,6 +563,7 @@ export default {
 			width: 1.4rem;
 			height: 1rem;
 			position: fixed;
+			z-index: 9;
 			top: 2.8rem;
 			right: 0rem;
 	}
