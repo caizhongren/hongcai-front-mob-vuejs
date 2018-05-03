@@ -24,23 +24,11 @@
           <span></span>
         </p>
         <ul class="text-left overflow-hid">
-          <li>
-            <p>152 **** 0000 2016.9.8 12:00</p>
-            <p>跟着土豪迈向人生巅峰！</p>
+          <li v-for="item in inviteMsg">
+            <p>{{item.mobile}} &nbsp;&nbsp; {{item.createTime | dateDotTime}}</p>
+            <p>{{item.encourage}}</p>
           </li>
-          <li>
-            <p>152 **** 0000 2016.9.8 12:00</p>
-            <p>跟着土豪迈向人生巅峰！</p>
-          </li>
-          <li>
-            <p>152 **** 0000 2016.9.8 12:00</p>
-            <p>跟着土豪迈向人生巅峰！</p>
-          </li>
-          <li>
-            <p>152 **** 0000 2016.9.8 12:00</p>
-            <p>跟着土豪迈向人生巅峰！</p>
-          </li>
-          <!-- <p v-if="">暂无数据</p> -->
+          <p v-show="!inviteMsg.length" class="text-center">暂无数据</p>
         </ul>
       </div>
       <div class="inviteContent rules">
@@ -80,7 +68,7 @@
         </div>
       </div>
     </div>
-    <div class="mask-common" v-show="actInfo.status">
+    <div class="mask-common" v-show="activityStatus !== 1">
       <div class="activityEnd">
         <img src="../../images/invite/invite-end.png" alt="" width="70%">
         <span>本活动已结束欢迎下载宏财网App参与更多活动</span>
@@ -260,6 +248,9 @@
     font-size: .22rem;
   }
   /*战略合作*/
+  .inviteContent.cooperation{
+    margin-bottom: 0 !important;
+  }
   .inviteContent .cooperations p:nth-child(odd) span{
     height: .8rem;
     border-radius: 5px;
@@ -361,12 +352,40 @@
           captcha: '',
           mobileCaptchaType: 1,
           mobileCaptchaBusiness: 0
+        },
+        inviteMsg: '',
+        activityType: 44,
+        activityStatus: 1,
+        arr: ['从此跟着土豪迈向人生巅峰！', '哇~好大的礼包呀，发财啦哈哈哈~~', '上宏财，财运来！欧了！', '谢谢老板，大礼包收到啦！', '自从领了礼包，腰不酸了腿也不疼了~', '礼包收到，确实是真爱！', '发礼包这事儿，我就服你。。。', '天哪~真的有10%加息券耶！'],
+        activityInfo: {
+          startYear: 0,
+          startMonth: 0,
+          startDate: 0,
+          endYear: 0,
+          endMonth: 0,
+          endDate: 0
         }
       }
     },
     props: ['showErrMsg'],
     created () {
+      $.fn.scrollToBottom = function (duration) {
+        var $el = this
+        var el = $el[0]
+        var startPosition = el.scrollTop
+        var delta = el.scrollHeight - $el.height() - startPosition
+        var startTime = Date.now()
+        function scroll () {
+          var fraction = Math.min(1, (Date.now() - startTime) / duration)
+          el.scrollTop = delta * fraction + startPosition
+          if (fraction < 1) {
+            setTimeout(scroll, 10)
+          }
+        }
+        scroll()
+      }
       this.getInvitedFriends()
+      this.getActivityStatus()
     },
     mounted () {
       this.refreshCode()
@@ -456,12 +475,18 @@
           that.showErrMsg('验证码发送失败')
         })
       },
+      encourageMixed () {
+        return this.arr[Math.floor(Math.random() * this.arr.length)]
+      },
       getInvitedFriends () {
         var that = this
-        that.$http.get(('/hongcai/rest/activitys/invitePrivilegedFriends/' + that.$route.params.inviteCode), {
+        that.$http.get('/hongcai/rest/activitys/invite/invitePrivilegedFriends?inviteCode=' + that.$route.params.inviteCode, {
         })
         .then(function (res) {
-          // var inviteMsg
+          that.inviteMsg = res.data
+          for (var i = 0; i < that.inviteMsg.length; i++) {
+            that.inviteMsg[i].encourage = that.encourageMixed()
+          }
         })
       },
       register (user) {
@@ -504,26 +529,29 @@
           }, 1000)
           console.log(err)
         })
+      },
+      getActivityStatus () { // 活动信息查询
+        var that = this
+        that.$http({ // 获取服务器时间
+          method: 'get',
+          url: '/hongcai/rest/systems/serverTime'
+        }).then((response) => {
+          that.$http('/hongcai/rest/activitys/' + that.activityType).then(function (res) {
+            that.activityStatus = res.data.status
+            // 获取活动开始、结束时间
+            var startTime = res.data.startTime
+            var endTime = res.data.endTime
+            that.activityInfo = {
+              startYear: new Date(startTime).getFullYear(),
+              startMonth: new Date(startTime).getMonth() + 1,
+              startDate: new Date(startTime).getDate(),
+              endYear: new Date(endTime).getFullYear(),
+              endMonth: new Date(endTime).getMonth() + 1,
+              endDate: new Date(endTime).getDate()
+            }
+          })
+        })
       }
     }
   }
-  // Restangular.one('activitys').one('invitePrivilegedFriends').get({
-  //     inviteCode : $stateParams.inviteCode
-  //   }).then(function(response){
-  //     if(response && response.ret !== -1) {
-  //       $scope.inviteList = response;
-  //       for(var i=0;i<$scope.inviteList.length;i++){
-  //          $scope.inviteList[i].encourage = encourageMixed();
-  //       }
-  //     }else if(response.code = -1041){
-  //       $scope.isActivityEnd = true; // 活动已结束
-  //       return;
-  //     }
-  //   })
-
-    // 激励语随机显示
-    // var arr = ['从此跟着土豪迈向人生巅峰！','哇~好大的礼包呀，发财啦哈哈哈~~','上宏财，财运来！欧了！','谢谢老板，大礼包收到啦！','自从领了礼包，腰不酸了腿也不疼了~','礼包收到，确实是真爱！','发礼包这事儿，我就服你。。。','天哪~真的有10%加息券耶！'];
-    // function encourageMixed() {
-    //   return arr[Math.floor(Math.random()*arr.length)];
-    // }
 </script>

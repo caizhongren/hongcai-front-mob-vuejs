@@ -663,7 +663,7 @@ const routes = [
     component: WanduRegister
   },
   {
-    path: '/wandu-success/inviteCode',
+    path: '/wandu-success',
     name: 'WanduSuccess',
     component: WanduSuccess
   },
