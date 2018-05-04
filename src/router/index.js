@@ -105,7 +105,7 @@ const operatingReport2017 = r => require.ensure([], () => r(require('../componen
 const operatingReport2016 = r => require.ensure([], () => r(require('../components/disclosure/operatingReport2016.vue')), 'operatingReport2016')
 const AuditPDF = r => require.ensure([], () => r(require('../components/disclosure/AuditPDF.vue')), 'AuditPDF')
 const ActivityInviteSharing = r => require.ensure([], () => r(require('../components/activity/inviteSharing.vue')), 'ActivityInviteSharing')
-const ActivitySucceed = r => require.ensure([], () => r(require('../components/user-center/activitySucceed.vue')), 'ActivitySucceed')
+const ActivitySucceed = r => require.ensure([], () => r(require('../components/activity/activitySucceed.vue')), 'ActivitySucceed')
 
 Vue.use(Router)
 Vue.use(VueCookie)
