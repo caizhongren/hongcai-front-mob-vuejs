@@ -1,6 +1,18 @@
 <template>
   <div class="inviteMsg">
     <div class="inviteShare">
+      <div class="imgs">
+        <img src="../../images/invite/invite-share_01.png" alt="">
+        <img src="../../images/invite/invite-share_02.png" alt="">
+        <img src="../../images/invite/invite-share_03.png" alt="">
+        <img src="../../images/invite/invite-share_04.png" alt="">
+        <img src="../../images/invite/invite-share_05.png" alt="">
+        <img src="../../images/invite/invite-share_06.png" alt="">
+        <img src="../../images/invite/invite-share_07.png" alt="">
+        <img src="../../images/invite/invite-share_08.png" alt="">
+        <img src="../../images/invite/invite-share_09.png" alt="">
+        <img src="../../images/invite/invite-share_10.png" alt="">
+      </div>
       <span><strong>18888元</strong>特权本金（邀请专属)</span>
       <span>966元现金券</span>
     </div>
@@ -80,12 +92,10 @@
   .inviteMsg{
     background: #060547 !important;
   }
-  .inviteShare{
+/*  .inviteShare{
     height: 10rem;
-    background: url(../../images/invite/activity-invite-share.png) no-repeat 0 0;
-    background-size: cover;
-  }
-  .inviteShare span:first-child{
+  }*/
+  .inviteShare span:nth-child(2) {
     display: block;
     position: absolute;
     right: .4rem;
@@ -94,7 +104,7 @@
     text-align: left;
     color: #666666;
   }
-  .inviteShare span:first-child strong{
+  .inviteShare span:nth-child(2) strong{
     font-weight: normal;
     color: #060547;
     font-size: .26rem;
@@ -107,9 +117,15 @@
     text-align: justify;
     color: #060547;
   }
+  .imgs img{
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+  }
   .inviteForm{
     background: #060547;
     margin-top: -.8rem;
+    position: relative;
   }
   .inviteForm p{
     margin: 0 auto;

@@ -1,6 +1,19 @@
 <template>
-  <div class="wandu-success" v-auto-height>
+  <div class="invite-success" v-auto-height>
     <div>
+      <div class="login-succeed">
+        <img src="../../images/invite/login-succeed_01.png" alt="">
+        <img src="../../images/invite/login-succeed_02.png" alt="">
+        <img src="../../images/invite/login-succeed_03.png" alt="">
+        <img src="../../images/invite/login-succeed_04.png" alt="">
+        <img src="../../images/invite/login-succeed_05.png" alt="">
+        <img src="../../images/invite/login-succeed_06.png" alt="">
+        <img src="../../images/invite/login-succeed_07.png" alt="">
+        <img src="../../images/invite/login-succeed_08.png" alt="">
+        <img src="../../images/invite/login-succeed_09.png" alt="">
+        <img src="../../images/invite/login-succeed_10.png" alt="">
+        <img src="../../images/invite/login-succeed_11.png" alt="">
+      </div>
       <span>966元现金券</span>
       <span><strong>18888元</strong>特权本金（邀请专属)</span>
       <p class="upload-btn" onclick="javascript:window.location.href='http://a.app.qq.com/o/simple.jsp?pkgname=com.hoolai.hongcai'">前往查看奖励</p>
@@ -8,13 +21,22 @@
   </div>
 </template>
 <style scoped>
-  .wandu-success {
+  .invite-success {
     font-weight: 500;
     padding-top: .2rem;
-    height: 10rem;
-    background: url(../../images/invite/login-succeed.png) no-repeat;
+    /*height: 10rem;*/
     background-size: 100%;
     background-color: #060547;
+  }
+  .login-succeed{
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .login-succeed img{
+    display: inline-block;
+    width: 100%;
+    vertical-align: top;
   }
   .upload-btn {
     width: 80%;
@@ -32,14 +54,14 @@
     bottom: 1rem;
     left: 10%;
   }
-  .wandu-success span:first-child {
+  .invite-success span:nth-child(2) {
     position: absolute;
     top: 4.66rem;
     left: .48rem;
     text-align: justify;
     color: #060547;
   }
-  .wandu-success span:nth-child(2) {
+  .invite-success span:nth-child(3) {
     position: absolute;
     top: 3.3rem;
     right: .54rem;
@@ -48,7 +70,7 @@
     width: 2rem;
     font-weight: normal;
   }
-  .wandu-success span:nth-child(2) strong{
+  .invite-success span:nth-child(2) strong{
     font-size: .26rem;
     color: #060547; 
   }
