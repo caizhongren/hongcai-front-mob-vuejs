@@ -294,16 +294,6 @@ let InputMaskHelper = (function (eleCls) {
     }
   }
 })('input-focus')
-let ScrollHalfPage = function (ele) {
-  window.onscroll = function () {
-    var t = document.documentElement.scrollTop || document.body.scrollTop
-    if (t >= window.innerHeight + 50) {
-      ele.show().addClass('.fixed')
-    } else {
-      ele.hide().removeClass('.fixed')
-    }
-  }
-}
 /**
  * 添加音效
  */
@@ -347,4 +337,3 @@ export {sendMobCaptcha}
 export {InputMaskHelper}
 export {audioPlayUtil}
 export {commonAnimation}
-export {ScrollHalfPage}
