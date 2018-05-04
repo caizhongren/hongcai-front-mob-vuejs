@@ -80,7 +80,8 @@
         investTotalPage: 2,
         rewardPage: 1,
         rewardTotalPage: 2,
-        loading: false
+        loading: false,
+        version: 310
       }
     },
     created: function () {
@@ -88,6 +89,7 @@
         this.activeTab === 1 ? this.getInviteNum() : this.getTotalCommission()
         this.activeTab === 1 ? this.getInvestRecords(this.investPage, this.pageSize) : this.getCommissionRecords(this.rewardPage, this.pageSize)
         this.getVoucher()
+        this.getVersion()
       }
     },
     props: ['token'],
@@ -97,10 +99,20 @@
           this.activeTab === 1 ? this.getInviteNum() : this.getTotalCommission()
           this.activeTab === 1 ? this.getInvestRecords(this.investPage, this.pageSize) : this.getCommissionRecords(this.rewardPage, this.pageSize)
           this.getVoucher()
+          this.getVersion()
         }
       }
     },
     methods: {
+      getVersion () {
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest/users/0/version?token=' + that.token
+        }).then(function (response) {
+          that.version = response.data.replace(/\./g, '')
+        })
+      },
       toShare: function () {
         if (!this.token || this.token === '') {
           this.toLogin()
@@ -114,8 +126,9 @@
           'url': shareItem.linkUrl,
           'imageUrl': shareItem.imageUrl
         }
-        bridgeUtil.webConnectNative('HCNative_Share', null, nativeNeedDatas, function (response) {
-        }, null)
+        var nativeName = 'HCNative_Share'
+        this.version >= 310 ? nativeName = 'HCNative_InviteShare' : nativeName = 'HCNative_Share'
+        bridgeUtil.webConnectNative(nativeName, null, nativeNeedDatas, function (response) {}, null)
       },
       switchTab: function (index) {
         if (this.activeTab !== index) {

@@ -143,14 +143,13 @@
 
 <script>
 import $ from 'zepto'
-import {InviteShareUtils, bridgeUtil, ModalHelper, ScrollHalfPage} from '../../service/Utils'
+import {InviteShareUtils, bridgeUtil, ModalHelper} from '../../service/Utils'
 import {swiper} from '../../service/swipeSlide'
 export default {
   name: 'Invite',
   data () {
     return {
       showRules: true,
-      isActivityEnd: false,
       voucher: '',
       shareItem: {},
       nativeNeedDatas: {},
@@ -162,7 +161,6 @@ export default {
   },
   created: function () {
     this.token ? this.getVersion() : ''
-    this.token ? this.getInvitedFriends() : ''
     this.token ? this.getInviteNum() : ''
     this.token ? this.getInviteCode() : ''
     bridgeUtil.webConnectNative('HCNative_NeedInviteList', null, {
@@ -174,7 +172,6 @@ export default {
   watch: {
     token: function (value) {
       if (value && value !== '') {
-        this.getInvitedFriends()
         this.getInviteCode()
         this.getInviteNum()
         this.getVersion()
@@ -182,7 +179,14 @@ export default {
     }
   },
   mounted () {
-    ScrollHalfPage($('.fixBtn'))
+    window.onscroll = function () {
+      var t = document.documentElement.scrollTop || document.body.scrollTop
+      if (t >= window.innerHeight + 50) {
+        $('.fixBtn').show().addClass('.fixed')
+      } else {
+        $('.fixBtn').hide().removeClass('.fixed')
+      }
+    }
     this.showRules = false
     swiper.init({
       autoSwipe: false,
@@ -205,7 +209,6 @@ export default {
         method: 'get',
         url: '/hongcai/rest/users/0/version?token=' + that.token
       }).then(function (response) {
-        alert(response.data.replace(/\./g, ''))
         that.version = response.data.replace(/\./g, '')
       })
     },
@@ -222,21 +225,6 @@ export default {
       } else {
         this.$router.push({name: 'ActivityReward'})
       }
-    },
-    getInvitedFriends: function () {
-      this.$http({
-        method: 'get',
-        url: '/hongcai/rest/users/0/isInvitedFriends?token=' + this.token
-      }).then((response) => {
-        if (response.data && response.data.ret !== -1) {
-        } else if (response.data.code && response.data.code === -1041) {
-          this.isActivityEnd = true
-        } else if (response.data.code && response.data.code === -1000) {
-          this.isActivityEnd = false
-        } else {
-          this.isActivityEnd = false
-        }
-      })
     },
     toLogin: function () {
       bridgeUtil.webConnectNative('HCNative_Login', '', {}, function (response) {}, null)
@@ -272,12 +260,9 @@ export default {
         this.toLogin()
         return
       }
-      if (this.isActivityEnd) {
-        alert('活动结束')
-        return
-      }
-      alert(this.version)
-      this.version >= 310 ? bridgeUtil.webConnectNative('HCNative_InviteShare', null, this.nativeNeedDatas, function (response) {}, null) : bridgeUtil.webConnectNative('HCNative_Share', null, this.nativeNeedDatas, function (response) {}, null)
+      var nativeName = 'HCNative_Share'
+      this.version >= 310 ? nativeName = 'HCNative_InviteShare' : nativeName = 'HCNative_Share'
+      bridgeUtil.webConnectNative(nativeName, null, this.nativeNeedDatas, function (response) {}, null)
     }
   }
 }
@@ -555,6 +540,7 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: 9999;
     display: none;
   }
 	.invite-rule {
