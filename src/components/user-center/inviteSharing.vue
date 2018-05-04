@@ -179,9 +179,8 @@
   .inviteContent{
     width: 80%;
      background:url(../../images/invite/friends-bg_01.png) no-repeat,
-                    url(../../images/invite/friends-bg_03.png) no-repeat center bottom,
-                    url(../../images/invite/friends-bg_02.png) repeat-y;
-                     
+                url(../../images/invite/friends-bg_03.png) no-repeat center bottom,
+                url(../../images/invite/friends-bg_02.png) repeat-y;
     background-size: contain;
     color: #FFFFFF;
     margin: .4rem auto;
@@ -322,7 +321,7 @@
   import $ from 'zepto'
   import {Utils, sendMobCaptcha} from '../../service/Utils'
   export default {
-    name: 'wanduRegister',
+    // name: 'wanduRegister',
     data () {
       return {
         canGetCaptch: true,
@@ -356,34 +355,11 @@
         inviteMsg: '',
         activityType: 44,
         activityStatus: 1,
-        arr: ['从此跟着土豪迈向人生巅峰！', '哇~好大的礼包呀，发财啦哈哈哈~~', '上宏财，财运来！欧了！', '谢谢老板，大礼包收到啦！', '自从领了礼包，腰不酸了腿也不疼了~', '礼包收到，确实是真爱！', '发礼包这事儿，我就服你。。。', '天哪~真的有10%加息券耶！'],
-        activityInfo: {
-          startYear: 0,
-          startMonth: 0,
-          startDate: 0,
-          endYear: 0,
-          endMonth: 0,
-          endDate: 0
-        }
+        arr: ['从此跟着土豪迈向人生巅峰！', '哇~好大的礼包呀，发财啦哈哈哈~~', '上宏财，财运来！欧了！', '谢谢老板，大礼包收到啦！', '自从领了礼包，腰不酸了腿也不疼了~', '礼包收到，确实是真爱！', '发礼包这事儿，我就服你。。。', '天哪~真的有10%加息券耶！']
       }
     },
     props: ['showErrMsg'],
     created () {
-      $.fn.scrollToBottom = function (duration) {
-        var $el = this
-        var el = $el[0]
-        var startPosition = el.scrollTop
-        var delta = el.scrollHeight - $el.height() - startPosition
-        var startTime = Date.now()
-        function scroll () {
-          var fraction = Math.min(1, (Date.now() - startTime) / duration)
-          el.scrollTop = delta * fraction + startPosition
-          if (fraction < 1) {
-            setTimeout(scroll, 10)
-          }
-        }
-        scroll()
-      }
       this.getInvitedFriends()
       this.getActivityStatus()
     },
@@ -532,24 +508,8 @@
       },
       getActivityStatus () { // 活动信息查询
         var that = this
-        that.$http({ // 获取服务器时间
-          method: 'get',
-          url: '/hongcai/rest/systems/serverTime'
-        }).then((response) => {
-          that.$http('/hongcai/rest/activitys/' + that.activityType).then(function (res) {
-            that.activityStatus = res.data.status
-            // 获取活动开始、结束时间
-            var startTime = res.data.startTime
-            var endTime = res.data.endTime
-            that.activityInfo = {
-              startYear: new Date(startTime).getFullYear(),
-              startMonth: new Date(startTime).getMonth() + 1,
-              startDate: new Date(startTime).getDate(),
-              endYear: new Date(endTime).getFullYear(),
-              endMonth: new Date(endTime).getMonth() + 1,
-              endDate: new Date(endTime).getDate()
-            }
-          })
+        that.$http('/hongcai/rest/activitys/' + that.activityType).then(function (res) {
+          that.activityStatus = res.data.status
         })
       }
     }
