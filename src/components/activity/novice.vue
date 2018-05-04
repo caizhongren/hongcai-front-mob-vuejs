@@ -26,7 +26,7 @@
           <div class="smallBox">
             <img class="cashTip" src="../../images/novice/RateCoupon.png" alt="">
             <img src="../../images/novice/rate-point-10.png" alt="" class="tqRate">
-            <div class="rates">
+            <!-- <div class="rates">
               <img class="rate1 fl" src="../../images/novice/rate-point-16.png" alt="">
               <img class="rate2 fr" src="../../images/novice/rate-point-8.png" alt="">
             </div>
@@ -37,7 +37,7 @@
             <div class="rates">
               <img class="rate1 fl" src="../../images/novice/rate-point-81.png" alt="">
               <img class="rate2 fr" src="../../images/novice/rate-point-3.png" alt="">
-            </div>
+            </div> -->
           </div>
         </div>
     </div>
@@ -187,7 +187,7 @@
     border-radius: .2rem;
     /*height: 10rem;*/
     box-shadow: 0px 0px .2rem 0 #d87d11;
-    padding: .68rem .18rem .36rem;
+    padding: .68rem .18rem 0rem;
   }
   .btns {
     position: fixed;
