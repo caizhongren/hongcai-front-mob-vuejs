@@ -13,7 +13,7 @@
         <img src="../../images/invite/invite-share_09.png" alt="">
         <img src="../../images/invite/invite-share_10.png" alt="">
       </div>
-      <span><strong>18888元特权本金(邀请专属)</strong></span>
+      <span>18888元特权本金(邀请专属)</span>
       <span>966元现金券</span>
     </div>
     <div class="inviteForm">
@@ -97,20 +97,16 @@
   .inviteMsg{
     background: #060547 !important;
   }
-  .inviteShare span:nth-child(2) {
-    display: block;
-    position: absolute;
-    right: .4rem;
-    top: 3.1rem;
-    width: 2rem;
-    text-align: left;
-    color: #666666;
-  }
-  .inviteShare span:nth-child(2) strong{
-    font-weight: normal;
+  .inviteShare span:nth-child(2){
     color: #060547;
     font-size: .28rem;
     font-weight: bold;
+    display: block;
+    position: absolute;
+    right: .4rem;
+    top: 3.06rem;
+    width: 2rem;
+    text-align: left;
   }
   .inviteShare span:last-child{
     display: block;
@@ -268,9 +264,9 @@
   }
   .inviteContent.rules{
     border-bottom: 1px solid #4464e0;
+    font-size: .22rem;
   }
   .rulesContent p{
-    font-size: .22rem;
     width: 94%;
     float: right;
   }
@@ -386,7 +382,7 @@
         inviteMsg: '',
         activityType: 44,
         activityStatus: 1,
-        arr: ['从此跟着土豪迈向人生巅峰！', '哇~好大的礼包呀，发财啦哈哈哈~~', '上宏财，财运来！欧了！', '谢谢老板，大礼包收到啦！', '自从领了礼包，腰不酸了腿也不疼了~', '礼包收到，确实是真爱！', '发礼包这事儿，我就服你。。。', '天哪~真的有10%加息券耶！']
+        arr: ['月薪3千买房买车的秘密原来在这里！', '跟着土豪迈向人生巅峰！', '有“财”同享才是真“壕”友！', '我发现了财富增值的奥秘！', '躺着赚钱的感觉原来是这样～']
       }
     },
     props: ['showErrMsg'],
