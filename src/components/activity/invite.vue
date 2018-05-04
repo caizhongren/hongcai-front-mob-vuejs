@@ -17,7 +17,7 @@
 				<div class="part1">
 					<div class="title">
 						<span class="yellow fl">邀友注册</span>
-						<span class="white fr">每邀请3名好友成功注册，您可获得</span>
+						<span class="white fl">每邀请3名好友成功注册，您可获得</span>
 					</div>
 					<div class="header-icon">
 						<p>每3位好友成功注册</p>
@@ -490,6 +490,9 @@ export default {
     background-size: 101%;
     margin-bottom: 0;
   }
+  .part1 .title .white {
+    margin-left: .42rem;
+  }
   .part3 .title .white {
     margin-left: .55rem;
   }
@@ -555,7 +558,6 @@ export default {
 	}
 	.invite-Rulebox {
 			padding: 0 .3rem;
-			background: rgba(0,0,0,.5);
 	}
 	.ruleBox {
 			background: url('../../images/invite/invite-rule-bg.png') no-repeat center bottom;
@@ -625,10 +627,12 @@ export default {
     color: #fefefe;
     font-size: .24rem;
     line-height: 1.8;
+    text-align: justify;
   }
   .slide li p span{
     font-size: .26rem;
     display: block;
+    text-align: center;
   }
   .dot{
     z-index: 1;
@@ -657,7 +661,7 @@ export default {
     color: #ffffff;
   }
   .ruleTitle img{
-		margin: .5rem auto 0;
+	margin: .5rem 10% 0 16%;
     width: 54%;
   }
   @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {

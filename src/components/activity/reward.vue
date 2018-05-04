@@ -60,7 +60,7 @@
         </div>
       </div>
     </div>
-    <div class="fixBtn" @click="toShare">继续邀请好友</div>
+    <div class="fix-btn" @click="toShare">继续邀请好友</div>
   </div>
 </template>
 
@@ -221,8 +221,8 @@
   }
 </script>
 
-<style>
-.fixBtn {
+<style scoped>
+.fix-btn {
   width: 100%;
   height: .9rem;
   line-height: .95rem;
@@ -233,12 +233,15 @@
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 9999;
 }
 .invite-reward {
   background: #060547;
   padding: 0.7rem .25rem .5rem;
   overflow: hidden;
+  position: fixed;
   width: 100%;
+  z-index: 99;
 }
 ul.recordTitle {
   overflow: hidden;
