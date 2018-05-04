@@ -105,7 +105,7 @@
 											精选项目1.2%无条件加息券 x 1张<br>
 											尊贵项目2.4%无条件加息券 x 1张<br>
 											(优惠券奖励可叠加获得，有效期自发放日起30天内)<br>
-											2.如邀请的新用户于注册日起30天内进行投资，老用户可获得其首投日起未来60天内，该好友每笔投资折合年化投资金额x2%的佣金返现，可从单个好友处获得佣金上限为1000元，可邀请好友人数无上限。
+											2.如邀请的新用户于注册日起90天内进行投资，老用户可获得其首投日起未来60天内，该好友每笔投资折合年化投资金额x2%的佣金返现，可从单个好友处获得佣金上限为1000元，可邀请好友人数无上限。
 										</p>
 									</li>
 									<li>
@@ -455,7 +455,7 @@ export default {
     width: 100%;
     overflow: hidden;
     clear: both;
-    margin-bottom: .25rem;
+    margin-bottom: .1rem;
     color: #fff;
   }
   .part2 ul li:nth-child(1) div {
@@ -521,10 +521,11 @@ export default {
   }
   .part3 .coupons li {
     width: 48%;
-		height: 1.2rem;
-		background: url('../../images/invite/box.png') no-repeat center center;
+    height: 1.2rem;
+    background: url('../../images/invite/box.png') no-repeat center center;
     background-size: 100%;
     font-size: .25rem;
+    text-align: center;
   }
   .part3 .coupons li:nth-child(1) p {
     padding: .22rem .25rem;
@@ -546,16 +547,16 @@ export default {
     z-index: 9999;
     display: none;
   }
-	.invite-rule {
-			background: url('../../images/invite/invite-rule.png') no-repeat center center;
-			background-size: contain;
-			width: 1.4rem;
-			height: 1rem;
-			position: fixed;
-			z-index: 9;
-			top: 2.8rem;
-			right: 0rem;
-	}
+  .invite-rule {
+    background: url('../../images/invite/invite-rule.png') no-repeat center center;
+    background-size: contain;
+    width: 1.4rem;
+    height: 1rem;
+    position: fixed;
+    z-index: 9;
+    top: 2.8rem;
+    right: 0rem;
+  }
 	.invite-Rulebox {
 			padding: 0 .3rem;
 	}
