@@ -13,7 +13,7 @@
         <img src="../../images/invite/invite-share_09.png" alt="">
         <img src="../../images/invite/invite-share_10.png" alt="">
       </div>
-      <span><strong>18888元</strong>特权本金（邀请专属)</span>
+      <span><strong>18888元特权本金(邀请专属)</strong></span>
       <span>966元现金券</span>
     </div>
     <div class="inviteForm">
@@ -50,9 +50,14 @@
           <span></span>
         </p>
         <div class="rulesContent text-left">
-          <p class="">1.本活动只针对新注册用户有效，同时特权本金奖励仅通过邀请方式注册的新用户可获得；</p>
-          <p>2.如注册后30日内未开通银行存管，则邀请专属特权本金奖励将自动失效，请注意及时开通哟；</p>
-          <p>3.本活动最终解释权归宏财网所有。</p>
+          <!-- <span class="fl">1.</span><p class="fl overflow-hid">本活动只针对新注册用户有效，同时特权本金奖励仅通过邀请方式注册的新用户可获得；</p>
+          <span class="fl">2.</span><p>如注册后30日内未开通银行存管，则邀请专属特权本金奖励将自动失效，请注意及时开通哟；</p>
+          <span class="fl">3.</span><p>本活动最终解释权归宏财网所有。</p> -->
+          <ul>
+            <li class="overflow-hid"><span class="fl">1.</span><p class="fl">本活动只针对新注册用户有效，同时特权本金奖励仅通过邀请方式注册的新用户可获得；</p></li>
+            <li class="overflow-hid"><span class="fl">2.</span><p class="fl">如注册后30日内未开通银行存管，则邀请专属特权本金奖励将自动失效，请注意及时开通哟；</p></li>
+            <li class="overflow-hid"><span class="fl">3.</span><p class="fl">本活动最终解释权归宏财网所有。</p></li>
+          </ul>
         </div>
       </div>
       <div class="inviteContent cooperation">
@@ -92,9 +97,6 @@
   .inviteMsg{
     background: #060547 !important;
   }
-/*  .inviteShare{
-    height: 10rem;
-  }*/
   .inviteShare span:nth-child(2) {
     display: block;
     position: absolute;
@@ -107,15 +109,18 @@
   .inviteShare span:nth-child(2) strong{
     font-weight: normal;
     color: #060547;
-    font-size: .26rem;
+    font-size: .28rem;
+    font-weight: bold;
   }
   .inviteShare span:last-child{
     display: block;
     position: absolute;
-    left: 0.56rem;
+    left: 0.46rem;
     top: 4.5rem;
     text-align: justify;
     color: #060547;
+    font-size: .28rem;
+    font-weight: bold;
   }
   .imgs img{
     display: inline-block;
@@ -132,7 +137,6 @@
     width: 80%;
     height: .8rem;
     border-radius: 5px;
-    overflow: hidden;
     margin-bottom: .2rem;
   }
 
@@ -148,6 +152,7 @@
     color: #000000;
     float: left;
     border-radius: 5px;
+    box-shadow: 0px 0px 10px #b43ea8;
   }
   .verification{
     width: 25%;
@@ -157,7 +162,6 @@
     float: right;
     background: #FFFFFF;
     border-radius: 5px;
-    box-shadow: 3.2px 2.4px 0 0 #ffca61;
   }
   .inviteForm #sent{
     display: block;
@@ -191,21 +195,22 @@
   }
   .inviteDetail{
     margin-top: .6rem;
+    padding-bottom: .2rem;
   }
   .inviteContent{
     width: 80%;
-     background:url(../../images/invite/friends-bg_01.png) no-repeat,
+    background :url(../../images/invite/friends-bg_01.png) no-repeat,
                 url(../../images/invite/friends-bg_03.png) no-repeat center bottom,
                 url(../../images/invite/friends-bg_02.png) repeat-y;
     background-size: contain;
     color: #FFFFFF;
-    margin: .4rem auto;
+    margin: .6rem auto;
     padding: 0 .35rem;
   }
   .inviteContent:nth-child(2){
-    background: url(../../images/invite/invite-content-2.png) no-repeat;
-    background-size: contain;
-    height: 3.8rem;
+    /*background: url(../../images/invite/invite-content-2.png) no-repeat;
+    background-size: contain;*/
+    height: 3.84rem;
   }
   .inviteContent:last-child{
     background: url(../../images/invite/invite-content-3.png) no-repeat;
@@ -244,6 +249,7 @@
   }
   .inviteContent.friends{
     border-bottom: 1px solid #4464e0;
+    margin-top: .9rem !important;
   }
   .inviteContent.friends li{
     margin-bottom: .16rem;
@@ -258,13 +264,22 @@
   /*活动规则*/
   .inviteContent.rules .rulesContent{
     margin-top: .2rem;
+    text-align: justify;
+  }
+  .inviteContent.rules{
+    border-bottom: 1px solid #4464e0;
   }
   .rulesContent p{
     font-size: .22rem;
+    width: 94%;
+    float: right;
   }
   /*战略合作*/
-  .inviteContent.cooperation{
-    margin-bottom: 0 !important;
+  .inviteContent .cooperations p:nth-child(odd){
+    height: .8rem;
+  }
+  .inviteContent .cooperations p:nth-child(even){
+    margin-bottom: .1rem;
   }
   .inviteContent .cooperations p:nth-child(odd) span{
     height: .8rem;
@@ -293,7 +308,7 @@
   }
   .inviteContent .cooperations p:nth-child(3) span:nth-child(2){
     background: url(../../images/invite/cooperation-4.png) no-repeat center;
-    background-size: 100%;
+    background-size: 90%;
     background-color: #ffffff;
   }
   .inviteContent .cooperations p:nth-child(5) span:nth-child(1){

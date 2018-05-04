@@ -566,9 +566,10 @@ export default {
 			z-index: 10;
 	}
 	.box {
-			overflow: hidden;
+			overflow-x: hidden;
+      overflow-y: scroll;
 			margin-top: -.4rem;
-			height: 6.1rem;
+			height: 5.1rem;
 	}
 	.close-rule {
 			width: .8rem;
@@ -584,7 +585,6 @@ export default {
     height: 4rem;
     border-radius: 12.5px;
     width: 90%;
-    overflow: hidden;
     -webkit-transform:rotate(0deg)
   }
   .slide{
@@ -607,13 +607,14 @@ export default {
     height: 100%;
   }
   .slide li{
-    overflow: hidden;
     list-style: none;
     position: absolute;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
   /* 解决js阻塞页面显示首屏 */
   .slide li:first-child{
