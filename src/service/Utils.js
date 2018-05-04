@@ -115,11 +115,11 @@ let InviteShareUtils = {
     return subTitle
   },
   shareLink: function (inviteCode) {
-    var shareLink = process.env.domain + '/activity/invite-sharing'
+    var shareLink = process.env.vue_domain + '/activity/invite-sharing'
     if (inviteCode) {
       shareLink = shareLink + '/' + inviteCode
     }
-    shareLink = shareLink + '?act=22&f=officeweb'
+    shareLink = shareLink + '?act=44&f=officeweb'
     return shareLink
   },
   shareImageUrl: function () {
