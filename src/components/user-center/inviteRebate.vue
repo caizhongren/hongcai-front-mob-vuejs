@@ -85,8 +85,8 @@
       var that = this
       that.qrcode = new QRCode(document.getElementById('qrcode'), {
         text: that.url,
-        width: 200,
-        height: 200,
+        width: 150,
+        height: 150,
         colorDark: '#000000',
         colorLight: '#ffffff'
       })
