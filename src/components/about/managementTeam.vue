@@ -178,6 +178,7 @@
   }
    #wrapper ul {
     overflow-x: hidden;
+    height: 100%;
   } 
    #wrapper .btns {
      width: 100%;
