@@ -17,9 +17,9 @@
       <span>966元现金券</span>
     </div>
     <div class="inviteForm">
-      <p><input type="tel" name="mobile" class="mobile" placeholder="请输入手机号" v-model="user.mobile" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler" autocomplete="off"></p>
+      <p><input type="tel" name="mobile" class="mobile" placeholder="请输入手机号" v-model="user.mobile" v-on:input="oninputHandler" v-on:beforepaste="beforepasteHandler(e)" autocomplete="off"></p>
       <p>
-        <input type="tel" maxlength="4" name="picCaptcha" placeholder="请输入图形验证码" v-model="user.picCaptcha" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler1(e)" autocomplete="off" style="width:50%">
+        <input type="tel" maxlength="4" name="picCaptcha" placeholder="请输入图形验证码" v-model="user.picCaptcha" v-on:input="oninputHandler1" v-on:beforepaste="beforepasteHandler(e)" autocomplete="off" style="width:50%">
         <span @click="refreshCode" class="verification"><img alt="图形验证码" id="picCaptcha" width="100%" height="100%"></span>
       </p>
       <p>
@@ -346,32 +346,13 @@
 </style>
 <script>
   import $ from 'zepto'
-  import {Utils, sendMobCaptcha} from '../../service/Utils'
+  import {Utils, sendMobCaptcha, ModalHelper} from '../../service/Utils'
   export default {
     // name: 'wanduRegister',
     data () {
       return {
         canGetCaptch: true,
         busy: false,
-        actInfo: {},
-        projects: [
-          {
-            rate: 8.6,
-            date: 55
-          },
-          {
-            rate: 9.3,
-            date: 85
-          },
-          {
-            rate: 9.8,
-            date: 180
-          },
-          {
-            rate: 11.6,
-            date: 360
-          }
-        ],
         user: {
           mobile: '',
           picCaptcha: '',
@@ -386,9 +367,15 @@
       }
     },
     props: ['showErrMsg'],
+    watch: {
+      'activityStatus': function (value) {
+        value === 2 ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+      }
+    },
     created () {
       this.getInvitedFriends()
       this.getActivityStatus()
+      this.activityStatus === 2 ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
     },
     mounted () {
       this.refreshCode()
@@ -411,13 +398,10 @@
         this.user.mobile = this.user.mobile.length > 11 ? this.user.mobile.slice(0, 11) : this.user.mobile
       },
       beforepasteHandler (e) {
-        e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/\D/g, ''))
+        e.clipboardData.setData('tel', e.clipboardData.getData('tel').replace(/\D/g, ''))
       },
       oninputHandler1 () {
         this.user.picCaptcha = this.user.picCaptcha.replace(/\D/g, '')
-      },
-      beforepasteHandler1 (e) {
-        e.clipboardData.setData('tel', e.clipboardData.getData('tel').replace(/\D/g, ''))
       },
       oninputHandler2 () {
         this.user.captcha = this.user.captcha.length > 6 ? this.user.captcha.slice(0, 6) : this.user.captcha
