@@ -570,8 +570,8 @@ export default {
 	}
 	.box {
 			overflow: scroll;
-			margin-top: -.4rem;
-			height: 5.1rem;
+			margin-top: -.3rem;
+			height: 5rem;
 	}
 	.close-rule {
 			width: .8rem;
@@ -587,7 +587,8 @@ export default {
     height: 4rem;
     border-radius: 12.5px;
     width: 90%;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     -webkit-transform:rotate(0deg)
   }
   .slide{
@@ -616,6 +617,7 @@ export default {
     top: 0;
     width: 100%;
     height: 100%;
+    overflow: auto;
   }
   /* 解决js阻塞页面显示首屏 */
   .slide li:first-child{
