@@ -624,7 +624,7 @@
         }
         function endTouchScroll (event) {
           sub = $('.scroll').offset().top - $('.details-more').offset().top
-          if ((sub === 0 && scrollDirection >= 20) || $('.scroll').offset().top > 80) {
+          if ((sub === 0 && scrollDirection >= 20) || $('.scroll').offset().top > 120) {
             $('.scroll').addClass('animate')
             setTimeout(function () {
               $('.scroll').css('transform', 'translateY(0px)')
@@ -633,7 +633,7 @@
               document.querySelector('.product-page1').style.webkitTransform = 'translateY(0px)'
               $('.product-page2').css('transform', 'translateY(0px)')
               document.querySelector('.product-page2').style.webkitTransform = 'translateY(0px)'
-            }, 300)
+            }, 100)
             scrollDirection = 0
           } else if (sub === 0 && scrollDirection < 20) {
             $('.scroll').css('transform', 'translateY(0px)')
