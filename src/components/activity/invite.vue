@@ -542,10 +542,9 @@ export default {
     background: #2923ab;
     position: fixed;
     bottom: 0;
-    left: 0;
-    right: 0;
     z-index: 9999;
     display: none;
+    max-width: 720px;
   }
   .invite-rule {
     background: url('../../images/invite/invite-rule.png') no-repeat center center;

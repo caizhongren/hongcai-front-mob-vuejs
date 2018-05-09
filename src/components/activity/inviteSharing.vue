@@ -96,6 +96,7 @@
 <style scoped>
   .inviteMsg{
     background: #060547 !important;
+    position: relative;
   }
   .inviteShare span:nth-child(2){
     color: #060547;
@@ -200,7 +201,7 @@
                 url(../../images/invite/friends-bg_02.png) repeat-y;
     background-size: contain;
     color: #FFFFFF;
-    margin: .6rem auto;
+    margin: .6rem auto 0;
     padding: 0 .35rem;
   }
   .inviteContent:nth-child(2){
@@ -211,7 +212,7 @@
   .inviteContent:last-child{
     background: url(../../images/invite/invite-content-3.png) no-repeat;
     background-size: contain;
-    height: 6rem;
+    height: 6.6rem;
   }
   .inviteContent>p:first-child{
     padding-top: .4rem;

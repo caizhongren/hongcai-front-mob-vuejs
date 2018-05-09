@@ -241,6 +241,7 @@
   overflow: hidden;
   position: fixed;
   width: 100%;
+  max-width: 720px;
   z-index: 99;
 }
 ul.recordTitle {
