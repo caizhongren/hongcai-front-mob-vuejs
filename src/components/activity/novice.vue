@@ -90,7 +90,7 @@
     <div class="iosTips" v-show="isIos">
       该活动与设备生产商APPLE INC.公司无关
     </div>
-    <div class="btns" @click="toHCNative">{{userAuth.active && userAuth.authStatus === 2 ? '立即投资' : '立即开通银行存管'}}</div>
+    <div class="btns" @click="toHCNative">{{userAuth.active && userAuth.authStatus === 2 ? '立即出借' : '立即开通银行存管'}}</div>
   </div>
 </template>
 

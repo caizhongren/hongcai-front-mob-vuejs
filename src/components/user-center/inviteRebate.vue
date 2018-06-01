@@ -12,7 +12,7 @@
         </div>
         <div class="count3 fr">
           <p>{{inviteStat.investNum || 0}}</p>
-          <p>首投成功(人)</p>
+          <p>首次出借成功(人)</p>
         </div>
       </div>
       <div class="tip">

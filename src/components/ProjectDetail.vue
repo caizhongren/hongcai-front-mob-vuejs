@@ -8,7 +8,7 @@
         <p class="ft-Arial" v-show="newbie"><a>+</a><span>6</span>%</p>
         <p class="second">期望年均回报率</p>
         <div class="tip-list">
-          <span class="tip-item tip-item1"><span class="font-Arial margin-0">100</span>元起投</span>
+          <span class="tip-item tip-item1"><span class="font-Arial margin-0">100</span>元起借</span>
           <span class="tip-item tip-item2"><span class="font-Arial margin-0">{{project.projectDays || 0}}</span>天项目期</span>
         </div>
         <div class="project-process clearfix">
@@ -24,12 +24,12 @@
             <div class="end-circle-center"></div>
           </div>
         </div>
-        <p class="remain-amount">项目总额：{{project.total | number}}元，剩余可投<span>{{project.amount | number}}</span>元</p>
+        <p class="remain-amount">项目总额：{{project.total | number}}元，剩余可出借<span>{{project.amount | number}}</span>元</p>
         <!-- <p class="actual-amount">{{newbie ? '上限' : '投资'}}<span>10,000.00</span>元，预计收益<span>{{expectEarning}}</span><span v-show="newbie || (welfareRate > 0 && project.status === 7)">+{{newbie ? (10000 * 6 * project.projectDays / 36500).toFixed(2) : project.status === 7 && welfareRate > 0 && !newbie ? (10000 * welfareRate * project.projectDays / 36500).toFixed(2) : ''}}</span>元</p> -->
       </div>
       <div class="project-detail-bottom bg-white">
         <div class="detail-item">
-          <span>起息日期：</span>投资成功，当日计息
+          <span>起息日期：</span>出借成功，当日计息
         </div>
         <div class="detail-item position-re">
           <span>还款方式：</span>按月付息，到期还本
@@ -135,7 +135,7 @@
                   <tr>
                     <th>成交时间</th>
                     <th>用户名</th>
-                    <th>投资金额(元)</th>
+                    <th>出借金额(元)</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -182,7 +182,7 @@
         </div>
       </div>
     </div>
-    <button class="invest-fixed-btn" :class="{'disable-btn': project.status !== 7 }" v-if="project.status === 7" @click="toInvest()" :disabled="busy">立即投资</button>
+    <button class="invest-fixed-btn" :class="{'disable-btn': project.status !== 7 }" v-if="project.status === 7" @click="toInvest()" :disabled="busy">立即出借</button>
     <button class="invest-fixed-btn disable-btn" v-if="project.status === 6">预发布</button>
     <button class="invest-fixed-btn disable-btn" v-if="project.status === 8">融资成功</button>
     <button class="invest-fixed-btn disable-btn" v-if="project.status === 9">还款中</button>
@@ -218,7 +218,7 @@
         expectEarning: 0,
         processWith: 0,
         activeTab: 0,
-        detailTabs: ['项目详情', '相关资料', '投资记录', '还款计划'],
+        detailTabs: ['项目详情', '相关资料', '出借记录', '还款计划'],
         pageSize: 10,
         page: 1,
         totalPage: 1,
