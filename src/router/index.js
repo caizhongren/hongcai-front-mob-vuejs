@@ -100,6 +100,7 @@ const FoolAnswer = r => require.ensure([], () => r(require('../components/activi
 const FoolResult = r => require.ensure([], () => r(require('../components/activity/FoolResult.vue')), 'FoolResult')
 const FoolAnswerPage = r => require.ensure([], () => r(require('../components/activity/FoolAnswerPage.vue')), 'FoolAnswerPage')
 const FoolTacit = r => require.ensure([], () => r(require('../components/activity/FoolTacit.vue')), 'FoolTacit')
+const TimeLimitRebate = r => require.ensure([], () => r(require('../components/activity/TimeLimitRebate.vue')), 'TimeLimitRebate')
 const LoanManagement = r => require.ensure([], () => r(require('../components/LoanManagement.vue')), 'LoanManagement')
 const operatingReport2017 = r => require.ensure([], () => r(require('../components/disclosure/operatingReport2017.vue')), 'operatingReport2017')
 const operatingReport2016 = r => require.ensure([], () => r(require('../components/disclosure/operatingReport2016.vue')), 'operatingReport2016')
@@ -530,6 +531,12 @@ const routes = [
         component: FoolTacit,
         meta: {title: '愚你同乐'}
       }]
+  },
+  {
+    path: '/activity/time-limit-rebate',
+    name: 'TimeLimitRebate',
+    component: TimeLimitRebate,
+    meta: {title: '限时返利200%'}
   },
   {
     path: '/register-agree',
