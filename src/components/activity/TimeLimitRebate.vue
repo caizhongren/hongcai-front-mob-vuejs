@@ -2,7 +2,7 @@
   <div class="TimeLimitRebate">
     <div class="header">
       <img src="../../images/timeLimitRebate/header.png" alt="" width="100%">
-      <div class="activityTime"> &nbsp;活动时间：{{activityInfo.startYear}}年{{activityInfo.startMonth}}月{{activityInfo.startDate}}日～{{activityInfo.endYear}}年{{activityInfo.endMonth}}月{{activityInfo.endDate}}日</div>
+      <div class="activityTime"> &nbsp;活动时间：2018年6月4日～2018年6月13日</div>
     </div>
     <div class="content">
       <div class="text-box">
@@ -24,40 +24,17 @@
   export default {
     data () {
       return {
-        activityInfo: {
-          startYear: 0,
-          startMonth: 0,
-          startDate: 0,
-          endYear: 0,
-          endMonth: 0,
-          endDate: 0
-        },
-        activityType: this.$route.query.act || 45
       }
     },
     props: ['token'],
     watch: {
     },
+    mounted () {
+      document.querySelector('.TimeLimitRebate').style.minHeight = window.innerHeight + 'px'
+    },
     created () {
-      this.getActivityStatus()
     },
     methods: {
-      getActivityStatus () { // 活动信息查询
-        var that = this
-        that.$http('/hongcai/rest/activitys/' + that.activityType).then(function (res) {
-          // 获取活动开始、结束时间
-          var startTime = res.data.startTime
-          var endTime = res.data.endTime
-          that.activityInfo = {
-            startYear: new Date(startTime).getFullYear(),
-            startMonth: new Date(startTime).getMonth() + 1,
-            startDate: new Date(startTime).getDate(),
-            endYear: new Date(endTime).getFullYear(),
-            endMonth: new Date(endTime).getMonth() + 1,
-            endDate: new Date(endTime).getDate()
-          }
-        })
-      },
       toInvest () {
         if (this.token) {
           bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (response) {
