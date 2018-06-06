@@ -1,7 +1,7 @@
 <template>
   <div class="business">
     <div class="overflow-hid">
-      <input type="month" class="form-control" pattern="[0-9]{4}-[5-9]{2}" min="2018-03" v-bind:max="dataTime" v-on:input="selectDate($event);" v-model="date" step="1"/>
+      <input type="month" class="form-control" min="2018-03" v-bind:max="dataTime" v-on:input="selectDate($event);" v-model="date" step="1"/>
       <img src="../../images/disclosure/search.png" alt="查询" class="search" @click="search" />
     </div>
     <div class="sumolume">
@@ -209,20 +209,20 @@
         }
       },
       // 占比保留两位小数
-      getPlatformData (dateTime) {
+      getPlatformData (dataTime) {
+        let url = ''
+        dataTime ? url = '/hongcai/rest/disclosureInfo/newest?dataTime=' + dataTime : url = '/hongcai/rest/disclosureInfo/newest'
         var that = this
         that.$http({
           method: 'get',
-          url: '/hongcai/rest/disclosureInfo/newest?dateTime=' + dateTime
+          url: url
         })
         .then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.cumulative = res.data.disclosureInformationDetail
             that.updateDate = res.data.systemDataTime
-            that.dataTime = res.data.dataTime
-            that.date = that.dataTime
-            that.currentYear = new Date(that.updateDate).getFullYear()
-            that.currentMonth = new Date(that.updateDate).getMonth() + 1
+            !dataTime ? (that.dataTime = res.data.dataTime, that.currentYear = new Date(res.data.systemDataTime).getFullYear(), that.currentMonth = new Date(res.data.systemDataTime).getMonth() + 1) : null
+            that.date = res.data.dataTime
           } else {
             console.log(res.data.msg)
           }
