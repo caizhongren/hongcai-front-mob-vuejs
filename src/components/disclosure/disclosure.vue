@@ -47,6 +47,7 @@
         activeTab: 0
       }
     },
+    props: ['showErrMsg'],
     methods: {
       switchTab: function (index) {
         if (this.activeTab !== index) {
