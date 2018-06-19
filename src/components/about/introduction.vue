@@ -5,7 +5,7 @@
       <ul class="companys">
         <li>
           <img src="../../images/about/profile-1.png" alt="">
-          <p>国有企业<br>A轮亿元融资</p>
+          <p>A轮<br>战略投资</p>
         </li>
         <li>
           <img src="../../images/about/profile-2.png" alt="">
@@ -17,14 +17,14 @@
         </li>
       </ul>
       <div class="profiles">
-        宏财网是国内领先的专注于中小微企业贷款需求的P2B互联网金融信息服务平台，2016年获得国有企业A轮战略投资1亿元，是国内极少数由上市金融集团提供专业安全金融资产的平台之一。自2014年成立以来，宏财网始终秉承“安全、透明、稳健、高效”的经营理念，不断为融投双方提供便利的互联网金融服务。
+        宏财网是国内领先的专注于中小微企业贷款需求的互联网金融信息服务平台，2016年获得A轮战略投资。自2014年成立以来，宏财网始终秉承“安全第一，信息透明，回报稳健，操作便捷”的经营理念，不断为融资双方提供优质的互联网金融服务。
       </div>
     </div>
     <div class="parting-line"></div>
     <div class="shareholder">
       <img src="../../images/about/shareholder.png" alt="" class="shareholder-title">
       <div class="shareholder-img"></div>
-      <p class="text-center">专注于中小企业资产管理的国有金融机构</p>
+      <p class="text-center">专注于中小企业资产管理的金融机构</p>
     </div>
     <div class="parting-line"></div>
     <div class="project-info">
@@ -36,7 +36,7 @@
         </li>
         <li>
           <p class="title"><span>项</span>目类型</p>
-          <p>目前宏财网以55天和180天的汽车金融和小微产业金融项目为主，流动性好，年均回报率在业内属于中高水准。</p>
+          <p>目前宏财网以90天和180天的汽车金融和小微产业金融项目为主，流动性好，期望年均回报率在业内属于中高水准。</p>
         </li>
       </ul>
     </div>
