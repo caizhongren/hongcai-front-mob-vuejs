@@ -2,7 +2,7 @@
   <!-- 宏财网服务协议-直投、宏财网服务协议-债转、老项目合同区分 contractType：1——直投，2——债转，4——老合同，3——债权转让协议 ，5——降息换物渠道项目合同，6——借款方企业协议，7——借款方个人协议，8——债转方企业协议，9——债转方个人协议 ，10 ——新的三方协议（电签）-->
   <!-- 2, 7, 9 个人签章 -->
   <div>
-    <div class="agreement-area row" v-show="contractType === 1 || contractType === 4 || contractType === 6 || contractType === 7">
+    <div class="agreement-area row" v-if="contractType === 1 || contractType === 4 || contractType === 6 || contractType === 7">
       <p class="text-title">宏财网服务协议</p>
       <p class="text-right" v-if="!contracts.total">合同编号：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
       <p class="text-right" v-if="contracts.total">合同编号：{{contracts.contractNumber}}</p>
@@ -292,7 +292,7 @@
         </table>
       </div>
     </div>
-    <div class="agreement-area row" v-show="contractType === 2 || contractType === 8 || contractType === 9">
+    <div class="agreement-area row" v-if="contractType === 2 || contractType === 8 || contractType === 9">
       <p class="text-title">宏财网服务协议</p>
       <p class="text-right" v-if="!contracts.total">合同编号：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>    
       <p class="text-right" v-if="contracts.total">合同编号：{{contracts.contractNumber}}</p>
@@ -565,7 +565,7 @@
         </table>
       </div>
     </div>
-    <div class="agreement-area row" v-show="contractType === 10">
+    <div class="agreement-area row" v-if="contractType === 10">
       <p class="text-title">借款合同</p>
       <p class="text-right" v-if="!contracts.total">合同编号：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
       <p class="text-right" v-if="contracts.total">合同编号：{{contracts.contractNumber}}</p>
@@ -770,7 +770,7 @@
         </table>
       </div>
     </div>
-    <div class="agreement-area row" v-show="contractType === 11">
+    <div class="agreement-area row" v-if="contractType === 12">
       <p class="text-title">借款合同</p>
       <p class="text-right" v-if="!contracts.total">合同编号：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
       <p class="text-right" v-if="contracts.total">合同编号：{{contracts.contractNumber}}</p>
@@ -781,8 +781,8 @@
         <p>统一社会信用代码/身份证号：{{contracts.entRegistrationNo}}</p>
         <p>平台会员编号：{{contracts.enterpriseUserId}}</p>
         <br>
-        <p><strong class="agree-mg">丙方（担保方）：</strong>{{}}</p>
-        <p>统一社会信用代码：{{}}</p>
+        <p><strong class="agree-mg">丙方（担保方）：</strong>{{contracts.guaranteeName}}</p>
+        <p>统一社会信用代码：{{contracts.guaranteeRegistrationNo}}</p>
         <br>
         <p><strong class="agree-mg">丁方（平台方）：</strong>北京竞财投资服务有限公司</p>
         <p>统一社会信用代码：91110107330246732H</p>
@@ -939,9 +939,8 @@
         <br>
         <div class="position-re"><strong class="agree-mg">丙方（签章）：</strong>
           <div class="hongcaiC">
-            <p class="economy1">{{}}</p> 
+            <p class="economy3">{{contracts.guaranteeName}}</p> 
           </div>
-          <b class="loanTypeAignature2" id="loanType2">{{contracts.enterpriseName}}</b>
         </div>
         <br>
         <br>
@@ -953,7 +952,7 @@
         <br>
         <br>
         <br>
-        <div class="position-re"><strong class="agree-mg">丁方（签章）</strong>
+        <div class="position-re"><strong class="agree-mg">丁方（签章）：</strong>
           <div class="hongcaiC">
             <p class="economy1">北京竞财投资服务有限公司</p> 
           </div>
@@ -1020,7 +1019,7 @@
         </table>
       </div>
     </div>
-    <div class="agreement-area row" v-show="creditNum === '0' || cutRateType === 5">
+    <div class="agreement-area row" v-if="creditNum === '0' || cutRateType === 5">
       <hr>
       <br>
       <br>
@@ -1134,98 +1133,18 @@
         }
       },
       'contracts': function (val) {
-        if (val.enterpriseName) {
+        if (val.enterpriseName || val.guaranteeName) {
           // alert(val.enterpriseName.length)
           Arctext1.Arctext({radius: 6, dir: 1}, $('.economy1'), '北京竞财投资服务有限公司')
           this.creditNum === '0' || this.cutRateType === 5 ? Arctext1.Arctext({radius: 6, dir: 1}, $('.economy2'), '北京竞财投资服务有限公司') : null
           Arctext1.Arctext({radius: val.enterpriseName.length / 2, dir: 1}, $('.economy'), val.enterpriseName)
-          var cssStyle = {}
-          switch (val.enterpriseName.length) {
-            case 19:
-              cssStyle = {
-                'transform': 'scale(.55)'
-              }
-              break
-            case 18:
-              cssStyle = {
-                'transform': 'scale(.58)'
-              }
-              break
-            case 17:
-              cssStyle = {
-                'transform': 'scale(.62)'
-              }
-              break
-            case 16:
-              cssStyle = {
-                'transform': 'scale(.64)'
-              }
-              break
-            case 15:
-              cssStyle = {
-                'transform': 'scale(.68)'
-              }
-              break
-            case 14:
-              cssStyle = {
-                'transform': 'scale(.73)'
-              }
-              break
-            case 13:
-              cssStyle = {
-                'transform': 'scale(.77)'
-              }
-              break
-            case 12:
-              cssStyle = {
-                'transform': 'scale(.85)'
-              }
-              break
-            case 11:
-              cssStyle = {
-                'transform': 'scale(.94)'
-              }
-              break
-            case 10:
-              cssStyle = {
-                'transform': 'scale(1)',
-                'top': '.08rem'
-              }
-              break
-            case 9:
-              cssStyle = {
-                'transform': 'scale(1.2)',
-                'top': '.12rem'
-              }
-              break
-            case 8:
-              cssStyle = {
-                'transform': 'scale(1.3)',
-                'top': '.12rem'
-              }
-              break
-            case 7:
-              cssStyle = {
-                'transform': 'scale(1.48)',
-                'top': '.125rem'
-              }
-              break
-            case 6:
-              cssStyle = {
-                'transform': 'scale(1.68)',
-                'top': '.15rem'
-              }
-              break
-            default:
-              cssStyle = {
-                'transform': 'scale(.5)'
-              }
-          }
-          $('.economy').css(cssStyle)
+          this.switchLenght(val.enterpriseName.length)
+          val.guaranteeName ? Arctext1.Arctext({radius: val.guaranteeName.length / 2, dir: 1}, $('.economy3'), val.guaranteeName) : null
+          val.guaranteeName ? this.switchLenght(val.guaranteeName.length) : null
         }
       },
       'contracts.loanType': function (val) {
-        if (this.contractType === 10 && val && val === 1) {
+        if ((this.contractType === 10 || this.contractType === 12) && val && val === 1) {
           $('#loanType2').hide()
         } else {
           $('#loanType1').hide()
@@ -1233,6 +1152,92 @@
       }
     },
     methods: {
+      switchLenght (name) {
+        var cssStyle = {}
+        switch (name) {
+          case 19:
+            cssStyle = {
+              'transform': 'scale(.55)'
+            }
+            break
+          case 18:
+            cssStyle = {
+              'transform': 'scale(.58)'
+            }
+            break
+          case 17:
+            cssStyle = {
+              'transform': 'scale(.62)'
+            }
+            break
+          case 16:
+            cssStyle = {
+              'transform': 'scale(.64)'
+            }
+            break
+          case 15:
+            cssStyle = {
+              'transform': 'scale(.68)'
+            }
+            break
+          case 14:
+            cssStyle = {
+              'transform': 'scale(.73)'
+            }
+            break
+          case 13:
+            cssStyle = {
+              'transform': 'scale(.77)'
+            }
+            break
+          case 12:
+            cssStyle = {
+              'transform': 'scale(.85)'
+            }
+            break
+          case 11:
+            cssStyle = {
+              'transform': 'scale(.94)'
+            }
+            break
+          case 10:
+            cssStyle = {
+              'transform': 'scale(1)',
+              'top': '.08rem'
+            }
+            break
+          case 9:
+            cssStyle = {
+              'transform': 'scale(1.2)',
+              'top': '.12rem'
+            }
+            break
+          case 8:
+            cssStyle = {
+              'transform': 'scale(1.3)',
+              'top': '.12rem'
+            }
+            break
+          case 7:
+            cssStyle = {
+              'transform': 'scale(1.48)',
+              'top': '.125rem'
+            }
+            break
+          case 6:
+            cssStyle = {
+              'transform': 'scale(1.68)',
+              'top': '.15rem'
+            }
+            break
+          default:
+            cssStyle = {
+              'transform': 'scale(.5)'
+            }
+        }
+        $('.economy').css(cssStyle)
+        $('.economy3').css(cssStyle)
+      },
       getProject: function () {
         var that = this
         that.$http({
@@ -1256,9 +1261,9 @@
         }).then(function (res) {
           if (res.data && res.data.ret !== -1) {
             that.contractType = res.data.type
-            that.contractType === 10 ? document.title = '借款合同' : document.title = '宏财网服务协议'
+            that.contractType === 10 || that.contractType === 12 ? document.title = '借款合同' : document.title = '宏财网服务协议'
           } else {
-            that.contractType = 11
+            that.contractType = 12
           }
         })
       },
@@ -1435,7 +1440,7 @@
     z-index: -1;
     text-align: center;
   }
-  .economy, .economy1, .economy2 {
+  .economy, .economy1, .economy2, .economy3 {
     font-size: .22rem;
     color: #e71f19;
     font-weight: bold;
@@ -1448,7 +1453,7 @@
   .economy {
     top: .05rem;
   }
-  .economy1, .economy2 {
+  .economy1, .economy2, .economy3 {
     transform: scale(.85);
   }
 </style>
