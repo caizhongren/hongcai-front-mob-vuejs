@@ -86,6 +86,10 @@
       <img src="../../images/novice/rule-14.png" alt="">
       <img src="../../images/novice/rule-15.png" alt="">
       <img src="../../images/novice/rule-16.png" alt="">
+      <img src="../../images/novice/rule-17.png" alt="">
+      <img src="../../images/novice/rule-18.png" alt="">
+      <img src="../../images/novice/rule-19.png" alt="">
+      <img src="../../images/novice/rule-20.png" alt="">
     </div>
     <div class="iosTips" v-show="isIos">
       该活动与设备生产商APPLE INC.公司无关

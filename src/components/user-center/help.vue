@@ -102,52 +102,35 @@
     <div v-if="type === '1'">
       <div class="content">
         <div class="column" @click="showOrHide($event)">
-          <div class="fl">1.宏财网是谁？</div>
+          <div class="fl">1.我们是谁？</div>
           <div class="fa-down txt-right fr">
           </div>
         </div>
         <div class="submenu">
-          <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">宏财网是国内领先的专注于中小微企业贷款需求的P2B互联网金融信息服务平台，2016年获得国有企业A轮战略投资1亿元，是国内极少数由上市金融集团提供专业安全金融资产的平台之一。自2014年成立以来，宏财网始终秉承“安全、透明、稳健、高效”的经营理念，不断为融投双方提供便利的互联网金融服务。</span>  
+          <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">宏财网是国内领先的专注于中小微企业贷款需求的互联网金融信息服务平台，2016年获得A轮战略投资。自2014年成立以来，宏财网始终秉承“安全第一，信息透明，回报稳健，操作便捷”的理念，不断为融资双方提供优质的互联网金融服务。</span>  
         </div>
       </div>
       <div class="content">
         <div class="column" @click="showOrHide($event)">
-          <div class="fl">2.为什么选择宏财网？</div>
+          <div class="fl">2.是否对接银行资金存管？</div>
+          <div class="fa-down txt-right fr">
+          </div>
+        </div>
+        <div class="submenu">
+          <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">根据银监会正式对外公布的《网络借贷资金存管业务指引》中要求，宏财网已于2017年6月正式上线海口联合农商银行资金存管系统。由银行对平台出借人与借款人资金存管账户进行管理和监督，对两者资金进行存管、划付、核算及监督，平台作为纯粹的信息中介参与到交易之中，全程不触碰资金，所有资金流动均在银行体系内进行，从而真正做到了平台与用户资金完全隔离，有效杜绝了平台支配和挪用用户资金的风险。</span>  
+        </div>
+      </div>
+      <div class="content">
+        <div class="column" @click="showOrHide($event)">
+          <div class="fl">3.银行资金存管之后有什么优势？</div>
           <div class="fa-down txt-right fr">
           </div>
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            1) 国资背景<br/>2016年获国有企业1亿元A轮战略投资<br>新三板金控第一股鑫融基入股<br>拥有博士高管团队的互联网金融平台<br><br>
-            2) 银行存管<br/>2016年加入网贷行业协会，首批接入北京存管通平台，所有投资信息实时上传北京金融局等监管部门<br>2017年6月正式上线海口联合农商银行资金存管，实现银行级资金安全保障<br><br>
-            3) 风控安全<br/>十年多金融生态圈，积累优质资产<br>银行级存管确保用户投资资金万无一失<br>所有项目借款方知根知底，铸造闭环征信体系<br>
-          </span>  
-        </div>
-      </div>
-      <div class="content">
-        <div class="column" @click="showOrHide($event)">
-          <div class="fl">3.什么是银行资金存管？</div>
-          <div class="fa-down txt-right fr">
-          </div>
-        </div>
-        <div class="submenu">
-          <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">根据银监会正式对外公布的《网络借贷资金存管业务指引》中要求，宏财网已于2017年6月份正式上线海口联合农商银行资金存管。由银行对平台出借人与借款人资金存管账户进行管理和监督，对两者资金进行存管、划付、核算及监督，平台作为纯粹的信息中介参与到交易之中，全程不触碰资金，所有资金流动均在银行体系内进行，从而真正做到了平台与用户资金完全隔离，有效杜绝了平台支配和挪用用户资金的风险。</span>  
-        </div>
-      </div>
-      <div class="content">
-        <div class="column" @click="showOrHide($event)">
-          <div class="fl">4.银行资金存管之后有什么优势？</div>
-          <div class="fa-down txt-right fr">
-          </div>
-        </div>
-        <div class="submenu">
-          <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            1）资金安全隔离<br>
-            凡在宏财网投资的用户，均在存管银行设有独立存管账户，有效实现平台资金和用户资金隔离，由存管银行对资金进行管理与监督，平台无法触碰用户资金。<br><br>
-            2）交易真实透明<br>
-            凡在宏财网投资的用户，需要单独设立交易密码保证账户安全，账户信息由存管银行管理。用户在宏财网进行投资时，银行划拨用户资金必须通过用户的授权操作，并对交易流程进行管理并记录资金流水，交易真实可查。<br><br>
-            3）监管合规标准<br>
-            与海口联合农商银行开展资金存管，符合《网络借贷资金存管业务指引》规定，做到了合法合规，对于客户资金安全也更有保障，除此之外，客户的资金操作也更加透明、高效、便捷。<br>
+            1）资金安全隔离<br/>凡在宏财网出借的用户，均在存管银行设有独立存管账户，有效实现平台资金和用户资金隔离，由存管银行对资金进行管理与监督，平台无法触碰用户资金。<br><br>
+            2）交易真实透明<br/>凡在宏财网出借的用户，需要单独设立交易密码保证账户安全，账户信息由存管银行管理。用户在宏财网进行出借时，银行划拨用户资金必须通过用户的授权操作，并对交易流程进行管理并记录资金流水，交易真实可查。<br><br>
+            3）监管合规标准<br/>与海口联合农商银行开展资金存管，符合《网络借贷资金存管业务指引》规定，做到了合法合规，对于客户资金安全也更有保障，除此之外，客户的资金操作也更加透明、高效、便捷。<br>
           </span>  
         </div>
       </div>
@@ -156,28 +139,28 @@
     <div v-if="type === '2'">
       <div class="content">
         <div class="column" @click="showOrHide($event)">
-          <div class="fl">1.投资项目的来源有哪些？</div>
+          <div class="fl">1.出借项目的来源有哪些？</div>
           <div class="fa-down txt-right fr">
           </div>
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            宏财网凭借股东广泛的金融资源，及项目方十多年积累的优质资产，打造了一个相对封闭的金融生态圈，主要由河南鑫融基金控股份有限公司、国信卓越信息咨询有限公司、北京青铜资产管理有限公司提供。精选小微产业金融、汽车金融及个人信用贷款等项目，提供方信息透明，知根知底，安全性高。<br>
-            未来我们也将接入更多类型的项目，以满足广大用户多样的投资需求。
+            宏财网凭借广泛的金融资源及项目方十多年积累的优质资产，打造了一个相对封闭的金融生态圈，主要由国信卓越信息咨询有限公司、北京青铜资产管理有限公司提供。精选小微产业金融、汽车金融及个人信用贷款等项目，提供方信息透明，知根知底。<br><br>
+            未来我们也将接入更多类型的项目，以满足广大用户多样的出借需求。
           </span>  
         </div>
       </div>
       <div class="content">
         <div class="column" @click="showOrHide($event)">
-          <div class="fl">2.投资项目的类型有哪些？</div>
+          <div class="fl">2.出借项目的类型有哪些？</div>
           <div class="fa-down txt-right fr">
           </div>
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            1）宏财精选：主要为30～90天的中短期项目，资金流动性强，投资更灵活。<br><br>
-            2）宏财尊贵：主要为150～360天的中长期项目，避免资金站岗，收益更稳健。<br><br>
-            3）债权转让：为投资人提高资金流动性，收益可控，期限更短。
+            1）宏财精选：主要为180天以内(含180天)的中短期项目，灵活稳健，具有一定流动性。<br><br>
+            2）宏财尊贵：主要为180天以上的中长期项目，回报更丰厚。<br><br>
+            3）债权转让：为出借人提高资金流动性，回报稳健，期限更短。
           </span>  
         </div>
       </div>
@@ -186,38 +169,38 @@
     <div v-if="type === '3'">
       <div class="content">
         <div class="column" @click="showOrHide($event)">
-          <div class="fl">1.项目起投金额是多少？</div>
+          <div class="fl">1.项目最低出借金额是多少？</div>
           <div class="fa-down txt-right fr">
           </div>
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            所有项目均100元起投，以100元为单位递增。
+            所有项目均100元起出借，以100元为单位递增。
           </span>  
         </div>
       </div>
       <div class="content">
         <div class="column" @click="showOrHide($event)">
-          <div class="fl">2.收益如何计算？</div>
+          <div class="fl">2.利息如何计算？</div>
           <div class="fa-down txt-right fr">
           </div>
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-              项目总收益=(投资本金×期望年均回报率) ÷365×项目投资期限
+              项目总利息=(出借本金×期望年均回报率) ÷365×项目期限
           </span>  
         </div>
       </div>
       <div class="content">
         <div class="column" @click="showOrHide($event)">
-          <div class="fl">3.投资后何时开始计息？</div>
+          <div class="fl">3.出借后何时开始计息？</div>
           <div class="fa-down txt-right fr">
           </div>
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            投资用户在宏财网成功投资所选项目后，一般会在该项目募集满额后当天开始计息，并按月付息给投资用户。如项目于周五募集结束，则周日开始计息。
-            同时宏财网投资用户还可根据投资项目的期望年均回报率，享受募集期贴息福利，就算在项目募集期间也不损失分毫收益！
+            用户在宏财网成功出借项目后，一般会在该项目募集满额放款后当天开始计息，并按月付息给出借用户。如项目于周五募集结束，则周日开始计息。
+            同时宏财网出借用户还可根据项目的期望年均回报率，享受募集期贴息福利，就算在项目募集期间也不失分毫！
           </span>  
         </div>
       </div>
@@ -229,9 +212,9 @@
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            在项目募集期间，会根据预估项目募集时间，显示收益及本金预计回款日期；<br><br>
-            当项目募集满额后，再根据满标日重新计算，显示收益及本金的回款日期；<br><br>
-            投资用户会在预计回款日当天24:00前，收到回款，具体时间由借款人还款时间决定。如借款人于还款日之前提前还款，投资用户将会提前收到项目收益及本金回款，且正常收益不受影响。
+            在项目募集期间，会根据预估项目募集时间，显示利息及本金预计回款日期；<br><br>
+            当项目募集满额后，再根据满标日重新计算，显示利息及本金的回款日期；<br><br>
+            出借用户会在预计回款日当天24:00前，收到回款，具体时间由借款人还款时间决定。如借款人于还款日之前提前还款，出借用户将会提前收到项目利息及本金回款，且按预计还款日正常计息，金额不受影响。
           </span>  
         </div>
       </div>
@@ -246,7 +229,8 @@
             可进行债权转让的项目应同时满足以下条件：<br><br>
             1）该项目满标后，持有天数大于30天；<br>
             2）转让当天距离该笔项目到期回款日大于3天；<br>
-            3）参与特定渠道奖励活动进行投资的项目不可进行债权转让。<br>
+            3）新手专享项目不可进行债权转让操作；<br>
+            4）参与特定渠道奖励活动进行出借的项目不可进行债权转让。<br>
           </span>  
         </div>
       </div>
@@ -258,8 +242,7 @@
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            1）手续费=转让本金×1%；<br>
-            2）单笔转让手续费最低为3元。
+            手续费=转让本金*1%，单笔转让的手续费最低为3元。<br>
           </span>  
         </div>
       </div>
@@ -272,32 +255,32 @@
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
             1）使用现金券的项目，会按照转让部分本金与项目本金等比例扣除已获返现；<br><br>
-            2）使用加息券的项目，已经获得的额外加息奖励不进行扣除，受让人购买该笔债权转让项目时，将不再继续享受加息收益。            
+            2）使用加息券的项目，已经获得的额外加息奖励不进行扣除，受让人购买该笔债权转让项目时，将不再继续享受加息奖励。            
           </span>  
         </div>
       </div>
       <div class="content">
         <div class="column" @click="showOrHide($event)">
-          <div class="fl">8.购买债转实际支付金额为何会大于认购金额？</div>
+          <div class="fl">8.购买债权转让的实际支付金额为什么会大于认购金额？</div>
           <div class="fa-down txt-right fr">
           </div>
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            实际支付金额=转让金额+当期已产生的待偿收益-转让奖金<br>
+            实际支付金额=转让金额+当期已产生的待偿利息-转让奖金<br>
             转让奖金=转让金额×(转让利率-原始利率)×剩余期限÷365<br>
           </span>  
         </div>
       </div>
       <div class="content">
         <div class="column" @click="showOrHide($event)">
-          <div class="fl">9.购买债转项目后，已收收益为何显示负值？</div>
+          <div class="fl">9.购买债权转让项目后，已收利息为什么显示负值？</div>
           <div class="fa-down txt-right fr">
           </div>
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            您购买债权转让项目时，需要先行垫付转让人当期已产生的收益，所以显示已收收益为负数，该笔收益会在下个回款日支付给您。
+            您购买债权转让项目时，需要先行垫付转让人当期已产生的利息，所以显示已收利息为负数，该笔利息会在下个回款日支付给您。
           </span>  
         </div>
       </div>
@@ -309,7 +292,7 @@
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            平台为避免投资用户资金站岗造成收益损失，推出自动投标功能，用户可自定义项目的期望年均回报率、投资期限、投资金额等信息，如果平台发布的投资项目中有满足用户设定的自定义项目，系统会根据自动投标的排名，自动进行投资，无需用户再次操作。
+            平台为避免用户资金站岗造成利息损失，推出自动投标功能，用户可自定义项目的期望年均回报率、项目期限、出借金额等信息，如果平台发布的项目中有满足用户设定的自定义项目，系统会根据自动投标金额设置的排名，按顺序自动撮合出借，无需用户再次操作。
           </span>  
         </div>
       </div>
@@ -337,13 +320,13 @@
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
             以下原因可能导致开通银行存管失败：<br><br>
-            1) 曾经改过名字；<br>
-            2) 名字中带有繁体字； <br>
-            3) 有过户籍变动；<br>
-            4) 军人转业、复员更换的身份证；<br>
-            5) 港澳台用户请联系客服协助开通；<br>
-            6) 18周岁以下用户；<br>
-            7) 银行卡非您账户同名同证件的卡片；<br>
+            1）曾经改过名字；<br>
+            2）名字中带有繁体字；<br>
+            3）有过户籍变动；<br>
+            4）军人转业、复员更换的身份证；<br>
+            5）港澳台用户请联系客服协助开通；<br>
+            6）18周岁以下用户；<br>
+            7）银行卡非您账户同名同证件的卡片；<br>
             由于银行存管系统与公安系统联网，将需要您提供实名身份信息，如实名身份信息不一致会导致无法通过，非以上原因开通未通过，请您联系客服为您查询确认。
           </span>  
         </div>
@@ -376,13 +359,13 @@
       </div>
       <div class="content">
         <div class="column" @click="showOrHide($event)">
-          <div class="fl">5.投资或提现时，忘记支付密码怎么办？</div>
+          <div class="fl">5.出借或提现时，忘记支付密码怎么办？</div>
           <div class="fa-down txt-right fr">
           </div>
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            点击投资或提现，进入海口联合农商银行存管页面，在输入安全支付密码框下，点击【忘记密码】，输入绑定的银行卡号及手机验证码即可重置密码。              
+            点击出借或提现，进入海口联合农商银行存管页面，在输入安全支付密码框下，点击【忘记密码】，输入绑定的银行卡号及手机验证码即可重置密码。              
           </span>  
         </div>
       </div>
@@ -435,7 +418,7 @@
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
             如您绑定的银行卡出现问题或需要更换，请先解绑后重新进行绑定。
             解绑银行卡的具体操作如下：<br><br>
-            1）当前绑定银行卡用于平台充值及提现，为保证投资人资金安全，目前一个账号只可同时绑定一张银行卡; <br><br>
+            1）当前绑定银行卡用于平台充值及提现，为保证出借人资金安全，目前一个账号只可同时绑定一张银行卡;<br><br>
             2）解绑银行卡：当账户总资产≤2元时，可直接解绑当前银行卡，如遇卡片丢失等不可抗拒因素时，需要联系客服，提供手持身份证等文件进行处理。<br>
           </span>  
         </div>
@@ -480,7 +463,7 @@
             3）收不到短信验证码<br>
             请先检查以下情况排除自身原因，如果依旧收不到验证码，您可以拨打宏财网客服电话： 400-990-7626进行咨询<br>
             a.是否安装短信拦截或者过滤软件<br>
-            b.是否能够正常接收短信（信号问题，欠费停机，关机等<br>
+            b.是否能够正常接收短信（信号问题，欠费停机，关机等）；<br>
             c.短信收发过程中可能会存在延迟，请耐心等待，短信在30分钟内均有效
           </span>  
         </div>
@@ -520,10 +503,10 @@
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            1) 绑定的银行卡尚未开通网上支付功能，请按照各银行开通方式及时开通即可；<br><br>
-            2) 绑定的银行卡已过期、作废、挂失，请前往银行柜台重新办理；<br><br>
-            3) 绑定的银行卡内余额不足，请及时充值；<br><br>
-            4) 您输入的金额超过了银行限额，您可拨打银行客服电话咨询如何提高支付限额，也可降低输入金额。<br><br>
+            1）绑定的银行卡尚未开通网上支付功能，请按照各银行开通方式及时开通即可；<br><br>
+            2）绑定的银行卡已过期、作废、挂失，请前往银行柜台重新办理；<br><br>
+            3）绑定的银行卡内余额不足，请及时充值；<br><br>
+            4）您输入的金额超过了银行限额，您可拨打银行客服电话咨询如何提高支付限额，也可降低输入金额。<br><br>
             如非上述情况造成，请联系客服为您查询处理。
           </span>  
         </div>
@@ -554,13 +537,13 @@
       </div>
       <div class="content">
         <div class="column" @click="showOrHide($event)">
-          <div class="fl">4.提现有手续费吗？提现次数和金额有何限制？</div>
+          <div class="fl">4.提现有手续费吗？提现次数和金额有什么限制？</div>
           <div class="fa-down txt-right fr">
           </div>
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            1）每笔提现收取2元手续费(提现金额不限)；<br>
+            1）每笔提现由第三方支付公司收取2元手续费(提现金额不限)；<br>
             2）单日提现次数不限，提现金额无上限。
           </span>  
         </div>
@@ -604,7 +587,7 @@
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            特权本金是平台向用户提供的一种虚拟资金，用于回馈奖励等活动。其本身不可提现或用于投资，但享受8%年化收益率。根据不同的活动规则，特权本金具有不同的计息时长，每日计息产生的收益直接发放至用户可用余额，可用于提现或投资。
+            特权本金是平台向用户提供的一种虚拟资金，用于回馈奖励等活动。其本身不可提现或作为出借资金，但享受8%年化利率。根据不同的活动规则，特权本金具有不同的计息时长，每日计息产生的奖励直接发放至用户可用余额，可用于提现或作为出借资金。
           </span>  
         </div>
       </div>
@@ -616,7 +599,7 @@
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            加息券是平台发布的一种奖励优惠券，使用加息券进行投资时，根据使用条件，单笔投资金额达到规定额度即可享受相应的额外加息奖励。投资成功且项目募集完成后，加息券开始生效，产生的额外收益将根据项目回款时间按月发放，可用于投资或提现。
+            加息券是平台发布的一种奖励优惠券，使用加息券进行出借时，根据使用条件，单笔出借金额达到规定额度即可享受相应的额外加息奖励。出借成功且项目募集完成后，加息券开始生效，产生的额外奖励将根据项目回款时间按月发放，可用于提现或作为出借资金。
           </span>  
         </div>
       </div>
@@ -628,7 +611,7 @@
         </div>
         <div class="submenu">
           <span class="padding-l-1 ft-grey7 display-inb padding-b-1p2">
-            现金券是平台发布的一种奖励优惠券，使用现金券进行投资时，根据使用条件，单笔投资金额达到规定额度即可获得相应面值的现金奖励。投资成功后，奖励将直接发放至账户余额，可用于投资或提现。
+            现金券是平台发布的一种奖励优惠券，使用现金券进行出借时，根据使用条件，单笔出借金额达到规定额度即可获得相应面值的现金奖励。出借成功后，奖励将直接发放至账户余额，可用于提现或作为出借资金。
           </span>  
         </div>
       </div>
@@ -647,7 +630,7 @@
       </div>
       <div class="content">
         <div class="column" @click="showOrHide($event)">
-          <div class="fl">5.如何进入宏财网VIP群？进群享受哪些特权？</div>
+          <div class="fl">5.如何才能进入宏财网VIP群？进群后享受哪些特权？</div>
           <div class="fa-down txt-right fr">
           </div>
         </div>
@@ -679,7 +662,12 @@
       </div>
       <div class="content">
         <div class="column">
-          <div class="fl">3.服务时间：工作日9:00-18:00</div>
+          <div class="fl">3.客服微信：hchellohello</div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="column">
+          <div class="fl">4.服务时间：工作日9:00-18:00</div>
         </div>
       </div>
     </div>
@@ -694,7 +682,7 @@
     data () {
       return {
         type: '1',
-        titles: ['了解宏财', '产品介绍', '投资相关', '注册登录', '账户管理', '充值提现', '用户福利', '客户服务', '预计回款'],
+        titles: ['了解宏财', '产品介绍', '出借相关', '注册登录', '账户管理', '充值提现', '用户福利', '客户服务', '预计回款'],
         bankLimit: [],
         number: '',
         projectNum: '',
@@ -872,7 +860,7 @@
     color: #666;
   }
   .help .content .column div.fl {
-    font-size: .26rem;
+    font-size: .22rem;
   }
   .column .rotate {
     transform: rotateZ(0deg);

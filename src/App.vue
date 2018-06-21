@@ -24,7 +24,7 @@ export default {
   name: 'app',
   data () {
     return {
-      token: '',
+      token: '6e024ce8681491101464cdcccec4a4ca0a412d0763340105',
       showErr: false,
       showLongErr: false,
       errMsg: '',

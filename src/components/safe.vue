@@ -3,23 +3,6 @@
     <div class="safe-top">
       <img src="../images/safe/safe-top.jpg" width="100%">
     </div>
-   <!--  <div class="section section-one position-re margin-auto">
-      <div class="business text-center">
-        <div class="tittle margin-auto text-center">
-          <p class="margin-b-0">国有企业战略投资</p>
-        </div>
-        <div>
-          <img src="../images/safe/advantage1.png" class="display-bl margin-auto" width="70%">
-        </div>
-        <div class="advantages">
-          <ul class="display-bl margin-auto safe-black">
-            <li>国有企业战略投资1亿元</li>
-            <li>股东是政府直接出资的国有金融机构</li>
-            <li>财务由国有企业统一管理</li>
-          </ul>
-        </div>
-      </div>
-    </div> -->
     <div class="section section-two">
       <div class="business">
         <div class="tittle margin-auto text-center">
