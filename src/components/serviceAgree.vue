@@ -1138,9 +1138,9 @@
           Arctext1.Arctext({radius: 6, dir: 1}, $('.economy1'), '北京竞财投资服务有限公司')
           this.creditNum === '0' || this.cutRateType === 5 ? Arctext1.Arctext({radius: 6, dir: 1}, $('.economy2'), '北京竞财投资服务有限公司') : null
           Arctext1.Arctext({radius: val.enterpriseName.length / 2, dir: 1}, $('.economy'), val.enterpriseName)
-          this.switchLenght(val.enterpriseName.length)
+          this.switchLenght(val.enterpriseName.length, 0)
           val.guaranteeName ? Arctext1.Arctext({radius: val.guaranteeName.length / 2, dir: 1}, $('.economy3'), val.guaranteeName) : null
-          val.guaranteeName ? this.switchLenght(val.guaranteeName.length) : null
+          val.guaranteeName ? this.switchLenght(val.guaranteeName.length, 3) : null
         }
       },
       'contracts.loanType': function (val) {
@@ -1152,91 +1152,85 @@
       }
     },
     methods: {
-      switchLenght (name) {
+      switchLenght (name, type) {
         var cssStyle = {}
         switch (name) {
           case 19:
             cssStyle = {
-              'transform': 'scale(.55)'
+              'letter-spacing': '-0.088rem'
             }
             break
           case 18:
             cssStyle = {
-              'transform': 'scale(.58)'
+              'letter-spacing': '-0.08rem'
             }
             break
           case 17:
             cssStyle = {
-              'transform': 'scale(.62)'
+              'letter-spacing': '-0.07rem'
             }
             break
           case 16:
             cssStyle = {
-              'transform': 'scale(.64)'
+              'letter-spacing': '-0.058rem'
             }
             break
           case 15:
             cssStyle = {
-              'transform': 'scale(.68)'
+              'letter-spacing': '-0.045rem'
             }
             break
           case 14:
             cssStyle = {
-              'transform': 'scale(.73)'
+              'letter-spacing': '-0.03rem'
             }
             break
           case 13:
             cssStyle = {
-              'transform': 'scale(.77)'
+              'letter-spacing': '-0.02rem'
             }
             break
           case 12:
             cssStyle = {
-              'transform': 'scale(.85)'
+              'letter-spacing': '0rem'
             }
             break
           case 11:
             cssStyle = {
-              'transform': 'scale(.94)'
+              'letter-spacing': '.012rem'
             }
             break
           case 10:
             cssStyle = {
-              'transform': 'scale(1)',
-              'top': '.08rem'
+              'letter-spacing': '.035rem'
             }
             break
           case 9:
             cssStyle = {
-              'transform': 'scale(1.2)',
-              'top': '.12rem'
+              'letter-spacing': '.06rem'
             }
             break
           case 8:
             cssStyle = {
-              'transform': 'scale(1.3)',
-              'top': '.12rem'
+              'letter-spacing': '.09rem'
             }
             break
           case 7:
             cssStyle = {
-              'transform': 'scale(1.48)',
-              'top': '.125rem'
+              'letter-spacing': '.12rem'
             }
             break
           case 6:
             cssStyle = {
-              'transform': 'scale(1.68)',
-              'top': '.15rem'
+              'letter-spacing': '.15rem'
             }
             break
           default:
             cssStyle = {
-              'transform': 'scale(.5)'
+              'letter-spacing': '.185rem'
             }
         }
-        $('.economy').css(cssStyle)
-        $('.economy3').css(cssStyle)
+        type === 0 ? $('.economy').css(cssStyle) : $('.economy3').css(cssStyle)
       },
       getProject: function () {
         var that = this
@@ -1449,11 +1443,6 @@
     height: .5rem;
     z-index: -1;
     margin: 0 auto;
-  }
-  .economy {
-    top: .05rem;
-  }
-  .economy1, .economy2, .economy3 {
     transform: scale(.85);
   }
 </style>
