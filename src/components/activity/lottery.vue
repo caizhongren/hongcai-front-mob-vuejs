@@ -319,7 +319,7 @@
                   prizeType: receivePrize.prizeType,
                   prizeText: '特权本金',
                   prizeValue: Number(receivePrize.value).toFixed(0),
-                  prizeCont: '前往【我的】>>【特权本金】即可查看，无需操作，收益次日到账哟～'
+                  prizeCont: '前往【我的】>>【特权本金】即可查看，无需操作，奖励次日到账哟～'
                 }
                 break
               case 6:

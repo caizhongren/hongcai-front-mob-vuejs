@@ -182,7 +182,7 @@
                   <div class="c5itemR">
                     <img src="../../images/disclosure/report5-04.png" alt="">
                     <p>271,827.87 元</p>
-                    <p>赚取收益最多</p>
+                    <p>赚取利息最多</p>
                   </div>
                   <div class="clear"></div>
                 </div>

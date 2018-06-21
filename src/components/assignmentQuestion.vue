@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="submenu">
-        <span class="">宏财网的投资者在满足一定条件的情况下，可以将待还的本金和利息转让给他人，将投资提前变现。</span>  
+        <span class="">宏财网的出借者在满足一定条件的情况下，可以将待还的本金和利息转让给他人，将资产提前变现。<br></span>  
       </div>
     </div>
     <div class="content">
@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="submenu">
-        <span class="">收益更高、期限更灵活。</span>  
+        <span class="">利息更高、期限更灵活。</span>  
       </div>
     </div>
     <div class="content">
@@ -46,13 +46,13 @@
     </div>
     <div class="content">
       <div class="example column">
-        <div class="txt-left fl">5.购买转让债权的收益如何计算？</div>
+        <div class="txt-left fl">5.购买转让债权的利息如何计算？</div>
         <div class="txt-right fr">
           <i class="angle-down fa fa-angle-down"></i>
         </div>
       </div>
       <div class="submenu">
-        <span class="">债权购买者的收益由两部分组成：待收利息、转让奖金。</span>  
+        <span class="">债权购买者的利息由两部分组成：待收利息、转让奖金。</span>  
       </div>
     </div>
     <div class="content">
@@ -68,13 +68,13 @@
     </div>
     <div class="content">
       <div class="example column">
-        <div class="txt-left fl">7.购买债权后，已收收益为什么为负？</div>
+        <div class="txt-left fl">7.购买债权后，已收利息为什么为负？</div>
         <div class="txt-right fr">
           <i class="angle-down fa fa-angle-down"></i>
         </div>
       </div>
       <div class="submenu">
-        <span class="">您购买债权时需要先行垫付转让人当期已产生的利息，所以显示收益为负数，该笔利息会在下个还款日支付给您。</span>  
+        <span class="">您购买债权时需要先行垫付转让人当期已产生的利息，所以显示利息为负数，该笔利息会在下个还款日支付给您。</span>  
       </div>
     </div>
     <div class="content">
@@ -107,7 +107,7 @@
         </div>
       </div>
       <div class="submenu">
-        <span class="">可以。使用奖金券的债权，会按转让金额等比例扣除已获奖金。使用加息券的债权，已获加息不扣除，受让人购买使用加息券的债权后，不再继续享有加息收益。</span>  
+        <span class="">可以。使用奖金券的债权，会按转让金额等比例扣除已获奖金。使用加息券的债权，已获加息不扣除，受让人购买使用加息券的债权后，不再继续享有加息利息。</span>  
       </div>
     </div>
     <div class="content">
@@ -162,7 +162,7 @@
         </div>
       </div>
       <div class="submenu">
-        <span class="">可以。如果撤销操作时存在投资者的正在认购，将暂时不能撤销。</span>  
+        <span class="">可以。如果撤销操作时存在出借者的正在认购，将暂时不能撤销。</span>  
       </div>
     </div>
     <div class="content border-grey-bottom">

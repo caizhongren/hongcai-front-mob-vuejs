@@ -170,7 +170,7 @@
                   <li class="fl">
                     <div class="report5ImgItem margin-auto"></div>
                     <p>63,500.46 元</p>
-                    <p>赚取收益最多</p>
+                    <p>赚取利息最多</p>
                   </li>
                   <li class="fr">
                     <div class="report5ImgItem margin-auto"></div>
@@ -410,7 +410,7 @@
           {
             imgUrl: '../../../static/images/report5-04.png',
             content1: '271,827.87 元',
-            content2: '赚取收益最多'
+            content2: '赚取利息最多'
           },
           {
             imgUrl: '../../../static/images/report5-05.png',
