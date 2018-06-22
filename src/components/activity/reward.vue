@@ -39,7 +39,7 @@
             <ul class="investTitle">
               <li>注册时间</li>
               <li>受邀好友</li>
-              <li>注册/投资</li>
+              <li>注册/出借</li>
             </ul>
             <div class="scrollBox">
               <table>
@@ -47,7 +47,7 @@
                   <tr v-for="item in investList">
                     <td>{{item.createTime | date('.')}}</td>
                     <td>{{item.mobile}}</td>
-                    <td>{{item.investAmount <= 0 ? '已注册' : '已投资'}}</td>
+                    <td>{{item.investAmount <= 0 ? '已注册' : '已出借'}}</td>
                   </tr>
                   <tr v-if="investTotalPage > investPage" class="loadMore" @click="loadMore(investPage)"><td colspan="4">查看更多</td></tr>
                 </tbody>
