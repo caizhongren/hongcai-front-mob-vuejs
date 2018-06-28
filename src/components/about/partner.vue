@@ -1,12 +1,8 @@
 <template>
   <div class="partner">
     <div class="part">
-      <img src="../../images/about/partner-1.png" alt="" width="60%">
-      <p>宏财网项目推荐方为鑫融基金控股份有限公司（以下简称鑫融基，证券代码：832379）。鑫融基注册资本16.39亿元，是2006年由政府出资发起，多家地方企业共同参与成立的金融机构。是新三板金控第一股和首家民间全牌照金融服务机构，股本总额位居全国第四。</p>
-    </div>
-    <div class="part">
       <img src="../../images/about/partner-4.png" alt="" width="44%">
-      <p>宏财网已正式对接海口联合农商银行资金存管系统。标的、资金信息同步上传北京市网贷协会，最大限度保护投资者利益。</p>
+      <p>宏财网已正式对接海口联合农商银行资金存管系统。标的、资金信息同步上传北京市网贷协会，最大限度保护出借人利益。</p>
     </div>
     <div class="part">
       <img src="../../images/about/partner-2.png" alt="" width="24%">

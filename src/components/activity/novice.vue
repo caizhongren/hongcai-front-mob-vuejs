@@ -26,7 +26,7 @@
           <div class="smallBox">
             <img class="cashTip" src="../../images/novice/RateCoupon.png" alt="">
             <img src="../../images/novice/rate-point-10.png" alt="" class="tqRate">
-            <div class="rates">
+            <!-- <div class="rates">
               <img class="rate1 fl" src="../../images/novice/rate-point-16.png" alt="">
               <img class="rate2 fr" src="../../images/novice/rate-point-8.png" alt="">
             </div>
@@ -37,7 +37,7 @@
             <div class="rates">
               <img class="rate1 fl" src="../../images/novice/rate-point-81.png" alt="">
               <img class="rate2 fr" src="../../images/novice/rate-point-3.png" alt="">
-            </div>
+            </div> -->
           </div>
         </div>
     </div>
@@ -86,11 +86,15 @@
       <img src="../../images/novice/rule-14.png" alt="">
       <img src="../../images/novice/rule-15.png" alt="">
       <img src="../../images/novice/rule-16.png" alt="">
+      <img src="../../images/novice/rule-17.png" alt="">
+      <img src="../../images/novice/rule-18.png" alt="">
+      <img src="../../images/novice/rule-19.png" alt="">
+      <img src="../../images/novice/rule-20.png" alt="">
     </div>
     <div class="iosTips" v-show="isIos">
       该活动与设备生产商APPLE INC.公司无关
     </div>
-    <div class="btns" @click="toHCNative">{{userAuth.active && userAuth.authStatus === 2 ? '立即投资' : '立即开通银行存管'}}</div>
+    <div class="btns" @click="toHCNative">{{userAuth.active && userAuth.authStatus === 2 ? '立即出借' : '立即开通银行存管'}}</div>
   </div>
 </template>
 
@@ -187,7 +191,7 @@
     border-radius: .2rem;
     /*height: 10rem;*/
     box-shadow: 0px 0px .2rem 0 #d87d11;
-    padding: .68rem .18rem .36rem;
+    padding: .68rem .18rem 0rem;
   }
   .btns {
     position: fixed;

@@ -4,7 +4,7 @@
       <div class="lottery-wrap">
         <div class="draw-lottery">
           <p class="text-center ft-1p3">
-            <span v-if="token">今日可抽奖次数：<span class="draw-count">{{drawCount}}</span>次</span>
+            <span v-if="token">今日可抽奖次数：<span class="draw-count">{{drawCount < 0 ? 0 : drawCount}}</span>次</span>
           </p>
           <!-- 抽奖转盘 1, "当日加息"" ; 2, "现金奖励 ; 3, "加息券 ; 4, "现金券" ; 5, "特权本金" ; 6, "谢谢"-->
           <div class="lottery-box" id="js-rect-luck-draw-con">
@@ -115,7 +115,7 @@
           <div class="rule-content">
             <p>1.每人每天拥有1次免费抽奖机会，首次分享幸运大抽奖到第三方平台，可再获得1次免费抽奖机会；</p>
             <p>2.您可在【我的奖励】中查看自己最近两周内的中奖情况；</p>
-            <p>3.抽中的当日加息奖励系统将自动为您使用，次日即可获得奖励收益，加息仅针对您当日宏财精选及宏财尊贵项目在投总资产有效，包含当日新增投资，不含购买的债权转让项目及已经成功转让的资产；</p>
+            <p>3.抽中的当日加息奖励系统将自动为您使用，次日即可获得奖励，加息仅针对您当日宏财精选及宏财尊贵项目在投总资产有效，包含当日新增出借金额，不含购买的债权转让项目及已经成功转让的资产；</p>
             <p>4.抽中的特权本金、返现、现金券及加息券奖励将直接发放至您的账户中，可在【我的】页面相应位置查看；</p>
             <p>5.所有奖励均可叠加获得；</p>
             <p>6.在法律规定范围内，平台保留本活动最终解释权；</p>
@@ -139,7 +139,7 @@
     name: 'lottery',
     data () {
       return {
-        drawCount: 0,
+        drawCount: -1,
         prizeList: {},
         showRules: false,
         canShare: false,
@@ -153,7 +153,8 @@
         isiOS: Utils.isIos(),
         isAndroid: Utils.isAndroid(),
         domain: process.env.domain,
-        inviteCode: ''
+        inviteCode: '',
+        busy: false
       }
     },
     props: ['token'],
@@ -217,13 +218,15 @@
           turnAroundCount: 2,
           maxAnimateDelay: 400,
           turnStartCallback: function () {
+            that.busy = true
           },
           turnEndCallback: function (prizeId, obj) {
+            that.busy = false
             that.showDrawBox = true
             $('.lottery-item').addClass('selecting')
           },
           startBtnClick: function ($btn) {
-            if (LuckDraw.isLocked()) {
+            if (LuckDraw.isLocked() || that.busy) {
               return
             }
             // prizeId ? LuckDraw.start(prizeId) : ''
@@ -249,41 +252,45 @@
         bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function (response) {}, null)
       },
       getPrize: function () {
-        if (!this.token || this.token === '') {
-          this.toLogin()
+        var that = this
+        if (!that.token || that.token === '') {
+          that.toLogin()
           return
         }
-        if (LuckDraw.isLocked()) {
+        if (that.drawCount < 0 || LuckDraw.isLocked() || that.busy) {
           return
         }
-        this.$http.post('/hongcai/rest/lotteries/draw', {
-          token: this.token
+        that.busy = true
+        that.$http.post('/hongcai/rest/lotteries/draw', {
+          token: that.token
         })
         .then((response) => {
+          that.busy = true
           if (response.data && response.data.ret === -1) {
-            this.showDrawBox = true
-            this.receiveDraw = false
+            that.showDrawBox = true
+            that.receiveDraw = false
+            that.busy = false
             if (response.data.code === -1300) {
-              this.showUpperLimit = true
+              that.showUpperLimit = true
             } else if (response.data.code === -1301) {
-              this.usedAndcanShare = true
+              that.usedAndcanShare = true
             } else {
               // alert(response.data.msg)
-              this.showDrawBox = false
+              that.showDrawBox = false
             }
           } else {
-            this.receiveDraw = true
-            this.usedAndcanShare = false
+            that.receiveDraw = true
+            that.usedAndcanShare = false
             $('.lottery-item').removeClass('selecting')
             var receivePrize = response.data
             var prizeId = receivePrize.prizeType || 1
             // console.log(prizeId)
-            this.canShare = response.data.canShare
-            this.draw(prizeId)
+            that.canShare = response.data.canShare
+            that.draw(prizeId)
             LuckDraw.start(prizeId)
             switch (prizeId) {
               case 1:
-                this.prizeList = {
+                that.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '当日加息',
                   prizeValue: '+' + receivePrize.value,
@@ -291,7 +298,7 @@
                 }
                 break
               case 2:
-                this.prizeList = {
+                that.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '现金返现',
                   prizeValue: receivePrize.value,
@@ -299,7 +306,7 @@
                 }
                 break
               case 3:
-                this.prizeList = {
+                that.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '加息券',
                   prizeValue: receivePrize.value,
@@ -307,7 +314,7 @@
                 }
                 break
               case 4:
-                this.prizeList = {
+                that.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '现金券',
                   prizeValue: Number(receivePrize.value).toFixed(0),
@@ -315,15 +322,15 @@
                 }
                 break
               case 5:
-                this.prizeList = {
+                that.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '特权本金',
                   prizeValue: Number(receivePrize.value).toFixed(0),
-                  prizeCont: '前往【我的】>>【特权本金】即可查看，无需操作，收益次日到账哟～'
+                  prizeCont: '前往【我的】>>【特权本金】即可查看，无需操作，奖励次日到账哟～'
                 }
                 break
               case 6:
-                this.prizeList = {
+                that.prizeList = {
                   prizeType: receivePrize.prizeType,
                   prizeText: '谢谢',
                   prizeValue: receivePrize.value,
@@ -331,7 +338,7 @@
                 }
                 break
             }
-            this.drawCount = this.drawCount <= 0 ? this.drawCount : this.drawCount - 1
+            that.drawCount = that.drawCount <= 0 ? that.drawCount : that.drawCount - 1
           }
         })
       },
@@ -341,7 +348,7 @@
           url: '/hongcai/rest/lotteries/drawCount?token=' + token
         })
         .then(function (res) {
-          if (res.data && res.data.ret !== -1) {
+          if (res.data && res.data.ret !== -1 || res.data === 0) {
             that.drawCount = res.data
           }
         })

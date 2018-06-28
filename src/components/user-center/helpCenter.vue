@@ -12,7 +12,7 @@
       <div class="class1">
         <img src="../../images/user-center/cpjs.png" alt="" class="display-bl margin-auto" width="100%">
         <div class="mask">
-          <span class="line1 display-inbl"></span><span>产品介绍</span><span class="line2 display-inbl"></span>
+          <span class="line1 display-inbl"></span><span>项目介绍</span><span class="line2 display-inbl"></span>
         </div>
       </div>
     </router-link>
@@ -20,7 +20,7 @@
       <div class="class1">
         <img src="../../images/user-center/tzxg.png" alt="" class="display-bl margin-auto" width="100%">
         <div class="mask">
-          <span class="line1 display-inbl"></span><span>投资相关</span><span class="line2 display-inbl"></span>
+          <span class="line1 display-inbl"></span><span>出借相关</span><span class="line2 display-inbl"></span>
         </div>
       </div>
     </router-link>
