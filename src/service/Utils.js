@@ -101,27 +101,29 @@ let InviteShareUtils = {
     return shareItem
   },
   shareTitle: function () {
-    var titleArray = []
-    titleArray.push('加入“宏财合伙人计划” ，一起发宏财！')
-    titleArray.push('朋友！收下这份大礼，你就是我的人了！')
-    titleArray.push('这四海八荒的财运，我都攒到一起送给你啦！')
-    titleArray.push('一个好汉三个帮，投资就上宏财网！')
-    return titleArray[Math.floor(Math.random() * titleArray.length)]
+    // var titleArray = []
+    // titleArray.push('加入“宏财合伙人计划” ，一起发宏财！')
+    // titleArray.push('朋友！收下这份大礼，你就是我的人了！')
+    // titleArray.push('这四海八荒的财运，我都攒到一起送给你啦！')
+    // titleArray.push('一个好汉三个帮，投资就上宏财网！')
+    // return titleArray[Math.floor(Math.random() * titleArray.length)]
+    var title = '这等好事，我第一个就想到你！'
+    return title
   },
   shareSubtitle: function () {
-    var subTitle = '新手立享966元现金红包！'
+    var subTitle = '既然都是老朋友，当然要享受特殊待遇咯！请先收下这18888元专属福利吧！'
     return subTitle
   },
   shareLink: function (inviteCode) {
-    var shareLink = process.env.domain + '/activity/invite-sharing'
+    var shareLink = process.env.vue_domain + '/activity/invite-sharing'
     if (inviteCode) {
       shareLink = shareLink + '/' + inviteCode
     }
-    shareLink = shareLink + '?act=22&f=officeweb'
+    shareLink = shareLink + '?act=44&f=officeweb'
     return shareLink
   },
   shareImageUrl: function () {
-    var imageUrl = 'https://mmbiz.qlogo.cn/mmbiz_jpg/8MZDOEkib8Akr3KNzVxtZ95xUPndUzXu3CvoSK2iap7RdeDEU69hTG8tSSL0no6uV9T75FqVsJXj54hVicu40KMicw/0?wx_fmt=jpeg'
+    var imageUrl = 'https://www.hongcai.com/uploads/png/original/2018-05-04/image/fb877197d1f54f52922186bda181f8b4-original.png'
     return imageUrl
   }
 }

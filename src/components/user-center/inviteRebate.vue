@@ -15,12 +15,11 @@
           <p>首次出借成功(人)</p>
         </div>
       </div>
+      <div class="qrCode" id="qrcode"></div>
       <div class="tip">
-        <p>成功邀请一位好友</p>
-        <p>最高可获得1315元现金奖励</p>
+        <p>扫码加入宏财网</p>
+        <p>让我们一起启航财富，放心去飞！</p>
       </div>
-      <!-- <p class="invite-btn" @click="toInviteActivity">立即参与</p> -->
-      <p class="invite-btn"></p>
       <div class="share-route position-re">
         <ul class="circles">
           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
@@ -43,11 +42,14 @@
   </div>
 </template>
 <script>
+  import {QRCode} from '../../service/qrcode.js'
   import {bridgeUtil, InviteShareUtils} from '../../service/Utils'
   export default {
     name: 'inviteRebate',
     data () {
       return {
+        url: '',
+        qrcode: Object,
         inviteStat: {},
         voucher: '',
         shareItem: {},
@@ -78,6 +80,16 @@
         }, function (data) {
         })
       }
+    },
+    mounted () {
+      var that = this
+      that.qrcode = new QRCode(document.getElementById('qrcode'), {
+        text: that.url,
+        width: 150,
+        height: 150,
+        colorDark: '#000000',
+        colorLight: '#ffffff'
+      })
     },
     methods: {
       getInviteStat: function () {
@@ -110,6 +122,8 @@
         }).then((response) => {
           if (response.data && response.data.ret !== -1) {
             that.voucher = response.data.inviteCode
+            that.url = process.env.vue_domain + '/activity/invite-sharing/' + that.voucher
+            that.qrcode.makeCode(that.url)
             that.shareItem = InviteShareUtils.share(that.voucher)
             that.nativeNeedDatas = {
               'HC_shareType': 1,
@@ -142,6 +156,9 @@
   }
 </script>
 <style scoped>
+  #qrcode {
+    margin-top: 5%;
+  }
   .invite-rebate {
     background-image: linear-gradient(to bottom, #ff6000, #f93438);
     padding: .3rem .4rem .6rem;
@@ -151,11 +168,11 @@
   .invite-rebate-wrap {
     border-radius: .2rem;
     height: 98%;
-    background: url('../../images/user-center/invite-bg.png') no-repeat center 33%;
+    background: url('../../images/user-center/invite-bg.png') no-repeat center 60%;
     background-color: #fff;
     background-size: 100%;
     color: #ff611d;
-    padding-top: 4%;
+    padding-top: 2%;
     position: relative;
     /*overflow: hidden;*/
   }
@@ -176,21 +193,10 @@
     width: 40%;
   }
   .tip {
-    margin: 14% 0 4%;
-    font-size: .28rem;
-    line-height: .38rem;
-    font-weight: 500;
-  }
-  .invite-btn {
-    height: 12%;
-    line-height: .9rem;
-    font-size: .27rem;
-    color: #fff;
-    border-radius: .4rem;
-    /* background: url('../../images/user-center/invite-btn.png') no-repeat 0 0; */
-    background-size: 100%;
-    padding: 0;
-    margin: 0 auto;
+    margin: 2% 0;
+    font-size: .21rem;
+    line-height: .35rem;
+    color: #666;
   }
   .circles {
     position: absolute;
@@ -215,7 +221,9 @@
   .share-route p {
     font-size: .28rem;
     color: #fa6943;
-    margin: 15% 0 8%;
+    margin: 15% 0 0%;
+    position: relative;
+    top: -.2rem;
   }
   .share-list, .share-list-words {
     display: flex;
@@ -242,7 +250,7 @@
       padding-top: 0;
     }
     .tip {
-      margin: 8% 0 4%;
+      margin: 4% 0 4%;
     }
     .share-route p {
       margin: 8% 0 5%;

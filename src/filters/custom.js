@@ -23,13 +23,14 @@ let dateTime = value => {
   (now.getSeconds() < 10 ? '0' + now.getSeconds() : now.getSeconds())
 }
 
-let date = value => {
+let date = (value, format) => {
   // 时间格式 ‘yyyy-MM-dd’
   if (!value) { return }
+  if (!format) { format = '-' }
   var now = new Date(value)
   var month = now.getMonth() < 9 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1
-  return now.getFullYear() + '-' +
-  month + '-' +
+  return now.getFullYear() + format +
+  month + format +
   (now.getDate() < 10 ? '0' + now.getDate() : now.getDate())
 }
 
