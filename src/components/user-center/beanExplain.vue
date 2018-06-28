@@ -11,7 +11,7 @@
       <span class="num">2</span>
       <div class="content">
         <p>如何获取及使用宏豆？</p>
-        用户可通过注册、认证、投资、参与各项活动等操作赚取宏豆，赚取到的宏豆可以在【发现】>>【积分商城】中兑换物品。
+        用户可通过注册、开通银行存管、成功出借、平台活动等方式获得宏豆，获得的宏豆可以在【发现】>>【积分商城】中兑换各类优惠奖励。
       </div>
     </div>
     <div class="part_detail clearfix">
@@ -36,14 +36,14 @@
         </li>
         <li class="clearfix">
           <div class="content_l fl">
-            <p>首次投资成功</p>(投资精选或者尊贵有效)
+            <p>首次出借成功</p>(仅限宏财精选或尊贵项目）
           </div>
           <span class="fr">+{{rules.firstInvestPoints}}</span>
           <img src="../../images/user-center/bean.png" alt="" width="7.4%" class="fr">
         </li>
         <li class="clearfix">
           <div class="content_l fl">
-            <p class="single">首次完成投资人风险自测</p>
+            <p class="single">首次完成出借人风险测评</p>
           </div>
           <span class="fr">+{{rules.doQuestionnairePoints}}</span>
           <img src="../../images/user-center/bean.png" alt="" width="7.4%" class="fr">
@@ -64,14 +64,14 @@
         </li>
         <li class="clearfix">
           <div class="content_l fl">
-            <p class="single">被邀请的好友在一周内完成首投</p>
+            <p class="single">被邀好友注册后7天内首次出借成功</p>
           </div>
           <span class="fr">+{{rules.inviteFriendFirstWeekInvestPoints}}</span>
           <img src="../../images/user-center/bean.png" alt="" width="7.4%" class="fr">
         </li>
         <li class="clearfix">
           <div class="content_l fl">
-            <p>投资精选或者尊贵项目时</p>单笔每满{{rules.investThreshold}}元(不设上限)
+            <p>单笔出借金额每满{{rules.investThreshold}}元</p>(仅限宏财精选或尊贵项目，无上限）
           </div>
           <span class="fr">+{{rules.investPoints}}</span>
           <img src="../../images/user-center/bean.png" alt="" width="7.4%" class="fr">

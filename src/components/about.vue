@@ -20,7 +20,7 @@
             <li class="margin-0">
               <img src="../images/about/hklogo.png" height="25px" class="display-bl margin-auto margin-b-1">
               <p class="margin-auto margin-t-1p5 ft-1p4">
-                宏财网已正式对接海口联合农商银行资金存管系统（简称银行资金存管系统）。标的、资金信息同步上传北京市网贷协会，最大限度保护投资者利益。
+                宏财网已正式对接海口联合农商银行资金存管系统（简称银行资金存管系统）。标的、资金信息同步上传北京市网贷协会，最大限度保护出借者利益。
               </p>
               <div class="line position-re"><p class="margin-auto position-ab"></p></div>
             </li>
@@ -59,7 +59,7 @@
           <div>
             <img src="../images/about/unit1-img.png" width="75%" class="display-bl margin-auto margin-b-2">
           </div class="content">
-          <p class="ft-1p2 margin-b-0 content">宏财网 2014年上线运营，2016年获得1亿元A轮融资，凭借股东广泛的金融资源、博士团队的专业能力和严谨的风控模型与项目管理流程,在项目方十多年积累的金融资源生态圈中，为广大投资者筛选优质的投资项目。</p>
+          <p class="ft-1p2 margin-b-0 content">宏财网 2014年上线运营，2016年获得1亿元A轮融资，凭借股东广泛的金融资源、博士团队的专业能力和严谨的风控模型与项目管理流程,在项目方十多年积累的金融资源生态圈中，为广大出借者筛选优质的出借项目。</p>
         </div>
         <div class="unit2 padding-l-1 padding-r-1 padding-t-2 margin-b-2">
           <div class="title margin-auto text-center margin-b-1">
@@ -128,7 +128,7 @@
               <div class="lf_text clear fr">
                 <i class="fa fa-circle circle fl display-inb" aria-hidden="true"></i>
                 <span class="text fl display-inb">
-                  厦门大学金融学博士。曾在深圳创投、正道及大型金融控股集团任职，擅长行业状况分析，精通价格投资，长期负责企业上市及并购重组事宜，在创新创投项目工作方面具有深刻的见解与丰富的实战经验，擅长消费金融、小微金融产品设计和全流程风险管理。
+                  厦门大学金融学博士。曾在深圳创投、正道及大型金融控股集团任职，擅长行业状况分析，精通价格出借，长期负责企业上市及并购重组事宜，在创新创投项目工作方面具有深刻的见解与丰富的实战经验，擅长消费金融、小微金融产品设计和全流程风险管理。
                 </span>
               </div>
             </div>
@@ -147,7 +147,7 @@
               <div class="lf_text clear">
                 <i class="fa fa-circle circle fl display-inb" aria-hidden="true"></i>
                 <span class="text fl display-inb">
-                  华中科技大学博士，曾担任大学院长等职务，长期担任政府金融部门顾问，金融专家委员会成员，为各级政府、企事业单位作专题金融讲座上百次，曾先后担任洛玻等多家国有上市公司、民营企业独立董事，民间金融互联网化、阳光化倡导者，在证券、投资、网贷、供应链金融产品创新等多领域具有深刻认识与丰富经验，带领团队设计并落地实施多项金融产品。
+                  华中科技大学博士，曾担任大学院长等职务，长期担任政府金融部门顾问，金融专家委员会成员，为各级政府、企事业单位作专题金融讲座上百次，曾先后担任洛玻等多家国有上市公司、民营企业独立董事，民间金融互联网化、阳光化倡导者，在证券、出借、网贷、供应链金融产品创新等多领域具有深刻认识与丰富经验，带领团队设计并落地实施多项金融产品。
                 </span>
               </div>
             </div>

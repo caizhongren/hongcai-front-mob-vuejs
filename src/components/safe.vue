@@ -3,23 +3,6 @@
     <div class="safe-top">
       <img src="../images/safe/safe-top.jpg" width="100%">
     </div>
-    <div class="section section-one position-re margin-auto">
-      <div class="business text-center">
-        <div class="tittle margin-auto text-center">
-          <p class="margin-b-0">国有企业战略投资</p>
-        </div>
-        <div>
-          <img src="../images/safe/advantage1.png" class="display-bl margin-auto" width="70%">
-        </div>
-        <div class="advantages">
-          <ul class="display-bl margin-auto safe-black">
-            <li>国有企业战略投资1亿元</li>
-            <li>股东是政府直接出资的国有金融机构</li>
-            <li>财务由国有企业统一管理</li>
-          </ul>
-        </div>
-      </div>
-    </div>
     <div class="section section-two">
       <div class="business">
         <div class="tittle margin-auto text-center">
@@ -38,14 +21,14 @@
               <img src="../images/safe/li2.png" width="16%" class="fl">
               <div class="fr padding-r-0p5">
                 <p class="margin-b-0 safe-blue">信息报备</p>
-                <p class="margin-b-0 safe-black"> 宏财网积极落实监管政策，标的、资金信息同步上传北京市金融局、北京市网贷协会，最大限度保护投资者利益。</p>
+                <p class="margin-b-0 safe-black"> 宏财网积极落实监管政策，标的、资金信息同步上传北京市金融局、北京市网贷协会，最大限度保护出借人利益。</p>
               </div>
             </li>
             <li class="clearfix">
               <img src="../images/safe/li3.png" width="16%" class="fl">
               <div class="fr padding-r-0p5">
                 <p class="margin-b-0 safe-blue">第三方支付</p>
-                <p class="margin-b-0 safe-black"> 与通联、富友、联动优势等知名第三方机构达成战略合作。第三方支付、银行资金存管系统系统、银行系统共同构筑用户资金安全堡垒。</p>
+                <p class="margin-b-0 safe-black"> 与易宝、先锋、联动、连连等知名第三方机构达成战略合作。第三方支付、银行资金存管系统系统、银行系统共同构筑用户资金安全堡垒。</p>
               </div>
             </li>
           </ul>
@@ -55,7 +38,7 @@
     <div class="section section-thr margin-auto">
       <div class="business text-left">
         <div class="tittle margin-auto text-center">
-          <p class="margin-b-0">风险控制保障</p>
+          <p class="margin-b-0">风险控制</p>
         </div>
         <ul class="content margin-t-2">
           <li><p class="display-inb circle"> 第一层</p><span class="display-inb safe-black"> 严格甄选行业及资产</span></li>
@@ -79,7 +62,7 @@
     <div class="section section-fif margin-auto">
       <div class="business text-center position-re">
         <div class="tittle margin-auto text-center">
-          <p class="margin-b-0">信息隐私安全保障</p>
+          <p class="margin-b-0">信息隐私安全</p>
           <div class="position-ab m1 safe-black">两地三中心容灾备份</div>
           <div class="position-ab m2 safe-black">SSL128位数<br>据加密</div>
           <div class="position-ab m3 safe-black">专职安全系统<br>运维工程师</div>
@@ -90,10 +73,10 @@
     <div class="section section-six margin-auto">
       <div class="business">
         <div class="tittle margin-auto text-center">
-          <p class="margin-b-0">法律权益保障</p>
+          <p class="margin-b-0">法律权益</p>
         </div>
         <div class="content safe-black margin-auto">
-          <p class="margin-b-0 safe-black">宏财网在平台运作、借贷居间服务、财务管理等方面均合法合规。若上述风险防控措施仍不能覆盖全部风险，投资人的借款合同仍然有效，受国家法律保护。宏财网可以帮助投资人通过法律程序维护合法权益。</p>
+          <p class="margin-b-0 safe-black">宏财网在平台运作、借贷居间服务、财务管理等方面均合法合规。若上述风险防控措施仍不能覆盖全部风险，出借人的借款合同仍然有效，受国家法律保护。宏财网可以帮助出借人通过法律程序维护合法权益。</p>
         </div>
       </div>
     </div>

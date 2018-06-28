@@ -577,7 +577,7 @@ const routes = [
     path: '/safe',
     name: 'Safe',
     component: Safe,
-    meta: {title: '安全保障'}
+    meta: {title: '安全体系'}
   },
   {
     path: '/bind-wechat',

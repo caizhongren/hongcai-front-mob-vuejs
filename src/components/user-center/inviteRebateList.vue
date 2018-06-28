@@ -4,7 +4,7 @@
       <div class="list-header">
         <ul class="list-title bg-white">
           <li>好友</li>
-          <li>投资状态</li>
+          <li>出借状态</li>
         </ul>
         <div class="circle">
           <span class="right-c"></span>
@@ -15,7 +15,7 @@
         <ul v-show="showList">
           <li v-for="item in inviteList">
             <p class="ft-Arail">{{item.user.mobile}}</p>
-            <p v-bind:class="{'ft-orange': item.investAmount > 0}">{{ item.investAmount <= 0 ? '未投资' : '已投资'}}</p>
+            <p v-bind:class="{'ft-orange': item.investAmount > 0}">{{ item.investAmount <= 0 ? '未出借' : '已出借'}}</p>
           </li>
         </ul>
         <div class="noList" v-show="!showList">
