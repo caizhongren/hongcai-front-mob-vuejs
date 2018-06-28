@@ -153,7 +153,7 @@ export default {
       voucher: '',
       shareItem: {},
       nativeNeedDatas: {},
-      inviteNum: 1,
+      inviteNum: 0,
       slideTab: {},
       number: [1, 2, 3, 4, 5],
       version: 310
