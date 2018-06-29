@@ -34,7 +34,7 @@
         <div class="detail-item position-re">
           <span>还款方式：</span>按月付息，到期还本
           <img src="../images/project/tip.png" alt="还款方式" width="4%" @click="showTip = !showTip" class="showTip">
-          <span class="pro_des_dot_tip" v-if="showTip">还款计算方式说明：假设借款金额为X，年利率为Y，借款期限为Z天，每月实际计息天数为N天，则：每月应还款利息计算公示：X*Y*N/365；应还总利息计算公式为：X*Y*Z/365；应还本金X。</span>
+          <span class="pro_des_dot_tip" v-if="showTip">还款计算方式说明：假设借款金额为X，年利率为Y，借款期限为Z天，每月实际计息天数为N天，则：每月应还款利息计算公式：X*Y*N/365；应还总利息计算公式为：X*Y*Z/365；应还本金X。</span>
         </div>
         <div class="detail-item">
           <span>到期日期：</span>{{project.status === 10 ? '' : '预计'}}{{project.repaymentDate | date}}
