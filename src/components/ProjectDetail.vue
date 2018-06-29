@@ -8,7 +8,7 @@
         <p class="ft-Arial" v-show="newbie"><a>+</a><span>6</span>%</p>
         <p class="second">期望年均回报率</p>
         <div class="tip-list">
-          <span class="tip-item tip-item1"><span class="font-Arial margin-0">100</span>元起借</span>
+          <span class="tip-item tip-item1"><span class="font-Arial margin-0">100</span>元起出借</span>
           <span class="tip-item tip-item2"><span class="font-Arial margin-0">{{project.projectDays || 0}}</span>天项目期</span>
         </div>
         <div class="project-process clearfix">
