@@ -72,7 +72,7 @@
                   <p class="gift-name">【典籍经典宝箱】&nbsp;&nbsp;【金宠随机包】<br>【随机神能宝箱】&nbsp;&nbsp;【坐骑兑换缰绳】</p>
                 </div>
               </div>
-              <p class="text" v-if="!cdkey1">首投任意金额(不含债权转让类项目)即可获取价值<span>RMB1000</span>游戏礼包</p>
+              <p class="text" v-if="!cdkey1">首次出借任意金额(不含债权转让类项目)即可获取价值<span>RMB1000</span>游戏礼包</p>
               <div class="gongxi" v-if="cdkey1">
                 <p>恭喜您获得焚天【中级礼包】！</p>
                 <p>奖励兑换码为</p>
@@ -110,7 +110,7 @@
                     <p class="gift-name">【9级宝石】&nbsp;&nbsp;【高级天机卷】<br>【金钥匙】&nbsp;&nbsp;&nbsp;&nbsp;【神器印记礼包】</p>
                 </div>
               </div>
-              <p class="text" v-if="!cdkey2">活动期间，累计投资金额满5000元 (不含债权转让类项目)即可获取价值<span>RMB2500</span>游戏礼包</p>
+              <p class="text" v-if="!cdkey2">活动期间，累计出借金额满5000元 (不含债权转让类项目)即可获取价值<span>RMB2500</span>游戏礼包</p>
               <div class="gongxi" v-if="cdkey2">
                 <p>恭喜您获得焚天【高级礼包】！</p>
                 <p>奖励兑换码为</p>

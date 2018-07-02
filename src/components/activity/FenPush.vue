@@ -46,51 +46,64 @@
       </div>
       <!-- 产品特点 -->
       <div class="product">
-        <p class="product-title">产品特点</p>
+        <p class="product-title">项目特点</p>
         <div class="product-box">
-          <p class="txt"><img src="../../images/fentian/icon-product.png" alt="" class="product-icon1">  风控严格：信托耕耘十多年的金融生态圈，借款企业信息知根知底，还款有保障。</p>
-          <p class="txt txt2"><img src="../../images/fentian/icon-product.png" alt="" class="product-icon2">  平台稳健：上线三年多，始终零逾期，资金由银行存管，信息安全通过国家等保三级认证。</p>
-          <ul class="projects">
-            <li class="fl">
-              <div class="jx">
-                <p>以55天汽车金融为主，年化收益率 7.8%-9.8%</p>
-                <p>宏财精选项目</p>
-              </div>
-            </li>
-            <li class="fr">
-              <div class="zg">
-                <p>以180天以上小微金融为主，年化收益率10.3%-11%</p>
-                <p>宏财尊贵项目</p>
-              </div>
-            </li>
-          </ul>
+          <div class="projectType">
+            <p>精选项目</p>
+            <div>
+              <p>期限：180天以内(含180天)</p>
+              期望年均回报率：8%-10%
+            </div>
+          </div>
+          <p class="description">由优质资产方推荐，经过宏财网严格风控程序层层筛选出的优质中短期金融资产。项目均有足额抵押物，灵活稳健，具有一定流动性。</p>
+          <div class="projectType">
+            <p>尊贵项目</p>
+            <div>
+              <p>期限：180天以上</p>
+              期望年均回报率：10%-12%
+            </div>
+          </div>
+          <p class="description">由优质资产方推荐，经过宏财网严格风控程序层层筛选出的优质中长期金融资产。宏财网对项目全程把控，回报丰厚。</p>
+          <div class="tips"><img src="../../images/fentian/tips.png" alt="提示" width="6%"> 会员还可按等级享受加息优惠</div>
         </div>
       </div>
-      <!-- 选择宏财的4大理由 -->
+      <!-- 战略合作 -->
       <div class="hongcai">
-        <div class="title">选择宏财的4大理由</div>
+        <div class="title">战略合作</div>
         <ul class="abouts">
           <li>
-            <img src="../../images/fentian/about-1.png" alt="">
-            <p>银行存管</p>
-            <p>2017年6月正式上线 <br/>海口联合农商银行资金存管</p>
+            <img src="../../images/fentian/hk.png" alt="">
+            <p>海口银行</p>
+            <p>全程资金存管</p>
           </li>
           <li>
-            <img src="../../images/fentian/about-2.png" alt="">
-            <p>国资背景</p>
-            <p>2016年获国有企业<br/>1亿元A轮战略融资</p>
+            <img src="../../images/fentian/fdd.png" alt="">
+            <p>法大大</p>
+            <p>合同电子签章</p>
           </li>
           <hr class="hr hr1" width="85%" color="#490745">
           <hr class="hr" width="85%" color="#490745">
           <li>
-            <img src="../../images/fentian/about-3.png" alt="">
-            <p>博士团队</p>
-            <p>拥有博士高管团队的<br/>互联网金融信息服务平台</p>
+            <img src="../../images/fentian/yb.png" alt="">
+            <p>易宝支付</p>
+            <p>合作支付通道</p>
           </li>
           <li>
-            <img src="../../images/fentian/about-4.png" alt="">
-            <p>优质资产</p>
-            <p>十多年金融生态圈<br/>积累优质资产</p>
+            <img src="../../images/fentian/xrj.png" alt="">
+            <p>鑫融基</p>
+            <p>优质资产推荐方</p>
+          </li>
+          <hr class="hr hr1" width="85%" color="#490745">
+          <hr class="hr" width="85%" color="#490745">
+          <li>
+            <img src="../../images/fentian/gx.png" alt="">
+            <p>国信</p>
+            <p>优质资产推荐方</p>
+          </li>
+          <li>
+            <img src="../../images/fentian/qt.png" alt="">
+            <p>青桐</p>
+            <p>优质资产推荐方</p>
           </li>
         </ul>
       </div>
@@ -269,7 +282,7 @@
   }
   .hongcai {
     width: 85%;
-    height: 5.6rem;
+    height: 7.6rem;
     background: url('../../images/fentian/bg-box2.png') no-repeat center center;
     background-size: 100% 100%;
     margin: 0.5rem auto 0;
@@ -297,15 +310,16 @@
     font-weight: bold;
     line-height: 1.33;
     letter-spacing: 1.1px;
-    color: #340e36;
+    color: #3e1543;
     text-align: center;
   }
   .hongcai .abouts li p:nth-child(3) {
     line-height: 1.2;
-    font-size: .2rem;
-    transform: scale(0.95);
+    letter-spacing: normal;
+    font-size: .21rem;
+    /* transform: scale(0.95); */
     font-weight: normal;
-    margin-top: .1rem;
+    margin-top: .05rem;
   }
   .hongcai .abouts li:nth-child(1) p:nth-child(3), .hongcai .abouts li:nth-child(2) p:nth-child(3) {
     margin-bottom: .1rem;
@@ -328,43 +342,6 @@
     position: relative;
     top: -.35rem;
   }
-  ul.projects {
-    overflow: hidden;
-    clear: both;
-    width: 100%;
-    margin: 1rem auto;
-  }
-  ul.projects li {
-    width: 50%;
-    height: 2.55rem;
-    background: url('../../images/fentian/jx.png') no-repeat center center;
-    background-size: 100% 100%;
-    margin-bottom: 0; 
-  }
-  ul.projects li .jx, ul.projects li .zg {
-    width: 61%;
-    margin: .35rem auto;
-  }
-  ul.projects li .jx p, ul.projects li .zg p {
-    text-align: center;
-  }
-  ul.projects li .jx p:nth-child(1), ul.projects li .zg p:nth-child(1) {
-    font-size: .2rem;
-    line-height: 1.38;
-    text-align: justify;
-    color: #240d1f;
-    margin-bottom: 0;
-    height: 1.38rem;
-  }
-  ul.projects li .jx p:nth-child(2), ul.projects li .zg p:nth-child(2) {
-    font-size: .25rem;
-    color: #fff;
-    font-weight: bold;
-  }
-  ul.projects li:nth-child(2) {
-    background: url('../../images/fentian/zg.png') no-repeat center center;
-    background-size: 104% 101%;
-  }
   .product {
     padding: .5rem 0;
   }
@@ -386,42 +363,65 @@
     background: url('../../images/fentian/bg-box.png') no-repeat center center;
     background-size: 100% 100%;
     width: 85%;
-    height: 5.5rem;
+    height: 6.5rem;
     margin: 0 auto;
     margin-top: -.35rem;
     z-index: 0;
     position: relative;
     padding: .5rem 0 .4rem;
   }
-  .product-box .txt, .product-box .txt2 {
-    border-radius: 27.8px;
-    background-color: #390f3e;
-    color: #fff;
-    width: 86%;
-    font-size: .2rem;
-    position: relative;
-    text-align: justify;
-    margin: .12rem .3rem;
+  .product-box .projectType {
+    background: url('../../images/fentian/xmbg.png') no-repeat center center;
+    background-size: 100% 100%;
+    width: 100%;
+    height: 1.78rem;
+    margin: 0 auto;
+    padding: .28rem .6rem .28rem .42rem;
   }
-  .product-box .txt {
-    padding: .12rem .25rem .1rem .32rem;
-    float: right;
-  }
-  .product-box .txt2 {
-    padding: .12rem .32rem .1rem .25rem;
+  .product-box .projectType>p {
     float: left;
+    width: 5px;
+    color: #fff;
+    text-align: center;
+    line-height: 1.22;
+    font-size: .23rem;
   }
-  .product-box .product-icon1, .product-box .product-icon2 {
-    width: 11%;
-    position: absolute;
+  .product-box .projectType>div {
+    float: right;
+    width: 74%;
+    color: #390f3e;
+    line-height: 1.97;
+    letter-spacing: 0.4px;
+    font-size: .23rem;
+    font-weight: bold;
+    text-align: left;
   }
-  .product-box .product-icon1 {
-    top: 0;
-    left: -.3rem;
+  .product-box .projectType>div>p {
+    border-bottom: 1px solid #f4c97b;
   }
-  .product-box .product-icon2 {
-    bottom: 0;
-    right: -.3rem;
+  .product-box .description {
+    width: 80%;
+    margin: -.2rem auto .1rem;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: justify;
+    color: #390f3e;
+    font-size: .21rem;
+  }
+  .product-box .tips {
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #461f4b;
+    font-size: .21rem;
+    margin-top: .35rem;
+  }
+  .product-box .tips img {
+    vertical-align: text-bottom;
+    margin-right: .1rem;
   }
   .ft-yellow {
     color: #f6ff00;
