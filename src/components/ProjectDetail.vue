@@ -8,7 +8,7 @@
         <p class="ft-Arial" v-show="newbie"><a>+</a><span>6</span>%</p>
         <p class="second">期望年均回报率</p>
         <div class="tip-list">
-          <span class="tip-item tip-item1"><span class="font-Arial margin-0">100</span>元起借</span>
+          <span class="tip-item tip-item1"><span class="font-Arial margin-0">100</span>元起出借</span>
           <span class="tip-item tip-item2"><span class="font-Arial margin-0">{{project.projectDays || 0}}</span>天项目期</span>
         </div>
         <div class="project-process clearfix">
@@ -34,7 +34,7 @@
         <div class="detail-item position-re">
           <span>还款方式：</span>按月付息，到期还本
           <img src="../images/project/tip.png" alt="还款方式" width="4%" @click="showTip = !showTip" class="showTip">
-          <span class="pro_des_dot_tip" v-if="showTip">还款计算方式说明：假设借款金额为X，年利率为Y，借款期限为Z天，每月实际计息天数为N天，则：每月应还款利息计算公示：X*Y*N/365；应还总利息计算公式为：X*Y*Z/365；应还本金X。</span>
+          <span class="pro_des_dot_tip" v-if="showTip">还款计算方式说明：假设借款金额为X，年利率为Y，借款期限为Z天，每月实际计息天数为N天，则：每月应还款利息计算公式：X*Y*N/365；应还总利息计算公式为：X*Y*Z/365；应还本金X。</span>
         </div>
         <div class="detail-item">
           <span>到期日期：</span>{{project.status === 10 ? '' : '预计'}}{{project.repaymentDate | date}}
