@@ -107,6 +107,7 @@ const operatingReport2016 = r => require.ensure([], () => r(require('../componen
 const AuditPDF = r => require.ensure([], () => r(require('../components/disclosure/AuditPDF.vue')), 'AuditPDF')
 const ActivityInviteSharing = r => require.ensure([], () => r(require('../components/activity/inviteSharing.vue')), 'ActivityInviteSharing')
 const ActivitySucceed = r => require.ensure([], () => r(require('../components/activity/activitySucceed.vue')), 'ActivitySucceed')
+const Bean = r => require.ensure([], () => r(require('../components/bean/bean.vue')), 'Bean')
 const BeanMall = r => require.ensure([], () => r(require('../components/bean/beanMall.vue')), 'BeanMall')
 const BeanCommodity = r => require.ensure([], () => r(require('../components/bean/commodity.vue')), 'BeanCommodity')
 const BeanExchange = r => require.ensure([], () => r(require('../components/bean/exchange.vue')), 'BeanExchange')
@@ -722,10 +723,15 @@ const routes = [
   },
   {
     path: '/bean',
-    name: 'BeanMall',
-    component: BeanMall,
-    meta: {title: '宏豆商城'},
+    name: 'Bean',
+    component: Bean,
     children: [
+      {
+        path: 'mall',
+        name: 'BeanMall',
+        component: BeanMall,
+        meta: {title: '宏豆商城'}
+      },
       {
         path: 'commodity',
         name: 'BeanCommodity',
