@@ -107,6 +107,11 @@ const operatingReport2016 = r => require.ensure([], () => r(require('../componen
 const AuditPDF = r => require.ensure([], () => r(require('../components/disclosure/AuditPDF.vue')), 'AuditPDF')
 const ActivityInviteSharing = r => require.ensure([], () => r(require('../components/activity/inviteSharing.vue')), 'ActivityInviteSharing')
 const ActivitySucceed = r => require.ensure([], () => r(require('../components/activity/activitySucceed.vue')), 'ActivitySucceed')
+const BeanMall = r => require.ensure([], () => r(require('../components/bean/beanMall.vue')), 'BeanMall')
+const BeanCommodity = r => require.ensure([], () => r(require('../components/bean/commodity.vue')), 'BeanCommodity')
+const BeanExchange = r => require.ensure([], () => r(require('../components/bean/exchange.vue')), 'BeanExchange')
+const BeanRecord = r => require.ensure([], () => r(require('../components/bean/record.vue')), 'BeanRecord')
+const exchangeDetail = r => require.ensure([], () => r(require('../components/bean/exchangeDetail.vue')), 'exchangeDetail')
 
 Vue.use(Router)
 Vue.use(VueCookie)
@@ -299,12 +304,6 @@ const routes = [
     name: 'NoticeDetail',
     component: NoticeDetail,
     meta: {title: '公告详情'}
-  },
-  {
-    path: '/user-center/bean-detail',
-    name: 'BeanDetail',
-    component: BeanDetail,
-    meta: {title: '宏豆明细'}
   },
   {
     path: '/user-center/postLoanManagementInfo/:projectNum',
@@ -714,6 +713,42 @@ const routes = [
     name: 'BeanExplain',
     component: BeanExplain,
     meta: {title: '宏豆小百科'}
+  },
+  {
+    path: '/user-center/bean-detail',
+    name: 'BeanDetail',
+    component: BeanDetail,
+    meta: {title: '宏豆明细'}
+  },
+  {
+    path: '/bean',
+    name: 'BeanMall',
+    component: BeanMall,
+    meta: {title: '宏豆商城'},
+    children: [
+      {
+        path: 'commodity',
+        name: 'BeanCommodity',
+        component: BeanCommodity
+      },
+      {
+        path: 'exchange/:status',
+        name: 'BeanExchange',
+        component: BeanExchange
+      },
+      {
+        path: 'exchange-record',
+        name: 'BeanRecord',
+        component: BeanRecord,
+        meta: {title: '兑换记录'}
+      },
+      {
+        path: 'exchange-detail',
+        name: 'exchangeDetail',
+        component: exchangeDetail,
+        meta: {title: '兑换详情'}
+      }
+    ]
   },
   {
     path: '/:page',
