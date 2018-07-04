@@ -727,13 +727,13 @@ const routes = [
     component: Bean,
     children: [
       {
-        path: 'mall',
+        path: '',
         name: 'BeanMall',
         component: BeanMall,
         meta: {title: '宏豆商城'}
       },
       {
-        path: 'commodity',
+        path: 'commodity/:id',
         name: 'BeanCommodity',
         component: BeanCommodity
       },
@@ -749,7 +749,7 @@ const routes = [
         meta: {title: '兑换记录'}
       },
       {
-        path: 'exchange-detail',
+        path: 'exchange-detail/:number',
         name: 'exchangeDetail',
         component: exchangeDetail,
         meta: {title: '兑换详情'}
