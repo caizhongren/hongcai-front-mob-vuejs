@@ -40,6 +40,7 @@
     props: ['token'],
     created: function () {
       this.status = this.$route.params.status
+      this.status === 0 ? document.title = '兑换失败' : document.title = '兑换成功'
     },
     methods: {
       toInvest () {
