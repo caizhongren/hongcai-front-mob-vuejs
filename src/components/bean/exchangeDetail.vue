@@ -70,7 +70,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .exchangeDetail {
     background: #ecebf1;
     width: 100%;
