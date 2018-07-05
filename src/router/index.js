@@ -131,72 +131,74 @@ const routes = [
   {
     path: '/about',
     component: About,
+    meta: {index: 1},
     children: [
       {
         path: 'management-team',
         name: 'ManagementTeam',
         component: ManagementTeam,
-        meta: {title: '走进宏财'}
+        meta: {title: '走进宏财', index: 2}
       },
       {
         path: '',
         name: 'Introduction',
         component: Introduction,
-        meta: {title: '走进宏财'}
+        meta: {title: '走进宏财', index: 2}
       },
       {
         path: 'contact-us',
         name: 'ContactUs',
         component: ContactUs,
-        meta: {title: '走进宏财'}
+        meta: {title: '走进宏财', index: 2}
       },
       {
         path: 'partner',
         name: 'Partner',
         component: Partner,
-        meta: {title: '走进宏财'}
+        meta: {title: '走进宏财', index: 2}
       }
     ]
   },
   {
     path: '/disclosure',
     component: Disclosure,
+    meta: {index: 1},
     children: [
       {
         path: '',
         name: 'CommitmentLetter',
         component: CommitmentLetter,
-        meta: {title: '信息披露'}
+        meta: {title: '信息披露', index: 2}
       },
       {
         path: 'record-information',
         name: 'RecordInformation',
         component: RecordInformation,
-        meta: {title: '信息披露'}
+        meta: {title: '信息披露', index: 2}
       },
       {
         path: 'audit-information',
         name: 'AuditInformation',
         component: AuditInformation,
-        meta: {title: '信息披露'}
+        meta: {title: '信息披露', index: 2}
       },
       {
         path: 'organization',
         name: 'Organization',
         component: Organization,
-        meta: {title: '信息披露'}
+        meta: {title: '信息披露', index: 2}
       },
       {
         path: 'business-information',
         name: 'BusinessInformation',
         component: BusinessInformation,
-        meta: {title: '信息披露'}
+        meta: {title: '信息披露', index: 2}
       },
       {
         path: 'policies-regulations',
         name: 'PoliciesRegulations',
         component: PoliciesRegulations,
-        meta: {title: '信息披露'}
+        meta: {title: '信息披露', index: 2}
       }
     ]
   },
@@ -204,7 +206,7 @@ const routes = [
     path: '/policies/:id',
     name: 'Policies',
     component: Policies,
-    meta: {title: '信息披露'}
+    meta: {title: '信息披露', index: 3}
   },
   {
     path: '/user-center/help-center',
@@ -233,13 +235,13 @@ const routes = [
     path: '/user-center/invite-rebate',
     name: 'InviteRebate',
     component: InviteRebate,
-    meta: {title: '我的邀请'}
+    meta: {title: '我的邀请', index: 1}
   },
   {
     path: '/user-center/invite-rebate-list',
     name: 'inviteRebateList',
     component: inviteRebateList,
-    meta: {title: '邀请列表'}
+    meta: {title: '邀请列表', index: 2}
   },
   {
     path: '/user-center/membership',
@@ -256,37 +258,37 @@ const routes = [
     path: '/activity/invite',
     name: 'Invite',
     component: Invite,
-    meta: {title: '邀请好友'}
+    meta: {title: '邀请好友', index: 1}
   },
   {
     path: '/activity/reward',
     name: 'ActivityReward',
     component: ActivityReward,
-    meta: {title: '我的奖励'}
+    meta: {title: '我的奖励', index: 2}
   },
   {
     path: '/activity/invite-sharing/:inviteCode',
     name: 'ActivityInviteSharing',
     component: ActivityInviteSharing,
-    meta: {title: '宏财新手大礼包，抢！'}
+    meta: {title: '宏财新手大礼包，抢！', index: 1}
   },
   {
     path: '/activity/invite-succeed',
     name: 'ActivitySucceed',
     component: ActivitySucceed,
-    meta: {title: '邀请好友'}
+    meta: {title: '邀请好友', index: 2}
   },
   {
     path: '/activity/lottery',
     name: 'Lottery',
     component: Lottery,
-    meta: {title: '幸运大抽奖'}
+    meta: {title: '幸运大抽奖', index: 1}
   },
   {
     path: '/activity/user-lottery-record',
     name: 'LotteryRecord',
     component: LotteryRecord,
-    meta: {title: '我的奖励'}
+    meta: {title: '我的奖励', index: 2}
   },
   {
     path: '/user-center/bankcard-limit',
@@ -358,13 +360,13 @@ const routes = [
     path: '/activity/fen-push',
     name: 'FenPush',
     component: FenPush,
-    meta: {title: '超值限量礼包免费领'}
+    meta: {title: '超值限量礼包免费领', index: 1}
   },
   {
     path: '/activity/fen-push-success',
     name: 'FenPushSuccess',
     component: FenPushSuccess,
-    meta: {title: '超值限量礼包免费领'}
+    meta: {title: '超值限量礼包免费领', index: 2}
   },
   {
     path: '/activity/Womens-Day',
@@ -483,37 +485,38 @@ const routes = [
   {
     path: '/activity/fools-day',
     component: FoolDays,
+    meta: {index: 1},
     children: [
       {
         path: '',
         name: 'FoolDaysIndex',
         component: FoolDaysIndex,
-        meta: {title: '愚你同乐'}
+        meta: {title: '愚你同乐', index: 1}
       },
       {
         path: 'question',
         name: 'FoolQuestion',
         component: FoolQuestion,
-        meta: {title: '愚你同乐'}
+        meta: {title: '愚你同乐', index: 2}
       },
       {
         path: 'result',
         name: 'FoolResult',
         component: FoolResult,
-        meta: {title: '愚你同乐'}
+        meta: {title: '愚你同乐', index: 2}
       },
       {
         path: 'reportCard/:number',
         name: 'FoolReportCard',
         component: FoolReportCard,
-        meta: {title: '愚你同乐'}
+        meta: {title: '愚你同乐', index: 3}
       },
 
       {
         path: 'record',
         name: 'FoolRecord',
         component: FoolRecord,
-        meta: {title: '愚你同乐'}
+        meta: {title: '愚你同乐', index: 3}
       },
       {
         path: 'exchange',
@@ -684,19 +687,19 @@ const routes = [
     path: '/operating-report-2017',
     name: 'operatingReport2017',
     component: operatingReport2017,
-    meta: {title: '2017年运营年报'}
+    meta: {title: '2017年运营年报', index: 3}
   },
   {
     path: '/operating-report-2016',
     name: 'operatingReport2016',
     component: operatingReport2016,
-    meta: {title: '2016年运营年报'}
+    meta: {title: '2016年运营年报', index: 3}
   },
   {
     path: '/auditPDF',
     name: 'AuditPDF',
     component: AuditPDF,
-    meta: {title: '2017年度财务审计报告'}
+    meta: {title: '2017年度财务审计报告', index: 3}
   },
   {
     path: '/qrcode',
@@ -713,46 +716,49 @@ const routes = [
     path: '/user-center/bean-explain',
     name: 'BeanExplain',
     component: BeanExplain,
-    meta: {title: '宏豆小百科'}
+    meta: {title: '宏豆小百科', index: 4}
   },
   {
     path: '/user-center/bean-detail',
     name: 'BeanDetail',
     component: BeanDetail,
-    meta: {title: '宏豆明细'}
+    meta: {title: '宏豆明细', index: 3}
   },
   {
     path: '/bean',
     name: 'Bean',
     component: Bean,
+    meta: {index: 1},
     children: [
       {
         path: '',
         name: 'BeanMall',
         component: BeanMall,
-        meta: {title: '宏豆商城'}
+        meta: {title: '宏豆商城', index: 2}
       },
       {
         path: 'commodity/:id',
         name: 'BeanCommodity',
-        component: BeanCommodity
+        component: BeanCommodity,
+        meta: {index: 3}
       },
       {
         path: 'exchange/:status',
         name: 'BeanExchange',
-        component: BeanExchange
+        component: BeanExchange,
+        meta: {index: 4}
       },
       {
         path: 'exchange-record',
         name: 'BeanRecord',
         component: BeanRecord,
-        meta: {title: '兑换记录'}
+        meta: {title: '兑换记录', index: 3}
       },
       {
         path: 'exchange-detail/:number',
         name: 'exchangeDetail',
         component: exchangeDetail,
-        meta: {title: '兑换详情'}
+        meta: {title: '兑换详情', index: 4}
       }
     ]
   },

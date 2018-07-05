@@ -10,7 +10,7 @@
     <ul class="tabs">
       <li class="fl" @click="toRouter(0)">
         <img src="../../images/beans/bean-icon.png" alt="" width="18%">
-        <p>宏豆<span> {{bean}}</span></p>
+        <p>宏豆<span v-if="$parent.token && $parent.token !== ''"> {{bean}}</span></p>
       </li>
       <li class="fr" @click="toRouter(1)">
         <img src="../../images/beans/bean-record.png" alt="" width="17.5%">
@@ -57,7 +57,7 @@
           }
         ],
         Interval: null,
-        bean: 20020290,
+        bean: 0,
         giftLists: [
           {
             id: 0,
@@ -106,8 +106,16 @@
     },
     props: ['token'],
     watch: {
+      '$parent.token': function (val) {
+        bridgeUtil.webConnectNative('HCNative_BeanDetail', null, {
+          // 1 需要显示 0 不需要显示
+          isShow: 0
+        }, function (res) {}, null)
+        val && val !== '' ? this.getUserPoints() : null
+      }
     },
     created () {
+      this.$parent.token ? this.getUserPoints() : null
       bridgeUtil.webConnectNative('HCNative_BeanDetail', null, {
         // 1 需要显示 0 不需要显示
         isShow: 0
@@ -120,6 +128,16 @@
       this.setCarousel()
     },
     methods: {
+      getUserPoints () {
+        var that = this
+        that.$http('/hongcai/rest/users/0/account?token=' + that.$parent.token).then(function (res) {
+          if (res && res.ret !== -1) {
+            that.bean = res.data.points
+          } else {
+            console.log(res.data.msg)
+          }
+        })
+      },
       setCarousel () { // 礼包布局配置
         var wrapper = document.getElementById('wrapper')
         Carousel.mCarousel(wrapper, {
