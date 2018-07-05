@@ -14,7 +14,7 @@
     <button class="selectGear dissatisfaction font-w" :class="" v-if="stock == 0">已兑完</button>
     <div class="selectGear" :class="" v-if="stock != 0 && gear == 1">
       <p class="gear-one"><span class="presentPrice">207</span><i></i></p>
-      <button class="gear-one-btn bg-orange" v-if="beanRemainder >= requireNumber" @click="exchangeReward()">确认兑换</button>
+      <button class="gear-one-btn bg-orange" v-if="beanRemainder >= requireNumber" @click="toConfirm()">确认兑换</button>
       <button class="gear-one-btn dissatisfaction" v-if="beanRemainder < requireNumber">宏豆不足</button>
     </div>
   	<button class="selectGear font-w bg-orange" :class="" v-if="stock != 0 && gear != 1" @click="modalappear()">选择档位</button>
@@ -28,11 +28,20 @@
         </ul>
         <div class="selectGear fixed-to-absolute" :class="">
           <p class="gear-one"><span class="presentPrice">207</span><i></i></p>
-          <button class="gear-one-btn bg-orange" v-if="beanRemainder >= requireNumber" @click="exchangeReward(selectedTab)">确认兑换</button>
+          <button class="gear-one-btn bg-orange" v-if="beanRemainder >= requireNumber" @click="toConfirm()">确认兑换</button>
           <button class="gear-one-btn dissatisfaction" v-if="beanRemainder < requireNumber">宏豆不足</button>
         </div>
       </div>
     </transition>
+    <div class="mask-common mask1" v-if="confirmExchange">
+      <div class="alert-wrap">
+        <div class="text">是否确认消耗<span class="orange-ft">88</span>宏豆兑换该商品？</div>
+        <div class="i-know">
+        <div class="" @click="afterConfirm()">取消</div>
+        <div class="" @click="exchangeReward(selectedTab)">确定</div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -50,6 +59,7 @@
         modalShow: false,
         gearList: ['15000起投', '7500起投', '2500起投', '7500起投'],
         selectedTab: 0,
+        confirmExchange: false,
         styleObject: {
           color: '#666',
           background: '#000000'
@@ -60,12 +70,14 @@
     watch: {
       modalShow (val) {
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+      },
+      confirmExchange (val) {
+        val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
     created: function () {
       document.title = '免费体现券'
       this.status = this.$route.params.status
-      console.log(this.showErr)
     },
     methods: {
       toInvest () {
@@ -81,15 +93,21 @@
       },
       selectGear (index) {
         this.selectedTab = index
-        console.log(this.selectedTab)
       },
       exchangeReward (number) {
+        this.afterConfirm()
         if (!number && number !== 0) {
-          console.log('只有一个档位')
         } else {
-          console.log(number)
           this.$parent.showErrMsg('兑换失败', '', this.styleObject)
         }
+      },
+      toConfirm () {
+        this.confirmExchange = true
+        this.animateStaus = false
+        this.modalShow = false
+      },
+      afterConfirm () {
+        this.confirmExchange = false
       }
     }
   }
@@ -99,7 +117,6 @@
     border: none;
   }
   .exchange-detail{
-  	height: 100%;
   	text-align: left;
   }
   .prize-banner{
@@ -207,6 +224,9 @@
   .bg-orange{
     background: #ff611d;
   }
+  .orange-ft{
+    color: #ff611d;
+  }
   .gear-one{
     border-top: 1px solid #dddddd;
     border-bottom: 1px solid #dddddd;
@@ -235,16 +255,17 @@
   }
 /*选择档位模态框*/
   .choose-modal{
-    height: 100%;
     width: 100%;
     background: rgba(0,0,0,0.4);
-    position: absolute;
+    position: fixed;
     z-index: 100;
     left: 0;
     top: 0;
+    bottom: 0;
+    right: 0;
   }
   .gear-container{
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     background: #fff;
@@ -303,5 +324,30 @@
   }
   .fixed-to-absolute{
     position: absolute;
+  }
+  .mask-common{
+    text-align: center;
+    background-color: rgba(0,0,0,0.9) !important;
+  }
+  .i-know{
+    display: flex;
+  }
+  .i-know div{
+    flex: 1;
+  }
+  .i-know div:first-child{
+    color: #666666;
+    border-right: 1px solid #ddd;
+  }
+  .i-know div:last-child{
+    color: #ff611d;
+  }
+  .mask1 .alert-wrap .text{
+    font-size: .26rem;
+    font-weight: bold;
+    height: 1.6rem;
+  }
+  .mask1 .alert-wrap{
+    width: 76%;
   }
 </style>
