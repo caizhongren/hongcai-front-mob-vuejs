@@ -102,8 +102,6 @@ export default {
     '$route': function (to, from) {
       this.getToken()
       // 如果to的索引值为0，不添加任何动画；如果to索引大于from索引,判断为前进状态,反之则为后退状态
-      console.log(to.meta.index)
-      console.log(from.meta.index)
       if (to.meta.index < from.meta.index) {
         this.transitionName = 'slide-right'
       } else {
