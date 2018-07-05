@@ -212,12 +212,13 @@ const routes = [
     path: '/user-center/help-center',
     name: 'HelpCenter',
     component: HelpCenter,
-    meta: {title: '帮助中心'}
+    meta: {title: '帮助中心', index: 1}
   },
   {
     path: '/user-center/help/:type',
     name: 'Help',
-    component: Help
+    component: Help,
+    meta: {index: 2}
   },
   {
     path: '/user-center/questionnaire',
@@ -235,13 +236,13 @@ const routes = [
     path: '/user-center/invite-rebate',
     name: 'InviteRebate',
     component: InviteRebate,
-    meta: {title: '我的邀请', index: 1}
+    meta: {title: '我的邀请'}
   },
   {
     path: '/user-center/invite-rebate-list',
     name: 'inviteRebateList',
     component: inviteRebateList,
-    meta: {title: '邀请列表', index: 2}
+    meta: {title: '邀请列表'}
   },
   {
     path: '/user-center/membership',
