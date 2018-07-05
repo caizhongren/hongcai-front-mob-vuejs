@@ -26,7 +26,7 @@ export default {
   name: 'app',
   data () {
     return {
-      token: '',
+      token: 'efad34123d2ba43d3b95e501e295e0d2b1f0253e23d88fe8',
       showErr: false,
       showLongErr: false,
       errMsg: '',
@@ -39,24 +39,6 @@ export default {
   created: function () {
     this.getToken()
     this.receiveToken()
-    var fundebug = require('fundebug-javascript')
-    fundebug.apikey = '2dc9a9abf8ec54b6444f6131cf9fa9accd3274d3a574df6c6669d323ad200e5f'
-    function formatComponentName (vm) {
-      if (vm.$root === vm) return 'root'
-      var name = vm._isVue ? (vm.$options && vm.$options.name) || (vm.$options && vm.$options._componentTag) : vm.name
-      return (name ? 'component <' + name + '>' : 'anonymous component') + (vm._isVue && vm.$options && vm.$options.__file ? ' at ' + (vm.$options && vm.$options.__file) : '')
-    }
-    Vue.config.errorHandler = function (err, vm, info) {
-      var componentName = formatComponentName(vm)
-      var propsData = vm.$options && vm.$options.propsData
-      fundebug.notifyError(err, {
-        metaData: {
-          componentName: componentName,
-          propsData: propsData,
-          info: info
-        }
-      })
-    }
   },
   mounted () {
     var vue = this
@@ -102,8 +84,6 @@ export default {
     '$route': function (to, from) {
       this.getToken()
       // 如果to的索引值为0，不添加任何动画；如果to索引大于from索引,判断为前进状态,反之则为后退状态
-      console.log(to.meta.index)
-      console.log(from.meta.index)
       if (to.meta.index < from.meta.index) {
         this.transitionName = 'slide-right'
       } else {
