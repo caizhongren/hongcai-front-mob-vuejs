@@ -186,5 +186,6 @@
     font-size: .25rem;
     font-weight: bold;
     letter-spacing: 0.4px;
+    max-width: 7.2rem;
   }
 </style>
