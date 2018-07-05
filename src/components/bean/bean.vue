@@ -1,6 +1,8 @@
 <template>
   <div class="beans">
-    <router-view></router-view>
+    <transition :name="transitionName">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 <script>
@@ -9,6 +11,6 @@
       return {
       }
     },
-    props: ['token']
+    props: ['token', 'showErrMsg', 'transitionName']
   }
 </script>

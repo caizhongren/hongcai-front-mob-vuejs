@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view :token="token" :showErrMsg="showErrMsg"></router-view>    
+    <transition :name="transitionName">
+      <router-view :token="token" :showErrMsg="showErrMsg" :transitionName="transitionName"></router-view>
+    </transition>
     <p id="err" v-show="showErr" v-bind:style="styleObject">{{errMsg}}</p>
     <div class="mask-common mask1" v-show="showLongErr">
       <div class="alert-wrap" v-show="showLongErr">
@@ -24,12 +26,14 @@ export default {
   name: 'app',
   data () {
     return {
-      token: '',
+      token: 'efad34123d2ba43d3b95e501e295e0d2b1f0253e23d88fe8',
       showErr: false,
       showLongErr: false,
       errMsg: '',
       timer: null,
-      styleObject: {}
+      styleObject: {},
+      transitionName: ''
+
     }
   },
   created: function () {
@@ -94,7 +98,18 @@ export default {
   },
   watch: {
     // 如果路由有变化，会再次执行该方法
-    '$route': 'getToken'
+    // '$route': 'getToken',
+    '$route': function (to, from) {
+      this.getToken()
+      // 如果to的索引值为0，不添加任何动画；如果to索引大于from索引,判断为前进状态,反之则为后退状态
+      console.log(to.meta.index)
+      console.log(from.meta.index)
+      if (to.meta.index < from.meta.index) {
+        this.transitionName = 'slide-right'
+      } else {
+        this.transitionName = 'slide-left'
+      }
+    }
   }
 }
 Object.keys(custom).forEach(key => {
@@ -127,6 +142,28 @@ Vue.directive('client-height', function (el, binding) {
 <style lang="css">
   @import 'css/common.css';
   @import 'css/golden-mask.css';
+  .slide-right-enter-active,
+  .slide-right-leave-active,
+  .slide-left-enter-active,
+  .slide-left-leave-active {
+      will-change: transform;
+      transition: all .3s;
+      position: absolute;
+      width:100%;
+      left:0;
+  }
+  .slide-right-enter {
+      transform: translateX(-100%);
+  }
+  .slide-right-leave-active {
+      transform: translateX(100%);
+  }
+  .slide-left-enter {
+      transform: translateX(100%);
+  }
+  .slide-left-leave-active {
+      transform: translateX(-100%);
+  }
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;

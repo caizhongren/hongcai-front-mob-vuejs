@@ -1,11 +1,11 @@
 <template>
   <div class="beanExchange">
     <ul class="exchangeLists">
-      <li v-for="item in exchangeLists">
+      <li v-for="item in exchangeLists" @click="toDetail(item.number)">
         <img v-bind:src="item.imgSrc" alt="" width="10%">
         <div class="description">
           <p class="title">{{item.title}}</p>
-          <p class="time">{{item.time | dateTime}} <span @click="toDetail(item.number)">查看详情 ></span></p>
+          <p class="time">{{item.time | dateTime}} <span>查看详情 ></span></p>
         </div>
       </li>
     </ul>
@@ -61,7 +61,7 @@
     created () {
     },
     mounted () {
-      document.getElementById('app').offsetHeight < document.documentElement.clientHeight ? document.querySelector('.beanExchange').style.height = window.innerHeight + 'px' : null
+      document.getElementById('app').offsetHeight < document.documentElement.clientHeight ? document.querySelector('.beanExchange').style.height = document.documentElement.clientHeight + 'px' : null
     },
     methods: {
       toDetail (number) {
@@ -79,7 +79,7 @@
     background: #fff;
     border-bottom: 1px solid #eee;
     height: .8rem;
-    padding: .45rem .4rem .3rem;
+    padding: .32rem .4rem .32rem;
   }
   .exchangeLists li img {
     float: left;
@@ -95,11 +95,11 @@
     line-height: 1.33;
     color: #666;
     font-size: .25rem;
-    margin-bottom: .25rem;
+    margin: -.01rem 0 .25rem;
   }
   .exchangeLists li .description .time {
     color: #999;
-    font-size: .2rem;
+    font-size: .22rem;
   }
   .time span {
     color: #ff6000;
