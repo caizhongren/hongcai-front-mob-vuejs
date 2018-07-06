@@ -8,7 +8,9 @@
   	<div class="magn-top"></div>
   	<div class="prize-detail">
   	  <p class="title"><span class="vertical-line"></span>商品详情</p>
-  	  <p>商提示提示提示提示提示提示提示介绍商品介绍商品介绍商品介绍提示提示</p>
+  	  <div data-v-5d6963f4="" class="content">
+        <p class="p1">亲爱的宏财网用户：</p><p class="p1"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; </span>现接到存管银行通知，为进一步提升用户体验，海口联合农商银行资金存管系统将于<strong><span style="color: rgb(255, 0, 0);">2018年5月11日22:00～5月12日8:00期间</span></strong>进行支付系统优化升级。<strong>届时您在电脑端、App端及微信端的提现操作将会受到影响，升级完成后立即恢复正常</strong>，请您提前做好资金安排。 因系统升级给您造成不便，敬请谅解。</p><p class="p2"><br></p><p class="p1" style="text-align: right;">宏财网</p><p class="p1" style="text-align: right;">2018年5月7日</p>
+      </div>
   	</div>
     <div></div>
     <button class="selectGear dissatisfaction font-w" :class="" v-if="stock == 0">已兑完</button>
@@ -17,7 +19,7 @@
       <button class="gear-one-btn bg-orange" v-if="beanRemainder >= requireNumber" @click="toConfirm()">确认兑换</button>
       <button class="gear-one-btn dissatisfaction" v-if="beanRemainder < requireNumber">宏豆不足</button>
     </div>
-  	<button class="selectGear font-w bg-orange" :class="" v-if="stock != 0 && gear != 1" @click="modalappear()">选择档位</button>
+  	<button class="selectGear font-w bg-orange" :class="" v-if="stock != 0 && gear > 1" @click="modalappear()">选择档位</button>
     <div class="choose-modal" v-if="modalShow" @click="modalisappear()"></div>
     <transition name="animate">
       <div class="gear-container" v-if="animateStaus">
@@ -53,7 +55,7 @@
       return {
         animateStaus: false,
         stock: 100, // 库存
-        gear: 2, // 档位
+        gear: 0, // 档位
         beanRemainder: 400, // 宏豆余额
         requireNumber: 200, // 兑换所需宏豆数
         modalShow: false,
@@ -61,8 +63,8 @@
         selectedTab: 0,
         confirmExchange: false,
         styleObject: {
-          color: '#666',
-          background: '#000000'
+          color: '#fff',
+          background: '#564e4b'
         }
       }
     },
@@ -77,7 +79,9 @@
     },
     created: function () {
       document.title = '免费体现券'
-      this.status = this.$route.params.status
+      if (this.gearList.length) {
+        this.gear = this.gearList.length
+      }
     },
     methods: {
       toInvest () {
@@ -99,6 +103,7 @@
         if (!number && number !== 0) {
         } else {
           this.$parent.showErrMsg('兑换失败', '', this.styleObject)
+          this.$router.push({name: 'BeanExchange', params: {status: 0}})
         }
       },
       toConfirm () {
@@ -129,11 +134,11 @@
   	padding: .2rem .4rem;
   }
   .prize-brief p:first-child{
-	font-size: .28rem;
-	font-weight: bold;
-	letter-spacing: 0.4px;
-	color: #333333;
-	margin-bottom: .15rem;
+  	font-size: .28rem;
+  	font-weight: bold;
+  	letter-spacing: 0.4px;
+  	color: #333333;
+  	margin-bottom: .15rem;
   }
   .prize-brief p span{
   	display: block;
@@ -187,22 +192,24 @@
     height: .28rem;
   }
   .prize-detail{
-  	padding: .2rem .6rem;
+  	padding: .2rem .6rem 1rem .6rem;
+    min-height: 6.2rem;
   }
   .prize-detail .title{
   	position: relative;
   	color: #666666;
   	line-height: .5rem;
   	font-size: .26rem;
+    font-weight: bold;
   }
   .vertical-line{
   	width: .1rem;
-	height: .3rem;
-	border-radius: 3px;
-	background-image: linear-gradient(to top, #fb9d1c, #ffc868);
-	position: absolute;
-	left: -.2rem;
-	top: .08rem;	
+  	height: .3rem;
+  	border-radius: 3px;
+  	background-image: linear-gradient(to top, #fb9d1c, #ffc868);
+  	position: absolute;
+  	left: -.2rem;
+  	top: .08rem;	
   }
   .border-grey{
   	border-bottom: 1px solid #f3f3f3;
@@ -349,5 +356,8 @@
   }
   .mask1 .alert-wrap{
     width: 76%;
+  }
+  .prize-detail .content{
+    padding: .15rem 0rem;
   }
 </style>

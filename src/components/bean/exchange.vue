@@ -22,7 +22,9 @@
   	<div class="magn-top"></div>
   	<div class="prize-detail">
   	  <p class="title"><span class="vertical-line"></span>商品详情</p>
-  	  <p>商提示提示提示提示提示提示提示介绍商品介绍商品介绍商品介绍提示提示</p>
+  	  <div data-v-5d6963f4="" class="content">
+        <p class="p1">亲爱的宏财网用户：</p><p class="p1"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; </span>现接到存管银行通知，为进一步提升用户体验，海口联合农商银行资金存管系统将于<strong><span style="color: rgb(255, 0, 0);">2018年5月11日22:00～5月12日8:00期间</span></strong>进行支付系统优化升级。<strong>届时您在电脑端、App端及微信端的提现操作将会受到影响，升级完成后立即恢复正常</strong>，请您提前做好资金安排。 因系统升级给您造成不便，敬请谅解。</p><p class="p2"><br></p><p class="p1" style="text-align: right;">宏财网</p><p class="p1" style="text-align: right;">2018年5月7日</p>
+      </div>
   	</div>
   	<div class="gotoUse" @click="toHCNative(prizeType)" v-if="status == 1">马上使用</div>
     <a href="tel:400-990-7626" v-if="status == 0"><div class="gotoUse">联系客服</div></a>
@@ -32,7 +34,7 @@
   import {bridgeUtil} from '../../service/Utils'
   // import $ from 'zepto'
   export default{
-    name: 'exchange',
+    name: 'BeanExchange',
     data () {
       return {
         status: '',
@@ -42,7 +44,6 @@
     props: ['token'],
     created: function () {
       this.status = this.$route.params.status
-      console.log(typeof (this.status))
       this.status === '0' ? document.title = '兑换失败' : document.title = '兑换成功'
     },
     methods: {
@@ -69,9 +70,9 @@
   }
   .exchange-tip span{
   	float: left;
-	font-size: .3rem;
-	color: #666666;
-	margin-top: .6rem;
+  	font-size: .3rem;
+  	color: #666666;
+  	margin-top: .6rem;
     margin-left: .6rem;
   }
   .exchange-tip img{
@@ -87,11 +88,11 @@
   }
   .prize-brief p:nth-child(2){
   	padding-left: 1.4rem;
-	color: #333333;
-	font-size: .25rem;
-	text-align: left;
-	padding-top: .2rem;
-	font-weight: bold;
+  	color: #333333;
+  	font-size: .25rem;
+  	text-align: left;
+  	padding-top: .2rem;
+  	font-weight: bold;
   }
   .prize-brief p:last-child{
   	padding-left: 1.4rem;
@@ -112,15 +113,16 @@
   	line-height: .5rem;
   	color: #666666;
   	position: relative;
+    font-weight: bold;
   }
   .vertical-line{
   	width: .1rem;
-	height: .3rem;
-	border-radius: 3px;
-	background-image: linear-gradient(to top, #fb9d1c, #ffc868);
-	position: absolute;
-	left: -.2rem;
-	top: .08rem;	
+  	height: .3rem;
+  	border-radius: 3px;
+  	background-image: linear-gradient(to top, #fb9d1c, #ffc868);
+  	position: absolute;
+  	left: -.2rem;
+  	top: .08rem;	
   }
   .orange-font{
   	color: rgba(255, 97, 29, 0.88);
@@ -129,15 +131,20 @@
   	color: rgba(102, 102, 102, 0.88);
   }
   .prize-detail{
-  	padding: .2rem .6rem;
+  	padding: .2rem .6rem 1rem .6rem;
+    min-height: 6.2rem;
+  }
+  .prize-detail .content{
+    padding: .15rem 0rem;
   }
   .prize-detail .title{
   	position: relative;
   	color: #666666;
   	line-height: .5rem;
+    font-weight: bold;
   }
   .gotoUse{
-	background: #ff611d;
+	 background: #ff611d;
     height: .8rem;
     line-height: .8rem;
     font-size: .26rem;
