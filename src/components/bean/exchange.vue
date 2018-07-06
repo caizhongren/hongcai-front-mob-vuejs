@@ -24,7 +24,8 @@
   	  <p class="title"><span class="vertical-line"></span>商品详情</p>
   	  <p>商提示提示提示提示提示提示提示介绍商品介绍商品介绍商品介绍提示提示</p>
   	</div>
-  	<div class="gotoUse" @click="toInvest()" ng-class="" v-if="status == 1">马上使用</div>
+  	<div class="gotoUse" @click="toHCNative(prizeType)" v-if="status == 1">马上使用</div>
+    <a href="tel:400-990-7626" v-if="status == 0"><div class="gotoUse">联系客服</div></a>
   </div>
 </template>
 <script>
@@ -34,17 +35,23 @@
     name: 'exchange',
     data () {
       return {
-        status: ''
+        status: '',
+        prizeType: 2
       }
     },
     props: ['token'],
     created: function () {
       this.status = this.$route.params.status
-      this.status === 0 ? document.title = '兑换失败' : document.title = '兑换成功'
+      console.log(typeof (this.status))
+      this.status === '0' ? document.title = '兑换失败' : document.title = '兑换成功'
     },
     methods: {
-      toInvest () {
-        bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {}, null)
+      toHCNative () {
+        if (this.prizeType === 1) {
+          bridgeUtil.webConnectNative('HCNative_GoWithdraw', undefined, {}, function (res) {}, null)
+        } else if (this.prizeType === 2) {
+          bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {}, null)
+        }
       }
     }
   }
