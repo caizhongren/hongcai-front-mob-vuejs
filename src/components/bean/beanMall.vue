@@ -57,7 +57,6 @@
           }
         ],
         Interval: null,
-        bean: 0,
         giftLists: [
           {
             id: 0,
@@ -104,7 +103,7 @@
         ]
       }
     },
-    props: ['token'],
+    props: ['token', 'bean'],
     watch: {
       '$parent.token': function (val) {
         bridgeUtil.webConnectNative('HCNative_BeanDetail', null, {
@@ -115,7 +114,6 @@
       }
     },
     created () {
-      this.$parent.token ? this.getUserPoints() : null
       bridgeUtil.webConnectNative('HCNative_BeanDetail', null, {
         // 1 需要显示 0 不需要显示
         isShow: 0
@@ -128,16 +126,6 @@
       this.setCarousel()
     },
     methods: {
-      getUserPoints () {
-        var that = this
-        that.$http('/hongcai/rest/users/0/account?token=' + that.$parent.token).then(function (res) {
-          if (res && res.ret !== -1) {
-            that.bean = res.data.points
-          } else {
-            console.log(res.data.msg)
-          }
-        })
-      },
       setCarousel () { // 礼包布局配置
         var wrapper = document.getElementById('wrapper')
         Carousel.mCarousel(wrapper, {

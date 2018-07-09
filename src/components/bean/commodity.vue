@@ -2,7 +2,7 @@
   <div class="exchange-detail">
   	<img src="../../images/arbor-day/arbor-header.png" alt="" class="prize-banner">
   	<div class="prize-brief">
-  	  <p>免费体现券</p>
+  	  <p>免费体现券{{beanRemainder}}</p>
   	  <p><span class="presentPrice">207</span><i></i><span class="originalPrice">308</span><i></i></p>
   	</div>
   	<div class="magn-top"></div>
@@ -49,14 +49,14 @@
 <script>
   import {bridgeUtil, ModalHelper} from '../../service/Utils'
   // import $ from 'zepto'
-  export default{
+  export default {
     name: 'exchangeDetail',
     data () {
       return {
         animateStaus: false,
         stock: 100, // 库存
         gear: 0, // 档位
-        beanRemainder: 400, // 宏豆余额
+        beanRemainder: this.bean, // 宏豆余额
         requireNumber: 200, // 兑换所需宏豆数
         modalShow: false,
         gearList: ['15000起投', '7500起投', '2500起投', '7500起投'],
@@ -68,7 +68,7 @@
         }
       }
     },
-    props: ['showErrMsg', 'token'],
+    props: ['showErrMsg', 'token', 'bean'],
     watch: {
       modalShow (val) {
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()

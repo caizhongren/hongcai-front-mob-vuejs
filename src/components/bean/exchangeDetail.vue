@@ -36,9 +36,9 @@
           orderNumber: 11111111,
           orderTime: 111111111,
           payAmount: 88,
-          isCoupon: true, // 是否为优惠券、实物奖励
           type: 0 // 0 提现券， 1、2 加息券、现金券
         },
+        isCoupon: true, // 是否为优惠券、实物奖励
         version: 310
       }
     },
