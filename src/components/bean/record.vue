@@ -1,6 +1,6 @@
 <template>
   <div class="beanExchange">
-    <ul class="exchangeLists">
+    <ul class="exchangeLists" v-if="exchangeLists.length > 0">
       <li v-for="item in exchangeLists" @click="toDetail(item.number)">
         <img v-bind:src="item.imgSrc" alt="" width="10%">
         <div class="description">
@@ -9,6 +9,10 @@
         </div>
       </li>
     </ul>
+    <div class="padding-t-1" v-else>
+      <img src="../../images/project/no-record.png" width="35%" class="no-record">
+      <p class="ft-grey4 margin-b-0 margin-t-1p5">暂无记录</p>
+    </div>
   </div>
 </template>
 <script>
@@ -71,6 +75,9 @@
   }
 </script>
 <style scoped>
+  .padding-t-1 {
+    padding-top: 1rem;
+  }
   .beanExchange {
     background: #ecebf1;
     width: 100%;

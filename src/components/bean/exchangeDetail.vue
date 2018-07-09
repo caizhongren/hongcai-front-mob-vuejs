@@ -20,7 +20,7 @@
       <div class="orderNumber">订单编号：<span>{{orderDetail.orderNumber}}</span></div>
       <div class="orderTime">下单时间：<span>{{orderDetail.orderTime | dateTime}}</span></div>
     </div>
-    <div class="fixedBtn" @click="goWithdraw(orderDetail.type)">马上使用</div>
+    <div class="fixedBtn" @click="goWithdraw(orderDetail.type)" v-if="isCoupon">马上使用</div>
   </div>
 </template>
 <script>
@@ -36,6 +36,7 @@
           orderNumber: 11111111,
           orderTime: 111111111,
           payAmount: 88,
+          isCoupon: true, // 是否为优惠券、实物奖励
           type: 0 // 0 提现券， 1、2 加息券、现金券
         },
         version: 310
