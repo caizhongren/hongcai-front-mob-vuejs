@@ -2,8 +2,8 @@
   <div class="beanMall">
     <div class="banners position-re" id="wrapper">
         <ul class="poster-list">
-          <li v-for="item in banners" @click="toDetail(item.link)">
-            <img v-bind:src="item.src" alt="" width="100%">
+          <li v-for="item in banners" @click="toDetail(item.linkUrl)">
+            <img v-bind:src="item.imageUrl" alt="" width="100%">
           </li>
         </ul>
     </div>
@@ -21,17 +21,18 @@
     <div class="gifts">
       <div class="title"><span></span> <p>大家都在兑</p></div>
       <ul class="giftList">
-        <li v-for="item in giftLists" @click="toRouter(2, item.id)">
+        <li v-for="item in giftLists" @click="toRouter(2, item.goodsNumber)">
           <div class="icon">
-            <img v-bind:src="item.imgSrc" alt="" width="80%">
+            <img v-bind:src="item.imgUrl" alt="" width="80%">
           </div>
-          <p class="name">{{item.name}}</p>
+          <p class="name">{{item.goodsName}}</p>
           <div class="description">
-            <span>{{item.bean}}</span>
+            <span>{{item.beans}}</span>
             <img src="../../images/beans/bean-icon.png" alt="" width="9%">
-            <p>{{item.label}}</p>
+            <p>{{item.tag}}</p>
           </div>
         </li>
+        <div class="clearfix ft-666" @click="loadMore()" v-if="page > totalPage">查看更多</div>
       </ul>
     </div>
   </div>
@@ -42,65 +43,12 @@
   export default {
     data () {
       return {
-        banners: [
-          {
-            link: 'https://app.hongcai.com',
-            src: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png'
-          },
-          {
-            link: 'https://app.hongcai.com',
-            src: 'https://www.hongcai.com/uploads/png/original/2018-02-02/image/afb2684713c347db8769dfcd167e136f-original.png'
-          },
-          {
-            link: 'https://app.hongcai.com',
-            src: 'https://www.hongcai.com/uploads/png/original/2018-03-19/image/10b378cb80d74e47babf870fbdabc0fc-original.png'
-          }
-        ],
+        banners: [],
         Interval: null,
-        giftLists: [
-          {
-            id: 0,
-            imgSrc: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-            name: '饿了么4-15元优惠券',
-            label: '限时特惠',
-            bean: 88
-          },
-          {
-            id: 1,
-            imgSrc: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-            name: '饿了么4-15元优惠券',
-            label: '限时特惠',
-            bean: 88
-          },
-          {
-            id: 2,
-            imgSrc: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-            name: '饿了么4-15元优惠券',
-            label: '限时特惠',
-            bean: 88
-          },
-          {
-            id: 3,
-            imgSrc: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-            name: '饿了么4-15元优惠券',
-            label: '限时特惠',
-            bean: 88
-          },
-          {
-            id: 4,
-            imgSrc: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-            name: '饿了么4-15元优惠券',
-            label: '限时特惠',
-            bean: 88
-          },
-          {
-            id: 5,
-            imgSrc: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-            name: '饿了么4-15元优惠券',
-            label: '限时特惠',
-            bean: 88
-          }
-        ]
+        page: 1,
+        pageSize: 10,
+        totalPage: 0,
+        giftLists: []
       }
     },
     props: ['token', 'bean'],
@@ -111,21 +59,139 @@
           isShow: 0
         }, function (res) {}, null)
         val && val !== '' ? this.getUserPoints() : null
+      },
+      'banners': function (val) {
+        var that = this
+        if (val.length > 0) {
+          setTimeout(function () {
+            that.setCarousel()
+          }, 100)
+          that.Interval = setInterval(function () {
+            Carousel.next()
+          }, 3000)
+        }
       }
     },
     created () {
+      this.getBanners()
+      this.getGoods(this.page)
       bridgeUtil.webConnectNative('HCNative_BeanDetail', null, {
         // 1 需要显示 0 不需要显示
         isShow: 0
       }, function (res) {}, null)
-      this.Interval = setInterval(function () {
-        Carousel.next()
-      }, 3000)
     },
     mounted () {
-      this.setCarousel()
     },
     methods: {
+      loadMore () {
+        this.page = this.page + 1
+        this.getGoods(this.page)
+      },
+      getGoods (page) {
+        var that = this
+        that.$http('/hongcai/rest/activitys/points/goods?page=' + page + '&pageSize=' + that.pageSize).then(function (res) {
+          if (res && res.ret !== -1) {
+            this.totalPage = res.data.totalPage
+            var giftLists = res.data.data
+            for (var i = 0; i < giftLists.length; i++) {
+              this.giftLists.push(giftLists[i])
+            }
+          }
+        }).catch(function (error) {
+          console.log(error.toString())
+          that.giftLists = [
+            {
+              goodsNumber: 0,
+              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+              goodsName: '饿了么4-15元优惠券',
+              tag: '限时特惠',
+              beans: 88
+            },
+            {
+              goodsNumber: 1,
+              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+              goodsName: '饿了么4-15元优惠券',
+              tag: '限时特惠',
+              beans: 88
+            },
+            {
+              goodsNumber: 2,
+              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+              goodsName: '饿了么4-15元优惠券',
+              tag: '限时特惠',
+              beans: 88
+            },
+            {
+              goodsNumber: 3,
+              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+              goodsName: '饿了么4-15元优惠券',
+              tag: '限时特惠',
+              beans: 88
+            },
+            {
+              goodsNumber: 4,
+              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+              goodsName: '饿了么4-15元优惠券',
+              tag: '限时特惠',
+              beans: 88
+            },
+            {
+              goodsNumber: 5,
+              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+              goodsName: '饿了么4-15元优惠券',
+              tag: '限时特惠',
+              beans: 88
+            },
+            {
+              goodsNumber: 2,
+              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+              goodsName: '饿了么4-15元优惠券',
+              tag: '限时特惠',
+              beans: 88
+            },
+            {
+              goodsNumber: 3,
+              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+              goodsName: '饿了么4-15元优惠券',
+              tag: '限时特惠',
+              beans: 88
+            },
+            {
+              goodsNumber: 4,
+              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+              goodsName: '饿了么4-15元优惠券',
+              tag: '限时特惠',
+              beans: 88
+            },
+            {
+              goodsNumber: 5,
+              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+              goodsName: '饿了么4-15元优惠券',
+              tag: '限时特惠',
+              beans: 88
+            }
+          ]
+          if (that.page > 1) {
+            that.giftLists.push(
+              {
+                goodsNumber: 0,
+                imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+                goodsName: '11饿了么4-15元优惠券',
+                tag: '11限时特惠',
+                beans: 1188
+              }
+            )
+          }
+        })
+      },
+      getBanners () {
+        var that = this
+        that.$http('/hongcai/rest/banners/activity?type=3&isShow=1&locale=8&count=10').then(function (res) {
+          if (res && res.ret !== -1) {
+            that.banners = res.data.data
+          }
+        })
+      },
       setCarousel () { // 礼包布局配置
         var wrapper = document.getElementById('wrapper')
         Carousel.mCarousel(wrapper, {
@@ -149,14 +215,14 @@
           window.location.href = link
         }
       },
-      toRouter (type, id) {
+      toRouter (type, goodsNumber) {
         if (this.toLogin()) {
           if (type === 0) {
             this.$router.push({name: 'BeanDetail'})
           } else if (type === 1) {
             this.$router.push({name: 'BeanRecord'})
           } else if (type === 2) {
-            this.$router.push({name: 'BeanCommodity', params: {id: id}})
+            this.$router.push({name: 'BeanCommodity', params: {goodsNumber: goodsNumber}})
           }
         }
       }
@@ -182,6 +248,7 @@
     height: 2.2rem;
     border-radius: 10px;
     background-color: #fff9f9;
+    overflow: hidden;
   }
   .poster-list li img {
     border-radius: 10px;
