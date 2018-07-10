@@ -1,46 +1,44 @@
 <template>
   <div class="exchange-detail">
-  	<img src="../../images/arbor-day/arbor-header.png" alt="" class="prize-banner">
+    <img :src="goodsDetail.imgUrl" alt="" class="prize-banner">
   	<div class="prize-brief">
-  	  <p>免费体现券{{beanRemainder}}</p>
-  	  <p><span class="presentPrice">207</span><i></i><span class="originalPrice">308</span><i></i></p>
+  	  <p>{{goodsDetail.goodsName}}</p>
+  	  <p><span class="presentPrice">{{goodsDetail.beans}}</span><i></i><span class="originalPrice">{{goodsDetail.marketBeans}}</span><i></i></p>
   	</div>
   	<div class="magn-top"></div>
   	<div class="prize-detail">
   	  <p class="title"><span class="vertical-line"></span>商品详情</p>
-  	  <div data-v-5d6963f4="" class="content">
-        <p class="p1">亲爱的宏财网用户：</p><p class="p1"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; </span>现接到存管银行通知，为进一步提升用户体验，海口联合农商银行资金存管系统将于<strong><span style="color: rgb(255, 0, 0);">2018年5月11日22:00～5月12日8:00期间</span></strong>进行支付系统优化升级。<strong>届时您在电脑端、App端及微信端的提现操作将会受到影响，升级完成后立即恢复正常</strong>，请您提前做好资金安排。 因系统升级给您造成不便，敬请谅解。</p><p class="p2"><br></p><p class="p1" style="text-align: right;">宏财网</p><p class="p1" style="text-align: right;">2018年5月7日</p>
-      </div>
+  	  <div class="content" v-html="goodsDetail.goodsDesc"></div>
   	</div>
     <div></div>
-    <button class="selectGear dissatisfaction font-w" :class="" v-if="stock == 0">已兑完</button>
-    <div class="selectGear" :class="" v-if="stock != 0 && gear == 1">
-      <p class="gear-one"><span class="presentPrice">207</span><i></i></p>
-      <button class="gear-one-btn bg-orange" v-if="beanRemainder >= requireNumber" @click="toConfirm()">确认兑换</button>
-      <button class="gear-one-btn dissatisfaction" v-if="beanRemainder < requireNumber">宏豆不足</button>
+    <button class="selectGear dissatisfaction font-w" :class="" v-if="goodsDetail.goodsStock == 0">已兑完</button>
+    <div class="selectGear" :class="" v-if="goodsDetail.goodsStock != 0 && gearAmount == 1">
+      <p class="gear-one"><span class="presentPrice">{{goodsDetail.beans}}</span><i></i></p>
+      <button class="gear-one-btn bg-orange" v-if="bean >= goodsDetail.beans" @click="toConfirm()">确认兑换</button>
+      <button class="gear-one-btn dissatisfaction" v-if="bean < goodsDetail.beans">宏豆不足</button>
     </div>
-  	<button class="selectGear font-w bg-orange" :class="" v-if="stock != 0 && gear > 1" @click="modalappear()">选择档位</button>
+  	<button class="selectGear font-w bg-orange" :class="" v-if="goodsDetail.goodsStock != 0 && gearAmount > 1" @click="modalappear()">选择档位</button>
     <div class="choose-modal" v-if="modalShow" @click="modalisappear()"></div>
     <transition name="animate">
       <div class="gear-container" v-if="animateStaus">
-        <p class="prize-name"><i @click="modalisappear()"></i>免费体现券</p>
+        <p class="prize-name"><i @click="modalisappear()"></i>{{goodsDetail.goodsName}}</p>
         <p class="gear-tip">选择档位:</p>
         <ul class="gear-list">
-          <li class="gear-project" @click="selectGear(index)" v-for="(item,index) in gearList" :class="{'gear-selected': selectedTab == index}">{{item}}</li>
+          <li class="gear-project" @click="selectedTab = index" v-for="(item,index) in goodsDetail.gearList" :class="{'gear-selected': selectedTab == index}">{{item}}</li>
         </ul>
         <div class="selectGear fixed-to-absolute" :class="">
-          <p class="gear-one"><span class="presentPrice">207</span><i></i></p>
-          <button class="gear-one-btn bg-orange" v-if="beanRemainder >= requireNumber" @click="toConfirm()">确认兑换</button>
-          <button class="gear-one-btn dissatisfaction" v-if="beanRemainder < requireNumber">宏豆不足</button>
+          <p class="gear-one"><span class="presentPrice">{{goodsDetail.beans}}</span><i></i></p>
+          <button class="gear-one-btn bg-orange" v-if="bean >= goodsDetail.beans" @click="toConfirm()">确认兑换</button>
+          <button class="gear-one-btn dissatisfaction" v-if="bean < goodsDetail.beans">宏豆不足</button>
         </div>
       </div>
     </transition>
     <div class="mask-common mask1" v-if="confirmExchange">
       <div class="alert-wrap">
-        <div class="text">是否确认消耗<span class="orange-ft">88</span>宏豆兑换该商品？</div>
+        <div class="text">是否确认消耗<span class="orange-ft">{{goodsDetail.beans}}</span>宏豆兑换该商品？</div>
         <div class="i-know">
         <div class="" @click="afterConfirm()">取消</div>
-        <div class="" @click="exchangeReward(selectedTab)">确定</div>
+        <div class="" @click="exchangeReward(goodsNumber,selectedTab)">确定</div>
         </div>
       </div>
     </div>
@@ -48,24 +46,24 @@
 </template>
 <script>
   import {bridgeUtil, ModalHelper} from '../../service/Utils'
-  // import $ from 'zepto'
   export default {
     name: 'exchangeDetail',
     data () {
       return {
+        goodsDetail: {
+          imgUrl: '/static/img/arbor-header.617861c.png',
+          beans: 1000,
+          marketBeans: 308,
+          goodsDesc: '<p class="p1">亲爱的宏财网用户：</p><p class="p1"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; </span>现接到存管银行通知，为进一步提升用户体验，海口联合农商银行资金存管系统将于<strong><span style="color: rgb(255, 0, 0);">2018年5月11日22:00～5月12日8:00期间</span></strong>进行支付系统优化升级。<strong>届时您在电脑端、App端及微信端的提现操作将会受到影响，升级完成后立即恢复正常</strong>，请您提前做好资金安排。 因系统升级给您造成不便，敬请谅解。</p><p class="p2"><br></p><p class="p1" style="text-align: right;">宏财网</p><p class="p1" style="text-align: right;">2018年5月7日</p>',
+          gearList: ['10000起投', '20000起投', '30000起投', '40000起投'],
+          goodsStock: 1000,
+          goodsName: '免费体现券'
+        },
         animateStaus: false,
-        stock: 100, // 库存
-        gear: 0, // 档位
-        beanRemainder: this.bean, // 宏豆余额
-        requireNumber: 200, // 兑换所需宏豆数
         modalShow: false,
-        gearList: ['15000起投', '7500起投', '2500起投', '7500起投'],
         selectedTab: 0,
         confirmExchange: false,
-        styleObject: {
-          color: '#fff',
-          background: '#564e4b'
-        }
+        goodsStatus: ''
       }
     },
     props: ['showErrMsg', 'token', 'bean'],
@@ -78,10 +76,9 @@
       }
     },
     created: function () {
-      document.title = '免费体现券'
-      if (this.gearList.length) {
-        this.gear = this.gearList.length
-      }
+      this.goodsNumber = this.$route.params.id
+      this.gearAmount = this.goodsDetail.gearList.length
+      this.getGoodsDetail()
     },
     methods: {
       toInvest () {
@@ -98,13 +95,24 @@
       selectGear (index) {
         this.selectedTab = index
       },
-      exchangeReward (number) {
-        this.afterConfirm()
-        if (!number && number !== 0) {
-        } else {
-          this.$parent.showErrMsg('兑换失败', '', this.styleObject)
-          this.$router.push({name: 'BeanExchange', params: {status: 0}})
-        }
+      getGoodsDetail () {
+        var that = this
+        document.title = that.goodsDetail.goodsName
+        that.$http.get('/hongcai/rest/activitys/points/goods/info/' + this.goodsNumber, function (response) {
+          that.goodsDetail = response.data
+          document.title = that.goodsDetail.goodsName
+        })
+      },
+      exchangeReward (goodsNumber, gradeNumber) {
+        var that = this
+        that.afterConfirm()
+        that.$http.post('/hongcai/rest/activitys/points/order', {
+          goodsNumber: parseInt(goodsNumber),
+          gradeNumber: gradeNumber
+        }).then(function (res) {
+          that.goodsStatus = res.data
+          that.$router.push({name: 'BeanExchange', params: {status: that.goodsStatus}})
+        })
       },
       toConfirm () {
         this.confirmExchange = true
@@ -224,6 +232,7 @@
     bottom: 0;
     width: 100%;
     text-align: center;
+    max-width: 7.2rem;
   }
   .dissatisfaction{
     background: #999999;
