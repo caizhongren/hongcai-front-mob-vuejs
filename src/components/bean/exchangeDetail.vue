@@ -2,25 +2,25 @@
   <div class="exchangeDetail">
     <div class="top">
       <div class="banner">
-        <img v-bind:src="orderDetail.bannerSrc" alt="" width="100%">
+        <img v-bind:src="orderDetail.imgUrl" alt="" width="100%">
         <div class="header">
-          <p class="title">{{orderDetail.title}}</p>
-          <p class="validity">有效期至：{{orderDetail.validity | date('.')}}</p>
+          <p class="title">{{orderDetail.goodsName}}<span v-if="orderDetail.gradeName">-{{orderDetail.gradeName}}</span></p>
+          <p class="validity" v-if="orderDetail.usefulTime">有效期至：{{orderDetail.usefulTime | date('-')}}</p>
           <span class="left"></span>
           <span class="right"></span>
         </div>
         <div class="description">
           <div class="title"><span></span> <p>商品详情</p></div>
-          <div v-html="orderDetail.content" class="content"></div>
+          <div v-html="orderDetail.goodsDesc" class="content"></div>
         </div>
       </div>
     </div>
     <div class="bottom">
-      <div class="title"><span></span><p> 支付金额：<a>{{orderDetail.payAmount}}宏豆</a></p></div>
+      <div class="title"><span></span><p> 支付金额：<a>{{orderDetail.beans}}宏豆</a></p></div>
       <div class="orderNumber">订单编号：<span>{{orderDetail.orderNumber}}</span></div>
       <div class="orderTime">下单时间：<span>{{orderDetail.orderTime | dateTime}}</span></div>
     </div>
-    <div class="fixedBtn" @click="goWithdraw(orderDetail.type)" v-if="isCoupon">马上使用</div>
+    <div class="fixedBtn" @click="goWithdraw(orderDetail.goodsType)" v-if="orderDetail.useStatus === 2 && orderDetail.goodsType !== 3">马上使用</div>
   </div>
 </template>
 <script>
@@ -29,22 +29,23 @@
     data () {
       return {
         orderDetail: {
-          bannerSrc: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-          title: '免费体现券档位',
-          validity: 111111,
-          content: '<p class="p1">亲爱的宏财网用户：</p><p class="p1"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; </span>现接到存管银行通知，为进一步提升用户体验，海口联合农商银行资金存管系统将于<strong><span style="color: rgb(255, 0, 0);">2018年5月11日22:00～5月12日8:00期间</span></strong>进行支付系统优化升级。<strong>届时您在电脑端、App端及微信端的提现操作将会受到影响，升级完成后立即恢复正常</strong>，请您提前做好资金安排。 因系统升级给您造成不便，敬请谅解。</p><p class="p2"><br/></p><p class="p1" style="text-align: right;">宏财网</p><p class="p1" style="text-align: right;">2018年5月7日</p>',
+          imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+          goodsName: '免费体现券',
+          gradeName: '档位',
+          usefulTime: 111111,
+          goodsDesc: '<p class="p1">亲爱的宏财网用户：</p><p class="p1"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; </span>现接到存管银行通知，为进一步提升用户体验，海口联合农商银行资金存管系统将于<strong><span style="color: rgb(255, 0, 0);">2018年5月11日22:00～5月12日8:00期间</span></strong>进行支付系统优化升级。<strong>届时您在电脑端、App端及微信端的提现操作将会受到影响，升级完成后立即恢复正常</strong>，请您提前做好资金安排。 因系统升级给您造成不便，敬请谅解。</p><p class="p2"><br/></p><p class="p1" style="text-align: right;">宏财网</p><p class="p1" style="text-align: right;">2018年5月7日</p>',
           orderNumber: 11111111,
           orderTime: 111111111,
-          payAmount: 88,
-          type: 0 // 0 提现券， 1、2 加息券、现金券
+          beans: 88,
+          useStatus: 2, // 使用状态：已使用：1，未使用：2
+          goodsType: 1 // 加息券：1，现金券：2，提现券：3
         },
-        isCoupon: true, // 是否为优惠券、实物奖励
         version: 310
       }
     },
     props: ['token', 'showErrMsg'],
     created () {
-      this.$parent.token ? this.getVersion() : null
+      this.$parent.token ? (this.getVersion(), this.getOrderDetail(this.$route.params.number)) : null
     },
     methods: {
       getVersion () {
@@ -56,9 +57,9 @@
           that.version = response.data.replace(/\./g, '')
         })
       },
-      goWithdraw (type) {
+      goWithdraw (goodsType) {
         var that = this
-        if (type !== 0) {
+        if (goodsType !== 3) {
           bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {}, null)
         } else {
           if (that.version < 330) {
@@ -67,6 +68,14 @@
           }
           bridgeUtil.webConnectNative('HCNative_GoWithdraw', undefined, {}, function (res) {}, null)
         }
+      },
+      getOrderDetail (orderNumber) {
+        var that = this
+        that.$http('/hongcai/rest/activitys/points/order?orderNumber=' + orderNumber).then(function (res) {
+          if (res && res.ret !== -1) {
+            that.orderDetail = res.data
+          }
+        })
       }
     }
   }

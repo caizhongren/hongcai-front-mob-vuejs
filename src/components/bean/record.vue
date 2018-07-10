@@ -1,13 +1,14 @@
 <template>
   <div class="beanExchange">
     <ul class="exchangeLists" v-if="exchangeLists.length > 0">
-      <li v-for="item in exchangeLists" @click="toDetail(item.number)">
-        <img v-bind:src="item.imgSrc" alt="" width="10%">
+      <li v-for="item in exchangeLists" @click="toDetail(item.orderNumber)">
+        <img v-bind:src="item.imgUrl" alt="" width="10%">
         <div class="description">
-          <p class="title">{{item.title}}</p>
-          <p class="time">{{item.time | dateTime}} <span>查看详情 ></span></p>
+          <p class="title">{{item.goodsName}}<span v-if="item.gradeName">-{{item.gradeName}}</span></p>
+          <p class="time">{{item.orderTime | dateTime}} <span>查看详情 ></span></p>
         </div>
       </li>
+      <div class="loadMore clearfix" @click="loadMore()" v-if="page > totalPage">查看更多</div>
     </ul>
     <div class="padding-t-1" v-else>
       <img src="../../images/project/no-record.png" width="35%" class="no-record">
@@ -19,62 +20,95 @@
   export default {
     data () {
       return {
-        exchangeLists: [
-          {
-            number: 0,
-            imgSrc: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-            title: '饿了么4-15元优惠券',
-            time: 8811111111
-          },
-          {
-            number: 1,
-            imgSrc: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-            title: '饿了么4-15元优惠券',
-            time: 1111111111
-          },
-          {
-            number: 2,
-            imgSrc: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-            title: '饿了么4-15元优惠券',
-            time: 1111111111
-          },
-          {
-            number: 3,
-            imgSrc: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-            title: '饿了么4-15元优惠券',
-            time: 1111111111
-          },
-          {
-            number: 4,
-            imgSrc: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-            title: '饿了么4-15元优惠券',
-            time: 1111111111
-          },
-          {
-            number: 5,
-            imgSrc: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-            title: '饿了么4-15元优惠券',
-            time: 1111111111
-          }
-        ]
+        page: 1,
+        pageSize: 10,
+        totalPage: 1,
+        exchangeLists: []
       }
     },
     props: ['token'],
     watch: {
     },
     created () {
+      this.$parent.token ? this.getRecord(this.page) : null
     },
     mounted () {
       document.getElementById('app').offsetHeight < document.documentElement.clientHeight ? document.querySelector('.beanExchange').style.height = document.documentElement.clientHeight + 'px' : null
     },
     methods: {
+      loadMore () {
+        this.page = this.page + 1
+        this.getRecord(this.page)
+      },
       toDetail (number) {
         this.$router.push({name: 'exchangeDetail', params: {number: number}})
+      },
+      getRecord (page) {
+        var that = this
+        that.$http('/hongcai/rest/activitys/points/orders?token=' + that.$parent.token + '&page=' + page).then(function (res) {
+          if (res && res.ret !== -1) {
+            this.totalPage = res.data.totalPage
+            var exchangeLists = res.data.data
+            for (var i = 0; i < exchangeLists.length; i++) {
+              this.exchangeLists.push(exchangeLists[i])
+            }
+          }
+        }).catch(function (error) {
+          console.log(error.toString())
+          that.exchangeLists = [
+            {
+              orderNumber: 0,
+              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+              goodsName: '饿了么4-15元优惠券',
+              gradeName: '',
+              orderTime: 8811111111
+            },
+            {
+              orderNumber: 1,
+              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+              goodsName: '饿了么4-15元优惠券',
+              gradeName: '档位',
+              orderTime: 1111111111
+            },
+            {
+              orderNumber: 2,
+              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+              goodsName: '饿了么4-15元优惠券',
+              gradeName: '档位',
+              orderTime: 1111111111
+            },
+            {
+              orderNumber: 3,
+              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+              goodsName: '饿了么4-15元优惠券',
+              gradeName: '档位',
+              orderTime: 1111111111
+            },
+            {
+              orderNumber: 4,
+              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+              goodsName: '饿了么4-15元优惠券',
+              gradeName: '档位',
+              orderTime: 1111111111
+            },
+            {
+              orderNumber: 5,
+              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+              goodsName: '饿了么4-15元优惠券',
+              gradeName: '档位',
+              orderTime: 1111111111
+            }
+          ]
+        })
       }
     }
   }
 </script>
 <style scoped>
+  .loadMore {
+    padding: .35rem;
+    color: #666;
+  }
   .padding-t-1 {
     padding-top: 1rem;
   }
