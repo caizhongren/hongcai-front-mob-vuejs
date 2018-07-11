@@ -1,6 +1,6 @@
 <template>
   <div class="exchange-detail">
-    <img :src="baseUrl + goodsDetail.imgUrl" alt="" class="prize-banner">
+    <img :src="baseFileUrl + goodsDetail.imgUrl" alt="" class="prize-banner">
   	<div class="prize-brief">
   	  <p>{{goodsDetail.goodsName}}</p>
   	  <p><span class="presentPrice">{{goodsDetail.beans}}</span><i></i><span class="originalPrice">{{goodsDetail.marketBeans}}</span><i></i></p>
@@ -68,7 +68,7 @@
         gearAmount: ''
       }
     },
-    props: ['showErrMsg', 'token', 'bean', 'baseUrl'],
+    props: ['showErrMsg', 'token', 'bean', 'baseFileUrl'],
     watch: {
       modalShow (val) {
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
@@ -102,15 +102,6 @@
           that.goodsDetail = response.data
           that.gearAmount = that.goodsDetail.goodsGrades.length
           that.goodsGrades = that.goodsDetail.goodsGrades
-          that.goodsGrades = [
-            {
-              name: '111',
-              number: 1
-            }, {
-              name: '222',
-              number: 2
-            }
-          ]
           that.selectedTab = that.goodsDetail.goodsGrades[1].number
           document.title = that.goodsDetail.goodsName
         })
