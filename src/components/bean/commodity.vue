@@ -76,7 +76,7 @@
       }
     },
     created: function () {
-      this.goodsNumber = this.$route.params.id
+      this.goodsNumber = this.$route.params.goodsNumber
       this.gearAmount = this.goodsDetail.gearList.length
       this.getGoodsDetail()
     },

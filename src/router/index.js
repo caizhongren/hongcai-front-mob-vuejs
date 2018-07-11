@@ -738,7 +738,7 @@ const routes = [
         meta: {title: '宏豆商城', index: 2}
       },
       {
-        path: 'commodity/:id',
+        path: 'commodity/:goodsNumber',
         name: 'BeanCommodity',
         component: BeanCommodity,
         meta: {index: 3}
