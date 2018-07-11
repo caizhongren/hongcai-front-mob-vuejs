@@ -1,6 +1,6 @@
 <template>
   <div class="exchange-detail">
-    <img :src="goodsDetail.imgUrl" alt="" class="prize-banner">
+    <img :src="baseUrl + goodsDetail.imgUrl" alt="" class="prize-banner">
   	<div class="prize-brief">
   	  <p>{{goodsDetail.goodsName}}</p>
   	  <p><span class="presentPrice">{{goodsDetail.beans}}</span><i></i><span class="originalPrice">{{goodsDetail.marketBeans}}</span><i></i></p>
@@ -24,7 +24,7 @@
         <p class="prize-name"><i @click="modalisappear()"></i>{{goodsDetail.goodsName}}</p>
         <p class="gear-tip">选择档位:</p>
         <ul class="gear-list">
-          <li class="gear-project" @click="selectedTab = index" v-for="(item,index) in goodsDetail.gearList" :class="{'gear-selected': selectedTab == index}">{{item}}</li>
+          <li class="gear-project" @click="selectedTab = item.number" v-for="(item,index) in goodsGrades" :class="{'gear-selected': selectedTab == item.number}">{{item.name}}</li>
         </ul>
         <div class="selectGear fixed-to-absolute" :class="">
           <p class="gear-one"><span class="presentPrice">{{goodsDetail.beans}}</span><i></i></p>
@@ -63,10 +63,12 @@
         modalShow: false,
         selectedTab: 0,
         confirmExchange: false,
-        goodsStatus: ''
+        goodsStatus: '',
+        goodsGrades: '',
+        gearAmount: ''
       }
     },
-    props: ['showErrMsg', 'token', 'bean'],
+    props: ['showErrMsg', 'token', 'bean', 'baseUrl'],
     watch: {
       modalShow (val) {
         val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
@@ -77,7 +79,6 @@
     },
     created: function () {
       this.goodsNumber = this.$route.params.goodsNumber
-      this.gearAmount = this.goodsDetail.gearList.length
       this.getGoodsDetail()
     },
     methods: {
@@ -97,9 +98,20 @@
       },
       getGoodsDetail () {
         var that = this
-        document.title = that.goodsDetail.goodsName
-        that.$http.get('/hongcai/rest/activitys/points/goods/info/' + this.goodsNumber, function (response) {
+        that.$http.get('/hongcai/rest/activitys/points/goods/' + this.goodsNumber).then(function (response) {
           that.goodsDetail = response.data
+          that.gearAmount = that.goodsDetail.goodsGrades.length
+          that.goodsGrades = that.goodsDetail.goodsGrades
+          that.goodsGrades = [
+            {
+              name: '111',
+              number: 1
+            }, {
+              name: '222',
+              number: 2
+            }
+          ]
+          that.selectedTab = that.goodsDetail.goodsGrades[1].number
           document.title = that.goodsDetail.goodsName
         })
       },
@@ -111,7 +123,14 @@
           gradeNumber: gradeNumber
         }).then(function (res) {
           that.goodsStatus = res.data
-          that.$router.push({name: 'BeanExchange', params: {status: that.goodsStatus}})
+          that.goodsStatus.orderNumber = 1222
+          that.$router.push({name: 'BeanExchange', params: {status: that.goodsStatus.aaa}, query: {orderNumber: that.goodsStatus.orderNumber}})
+        }).catch(function (res) {
+          that.goodsStatus = res
+          that.goodsStatus.aaa = 1
+          that.goodsStatus.orderNumber = 1222
+          console.log(that.goodsStatus.goodsNumber)
+          that.$router.push({name: 'BeanExchange', params: {status: that.goodsStatus.aaa}, query: {orderNumber: that.goodsStatus.orderNumber}})
         })
       },
       toConfirm () {
@@ -318,8 +337,8 @@
   }
   .gear-project{
     float: left;
-    width: 25%;
-    margin: 3.8%;
+    width: 27.3%;
+    margin: 2.3%;
     border-radius: 5px;
     background-color: rgba(221,221,221,0.5);
     border: solid 0.5px #dddddd;
