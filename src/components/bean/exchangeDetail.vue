@@ -2,7 +2,7 @@
   <div class="exchangeDetail">
     <div class="top">
       <div class="banner">
-        <img v-bind:src="orderDetail.imgUrl" alt="" width="100%">
+        <img v-bind:src="baseFileUrl + orderDetail.imgUrl" alt="" width="100%">
         <div class="header">
           <p class="title">{{orderDetail.goodsName}}<span v-if="orderDetail.gradeName">-{{orderDetail.gradeName}}</span></p>
           <p class="validity" v-if="orderDetail.usefulTime">有效期至：{{orderDetail.usefulTime | date('-')}}</p>
@@ -43,7 +43,7 @@
         version: 310
       }
     },
-    props: ['token', 'showErrMsg'],
+    props: ['token', 'showErrMsg', 'baseFileUrl'],
     created () {
       this.$parent.token ? (this.getVersion(), this.getOrderDetail(this.$route.params.number)) : null
     },
@@ -71,7 +71,7 @@
       },
       getOrderDetail (orderNumber) {
         var that = this
-        that.$http('/hongcai/rest/activitys/points/order?orderNumber=' + orderNumber).then(function (res) {
+        that.$http('/hongcai/rest/activitys/points/order/' + orderNumber).then(function (res) {
           if (res && res.ret !== -1) {
             that.orderDetail = res.data
           }

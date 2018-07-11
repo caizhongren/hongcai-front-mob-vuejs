@@ -1,7 +1,7 @@
 <template>
   <div class="beans">
     <transition :name="transitionName">
-      <router-view :bean="bean"></router-view>
+      <router-view :bean="bean" :baseFileUrl="baseFileUrl"></router-view>
     </transition>
   </div>
 </template>
@@ -9,7 +9,8 @@
   export default {
     data () {
       return {
-        bean: 0
+        bean: 0,
+        baseFileUrl: process.env.baseFileUrl
       }
     },
     props: ['token', 'showErrMsg', 'transitionName'],
