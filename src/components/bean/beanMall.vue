@@ -23,7 +23,7 @@
       <ul class="giftList">
         <li v-for="item in giftLists" @click="toRouter(2, item.goodsNumber)">
           <div class="icon">
-            <img v-bind:src="item.imgUrl" alt="" width="80%">
+            <img v-bind:src="baseFileUrl + item.imgUrl" alt="" width="85%">
           </div>
           <p class="name">{{item.goodsName}}</p>
           <div class="description">
@@ -51,7 +51,7 @@
         giftLists: []
       }
     },
-    props: ['token', 'bean'],
+    props: ['token', 'bean', 'baseFileUrl'],
     watch: {
       '$parent.token': function (val) {
         bridgeUtil.webConnectNative('HCNative_BeanDetail', null, {
@@ -90,11 +90,11 @@
       getGoods (page) {
         var that = this
         that.$http('/hongcai/rest/activitys/points/goods?page=' + page + '&pageSize=' + that.pageSize).then(function (res) {
-          if (res && res.ret !== -1) {
-            this.totalPage = res.data.totalPage
+          if (res && res.data) {
+            that.totalPage = res.data.totalPage
             var giftLists = res.data.data
             for (var i = 0; i < giftLists.length; i++) {
-              this.giftLists.push(giftLists[i])
+              that.giftLists.push(giftLists[i])
             }
           }
         }).catch(function (error) {
@@ -313,12 +313,12 @@
   .giftList li .icon {
     background: #f4f1f2;
     border-radius: 10px 10px 0 0;
-    padding: .28rem .03rem .12rem;
+    padding: .2rem .03rem .1rem;
   }
   .giftList li .name {
     color: #666;
     font-size: .23rem;
-    margin: .2rem auto 0.1rem;
+    margin: .2rem auto 0rem;
   }
   .giftList li .description span {
     color: #ff6000;

@@ -2,7 +2,7 @@
   <div class="beanExchange">
     <ul class="exchangeLists" v-if="exchangeLists.length > 0">
       <li v-for="item in exchangeLists" @click="toDetail(item.orderNumber)">
-        <img v-bind:src="item.imgUrl" alt="" width="10%">
+        <img v-bind:src="baseFileUrl + item.imgUrl" alt="" width="10%">
         <div class="description">
           <p class="title">{{item.goodsName}}<span v-if="item.gradeName">-{{item.gradeName}}</span></p>
           <p class="time">{{item.orderTime | dateTime}} <span>查看详情 ></span></p>
@@ -26,7 +26,7 @@
         exchangeLists: []
       }
     },
-    props: ['token'],
+    props: ['token', 'baseFileUrl'],
     watch: {
     },
     created () {
@@ -46,11 +46,11 @@
       getRecord (page) {
         var that = this
         that.$http('/hongcai/rest/activitys/points/orders?token=' + that.$parent.token + '&page=' + page).then(function (res) {
-          if (res && res.ret !== -1) {
-            this.totalPage = res.data.totalPage
+          if (res && res.data) {
+            that.totalPage = res.data.totalPage
             var exchangeLists = res.data.data
             for (var i = 0; i < exchangeLists.length; i++) {
-              this.exchangeLists.push(exchangeLists[i])
+              that.exchangeLists.push(exchangeLists[i])
             }
           }
         }).catch(function (error) {
@@ -120,7 +120,7 @@
     background: #fff;
     border-bottom: 1px solid #eee;
     height: .8rem;
-    padding: .32rem .4rem .32rem;
+    padding: .32rem;
   }
   .exchangeLists li img {
     float: left;
@@ -130,7 +130,7 @@
     float: left;
     width: 85%;
     text-align: left;
-    padding-left: .35rem;
+    padding-left: .2rem;
   }
   .exchangeLists li .description .title {
     line-height: 1.33;
