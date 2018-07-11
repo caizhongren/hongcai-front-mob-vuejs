@@ -189,6 +189,20 @@
         that.$http('/hongcai/rest/banners/activity?type=3&isShow=1&locale=8&count=10').then(function (res) {
           if (res && res.ret !== -1) {
             that.banners = res.data.data
+            that.banners.length < 3 ? that.banners = [
+              {
+                imageUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+                linkUrl: 'https://www.hongcai.com'
+              },
+              {
+                imageUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+                linkUrl: 'https://www.hongcai.com'
+              },
+              {
+                imageUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
+                linkUrl: 'https://www.hongcai.com'
+              }
+            ] : null
           }
         })
       },

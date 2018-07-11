@@ -20,7 +20,7 @@
       <div class="orderNumber">订单编号：<span>{{orderDetail.orderNumber}}</span></div>
       <div class="orderTime">下单时间：<span>{{orderDetail.orderTime | dateTime}}</span></div>
     </div>
-    <div class="fixedBtn" @click="goWithdraw(orderDetail.goodsType)" v-if="orderDetail.useStatus === 2 && orderDetail.goodsType !== 3">马上使用</div>
+    <div class="fixedBtn" :class="{'greyBtn': orderDetail.useStatus !== 2}" @click="goWithdraw(orderDetail.goodsType)" v-if="orderDetail.goodsType !== 3">{{orderDetail.useStatus === 2 ? '马上使用' : '已使用'}}</div>
   </div>
 </template>
 <script>
@@ -197,5 +197,8 @@
     font-weight: bold;
     letter-spacing: 0.4px;
     max-width: 7.2rem;
+  }
+  .greyBtn {
+    background-color: #999;
   }
 </style>

@@ -136,7 +136,7 @@
     line-height: 1.33;
     color: #666;
     font-size: .25rem;
-    margin: -.01rem 0 .25rem;
+    margin: .03rem 0 .2rem;
   }
   .exchangeLists li .description .time {
     color: #999;
