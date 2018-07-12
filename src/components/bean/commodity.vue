@@ -51,21 +51,21 @@
     data () {
       return {
         goodsDetail: {
-          imgUrl: '/static/img/arbor-header.617861c.png',
-          beans: 1000,
-          marketBeans: 308,
-          goodsDesc: '<p class="p1">亲爱的宏财网用户：</p><p class="p1"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; </span>现接到存管银行通知，为进一步提升用户体验，海口联合农商银行资金存管系统将于<strong><span style="color: rgb(255, 0, 0);">2018年5月11日22:00～5月12日8:00期间</span></strong>进行支付系统优化升级。<strong>届时您在电脑端、App端及微信端的提现操作将会受到影响，升级完成后立即恢复正常</strong>，请您提前做好资金安排。 因系统升级给您造成不便，敬请谅解。</p><p class="p2"><br></p><p class="p1" style="text-align: right;">宏财网</p><p class="p1" style="text-align: right;">2018年5月7日</p>',
-          gearList: ['10000起投', '20000起投', '30000起投', '40000起投'],
+          imgUrl: '',
+          beans: Number,
+          marketBeans: Number,
+          goodsDesc: '',
+          goodsGrades: {},
           goodsStock: 1000,
           goodsName: '免费体现券'
         },
         animateStaus: false,
         modalShow: false,
-        selectedTab: 0,
+        selectedTab: Number,
         confirmExchange: false,
         goodsStatus: '',
-        goodsGrades: '',
-        gearAmount: ''
+        gearAmount: Number,
+        goodsGrades: {}
       }
     },
     props: ['showErrMsg', 'token', 'bean', 'baseFileUrl'],
@@ -98,11 +98,11 @@
       },
       getGoodsDetail () {
         var that = this
-        that.$http.get('/hongcai/rest/activitys/points/goods/' + this.goodsNumber).then(function (response) {
+        that.$http.get('/hongcai/rest/activitys/points/goods/' + that.goodsNumber).then(function (response) {
           that.goodsDetail = response.data
           that.gearAmount = that.goodsDetail.goodsGrades.length
           that.goodsGrades = that.goodsDetail.goodsGrades
-          that.selectedTab = that.goodsDetail.goodsGrades[1].number
+          that.selectedTab = that.goodsDetail.goodsGrades[0].number
           document.title = that.goodsDetail.goodsName
         })
       },
@@ -110,18 +110,19 @@
         var that = this
         that.afterConfirm()
         that.$http.post('/hongcai/rest/activitys/points/order', {
-          goodsNumber: parseInt(goodsNumber),
+          goodsNumber: goodsNumber,
           gradeNumber: gradeNumber
         }).then(function (res) {
           that.goodsStatus = res.data
-          that.goodsStatus.orderNumber = 1222
-          that.$router.push({name: 'BeanExchange', params: {status: that.goodsStatus.aaa}, query: {orderNumber: that.goodsStatus.orderNumber}})
+          if (res.data.ret && res.data.ret === -1) {
+            that.$router.push({name: 'BeanExchange', params: {status: '0'}, query: {goodsNumber: that.goodsNumber}})
+          } else {
+            that.$router.push({name: 'BeanExchange', params: {status: '1'}, query: {orderNumber: that.goodsStatus.orderNumber}})
+          }
         }).catch(function (res) {
           that.goodsStatus = res
-          that.goodsStatus.aaa = 1
-          that.goodsStatus.orderNumber = 1222
-          console.log(that.goodsStatus.goodsNumber)
-          that.$router.push({name: 'BeanExchange', params: {status: that.goodsStatus.aaa}, query: {orderNumber: that.goodsStatus.orderNumber}})
+          console.log(res)
+          that.$router.push({name: 'BeanExchange', params: {status: 0}, query: {goodsNumber: that.goodsNumber}})
         })
       },
       toConfirm () {
@@ -206,7 +207,7 @@
     margin-top: .1rem;
   }
   .magn-top{
-  	background: #f3f3f3;
+  	background: #efeef4;
     height: .28rem;
   }
   .prize-detail{
