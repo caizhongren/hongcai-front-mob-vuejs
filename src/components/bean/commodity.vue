@@ -56,8 +56,8 @@
           marketBeans: Number,
           goodsDesc: '',
           goodsGrades: {},
-          goodsStock: 1000,
-          goodsName: '免费体现券'
+          goodsStock: Number,
+          goodsName: ''
         },
         animateStaus: false,
         modalShow: false,
@@ -217,13 +217,13 @@
   .prize-detail .title{
   	position: relative;
   	color: #666666;
-  	line-height: .5rem;
+  	line-height: .46rem;
   	font-size: .26rem;
     font-weight: bold;
   }
   .vertical-line{
-  	width: .1rem;
-  	height: .3rem;
+  	width: .12rem;
+  	height: .265rem;
   	border-radius: 3px;
   	background-image: linear-gradient(to top, #fb9d1c, #ffc868);
   	position: absolute;

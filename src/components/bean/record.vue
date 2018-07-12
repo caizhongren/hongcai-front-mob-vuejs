@@ -54,51 +54,7 @@
             }
           }
         }).catch(function (error) {
-          console.log(error.toString())
-          that.exchangeLists = [
-            {
-              orderNumber: 0,
-              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-              goodsName: '饿了么4-15元优惠券',
-              gradeName: '',
-              orderTime: 8811111111
-            },
-            {
-              orderNumber: 1,
-              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-              goodsName: '饿了么4-15元优惠券',
-              gradeName: '档位',
-              orderTime: 1111111111
-            },
-            {
-              orderNumber: 2,
-              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-              goodsName: '饿了么4-15元优惠券',
-              gradeName: '档位',
-              orderTime: 1111111111
-            },
-            {
-              orderNumber: 3,
-              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-              goodsName: '饿了么4-15元优惠券',
-              gradeName: '档位',
-              orderTime: 1111111111
-            },
-            {
-              orderNumber: 4,
-              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-              goodsName: '饿了么4-15元优惠券',
-              gradeName: '档位',
-              orderTime: 1111111111
-            },
-            {
-              orderNumber: 5,
-              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-              goodsName: '饿了么4-15元优惠券',
-              gradeName: '档位',
-              orderTime: 1111111111
-            }
-          ]
+          alert(error.toString())
         })
       }
     }
