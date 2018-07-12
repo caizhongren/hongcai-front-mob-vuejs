@@ -51,13 +51,13 @@
     data () {
       return {
         goodsDetail: {
-          imgUrl: '/static/img/arbor-header.617861c.png',
-          beans: 1000,
-          marketBeans: 308,
-          goodsDesc: '<p class="p1">亲爱的宏财网用户：</p><p class="p1"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; </span>现接到存管银行通知，为进一步提升用户体验，海口联合农商银行资金存管系统将于<strong><span style="color: rgb(255, 0, 0);">2018年5月11日22:00～5月12日8:00期间</span></strong>进行支付系统优化升级。<strong>届时您在电脑端、App端及微信端的提现操作将会受到影响，升级完成后立即恢复正常</strong>，请您提前做好资金安排。 因系统升级给您造成不便，敬请谅解。</p><p class="p2"><br></p><p class="p1" style="text-align: right;">宏财网</p><p class="p1" style="text-align: right;">2018年5月7日</p>',
-          gearList: ['10000起投', '20000起投', '30000起投', '40000起投'],
-          goodsStock: 1000,
-          goodsName: '免费体现券'
+          imgUrl: '',
+          beans: 0,
+          marketBeans: 0,
+          goodsDesc: '',
+          gearList: [],
+          goodsStock: 0,
+          goodsName: ''
         },
         animateStaus: false,
         modalShow: false,
@@ -206,7 +206,7 @@
     margin-top: .1rem;
   }
   .magn-top{
-  	background: #f3f3f3;
+  	background: #efeef4;
     height: .28rem;
   }
   .prize-detail{
@@ -216,13 +216,13 @@
   .prize-detail .title{
   	position: relative;
   	color: #666666;
-  	line-height: .5rem;
+  	line-height: .46rem;
   	font-size: .26rem;
     font-weight: bold;
   }
   .vertical-line{
-  	width: .1rem;
-  	height: .3rem;
+  	width: .12rem;
+  	height: .265rem;
   	border-radius: 3px;
   	background-image: linear-gradient(to top, #fb9d1c, #ffc868);
   	position: absolute;

@@ -58,7 +58,6 @@
           // 1 需要显示 0 不需要显示
           isShow: 0
         }, function (res) {}, null)
-        val && val !== '' ? this.getUserPoints() : null
       },
       'banners': function (val) {
         var that = this
@@ -99,94 +98,11 @@
           }
         }).catch(function (error) {
           console.log(error.toString())
-          that.giftLists = [
-            {
-              goodsNumber: 0,
-              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-              goodsName: '饿了么4-15元优惠券',
-              tag: '限时特惠',
-              beans: 88
-            },
-            {
-              goodsNumber: 1,
-              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-              goodsName: '饿了么4-15元优惠券',
-              tag: '限时特惠',
-              beans: 88
-            },
-            {
-              goodsNumber: 2,
-              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-              goodsName: '饿了么4-15元优惠券',
-              tag: '限时特惠',
-              beans: 88
-            },
-            {
-              goodsNumber: 3,
-              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-              goodsName: '饿了么4-15元优惠券',
-              tag: '限时特惠',
-              beans: 88
-            },
-            {
-              goodsNumber: 4,
-              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-              goodsName: '饿了么4-15元优惠券',
-              tag: '限时特惠',
-              beans: 88
-            },
-            {
-              goodsNumber: 5,
-              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-              goodsName: '饿了么4-15元优惠券',
-              tag: '限时特惠',
-              beans: 88
-            },
-            {
-              goodsNumber: 2,
-              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-              goodsName: '饿了么4-15元优惠券',
-              tag: '限时特惠',
-              beans: 88
-            },
-            {
-              goodsNumber: 3,
-              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-              goodsName: '饿了么4-15元优惠券',
-              tag: '限时特惠',
-              beans: 88
-            },
-            {
-              goodsNumber: 4,
-              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-              goodsName: '饿了么4-15元优惠券',
-              tag: '限时特惠',
-              beans: 88
-            },
-            {
-              goodsNumber: 5,
-              imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-              goodsName: '饿了么4-15元优惠券',
-              tag: '限时特惠',
-              beans: 88
-            }
-          ]
-          if (that.page > 1) {
-            that.giftLists.push(
-              {
-                goodsNumber: 0,
-                imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-                goodsName: '11饿了么4-15元优惠券',
-                tag: '11限时特惠',
-                beans: 1188
-              }
-            )
-          }
         })
       },
       getBanners () {
         var that = this
-        that.$http('/hongcai/rest/banners/activity?type=3&isShow=1&locale=8&count=10').then(function (res) {
+        that.$http('/hongcai/rest/banners/activity?type=3&isShow=1&locale=10&count=10').then(function (res) {
           if (res && res.ret !== -1) {
             that.banners = res.data.data
             that.banners.length < 3 ? that.banners = [
@@ -248,13 +164,13 @@
 </script>
 <style scoped>
   .magn-top {
-    background: #ecebf1;
-    height: .35rem;
+    background: #efeef4;
+    height: .28rem;
   }
   .banners {
     overflow: hidden;
     width: 100%;
-    height: 2.9rem;
+    height: 2.72rem;
     padding: .3rem 0;
   }
   .poster-list li {
@@ -282,11 +198,11 @@
   }
   .tabs li p {
     color: #666;
-    font-size: .23rem;
+    font-size: .25rem;
   }
   .tabs li p span {
     color: #ff6000;
-    font-size: .24rem;
+    font-size: .26rem;
   }
   .gifts .title {
     color: #666;
@@ -296,14 +212,14 @@
   }
   .gifts .title p {
     float: left;
-    height: .34rem;
-    line-height: .38rem;
+    height: .28rem;
+    line-height: .31rem;
     margin-left: .1rem;
   }
   .gifts .title span {
     float: left;
-    width: .14rem;
-    height: .34rem;
+    width: .12rem;
+    height: .265rem;
     border-radius: 3.5px;
     background-image: linear-gradient(to top, #fb9d1c, #ffc868);
   }
@@ -325,7 +241,7 @@
     float: right;
   }
   .giftList li .icon {
-    background: #f4f1f2;
+    background-color: #f4f1f2;
     border-radius: 10px 10px 0 0;
     padding: .2rem .03rem .1rem;
   }

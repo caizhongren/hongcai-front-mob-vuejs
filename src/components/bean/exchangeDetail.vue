@@ -2,7 +2,7 @@
   <div class="exchangeDetail">
     <div class="top">
       <div class="banner">
-        <img v-bind:src="baseFileUrl + orderDetail.imgUrl" alt="" width="100%">
+        <img v-bind:src="orderDetail.imgUrl" alt="" width="100%">
         <div class="header">
           <p class="title">{{orderDetail.goodsName}}<span v-if="orderDetail.gradeName">-{{orderDetail.gradeName}}</span></p>
           <p class="validity" v-if="orderDetail.usefulTime">有效期至：{{orderDetail.usefulTime | date('-')}}</p>
@@ -29,14 +29,14 @@
     data () {
       return {
         orderDetail: {
-          imgUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-          goodsName: '免费体现券',
-          gradeName: '档位',
-          usefulTime: 111111,
-          goodsDesc: '<p class="p1">亲爱的宏财网用户：</p><p class="p1"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; </span>现接到存管银行通知，为进一步提升用户体验，海口联合农商银行资金存管系统将于<strong><span style="color: rgb(255, 0, 0);">2018年5月11日22:00～5月12日8:00期间</span></strong>进行支付系统优化升级。<strong>届时您在电脑端、App端及微信端的提现操作将会受到影响，升级完成后立即恢复正常</strong>，请您提前做好资金安排。 因系统升级给您造成不便，敬请谅解。</p><p class="p2"><br/></p><p class="p1" style="text-align: right;">宏财网</p><p class="p1" style="text-align: right;">2018年5月7日</p>',
-          orderNumber: 11111111,
-          orderTime: 111111111,
-          beans: 88,
+          imgUrl: '',
+          goodsName: '',
+          gradeName: '',
+          usefulTime: 0,
+          goodsDesc: '',
+          orderNumber: 0,
+          orderTime: 0,
+          beans: 0,
           useStatus: 2, // 使用状态：已使用：1，未使用：2
           goodsType: 1 // 加息券：1，现金券：2，提现券：3
         },
@@ -74,6 +74,7 @@
         that.$http('/hongcai/rest/activitys/points/order/' + orderNumber).then(function (res) {
           if (res && res.ret !== -1) {
             that.orderDetail = res.data
+            that.orderDetail.imgUrl = that.baseFileUrl + that.orderDetail.imgUrl
           }
         })
       }
@@ -135,16 +136,17 @@
   }
   .description .title p {
     float: left;
-    height: .34rem;
-    line-height: .32rem;
+    height: .28rem;
+    line-height: .31rem;
     letter-spacing: 0.4px;
     margin-left: .1rem;
     font-weight: bold;
   }
   .description .title span {
     float: left;
-    width: .12rem;
-    height: .28rem;
+    display: block;
+    width: .115rem;
+    height: .265rem;
     border-radius: 3.5px;
     background-image: linear-gradient(to top, #fb9d1c, #ffc868);
   }
@@ -171,8 +173,9 @@
   }
   .exchangeDetail .bottom .title span {
     float: left;
-    width: .12rem;
-    height: .28rem;
+    display: block;
+    width: .115rem;
+    height: .265rem;
     border-radius: 3.5px;
     background-image: linear-gradient(to top, #fb9d1c, #ffc868);
   }
