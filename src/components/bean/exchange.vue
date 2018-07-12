@@ -20,14 +20,15 @@
   	<div class="identifier" v-if="status == 1">
   	  <p><span class="vertical-line"></span>支付金额：<span class="orange-font">{{orderDetails.beans}}宏豆</span></p>
   	  <p>订单编号：<span class="grey-font">{{orderDetails.orderNumber}}</span></p>
-  	  <p>下单时间：<span class="grey-font">{{orderDetails.orderTime}}</span></p>
+  	  <p>下单时间：<span class="grey-font">{{orderDetails.orderTime | dateTime}}</span></p>
   	</div>
   	<div class="magn-top"></div>
   	<div class="prize-detail">
   	  <p class="title"><span class="vertical-line"></span>商品详情</p>
   	  <div data-v-5d6963f4="" class="content" v-html="orderDetails.goodsDesc"></div>
   	</div>
-  	<div class="gotoUse" @click="toHCNative(orderDetails.goodsType)" v-if="orderDetails.useStatus == 2 && status == 1">马上使用</div>
+  	<div class="gotoUse" @click="toHCNative(orderDetails.goodsType)" v-if="orderDetails.useStatus == 1 && status == 1">马上使用</div>
+    <div class="gotoUse grey-btn" v-if="orderDetails.useStatus == 0 && status == 1">已使用</div>
     <a href="tel:400-990-7626" v-if="status == 0"><div class="gotoUse">联系客服</div></a>
   </div>
 </template>
@@ -202,5 +203,8 @@
   }
   .border-grey{
   	border-bottom: 1px solid #f3f3f3;
+  }
+  .grey-btn{
+    background-color: #999;
   }
 </style>
