@@ -10,10 +10,12 @@
   	</div>
   	<div class="prize-brief">
       <img :src="orderDetails.iconImgUrl" alt="">
-      <div class="goods-title">
-        <p v-if="status == 1" class="goods-name">{{orderDetails.goodsName}}</p>
-        <p v-if="status == 0" class="goods-name-center">{{orderDetails.goodsName}}</p>
-        <p v-if="status == 1" class="grade-name">{{orderDetails.gradeName}}</p>
+      <div class="goods-title" v-if="orderDetails.gradeName">
+        <p class="goods-name">{{orderDetails.goodsName}}</p>
+        <p class="grade-name">{{orderDetails.gradeName}}</p>
+      </div>
+      <div class="goods-title" v-if="!orderDetails.gradeName">
+        <p class="goods-name-center">{{orderDetails.goodsName}}</p>
       </div>
   	</div>
   	<div class="magn-top" v-if="status == 1"></div>

@@ -33,12 +33,18 @@
         </div>
       </div>
     </transition>
-    <div class="mask-common mask1" v-if="confirmExchange">
-      <div class="alert-wrap">
+    <div class="mask-common mask1" v-if="confirmExchange || exchangeFail">
+      <div class="alert-wrap" v-if="confirmExchange">
         <div class="text">是否确认消耗<span class="orange-ft">{{requireBeans}}</span>宏豆兑换该商品？</div>
         <div class="i-know">
         <div class="" @click="afterConfirm()">取消</div>
         <div class="" @click="exchangeReward(goodsNumber,selectedTab)">确定</div>
+        </div>
+      </div>
+      <div class="alert-wrap" v-if="exchangeFail">
+        <div class="text">红豆不足</div>
+        <div class="i-know" style="text-align: center;display: block;" @click="iknowResult()">
+          我知道了
         </div>
       </div>
     </div>
@@ -66,7 +72,9 @@
         goodsStatus: '',
         gearAmount: 0,
         goodsGrades: {},
-        requireBeans: 0
+        requireBeans: 0,
+        exchangeFail: false,
+        errorMsg: ''
       }
     },
     props: ['showErrMsg', 'token', 'bean', 'baseFileUrl'],
@@ -112,7 +120,10 @@
         }).then(function (res) {
           that.goodsStatus = res.data
           if (res.data.ret && res.data.ret === -1) {
-            that.$router.push({name: 'BeanExchange', params: {status: '0'}, query: {goodsNumber: that.goodsNumber}})
+            that.errorMsg = res.data.msg
+            that.exchangeFail = true
+            return
+            // that.$router.push({name: 'BeanExchange', params: {status: '0'}, query: {goodsNumber: that.goodsNumber}})
           } else {
             that.$router.push({name: 'BeanExchange', params: {status: '1'}, query: {orderNumber: that.goodsStatus.orderNumber}})
           }
@@ -129,6 +140,10 @@
       },
       afterConfirm () {
         this.confirmExchange = false
+      },
+      iknowResult () {
+        this.exchangeFail = false
+        this.getGoodsDetail()
       }
     }
   }
