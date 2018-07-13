@@ -107,16 +107,16 @@
             that.banners = res.data.data
             that.banners.length < 3 ? that.banners = [
               {
-                imageUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-                linkUrl: 'https://www.hongcai.com'
+                imageUrl: 'http://test321.hongcai.com/uploads/png/original/2018-07-13/image/4f9b31ae1d424b129901bb8b6ffc7bea-original.png',
+                linkUrl: ''
               },
               {
-                imageUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-                linkUrl: 'https://www.hongcai.com'
+                imageUrl: 'http://test321.hongcai.com/uploads/png/original/2018-07-13/image/4f9b31ae1d424b129901bb8b6ffc7bea-original.png',
+                linkUrl: ''
               },
               {
-                imageUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-                linkUrl: 'https://www.hongcai.com'
+                imageUrl: 'http://test321.hongcai.com/uploads/png/original/2018-07-13/image/4f9b31ae1d424b129901bb8b6ffc7bea-original.png',
+                linkUrl: ''
               }
             ] : null
           }
@@ -141,7 +141,7 @@
         return true
       },
       toDetail (link) {
-        if (this.toLogin()) {
+        if (this.toLogin() && link) {
           window.location.href = link
         }
       },

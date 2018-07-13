@@ -2,7 +2,8 @@
   <div class="exchangeDetail">
     <div class="top">
       <div class="banner">
-        <img v-bind:src="orderDetail.imgUrl" alt="" width="100%">
+        <img src="../../images/beans/img_nor.png" alt="" width="100%" v-if="!showImg">
+        <img v-bind:src="orderDetail.imgUrl" alt="" width="100%" v-if="showImg">
         <div class="header">
           <p class="title">{{orderDetail.goodsName}}<span v-if="orderDetail.gradeName">-{{orderDetail.gradeName}}</span></p>
           <p class="validity" v-if="orderDetail.usefulTime">有效期至：{{orderDetail.usefulTime | date('-')}}</p>
@@ -39,10 +40,16 @@
           beans: 0,
           useStatus: 2, // 使用状态：已使用：1，未使用：2
           goodsType: 1 // 加息券：1，现金券：2，提现券：3
-        }
+        },
+        showImg: false
       }
     },
     props: ['token', 'showErrMsg', 'baseFileUrl'],
+    watch: {
+      'orderDetail.imgUrl': function (val) {
+        val ? this.showImg = true : this.showImg = false
+      }
+    },
     created () {
       this.$parent.token ? this.getOrderDetail(this.$route.params.number) : null
     },
