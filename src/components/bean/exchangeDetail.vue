@@ -20,7 +20,7 @@
       <div class="orderNumber">订单编号：<span>{{orderDetail.orderNumber}}</span></div>
       <div class="orderTime">下单时间：<span>{{orderDetail.orderTime | dateTime}}</span></div>
     </div>
-    <div class="fixedBtn" :class="{'greyBtn': orderDetail.useStatus !== 2}" @click="goWithdraw(orderDetail.goodsType)" v-if="orderDetail.goodsType !== 3">{{orderDetail.useStatus === 2 ? '马上使用' : '已使用'}}</div>
+    <div class="fixedBtn" :class="{'greyBtn': orderDetail.useStatus !== 2}" @click="goInvestList(orderDetail.goodsType)" v-if="orderDetail.goodsType !== 3">{{orderDetail.useStatus === 2 ? '马上使用' : '已使用'}}</div>
   </div>
 </template>
 <script>
@@ -39,34 +39,21 @@
           beans: 0,
           useStatus: 2, // 使用状态：已使用：1，未使用：2
           goodsType: 1 // 加息券：1，现金券：2，提现券：3
-        },
-        version: 310
+        }
       }
     },
     props: ['token', 'showErrMsg', 'baseFileUrl'],
     created () {
-      this.$parent.token ? (this.getVersion(), this.getOrderDetail(this.$route.params.number)) : null
+      this.$parent.token ? this.getOrderDetail(this.$route.params.number) : null
     },
     methods: {
-      getVersion () {
+      goInvestList (goodsType) {
         var that = this
-        that.$http({
-          method: 'get',
-          url: '/hongcai/rest/users/0/version?token=' + that.$parent.token
-        }).then(function (response) {
-          that.version = response.data.replace(/\./g, '')
-        })
-      },
-      goWithdraw (goodsType) {
-        var that = this
+        if (that.orderDetail.useStatus !== 2) {
+          return
+        }
         if (goodsType !== 3) {
           bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {}, null)
-        } else {
-          if (that.version < 330) {
-            that.$parent.showErrMsg('为了不影响您的正常使用，建议您更新到最新版本哦～')
-            return
-          }
-          bridgeUtil.webConnectNative('HCNative_GoWithdraw', undefined, {}, function (res) {}, null)
         }
       },
       getOrderDetail (orderNumber) {
