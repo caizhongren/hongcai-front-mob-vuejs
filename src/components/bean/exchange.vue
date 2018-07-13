@@ -9,7 +9,7 @@
   	  <span>兑换失败了。。</span>
   	</div>
   	<div class="prize-brief">
-      <img :src="orderDetails.imgUrl" alt="">
+      <img :src="orderDetails.iconImgUrl" alt="">
       <div class="goods-title">
         <p v-if="status == 1" class="goods-name">{{orderDetails.goodsName}}</p>
         <p v-if="status == 0" class="goods-name-center">{{orderDetails.goodsName}}</p>
@@ -39,7 +39,7 @@
     data () {
       return {
         orderDetails: {
-          imgUrl: '',
+          iconImgUrl: '',
           goodsName: '',
           orderNumber: '',
           gradeName: '',
@@ -52,15 +52,13 @@
         orderNumber: this.$route.query.orderNumber,
         status: this.$route.params.status,
         goodsNumber: this.$route.query.goodsNumber,
-        version: 310
+        version: ''
       }
     },
     props: ['token', 'baseFileUrl', 'showErrMsg'],
     created: function () {
       this.status === '0' ? (document.title = '兑换失败') : document.title = '兑换成功'
       this.$parent.token ? (this.getVersion(), this.getExchangeStatus()) : null
-      this.getVersion()
-      this.getExchangeStatus()
     },
     methods: {
       getVersion () {
@@ -86,15 +84,15 @@
       },
       getExchangeStatus () {
         var that = this
-        if (this.goodsNumber) {
+        if (that.goodsNumber) {
           that.$http.get('/hongcai/rest/activitys/points/goods/' + that.goodsNumber).then(function (response) {
             that.orderDetails = response.data
-            that.orderDetails.imgUrl = that.baseFileUrl + that.orderDetails.imgUrl
+            that.orderDetails.iconImgUrl = that.baseFileUrl + that.orderDetails.iconImgUrl
           })
         } else {
-          that.$http.get('/hongcai/rest/activitys/points/order/status?orderNumber=' + this.orderNumber).then(function (res) {
+          that.$http.get('/hongcai/rest/activitys/points/order/status?orderNumber=' + that.orderNumber).then(function (res) {
             that.orderDetails = res.data
-            that.orderDetails.imgUrl = that.baseFileUrl + that.orderDetails.imgUrl
+            that.orderDetails.iconImgUrl = that.baseFileUrl + that.orderDetails.iconImgUrl
           }).catch(function (res) {
             console.log(res.toString())
           })
