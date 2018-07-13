@@ -1,5 +1,5 @@
 <template>
-  <div class="beanExchange">
+  <div class="beanExchange" v-if="showPage">
     <ul class="exchangeLists" v-if="exchangeLists.length > 0">
       <li v-for="item in exchangeLists" @click="toDetail(item.orderNumber)">
         <img v-bind:src="baseFileUrl + item.imgUrl" alt="" width="10%">
@@ -23,7 +23,8 @@
         page: 1,
         pageSize: 10,
         totalPage: 1,
-        exchangeLists: []
+        exchangeLists: [],
+        showPage: false
       }
     },
     props: ['token', 'baseFileUrl'],
@@ -46,6 +47,7 @@
       getRecord (page) {
         var that = this
         that.$http('/hongcai/rest/activitys/points/orders?token=' + that.$parent.token + '&page=' + page + '&pageSize=' + that.pageSize).then(function (res) {
+          that.showPage = true
           if (res && res.data) {
             that.totalPage = res.data.totalPage
             var exchangeLists = res.data.data
