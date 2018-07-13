@@ -32,7 +32,7 @@
             <p>{{item.tag}}</p>
           </div>
         </li>
-        <div class="clearfix ft-666" @click="loadMore()" v-if="page > totalPage">查看更多</div>
+        <div class="clearfix ft-666" @click="loadMore()" v-if="page < totalPage">查看更多</div>
       </ul>
     </div>
   </div>
@@ -47,7 +47,7 @@
         Interval: null,
         page: 1,
         pageSize: 10,
-        totalPage: 0,
+        totalPage: 1,
         giftLists: []
       }
     },

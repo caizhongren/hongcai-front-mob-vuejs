@@ -8,7 +8,7 @@
           <p class="time">{{item.orderTime | dateTime}} <span>查看详情 ></span></p>
         </div>
       </li>
-      <div class="loadMore clearfix" @click="loadMore()" v-if="page > totalPage">查看更多</div>
+      <div class="loadMore clearfix" @click="loadMore()" v-if="page < totalPage">查看更多</div>
     </ul>
     <div class="padding-t-1" v-else>
       <img src="../../images/project/no-record.png" width="35%" class="no-record">
@@ -45,7 +45,7 @@
       },
       getRecord (page) {
         var that = this
-        that.$http('/hongcai/rest/activitys/points/orders?token=' + that.$parent.token + '&page=' + page).then(function (res) {
+        that.$http('/hongcai/rest/activitys/points/orders?token=' + that.$parent.token + '&page=' + page + '&pageSize=' + that.pageSize).then(function (res) {
           if (res && res.data) {
             that.totalPage = res.data.totalPage
             var exchangeLists = res.data.data
