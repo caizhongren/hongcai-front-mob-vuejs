@@ -9,7 +9,7 @@
   	  <span>兑换失败了。。</span>
   	</div>
   	<div class="prize-brief">
-      <img :src="baseFileUrl + orderDetails.imgUrl" alt="" v-cloak>
+      <img :src="orderDetails.imgUrl" alt="">
       <div class="goods-title">
         <p v-if="status == 1" class="goods-name">{{orderDetails.goodsName}}</p>
         <p v-if="status == 0" class="goods-name-center">{{orderDetails.goodsName}}</p>
@@ -25,10 +25,10 @@
   	<div class="magn-top"></div>
   	<div class="prize-detail">
   	  <p class="title"><span class="vertical-line"></span>商品详情</p>
-  	  <div data-v-5d6963f4="" class="content" v-html="orderDetails.goodsDesc"></div>
+  	  <div class="content" v-html="orderDetails.goodsDesc"></div>
   	</div>
-  	<div class="gotoUse" @click="toHCNative(orderDetails.goodsType)" v-if="orderDetails.useStatus == 1 && status == 1">马上使用</div>
-    <div class="gotoUse grey-btn" v-if="orderDetails.useStatus == 0 && status == 1">已使用</div>
+  	<div class="gotoUse" @click="toHCNative(orderDetails.goodsType)" v-if="orderDetails.useStatus == 2 && status == 1">马上使用</div>
+    <div class="gotoUse grey-btn" v-if="orderDetails.useStatus == 1 && status == 1">已使用</div>
     <a href="tel:400-990-7626" v-if="status == 0"><div class="gotoUse">联系客服</div></a>
   </div>
 </template>
@@ -51,21 +51,36 @@
         },
         orderNumber: this.$route.query.orderNumber,
         status: this.$route.params.status,
-        goodsNumber: this.$route.query.goodsNumber
+        goodsNumber: this.$route.query.goodsNumber,
+        version: 310
       }
     },
-    props: ['token', 'baseFileUrl'],
+    props: ['token', 'baseFileUrl', 'showErrMsg'],
     created: function () {
       this.status === '0' ? (document.title = '兑换失败') : document.title = '兑换成功'
-      this.$parent.token ? this.getExchangeStatus() : null
+      this.$parent.token ? (this.getVersion(), this.getExchangeStatus()) : null
+      this.getVersion()
+      this.getExchangeStatus()
     },
     methods: {
+      getVersion () {
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest/users/0/version?token=' + that.$parent.token
+        }).then(function (response) {
+          that.version = response.data.replace(/\./g, '')
+        })
+      },
       toHCNative (type) {
-        if (type === 3) {
-          console.log('tixian')
+        var that = this
+        if (type === 3) { // 提现券
+          if (parseInt(that.version) < 330) {
+            that.$parent.showErrMsg('为了不影响您的正常使用，建议您更新到最新版本哦～')
+            return
+          }
           bridgeUtil.webConnectNative('HCNative_GoWithdraw', undefined, {}, function (res) {}, null)
-        } else if (type === 1 || type === 2) {
-          console.log('touzi')
+        } else if (type === 1 || type === 2) { // 1.加息券 2.现金券
           bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {}, null)
         }
       },
@@ -74,10 +89,12 @@
         if (this.goodsNumber) {
           that.$http.get('/hongcai/rest/activitys/points/goods/' + that.goodsNumber).then(function (response) {
             that.orderDetails = response.data
+            that.orderDetails.imgUrl = that.baseFileUrl + that.orderDetails.imgUrl
           })
         } else {
           that.$http.get('/hongcai/rest/activitys/points/order/status?orderNumber=' + this.orderNumber).then(function (res) {
             that.orderDetails = res.data
+            that.orderDetails.imgUrl = that.baseFileUrl + that.orderDetails.imgUrl
           }).catch(function (res) {
             console.log(res.toString())
           })
@@ -87,9 +104,6 @@
   }
 </script>
 <style scoped>
-  [v-cloak]{ 
-    display: none;
-  }
   p{
   	text-align: left;
   }

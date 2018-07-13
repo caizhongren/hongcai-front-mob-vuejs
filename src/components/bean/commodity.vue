@@ -1,6 +1,6 @@
 <template>
   <div class="exchange-detail">
-    <img :src="baseFileUrl + goodsDetail.imgUrl" alt="" class="prize-banner">
+    <img v-bind:src="goodsDetail.imgUrl" class="prize-banner" v-cloak>
   	<div class="prize-brief">
   	  <p>{{goodsDetail.goodsName}}</p>
   	  <p><span class="presentPrice">{{requireBeans}}</span><i></i><span class="originalPrice">{{goodsDetail.marketBeans}}</span><i></i></p>
@@ -45,28 +45,28 @@
   </div>
 </template>
 <script>
-  import {bridgeUtil, ModalHelper} from '../../service/Utils'
+  import {ModalHelper} from '../../service/Utils'
   export default {
     name: 'exchangeDetail',
     data () {
       return {
         goodsDetail: {
           imgUrl: '',
-          beans: Number,
-          marketBeans: Number,
+          beans: 0,
+          marketBeans: 0,
           goodsDesc: '',
           goodsGrades: [],
-          goodsStock: Number,
+          goodsStock: 0,
           goodsName: ''
         },
         animateStaus: false,
         modalShow: false,
-        selectedTab: Number,
+        selectedTab: 0,
         confirmExchange: false,
         goodsStatus: '',
-        gearAmount: Number,
+        gearAmount: 0,
         goodsGrades: {},
-        requireBeans: Number
+        requireBeans: 0
       }
     },
     props: ['showErrMsg', 'token', 'bean', 'baseFileUrl'],
@@ -83,9 +83,6 @@
       this.getGoodsDetail()
     },
     methods: {
-      toInvest () {
-        bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {}, null)
-      },
       modalappear () {
         this.modalShow = true
         this.animateStaus = true
@@ -98,6 +95,7 @@
         var that = this
         that.$http.get('/hongcai/rest/activitys/points/goods/' + that.goodsNumber).then(function (response) {
           that.goodsDetail = response.data
+          that.goodsDetail.imgUrl = that.baseFileUrl + that.goodsDetail.imgUrl
           that.gearAmount = that.goodsDetail.goodsGrades.length
           that.goodsGrades = that.goodsDetail.goodsGrades
           that.selectedTab = that.goodsDetail.goodsGrades[0].number
@@ -136,6 +134,9 @@
   }
 </script>
 <style scoped>
+  [v-cloak]{ 
+    display: none;
+  }
   button{
     border: none;
   }
@@ -346,6 +347,7 @@
     transition: all .3s ease;
   }
   .animate-enter, .animate-leave-to{
+    opacity:  0;
     transform: translateY(6rem);
   }
   .fixed-to-absolute{
