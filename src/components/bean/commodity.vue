@@ -3,7 +3,7 @@
     <img :src="baseFileUrl + goodsDetail.imgUrl" alt="" class="prize-banner">
   	<div class="prize-brief">
   	  <p>{{goodsDetail.goodsName}}</p>
-  	  <p><span class="presentPrice">{{goodsDetail.beans}}</span><i></i><span class="originalPrice">{{goodsDetail.marketBeans}}</span><i></i></p>
+  	  <p><span class="presentPrice">{{requireBeans}}</span><i></i><span class="originalPrice">{{goodsDetail.marketBeans}}</span><i></i></p>
   	</div>
   	<div class="magn-top"></div>
   	<div class="prize-detail">
@@ -13,9 +13,9 @@
     <div></div>
     <button class="selectGear dissatisfaction font-w" :class="" v-if="goodsDetail.goodsStock == 0">已兑完</button>
     <div class="selectGear" :class="" v-if="goodsDetail.goodsStock != 0 && gearAmount == 1">
-      <p class="gear-one"><span class="presentPrice">{{goodsDetail.beans}}</span><i></i></p>
-      <button class="gear-one-btn bg-orange" v-if="bean >= goodsDetail.beans" @click="toConfirm()">确认兑换</button>
-      <button class="gear-one-btn dissatisfaction" v-if="bean < goodsDetail.beans">宏豆不足</button>
+      <p class="gear-one"><span class="presentPrice">{{requireBeans}}</span><i></i></p>
+      <button class="gear-one-btn bg-orange" v-if="bean >= requireBeans" @click="toConfirm()">确认兑换</button>
+      <button class="gear-one-btn dissatisfaction" v-if="bean < requireBeans">宏豆不足</button>
     </div>
   	<button class="selectGear font-w bg-orange" :class="" v-if="goodsDetail.goodsStock != 0 && gearAmount > 1" @click="modalappear()">选择档位</button>
     <div class="choose-modal" v-if="modalShow" @click="modalisappear()"></div>
@@ -24,18 +24,18 @@
         <p class="prize-name"><i @click="modalisappear()"></i>{{goodsDetail.goodsName}}</p>
         <p class="gear-tip">选择档位:</p>
         <ul class="gear-list">
-          <li class="gear-project" @click="selectedTab = item.number" v-for="(item,index) in goodsGrades" :class="{'gear-selected': selectedTab == item.number}">{{item.name}}</li>
+          <li class="gear-project" @click="selectedTab = item.number,requireBeans = item.beans" v-for="(item,index) in goodsGrades" :class="{'gear-selected': selectedTab == item.number}">{{item.name}}</li>
         </ul>
         <div class="selectGear fixed-to-absolute" :class="">
-          <p class="gear-one"><span class="presentPrice">{{goodsDetail.beans}}</span><i></i></p>
-          <button class="gear-one-btn bg-orange" v-if="bean >= goodsDetail.beans" @click="toConfirm()">确认兑换</button>
-          <button class="gear-one-btn dissatisfaction" v-if="bean < goodsDetail.beans">宏豆不足</button>
+          <p class="gear-one"><span class="presentPrice">{{requireBeans}}</span><i></i></p>
+          <button class="gear-one-btn bg-orange" v-if="bean >= requireBeans" @click="toConfirm()">确认兑换</button>
+          <button class="gear-one-btn dissatisfaction" v-if="bean < requireBeans">宏豆不足</button>
         </div>
       </div>
     </transition>
     <div class="mask-common mask1" v-if="confirmExchange">
       <div class="alert-wrap">
-        <div class="text">是否确认消耗<span class="orange-ft">{{goodsDetail.beans}}</span>宏豆兑换该商品？</div>
+        <div class="text">是否确认消耗<span class="orange-ft">{{requireBeans}}</span>宏豆兑换该商品？</div>
         <div class="i-know">
         <div class="" @click="afterConfirm()">取消</div>
         <div class="" @click="exchangeReward(goodsNumber,selectedTab)">确定</div>
@@ -55,7 +55,7 @@
           beans: Number,
           marketBeans: Number,
           goodsDesc: '',
-          goodsGrades: {},
+          goodsGrades: [],
           goodsStock: Number,
           goodsName: ''
         },
@@ -65,7 +65,8 @@
         confirmExchange: false,
         goodsStatus: '',
         gearAmount: Number,
-        goodsGrades: {}
+        goodsGrades: {},
+        requireBeans: Number
       }
     },
     props: ['showErrMsg', 'token', 'bean', 'baseFileUrl'],
@@ -93,9 +94,6 @@
         this.modalShow = false
         this.animateStaus = false
       },
-      selectGear (index) {
-        this.selectedTab = index
-      },
       getGoodsDetail () {
         var that = this
         that.$http.get('/hongcai/rest/activitys/points/goods/' + that.goodsNumber).then(function (response) {
@@ -103,6 +101,7 @@
           that.gearAmount = that.goodsDetail.goodsGrades.length
           that.goodsGrades = that.goodsDetail.goodsGrades
           that.selectedTab = that.goodsDetail.goodsGrades[0].number
+          that.requireBeans = that.goodsDetail.goodsGrades[0].beans
           document.title = that.goodsDetail.goodsName
         })
       },
