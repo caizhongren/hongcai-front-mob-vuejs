@@ -5,6 +5,7 @@
  * el 包裹容器(一个字符串css3选择器或者元素对象)
  * opts.index 当前居中元素的索引 默认(0)
  * opts.scale 缩放比率 默认(0.8)
+ * opts.diff  控制左右位置
  * opts.active 当前居中的类名 默认('active')
  * opts.duration 动画持续时间 默认 400(ms)
  * opts.locked 触摸移动中是否同时变换 默认(false: 不锁定)

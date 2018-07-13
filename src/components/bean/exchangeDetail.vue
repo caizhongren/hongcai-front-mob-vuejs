@@ -39,7 +39,7 @@
           orderTime: 0,
           beans: 0,
           useStatus: 2, // 使用状态：已使用：1，未使用：2
-          goodsType: 1 // 加息券：1，现金券：2，提现券：3
+          goodsType: 3 // 加息券：1，现金券：2，提现券：3
         },
         showImg: false
       }
