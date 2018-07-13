@@ -78,7 +78,7 @@
         if (val.length > 0) {
           setTimeout(function () {
             that.setCarousel()
-          }, 100)
+          }, 10)
           that.Interval = setInterval(function () {
             Carousel.next()
           }, 3000)
@@ -132,10 +132,10 @@
         Carousel.mCarousel(wrapper, {
           index: 0,
           active: 'active',
-          scale: 0.67,
+          scale: 0.68,
           duration: 300,
           locked: true,
-          diff: 0.445
+          diff: 0.403
         })
       },
       toLogin () {
@@ -179,7 +179,7 @@
     padding: .3rem 0;
   }
   .poster-list li {
-    width: 75.6%;
+    width: 85%;
     height: 2.2rem;
     border-radius: 10px;
     background-color: #fff9f9;
