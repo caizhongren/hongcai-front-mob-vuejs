@@ -14,6 +14,14 @@
       }
     },
     props: ['token', 'showErrMsg', 'transitionName'],
+    watch: {
+      'token': function (val) {
+        val ? this.getUserPoints() : null
+      },
+      '$route': function (to, from) {
+        this.token ? this.getUserPoints() : null
+      }
+    },
     created () {
       this.token ? this.getUserPoints() : null
     },

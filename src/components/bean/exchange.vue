@@ -175,8 +175,8 @@
     font-weight: bold;
   }
   .vertical-line{
-  	width: .1rem;
-  	height: .3rem;
+  	width: .12rem;
+  	height: .265rem;
   	border-radius: 3px;
   	background-image: linear-gradient(to top, #fb9d1c, #ffc868);
   	position: absolute;

@@ -32,7 +32,7 @@
             <p>{{item.tag}}</p>
           </div>
         </li>
-        <div class="clearfix ft-666" @click="loadMore()" v-if="page > totalPage">查看更多</div>
+        <div class="clearfix ft-666" @click="loadMore()" v-if="page < totalPage">查看更多</div>
       </ul>
     </div>
   </div>
@@ -47,8 +47,22 @@
         Interval: null,
         page: 1,
         pageSize: 10,
-        totalPage: 0,
-        giftLists: []
+        totalPage: 1,
+        giftLists: [],
+        baseBanner: [
+          {
+            imageUrl: 'http://test321.hongcai.com/uploads/png/original/2018-07-13/image/4f9b31ae1d424b129901bb8b6ffc7bea-original.png',
+            linkUrl: ''
+          },
+          {
+            imageUrl: 'http://test321.hongcai.com/uploads/png/original/2018-07-13/image/4f9b31ae1d424b129901bb8b6ffc7bea-original.png',
+            linkUrl: ''
+          },
+          {
+            imageUrl: 'http://test321.hongcai.com/uploads/png/original/2018-07-13/image/4f9b31ae1d424b129901bb8b6ffc7bea-original.png',
+            linkUrl: ''
+          }
+        ]
       }
     },
     props: ['token', 'bean', 'baseFileUrl'],
@@ -105,21 +119,12 @@
         that.$http('/hongcai/rest/banners/activity?type=3&isShow=1&locale=10&count=10').then(function (res) {
           if (res && res.ret !== -1) {
             that.banners = res.data.data
-            that.banners.length < 3 ? that.banners = [
-              {
-                imageUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-                linkUrl: 'https://www.hongcai.com'
-              },
-              {
-                imageUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-                linkUrl: 'https://www.hongcai.com'
-              },
-              {
-                imageUrl: 'https://www.hongcai.com/uploads/png/original/2018-02-11/image/e5c9965aa4554b7baf25f10186f829a2-original.png',
-                linkUrl: 'https://www.hongcai.com'
-              }
-            ] : null
+            that.banners.length < 3 ? that.banners = that.baseBanner : null
           }
+        })
+        .catch(function (error) {
+          console.log(error.toString())
+          that.banners.length < 3 ? that.banners = that.baseBanner : null
         })
       },
       setCarousel () { // 礼包布局配置
@@ -141,7 +146,7 @@
         return true
       },
       toDetail (link) {
-        if (this.toLogin()) {
+        if (this.toLogin() && link) {
           window.location.href = link
         }
       },
