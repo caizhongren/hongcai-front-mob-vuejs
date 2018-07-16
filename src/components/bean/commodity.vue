@@ -1,5 +1,5 @@
 <template>
-  <div class="exchange-detail">
+  <div class="exchange-detail"> 
     <img v-bind:src="goodsDetail.imgUrl" class="prize-banner" v-cloak>
   	<div class="prize-brief">
   	  <p>{{goodsDetail.goodsName}}</p>
@@ -42,7 +42,7 @@
         </div>
       </div>
       <div class="alert-wrap" v-if="exchangeFail">
-        <div class="text">红豆不足</div>
+        <div class="text">{{errorMsg}}</div>
         <div class="i-know" style="text-align: center;display: block;" @click="iknowResult()">
           我知道了
         </div>
@@ -89,6 +89,7 @@
     created: function () {
       this.goodsNumber = this.$route.params.goodsNumber
       this.getGoodsDetail()
+      document.body.scrollTop = 0
     },
     methods: {
       modalappear () {
