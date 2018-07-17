@@ -1,5 +1,5 @@
 <template>
-  <div class="beanExchange" v-if="showPage">
+  <div class="beanExchange" v-show="showPage">
     <ul class="exchangeLists" v-if="exchangeLists.length > 0">
       <li v-for="item in exchangeLists" @click="toDetail(item.orderNumber)">
         <img v-bind:src="baseFileUrl + item.imgUrl" alt="" width="10%">
