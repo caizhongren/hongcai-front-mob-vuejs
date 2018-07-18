@@ -21,11 +21,13 @@
       <div class="orderNumber">订单编号：<span>{{orderDetail.orderNumber}}</span></div>
       <div class="orderTime">下单时间：<span>{{orderDetail.orderTime | dateTime}}</span></div>
     </div>
+    <Bean-Update :showUpdate="showUpdate" v-show="showUpdate"></Bean-Update>
     <div class="fixedBtn" :class="{'greyBtn': orderDetail.useStatus !== 2}" @click="goInvestList(orderDetail.goodsType)" v-if="orderDetail.goodsType !== 3">{{orderDetail.useStatus === 2 ? '马上使用' : '已使用'}}</div>
   </div>
 </template>
 <script>
   import {bridgeUtil} from '../../service/Utils'
+  import BeanUpdate from './alertWrap.vue'
   export default {
     data () {
       return {
@@ -41,7 +43,9 @@
           useStatus: 2, // 使用状态：已使用：1，未使用：2
           goodsType: 3 // 加息券：1，现金券：2，提现券：3
         },
-        showImg: false
+        showImg: false,
+        showUpdate: false,
+        version: ''
       }
     },
     props: ['token', 'showErrMsg', 'baseFileUrl'],
@@ -51,11 +55,24 @@
       }
     },
     created () {
-      this.$parent.token ? this.getOrderDetail(this.$route.params.number) : null
+      this.$parent.token ? (this.getVersion(), this.getOrderDetail(this.$route.params.number)) : null
     },
     methods: {
+      getVersion () {
+        var that = this
+        that.$http({
+          method: 'get',
+          url: '/hongcai/rest/users/0/version?token=' + that.$parent.token
+        }).then(function (response) {
+          that.version = response.data.replace(/\./g, '')
+        })
+      },
       goInvestList (goodsType) {
         var that = this
+        if (parseInt(that.version) < 340) {
+          that.showUpdate = true
+          return
+        }
         if (that.orderDetail.useStatus !== 2) {
           return
         }
@@ -72,7 +89,8 @@
           }
         })
       }
-    }
+    },
+    components: {BeanUpdate}
   }
 </script>
 <style scoped>

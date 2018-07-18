@@ -32,11 +32,13 @@
   	<div class="gotoUse" @click="toHCNative(orderDetails.goodsType)" v-if="orderDetails.useStatus == 2 && status == 1">马上使用</div>
     <div class="gotoUse grey-btn" v-if="orderDetails.useStatus == 1 && status == 1">已使用</div>
     <a href="tel:400-990-7626" v-if="status == 0"><div class="gotoUse">联系客服</div></a>
+    <Bean-Update :showUpdate="showUpdate" v-show="showUpdate"></Bean-Update>
   </div>
 </template>
 <script>
   import {bridgeUtil} from '../../service/Utils'
-  export default{
+  import BeanUpdate from './alertWrap.vue'
+  export default {
     name: 'BeanExchange',
     data () {
       return {
@@ -54,7 +56,8 @@
         orderNumber: this.$route.query.orderNumber,
         status: this.$route.params.status,
         goodsNumber: this.$route.query.goodsNumber,
-        version: ''
+        version: '',
+        showUpdate: false
       }
     },
     props: ['token', 'baseFileUrl', 'showErrMsg'],
@@ -74,14 +77,15 @@
       },
       toHCNative (type) {
         var that = this
-        if (type === 3) { // 提现券
-          if (parseInt(that.version) < 330) {
-            that.$parent.showErrMsg('为了不影响您的正常使用，建议您更新到最新版本哦～')
-            return
+        if (parseInt(that.version) < 340) {
+          that.showUpdate = true
+          return
+        } else {
+          if (type === 3) { // 提现券
+            bridgeUtil.webConnectNative('HCNative_GoWithdraw', undefined, {}, function (res) {}, null)
+          } else if (type === 1 || type === 2) { // 1.加息券 2.现金券
+            bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {}, null)
           }
-          bridgeUtil.webConnectNative('HCNative_GoWithdraw', undefined, {}, function (res) {}, null)
-        } else if (type === 1 || type === 2) { // 1.加息券 2.现金券
-          bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {}, null)
         }
       },
       getExchangeStatus () {
@@ -100,7 +104,8 @@
           })
         }
       }
-    }
+    },
+    components: {BeanUpdate}
   }
 </script>
 <style scoped>
