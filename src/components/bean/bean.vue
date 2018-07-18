@@ -1,6 +1,5 @@
 <template>
   <div class="beans">
-    <div>token:{{token}}</div>
     <transition :name="transitionName">
       <router-view :bean="bean" :baseFileUrl="baseFileUrl"></router-view>
     </transition>
