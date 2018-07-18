@@ -146,20 +146,20 @@
         return true
       },
       toDetail (link) {
-        // if (this.toLogin() && link) {
-        window.location.href = link
-        // }
+        if (this.toLogin() && link) {
+          window.location.href = link
+        }
       },
       toRouter (type, goodsNumber) {
-        // if (this.toLogin()) {
-        if (type === 0) {
-          this.$router.push({name: 'BeanDetail'})
-        } else if (type === 1) {
-          this.$router.push({name: 'BeanRecord'})
-        } else if (type === 2) {
-          this.$router.push({name: 'BeanCommodity', params: {goodsNumber: goodsNumber}})
+        if (this.toLogin()) {
+          if (type === 0) {
+            this.$router.push({name: 'BeanDetail'})
+          } else if (type === 1) {
+            this.$router.push({name: 'BeanRecord'})
+          } else if (type === 2) {
+            this.$router.push({name: 'BeanCommodity', params: {goodsNumber: goodsNumber}})
+          }
         }
-        // }
       }
     },
     destroyed () {
