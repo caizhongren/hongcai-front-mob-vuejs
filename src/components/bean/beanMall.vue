@@ -238,6 +238,7 @@
     box-shadow: -0.1px 1px 4px 0 rgba(73, 30, 5, 0.08);
     border-radius: 10px;
     padding-bottom: .05rem;
+    min-height: 2.67rem;
   }
   .giftList li:nth-child(odd) {
     float: left;
@@ -254,6 +255,13 @@
     color: #666;
     font-size: .23rem;
     margin: .2rem auto 0rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .giftList li .description {
+    white-space: nowrap;
+    overflow: hidden;
   }
   .giftList li .description span {
     color: #ff6000;
@@ -273,5 +281,6 @@
     background-color: #fd8f1d;
     transform: scale(.85);
     -webkit-transform: scale(.85) translateY(-3px);
+    max-width: 1.2rem;
   }
 </style>
