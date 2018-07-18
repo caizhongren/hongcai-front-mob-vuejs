@@ -17,13 +17,14 @@
     watch: {
       'token': function (val) {
         val ? this.getUserPoints() : null
-      },
-      '$route': function (to, from) {
-        this.token ? this.getUserPoints() : null
       }
+      // '$route': function (to, from) {
+      //   this.token ? this.getUserPoints() : null
+      // }
     },
     created () {
-      this.token ? this.getUserPoints() : null
+      // this.token ? this.getUserPoints() : null
+      this.$router.push({name: 'BeanDetail'})
     },
     methods: {
       getUserPoints () {
@@ -31,6 +32,7 @@
         that.$http('/hongcai/rest/users/0/account?token=' + that.token).then(function (res) {
           if (res && res.ret !== -1) {
             that.bean = res.data.points
+            that.$router.push({name: 'BeanRecord'})
           } else {
             console.log(res.data.msg)
           }
