@@ -1,6 +1,6 @@
 <template>
   <div class="beans">
-    <transition :name="transitionName">
+    <transition name="router-fade" mode="out-in">
       <router-view :bean="bean" :baseFileUrl="baseFileUrl"></router-view>
     </transition>
   </div>

@@ -57,6 +57,9 @@
     created () {
       this.$parent.token ? (this.getVersion(), this.getOrderDetail(this.$route.params.number)) : null
     },
+    mounted () {
+      document.getElementById('app').offsetHeight < document.documentElement.clientHeight ? document.querySelector('.exchangeDetail').style.height = document.documentElement.clientHeight + 'px' : null
+    },
     methods: {
       getVersion () {
         var that = this

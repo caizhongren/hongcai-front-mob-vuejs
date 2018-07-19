@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <transition :name="transitionName">
-      <router-view :token="token" :showErrMsg="showErrMsg" :transitionName="transitionName"></router-view>
+    <transition name="router-fade" mode="out-in">
+      <router-view :token="token" :showErrMsg="showErrMsg"></router-view>
     </transition>
     <p id="err" v-show="showErr" v-bind:style="styleObject">{{errMsg}}</p>
     <div class="mask-common mask1" v-show="showLongErr">
@@ -31,9 +31,7 @@ export default {
       showLongErr: false,
       errMsg: '',
       timer: null,
-      styleObject: {},
-      transitionName: ''
-
+      styleObject: {}
     }
   },
   created: function () {
@@ -83,16 +81,7 @@ export default {
   },
   watch: {
     // 如果路由有变化，会再次执行该方法
-    // '$route': 'getToken',
-    '$route': function (to, from) {
-      this.getToken()
-      // 如果to的索引值为0，不添加任何动画；如果to索引大于from索引,判断为前进状态,反之则为后退状态
-      if (to.meta.index < from.meta.index) {
-        this.transitionName = 'slide-right'
-      } else {
-        this.transitionName = 'slide-left'
-      }
-    }
+    '$route': 'getToken'
   }
 }
 Object.keys(custom).forEach(key => {
@@ -125,25 +114,12 @@ Vue.directive('client-height', function (el, binding) {
 <style lang="css">
   @import 'css/common.css';
   @import 'css/golden-mask.css';
-  .slide-right-enter-active,
-  .slide-right-leave-active,
-  .slide-left-enter-active,
-  .slide-left-leave-active {
-      will-change: transform;
-      transition: all .3s;
-  }
-  .slide-right-enter {
-      transform: translateX(-100%);
-  }
-  .slide-right-leave-active {
-      transform: translateX(100%);
-  }
-  .slide-left-enter {
-      transform: translateX(100%);
-  }
-  .slide-left-leave-active {
-      transform: translateX(-100%);
-  }
+  .router-fade-enter-active, .router-fade-leave-active {
+	  transition: opacity .3s;
+	}
+  .router-fade-enter, .router-fade-leave-active {
+	  opacity: 0;
+	}
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;

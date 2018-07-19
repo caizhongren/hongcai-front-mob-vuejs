@@ -29,7 +29,7 @@
           <div class="description">
             <span>{{item.beans}}</span>
             <img src="../../images/beans/bean-icon.png" alt="" width="9%">
-            <p>{{item.tag}}</p>
+            <p v-if="item.tag">{{item.tag}}</p>
           </div>
         </li>
         <div class="clearfix ft-666" @click="loadMore()" v-if="page < totalPage">查看更多</div>

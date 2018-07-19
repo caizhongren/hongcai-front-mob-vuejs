@@ -91,6 +91,9 @@
       this.getGoodsDetail()
       document.body.scrollTop = 0
     },
+    mounted () {
+      document.getElementById('app').offsetHeight < document.documentElement.clientHeight ? document.querySelector('.exchange-detail').style.height = document.documentElement.clientHeight + 'px' : null
+    },
     methods: {
       modalappear () {
         this.modalShow = true
