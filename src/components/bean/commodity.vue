@@ -126,12 +126,12 @@
             return
             // that.$router.push({name: 'BeanExchange', params: {status: '0'}, query: {goodsNumber: that.goodsNumber}})
           } else {
-            that.$router.push({name: 'BeanExchange', params: {status: '1'}, query: {orderNumber: that.goodsStatus.orderNumber}})
+            that.$router.push({name: 'BeanExchange', params: {status: '1'}, query: {orderNumber: that.goodsStatus.orderNumber, dbnewopen: 1}})
           }
         }).catch(function (res) {
           that.goodsStatus = res
           console.log(res)
-          that.$router.push({name: 'BeanExchange', params: {status: 0}, query: {goodsNumber: that.goodsNumber}})
+          that.$router.push({name: 'BeanExchange', params: {status: 0}, query: {goodsNumber: that.goodsNumber, dbnewopen: 1}})
         })
       },
       toConfirm () {

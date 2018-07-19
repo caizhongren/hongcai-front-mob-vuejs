@@ -50,6 +50,9 @@ export default {
   methods: {
     getToken: function () {
       var that = this
+      if (location.pathname.indexOf('bean') !== -1 && location.pathname.indexOf('token') !== -1) {
+        that.token = that.$route.query.token
+      }
       bridgeUtil.webConnectNative('HCNative_GetToken', '', {}, function (res) {
         that.token = Utils.isAndroid() ? JSON.parse(res).token : res.token
       }, null)

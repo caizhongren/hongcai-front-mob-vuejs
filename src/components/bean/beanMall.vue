@@ -153,11 +153,11 @@
       toRouter (type, goodsNumber) {
         if (this.toLogin()) {
           if (type === 0) {
-            this.$router.push({name: 'BeanDetail'})
+            this.$router.push({name: 'BeanDetail', query: {dbnewopen: 1}})
           } else if (type === 1) {
-            this.$router.push({name: 'BeanRecord'})
+            this.$router.push({name: 'BeanRecord', query: {dbnewopen: 1}})
           } else if (type === 2) {
-            this.$router.push({name: 'BeanCommodity', params: {goodsNumber: goodsNumber}})
+            this.$router.push({name: 'BeanCommodity', params: {goodsNumber: goodsNumber}, query: {dbnewopen: 1}})
           }
         }
       }
