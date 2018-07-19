@@ -42,7 +42,7 @@
         this.getRecord(this.page)
       },
       toDetail (number) {
-        this.$router.push({name: 'exchangeDetail', params: {number: number}})
+        this.$router.push({name: 'exchangeDetail', params: {number: number}, query: {dbnewopen: 1}})
       },
       getRecord (page) {
         var that = this
