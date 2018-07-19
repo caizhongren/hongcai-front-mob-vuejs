@@ -147,7 +147,7 @@
       },
       toDetail (link) {
         if (this.toLogin() && link) {
-          window.location.href = link
+          window.location.href = link + '?token=' + this.$parent.token
         }
       },
       toRouter (type, goodsNumber) {
