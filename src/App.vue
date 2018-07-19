@@ -128,9 +128,6 @@ Vue.directive('client-height', function (el, binding) {
   .slide-left-leave-active {
       will-change: transform;
       transition: all .3s;
-      position: absolute;
-      width:100%;
-      left:0;
   }
   .slide-right-enter {
       transform: translateX(-100%);
