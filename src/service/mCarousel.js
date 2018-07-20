@@ -304,15 +304,15 @@ var Carousel = {
     this._setIndex(index);
     // console.log('当前index值：' + this.index)
     this._setDisplay(this.nIndex, 'block');
-    this._setDisplay(this.oIndex, 'block');
     this._setDisplay(this.index, 'block');
-    this._setTransform(this.index, this.centerX, 0, 1);
-    this._setTransform(this.nIndex, this.rightX, 0, this.ratio);
+    this._setDisplay(this.oIndex, 'block');
     this._setTransform(this.oIndex, this.leftX, 0, this.ratio);
+    this._setTransform(this.nIndex, this.rightX, 0, this.ratio);
+    this._setTransform(this.index, this.centerX, 0, 1);
     this._setStacks('center');
-    utils.addClass(this.elements[this.index], this.active);
-    utils.removeClass(this.elements[this.nIndex], this.active);
     utils.removeClass(this.elements[this.oIndex], this.active);
+    utils.removeClass(this.elements[this.nIndex], this.active);
+    utils.addClass(this.elements[this.index], this.active);
   },
   _setFourth: function(index, dir) {
     var dx = 0;
@@ -394,7 +394,7 @@ Carousel.mCarousel = function(el, opts) {
   this.scroller = this.wrapper.children[0];
   this.elements = this.scroller.children;
   this.length = this.elements.length;
-  if (this.length < 3) return;
+  // if (this.length < 3) return;
 
   this._hasTransform3d = utils.support3d();
   this._hasTransform2d = utils.supportCss('transform');
