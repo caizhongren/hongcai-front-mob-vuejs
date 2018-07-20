@@ -107,9 +107,9 @@ var utils = (function() {
   };
 }());
 var Carousel = {
-  _init: function() {
+  _init: function(length) {
     this._setup();
-    this._bindEvent();
+    length < 2 ? null : this._bindEvent();
   },
   _setup: function() {
     if (utils.css(this.wrapper, 'position') === 'static') this.wrapper.style.position = 'relative';
@@ -430,7 +430,7 @@ Carousel.mCarousel = function(el, opts) {
   this.dRatio = 1 - this.ratio;
   // this.overlap = !!(this.singleW + 2 * this.singleW * this.ratio > this.viewW);
 
-  this._init();
+  this._init(this.length);
 };
 if (typeof define === 'function' && (define.amd || define.cmd)) {
   define('mCarousel', [], function() {
