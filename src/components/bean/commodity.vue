@@ -118,9 +118,10 @@
       exchangeReward (goodsNumber, gradeNumber) {
         var that = this
         that.afterConfirm()
-        that.$axios.post('/hongcai/rest/activitys/points/order', {
+        that.$http.post('/hongcai/rest/activitys/points/order', {
           goodsNumber: goodsNumber,
-          gradeNumber: gradeNumber
+          gradeNumber: gradeNumber,
+          token: that.$parent.token
         }).then(function (res) {
           that.goodsStatus = res.data
           if (res.data && res.data.ret === -1) {
