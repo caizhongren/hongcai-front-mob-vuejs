@@ -23,15 +23,18 @@
     <!-- 资金存管信息 -->
     <div class="fund-info">
       <img src="../../images/disclosure/zjcgxx-03.png" alt="资金存管信息" class="fund-title" width="39%">
-      <ul class="slide position-re">
+      <!-- <ul class="slide position-re">
         <li class="slide-banner text-center" @click="preview('https://www.hongcai.com/uploads/png/original/2017-10-19/image/9bcbea8d83f04b289b6b9c2cf8c3af9a-original.png')">
           <img src="../../images/disclosure/contract1.png"/>
         </li>
         <li class="slide-banner text-center" @click="preview('https://www.hongcai.com/uploads/png/original/2017-10-19/image/e8b1d7c10f354901a532a91c4fd7439a-original.png')">
           <img src="../../images/disclosure/contract2.png"/>
         </li>
-      </ul>
-      <p>资金存管银行全称：海口联合农村商业银行</p>
+      </ul> -->
+      <!-- <p>资金存管银行全称：海口联合农村商业银行</p> -->
+      <div class="info">
+        <p class="text-center">资金存管银行全称:海口联合农村商业银行</p>
+      </div>
     </div>
     <div class="parting-line"></div>
     <!-- 网站备案图标及编号 -->
@@ -359,23 +362,26 @@
     color: #666666;
     font-size: .25rem;
   }
-  .fund-info p, .security-info p {
+  .security-info p {
     font-size: .22rem;
     color: #666;
     margin: .35rem auto;
   }
-  .license-info .info {
+  .license-info .info, .fund-info .info {
     overflow: hidden;
     clear: both;
     height: 1.5rem;
     line-height: 1.56rem;
     padding: 0 .35rem;
   }
+  .fund-info .info p {
+    width: 100%;
+  }
   .license-info .info p {
     float: left;
     width: 50%;
   }
-  .license-info .info p:nth-child(2) {
+  .license-info .info p:nth-child(2){
     font-size: .5rem;
   }
   .parting-line {
