@@ -1,26 +1,40 @@
 <template>
-  <!-- 计算器 -->
   <div class="mask-common clacul-mask">
     <div id="calcu-body">
-      <div class="calculator">
+      <!-- 计算器 -->
+      <div class="calculator" v-if="isCalculator">
+        　<img src="../../images/gold-day/header-calcul.png" alt="年化出借计算器" width="80%">
         <form action="" autocomplete="off">
-        <div class="input-item">
-            <input type="tel" name="amount" maxlength=9 placeholder="投资金额" rows=6 cols=30 v-model="project.amount" v-on:input="project.amount = project.amount.replace(/\D/g, '')">
+          <div class="input-item">
+            <input type="tel" name="amount" maxlength=9 placeholder="出借金额" rows=6 cols=30 v-model="project.amount" v-on:input="project.amount = project.amount.replace(/\D/g, '')">
             元
-        </div>
-        <div class="input-item">
+          </div>
+          <div class="input-item">
             <input type="tel" name="project.term" maxlength=3 placeholder="项目期限" v-model="project.term" v-on:input="project.term = project.term.replace(/\D/g, '')">
             天
-        </div>
+          </div>
         </form>
         <div class="result clearfix">
-          <p class="fl">折合年化投资金额</p>
+          <p class="fl">折合年化出借金额</p>
           <p class="fr">{{annualInvestment}}元</p>
         </div>
-        <p class="calculator-tip margin-auto">*年化投资金额=投资金额÷365×项目期限</p>
+        <p class="calculator-tip margin-auto">*年化出借金额=出借金额÷365×项目期限</p>
+      </div>
+      <!-- 温馨提示 -->
+      <div class="tipBox" v-else-if="isTips">
+        <div :class="[isTips === 1 ? 'header-tip' : 'header-activityEnd']"></div>
+        <div class="text">
+          特权本金产量未达到100元 <br>
+          {{isTips === 1 ? '现在收获不产生收益哟' : '不能获取产生收益哟'}}
+        </div>
+        <div class="btns" @click="$parent.showCalculator = false;">{{isTips === 1 ? '再等等' : '知道了'}}</div>
+      </div>
+      <!-- 活动结束蒙层 -->
+      <div class="activityEnd" v-else>
+        <img src="../../images/gold-day/activityEnd.png" alt="">
       </div>
     </div>
-    <img src="../../images/break-egg/icon-close.png" width="12%" alt="" @click="$parent.showCalculator = false;">
+    <img v-if="isCalculator" src="../../images/break-egg/icon-close.png" width="12%" class="close" @click="$parent.showCalculator = false;">
   </div>
 </template>
 <script>
@@ -36,7 +50,7 @@ export default {
       annualInvestment: 0
     }
   },
-  props: ['showCalculator'],
+  props: ['showCalculator', 'isCalculator', 'isTips'],
   watch: {
     'project.amount': function (newVal, oldVal) {
       this.annualInvestment = Math.ceil(this.project.amount * this.project.term / 365)
@@ -63,35 +77,35 @@ export default {
 </script>
 <style scoped>
 /* 计算器 */
-.mask-common img {
-  margin-top: 1.5rem;
+.mask-common .close {
+  margin-top: 1.2rem;
   margin-bottom: -0.8rem;
 }
 .calculator {
-  margin-top: 1.5rem;
-  padding: 1.5rem .3rem .1rem .3rem;
-  height: 5.2rem;
-  width: 76%;
-  margin-left: 12%;
-  border-radius: .1rem;
-  background: url(../../images/arbor-day/cacul-bg.png) no-repeat center center;
-  background-size: 100%;
+  margin: 1.5rem auto 0;
+  padding: .2rem .25rem;
+  height: auto;
+  width: 80%;
+  border-radius: 15px;
+  background-color: #36dcdc;
+  border: solid 1.5px #008087;
 
 }
 .calculator-tip {
   width: 96%;
-  margin-left: 2%;
-  margin-top: 0.3rem;
+  margin-left: 5%;
+  margin-top: 0.2rem;
   font-size: .2rem;
   line-height: 1.6;
-  color: #fff;
+  color: #008087;
+  text-align: left;
 }
 .rules-tip {
   font-size: .26rem;
   line-height: 1.4;
 }
 .close-btn {
-  width: 50%;
+  width: 51%;
   background: url('../../images/singles-day/btn-green.png') no-repeat center center;
   background-size: 100% 100%;
   padding: .26rem .35rem .28rem;
@@ -110,8 +124,8 @@ form .input-item {
   height: .8rem;
   line-height: .8rem;
   border-radius: 7.5px;
-  background-color: #ffffff;
-  border: 1px solid #0b6c0d;
+  background-color: #fff;
+  border: 1px solid #008087;
   margin-bottom: .1rem;
   margin-top: .1rem;
   overflow: hidden;
@@ -120,19 +134,18 @@ form .input-item {
 }
 form .input-item input {
   line-height: 1.3;
-  width: 73%;
+  width: 82%;
   border: none;
   font-size: .25rem;
-  padding-left: .2rem;
   color: #0a3617;
 }
 input::-webkit-input-placeholder {
-  color: rgba(78, 8, 12, 0.5);
+  color: rgba(78, 2, 10, 0.5);
   opacity: 0.5;
   font-size: .25rem;
 }
 input:-moz-placeholder {
-  color: rgba(78, 8, 12, 0.5);
+  color: rgba(78, 2, 10, 0.5);
   opacity: 0.5;
   font-size: .25rem;
 }
@@ -140,7 +153,7 @@ input:-moz-placeholder {
   margin-top: .15rem;
   width: 96%;
   font-size: .22rem;
-  color: #fff;
+  color: #008087;
   line-height: 1.2;
 }
 .result p, .result span {
@@ -163,8 +176,56 @@ input:-moz-placeholder {
   font-size: .25rem;
   text-align: center;
   border-radius: 7.5px;
-  background-color: #d6fced;
-  border: solid 1px #0b6c0d;
+  background-color: #93e8f8;
+  border: solid 1px #008087;
   color: #0a3617;
+}
+.tipBox {
+  margin: 1.5rem auto 0;
+  padding: .15rem 0 .2rem;
+  height: auto;
+  width: 63%;
+  border-radius: 15px;
+  background-color: #36dcdc;
+  border: solid 2px #008087;
+  text-align: center;
+}
+.header-tip, .header-activityEnd {
+  width: 85%;
+  height: .72rem;
+  margin: 0 auto;
+}
+.header-tip {
+  background: url('../../images/gold-day/header-tip.png') no-repeat center center;
+  background-size: contain;
+}
+.header-activityEnd {
+  background: url('../../images/gold-day/header-activityEnd.png') no-repeat center center;
+  background-size: contain;
+}
+.tipBox .text {
+  background-color: #93e8f8;
+  color: #05848b;
+  font-weight: bold;
+  padding: .2rem;
+  margin: .2rem 0;
+}
+.tipBox .btns {
+  width: 56%;
+  height: .6rem;
+  line-height: .65rem;
+  margin: 0 auto;
+  border-radius: 17.5px;
+  background-color: #ffcc02;
+  box-shadow: 0px 2px 2px 0 rgba(184, 130, 18, 0.94);
+  color: #9a540e;
+  text-shadow: 0.2px 0.5px 0 rgba(111, 74, 0, 0.28);
+}
+.activityEnd {
+  margin: 2rem auto 0;
+}
+.activityEnd img {
+  width: 45%;
+  margin: .5rem 0 0 16%;
 }
 </style>
