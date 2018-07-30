@@ -64,6 +64,7 @@
     created: function () {
       this.status === '0' ? (document.title = '兑换失败') : document.title = '兑换成功'
       this.$parent.token ? (this.getVersion(), this.getExchangeStatus()) : null
+      document.body.scrollTop = 0
     },
     methods: {
       getVersion () {
