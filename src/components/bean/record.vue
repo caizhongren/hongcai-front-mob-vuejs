@@ -34,7 +34,7 @@
       this.$parent.token ? this.getRecord(this.page) : null
     },
     mounted () {
-      document.getElementById('app').offsetHeight < document.documentElement.clientHeight ? document.querySelector('.beanExchange').style.height = document.documentElement.clientHeight + 'px' : null
+      document.getElementById('app').offsetHeight < document.documentElement.clientHeight ? document.querySelector('.beanExchange').style.minHeight = document.documentElement.clientHeight + 'px' : null
     },
     methods: {
       loadMore () {
@@ -56,7 +56,7 @@
             }
           }
         }).catch(function (error) {
-          alert(error.toString())
+          console.log(error.toString())
         })
       }
     }
