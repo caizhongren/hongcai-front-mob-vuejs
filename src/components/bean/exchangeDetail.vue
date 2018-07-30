@@ -1,5 +1,5 @@
 <template>
-  <div class="exchangeDetail">
+  <div class="exchangeDetail" :class="{'marign-b-8': orderDetail.goodsType !== 3}">
     <div class="top">
       <div class="banner">
         <img src="../../images/beans/img_nor.png" alt="" width="100%" v-if="!showImg">
@@ -58,7 +58,7 @@
       this.$parent.token ? (this.getVersion(), this.getOrderDetail(this.$route.params.number)) : null
     },
     mounted () {
-      document.getElementById('app').offsetHeight < document.documentElement.clientHeight ? document.querySelector('.exchangeDetail').style.height = document.documentElement.clientHeight + 'px' : null
+      document.getElementById('app').offsetHeight < document.documentElement.clientHeight ? document.querySelector('.exchangeDetail').style.minHeight = document.documentElement.clientHeight + 'px' : null
     },
     methods: {
       getVersion () {
@@ -97,10 +97,13 @@
   }
 </script>
 <style scoped>
+  .marign-b-8 {
+    margin-bottom: .8rem;
+  }
   .exchangeDetail {
     background: #ecebf1;
     width: 100%;
-    padding: .3rem 0 .8rem;
+    padding: .3rem 0 .5rem;
   }
   .exchangeDetail .top, .exchangeDetail .bottom {
     background: #fff;
