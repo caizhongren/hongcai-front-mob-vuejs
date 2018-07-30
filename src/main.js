@@ -16,7 +16,7 @@ new Vue({
   components: { App }
 })
 var fundebug = require('fundebug-javascript')
-fundebug.apikey = '2dc9a9abf8ec54b6444f6131cf9fa9accd3274d3a574df6c6669d323ad200e5f'
+fundebug.apikey = 'c24b5cc74fe127ac6f794193c749fdac23e2117a568e9c1c0b17c6b6c49349bf'
 function formatComponentName (vm) {
   if (vm.$root === vm) return 'root'
   var name = vm._isVue ? (vm.$options && vm.$options.name) || (vm.$options && vm.$options._componentTag) : vm.name
