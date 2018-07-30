@@ -88,6 +88,8 @@ const FenPushSuccess = r => require.ensure([], () => r(require('../components/ac
 const WomensDay = r => require.ensure([], () => r(require('../components/activity/WomensDay.vue')), 'WomensDay')
 const ArborDays = r => require.ensure([], () => r(require('../components/activity/arborDay.vue')), 'ArborDays')
 const ArborRecord = r => require.ensure([], () => r(require('../components/activity/arborRecord.vue')), 'ArborRecord')
+const GoldDays = r => require.ensure([], () => r(require('../components/activity/goldDay.vue')), 'GoldDays')
+const GoldRecord = r => require.ensure([], () => r(require('../components/activity/goldRecord.vue')), 'GoldRecord')
 const FoolDays = r => require.ensure([], () => r(require('../components/activity/FoolDays.vue')), 'FoolDays')
 const FoolDaysApp = r => require.ensure([], () => r(require('../components/activity/FoolDaysApp.vue')), 'FoolDaysApp')
 const FoolDaysIndex = r => require.ensure([], () => r(require('../components/activity/FoolDaysIndex.vue')), 'FoolDaysIndex')
@@ -472,6 +474,18 @@ const routes = [
     path: '/activity/arbor-record',
     name: 'ArborRecord',
     component: ArborRecord,
+    meta: {title: '查看详情'}
+  },
+  {
+    path: '/activity/gold-days',
+    name: 'GoldDays',
+    component: GoldDays,
+    meta: {title: '淘金节'}
+  },
+  {
+    path: '/activity/gold-record',
+    name: 'GoldRecord',
+    component: GoldRecord,
     meta: {title: '查看详情'}
   },
   {
