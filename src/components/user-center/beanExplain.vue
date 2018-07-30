@@ -127,7 +127,6 @@
       }, function (res) {}, null)
       this.$http('/hongcai/rest/activitys/' + this.act).then((res) => {
         this.rules = JSON.parse(res.data.rules)
-        console.log(this.rules)
       })
     }
   }

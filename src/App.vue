@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view :token="token" :showErrMsg="showErrMsg"></router-view>    
+    <transition name="router-fade" mode="out-in">
+      <router-view :token="token" :showErrMsg="showErrMsg"></router-view>
+    </transition>
     <p id="err" v-show="showErr" v-bind:style="styleObject">{{errMsg}}</p>
     <div class="mask-common mask1" v-show="showLongErr">
       <div class="alert-wrap" v-show="showLongErr">
@@ -46,6 +48,9 @@ export default {
   methods: {
     getToken: function () {
       var that = this
+      if (location.href.indexOf('bean') !== -1 && location.href.indexOf('token') !== -1) {
+        that.token = that.$route.query.token
+      }
       bridgeUtil.webConnectNative('HCNative_GetToken', '', {}, function (res) {
         that.token = Utils.isAndroid() ? JSON.parse(res).token : res.token
       }, null)
@@ -109,6 +114,12 @@ Vue.directive('client-height', function (el, binding) {
 <style lang="css">
   @import 'css/common.css';
   @import 'css/golden-mask.css';
+  .router-fade-enter-active, .router-fade-leave-active {
+	  transition: opacity .3s;
+	}
+  .router-fade-enter, .router-fade-leave-active {
+	  opacity: 0;
+	}
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;

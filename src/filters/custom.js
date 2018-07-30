@@ -1,5 +1,5 @@
 let dateDotTime = value => {
-  // 时间格式 ‘yyyy-MM-dd HH:mm:ss’
+  // 时间格式 ‘yyyy.MM.dd HH:mm:ss’
   if (!value) { return }
   var now = new Date(value)
   var month = now.getMonth() < 9 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1

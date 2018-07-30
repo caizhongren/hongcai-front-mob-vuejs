@@ -5,6 +5,7 @@
  * el 包裹容器(一个字符串css3选择器或者元素对象)
  * opts.index 当前居中元素的索引 默认(0)
  * opts.scale 缩放比率 默认(0.8)
+ * opts.diff  控制左右位置
  * opts.active 当前居中的类名 默认('active')
  * opts.duration 动画持续时间 默认 400(ms)
  * opts.locked 触摸移动中是否同时变换 默认(false: 不锁定)
@@ -106,9 +107,9 @@ var utils = (function() {
   };
 }());
 var Carousel = {
-  _init: function() {
+  _init: function(length) {
     this._setup();
-    this._bindEvent();
+    length < 2 ? null : this._bindEvent();
   },
   _setup: function() {
     if (utils.css(this.wrapper, 'position') === 'static') this.wrapper.style.position = 'relative';
@@ -303,15 +304,15 @@ var Carousel = {
     this._setIndex(index);
     // console.log('当前index值：' + this.index)
     this._setDisplay(this.nIndex, 'block');
-    this._setDisplay(this.oIndex, 'block');
     this._setDisplay(this.index, 'block');
-    this._setTransform(this.index, this.centerX, 0, 1);
-    this._setTransform(this.nIndex, this.rightX, 0, this.ratio);
+    this._setDisplay(this.oIndex, 'block');
     this._setTransform(this.oIndex, this.leftX, 0, this.ratio);
+    this._setTransform(this.nIndex, this.rightX, 0, this.ratio);
+    this._setTransform(this.index, this.centerX, 0, 1);
     this._setStacks('center');
-    utils.addClass(this.elements[this.index], this.active);
-    utils.removeClass(this.elements[this.nIndex], this.active);
     utils.removeClass(this.elements[this.oIndex], this.active);
+    utils.removeClass(this.elements[this.nIndex], this.active);
+    utils.addClass(this.elements[this.index], this.active);
   },
   _setFourth: function(index, dir) {
     var dx = 0;
@@ -393,7 +394,7 @@ Carousel.mCarousel = function(el, opts) {
   this.scroller = this.wrapper.children[0];
   this.elements = this.scroller.children;
   this.length = this.elements.length;
-  if (this.length < 3) return;
+  // if (this.length < 3) return;
 
   this._hasTransform3d = utils.support3d();
   this._hasTransform2d = utils.supportCss('transform');
@@ -429,7 +430,7 @@ Carousel.mCarousel = function(el, opts) {
   this.dRatio = 1 - this.ratio;
   // this.overlap = !!(this.singleW + 2 * this.singleW * this.ratio > this.viewW);
 
-  this._init();
+  this._init(this.length);
 };
 if (typeof define === 'function' && (define.amd || define.cmd)) {
   define('mCarousel', [], function() {
