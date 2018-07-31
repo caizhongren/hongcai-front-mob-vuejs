@@ -10,7 +10,7 @@
             元
           </div>
           <div class="input-item">
-            <input type="tel" name="project.term" maxlength=3 placeholder="项目期限" v-model="project.term" v-on:input="project.term = project.term.replace(/\D/g, '')">
+            <input type="tel" name="term" maxlength=3 placeholder="项目期限" v-model="project.term" v-on:input="project.term = project.term.replace(/\D/g, '')">
             天
           </div>
         </form>
@@ -46,32 +46,31 @@ export default {
       project: {
         amount: null,
         term: null
-      },
-      annualInvestment: 0
+      }
     }
   },
   props: ['showCalculator', 'isCalculator', 'isTips'],
   watch: {
-    'project.amount': function (newVal, oldVal) {
-      this.annualInvestment = Math.ceil(this.project.amount * this.project.term / 365)
-    },
     'project.term': function (newVal, oldVal) {
-      this.annualInvestment = Math.ceil(this.project.amount * this.project.term / 365)
       this.project.term = newVal > 365 ? newVal.slice(0, 2) : this.project.term
     },
     '$parent.showCalculator': function (newVal, oldVal) {
       var that = this
-      if (!newVal) {
+      if (that.isCalculator) {
         that.project.term = ''
         that.project.amount = ''
-      } else {
-        var handleEle = document.getElementById('calcu-body')
-        InputMaskHelper.windowChange(handleEle)
+        InputMaskHelper.windowChange(document.getElementById('calcu-body'))
       }
       newVal ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
     }
   },
-  methods: {
+  created () {
+    this.$parent.showCalculator ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+  },
+  computed: {
+    annualInvestment () {
+      return Math.ceil(this.project.amount * this.project.term / 365)
+    }
   }
 }
 </script>

@@ -308,7 +308,7 @@ let audioPlayUtil = {
   }
 }
 /**
- * 公共动画特效
+ * 公共动画特效 - 数值递增
  */
 let commonAnimation = {
   // 数字动画、递增特效 elem（数字元素）, endVal（截止数字值）, startVal（起始数字值）, duration（动画时长）, decimal（保留小数点位数）
@@ -328,6 +328,48 @@ let commonAnimation = {
     requestAnimationFrame(startCount)
   }
 }
+
+/*
+ * 页面滚动一屏
+ */
+let scrollHalfPage = callback => {
+  let requestFram
+  let oldScrollTop
+  var scrollTop
+  document.addEventListener('scroll', () => {
+    scrollHalfPageFun()
+  }, false)
+  document.addEventListener('touchstart', () => {
+    scrollHalfPageFun()
+  }, {passive: true})
+  document.addEventListener('touchmove', () => {
+    scrollHalfPageFun()
+  }, {passive: true})
+  document.addEventListener('touchend', () => {
+    oldScrollTop = scrollTop
+    moveEnd()
+  }, {passive: true})
+  const moveEnd = () => {
+    requestFram = requestAnimationFrame(() => {
+      if (scrollTop !== oldScrollTop) {
+        oldScrollTop = scrollTop
+        moveEnd()
+      } else {
+        cancelAnimationFrame(requestFram)
+      }
+      scrollHalfPageFun()
+    })
+  }
+  // 判断是否达到目标点
+  const scrollHalfPageFun = () => {
+    scrollTop = document.body.scrollTop + document.documentElement.scrollTop
+    if (scrollTop >= window.innerHeight + 50) {
+      callback(true)
+    } else {
+      callback(false)
+    }
+  }
+}
 export {Utils}
 export {InviteShareUtils}
 export {bridgeUtil}
@@ -337,3 +379,4 @@ export {sendMobCaptcha}
 export {InputMaskHelper}
 export {audioPlayUtil}
 export {commonAnimation}
+export {scrollHalfPage}

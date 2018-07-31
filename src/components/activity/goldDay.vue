@@ -12,7 +12,7 @@
         <span>1447元</span>
       </div>
       <button v-if="!token && activityStatus !== 0" @click="toNative('HCNative_Login')">登录查看奖励</button>
-      <button v-if="(activityStatus === 1 || activityStatus === 2) && token" @click="collectProfit()" :class="{'notEnough' : !profitEnough}">立即收获</button>
+      <button v-if="(activityStatus === 1 || activityStatus === 2) && token" @click="collectProfit();showCalculator = true;isCalculator = false; (activityStatus === 2 ? isTips= 2 : isTips= 1);" :class="{'notEnough' : !profitEnough}">立即收获</button>
       <p class="tips">*为保证收益，特权本金产量需满100元才可点击收获哟～</p>
     </div>
     <div class="explain">
@@ -24,7 +24,7 @@
     </div>
     <div class="check_details">
       <span>我的累计年化出借金额：xxxxx元</span>
-      <span>查看<br>详情</span>
+      <router-link tag="span" :to="'/activity/gold-record'" >查看<br>详情</router-link>
     </div>
     <div class="speed_rule">
       <ul>
@@ -70,25 +70,26 @@
       </div>
     </div>
     <div v-if="isIos" class="iosTips">该活动与设备生产商Apple Inc.公司无关</div>
-    <button v-if="token && activityStatus === 1 && investAmount < 300000" class="invest-fixed-btn" @click="toInvest()" :disabled="busy">立即出借</button>
+    <button v-if="token && activityStatus === 1 && showBtn" class="invest-fixed-btn" @click="toInvest()" :disabled="busy">立即出借</button>
     <!-- 计算器入口 -->
-    <div class="icon-calculator" @click="isCalculator = !isCalculator,showMask = !showMask"></div>
+    <div class="icon-calculator" @click="showCalculator = true;isCalculator = true; isTips= 0;"></div>
     <!-- 计算器弹窗 -->
     <Gold-Calculator v-show="isCalculator" :isCalculator="isCalculator" :isTips="isTips"></Gold-Calculator>
   </div>
 </template>
 <script>
-  import {bridgeUtil, Utils, ModalHelper, audioPlayUtil} from '../../service/Utils'
+  import {bridgeUtil, Utils, ModalHelper, audioPlayUtil, scrollHalfPage} from '../../service/Utils'
   import GoldCalculator from './goldCalculator'
   import $ from 'zepto'
   export default {
     name: 'goldDays',
     data () {
       return {
-        // showCalculator: false,
+        showBtn: false, // 是否显示底部按钮
+        activityStatus: 2, // 0 活动未开始，1 活动进行中，2 活动结束3天内，3 活动结束3天后
+        showCalculator: false,
         isCalculator: false, // 年化出借计算器
         isTips: 0, // 0 不显示提示 1 温馨提示 2 活动已结束
-        activityStatus: 1,
         isIos: Utils.isIos(),
         activityInfo: {
           startYear: 0,
@@ -119,14 +120,9 @@
       }
     },
     mounted () {
-      window.onscroll = function () {
-        var t = document.documentElement.scrollTop || document.body.scrollTop
-        if (t >= window.innerHeight + 50) {
-          $('.invest-fixed-btn').show().addClass('fixed')
-        } else {
-          $('.invest-fixed-btn').hide().removeClass('fixed')
-        }
-      }
+      scrollHalfPage(status => {
+        this.showBtn = status
+      })
     },
     created () {
       this.token ? (this.getUnTakeRewards(), this.arborDayInfo(), this.getAnnualInvestAmount()) : null
@@ -139,15 +135,15 @@
           method: 'get',
           url: '/hongcai/rest/systems/serverTime'
         }).then((response) => {
-          // var serverTime = response.data.time
+          var serverTime = response.data.time
           that.$http('/hongcai/rest/activitys/' + that.activityType).then(function (res) {
-            // if (serverTime - res.data.endTime > 3 * 24 * 60 * 60 * 1000) {
-            //   that.activityStatus = 3 // 活动结束3天后
-            // } else if (serverTime < res.data.ceratTime) {
-            //   that.activityStatus = 0 // 预热状态
-            // } else {
-            //   that.activityStatus = res.data.status
-            // }
+            if (serverTime - res.data.endTime > 3 * 24 * 60 * 60 * 1000) {
+              that.activityStatus = 3 // 活动结束3天后
+            } else if (serverTime < res.data.ceratTime) {
+              that.activityStatus = 0 // 预热状态
+            } else {
+              that.activityStatus = res.data.status
+            }
             console.log(that.activityStatus)
             // 获取活动开始、结束时间
             var startTime = res.data.startTime
@@ -565,7 +561,6 @@
     left: 0;
     right: 0;
     z-index: 99;
-    display: none;
   }
   .harvest .notEnough{
     object-fit: contain;
