@@ -140,7 +140,7 @@
     padding-left: 5%;
     box-sizing: border-box;
   }
-  .loadMore {
+  .investRecord table tbody tr.loadMore td {
     text-align: center;
     margin:  0 auto;
   }

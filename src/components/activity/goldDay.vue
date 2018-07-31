@@ -10,7 +10,8 @@
       <div class="crystal_ball">
         <span>1447元</span>
       </div>
-      <button>立即收获</button>
+      <!-- <button>立即收获</button> -->
+      <button @click="showCalculator = true;isCalculator = false; (activityStatus === 2 ? isTips= 2 : isTips= 1);">立即收获</button>
       <p class="tips">*为保证收益，特权本金产量需满100元才可点击收获哟～</p>
     </div>
     <div class="explain">
@@ -22,19 +23,22 @@
     </div>
     <div class="check_details">
       <span>我的累计年化出借金额：xxxxx元</span>
-      <span>查看<br>详情</span>
+      <router-link tag="span" :to="'/activity/gold-record'" >查看<br>详情</router-link>
     </div>
     <!-- 计算器入口 -->
-    <div class="icon-calculator"></div>
+    <div class="icon-calculator" @click="showCalculator = true;isCalculator = true; isTips= 0;"></div>
     <!-- 计算器弹窗 -->
     <Gold-Calculator v-show="showCalculator" :isCalculator="isCalculator" :isTips="isTips"></Gold-Calculator>
   </div>
 </template>
 <script>
   import GoldCalculator from './goldCalculator'
+  import {scrollHalfPage} from '../../service/Utils'
   export default {
     data () {
       return {
+        showBtn: false, // 是否显示底部按钮
+        activityStatus: 2, // 0 活动未开始，1 活动进行中，2 活动结束3天内，3 活动结束3天后
         showCalculator: false,
         isCalculator: false, // 年化出借计算器
         isTips: 0 // 0 不显示提示 1 温馨提示 2 活动已结束
@@ -42,6 +46,9 @@
     },
     props: [],
     mounted () {
+      scrollHalfPage(status => {
+        this.showBtn = status
+      })
     },
     created () {
     },
