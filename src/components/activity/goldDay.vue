@@ -1,18 +1,18 @@
 <template>
-  <div class="goldDays">
+  <div class="goldDays" :class="{'padding-bottom-9' : activityStatus === 1 && showBtn }">
     <audio preload="preload" id="reward"><source src="../../assets/reward.mp3"></audio>
-    <div class="activity_time">{{activityInfo.startYear}}年{{activityInfo.startMonth}}月{{activityInfo.startDate}}日至{{activityInfo.endYear}}年{{activityInfo.endMonth}}月{{activityInfo.endDate}}日</div>
+    <div class="activity_time">{{activityInfo.createTime | dateCharacter}}至{{activityInfo.endTime | dateCharacter}}</div>
     <div class="top_two">
-      <p><img src="../../images/gold-day/received.png" alt=""><span>已收获特权本金</span><span>xxxx元</span></p>
-      <p><img src="../../images/gold-day/speed.png" alt=""><span>当前产出速度</span><span>xxx元特权本金/小时</span></p>
+      <p><img src="../../images/gold-day/received.png" alt=""><span>已收获特权本金</span><span>{{userActivityInfo.harvestAmount}}元</span></p>
+      <p><img src="../../images/gold-day/speed.png" alt=""><span>当前产出速度</span><span>{{userActivityInfo.speed}}元特权本金/小时</span></p>
     </div>
     <div class="harvest">
       <div class="crystal_ball no-start" v-if="activityStatus === 0"></div>
       <div class="crystal_ball" v-if="activityStatus > 0">
-        <span>1447元</span>
+        <span>{{userActivityInfo.amount}}元</span>
       </div>
       <button v-if="!token && activityStatus !== 0" @click="toNative('HCNative_Login')">登录查看奖励</button>
-      <button v-if="(activityStatus === 1 || activityStatus === 2) && token" @click="collectProfit();showMask = true;isCalculator = false; (activityStatus === 2 ? isTips= 2 : isTips= 1);" :class="{'notEnough' : !profitEnough}">立即收获</button>
+      <button v-if="(activityStatus === 1 || activityStatus === 2) && token" @click="collectProfit();showMask = true;isCalculator = false; (activityStatus === 2 ? isTips= 2 : isTips= 1);" :class="{'notEnough' : userActivityInfo.amount < 100}">立即收获</button>
       <p class="tips">*为保证收益，特权本金产量需满100元才可点击收获哟～</p>
     </div>
     <div class="explain">
@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="check_details">
-      <span>我的累计年化出借金额：xxxxx元</span>
+      <span>我的累计年化出借金额：{{investAmount}}元</span>
       <router-link tag="span" :to="'/activity/gold-record'" >查看<br>详情</router-link>
     </div>
     <div class="speed_rule">
@@ -48,7 +48,7 @@
       </div>
       <div class="">
         <p class="rule-num"><span>1</span>活动时间</p>
-        <p class="rule-content">本次活动仅限于{{activityInfo.startYear}}年{{activityInfo.startMonth}}月{{activityInfo.startDate}}日至{{activityInfo.endYear}}年{{activityInfo.endMonth}}月{{activityInfo.endDate}}日内参与有效；</p>
+        <p class="rule-content">本次活动仅限于{{activityInfo.createTime | dateCharacter}}至{{activityInfo.endTime | dateCharacter}}内参与有效；</p>
         <!-- <p class="rule-content">123</p> -->
       </div>
       <div class="">
@@ -70,7 +70,7 @@
       </div>
     </div>
     <div v-if="isIos" class="iosTips">该活动与设备生产商Apple Inc.公司无关</div>
-    <button v-if="token && activityStatus === 1 && showBtn" class="invest-fixed-btn" @click="toInvest()" :disabled="busy">立即出借</button>
+    <button v-if="activityStatus === 1 && showBtn" class="invest-fixed-btn" @click="toInvest()" :disabled="busy">{{token ? '立即出借' : '立即登录'}}</button>
     <!-- 计算器入口 -->
     <div class="icon-calculator" @click="showMask = true;isCalculator = true; isTips= 0;"></div>
     <!-- 计算器弹窗 -->
@@ -80,7 +80,6 @@
 <script>
   import {bridgeUtil, Utils, audioPlayUtil, scrollHalfPage} from '../../service/Utils'
   import GoldCalculator from './goldCalculator'
-  import $ from 'zepto'
   export default {
     name: 'goldDays',
     data () {
@@ -92,27 +91,27 @@
         isTips: 0, // 0 不显示提示 1 温馨提示 2 活动已结束
         isIos: Utils.isIos(),
         activityInfo: {
-          startYear: 0,
-          startMonth: 0,
-          startDate: 0,
-          endYear: 0,
-          endMonth: 0,
-          endDate: 0,
-          validityYear: 0,
-          validityMonth: 0,
-          validityDate: 0
+          createTime: '',
+          endTime: ''
         },
-        profitEnough: true,
         busy: false,
         activityType: this.$route.query.act || 45,
         amount: 90,
-        showReminder: false
+        showReminder: false,
+        investAmount: 0,
+        userActivityInfo: {
+          speed: 0,
+          amount: 0,
+          harvestAmount: 0
+        },
+        timer: null,
+        serverTime: 4000
       }
     },
     props: ['token'],
     watch: {
       token: function (val) {
-        val && val !== '' ? (this.getUnTakeRewards(), this.arborDayInfo(), this.getAnnualInvestAmount()) : null
+        val && val !== '' ? (this.goldDayInfo(), this.getAnnualInvestAmount()) : null
       }
     },
     mounted () {
@@ -121,8 +120,23 @@
       })
     },
     created () {
-      this.token ? (this.getUnTakeRewards(), this.arborDayInfo(), this.getAnnualInvestAmount()) : null
+      this.token ? (this.goldDayInfo(), this.getAnnualInvestAmount()) : null
       this.getActivityStatus()
+    },
+    computed: {
+      computeNumber () {
+        var that = this
+        clearInterval(that.timer)
+        that.timer = setInterval(function () {
+          if (that.serverTime <= 0) {
+            clearInterval(that.timer)
+            return
+          } else {
+            that.serverTime = that.serverTime - 1000
+            that.userActivityInfo.amount = that.userActivityInfo.amount + that.userActivityInfo.speed
+          }
+        }, 1000)
+      }
     },
     methods: {
       getActivityStatus () { // 活动信息查询
@@ -131,28 +145,20 @@
           method: 'get',
           url: '/hongcai/rest/systems/serverTime'
         }).then((response) => {
-          var serverTime = response.data.time
+          that.serverTime = response.data.time
+          console.log(that.serverTime)
           that.$http('/hongcai/rest/activitys/' + that.activityType).then(function (res) {
-            if (serverTime - res.data.endTime > 3 * 24 * 60 * 60 * 1000) {
+            if (that.serverTime - res.data.endTime > 3 * 24 * 60 * 60 * 1000) {
               that.activityStatus = 3 // 活动结束3天后
-            } else if (serverTime < res.data.ceratTime) {
+            } else if (that.serverTime < res.data.createTime) {
               that.activityStatus = 0 // 预热状态
             } else {
               that.activityStatus = res.data.status
             }
-            console.log(that.activityStatus)
             // 获取活动开始、结束时间
-            var startTime = res.data.startTime
-            var endTime = res.data.endTime
-            that.activityInfo = {
-              startYear: new Date(startTime).getFullYear(),
-              startMonth: new Date(startTime).getMonth() + 1,
-              startDate: new Date(startTime).getDate(),
-              endYear: new Date(endTime).getFullYear(),
-              endMonth: new Date(endTime).getMonth() + 1,
-              endDate: new Date(endTime).getDate()
-            }
+            that.activityInfo = res.data
           })
+          that.computeNumber()
         })
       },
       toInvest () {
@@ -160,47 +166,30 @@
         if (that.busy) {
           return
         }
-        that.busy = true
-        setTimeout(function () {
-          that.busy = false
-        }, 2000)
         bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {}, null)
       },
       collectProfit () {
         var that = this
-        if (that.amount < 100) {
-          that.showReminder = true
+        if (that.userActivityInfo.amount < 100) {
         } else {
-          this.profitEnough ? audioPlayUtil.playOrPaused('reward', 'true') : audioPlayUtil.playOrPaused('ten', 'true')
+          (that.userActivityInfo.amount >= 100) ? audioPlayUtil.playOrPaused('reward', 'true') : audioPlayUtil.playOrPaused('ten', 'true')
         }
       },
       toNative (HCNative) {
         bridgeUtil.webConnectNative(HCNative, undefined, {}, function (response) {
         }, null)
       },
-      getUnTakeRewards () { // 未领取的特权本金奖励
+      goldDayInfo () { // 获取已收获特权本金金额
         var that = this
-        that.$http('/hongcai/rest/activitys/arborDay/unTakeRewards?token=' + that.token).then(function (res) {
+        that.$http('/hongcai/rest/activitys/invest/transition/0/userSpeed?token=' + that.token).then(function (res) {
           if (res && res.ret !== -1) {
-            that.unTakeRewardsList = res.data
-            that.canTakeCount = res.data.length
-          }
-        })
-      },
-      arborDayInfo () { // 获取已收获特权本金金额
-        var that = this
-        that.$http('/hongcai/rest/activitys/arborDay/arborDayInfo?token=' + that.token).then(function (res) {
-          if (res && res.ret !== -1) {
-            that.takedPrivileged = res.data.receiveReward
-            that.nextLevelAmount = res.data.nextReward.amount
-            that.gettingRewardMoney = res.data.nextReward.reward
-            $('.tree0').addClass('tree' + (res.data.nextReward.level))
+            that.userActivityInfo = res.data
           }
         })
       },
       getAnnualInvestAmount () {
         var that = this
-        that.$http('/hongcai/rest/activitys/invest/transition/0/annualInvestAmount?token=' + that.token + '&activityType=' + that.$route.query.act)
+        that.$http('/hongcai/rest/activitys/invest/transition/0/annualInvestAmount?token=' + that.token + '&activityType=' + that.activityType)
         .then(function (res) { // 获取累计年化投资金额
           if (!res || res.ret === -1) {
             return
@@ -222,12 +211,14 @@
     background: url(../../images/gold-day/gold_day_bg.png) no-repeat;
     background-color: #3aeaea;
     background-size: 100%;
-    border-bottom: .9rem solid #fff;
+  }
+  .padding-bottom-9{
+    padding-bottom: .9rem;
   }
   .activity_time{
     padding-top: 2.78rem;
     text-indent: 1.3rem;
-    font-size: .23rem;
+    font-size: .21rem;
     color: #fff;
     margin-bottom: .7rem;
   }
@@ -273,20 +264,22 @@
     padding: 0 .3rem;
   }
   .harvest .crystal_ball{
+    margin-top: -.2rem;
     height: 4.5rem;
     background: url(../../images/gold-day/crystal_ball.png) no-repeat center;
-    background-position-y: -.4rem;
-    background-size: 85% 100%;
+    background-size: contain;
+    margin-bottom: .2rem;
   }
   .harvest .no-start{
+    margin-top: -.2rem;
     height: 4.5rem;
     background: url(../../images/gold-day/crystal_ball_expect.png) no-repeat center;
-    background-position-y: -.4rem;
-    background-size: 85% 100%;
+    background-size: contain;
+    margin-bottom: .2rem;
   }
   .harvest .crystal_ball span{
     display: block;
-    padding-top: 1.2rem;
+    padding-top: 1.5rem;
     color: #fa9800;
     font-size: .5rem;
     font-weight: bold;
@@ -332,10 +325,11 @@
     color: #9a540e;
     font-weight: bold;
     text-indent: .18rem;
+    margin-left: -.3rem;
   }
   .check_details{
     height: .9rem;
-    font-size: .3rem;
+    font-size: .28rem;
     font-weight: bold;
     display: flex;
     justify-content: space-between;
@@ -347,17 +341,13 @@
     line-height: .9rem;
     background-color: #ffcc02;
     position: relative;
-    z-index: 2;   
-  }
-  .check_details span:first-child:after{
-    content: '';
-    width: .9rem;
-    height: .9rem;
-    position: absolute;
-    right: -.45rem;
-    border-radius: 50%;
-    background-color: #ffcc02;
-    z-index: -5;
+    z-index: 2;
+    width: 5.7rem;
+    text-align: left;
+    border-radius: .8rem;
+    padding-right: .28rem;
+    margin-left: -0.8rem;
+    text-indent: 1.1rem;  
   }
   .check_details span:last-child{
     width: .7rem;
