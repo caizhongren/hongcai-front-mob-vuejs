@@ -12,7 +12,7 @@
         <span>1447元</span>
       </div>
       <button v-if="!token && activityStatus !== 0" @click="toNative('HCNative_Login')">登录查看奖励</button>
-      <button v-if="(activityStatus === 1 || activityStatus === 2) && token" @click="collectProfit();showCalculator = true;isCalculator = false; (activityStatus === 2 ? isTips= 2 : isTips= 1);" :class="{'notEnough' : !profitEnough}">立即收获</button>
+      <button v-if="(activityStatus === 1 || activityStatus === 2) && token" @click="collectProfit();showMask = true;isCalculator = false; (activityStatus === 2 ? isTips= 2 : isTips= 1);" :class="{'notEnough' : !profitEnough}">立即收获</button>
       <p class="tips">*为保证收益，特权本金产量需满100元才可点击收获哟～</p>
     </div>
     <div class="explain">
@@ -72,13 +72,13 @@
     <div v-if="isIos" class="iosTips">该活动与设备生产商Apple Inc.公司无关</div>
     <button v-if="token && activityStatus === 1 && showBtn" class="invest-fixed-btn" @click="toInvest()" :disabled="busy">立即出借</button>
     <!-- 计算器入口 -->
-    <div class="icon-calculator" @click="showCalculator = true;isCalculator = true; isTips= 0;"></div>
+    <div class="icon-calculator" @click="showMask = true;isCalculator = true; isTips= 0;"></div>
     <!-- 计算器弹窗 -->
-    <Gold-Calculator v-show="isCalculator" :isCalculator="isCalculator" :isTips="isTips"></Gold-Calculator>
+    <Gold-Calculator v-show="showMask" :isCalculator="isCalculator" :isTips="isTips"></Gold-Calculator>
   </div>
 </template>
 <script>
-  import {bridgeUtil, Utils, ModalHelper, audioPlayUtil, scrollHalfPage} from '../../service/Utils'
+  import {bridgeUtil, Utils, audioPlayUtil, scrollHalfPage} from '../../service/Utils'
   import GoldCalculator from './goldCalculator'
   import $ from 'zepto'
   export default {
@@ -87,7 +87,7 @@
       return {
         showBtn: false, // 是否显示底部按钮
         activityStatus: 2, // 0 活动未开始，1 活动进行中，2 活动结束3天内，3 活动结束3天后
-        showCalculator: false,
+        showMask: false, // 弹窗蒙层
         isCalculator: false, // 年化出借计算器
         isTips: 0, // 0 不显示提示 1 温馨提示 2 活动已结束
         isIos: Utils.isIos(),
@@ -104,7 +104,6 @@
         },
         profitEnough: true,
         busy: false,
-        showMask: false,
         activityType: this.$route.query.act || 45,
         amount: 90,
         showReminder: false
@@ -114,9 +113,6 @@
     watch: {
       token: function (val) {
         val && val !== '' ? (this.getUnTakeRewards(), this.arborDayInfo(), this.getAnnualInvestAmount()) : null
-      },
-      showMask (val) {
-        val ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
       }
     },
     mounted () {

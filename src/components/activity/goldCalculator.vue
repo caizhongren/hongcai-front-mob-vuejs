@@ -27,14 +27,14 @@
           特权本金产量未达到100元 <br>
           {{isTips === 1 ? '现在收获不产生收益哟' : '不能获取产生收益哟'}}
         </div>
-        <div class="btns" @click="$parent.showCalculator = false;">{{isTips === 1 ? '再等等' : '知道了'}}</div>
+        <div class="btns" @click="$parent.showMask = false;">{{isTips === 1 ? '再等等' : '知道了'}}</div>
       </div>
       <!-- 活动结束蒙层 -->
       <div class="activityEnd" v-else>
         <img src="../../images/gold-day/activityEnd.png" alt="">
       </div>
     </div>
-    <img v-if="isCalculator" src="../../images/break-egg/icon-close.png" width="12%" class="close" @click="$parent.showCalculator = false;">
+    <img v-if="isCalculator" src="../../images/break-egg/icon-close.png" width="12%" class="close" @click="$parent.showMask = false;">
   </div>
 </template>
 <script>
@@ -49,12 +49,12 @@ export default {
       }
     }
   },
-  props: ['showCalculator', 'isCalculator', 'isTips'],
+  props: ['showMask', 'isCalculator', 'isTips'],
   watch: {
     'project.term': function (newVal, oldVal) {
       this.project.term = newVal > 365 ? newVal.slice(0, 2) : this.project.term
     },
-    '$parent.showCalculator': function (newVal, oldVal) {
+    '$parent.showMask': function (newVal, oldVal) {
       var that = this
       if (that.isCalculator) {
         that.project.term = ''
@@ -65,7 +65,7 @@ export default {
     }
   },
   created () {
-    this.$parent.showCalculator ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
+    this.$parent.showMask ? ModalHelper.afterOpen() : ModalHelper.beforeClose()
   },
   computed: {
     annualInvestment () {
