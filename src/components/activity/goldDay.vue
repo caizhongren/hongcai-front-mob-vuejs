@@ -13,7 +13,7 @@
       </div>
       <button v-if="!token && activityStatus !== 0" @click="toNative('HCNative_Login')">登录查看奖励</button>
       <button v-if="(activityStatus === 1 || activityStatus === 2) && token" @click="collectProfit(); (activityStatus === 2 ? isTips= 2 : isTips= 1);" :class="{'notEnough' : userActivityInfo.amount < 100}" :disable="busy">立即收获</button>
-      <p class="tips" v-if="activityStatus !== 0">{{userActivityInfo.amount}}*为保证收益，特权本金产量需满100元才可点击收获哟～</p>
+      <p class="tips" v-if="activityStatus !== 0">*为保证收益，特权本金产量需满100元才可点击收获哟～</p>
     </div>
     <div class="explain">
       <div class="describe">
@@ -213,7 +213,7 @@
         that.$http('/hongcai/rest/activitys/invest/transition/0/userSpeed?token=' + that.token).then(function (res) {
           if (res && res.ret !== -1) {
             that.userActivityInfo = res.data
-            that.computeNumber()
+            that.userActivityInfo.speed > 0 ? that.computeNumber() : null
           }
         })
       },
