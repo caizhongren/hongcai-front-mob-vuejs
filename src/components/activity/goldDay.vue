@@ -340,10 +340,11 @@
   .harvest .tips{
     color: #9a540e;
     font-size: .22rem;
-    margin: .2rem 0;
+    margin: .2rem 0 0;
   }
   .explain{
     padding: 0 .26rem;
+    margin: .5rem auto;
   }
   .explain .describe{
     padding: .3rem;
@@ -352,7 +353,6 @@
     border-radius: .2rem;
     color: #fff;
     text-align: justify;
-    margin-bottom: .4rem;
   }
   .explain .describe p:nth-child(2){
     margin: .2rem 0 .1rem 0;
@@ -399,7 +399,7 @@
   }
   .speed_rule{
     padding: 0 .26rem;
-    margin-bottom: .66rem;
+    margin-bottom: .5rem;
   }
   .speed_rule ul{
     border-radius: .18rem;
@@ -416,7 +416,7 @@
     flex: 1;
     color: #fff;
     font-weight: bold;
-    font-size: .27rem;
+    font-size: .24rem;
   }
   .speed_rule ul li p:last-child{
     color: #9ce9fc;
@@ -446,7 +446,8 @@
     display: flex;
     width: 87%;
     margin: 0 auto;
-    line-height: .53rem;
+    line-height: .65rem;
+    height: .53rem;
     font-weight: 900;
   }
   .speed_rule .formula img{

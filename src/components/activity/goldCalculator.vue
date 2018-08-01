@@ -180,7 +180,7 @@ input:-moz-placeholder {
   color: #0a3617;
 }
 .tipBox {
-  margin: 1.5rem auto 0;
+  margin: 2.75rem auto 0;
   padding: .15rem 0 .2rem;
   height: auto;
   width: 63%;

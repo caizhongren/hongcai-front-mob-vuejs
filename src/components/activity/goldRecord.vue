@@ -80,7 +80,7 @@
 <style scoped>
   .gold-record {
     background: url('../../images/gold-day/record-bg.png') no-repeat 0 0;
-    background-size: 100% 100%;
+    background-size: 100%;
     padding-top: 1.6rem;
     width: 100%;
     position: fixed;
