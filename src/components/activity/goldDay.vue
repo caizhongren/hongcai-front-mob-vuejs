@@ -1,7 +1,7 @@
 <template>
   <div class="goldDays" :class="{'padding-bottom-9' : activityStatus === 1 && showBtn }">
     <audio preload="preload" id="reward"><source src="../../assets/reward.mp3"></audio>
-    <div class="activity_time">{{activityInfo.createTime | dateCharacter}}至{{activityInfo.endTime | dateCharacter}}</div>
+    <div class="activity_time">{{activityInfo.startTime | dateCharacter}}至{{activityInfo.endTime | dateCharacter}}</div>
     <div class="top_two" v-if="activityStatus !== 0">
       <p><img src="../../images/gold-day/received.png" alt=""><span>已收获特权本金</span><span id="harvested">{{userActivityInfo.harvestAmount || 0 | floor}}</span><span>元</span></p>
       <p><img src="../../images/gold-day/speed.png" alt=""><span>当前产出速度</span><span>{{userActivityInfo.speed || 0}}元特权本金/小时</span></p>
@@ -22,7 +22,7 @@
         <p>小财在活动期间累计年化出借达到10000元，截至活动结束前，根据奖励产出速度，每小时可产生450元特权本金奖励，如中途小财追加出借，累计年化出借达到50000元，则后续奖励产出速度提升至每小时可产生2700元特权本金奖励。</p>
       </div>
     </div>
-    <div class="check_details" v-if="token">
+    <div class="check_details" v-if="token && activityStatus !== 0">
       <span>我的累计年化出借金额：{{investAmount}}元</span>
       <router-link tag="span" :to="'/activity/gold-record'" >查看<br>详情</router-link>
     </div>
@@ -48,7 +48,7 @@
       </div>
       <div class="">
         <p class="rule-num"><span>1</span>活动时间</p>
-        <p class="rule-content">本次活动仅限于{{activityInfo.createTime | dateCharacter}}至{{activityInfo.endTime | dateCharacter}}内参与有效；</p>
+        <p class="rule-content">本次活动仅限于{{activityInfo.startTime | dateCharacter}}至{{activityInfo.endTime | dateCharacter}}内参与有效；</p>
       </div>
       <div class="">
         <p class="rule-num"><span>2</span>参与方式</p>
