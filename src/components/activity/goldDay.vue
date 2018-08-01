@@ -2,9 +2,9 @@
   <div class="goldDays" :class="{'padding-bottom-9' : activityStatus === 1 && showBtn }">
     <audio preload="preload" id="reward"><source src="../../assets/reward.mp3"></audio>
     <div class="activity_time">{{activityInfo.createTime | dateCharacter}}至{{activityInfo.endTime | dateCharacter}}</div>
-    <div class="top_two">
-      <p><img src="../../images/gold-day/received.png" alt=""><span>已收获特权本金</span><span id="harvested">{{userActivityInfo.harvestAmount | floor}}</span><span>元</span></p>
-      <p><img src="../../images/gold-day/speed.png" alt=""><span>当前产出速度</span><span>{{userActivityInfo.speed}}元特权本金/小时</span></p>
+    <div class="top_two" v-if="activityStatus !== 0">
+      <p><img src="../../images/gold-day/received.png" alt=""><span>已收获特权本金</span><span id="harvested">{{userActivityInfo.harvestAmount || 0 | floor}}</span><span>元</span></p>
+      <p><img src="../../images/gold-day/speed.png" alt=""><span>当前产出速度</span><span>{{userActivityInfo.speed || 0}}元特权本金/小时</span></p>
     </div>
     <div class="harvest">
       <div class="crystal_ball no-start" v-if="activityStatus === 0"></div>
@@ -13,7 +13,7 @@
       </div>
       <button v-if="!token && activityStatus !== 0" @click="toNative('HCNative_Login')">登录查看奖励</button>
       <button v-if="(activityStatus === 1 || activityStatus === 2) && token" @click="collectProfit(); (activityStatus === 2 ? isTips= 2 : isTips= 1);" :class="{'notEnough' : userActivityInfo.amount < 100}" :disable="busy">立即收获</button>
-      <p class="tips">*为保证收益，特权本金产量需满100元才可点击收获哟～</p>
+      <p class="tips" v-if="activityStatus !== 0">{{userActivityInfo.amount}}*为保证收益，特权本金产量需满100元才可点击收获哟～</p>
     </div>
     <div class="explain">
       <div class="describe">
@@ -22,7 +22,7 @@
         <p>小财在活动期间累计年化出借达到10000元，截至活动结束前，根据奖励产出速度，每小时可产生450元特权本金奖励，如中途小财追加出借，累计年化出借达到50000元，则后续奖励产出速度提升至每小时可产生2700元特权本金奖励。</p>
       </div>
     </div>
-    <div class="check_details">
+    <div class="check_details" v-if="token">
       <span>我的累计年化出借金额：{{investAmount}}元</span>
       <router-link tag="span" :to="'/activity/gold-record'" >查看<br>详情</router-link>
     </div>
@@ -94,8 +94,6 @@
           endTime: ''
         },
         activityType: this.$route.query.act || 45,
-        amount: 0,
-        showReminder: false,
         investAmount: 0,
         userActivityInfo: {
           speed: 0,
@@ -103,14 +101,21 @@
           harvestAmount: 0
         },
         timer: null,
-        serverTime: 4000,
+        activityEndTime: 4000,
         busy: false
       }
     },
     props: ['token'],
     watch: {
       token: function (val) {
-        val && val !== '' ? (this.goldDayInfo(), this.getAnnualInvestAmount()) : null
+        val && val !== '' ? this.getAnnualInvestAmount() : null
+        val && val !== '' && (this.activityStatus === 1 || this.activityStatus === 2) ? this.goldDayInfo() : null
+      },
+      activityStatus: function (val) {
+        if (val === 2 && this.investAmount === 0) {
+          this.showMask = true
+          this.isTips = 0
+        }
       }
     },
     mounted () {
@@ -119,7 +124,7 @@
       })
     },
     created () {
-      this.token ? (this.goldDayInfo(), this.getAnnualInvestAmount()) : null
+      this.token ? this.getAnnualInvestAmount() : null
       this.getActivityStatus()
     },
     computed: {
@@ -127,12 +132,12 @@
         var that = this
         clearInterval(that.timer)
         that.timer = setInterval(function () {
-          if (that.serverTime <= 0) {
+          if (that.activityEndTime <= 0) {
             clearInterval(that.timer)
             return
           } else {
-            that.serverTime = that.serverTime - 1000
-            that.userActivityInfo.amount = that.userActivityInfo.amount + that.userActivityInfo.speed / 60 / 60
+            that.activityEndTime -= 1000
+            that.userActivityInfo.amount += that.userActivityInfo.speed / 60 / 60
           }
         }, 1000)
       }
@@ -144,25 +149,22 @@
           method: 'get',
           url: '/hongcai/rest/systems/serverTime'
         }).then((response) => {
-          that.serverTime = response.data.time
+          var serverTime = response.data.time
           that.$http('/hongcai/rest/activitys/' + that.activityType).then(function (res) {
-            if (that.serverTime - res.data.endTime > 3 * 24 * 60 * 60 * 1000) {
+            that.activityEndTime = res.data.endTime - serverTime
+            if (serverTime - res.data.endTime > 3 * 24 * 60 * 60 * 1000) {
               that.activityStatus = 3 // 活动结束3天后
               that.showMask = true
               that.isTips = 0
-            } else if (that.serverTime < res.data.createTime) {
+            } else if (serverTime < res.data.startTime) {
               that.activityStatus = 0 // 预热状态
             } else {
+              that.token ? that.goldDayInfo() : null
               that.activityStatus = res.data.status
-              if (that.activityStatus === 2 && that.investAmount === 0) {
-                that.showMask = true
-                that.isTips = 0
-              }
             }
             // 获取活动开始、结束时间
             that.activityInfo = res.data
           })
-          that.computeNumber()
         })
       },
       toInvest () {
@@ -211,6 +213,7 @@
         that.$http('/hongcai/rest/activitys/invest/transition/0/userSpeed?token=' + that.token).then(function (res) {
           if (res && res.ret !== -1) {
             that.userActivityInfo = res.data
+            that.computeNumber()
           }
         })
       },
@@ -554,7 +557,7 @@
   .rule-content {
     width: 86%;
     margin-left: 9.8%;
-    margin-bottom: .3rem;
+    padding-bottom: .3rem;
   }
   .iosTips {
     font-size: .2rem;
