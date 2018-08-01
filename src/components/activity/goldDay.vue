@@ -3,16 +3,16 @@
     <audio preload="preload" id="reward"><source src="../../assets/reward.mp3"></audio>
     <div class="activity_time">{{activityInfo.createTime | dateCharacter}}至{{activityInfo.endTime | dateCharacter}}</div>
     <div class="top_two">
-      <p><img src="../../images/gold-day/received.png" alt=""><span>已收获特权本金</span><span>{{userActivityInfo.harvestAmount}}元</span></p>
+      <p><img src="../../images/gold-day/received.png" alt=""><span>已收获特权本金</span><span id="harvested">{{userActivityInfo.harvestAmount | floor}}</span><span>元</span></p>
       <p><img src="../../images/gold-day/speed.png" alt=""><span>当前产出速度</span><span>{{userActivityInfo.speed}}元特权本金/小时</span></p>
     </div>
     <div class="harvest">
       <div class="crystal_ball no-start" v-if="activityStatus === 0"></div>
       <div class="crystal_ball" v-if="activityStatus > 0">
-        <span>{{userActivityInfo.amount}}元</span>
+        <span>{{userActivityInfo.amount | floor}}元</span>
       </div>
       <button v-if="!token && activityStatus !== 0" @click="toNative('HCNative_Login')">登录查看奖励</button>
-      <button v-if="(activityStatus === 1 || activityStatus === 2) && token" @click="collectProfit();showMask = true;isCalculator = false; (activityStatus === 2 ? isTips= 2 : isTips= 1);" :class="{'notEnough' : userActivityInfo.amount < 100}">立即收获</button>
+      <button v-if="(activityStatus === 1 || activityStatus === 2) && token" @click="collectProfit(); (activityStatus === 2 ? isTips= 2 : isTips= 1);" :class="{'notEnough' : userActivityInfo.amount < 100}" :disable="busy">立即收获</button>
       <p class="tips">*为保证收益，特权本金产量需满100元才可点击收获哟～</p>
     </div>
     <div class="explain">
@@ -49,7 +49,6 @@
       <div class="">
         <p class="rule-num"><span>1</span>活动时间</p>
         <p class="rule-content">本次活动仅限于{{activityInfo.createTime | dateCharacter}}至{{activityInfo.endTime | dateCharacter}}内参与有效；</p>
-        <!-- <p class="rule-content">123</p> -->
       </div>
       <div class="">
         <p class="rule-num"><span>2</span>参与方式</p>
@@ -58,7 +57,6 @@
       <div class="">
         <p class="rule-num"><span>3</span>奖励发放</p>
         <p class="rule-content">用户点击“立即收获”按钮即可收获已产出的特权本金奖励，为保证特权本金收益，产量需达到100元特权本金方可点击收获；<br>如活动结束后3天内仍未领取奖励，将视为自动放弃奖励；</p>
-        <!-- <p class="rule-content">123</p> -->
       </div>
       <div class="">
         <p class="rule-num"><span>4</span>关于特权本金</p>
@@ -70,7 +68,7 @@
       </div>
     </div>
     <div v-if="isIos" class="iosTips">该活动与设备生产商Apple Inc.公司无关</div>
-    <button v-if="activityStatus === 1 && showBtn" class="invest-fixed-btn" @click="toInvest()" :disabled="busy">{{token ? '立即出借' : '立即登录'}}</button>
+    <button v-if="activityStatus === 1 && showBtn" class="invest-fixed-btn" @click="toInvest()" >{{token ? '立即出借' : '立即登录'}}</button>
     <!-- 计算器入口 -->
     <div class="icon-calculator" @click="showMask = true;isCalculator = true; isTips= 0;"></div>
     <!-- 计算器弹窗 -->
@@ -78,7 +76,8 @@
   </div>
 </template>
 <script>
-  import {bridgeUtil, Utils, audioPlayUtil, scrollHalfPage} from '../../service/Utils'
+  import $ from 'zepto'
+  import {bridgeUtil, Utils, audioPlayUtil, scrollHalfPage, commonAnimation} from '../../service/Utils'
   import GoldCalculator from './goldCalculator'
   export default {
     name: 'goldDays',
@@ -88,15 +87,14 @@
         activityStatus: 2, // 0 活动未开始，1 活动进行中，2 活动结束3天内，3 活动结束3天后
         showMask: false, // 弹窗蒙层
         isCalculator: false, // 年化出借计算器
-        isTips: 0, // 0 不显示提示 1 温馨提示 2 活动已结束
+        isTips: 2, // 0 不显示提示 1 温馨提示 2 活动已结束
         isIos: Utils.isIos(),
         activityInfo: {
           createTime: '',
           endTime: ''
         },
-        busy: false,
         activityType: this.$route.query.act || 45,
-        amount: 90,
+        amount: 0,
         showReminder: false,
         investAmount: 0,
         userActivityInfo: {
@@ -105,7 +103,8 @@
           harvestAmount: 0
         },
         timer: null,
-        serverTime: 4000
+        serverTime: 4000,
+        busy: false
       }
     },
     props: ['token'],
@@ -133,7 +132,7 @@
             return
           } else {
             that.serverTime = that.serverTime - 1000
-            that.userActivityInfo.amount = that.userActivityInfo.amount + that.userActivityInfo.speed
+            that.userActivityInfo.amount = that.userActivityInfo.amount + that.userActivityInfo.speed / 60 / 60
           }
         }, 1000)
       }
@@ -146,14 +145,19 @@
           url: '/hongcai/rest/systems/serverTime'
         }).then((response) => {
           that.serverTime = response.data.time
-          console.log(that.serverTime)
           that.$http('/hongcai/rest/activitys/' + that.activityType).then(function (res) {
             if (that.serverTime - res.data.endTime > 3 * 24 * 60 * 60 * 1000) {
               that.activityStatus = 3 // 活动结束3天后
+              that.showMask = true
+              that.isTips = 0
             } else if (that.serverTime < res.data.createTime) {
               that.activityStatus = 0 // 预热状态
             } else {
               that.activityStatus = res.data.status
+              if (that.activityStatus === 2 && that.investAmount === 0) {
+                that.showMask = true
+                that.isTips = 0
+              }
             }
             // 获取活动开始、结束时间
             that.activityInfo = res.data
@@ -163,23 +167,46 @@
       },
       toInvest () {
         var that = this
-        if (that.busy) {
-          return
+        if (that.token) {
+          bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {}, null)
+        } else {
+          bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function (res) {}, null)
         }
-        bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {}, null)
       },
       collectProfit () {
         var that = this
-        if (that.userActivityInfo.amount < 100) {
+        that.isCalculator = false
+        if (that.userActivityInfo.amount < 100 && that.activityStatus === 1) {
+          that.showMask = true
+          that.isTips = 1
+        } else if (that.userActivityInfo.amount < 100 && that.activityStatus !== 1) {
+          that.showMask = true
+          that.isTips = 2
         } else {
-          (that.userActivityInfo.amount >= 100) ? audioPlayUtil.playOrPaused('reward', 'true') : audioPlayUtil.playOrPaused('ten', 'true')
+          that.showMask = false
+          that.$http.post('/hongcai/rest/activitys/invest/transition/userSpeed/privilegedCapital', {
+            token: that.token
+          }).then((response) => {
+            if (that.busy) {
+              return
+            }
+            that.busy = true
+            setTimeout(function () {
+              that.busy = false
+            }, 800)
+            if (response.data) {
+              audioPlayUtil.playOrPaused('reward', 'true')
+              commonAnimation.countToNumber($('#harvested'), that.userActivityInfo.harvestAmount + that.userActivityInfo.amount, that.userActivityInfo.harvestAmount, 800, 0)
+              that.goldDayInfo()
+            }
+          })
         }
       },
       toNative (HCNative) {
         bridgeUtil.webConnectNative(HCNative, undefined, {}, function (response) {
         }, null)
       },
-      goldDayInfo () { // 获取已收获特权本金金额
+      goldDayInfo () { // 获取用户活动期间产出速度，待收和已收特权本金
         var that = this
         that.$http('/hongcai/rest/activitys/invest/transition/0/userSpeed?token=' + that.token).then(function (res) {
           if (res && res.ret !== -1) {
@@ -202,6 +229,11 @@
       GoldCalculator
     },
     destroyed () {
+    },
+    filters: {
+      floor (value) {
+        return Math.floor(value)
+      }
     }
   }
 </script>
@@ -256,6 +288,9 @@
   .top_two p span:nth-child(2){
     font-size: .22rem;
     width: 1.8rem;
+  }
+  .top_two p span:nth-child(3){
+    font-size: .25rem;
   }
   .top_two p span:last-child{
     font-size: .25rem;
