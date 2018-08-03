@@ -112,7 +112,7 @@
         val && val !== '' && (this.activityStatus === 1 || this.activityStatus === 2) ? this.goldDayInfo() : null
       },
       activityStatus: function (val) {
-        if (val === 2 && this.investAmount === 0) {
+        if (val === 2 && this.investAmount === 0 && this.token || val === 3) {
           this.showMask = true
           this.isTips = 0
         }
