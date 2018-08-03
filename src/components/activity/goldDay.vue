@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="check_details" v-if="token && activityStatus !== 0">
-      <span>我的累计年化出借金额：{{investAmount}}元</span>
+      <span>我的累计年化出借金额：{{investAmount || 0}}元</span>
       <router-link tag="span" :to="'/activity/gold-record'" >查看<br>详情</router-link>
     </div>
     <div class="speed_rule">
@@ -90,11 +90,11 @@
         isTips: 0, // 0 不显示提示 1 温馨提示 2 活动已结束
         isIos: Utils.isIos(),
         activityInfo: {
-          createTime: '',
+          startTime: '',
           endTime: ''
         },
         activityType: this.$route.query.act || 45,
-        investAmount: 0,
+        investAmount: '',
         userActivityInfo: {
           speed: 0,
           amount: 0,
@@ -111,8 +111,8 @@
         val && val !== '' ? this.getAnnualInvestAmount() : null
         val && val !== '' && (this.activityStatus === 1 || this.activityStatus === 2) ? this.goldDayInfo() : null
       },
-      activityStatus: function (val) {
-        if (val === 2 && this.investAmount === 0 && this.token || val === 3) {
+      investAmount (val) {
+        if (val === 0 && this.token && this.activityStatus === 2) {
           this.showMask = true
           this.isTips = 0
         }
@@ -124,7 +124,6 @@
       })
     },
     created () {
-      this.token ? this.getAnnualInvestAmount() : null
       this.getActivityStatus()
     },
     computed: {
@@ -159,8 +158,9 @@
             } else if (serverTime < res.data.startTime) {
               that.activityStatus = 0 // 预热状态
             } else {
-              that.token ? that.goldDayInfo() : null
               that.activityStatus = res.data.status
+              that.token ? that.goldDayInfo() : null
+              that.token ? that.getAnnualInvestAmount() : null
             }
             // 获取活动开始、结束时间
             that.activityInfo = res.data
@@ -170,9 +170,9 @@
       toInvest () {
         var that = this
         if (that.token) {
-          bridgeUtil.webConnectNative('HCNative_GoInvestList', undefined, {}, function (res) {}, null)
+          that.toNative('HCNative_GoInvestList')
         } else {
-          bridgeUtil.webConnectNative('HCNative_Login', undefined, {}, function (res) {}, null)
+          that.toNative('HCNative_Login')
         }
       },
       collectProfit () {
