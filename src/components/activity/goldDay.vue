@@ -232,6 +232,7 @@
       GoldCalculator
     },
     destroyed () {
+      clearInterval(this.timer)
     },
     filters: {
       floor (value) {
