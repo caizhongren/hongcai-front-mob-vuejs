@@ -84,10 +84,10 @@
     data () {
       return {
         showBtn: false, // 是否显示底部按钮
-        activityStatus: 2, // 0 活动未开始，1 活动进行中，2 活动结束3天内，3 活动结束3天后
+        activityStatus: 0, // 0 活动未开始，1 活动进行中，2 活动结束3天内，3 活动结束3天后
         showMask: false, // 弹窗蒙层
         isCalculator: false, // 年化出借计算器
-        isTips: 2, // 0 不显示提示 1 温馨提示 2 活动已结束
+        isTips: 0, // 0 不显示提示 1 温馨提示 2 活动已结束
         isIos: Utils.isIos(),
         activityInfo: {
           createTime: '',
@@ -101,7 +101,7 @@
           harvestAmount: 0
         },
         timer: null,
-        activityEndTime: 4000,
+        activityEndTime: 0,
         busy: false
       }
     },
